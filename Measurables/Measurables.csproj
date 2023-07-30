@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CsabaDu.FooVaria\Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Factories\Implementations\" />
+    <Folder Include="Types\Implementations\MeasureTypes\" />
+  </ItemGroup>
+
+</Project>
