@@ -6,7 +6,9 @@
 
         Enum GetMeasureUnit();
         Enum GetDefinedMeasureUnit(Enum measureUnit);
-        bool HasSameMeasureUnitTypeCode(Enum measureUnit);
+        Enum GetNextCustomMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate);
+        bool TryAddCustomMeasureUnit(Enum measureUnit, decimal exchangeRate);
+        bool HasSameMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode);
 
         void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode measureUnitTypeCode = default);
     }

@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Common.Behaviors;
+﻿namespace CsabaDu.FooVaria.Measurables.Behaviors;
 
 public interface IMeasureUnitType
 {
