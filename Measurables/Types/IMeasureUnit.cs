@@ -1,16 +1,12 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types
+﻿namespace CsabaDu.FooVaria.Measurables.Types;
+
+public interface IMeasureUnit : IMeasureUnitType
 {
-    public interface IMeasureUnit
-    {
-        MeasureUnitTypeCode MeasureUnitTypeCode { get; init; }
+    MeasureUnitTypeCode MeasureUnitTypeCode { get; init; }
 
-        Enum GetMeasureUnit();
-        Enum GetDefinedMeasureUnit(Enum measureUnit);
-        Enum GetNextCustomMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate);
-        bool TryAddCustomMeasureUnit(Enum measureUnit, decimal exchangeRate);
-        bool HasSameMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode);
+    Enum GetMeasureUnit();
+    Enum GetDefaultMeasureUnit(MeasureUnitTypeCode? measureUnitTypeCode = null);
+    Enum? GetDefinedMeasureUnit(Enum measureUnit);
 
-        void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode measureUnitTypeCode = default);
-    }
-
+    void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode? measureUnitTypeCode = null);
 }

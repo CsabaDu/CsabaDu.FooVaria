@@ -2,7 +2,8 @@
 
 public interface IMeasureUnitType
 {
-    MeasureUnitTypeCode GetMeasureUnitTypeCode();
+    MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum? measureUnit = null);
+    bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode);
 
     void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode);
 }

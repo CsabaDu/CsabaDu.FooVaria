@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.MeasureUnits;
 
-public enum Pieces
+public enum Pieces : short
 {
     Default, Pcs_01, Pcs_02, Pcs_03, Pcs_04, Pcs_05, Pcs_06, Pcs_07, Pcs_08, Pcs_09,
     Pcs_10, Pcs_11, Pcs_12, Pcs_13, Pcs_14, Pcs_15, Pcs_16, Pcs_17, Pcs_18, Pcs_19,

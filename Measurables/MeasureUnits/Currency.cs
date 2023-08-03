@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.MeasureUnits;
 
-public enum Currency
+public enum Currency : short
 {
     Default, Ccy_01, Ccy_02, Ccy_03, Ccy_04, Ccy_05, Ccy_06, Ccy_07, Ccy_08, Ccy_09,
     Ccy_10, Ccy_11, Ccy_12, Ccy_13, Ccy_14, Ccy_15, Ccy_16, Ccy_17, Ccy_18, Ccy_19,

@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Types;
 
-public interface IMeasurement : IMeasurable, IRateComponent, IProportional<IMeasurement, Enum>
+public interface IMeasurement : IMeasurable, IRateComponent, ICustomMeasurement, IProportional<IMeasurement, Enum>
 {
     object MeasureUnit { get; init; }
     decimal ExchangeRate { get; init; }

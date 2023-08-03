@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Types
 {
-    public interface IQuantity<out T> : IRound<T>, IExchange<ValueType, decimal> where T : class, IBaseMeasure
+    public interface IQuantity<out T> : IRound<T>, IExchange<ValueType, decimal> where T : class, IMeasurable
     {
         TypeCode QuantityTypeCode { get; init; }
         decimal DecimalQuantity { get; init; }

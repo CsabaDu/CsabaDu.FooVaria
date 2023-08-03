@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.MeasureUnits;
 
-public enum TimePeriodUnit
+public enum TimePeriodUnit : byte
 {
     minute,
     hour,
