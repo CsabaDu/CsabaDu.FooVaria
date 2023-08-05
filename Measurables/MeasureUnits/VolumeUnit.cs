@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.MeasureUnits;
 
-public enum VolumeUnit : byte
+public enum VolumeUnit
 {
     mmCubic,
     cmCubic,

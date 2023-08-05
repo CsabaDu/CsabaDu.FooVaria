@@ -7,3 +7,4 @@ global using CsabaDu.FooVaria.Measurables.Markers;
 global using CsabaDu.FooVaria.Measurables.MeasureUnits;
 global using CsabaDu.FooVaria.Measurables.Types;
 global using System.Diagnostics.CodeAnalysis;
+global using static CsabaDu.FooVaria.Common.Statics.Validate;

@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.MeasureUnits;
 
-public enum ExtentUnit : byte
+public enum ExtentUnit
 {
     mm,
     cm,

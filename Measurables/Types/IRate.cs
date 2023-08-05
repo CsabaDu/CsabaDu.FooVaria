@@ -1,9 +1,9 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Types;
 
-public interface IRate : IMeasurable, IProportional<IRate, IRate>, IExchange<IRate, IDenominator>
+public interface IRate : IMeasurable, IQuantifiable, IProportional<IRate, IRate>, IExchange<IRate, IDenominator>
 {
-    IMeasure Numerator { get; init; }
     IDenominator Denominator { get; init; }
+    IMeasure Numerator { get; init; }
 
     ILimit? GetLimit();
     IRate GetRate(IMeasure numerator, Enum measureUnit, decimal? exchangeRate = null, ValueType? quantity = null, ILimit? limit = null);

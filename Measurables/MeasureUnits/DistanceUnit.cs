@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.MeasureUnits;
 
-public enum DistanceUnit : byte
+public enum DistanceUnit
 {
     meter,
     km

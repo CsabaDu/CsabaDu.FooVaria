@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.MeasureUnits;
 
-public enum AreaUnit : byte
+public enum AreaUnit
 {
     mmSquare,
     cmSquare,
