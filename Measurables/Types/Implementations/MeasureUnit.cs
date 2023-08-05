@@ -37,6 +37,13 @@ internal abstract class MeasureUnit : IMeasureUnit
         return IsDefinedMeasureUnit(measureUnit) ? measureUnit : null;
     }
 
+    public IEnumerable<string> GetMeasureUnitNames(MeasureUnitTypeCode? measureUnitTypeCode = null)
+    {
+        Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode ?? MeasureUnitTypeCode);
+
+        return Enum.GetNames(measureUnitType);
+    }
+
     public Type GetMeasureUnitType(MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
         Type measureUnitType = GetMeasureUnit().GetType();

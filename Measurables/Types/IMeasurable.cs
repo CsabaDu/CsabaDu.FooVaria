@@ -6,5 +6,5 @@ public interface IMeasurable : IMeasureUnit, IQuantityType
 
     IMeasurable GetDefaultMeasurable(IMeasurable? measurable = null);
     IMeasurable GetMeasurable(IMeasurable measurable);
-    //IMeasurable GetMeasurable(IMeasurableFactory measurableFactory, IMeasurable measurable);
+    IMeasurable GetMeasurable(IMeasurableFactory measurableFactory, IMeasurable measurable);
 }
