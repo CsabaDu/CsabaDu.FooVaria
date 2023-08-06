@@ -73,22 +73,14 @@ internal class Measurement : Measurable, IMeasurement
 
         ValidateCustomMeasureUnitTypeCode((MeasureUnitTypeCode)measureUnitTypeCode);
 
-        return CustomMeasureUnitNameCollection
-            .Where(x => x.Key.GetType() == GetMeasureUnitType(measureUnitTypeCode))
-            .OrderBy(x => x.Key)
-            .ToDictionary(x => x.Key, x => x.Value);
+        return GetMeasureUnitBasedCollection(CustomMeasureUnitNameCollection, (MeasureUnitTypeCode)measureUnitTypeCode);
     }
 
     public IDictionary<Enum, decimal> GetExchangeRateCollection(MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
         if (measureUnitTypeCode == null) return new SortedList<Enum, decimal>(ExchangeRateCollection);
 
-        Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode);
-
-        return ExchangeRateCollection
-            .Where(x => x.Key.GetType() == measureUnitType)
-            .OrderBy(x => x.Key)
-            .ToDictionary(x => x.Key, x => x.Value);
+        return GetMeasureUnitBasedCollection(ExchangeRateCollection, (MeasureUnitTypeCode)measureUnitTypeCode);
     }
 
     public decimal GetExchangeRate(Enum measureUnit)
@@ -295,6 +287,16 @@ internal class Measurement : Measurable, IMeasurement
             Enum measureUnit = (Enum)Enum.Parse(measureUnitType, measureUnitNames.ElementAt(i + 1));
             exchangeRateCollection.Add(measureUnit, exchangeRates[i]);
         }
+    }
+
+    private IDictionary<Enum, T> GetMeasureUnitBasedCollection<T>(IDictionary<Enum, T> measureUnitBasedCollection, MeasureUnitTypeCode measureUnitTypeCode) where T : notnull
+    {
+        Type meeasureUnitType = GetMeasureUnitType(measureUnitTypeCode);
+
+        return measureUnitBasedCollection
+            .Where(x => x.Key.GetType() == meeasureUnitType)
+            .OrderBy(x => x.Key)
+            .ToDictionary(x => x.Key, x => x.Value);
     }
 
     private Enum GetNextCustomMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode)
