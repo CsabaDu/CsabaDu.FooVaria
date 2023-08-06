@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿using CsabaDu.FooVaria.Measurables.Behaviors;
+
+namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal class Measurement : Measurable, IMeasurement
 {
@@ -9,7 +11,7 @@ internal class Measurement : Measurable, IMeasurement
     {
         ExchangeRateCollection = new SortedList<Enum, decimal>();
 
-        InitiateConstantExchangeRates();
+        InitiateConstantExchangeRates(ExchangeRateCollection);
     }
 
     internal Measurement(IMeasurementFactory measurementFactory, Enum measureUnit, decimal? exchangeRate = null) : base(measurementFactory, measureUnit)
@@ -19,6 +21,7 @@ internal class Measurement : Measurable, IMeasurement
         MeasureUnit = measureUnit;
         ExchangeRate = (decimal)exchangeRate!;
     }
+
     internal Measurement(IMeasurementFactory measurementFactory, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate) : base(measurementFactory, measureUnitTypeCode)
     {
         ValidateExchangeRate(exchangeRate);
@@ -50,6 +53,15 @@ internal class Measurement : Measurable, IMeasurement
     public override bool Equals(object? obj)
     {
         return obj is IMeasurement other && Equals(other);
+    }
+
+    public IDictionary<Enum, decimal> GetConstantExchangeRateCollection()
+    {
+        var constantExchangeRateCollection = new SortedList<Enum, decimal>();
+
+        InitiateConstantExchangeRates(constantExchangeRateCollection);
+
+        return constantExchangeRateCollection;
     }
 
     public IDictionary<Enum, decimal> GetExchangeRateCollection(MeasureUnitTypeCode? measureUnitTypeCode = null)
@@ -130,10 +142,7 @@ internal class Measurement : Measurable, IMeasurement
         Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode);
         IEnumerable<string> measureUnitNames = GetMeasureUnitNames(measureUnitTypeCode);
 
-        for (int i = 0; i < count; i++)
-        {
-            AddExchangeRate(measureUnitType, measureUnitNames, exchangeRates!, i);
-        }
+        AddExchangeRates(ExchangeRateCollection, measureUnitType, measureUnitNames, exchangeRates!);
     }
 
     public bool IsCustomMeasureUnit(Enum measureUnit)
@@ -168,7 +177,7 @@ internal class Measurement : Measurable, IMeasurement
     public void RestoreConstantMeasureUnits()
     {
         ExchangeRateCollection.Clear();
-        InitiateConstantExchangeRates();
+        InitiateConstantExchangeRates(ExchangeRateCollection);
     }
 
     public bool TryAddCustomMeasureUnit(Enum measureUnit, decimal exchangeRate)
@@ -242,7 +251,7 @@ internal class Measurement : Measurable, IMeasurement
     }
 
     #region Private methods
-    private static void AddConstantExchangeRates<T>(params decimal[] exchangeRates) where T : struct, Enum
+    private static void AddConstantExchangeRates<T>(IDictionary<Enum, decimal> exchangeRateCollection, params decimal[] exchangeRates) where T : struct, Enum
     {
         Type measureUnitType = typeof(T);
         string[] measureUnitNames = Enum.GetNames(measureUnitType);
@@ -255,17 +264,17 @@ internal class Measurement : Measurable, IMeasurement
 
         if (exchangeRatesCount > 0)
         {
-            for (int i = 0; i < exchangeRatesCount; i++)
-            {
-                AddExchangeRate(measureUnitType, measureUnitNames, exchangeRates!, i);
-            }
+            AddExchangeRates(exchangeRateCollection, measureUnitType, measureUnitNames, exchangeRates!);
         }
     }
 
-    private static void AddExchangeRate(Type measureUnitType, IEnumerable<string> measureUnitNames, decimal[] exchangeRates, int i)
+    private static void AddExchangeRates(IDictionary<Enum, decimal> exchangeRateCollection, Type measureUnitType, IEnumerable<string> measureUnitNames, decimal[] exchangeRates)
     {
-        Enum measureUnit = (Enum)Enum.Parse(measureUnitType, measureUnitNames.ElementAt(i + 1));
-        ExchangeRateCollection.Add(measureUnit, exchangeRates[i]);
+        for (int i = 0; i < exchangeRates.Length; i++)
+        {
+            Enum measureUnit = (Enum)Enum.Parse(measureUnitType, measureUnitNames.ElementAt(i + 1));
+            exchangeRateCollection.Add(measureUnit, exchangeRates[i]);
+        }
     }
 
     private Enum GetNextCustomMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode)
@@ -287,16 +296,16 @@ internal class Measurement : Measurable, IMeasurement
         return (Enum)Enum.ToObject(measureUnitType, count);
     }
 
-    private static void InitiateConstantExchangeRates()
+    private static void InitiateConstantExchangeRates(IDictionary<Enum, decimal> exchangeRateCollection)
     {
-        AddConstantExchangeRates<AreaUnit>(100, 10000, 1000000);
-        AddConstantExchangeRates<Currency>();
-        AddConstantExchangeRates<DistanceUnit>(1000);
-        AddConstantExchangeRates<Pieces>();
-        AddConstantExchangeRates<ExtentUnit>(10, 100, 1000);
-        AddConstantExchangeRates<TimePeriodUnit>(60, 1440, 10080, 14400);
-        AddConstantExchangeRates<VolumeUnit>(1000, 1000000, 1000000000);
-        AddConstantExchangeRates<WeightUnit>(1000, 1000000);
+        AddConstantExchangeRates<AreaUnit>(exchangeRateCollection, 100, 10000, 1000000);
+        AddConstantExchangeRates<Currency>(exchangeRateCollection);
+        AddConstantExchangeRates<DistanceUnit>(exchangeRateCollection, 1000);
+        AddConstantExchangeRates<Pieces>(exchangeRateCollection);
+        AddConstantExchangeRates<ExtentUnit>(exchangeRateCollection, 10, 100, 1000);
+        AddConstantExchangeRates<TimePeriodUnit>(exchangeRateCollection, 60, 1440, 10080, 14400);
+        AddConstantExchangeRates<VolumeUnit>(exchangeRateCollection, 1000, 1000000, 1000000000);
+        AddConstantExchangeRates<WeightUnit>(exchangeRateCollection, 1000, 1000000);
     }
 
     private bool IsExchangeableTo(Enum measureUnit, MeasureUnitTypeCode measureUnitTypeCode)

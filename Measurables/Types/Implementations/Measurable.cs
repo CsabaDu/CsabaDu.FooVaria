@@ -71,4 +71,52 @@
             };
         }
     }
+
+    internal abstract class BaseMeasure : Measurable, IBaseMeasure
+    {
+        private protected BaseMeasure(IMeasurable measurable) : base(measurable)
+        {
+        }
+
+        private protected BaseMeasure(IMeasurableFactory measurableFactory, MeasureUnitTypeCode measureUnitTypeCode) : base(measurableFactory, measureUnitTypeCode)
+        {
+        }
+
+        private protected BaseMeasure(IMeasurableFactory measurableFactory, Enum measureUnit) : base(measurableFactory, measureUnit)
+        {
+        }
+
+        private protected BaseMeasure(IMeasurableFactory measurableFactory, IMeasurable measurable) : base(measurableFactory, measurable)
+        {
+        }
+
+        public abstract IMeasurement Measurement { get; init; }
+        public abstract object Quantity { get; init; }
+        public abstract TypeCode QuantityTypeCode { get; init; }
+        public abstract decimal DecimalQuantity { get; init; }
+
+        public abstract ValueType? ExchangeTo(decimal context);
+        public abstract IBaseMeasure? ExchangeTo(Enum context);
+        public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit, decimal? exchangeRate = null);
+        public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, IMeasurement? measurement = null);
+        public abstract IBaseMeasure GetBaseMeasure(IBaseMeasure? other = null);
+        public abstract decimal GetDefaultQuantity(IBaseMeasure? baseMeasure = null);
+        public abstract decimal GetExchangeRate();
+        public abstract LimitMode? GetLimitMode();
+
+        public override Enum GetMeasureUnit()
+        {
+            return Measurement.GetMeasureUnit();
+        }
+
+        public abstract ValueType GetQuantity();
+        public abstract ValueType GetQuantity(RoundingMode roundingMode);
+        public abstract ValueType GetQuantity(TypeCode quantityTypeCode);
+        public abstract RateComponentCode GetRateComponentCode();
+        public abstract IBaseMeasure Round(RoundingMode roundingMode);
+        public abstract bool TryExchangeTo(decimal context, [NotNullWhen(true)] out ValueType? exchanged);
+        public abstract bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IBaseMeasure? exchanged);
+        public abstract void ValidateQuantity(ValueType quantity, TypeCode quantityTypeCode = TypeCode.Object);
+        public abstract void ValidateQuantityTypeCode(TypeCode quantityTypeCode);
+    }
 }
