@@ -12,6 +12,8 @@ internal class Measurement : Measurable, IMeasurement
         ExchangeRateCollection = new SortedList<Enum, decimal>();
 
         InitiateConstantExchangeRates(ExchangeRateCollection);
+
+        CustomMeasureUnitNameCollection = new SortedList<Enum, string>();
     }
 
     internal Measurement(IMeasurementFactory measurementFactory, Enum measureUnit, decimal? exchangeRate = null) : base(measurementFactory, measureUnit)
@@ -34,6 +36,7 @@ internal class Measurement : Measurable, IMeasurement
     public decimal ExchangeRate { get; init; }
     private IMeasurementFactory MeasurementFactory => (IMeasurementFactory)MeasurableFactory;
     private static IDictionary<Enum, decimal> ExchangeRateCollection { get; }
+    private static IDictionary<Enum, string> CustomMeasureUnitNameCollection { get; }
 
     public int CompareTo(IMeasurement? other)
     {
@@ -62,6 +65,18 @@ internal class Measurement : Measurable, IMeasurement
         InitiateConstantExchangeRates(constantExchangeRateCollection);
 
         return constantExchangeRateCollection;
+    }
+
+    public IDictionary<Enum, string> GetCustomMeasureUnitNameCollection(MeasureUnitTypeCode? measureUnitTypeCode = null)
+    {
+        if (measureUnitTypeCode == null) return new SortedList<Enum, string>(CustomMeasureUnitNameCollection);
+
+        ValidateCustomMeasureUnitTypeCode((MeasureUnitTypeCode)measureUnitTypeCode);
+
+        return CustomMeasureUnitNameCollection
+            .Where(x => x.Key.GetType() == GetMeasureUnitType(measureUnitTypeCode))
+            .OrderBy(x => x.Key)
+            .ToDictionary(x => x.Key, x => x.Value);
     }
 
     public IDictionary<Enum, decimal> GetExchangeRateCollection(MeasureUnitTypeCode? measureUnitTypeCode = null)
@@ -180,11 +195,16 @@ internal class Measurement : Measurable, IMeasurement
         InitiateConstantExchangeRates(ExchangeRateCollection);
     }
 
-    public bool TryAddCustomMeasureUnit(Enum measureUnit, decimal exchangeRate)
+    public bool TryAddCustomMeasureUnit(Enum measureUnit, decimal exchangeRate, string? customMeasureUnitName = null)
     {
         ValidateExchangeRate(exchangeRate);
 
         return ExchangeRateCollection.TryAdd(measureUnit, exchangeRate);
+    }
+
+    public bool TryAddCustomMeasureUnitName(Enum measureUnit, string customMeasureUnitName)
+    {
+        return IsValidMeasureUnit(measureUnit) && CustomMeasureUnitNameCollection.TryAdd(measureUnit, customMeasureUnitName);
     }
 
     public bool TryGetCustomMeasurement(Enum measureUnit, decimal exchangeRate, [NotNullWhen(true)] out ICustomMeasurement? customMeasurement)
