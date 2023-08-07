@@ -32,11 +32,6 @@ internal abstract class MeasureUnit : IMeasureUnit
         return (Enum)Enum.ToObject(enumType, 0);
     }
 
-    public Enum? GetDefinedMeasureUnit(Enum measureUnit)
-    {
-        return IsDefinedMeasureUnit(measureUnit) ? measureUnit : null;
-    }
-
     public IEnumerable<string> GetMeasureUnitNames(MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
         Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode ?? MeasureUnitTypeCode);

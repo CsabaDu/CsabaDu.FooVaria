@@ -6,7 +6,7 @@ public interface IMeasureUnit : IMeasureUnitType
 
     Enum GetMeasureUnit();
     Enum GetDefaultMeasureUnit(MeasureUnitTypeCode? measureUnitTypeCode = null);
-    Enum? GetDefinedMeasureUnit(Enum measureUnit);
+    //Enum? GetDefinedMeasureUnit(Enum measureUnit);
     IEnumerable<string> GetMeasureUnitNames(MeasureUnitTypeCode? measureUnitTypeCode = null);
     bool IsDefinedMeasureUnit(Enum measureUnit);
 
