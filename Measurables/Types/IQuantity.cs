@@ -2,8 +2,8 @@
 {
     public interface IQuantity<out T> : IRound<T>, IExchange<ValueType, decimal> where T : class, IMeasurable
     {
-        TypeCode QuantityTypeCode { get; init; }
-        decimal DecimalQuantity { get; init; }
+        TypeCode QuantityTypeCode { get; }
+        decimal DecimalQuantity { get; }
 
         ValueType GetQuantity();
         ValueType GetQuantity(RoundingMode roundingMode);

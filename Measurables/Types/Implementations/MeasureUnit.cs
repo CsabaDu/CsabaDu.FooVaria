@@ -32,7 +32,7 @@ internal abstract class MeasureUnit : IMeasureUnit
         return (Enum)Enum.ToObject(enumType, 0);
     }
 
-    public IEnumerable<string> GetMeasureUnitNames(MeasureUnitTypeCode? measureUnitTypeCode = null)
+    public string[] GetMeasureUnitNames(MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
         Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode ?? MeasureUnitTypeCode);
 
@@ -43,10 +43,12 @@ internal abstract class MeasureUnit : IMeasureUnit
     {
         Type measureUnitType = GetMeasureUnit().GetType();
 
-        if (measureUnitTypeCode == null) return measureUnitType;
+        if (measureUnitTypeCode is not MeasureUnitTypeCode notNullMeasureUnitTypeCode) return measureUnitType;
+
+        ValidateMeasureUnitTypeCode(notNullMeasureUnitTypeCode);
 
         string nameSpace = measureUnitType.Namespace! + ".";
-        string name = Enum.GetName(typeof(MeasureUnitTypeCode), measureUnitTypeCode)!;
+        string name = Enum.GetName(typeof(MeasureUnitTypeCode), notNullMeasureUnitTypeCode)!;
 
         return Type.GetType(nameSpace + name)!;
     }
