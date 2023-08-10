@@ -1,18 +1,26 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations
 {
-    internal abstract class Measurable : MeasureUnit, IMeasurable
+    internal abstract class Measurable : BaseMeasurable, IMeasurable
     {
+        #region Constructors
         private protected Measurable(IMeasurableFactory measurableFactory, MeasureUnitTypeCode measureUnitTypeCode) : base(measureUnitTypeCode)
         {
-            _ = NullChecked(measurableFactory, nameof(measurableFactory));
-
-            MeasurableFactory = measurableFactory;
+            MeasurableFactory = (IMeasurableFactory)NullChecked(measurableFactory, nameof(measurableFactory));
         }
+
         private protected Measurable(IMeasurableFactory measurableFactory, Enum measureUnit) : base(measureUnit)
         {
-            _ = NullChecked(measurableFactory, nameof(measurableFactory));
+            MeasurableFactory = (IMeasurableFactory)NullChecked(measurableFactory, nameof(measurableFactory));
+        }
 
-            MeasurableFactory = measurableFactory;
+        private protected Measurable(IMeasurableFactory measurableFactory, IMeasurable measurable) : base(measurable)
+        {
+            MeasurableFactory = (IMeasurableFactory)NullChecked(measurableFactory, nameof(measurableFactory));
+        }
+
+        private protected Measurable(IMeasurable measurable) : base(measurable)
+        {
+            MeasurableFactory = measurable.MeasurableFactory;
         }
 
         //private protected Measurable(IMeasurableFactory measurableFactory, params IBaseMeasure[] baseMeasures) : this(measurableFactory)
@@ -21,30 +29,23 @@
 
         //    MeasureUnitTypeCode = GetMeasureUnitTypeCode(measurableFactory, baseMeasures);
         //}
+        #endregion
 
-        private protected Measurable(IMeasurableFactory measurableFactory, IMeasurable measurable) : base(measurable)
-        {
-            _ = NullChecked(measurableFactory, nameof(measurableFactory));
-
-            MeasurableFactory = measurableFactory;
-        }
-
-        private protected Measurable(IMeasurable measurable) : base(measurable)
-        {
-            MeasurableFactory = measurable.MeasurableFactory;
-        }
-
+        #region Properties
         public IMeasurableFactory MeasurableFactory { get; init; }
+        #endregion
 
+        #region Public methods
         public IMeasurable GetDefaultMeasurable(IMeasurable? measurable = null)
         {
-            throw new NotImplementedException();
+            return MeasurableFactory.CreateDefault(measurable ?? this);
         }
 
         public IMeasurable GetMeasurable(IMeasurable measurable)
         {
             return MeasurableFactory.Create(measurable);
         }
+
         public virtual IMeasurable GetMeasurable(IMeasurableFactory measurableFactory, IMeasurable measurable)
         {
             _ = NullChecked(measurableFactory, nameof(measurableFactory));
@@ -70,6 +71,7 @@
                _ => throw InvalidMeasureUnitTypeCodeEnumArgumentException((MeasureUnitTypeCode)measureUnitTypeCode),
             };
         }
+        #endregion
     }
 
     internal abstract class BaseMeasure : Measurable, IBaseMeasure
@@ -93,8 +95,11 @@
         public IMeasurement Measurement { get; init; }
         public virtual TypeCode QuantityTypeCode => GetQuantityTypeCode(MeasureUnitTypeCode);
         public decimal DecimalQuantity => (decimal)GetQuantity(TypeCode.Decimal);
+
         public abstract object Quantity { get; init; }
         public abstract RateComponentCode RateComponentCode { get; init; }
+
+        private IBaseMeasureFactory BaseMeasureFactory => (IBaseMeasureFactory)MeasurableFactory;
 
         public abstract ValueType? ExchangeTo(decimal exchangeRate);
         public abstract IBaseMeasure? ExchangeTo(Enum measureUnit);
@@ -118,5 +123,7 @@
         public abstract bool TryExchangeTo(Enum measureUnit, [NotNullWhen(true)] out IBaseMeasure? exchanged);
         public abstract void ValidateQuantity(ValueType quantity, TypeCode quantityTypeCode = TypeCode.Object);
         public abstract void ValidateQuantityTypeCode(TypeCode quantityTypeCode);
+        public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit, decimal? exchangeRate = null, string? customName = null);
+        public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, string? customName = null);
     }
 }

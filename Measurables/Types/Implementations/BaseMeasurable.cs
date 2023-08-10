@@ -1,38 +1,59 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
-internal abstract class MeasureUnit : IMeasureUnit
+internal abstract class BaseMeasurable : IBaseMeasurable
 {
-    private protected MeasureUnit(MeasureUnitTypeCode measureUnitTypeCode)
+    #region Constructors
+    private protected BaseMeasurable(MeasureUnitTypeCode measureUnitTypeCode)
     {
         ValidateMeasureUnitTypeCode(measureUnitTypeCode);
 
         MeasureUnitTypeCode = measureUnitTypeCode;
     }
 
-    private protected MeasureUnit(Enum measureUnit)
+    private protected BaseMeasurable(Enum measureUnit)
     {
        ValidateMeasureUnit(measureUnit);
 
         MeasureUnitTypeCode = GetMeasureUnitTypeCode(measureUnit);
     }
 
-    private protected MeasureUnit(IMeasurable measurable)
+    private protected BaseMeasurable(IBaseMeasurable baseMeasurable)
     {
-        _ = NullChecked(measurable, nameof(measurable));
+        _ = NullChecked(baseMeasurable, nameof(baseMeasurable));
 
-        MeasureUnitTypeCode = measurable.MeasureUnitTypeCode;
+        MeasureUnitTypeCode = baseMeasurable.MeasureUnitTypeCode;
     }
+    #endregion
 
+    #region Properties
     public MeasureUnitTypeCode MeasureUnitTypeCode { get; init; }
+    #endregion
 
+    #region Public methods
     public Enum GetDefaultMeasureUnit(MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
         Type enumType = GetMeasureUnitType(measureUnitTypeCode)!;
 
         return (Enum)Enum.ToObject(enumType, 0);
     }
+    
+    public string GetDefaultName(Enum? measureUnit = null)
+    {
+        if (measureUnit == null)
+        {
+            measureUnit = GetMeasureUnit();
+        }
+        else
+        {
+            ValidateMeasureUnit(measureUnit);
+        }
 
-    public string[] GetMeasureUnitNames(MeasureUnitTypeCode? measureUnitTypeCode = null)
+        Type measureUnitType = measureUnit.GetType();
+
+        return Enum.GetName(measureUnitType, measureUnit)!;
+    }
+
+    public string[] GetDefaultNames(MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
         Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode ?? MeasureUnitTypeCode);
 
@@ -64,6 +85,11 @@ internal abstract class MeasureUnit : IMeasureUnit
         return (MeasureUnitTypeCode)Enum.Parse(typeof(MeasureUnitTypeCode), name);
     }
 
+    public MeasureUnitTypeCode[] GetMeasureUnitTypeCodes()
+    {
+        return Enum.GetValues<MeasureUnitTypeCode>();
+    }
+
     public bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, Enum? measureUnit = null)
     {
         ValidateMeasureUnitTypeCode(measureUnitTypeCode);
@@ -77,7 +103,16 @@ internal abstract class MeasureUnit : IMeasureUnit
     {
         _ = NullChecked(measureUnit, nameof(measureUnit));
 
-        return Enum.IsDefined(measureUnit.GetType(), measureUnit);
+        MeasureUnitTypeCode[] measureUnitTypeCodes = GetMeasureUnitTypeCodes();
+
+        foreach (MeasureUnitTypeCode item in measureUnitTypeCodes)
+        {
+            Type measureUnitType = GetMeasureUnitType(item);
+
+            if (Enum.IsDefined(measureUnitType, measureUnit)) return true;
+        }
+
+        return false;
     }
 
     public virtual void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode? measureUnitTypeCode = null)
@@ -101,5 +136,8 @@ internal abstract class MeasureUnit : IMeasureUnit
         throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode); 
     }
 
+    #region Abstract methods
     public abstract Enum GetMeasureUnit();
+    #endregion
+    #endregion
 }

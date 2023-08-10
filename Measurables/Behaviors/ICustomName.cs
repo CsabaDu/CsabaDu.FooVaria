@@ -1,13 +1,11 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types;
+﻿namespace CsabaDu.FooVaria.Measurables.Behaviors;
 
 public interface ICustomName
 {
-    string? CustomName { get; }
-
-    Enum? GetMeasureUnit(string customName);
+    string? GetCustomName(Enum? measureUnit = null);
     bool TryAddCustomName(Enum measureUnit, string? customName);
-    bool TryGetMeasureUnit(string customName, [NotNullWhen(true)] out Enum? measureUnit);
     IDictionary<Enum, string> GetCustomNameCollection(MeasureUnitTypeCode? measureUnitTypeCode = null);
 
+    void AddOrReplaceCustomName(string customName);
     void ValidateCustomName(string? customName);
 }

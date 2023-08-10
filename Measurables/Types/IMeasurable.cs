@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Types;
 
-public interface IMeasurable : IMeasureUnit, IQuantityType
+public interface IMeasurable : IBaseMeasurable, IQuantityType
 {
     IMeasurableFactory MeasurableFactory { get; init; }
 
