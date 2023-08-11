@@ -68,10 +68,10 @@ internal abstract class BaseMeasurable : IBaseMeasurable
 
         ValidateMeasureUnitTypeCode(notNullMeasureUnitTypeCode);
 
-        string nameSpace = measureUnitType.Namespace! + ".";
+        string nameSpace = measureUnitType.Namespace!;
         string name = Enum.GetName(typeof(MeasureUnitTypeCode), notNullMeasureUnitTypeCode)!;
 
-        return Type.GetType(nameSpace + name)!;
+        return Type.GetType(nameSpace + "." + name)!;
     }
 
     public MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum? measureUnit = null)
