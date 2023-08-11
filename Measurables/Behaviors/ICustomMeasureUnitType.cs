@@ -1,5 +1,5 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Behaviors;
-public interface ICustomMeasureUnitTypeCode
+public interface ICustomMeasureUnitType
 {
     bool IsCustomMeasureUnitTypeCode(MeasureUnitTypeCode? measureUnitTypeCode = null);
     IEnumerable<MeasureUnitTypeCode> GetCustomMeasureUnitTypeCodes();
