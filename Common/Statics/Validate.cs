@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Common.Statics
+﻿using System.Security.AccessControl;
+
+namespace CsabaDu.FooVaria.Common.Statics
 {
     public static class Validate
     {
@@ -21,5 +23,10 @@
         {
             return new ArgumentOutOfRangeException(nameof(exchangeRate), exchangeRate, null);
         }
+        public static ArgumentOutOfRangeException CustomNameArgumentOutOfRangeException(string? customName)
+        {
+            throw new ArgumentOutOfRangeException(nameof(customName), customName, null);
+        }
+
     }
 }

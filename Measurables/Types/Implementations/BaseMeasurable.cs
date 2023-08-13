@@ -53,23 +53,39 @@ internal abstract class BaseMeasurable : IBaseMeasurable
         return Enum.GetName(measureUnitType, measureUnit)!;
     }
 
-    public string[] GetDefaultNames(MeasureUnitTypeCode? measureUnitTypeCode = null)
+    public IEnumerable<string> GetDefaultNames(MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
-        Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode ?? MeasureUnitTypeCode);
+        if (measureUnitTypeCode == null)
+        {
+            IEnumerable<string> defaultNames = new List<string>();
 
-        return Enum.GetNames(measureUnitType);
+            foreach (MeasureUnitTypeCode item in GetMeasureUnitTypeCodes())
+            {
+                Type measureUnitType = GetMeasureUnitType(item);
+                IEnumerable<string> next = Enum.GetNames(measureUnitType);
+                defaultNames = defaultNames.Union(next);
+            }
+
+            return defaultNames;
+        }
+        else
+        {
+            Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode);
+
+            return Enum.GetNames(measureUnitType);
+        }
     }
 
     public Type GetMeasureUnitType(MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
         Type measureUnitType = GetMeasureUnit().GetType();
 
-        if (measureUnitTypeCode is not MeasureUnitTypeCode notNullMeasureUnitTypeCode) return measureUnitType;
+        if (measureUnitTypeCode == null) return measureUnitType;
 
-        ValidateMeasureUnitTypeCode(notNullMeasureUnitTypeCode);
+        ValidateMeasureUnitTypeCode(measureUnitTypeCode.Value);
 
         string nameSpace = measureUnitType.Namespace!;
-        string name = Enum.GetName(typeof(MeasureUnitTypeCode), notNullMeasureUnitTypeCode)!;
+        string name = Enum.GetName(typeof(MeasureUnitTypeCode), measureUnitTypeCode.Value)!;
 
         return Type.GetType(nameSpace + "." + name)!;
     }
@@ -85,27 +101,21 @@ internal abstract class BaseMeasurable : IBaseMeasurable
         return (MeasureUnitTypeCode)Enum.Parse(typeof(MeasureUnitTypeCode), name);
     }
 
-    public MeasureUnitTypeCode[] GetMeasureUnitTypeCodes()
+    public IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
     {
         return Enum.GetValues<MeasureUnitTypeCode>();
     }
 
     public bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, Enum? measureUnit = null)
     {
-        ValidateMeasureUnitTypeCode(measureUnitTypeCode);
-
-        MeasureUnitTypeCode otherMeasureUnitTypeCode = GetMeasureUnitTypeCode(measureUnit);
-
-        return otherMeasureUnitTypeCode == measureUnitTypeCode;
+        return measureUnitTypeCode == GetMeasureUnitTypeCode(measureUnit);
     }
 
     public bool IsDefinedMeasureUnit(Enum measureUnit)
     {
         _ = NullChecked(measureUnit, nameof(measureUnit));
 
-        MeasureUnitTypeCode[] measureUnitTypeCodes = GetMeasureUnitTypeCodes();
-
-        foreach (MeasureUnitTypeCode item in measureUnitTypeCodes)
+        foreach (MeasureUnitTypeCode item in GetMeasureUnitTypeCodes())
         {
             Type measureUnitType = GetMeasureUnitType(item);
 

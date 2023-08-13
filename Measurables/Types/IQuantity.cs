@@ -3,13 +3,13 @@
     public interface IQuantity<out T> : IRound<T>, IExchange<ValueType, decimal> where T : class, IMeasurable
     {
         TypeCode QuantityTypeCode { get; }
-        decimal DecimalQuantity { get; }
+        object Quantity { get; init; }
 
         ValueType GetQuantity();
         ValueType GetQuantity(RoundingMode roundingMode);
         ValueType GetQuantity(TypeCode quantityTypeCode);
 
-        void ValidateQuantity(ValueType quantity, TypeCode quantityTypeCode = TypeCode.Object);
+        void ValidateQuantity(ValueType quantity, TypeCode? quantityTypeCode = null);
         void ValidateQuantityTypeCode(TypeCode quantityTypeCode);
     }
 
