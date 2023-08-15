@@ -6,11 +6,12 @@ public interface IBaseMeasure : IMeasurable, IQuantifiable, IRateComponent, IQua
     RateComponentCode RateComponentCode { get; init; }
     decimal DefaultQuantity { get; }
 
-    IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit, decimal? exchangeRate = null, string? customName = null);
+    IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit);
+    IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string? customName = null);
     IBaseMeasure GetBaseMeasure(ValueType quantity, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, string? customName = null);
     IBaseMeasure GetBaseMeasure(ValueType quantity, string name);
     IBaseMeasure GetBaseMeasure(ValueType quantity, IMeasurement? measurement = null);
-    IBaseMeasure GetBaseMeasure(IBaseMeasure? other = null);
+    IBaseMeasure GetBaseMeasure(IBaseMeasure? baseMeasure = null);
     decimal GetDecimalQuantity(IBaseMeasure? baseMeasure = null);
     LimitMode? GetLimitMode();
 }

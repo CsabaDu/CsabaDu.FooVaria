@@ -2,8 +2,6 @@
 
 public enum MeasureUnitTypeCode
 {
-    //Default,
-
     AreaUnit,
     Currency,
     DistanceUnit,

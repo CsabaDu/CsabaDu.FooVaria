@@ -4,9 +4,14 @@ namespace CsabaDu.FooVaria.Common.Statics
 {
     public static class Validate
     {
-        public static object NullChecked(object? obj, string name)
+        //public static object NullChecked(object? param, string name)
+        //{
+        //    return param ?? throw new ArgumentNullException(name);
+        //}
+
+        public static T NullChecked<T>(T? param, string name)
         {
-            return obj ?? throw new ArgumentNullException(name);
+            return param ?? throw new ArgumentNullException(name);
         }
 
         public static InvalidEnumArgumentException InvalidMeasureUnitEnumArgumentException(Enum measureUnit)
@@ -26,6 +31,11 @@ namespace CsabaDu.FooVaria.Common.Statics
         public static ArgumentOutOfRangeException CustomNameArgumentOutOfRangeException(string? customName)
         {
             throw new ArgumentOutOfRangeException(nameof(customName), customName, null);
+        }
+
+        public static ArgumentOutOfRangeException QuantityArgumentOutOfRangeException(ValueType? quantity)
+        {
+            throw new ArgumentOutOfRangeException(nameof(quantity), Type.GetTypeCode(quantity?.GetType()), null);
         }
 
     }

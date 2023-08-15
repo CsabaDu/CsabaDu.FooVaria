@@ -8,8 +8,9 @@
         ValueType GetQuantity();
         ValueType GetQuantity(RoundingMode roundingMode);
         ValueType GetQuantity(TypeCode quantityTypeCode);
+        TypeCode? GetQuantityTypeCode(ValueType? quantity);
 
-        void ValidateQuantity(ValueType quantity, TypeCode? quantityTypeCode = null);
+        void ValidateQuantity(ValueType? quantity, TypeCode? quantityTypeCode = null);
         void ValidateQuantityTypeCode(TypeCode quantityTypeCode);
     }
 

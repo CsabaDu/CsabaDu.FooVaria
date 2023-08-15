@@ -3,9 +3,10 @@
 public interface ICustomName
 {
     string? GetCustomName(Enum? measureUnit = null);
-    bool TryAddCustomName(Enum measureUnit, string? customName);
+    bool TrySetCustomName(Enum measureUnit, string? customName);
     IDictionary<Enum, string> GetCustomNameCollection(MeasureUnitTypeCode? measureUnitTypeCode = null);
 
-    void AddOrReplaceCustomName(string customName);
+    void SetCustomName(Enum measureUnit, string? customName);
+    void SetOrReplaceCustomName(string customName);
     void ValidateCustomName(string? customName);
 }

@@ -1,5 +1,6 @@
 ﻿global using CsabaDu.FooVaria.Common.Behaviors;
 global using CsabaDu.FooVaria.Common.Enums;
+global using CsabaDu.FooVaria.Common.Statics;
 global using CsabaDu.FooVaria.Measurables.Behaviors;
 global using CsabaDu.FooVaria.Measurables.Enums;
 global using CsabaDu.FooVaria.Measurables.Factories;
@@ -7,4 +8,5 @@ global using CsabaDu.FooVaria.Measurables.Markers;
 global using CsabaDu.FooVaria.Measurables.MeasureUnits;
 global using CsabaDu.FooVaria.Measurables.Types;
 global using System.Diagnostics.CodeAnalysis;
+global using static CsabaDu.FooVaria.Common.Statics.Extensions;
 global using static CsabaDu.FooVaria.Common.Statics.Validate;

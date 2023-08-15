@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿using CsabaDu.FooVaria.Common.Statics;
+
+namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal abstract class BaseMeasure : Measurable, IBaseMeasure
 {
@@ -7,31 +9,36 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         Measurement = baseMeasure.Measurement;
     }
 
-    private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, string? customName, ValueType quantity) : base(baseMeasureFactory, measureUnitTypeCode)
+    private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, MeasureUnitTypeCode customMeasureUnitTypeCode, decimal exchangeRate, string? customName) : base(baseMeasureFactory, customMeasureUnitTypeCode)
     {
+        ValidateQuantity(quantity);
+
+        Measurement = baseMeasureFactory.MeasurementFactory.Create(customMeasureUnitTypeCode, exchangeRate, customName);
     }
 
-    private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, Enum measureUnit, decimal? exchangeRate, string? customName, ValueType quantity) : base(baseMeasureFactory, measureUnit)
+    private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, Enum measureUnit) : base(baseMeasureFactory, measureUnit)
     {
-        _ = NullChecked(quantity, nameof(quantity));
+        ValidateQuantity(quantity);
 
-        IMeasurementFactory measurementFactory = baseMeasureFactory.MeasurementFactory;
-
-        Measurement = exchangeRate == null ?
-            measurementFactory.Create(measureUnit)
-            : measurementFactory.Create(measureUnit, exchangeRate.Value);
+        Measurement = baseMeasureFactory.MeasurementFactory.Create(measureUnit);
     }
 
-    private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, IMeasurement measurement, ValueType quantity) : base(baseMeasureFactory, measurement)
+    private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, Enum measureUnit, decimal exchangeRate, string? customName) : base(baseMeasureFactory, measureUnit)
     {
-        _ = NullChecked(measurement, nameof(measurement));
-        _ = NullChecked(quantity, nameof(quantity));
+        ValidateQuantity(quantity);
+
+        Measurement = baseMeasureFactory.MeasurementFactory.Create(measureUnit, exchangeRate, customName);
+    }
+
+    private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, IMeasurement measurement) : base(baseMeasureFactory, measurement)
+    {
+        ValidateQuantity(quantity);
 
         Measurement = measurement;
     }
 
     public IMeasurement Measurement { get; init; }
-    public virtual TypeCode QuantityTypeCode => GetQuantityTypeCode(MeasureUnitTypeCode);
+    public abstract TypeCode QuantityTypeCode { get; }
     public decimal DefaultQuantity => GetDecimalQuantity() * GetExchangeRate();
 
     public abstract object Quantity { get; init; }
@@ -58,18 +65,38 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     {
         return obj is IBaseMeasure other && Equals(other);
     }
-    public abstract ValueType? ExchangeTo(decimal exchangeRate);
-    public abstract IBaseMeasure? ExchangeTo(Enum measureUnit);
+    public ValueType? ExchangeTo(decimal exchangeRate)
+    {
+        if (exchangeRate <= 0) return null;
+
+        ValueType exchanged = DefaultQuantity / exchangeRate;
+
+        return exchanged.ToQuantity(QuantityTypeCode);
+    }
+    public IBaseMeasure? ExchangeTo(Enum measureUnit)
+    {
+        if (!IsExchangeableTo(measureUnit)) return null;
+
+        decimal exchangeRate = Measurement.GetExchangeRate(measureUnit);
+
+        ValueType? quantity = ExchangeTo(exchangeRate);
+
+        if (quantity == null) return null;
+
+        return GetBaseMeasure(quantity, measureUnit);
+    }
+
+    public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit);
     public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, IMeasurement? measurement = null);
     public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, string name);
-    public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit, decimal? exchangeRate = null, string? customName = null);
+    public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string? customName = null);
     public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, string? customName = null);
     public abstract IBaseMeasure GetBaseMeasure(IBaseMeasure? other = null);
     public decimal GetDecimalQuantity(IBaseMeasure? baseMeasure = null)
     {
-        baseMeasure ??= this;
+        ValueType quantity = (baseMeasure ?? this).GetQuantity();
 
-        return baseMeasure.DefaultQuantity / baseMeasure.GetExchangeRate();
+        return (decimal)quantity.ToQuantity(TypeCode.Decimal)!;
     }
     public decimal GetExchangeRate()
     {
@@ -96,6 +123,16 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     }
     public abstract ValueType GetQuantity(RoundingMode roundingMode);
     public abstract ValueType GetQuantity(TypeCode quantityTypeCode);
+
+    public TypeCode? GetQuantityTypeCode(ValueType? quantity)
+    {
+        TypeCode quantityTypeCode = Type.GetTypeCode(quantity?.GetType());
+
+        return GetQuantityTypeCodes().Contains(quantityTypeCode) ?
+            quantityTypeCode
+            : null;
+    }
+
     public abstract IRateComponent? GetRateComponent(IRate rate, RateComponentCode rateComponentCode);
     public bool IsExchangeableTo(Enum context)
     {
@@ -103,9 +140,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     }
     public decimal ProportionalTo(IBaseMeasure baseMeasure)
     {
-       _ = NullChecked(baseMeasure, nameof(baseMeasure));
-
-        MeasureUnitTypeCode measureUnitTypeCode = baseMeasure.MeasureUnitTypeCode;
+        MeasureUnitTypeCode measureUnitTypeCode = NullChecked(baseMeasure, nameof(baseMeasure)).MeasureUnitTypeCode;
 
         if (IsExchangeableTo(measureUnitTypeCode)) return DefaultQuantity / baseMeasure.DefaultQuantity;
 
@@ -125,11 +160,25 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return exchanged != null;
     }
 
+    public override sealed void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode? measureUnitTypeCode = null)
+    {
+        Measurement.ValidateMeasureUnit(measureUnit, measureUnitTypeCode);
+    }
+
     public override sealed void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
     {
         Measurement.ValidateMeasureUnitTypeCode(measureUnitTypeCode);
     }
 
-    public abstract void ValidateQuantity(ValueType quantity, TypeCode? quantityTypeCode = null);
+    public virtual void ValidateQuantity(ValueType? quantity, TypeCode? quantityTypeCode = null)
+    {
+        TypeCode typeCode = GetQuantityTypeCode(quantity) ?? throw QuantityArgumentOutOfRangeException(quantity);
+
+        if (quantityTypeCode == null) return;
+
+        if (typeCode == quantityTypeCode) return;
+
+        throw QuantityArgumentOutOfRangeException(quantity);
+    }
     public abstract void ValidateQuantityTypeCode(TypeCode quantityTypeCode);
 }
