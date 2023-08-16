@@ -40,8 +40,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     public abstract object Quantity { get; init; }
     public abstract TypeCode QuantityTypeCode { get; }
-    public abstract RateComponentCode RateComponentCode { get; }
-
     public int CompareTo(IBaseMeasure? other)
     {
         if (other == null) return 1;
@@ -179,6 +177,11 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     public IRateComponent? GetRateComponent(IRate rate, RateComponentCode rateComponentCode)
     {
         return GetBaseMeasureFactory().Create(rate, rateComponentCode);
+    }
+
+    public RateComponentCode GetRateComponentCode(IBaseMeasure? baseMeasure = null)
+    {
+        return (baseMeasure ?? this).GetBaseMeasureFactory().RateComponentCode;
     }
 
     public bool IsExchangeableTo(Enum context)
