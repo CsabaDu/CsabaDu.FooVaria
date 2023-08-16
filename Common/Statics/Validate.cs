@@ -41,4 +41,9 @@ public static class Validate
         return new InvalidEnumArgumentException(nameof(roundingMode), (int)roundingMode, roundingMode.GetType());
     }
 
+    public static InvalidEnumArgumentException InvalidLimitModeEnumArgumentException(LimitMode limitMode)
+    {
+        return new InvalidEnumArgumentException(nameof(limitMode), (int)limitMode, limitMode.GetType());
+    }
+
 }

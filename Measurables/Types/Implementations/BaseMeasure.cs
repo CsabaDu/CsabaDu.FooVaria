@@ -258,7 +258,15 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     #endregion
 
     #region Protected methods
-
+    protected static bool Equals<T>(T rateComponent, IBaseMeasure? other) where T : class, IBaseMeasure
+    {
+        return rateComponent.Equals(other)
+            && rateComponent.GetRateComponentCode() == other.GetRateComponentCode();
+    }
+    protected static int GetHashCode<T>(T rateComponent) where T : class, IBaseMeasure
+    {
+        return HashCode.Combine(rateComponent.GetHashCode(), rateComponent.GetRateComponentCode());
+    }
     #endregion
 
     #region Private methods

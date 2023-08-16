@@ -1,6 +1,4 @@
-﻿using System.Collections.Immutable;
-
-namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal sealed class Measurement : Measurable, IMeasurement
 {
@@ -522,8 +520,6 @@ internal sealed class Measurement : Measurable, IMeasurement
 
     private bool IsValidCustomNameOrNull(string? customName)
     {
-        customName = customName?.ToLower();
-
         return customName == null
             || !string.IsNullOrWhiteSpace(customName)
             && customName != string.Empty
@@ -533,15 +529,7 @@ internal sealed class Measurement : Measurable, IMeasurement
         #region Local methods
         bool doesNotContainCustomName(IEnumerable<string> names)
         {
-            return !getNamesToLower(names).Contains(customName);
-        }
-
-        static IEnumerable<string> getNamesToLower(IEnumerable<string> names)
-        {
-            foreach (string item in names)
-            {
-                yield return item.ToLower();
-            }
+            return !names.Any(x => x.ToLower() == customName.ToLower());
         }
         #endregion
     }

@@ -39,6 +39,16 @@ internal sealed class Denominator : BaseMeasure, IDenominator
     #endregion
 
     #region Public methods
+    public override bool Equals(IBaseMeasure? other)
+    {
+        return Equals(this, other);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is IDenominator denominator && Equals(denominator);
+    }
+
     public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit)
     {
         return GetDenominator(measureUnit, quantity);
@@ -97,6 +107,11 @@ internal sealed class Denominator : BaseMeasure, IDenominator
     public IDenominatorFactory GetDenominatorFactory()
     {
         return MeasurableFactory as IDenominatorFactory ?? throw new InvalidOperationException(null);
+    }
+
+    public override int GetHashCode()
+    {
+        return GetHashCode(this);
     }
 
     public override ValueType GetQuantity(ValueType? quantity = null)
