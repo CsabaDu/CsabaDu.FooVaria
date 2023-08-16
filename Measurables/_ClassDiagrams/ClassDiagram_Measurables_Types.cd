@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Interface Name="CsabaDu.FooVaria.Measurables.Types.IBaseMeasurable" Collapsed="true">
-    <Position X="7.75" Y="8.5" Width="1.5" />
+    <Position X="7.5" Y="10" Width="1.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Behaviors.IMeasureUnitType" FixedFromPoint="true">
       <Path>
-        <Point X="11.75" Y="5.062" />
-        <Point X="11.75" Y="5.437" />
-        <Point X="8.5" Y="5.437" />
-        <Point X="8.5" Y="8.5" />
+        <Point X="11.75" Y="7.812" />
+        <Point X="11.75" Y="8.187" />
+        <Point X="8.25" Y="8.187" />
+        <Point X="8.25" Y="10" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -16,13 +16,13 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Types.IMeasurable" Collapsed="true">
-    <Position X="6" Y="10" Width="1.25" />
+    <Position X="6" Y="11.5" Width="1.25" />
     <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Types.IBaseMeasurable" FixedFromPoint="true">
       <Path>
-        <Point X="8.25" Y="9.32" />
-        <Point X="8.25" Y="9.625" />
-        <Point X="6.625" Y="9.625" />
-        <Point X="6.625" Y="10" />
+        <Point X="8" Y="10.82" />
+        <Point X="8" Y="11.125" />
+        <Point X="6.625" Y="11.125" />
+        <Point X="6.625" Y="11.5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -31,20 +31,20 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Behaviors.IQuantityType" Collapsed="true">
-    <Position X="6" Y="8.75" Width="1.25" />
+    <Position X="6" Y="10.25" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Behaviors\IQuantityType.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Types.ICustomMeasurement" Collapsed="true">
-    <Position X="9.25" Y="10" Width="1.75" />
+    <Position X="9.25" Y="11.5" Width="1.75" />
     <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Types.IBaseMeasurable" FixedFromPoint="true">
       <Path>
-        <Point X="8.75" Y="9.32" />
-        <Point X="8.75" Y="9.625" />
-        <Point X="10.125" Y="9.625" />
-        <Point X="10.125" Y="10" />
+        <Point X="8.5" Y="10.82" />
+        <Point X="8.5" Y="11.125" />
+        <Point X="10.125" Y="11.125" />
+        <Point X="10.125" Y="11.5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -54,43 +54,43 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Types.IMeasurement" Collapsed="true">
-    <Position X="12" Y="11.5" Width="2.25" />
+    <Position X="12" Y="13" Width="2.25" />
     <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Types.IMeasurable" FixedFromPoint="true">
       <Path>
-        <Point X="6.875" Y="10.82" />
-        <Point X="6.875" Y="11.125" />
-        <Point X="13.125" Y="11.125" />
-        <Point X="13.125" Y="11.5" />
+        <Point X="6.875" Y="12.32" />
+        <Point X="6.875" Y="12.625" />
+        <Point X="13.125" Y="12.625" />
+        <Point X="13.125" Y="13" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Markers.IRateComponent" FixedFromPoint="true">
       <Path>
-        <Point X="10.5" Y="6.312" />
-        <Point X="10.5" Y="6.687" />
-        <Point X="13.125" Y="6.687" />
-        <Point X="13.125" Y="11.5" />
+        <Point X="10.5" Y="5.312" />
+        <Point X="10.5" Y="5.687" />
+        <Point X="13.125" Y="5.687" />
+        <Point X="13.125" Y="13" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.Common.Behaviors.IProportional&lt;T, U&gt;" FixedFromPoint="true">
       <Path>
         <Point X="13.125" Y="3.941" />
-        <Point X="13.125" Y="11.5" />
+        <Point X="13.125" Y="13" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>IAAACAAAAAAAAAIQAAAAAAAAAAAAAEAAAAAACAAABAA=</HashCode>
+      <HashCode>IAACCAAAAAAAAAIQAAAAAAAAAAAAAEAAAAAACAAABAA=</HashCode>
       <FileName>Types\IMeasurement.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Behaviors.IExchangeRateCollection" Collapsed="true">
-    <Position X="10.75" Y="9" Width="2" />
+    <Position X="10.75" Y="10.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAACAAAAAQAIAAAAAAA=</HashCode>
       <FileName>Behaviors\IExchangeRateCollection.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Markers.IRateComponent" Collapsed="true">
-    <Position X="9.5" Y="5.75" Width="1.5" />
+    <Position X="9.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Markers\IRateComponent.cs</FileName>
@@ -98,9 +98,9 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Behaviors.ICustomName" Collapsed="true">
-    <Position X="7.5" Y="10.25" Width="1.5" />
+    <Position X="7.5" Y="11.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAEAAAAAAAAAAAAAAAAAAAAABIAAAAABAAAAAAAAA=</HashCode>
+      <HashCode>IAAAEAgAAAAAAAAAAAAAAAAIAAAIAAAAAAAAAAAAAgA=</HashCode>
       <FileName>Behaviors\ICustomName.cs</FileName>
       <NewMemberFileName>Types\ICustomName.cs</NewMemberFileName>
     </TypeIdentifier>
@@ -114,79 +114,73 @@
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Behaviors.IMeasureUnitType" Collapsed="true">
-    <Position X="11.25" Y="4.5" Width="1.5" />
+    <Position X="11.25" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAACAAAAAAAAAAAAASAAAAAAAAAAAAAA=</HashCode>
       <FileName>Behaviors\IMeasureUnitType.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Types.IBaseMeasure" Collapsed="true">
-    <Position X="4.5" Y="11.5" Width="2.25" />
+    <Position X="2" Y="13" Width="2.25" />
     <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Types.IMeasurable" FixedFromPoint="true">
       <Path>
-        <Point X="6.375" Y="10.82" />
-        <Point X="6.375" Y="11.125" />
-        <Point X="5.625" Y="11.125" />
-        <Point X="5.625" Y="11.5" />
+        <Point X="6.375" Y="12.32" />
+        <Point X="6.375" Y="12.625" />
+        <Point X="3.125" Y="12.625" />
+        <Point X="3.125" Y="13" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Markers.IRateComponent" FixedFromPoint="true">
       <Path>
-        <Point X="10" Y="6.312" />
-        <Point X="10" Y="6.687" />
-        <Point X="8.583" Y="6.687" Type="JumpStart" />
-        <Point X="8.417" Y="6.687" Type="JumpEnd" />
-        <Point X="5.75" Y="6.687" />
-        <Point X="5.75" Y="11.125" />
-        <Point X="5.625" Y="11.125" />
-        <Point X="5.625" Y="11.5" />
+        <Point X="10" Y="5.312" />
+        <Point X="10" Y="5.687" />
+        <Point X="2" Y="5.687" />
+        <Point X="2" Y="12.625" />
+        <Point X="3.125" Y="12.625" />
+        <Point X="3.125" Y="13" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.Common.Behaviors.IProportional&lt;T, U&gt;" FixedFromPoint="true">
       <Path>
         <Point X="12.875" Y="3.941" />
-        <Point X="12.875" Y="4.241" />
-        <Point X="5.833" Y="4.241" Type="JumpStart" />
-        <Point X="5.667" Y="4.241" Type="JumpEnd" />
-        <Point X="4.55" Y="4.241" />
-        <Point X="4.55" Y="10.05" />
-        <Point X="5.75" Y="10.05" />
-        <Point X="5.75" Y="11.125" />
-        <Point X="5.625" Y="11.125" />
-        <Point X="5.625" Y="11.5" />
+        <Point X="12.875" Y="4.316" />
+        <Point X="2" Y="4.316" />
+        <Point X="2" Y="12.625" />
+        <Point X="3.125" Y="12.625" />
+        <Point X="3.125" Y="13" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAQAAAAhAAAAAAAAAAAAAAAAgAAAAAAAQAABAAAA=</HashCode>
+      <HashCode>AAAAAQAAAAhAAAIAIAAAAAAAAAAAAAAAAAAQAABAAAA=</HashCode>
       <FileName>Types\IBaseMeasure.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Markers.IQuantifiable" Collapsed="true">
-    <Position X="4.25" Y="10.25" Width="1.25" />
+    <Position X="4.25" Y="11.75" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Markers\IQuantifiable.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Types.IQuantity&lt;T&gt;" Collapsed="true">
-    <Position X="4.75" Y="5.5" Width="2" />
+    <Position X="4.75" Y="7" Width="2" />
     <TypeIdentifier>
-      <HashCode>AgAAACAAAAACAAAAAAAAAAAAAAAAAAAAAAIAgAAAAAA=</HashCode>
+      <HashCode>AgAAAiAAAAACAAAAAAAAAAAAAAAAAAAAAAIAgAAAAAA=</HashCode>
       <FileName>Types\IQuantity.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Common.Behaviors.IExchange&lt;T, U&gt;" Collapsed="true">
-    <Position X="5" Y="3" Width="1.5" />
+    <Position X="5" Y="6" Width="1.5" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Behaviors.IExchangeRate&lt;T&gt;" Collapsed="true">
-    <Position X="2.25" Y="10" Width="1.75" />
+    <Position X="2.25" Y="11.5" Width="1.75" />
     <InheritanceLine Type="CsabaDu.FooVaria.Common.Behaviors.IExchange&lt;T, U&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="5.5" Y="3.562" />
-        <Point X="5.5" Y="3.937" />
-        <Point X="3.125" Y="3.937" />
-        <Point X="3.125" Y="10" />
+        <Point X="5.5" Y="6.562" />
+        <Point X="5.5" Y="6.802" />
+        <Point X="3.125" Y="6.802" />
+        <Point X="3.125" Y="11.5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -195,31 +189,89 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Behaviors.IValidMeasureUnit" Collapsed="true">
-    <Position X="11.25" Y="10.25" Width="1.75" />
+    <Position X="11.25" Y="11.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>EAAAAAAACAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAE=</HashCode>
       <FileName>Behaviors\IValidMeasureUnit.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Behaviors.ICustomMeasureUnitType" Collapsed="true">
-    <Position X="9.5" Y="7" Width="2" />
+    <Position X="9.5" Y="8.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAEAAgAAAAA=</HashCode>
       <FileName>Behaviors\ICustomMeasureUnitType.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Behaviors.ICustomMeasureUnit" Collapsed="true">
-    <Position X="9.5" Y="8" Width="2" />
+    <Position X="9.5" Y="9.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAQAAAAAAAAAIAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAEAQAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Behaviors\ICustomMeasureUnit.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Behaviors.IDefaultMeasureUnit" Collapsed="true">
-    <Position X="6.5" Y="7" Width="1.75" />
+    <Position X="6.25" Y="8.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Behaviors\IDefaultMeasureUnit.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Measurables.Types.IDenominator" Collapsed="true">
+    <Position X="2.5" Y="16.25" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Types\IDenominator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Measurables.Types.ILimit" Collapsed="true">
+    <Position X="0.5" Y="16.25" Width="1.75" />
+    <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Types.IBaseMeasure" FixedFromPoint="true">
+      <Path>
+        <Point X="2.875" Y="14.338" />
+        <Point X="2.875" Y="15.875" />
+        <Point X="1.375" Y="15.875" />
+        <Point X="1.375" Y="16.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAADAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\ILimit.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Measurables.Types.IMeasure" Collapsed="true">
+    <Position X="4" Y="16.25" Width="2" />
+    <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Types.IBaseMeasure" FixedFromPoint="true">
+      <Path>
+        <Point X="3.375" Y="14.338" />
+        <Point X="3.375" Y="15.875" />
+        <Point X="5" Y="15.875" />
+        <Point X="5" Y="16.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\IMeasure.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Measurables.Markers.ILimitable" Collapsed="true">
+    <Position X="5.5" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>Markers\ILimitable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Measurables.Markers.ICalculable" Collapsed="true">
+    <Position X="3.75" Y="14.75" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Markers\ICalculable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Measurables.Behaviors.ICalculate&lt;U, T&gt;" Collapsed="true">
+    <Position X="4.5" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Behaviors\ICalculate.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />
