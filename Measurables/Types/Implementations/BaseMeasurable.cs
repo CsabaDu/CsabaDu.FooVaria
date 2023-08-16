@@ -19,9 +19,7 @@ internal abstract class BaseMeasurable : IBaseMeasurable
 
     private protected BaseMeasurable(IBaseMeasurable baseMeasurable)
     {
-        _ = NullChecked(baseMeasurable, nameof(baseMeasurable));
-
-        MeasureUnitTypeCode = baseMeasurable.MeasureUnitTypeCode;
+        MeasureUnitTypeCode = NullChecked(baseMeasurable, nameof(baseMeasurable)).MeasureUnitTypeCode;
     }
     #endregion
 
@@ -84,10 +82,10 @@ internal abstract class BaseMeasurable : IBaseMeasurable
 
         ValidateMeasureUnitTypeCode(measureUnitTypeCode.Value);
 
-        string name = Enum.GetName(typeof(MeasureUnitTypeCode), measureUnitTypeCode.Value)!;
-        name = measureUnitType.FullName!.Replace(measureUnitType.Name, name);
+        string measureUnitTypeName = Enum.GetName(typeof(MeasureUnitTypeCode), measureUnitTypeCode.Value)!;
+        measureUnitTypeName = measureUnitType.FullName!.Replace(measureUnitType.Name, measureUnitTypeName);
 
-        return Type.GetType(name)!;
+        return Type.GetType(measureUnitTypeName)!;
     }
 
     public MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum? measureUnit = null)
@@ -96,9 +94,9 @@ internal abstract class BaseMeasurable : IBaseMeasurable
 
         ValidateMeasureUnit(measureUnit);
 
-        string name = measureUnit.GetType().Name;
+        string measureUnitTypeName = measureUnit.GetType().Name;
 
-        return (MeasureUnitTypeCode)Enum.Parse(typeof(MeasureUnitTypeCode), name);
+        return (MeasureUnitTypeCode)Enum.Parse(typeof(MeasureUnitTypeCode), measureUnitTypeName);
     }
 
     public IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
@@ -113,23 +111,12 @@ internal abstract class BaseMeasurable : IBaseMeasurable
 
     public bool IsDefinedMeasureUnit(Enum measureUnit)
     {
-        _ = NullChecked(measureUnit, nameof(measureUnit));
-
-        foreach (MeasureUnitTypeCode item in GetMeasureUnitTypeCodes())
-        {
-            Type measureUnitType = GetMeasureUnitType(item);
-
-            if (Enum.IsDefined(measureUnitType, measureUnit)) return true;
-        }
-
-        return false;
+        return NullChecked(measureUnit, nameof(measureUnit)).IsDefinedMeasureUnit();
     }
 
     public virtual void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
-        _ = NullChecked(measureUnit, nameof(measureUnit));
-
-        if (IsDefinedMeasureUnit(measureUnit))
+        if (IsDefinedMeasureUnit(NullChecked(measureUnit, nameof(measureUnit))))
         {
             if (measureUnitTypeCode == null) return;
 

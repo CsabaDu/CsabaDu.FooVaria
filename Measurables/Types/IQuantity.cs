@@ -5,7 +5,7 @@
         TypeCode QuantityTypeCode { get; }
         object Quantity { get; init; }
 
-        ValueType GetQuantity();
+        ValueType GetQuantity(ValueType? quantity = null);
         ValueType GetQuantity(RoundingMode roundingMode);
         ValueType GetQuantity(TypeCode quantityTypeCode);
         TypeCode? GetQuantityTypeCode(ValueType? quantity);

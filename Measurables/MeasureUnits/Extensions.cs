@@ -8,23 +8,27 @@
         #region System.Enum
         public static bool IsDefinedMeasureUnit(this Enum measureUnit)
         {
-            Type measureUnitType = measureUnit.GetType();
-            string? measureUnitNamespace = measureUnitType.Namespace;
-            string? measureUnitTypeName = measureUnitType.Name;
-
-            return measureUnitNamespace == MeasureUnit.Namespace
+            return TryGetMeasureUnitTypeName(measureUnit, out string? measureUnitTypeName)
                 && MeasureUnitTypeCodeNames.Contains(measureUnitTypeName);
         }
 
         public static bool IsDefinedMeasureUnit(this Enum measureUnit, MeasureUnitTypeCode measureUnitTypeCode)
         {
-            Type measureUnitType = measureUnit.GetType();
-            string? measureUnitNamespace = measureUnitType.Namespace;
-            string? measureUnitTypeName = measureUnitType.Name;
             string? measureUnitTypeCodeName = Enum.GetName(measureUnitTypeCode);
 
-            return measureUnitNamespace == MeasureUnit.Namespace
+            return TryGetMeasureUnitTypeName(measureUnit, out string? measureUnitTypeName)
                 && measureUnitTypeCodeName == measureUnitTypeName;
+        }
+
+        private static bool TryGetMeasureUnitTypeName(Enum measureUnit, out string? measureUnitTypeName)
+        {
+            Type measureUnitType = NullChecked(measureUnit, nameof(measureUnit)).GetType();
+            string? measureUnitNamespace = measureUnitType.Namespace;
+            measureUnitTypeName = measureUnitNamespace == MeasureUnit.Namespace ?
+                measureUnitType.Name
+                : null;
+
+            return measureUnitTypeName != null;
         }
         #endregion
     }

@@ -29,7 +29,7 @@ internal sealed class Measurement : Measurable, IMeasurement
 
     internal Measurement(IMeasurementFactory measurementFactory, Enum measureUnit, decimal exchangeRate, string? customName) : base(measurementFactory, measureUnit) // TODO
     {
-        ValiddateCustomMeasurementParams(measureUnit, exchangeRate, customName);
+        SetCustomMeasurementValidatedParams(measureUnit, exchangeRate, customName);
 
         ExchangeRate = exchangeRate;
         MeasureUnit = measureUnit;
@@ -37,7 +37,7 @@ internal sealed class Measurement : Measurable, IMeasurement
 
     internal Measurement(IMeasurementFactory measurementFactory, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, string? customName) : base(measurementFactory, measureUnitTypeCode) // TODO
     {
-        ValiddateCustomMeasurementParams(measureUnitTypeCode, exchangeRate, customName, out Enum measureUnit);
+        SetCustomMeasurementValidatedParams(measureUnitTypeCode, exchangeRate, customName, out Enum measureUnit);
 
         ExchangeRate = exchangeRate;
         MeasureUnit = measureUnit;
@@ -47,8 +47,6 @@ internal sealed class Measurement : Measurable, IMeasurement
     #region Properties
     public object MeasureUnit { get; init; }
     public decimal ExchangeRate { get; init; }
-
-    private IMeasurementFactory MeasurementFactory => (IMeasurementFactory)MeasurableFactory;
     #endregion
 
     #region Public methods
@@ -137,17 +135,17 @@ internal sealed class Measurement : Measurable, IMeasurement
 
     public IMeasurement GetMeasurement(Enum measureUnit)
     {
-        return MeasurementFactory.Create(measureUnit);
+        return GetMeasurementFactory().Create(measureUnit);
     }
 
     public IMeasurement GetMeasurement(Enum measureUnit, decimal exchangeRate, string? customName = null)
     {
-        return MeasurementFactory.Create(measureUnit, exchangeRate, customName);
+        return GetMeasurementFactory().Create(measureUnit, exchangeRate, customName);
     }
 
     public IMeasurement GetMeasurement(IMeasurement? other = null)
     {
-        return MeasurementFactory.Create(other ??  this);
+        return GetMeasurementFactory().Create(other ?? this);
     }
 
     public IMeasurement GetMeasurement(IBaseMeasure baseMeasure)
@@ -164,6 +162,10 @@ internal sealed class Measurement : Measurable, IMeasurement
         return GetMeasurement(measureUnit);
     }
 
+    public IMeasurementFactory GetMeasurementFactory()
+    {
+        return MeasurableFactory as IMeasurementFactory ?? throw new InvalidOperationException(null);
+    }
     public override Enum GetMeasureUnit()
     {
         return (Enum)MeasureUnit;
@@ -198,7 +200,7 @@ internal sealed class Measurement : Measurable, IMeasurement
 
     public ICustomMeasurement GetNextCustomMeasurement(MeasureUnitTypeCode customMeasureUnitTypeCode, decimal exchangeRate, string? customName = null)
     {
-        return MeasurementFactory.Create(customMeasureUnitTypeCode, exchangeRate, customName);
+        return GetMeasurementFactory().Create(customMeasureUnitTypeCode, exchangeRate, customName);
     }
 
     public IEnumerable<T> GetNotUsedCustomMeasureUnits<T>() where T : struct, Enum
@@ -264,7 +266,7 @@ internal sealed class Measurement : Measurable, IMeasurement
 
     public IRateComponent? GetRateComponent(IRate rate, RateComponentCode rateComponentCode)
     {
-        return MeasurementFactory.GetRateComponent(rate, rateComponentCode);
+        return GetMeasurementFactory().GetRateComponent(rate, rateComponentCode);
     }
 
     public void InitiateCustomExchangeRates(MeasureUnitTypeCode customMeasureUnitTypeCode, params decimal[] exchangeRates)
@@ -324,8 +326,8 @@ internal sealed class Measurement : Measurable, IMeasurement
 
     public void RestoreConstantMeasureUnits()
     {
-        ExchangeRateCollection = GetConstantExchangeRates(ExchangeRateCollection);
         CustomNameCollection.Clear();
+        ExchangeRateCollection = GetConstantExchangeRates(ExchangeRateCollection);
     }
 
     public void SetCustomName(Enum measureUnit, string? customName)
@@ -570,7 +572,7 @@ internal sealed class Measurement : Measurable, IMeasurement
         }
     }
 
-    private void ValiddateCustomMeasurementParams(Enum measureUnit, decimal exchangeRate, string? customName) // Check!
+    private void SetCustomMeasurementValidatedParams(Enum measureUnit, decimal exchangeRate, string? customName) // Check!
     {
         if (exchangeRate <= 0)
         {
@@ -604,7 +606,7 @@ internal sealed class Measurement : Measurable, IMeasurement
         throw new InvalidOperationException(null);
     }
 
-    private void ValiddateCustomMeasurementParams(MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, string? customName, out Enum measureUnit)
+    private void SetCustomMeasurementValidatedParams(MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, string? customName, out Enum measureUnit)
     {
         ValidateExchangeRate(exchangeRate);
 

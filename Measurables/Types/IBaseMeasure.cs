@@ -3,7 +3,7 @@
 public interface IBaseMeasure : IMeasurable, IQuantifiable, IRateComponent, IQuantity<IBaseMeasure>, IExchangeRate<IBaseMeasure>, IProportional<IBaseMeasure, Enum>
 {
     IMeasurement Measurement { get; init; }
-    RateComponentCode RateComponentCode { get; init; }
+    RateComponentCode RateComponentCode { get; }
     decimal DefaultQuantity { get; }
 
     IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit);
@@ -14,4 +14,6 @@ public interface IBaseMeasure : IMeasurable, IQuantifiable, IRateComponent, IQua
     IBaseMeasure GetBaseMeasure(IBaseMeasure? baseMeasure = null);
     decimal GetDecimalQuantity(IBaseMeasure? baseMeasure = null);
     LimitMode? GetLimitMode();
+
+    IBaseMeasureFactory GetBaseMeasureFactory();
 }

@@ -14,7 +14,7 @@ public interface IMeasurement : IMeasurable, IExchangeRateCollection, IRateCompo
     IMeasurement? GetMeasurement(string name);
     string GetName(Enum? measureUnit = null);
     bool TryGetMeasurement(Enum measureUnit, decimal exchangeRate, string? customName, [NotNullWhen(true)] out IMeasurement? measurement);
-
+    IMeasurementFactory GetMeasurementFactory();
 
     void RestoreConstantMeasureUnits();
 }
