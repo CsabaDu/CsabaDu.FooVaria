@@ -2,5 +2,5 @@
 
 public interface ILimitable : IFit<IBaseMeasure>
 {
-    bool? FitsIn(ILimit limit);
+    bool? FitsIn(ILimit? limit);
 }

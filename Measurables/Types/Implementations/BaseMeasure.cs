@@ -2,6 +2,7 @@
 
 internal abstract class BaseMeasure : Measurable, IBaseMeasure
 {
+    #region Constructors
     private protected BaseMeasure(IBaseMeasure baseMeasure) : base(baseMeasure)
     {
         Measurement = baseMeasure.Measurement;
@@ -34,12 +35,19 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
         Measurement = measurement;
     }
+    #endregion
 
+    #region Properties
     public IMeasurement Measurement { get; init; }
     public decimal DefaultQuantity => GetDecimalQuantity() * GetExchangeRate();
 
+    #region Abstract properties
     public abstract object Quantity { get; init; }
     public abstract TypeCode QuantityTypeCode { get; }
+    #endregion
+    #endregion
+
+    #region Public methods
     public int CompareTo(IBaseMeasure? other)
     {
         if (other == null) return 1;
@@ -165,8 +173,10 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return GetQuantity().ToQuantity(quantityTypeCode) ?? throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
     }
 
-    public TypeCode? GetQuantityTypeCode(ValueType? quantity)
+    public TypeCode? GetQuantityTypeCode([DisallowNull] ValueType quantity)
     {
+        if (quantity is MeasureUnitTypeCode measureUnitTypeCode) return base.GetQuantityTypeCode(measureUnitTypeCode);
+
         TypeCode quantityTypeCode = Type.GetTypeCode(NullChecked(quantity, nameof(quantity)).GetType());
 
         if (GetQuantityTypeCodes().Contains(quantityTypeCode)) return quantityTypeCode;
@@ -229,13 +239,13 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         Measurement.ValidateMeasureUnitTypeCode(measureUnitTypeCode);
     }
 
-    public /*virtual*/ void ValidateQuantity(ValueType? quantity, TypeCode? quantityTypeCode = null)
+    public void ValidateQuantity(ValueType? quantity, TypeCode? quantityTypeCode = null)
     {
         _ = NullChecked(quantity, nameof(quantity));
 
-        TypeCode typeCode = GetQuantityTypeCode(quantity) ?? throw QuantityArgumentOutOfRangeException(quantity);
-
         if (quantityTypeCode == null) return;
+
+        TypeCode? typeCode = GetQuantityTypeCode(quantity!);
 
         if (typeCode == quantityTypeCode) return;
 
@@ -256,6 +266,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, string? customName = null);
     public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, string name);
     #endregion
+    #endregion
 
     #region Protected methods
     protected static bool Equals<T>(T rateComponent, IBaseMeasure? other) where T : class, IBaseMeasure
@@ -263,6 +274,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return rateComponent.Equals(other)
             && rateComponent.GetRateComponentCode() == other.GetRateComponentCode();
     }
+
     protected static int GetHashCode<T>(T rateComponent) where T : class, IBaseMeasure
     {
         return HashCode.Combine(rateComponent.GetHashCode(), rateComponent.GetRateComponentCode());
