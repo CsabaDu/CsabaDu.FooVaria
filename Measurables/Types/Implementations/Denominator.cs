@@ -2,8 +2,11 @@
 
 internal sealed class Denominator : BaseMeasure, IDenominator
 {
+    #region Private constants
     private const decimal DefaultDenominatorQuantity = decimal.One;
+    #endregion
 
+    #region Constructors
     public Denominator(IDenominator denominator) : base(denominator)
     {
         Quantity = denominator.Quantity;
@@ -28,11 +31,14 @@ internal sealed class Denominator : BaseMeasure, IDenominator
     {
         Quantity = GetDenominatorQuantity(quantity);
     }
+    #endregion
 
+    #region Properties
     public override object Quantity { get; init; }
-
     public override TypeCode QuantityTypeCode => TypeCode.Decimal;
+    #endregion
 
+    #region Public methods
     public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit)
     {
         return GetDenominator(measureUnit, quantity);
@@ -101,6 +107,7 @@ internal sealed class Denominator : BaseMeasure, IDenominator
 
         return quantity;
     }
+    #endregion
 
     #region Private methods
     private ValueType GetDenominatorQuantity(ValueType? quantity)
