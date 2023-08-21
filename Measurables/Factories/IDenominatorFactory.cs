@@ -9,3 +9,4 @@ public interface IDenominatorFactory : IBaseMeasureFactory
     IDenominator Create(MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, string? customName, ValueType? quantity);
     IDenominator Create(IDenominator denominator);
 }
+

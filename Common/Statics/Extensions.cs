@@ -51,8 +51,9 @@ public static class Extensions
         if (!QuantityTypes.Contains(quantityType)) return null;
 
         TypeCode quantityTypeCode = Type.GetTypeCode(quantityType);
+        int roundingDecimals = 8;
 
-        if (quantityTypeCode == conversionTypeCode) return getRoundedQuantity(8);
+        if (quantityTypeCode == conversionTypeCode) return getRoundedQuantity(roundingDecimals);
 
         try
         {
@@ -63,7 +64,7 @@ public static class Extensions
                 TypeCode.UInt32 or
                 TypeCode.UInt64 => getUIntQuantityOrNull(),
                 TypeCode.Double or
-                TypeCode.Decimal => getRoundedQuantity(8),
+                TypeCode.Decimal => getRoundedQuantity(roundingDecimals),
 
                 _ => null,
             };
@@ -132,6 +133,44 @@ public static class Extensions
 
             _ => null,
         };
+    }
+
+    public static string GetName(this MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        string? name = Enum.GetName(typeof(MeasureUnitTypeCode), measureUnitTypeCode);
+
+        return name ?? throw new InvalidEnumArgumentException(nameof(measureUnitTypeCode), (int)measureUnitTypeCode, measureUnitTypeCode.GetType());
+    }
+
+    public static IEnumerable<string> GetMeasureUnitDefaultNames(this MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        Type measureUnitType = measureUnitTypeCode.GetMeasureUnitType();
+
+        return Enum.GetNames(measureUnitType);
+    }
+
+    public static Type GetMeasureUnitType(this MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        return measureUnitTypeCode switch
+        {
+            MeasureUnitTypeCode.AreaUnit => typeof(AreaUnit),
+            MeasureUnitTypeCode.Currency => typeof(Currency),
+            MeasureUnitTypeCode.DistanceUnit => typeof(DistanceUnit),
+            MeasureUnitTypeCode.ExtentUnit => typeof(ExtentUnit),
+            MeasureUnitTypeCode.TimePeriodUnit => typeof(TimePeriodUnit),
+            MeasureUnitTypeCode.Pieces => typeof(Pieces),
+            MeasureUnitTypeCode.VolumeUnit => typeof(VolumeUnit),
+            MeasureUnitTypeCode.WeightUnit => typeof(WeightUnit),
+
+            _ => throw new InvalidEnumArgumentException(nameof(measureUnitTypeCode), (int)measureUnitTypeCode, measureUnitTypeCode.GetType()),
+        };
+    }
+
+    public static Enum GetMeasureUnitDefault(this MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        Type measureUnitType = measureUnitTypeCode.GetMeasureUnitType();
+
+       return (Enum)Enum.ToObject(measureUnitType, default(int));
     }
     #endregion
 }

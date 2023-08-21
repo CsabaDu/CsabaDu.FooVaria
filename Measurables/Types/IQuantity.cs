@@ -9,6 +9,7 @@
         ValueType GetQuantity(RoundingMode roundingMode);
         ValueType GetQuantity(TypeCode quantityTypeCode);
         TypeCode? GetQuantityTypeCode([DisallowNull] ValueType quantity);
+        ValueType GetDefaultRateComponentQuantity();
 
         void ValidateQuantity(ValueType? quantity, TypeCode? quantityTypeCode = null);
         void ValidateQuantityTypeCode(TypeCode quantityTypeCode);

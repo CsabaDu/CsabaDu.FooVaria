@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Measurables.MeasureUnits;
+﻿namespace CsabaDu.FooVaria.Common.Enums.MeasureUnits;
 
 public enum Pieces
 {

@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿using System.Runtime.CompilerServices;
+
+namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal abstract class BaseMeasure : Measurable, IBaseMeasure
 {
@@ -184,10 +186,10 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return null;
     }
 
-    public IRateComponent? GetRateComponent(IRate rate, RateComponentCode rateComponentCode)
-    {
-        return GetBaseMeasureFactory().Create(rate, rateComponentCode);
-    }
+    //public BaseMeasure? GetRateComponent(IRate rate, RateComponentCode rateComponentCode)
+    //{
+    //    return GetBaseMeasureFactory().Create(rate, rateComponentCode);
+    //}
 
     public RateComponentCode GetRateComponentCode(IBaseMeasure? baseMeasure = null)
     {
@@ -282,9 +284,33 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     #endregion
 
     #region Private methods
+    public abstract IBaseMeasure GetDefault(RateComponentCode rateComponentCode, MeasureUnitTypeCode? measureUnitTypeCode = null);
+
     private static IMeasurementFactory GetMeasurementFactory(IBaseMeasureFactory baseMeasureFactory)
     {
         return baseMeasureFactory.MeasurementFactory;
     }
     #endregion
+
+    public abstract bool TryGetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string? customName, [NotNullWhen(true)] out IBaseMeasure? baseMeasure);
+    public IBaseMeasure? GetRateComponent(IRate rate, RateComponentCode rateComponentCode)
+    {
+        return rate[rateComponentCode];
+    }
+    public IBaseMeasure GetDefault(MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        base.ValidateMeasureUnitTypeCode(measureUnitTypeCode);
+
+        Enum measureUnit = GetDefaultMeasureUnit(measureUnitTypeCode);
+        ValueType quantity = GetDefaultRateComponentQuantity();
+
+        return GetBaseMeasure(quantity, measureUnit);
+    }
+    public RateComponentCode? GetRateComponentCode()
+    {
+        return GetBaseMeasureFactory().RateComponentCode;
+    }
+
+    public abstract ValueType GetDefaultRateComponentQuantity();
+
 }

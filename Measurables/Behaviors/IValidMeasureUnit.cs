@@ -2,6 +2,8 @@
 
 public interface IValidMeasureUnit
 {
+    Enum? GetMeasureUnit(string name);
+
     bool IsValidMeasureUnit(Enum measureUnit, decimal? exchangeRate = null);
     bool TryGetMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, [NotNullWhen(true)] out Enum? measureUnit);
     bool TryGetMeasureUnit(string name, [NotNullWhen(true)] out Enum? measureUnit);

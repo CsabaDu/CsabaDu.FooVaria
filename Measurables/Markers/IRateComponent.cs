@@ -1,6 +1,8 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Markers;
 
-public interface IRateComponent
+public interface IRateComponent<out T> where T : class, IMeasurable
 {
-    IRateComponent? GetRateComponent(IRate rate, RateComponentCode rateComponentCode);
+    T? GetRateComponent(IRate rate, RateComponentCode rateComponentCode);
+    T GetDefault(MeasureUnitTypeCode measureUnitTypeCode);
+    RateComponentCode? GetRateComponentCode();
 }

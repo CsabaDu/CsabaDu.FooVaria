@@ -4,7 +4,10 @@ public interface IMeasurable : IBaseMeasurable, IQuantityType
 {
     IMeasurableFactory MeasurableFactory { get; init; }
 
-    IMeasurable GetDefaultMeasurable(IMeasurable? measurable = null);
-    IMeasurable GetMeasurable(IMeasurable measurable);
+    IMeasurable GetDefault();
+
+    IMeasurable GetMeasurable(IMeasurable? measurable = null);
+    IMeasurable GetMeasurable(Enum measureUnit);
+    IMeasurable GetMeasurable(string name);
     IMeasurable GetMeasurable(IMeasurableFactory measurableFactory, IMeasurable measurable);
 }

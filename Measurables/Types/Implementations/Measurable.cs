@@ -1,8 +1,11 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations
+﻿using System.ComponentModel;
+
+namespace CsabaDu.FooVaria.Measurables.Types.Implementations
 {
     internal abstract class Measurable : BaseMeasurable, IMeasurable
     {
         #region Constructors
+
         private protected Measurable(IMeasurableFactory measurableFactory, MeasureUnitTypeCode measureUnitTypeCode) : base(measureUnitTypeCode)
         {
             MeasurableFactory = NullChecked(measurableFactory, nameof(measurableFactory));
@@ -36,14 +39,21 @@
         #endregion
 
         #region Public methods
-        public IMeasurable GetDefaultMeasurable(IMeasurable? measurable = null)
+        public override bool Equals(object? obj)
         {
-            return MeasurableFactory.CreateDefault(measurable ?? this);
+            return obj is IMeasurable other
+                && MeasureUnitTypeCode == other.MeasureUnitTypeCode
+                && MeasurableFactory.Equals(other.MeasurableFactory);
         }
 
-        public IMeasurable GetMeasurable(IMeasurable measurable)
+        public override int GetHashCode()
         {
-            return MeasurableFactory.Create(measurable);
+            return HashCode.Combine(MeasureUnitTypeCode, MeasurableFactory);
+        }
+
+        public IMeasurable GetMeasurable(IMeasurable? measurable = null)
+        {
+            return MeasurableFactory.Create(measurable ?? this);
         }
 
         public virtual IMeasurable GetMeasurable(IMeasurableFactory measurableFactory, IMeasurable measurable)
@@ -57,11 +67,27 @@
 
             return quantityTypeCode ?? throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode!.Value);
         }
+
+        public abstract IMeasurable GetDefault();
+        public abstract IMeasurable GetMeasurable(Enum measureUnit);
+        public abstract IMeasurable GetMeasurable(string name);
         #endregion
     }
 
     internal abstract class Measure : BaseMeasure, IMeasure
     {
+        #region Enums
+        protected enum SummingMode
+        {
+            Add,
+            Subtract,
+        }
+        #endregion
+
+        #region Private constants
+        private const int DefaultMeasureQuantity = 0;
+        #endregion
+
         private protected Measure(IMeasure measure) : base(measure)
         {
             Quantity = measure.Quantity;
@@ -92,20 +118,24 @@
 
         public IMeasure Add(IMeasure? other)
         {
-            throw new NotImplementedException();
+            return GetSum(other, SummingMode.Add);
         }
 
         public IMeasure Divide(decimal divisor)
         {
-            throw new NotImplementedException();
+            if (divisor == 0) throw new ArgumentOutOfRangeException(nameof(divisor), divisor, null);
+
+            decimal quantity = decimal.Divide(GetDecimalQuantity(), divisor);
+
+            return GetMeasure(quantity);
         }
 
-        public override bool Equals(IBaseMeasure? other)
+        public override sealed bool Equals(IBaseMeasure? other)
         {
             return Equals(this, other);
         }
 
-        public override bool Equals(object? obj)
+        public override sealed bool Equals(object? obj)
         {
             return obj is IMeasure measure && Equals(measure);
         }
@@ -117,62 +147,91 @@
 
         public bool? FitsIn(IBaseMeasure? baseMeasure, LimitMode? limitMode)
         {
-            throw new NotImplementedException();
+            if (baseMeasure == null && limitMode == null) return true;
+
+            if (baseMeasure?.IsExchangeableTo(MeasureUnitTypeCode) != true) return null;
+
+            limitMode ??= default;
+            IBaseMeasure ceilingBaseMeasure = baseMeasure.Round(RoundingMode.Ceiling);
+            baseMeasure = getRoundedBaseMeasure();
+
+            if (baseMeasure == null) return null;
+
+            int comparison = CompareTo(baseMeasure);
+
+            return limitMode switch
+            {
+                LimitMode.BeEqual => comparison == 0 && ceilingBaseMeasure.Equals(baseMeasure),
+
+                _ => comparison.FitsIn(limitMode),
+            };
+
+            #region Local methods
+            IBaseMeasure? getRoundedBaseMeasure()
+            {
+                return limitMode switch
+                {
+                    LimitMode.BeNotLess or
+                    LimitMode.BeGreater => ceilingBaseMeasure,
+
+                    LimitMode.BeNotGreater or
+                    LimitMode.BeLess or
+                    LimitMode.BeEqual => baseMeasure!.Round(RoundingMode.Floor),
+
+                    _ => null,
+                };
+            }
+            #endregion
         }
 
         public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit)
         {
-            throw new NotImplementedException();
+            return GetMeasure(quantity, measureUnit);
         }
 
         public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string? customName = null)
         {
-            throw new NotImplementedException();
+            return GetMeasure(quantity, measureUnit, exchangeRate, customName);
         }
 
         public override IBaseMeasure GetBaseMeasure(ValueType quantity, IMeasurement? measurement = null)
         {
-            throw new NotImplementedException();
+            return GetMeasure(quantity, measurement);
         }
 
         public override IBaseMeasure GetBaseMeasure(ValueType quantity, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, string? customName = null)
         {
-            throw new NotImplementedException();
+            return GetMeasure(quantity, measureUnitTypeCode, exchangeRate, customName);
         }
 
         public override IBaseMeasure GetBaseMeasure(ValueType quantity, string name)
         {
-            throw new NotImplementedException();
+            return GetMeasure(quantity, name);
         }
 
-        public override int GetHashCode()
+        public override sealed int GetHashCode()
         {
             return GetHashCode(this);
         }
 
-        public IMeasure GetMeasure(ValueType quantity, Enum measureUnit, decimal? exchangeRate = null)
+        public override sealed LimitMode? GetLimitMode()
         {
-            throw new NotImplementedException();
+            return base.GetLimitMode();
         }
 
-        public IMeasure GetMeasure(ValueType quantity, IMeasurement? measurement = null)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract IMeasure GetMeasure(Enum measureUnit);
+        public abstract IMeasure GetMeasure(string name);
+        public abstract IMeasure GetMeasure(ValueType quantity, Enum measureUnit);
+        public abstract IMeasure GetMeasure(ValueType quantity, string name);
+        public abstract IMeasure GetMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string? customName = null);
+        public abstract IMeasure GetMeasure(ValueType quantity, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, string? customName = null);
+        public abstract IMeasure GetMeasure(ValueType quantity, IMeasurement? measurement = null);
+        public abstract IMeasure GetMeasure(IBaseMeasure baseMeasure);
+        public abstract IMeasure GetMeasure(IMeasure? other = null);
 
-        public IMeasure GetMeasure(IBaseMeasure baseMeasure)
+        public IMeasureFactory GetMeasureFactory()
         {
-            throw new NotImplementedException();
-        }
-
-        public IMeasure GetMeasure(IMeasure? other = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IMeasure GetMeasure(Enum measureUnit)
-        {
-            throw new NotImplementedException();
+            return MeasurableFactory as IMeasureFactory ?? throw new InvalidOperationException(null);
         }
 
         public override sealed ValueType GetQuantity(ValueType? quantity = null)
@@ -182,17 +241,46 @@
 
         public IMeasure Multiply(decimal multiplier)
         {
-            throw new NotImplementedException();
+            decimal quantity = decimal.Multiply(GetDecimalQuantity(), multiplier);
+
+            return GetMeasure(quantity);
         }
 
         public IMeasure Subtract(IMeasure? other)
         {
-            throw new NotImplementedException();
+            return GetSum(other, SummingMode.Subtract);
         }
 
-        public bool TryGetValidMeasureQuantity(ValueType quantity, Enum measureUnit, out ValueType? measureQuantity)
+        //public bool TryGetValidMeasureQuantity(ValueType quantity, Enum measureUnit, out ValueType? measureQuantity)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        private IMeasure GetSum(IMeasure? other, SummingMode summingMode)
         {
-            throw new NotImplementedException();
+            if (other == null) return GetMeasure();
+
+            if (!IsExchangeableTo(other.MeasureUnitTypeCode)) throw new ArgumentOutOfRangeException(nameof(other), other.MeasureUnitTypeCode, null);
+
+            decimal quantity = getSumDefaultQuantity() / GetExchangeRate();
+
+            return GetMeasure(quantity);
+
+            #region Local methods
+            decimal getSumDefaultQuantity()
+            {
+                decimal thisQuantity = DefaultQuantity;
+                decimal otherQuantity = other!.DefaultQuantity;
+
+                return summingMode switch
+                {
+                    SummingMode.Add => decimal.Add(thisQuantity, otherQuantity),
+                    SummingMode.Subtract => decimal.Subtract(thisQuantity, otherQuantity),
+
+                    _ => throw new InvalidEnumArgumentException(nameof(summingMode), (int)summingMode, typeof(SummingMode)),
+                };
+            }
+            #endregion
         }
     }
 }
