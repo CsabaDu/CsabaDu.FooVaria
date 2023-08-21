@@ -92,6 +92,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
         return GetBaseMeasure(quantity, measureUnit);
     }
+
     public IBaseMeasure GetBaseMeasure(IBaseMeasure? other = null)
     {
         return (IBaseMeasure)GetBaseMeasureFactory().Create(other ?? this);
@@ -101,12 +102,24 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     {
         return MeasurableFactory as IBaseMeasureFactory ?? throw new InvalidOperationException(null);
     }
+
     public decimal GetDecimalQuantity(IBaseMeasure? baseMeasure = null)
     {
         ValueType quantity = (baseMeasure ?? this).GetQuantity();
 
         return (decimal?)quantity.ToQuantity(TypeCode.Decimal) ?? throw new InvalidOperationException(null);
     }
+
+    public IBaseMeasure GetDefault(MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        base.ValidateMeasureUnitTypeCode(measureUnitTypeCode);
+
+        Enum measureUnit = GetDefaultMeasureUnit(measureUnitTypeCode);
+        ValueType quantity = GetDefaultRateComponentQuantity();
+
+        return GetBaseMeasure(quantity, measureUnit);
+    }
+
     public decimal GetExchangeRate()
     {
         return Measurement.ExchangeRate;
@@ -116,6 +129,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     {
         return HashCode.Combine(DefaultQuantity, MeasureUnitTypeCode);
     }
+
     public virtual LimitMode? GetLimitMode()
     {
         return null;
@@ -186,10 +200,15 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return null;
     }
 
-    //public BaseMeasure? GetRateComponent(IRate rate, RateComponentCode rateComponentCode)
-    //{
-    //    return GetBaseMeasureFactory().Create(rate, rateComponentCode);
-    //}
+    public IBaseMeasure? GetRateComponent(IRate rate, RateComponentCode rateComponentCode)
+    {
+        return rate[rateComponentCode];
+    }
+
+    public RateComponentCode? GetRateComponentCode()
+    {
+        return GetBaseMeasureFactory().RateComponentCode;
+    }
 
     public RateComponentCode GetRateComponentCode(IBaseMeasure? baseMeasure = null)
     {
@@ -224,12 +243,15 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
         return exchanged != null;
     }
+
     public bool TryExchangeTo(Enum measureUnit, [NotNullWhen(true)] out IBaseMeasure? exchanged)
     {
         exchanged = ExchangeTo(measureUnit);
 
         return exchanged != null;
     }
+
+    public abstract bool TryGetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string? customName, [NotNullWhen(true)] out IBaseMeasure? baseMeasure);
 
     public override sealed void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
@@ -267,6 +289,8 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, IMeasurement? measurement = null);
     public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, string? customName = null);
     public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, string name);
+    public abstract IBaseMeasure GetDefault(RateComponentCode rateComponentCode, MeasureUnitTypeCode? measureUnitTypeCode = null);
+    public abstract ValueType GetDefaultRateComponentQuantity();
     #endregion
     #endregion
 
@@ -284,33 +308,9 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     #endregion
 
     #region Private methods
-    public abstract IBaseMeasure GetDefault(RateComponentCode rateComponentCode, MeasureUnitTypeCode? measureUnitTypeCode = null);
-
     private static IMeasurementFactory GetMeasurementFactory(IBaseMeasureFactory baseMeasureFactory)
     {
         return baseMeasureFactory.MeasurementFactory;
     }
     #endregion
-
-    public abstract bool TryGetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string? customName, [NotNullWhen(true)] out IBaseMeasure? baseMeasure);
-    public IBaseMeasure? GetRateComponent(IRate rate, RateComponentCode rateComponentCode)
-    {
-        return rate[rateComponentCode];
-    }
-    public IBaseMeasure GetDefault(MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        base.ValidateMeasureUnitTypeCode(measureUnitTypeCode);
-
-        Enum measureUnit = GetDefaultMeasureUnit(measureUnitTypeCode);
-        ValueType quantity = GetDefaultRateComponentQuantity();
-
-        return GetBaseMeasure(quantity, measureUnit);
-    }
-    public RateComponentCode? GetRateComponentCode()
-    {
-        return GetBaseMeasureFactory().RateComponentCode;
-    }
-
-    public abstract ValueType GetDefaultRateComponentQuantity();
-
 }

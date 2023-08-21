@@ -9,5 +9,5 @@ public interface ILimitedRateFactory : IRateFactory
     ILimitedRate Create(IMeasure numerator, IMeasurement measurement, ValueType? quantity, ILimit? limit);
     ILimitedRate Create(IMeasure numerator, IDenominator denominator, ILimit? limit);
     ILimitedRate Create(IRate rate, ILimit? limit);
-    ILimitedRate Create(IRate rate, IRateComponent? rateComponent);
+    ILimitedRate Create<T>(IRate rate, IRateComponent? rateComponent);
 }

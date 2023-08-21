@@ -74,6 +74,21 @@ internal sealed class Denominator : BaseMeasure, IDenominator
         return GetDenominator(name, quantity);
     }
 
+    public override IBaseMeasure GetDefault(RateComponentCode rateComponentCode, MeasureUnitTypeCode? measureUnitTypeCode = null)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override IMeasurable GetDefault()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override ValueType GetDefaultRateComponentQuantity()
+    {
+        throw new NotImplementedException();
+    }
+
     public IDenominator GetDenominator(IMeasurement measurement, ValueType? quantity = null)
     {
         return GetDenominatorFactory().Create(measurement, quantity);
@@ -121,6 +136,11 @@ internal sealed class Denominator : BaseMeasure, IDenominator
         if ((decimal)quantity <= 0) throw QuantityArgumentOutOfRangeException(quantity);
 
         return quantity;
+    }
+
+    public override bool TryGetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string? customName, [NotNullWhen(true)] out IBaseMeasure? baseMeasure)
+    {
+        throw new NotImplementedException();
     }
     #endregion
 

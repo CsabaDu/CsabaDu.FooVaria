@@ -69,8 +69,6 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
         }
 
         public abstract IMeasurable GetDefault();
-        public abstract IMeasurable GetMeasurable(Enum measureUnit);
-        public abstract IMeasurable GetMeasurable(string name);
         #endregion
     }
 
@@ -219,8 +217,6 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
             return base.GetLimitMode();
         }
 
-        public abstract IMeasure GetMeasure(Enum measureUnit);
-        public abstract IMeasure GetMeasure(string name);
         public abstract IMeasure GetMeasure(ValueType quantity, Enum measureUnit);
         public abstract IMeasure GetMeasure(ValueType quantity, string name);
         public abstract IMeasure GetMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string? customName = null);
@@ -282,5 +278,8 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
             }
             #endregion
         }
+
+        public abstract IMeasure GetMeasure(Enum measureUnit);
+        public abstract IMeasure GetMeasure(string name);
     }
 }

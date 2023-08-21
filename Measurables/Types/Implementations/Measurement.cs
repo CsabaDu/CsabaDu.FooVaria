@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal sealed class Measurement : Measurable, IMeasurement
 {
@@ -188,10 +186,10 @@ internal sealed class Measurement : Measurable, IMeasurement
     {
         IDictionary<string, Enum> measureUnitCollection = CustomNameCollection.ToDictionary(x => x.Value, x => x.Key);
 
-        foreach (Enum item in GetValidMeasureUnits(measureUnitTypeCode))
+        foreach (Enum measureUnit in GetValidMeasureUnits(measureUnitTypeCode))
         {
-            string defaultName = GetDefaultName(item);
-            measureUnitCollection.Add(defaultName, item);
+            string defaultName = GetDefaultName(measureUnit);
+            measureUnitCollection.Add(defaultName, measureUnit);
         }
 
         return measureUnitCollection;
@@ -500,7 +498,7 @@ internal sealed class Measurement : Measurable, IMeasurement
 
     private Enum GetNextNotUsedCustomMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode)
     {
-        return GetNotUsedCustomMeasureUnits(measureUnitTypeCode).First();
+        return GetNotUsedCustomMeasureUnits(measureUnitTypeCode).OrderBy(x => x).First();
     }
 
     private IEnumerable<T> GetNotUsedCustomMeasureUnits<T>(Array measureUnits, MeasureUnitTypeCode customMeasureUnitTypeCode) where T : Enum
@@ -547,7 +545,7 @@ internal sealed class Measurement : Measurable, IMeasurement
 
         static IEnumerable<string> getAllMeasureUnitDefaultNames()
         {
-            foreach (MeasureUnitTypeCode item in Enum.GetValues(typeof(MeasureUnitTypeCode)))
+            foreach (MeasureUnitTypeCode item in Enum.GetValues<MeasureUnitTypeCode>())
             {
                 foreach (string name in item.GetMeasureUnitDefaultNames())
                 {
@@ -691,16 +689,6 @@ internal sealed class Measurement : Measurable, IMeasurement
     }
 
     public bool TryGetCustomMeasurement(Enum measureUnit, decimal exchangeRate, string? customName, [NotNullWhen(true)] out ICustomMeasurement? customMeasurement)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override IMeasurable GetMeasurable(Enum measureUnit)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override IMeasurable GetMeasurable(string name)
     {
         throw new NotImplementedException();
     }

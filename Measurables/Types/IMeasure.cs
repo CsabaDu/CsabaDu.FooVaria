@@ -9,8 +9,6 @@ public interface IMeasure : IBaseMeasure, ILimitable, ICalculable, ICalculate<de
     IMeasure GetMeasure(ValueType quantity, IMeasurement? measurement = null);
     IMeasure GetMeasure(IBaseMeasure baseMeasure);
     IMeasure GetMeasure(IMeasure? other = null);
-    IMeasure GetMeasure(Enum measureUnit);
-    IMeasure GetMeasure(string name);
 
     IMeasureFactory GetMeasureFactory();
 

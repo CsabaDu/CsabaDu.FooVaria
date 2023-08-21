@@ -91,6 +91,21 @@ internal sealed class Limit : BaseMeasure, ILimit
         return GetLimit(name, quantity);
     }
 
+    public override IBaseMeasure GetDefault(RateComponentCode rateComponentCode, MeasureUnitTypeCode? measureUnitTypeCode = null)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override IMeasurable GetDefault()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override ValueType GetDefaultRateComponentQuantity()
+    {
+        throw new NotImplementedException();
+    }
+
     public int GetHashCode([DisallowNull] ILimit limit)
     {
         return HashCode.Combine(limit.GetHashCode(), limit.LimitMode);
@@ -162,6 +177,11 @@ internal sealed class Limit : BaseMeasure, ILimit
     public bool? Includes(IMeasure measure)
     {
         return measure.FitsIn(this);
+    }
+
+    public override bool TryGetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string? customName, [NotNullWhen(true)] out IBaseMeasure? baseMeasure)
+    {
+        throw new NotImplementedException();
     }
 
     public void ValidateLimitMode(LimitMode limitMode)

@@ -7,7 +7,5 @@ public interface IMeasurable : IBaseMeasurable, IQuantityType
     IMeasurable GetDefault();
 
     IMeasurable GetMeasurable(IMeasurable? measurable = null);
-    IMeasurable GetMeasurable(Enum measureUnit);
-    IMeasurable GetMeasurable(string name);
     IMeasurable GetMeasurable(IMeasurableFactory measurableFactory, IMeasurable measurable);
 }
