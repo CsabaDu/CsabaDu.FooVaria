@@ -112,7 +112,7 @@ internal abstract class BaseMeasurable : IBaseMeasurable
     public bool IsDefinedMeasureUnit(Enum measureUnit)
     {
         MeasureUnitTypeCode measureUnitTypeCode = GetMeasureUnitTypeCode(measureUnit);
-        Type measureUnitType = measureUnitTypeCode.GetMeasureUnitType();
+        Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode);
 
         return Enum.IsDefined(measureUnitType, NullChecked(measureUnit, nameof(measureUnit)));
     }
