@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Types;
 
-public interface IMeasure : IBaseMeasure, ILimitable, ICalculable, ICalculate<decimal, IMeasure>
+public interface IMeasure : IBaseMeasure, ILimitable, ICalculate<decimal, IMeasure>
 {
     IMeasure GetMeasure(ValueType quantity, string name);
     IMeasure GetMeasure(ValueType quantity, Enum measureUnit);
