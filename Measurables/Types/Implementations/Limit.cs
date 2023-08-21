@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿using CsabaDu.FooVaria.Common.Enums;
+using System.Xml.Linq;
+
+namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal sealed class Limit : BaseMeasure, ILimit
 {
@@ -91,19 +94,16 @@ internal sealed class Limit : BaseMeasure, ILimit
         return GetLimit(name, quantity);
     }
 
-    public override IBaseMeasure GetDefault(RateComponentCode rateComponentCode, MeasureUnitTypeCode? measureUnitTypeCode = null)
-    {
-        throw new NotImplementedException();
-    }
-
     public override IMeasurable GetDefault()
     {
-        throw new NotImplementedException();
+        IMeasurement measurement = (IMeasurement)Measurement.GetDefault();
+
+        return GetLimit(measurement);
     }
 
     public override ValueType GetDefaultRateComponentQuantity()
     {
-        throw new NotImplementedException();
+        return DefaultLimitQuantity;
     }
 
     public int GetHashCode([DisallowNull] ILimit limit)
@@ -128,12 +128,11 @@ internal sealed class Limit : BaseMeasure, ILimit
 
     public ILimit GetLimit(IBaseMeasure baseMeasure, LimitMode? limitMode = null)
     {
-        throw new NotImplementedException();
+        return GetLimitFactory().Create(baseMeasure, limitMode);
     }
-
     public ILimit GetLimit(ILimit? other = null)
     {
-        throw new NotImplementedException();
+        return GetLimitFactory().Create(other ?? this);
     }
 
     public ILimit GetLimit(string name, ValueType? quantity = null, LimitMode? limitMode = null)

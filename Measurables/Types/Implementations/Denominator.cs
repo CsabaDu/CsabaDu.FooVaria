@@ -74,11 +74,6 @@ internal sealed class Denominator : BaseMeasure, IDenominator
         return GetDenominator(name, quantity);
     }
 
-    public override IBaseMeasure GetDefault(RateComponentCode rateComponentCode, MeasureUnitTypeCode? measureUnitTypeCode = null)
-    {
-        throw new NotImplementedException();
-    }
-
     public override IMeasurable GetDefault()
     {
         throw new NotImplementedException();

@@ -120,6 +120,11 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return GetBaseMeasure(quantity, measureUnit);
     }
 
+    public IBaseMeasure GetDefault(RateComponentCode rateComponentCode, MeasureUnitTypeCode? measureUnitTypeCode = null)
+    {
+        return GetBaseMeasureFactory().CreateDefault(rateComponentCode, measureUnitTypeCode ?? MeasureUnitTypeCode);
+    }
+
     public decimal GetExchangeRate()
     {
         return Measurement.ExchangeRate;
@@ -289,7 +294,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, IMeasurement? measurement = null);
     public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, string? customName = null);
     public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, string name);
-    public abstract IBaseMeasure GetDefault(RateComponentCode rateComponentCode, MeasureUnitTypeCode? measureUnitTypeCode = null);
     public abstract ValueType GetDefaultRateComponentQuantity();
     #endregion
     #endregion
