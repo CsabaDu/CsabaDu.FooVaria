@@ -59,8 +59,8 @@ internal sealed class Measurement : Measurable, IMeasurement
 
     public bool Equals(IMeasurement? other)
     {
-        return other?.HasMeasureUnitTypeCode(MeasureUnitTypeCode) == true
-            && other.ExchangeRate == ExchangeRate;
+        return IsExchangeableTo(other?.MeasureUnitTypeCode)
+            && other!.ExchangeRate == ExchangeRate;
     }
 
     public override bool Equals(object? obj)
@@ -317,17 +317,17 @@ internal sealed class Measurement : Measurable, IMeasurement
         return IsCustomMeasureUnitTypeCode(measureUnitTypeCode ?? MeasureUnitTypeCode);
     }
 
-    public bool IsExchangeableTo(Enum context)
+    public bool IsExchangeableTo(Enum? context)
     {
-        if (context == null) return false;
-
         if (context is MeasureUnitTypeCode measureUnitTypeCode) return HasMeasureUnitTypeCode(measureUnitTypeCode);
 
         return IsExchangeableTo(context, MeasureUnitTypeCode);
     }
 
-    public bool IsValidMeasureUnit(Enum measureUnit, decimal? exchangeRate = null)
+    public bool IsValidMeasureUnit(Enum? measureUnit, decimal? exchangeRate = null)
     {
+        if (measureUnit == null) return false;
+
         if (!ExchangeRateCollection.ContainsKey(measureUnit)) return false;
 
         if (exchangeRate == null) return true;
@@ -525,7 +525,7 @@ internal sealed class Measurement : Measurable, IMeasurement
         return defaultNames?.First() == DefaultCustomMeasureUnitName;
     }
 
-    private bool IsExchangeableTo(Enum measureUnit, MeasureUnitTypeCode measureUnitTypeCode)
+    private bool IsExchangeableTo(Enum? measureUnit, MeasureUnitTypeCode measureUnitTypeCode)
     {
         return IsValidMeasureUnit(measureUnit) && HasMeasureUnitTypeCode(measureUnitTypeCode, measureUnit);
     }

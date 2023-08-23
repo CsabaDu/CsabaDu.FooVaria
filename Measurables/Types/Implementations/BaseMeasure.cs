@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal abstract class BaseMeasure : Measurable, IBaseMeasure
 {
@@ -220,7 +218,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return (baseMeasure ?? this).GetBaseMeasureFactory().RateComponentCode;
     }
 
-    public bool IsExchangeableTo(Enum context)
+    public bool IsExchangeableTo(Enum? context)
     {
         return Measurement.IsExchangeableTo(context);
     }

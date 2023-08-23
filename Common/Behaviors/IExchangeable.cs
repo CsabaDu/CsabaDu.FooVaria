@@ -2,5 +2,5 @@
 
 public interface IExchangeable<T, in U> where T : class where U : notnull
 {
-    bool IsExchangeableTo(U context);
+    bool IsExchangeableTo(U? context);
 }
