@@ -2,8 +2,8 @@
 
 public interface IMeasurementFactory : IMeasurableFactory, IRateComponentFactory<IMeasurement>
 {
-    IMeasurement Create(MeasureUnitTypeCode customMeasureUnitTypeCode, decimal exchangeRate, string? customName);
-    IMeasurement Create(Enum measureUnit, decimal exchangeRate, string? customName);
+    IMeasurement Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate);
+    IMeasurement Create(Enum measureUnit, decimal exchangeRate, string customName);
     IMeasurement Create(Enum measureUnit);
     IMeasurement Create(IMeasurement measurement);
 

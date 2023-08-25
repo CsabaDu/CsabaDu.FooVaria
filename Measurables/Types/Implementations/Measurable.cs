@@ -101,12 +101,12 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
             Quantity = GetQuantity(quantity);
         }
 
-        private protected Measure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, MeasureUnitTypeCode customMeasureUnitTypeCode, decimal exchangeRate, string? customName) : base(baseMeasureFactory, quantity, customMeasureUnitTypeCode, exchangeRate, customName)
+        private protected Measure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, MeasureUnitTypeCode measureUnitTypeCode, string customName, decimal exchangeRate) : base(baseMeasureFactory, quantity, measureUnitTypeCode, exchangeRate, customName)
         {
             Quantity = GetQuantity(quantity);
         }
 
-        private protected Measure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, Enum measureUnit, decimal exchangeRate, string? customName) : base(baseMeasureFactory, quantity, measureUnit, exchangeRate, customName)
+        private protected Measure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName) : base(baseMeasureFactory, quantity, measureUnit, exchangeRate, customName)
         {
             Quantity = GetQuantity(quantity);
         }
@@ -187,7 +187,7 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
             return GetMeasure(quantity, measureUnit);
         }
 
-        public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string? customName = null)
+        public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName)
         {
             return GetMeasure(quantity, measureUnit, exchangeRate, customName);
         }
@@ -197,7 +197,7 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
             return GetMeasure(quantity, measurement);
         }
 
-        public override IBaseMeasure GetBaseMeasure(ValueType quantity, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, string? customName = null)
+        public override IBaseMeasure GetBaseMeasure(ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
         {
             return GetMeasure(quantity, measureUnitTypeCode, exchangeRate, customName);
         }
@@ -219,8 +219,8 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
 
         public abstract IMeasure GetMeasure(ValueType quantity, Enum measureUnit);
         public abstract IMeasure GetMeasure(ValueType quantity, string name);
-        public abstract IMeasure GetMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string? customName = null);
-        public abstract IMeasure GetMeasure(ValueType quantity, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, string? customName = null);
+        public abstract IMeasure GetMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName);
+        public abstract IMeasure GetMeasure(ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate);
         public abstract IMeasure GetMeasure(ValueType quantity, IMeasurement? measurement = null);
         public abstract IMeasure GetMeasure(IBaseMeasure baseMeasure);
         public abstract IMeasure GetMeasure(IMeasure? other = null);
@@ -281,5 +281,23 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
 
         public abstract IMeasure GetMeasure(Enum measureUnit);
         public abstract IMeasure GetMeasure(string name);
+
+        public override bool TryGetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string? customName, [NotNullWhen(true)] out IBaseMeasure? baseMeasure)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override ValueType GetDefaultRateComponentQuantity()
+        {
+            return DefaultMeasureQuantity;
+        }
+
+        public override IMeasurable GetDefault()
+        {
+            Enum measureUnit = GetDefaultMeasureUnit();
+            ValueType quantity = GetDefaultRateComponentQuantity();
+
+            return GetMeasure(quantity, measureUnit);
+        }
     }
 }

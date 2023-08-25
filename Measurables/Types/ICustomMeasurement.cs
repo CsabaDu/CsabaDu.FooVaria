@@ -2,9 +2,9 @@
 
 public interface ICustomMeasurement : IBaseMeasurable, ICustomMeasureUnit
 {
-    ICustomMeasurement GetNextCustomMeasurement(MeasureUnitTypeCode customMeasureUnitTypeCode, decimal exchangeRate, string? customName);
-    bool TryGetCustomMeasurement(Enum measureUnit, decimal exchangeRate, string? customName, [NotNullWhen(true)] out ICustomMeasurement? customMeasurement);
-    ICustomMeasurement? GetCustomMeasurement(Enum measureUnit, decimal exchangeRate, string? customName = null);
+    ICustomMeasurement GetCustomMeasurement(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate);
+    ICustomMeasurement? GetCustomMeasurement(Enum measureUnit, decimal exchangeRate, string customName);
+    bool TryGetCustomMeasurement(Enum measureUnit, decimal exchangeRate, string customName, [NotNullWhen(true)] out ICustomMeasurement? customMeasurement);
 
-    void InitiateCustomExchangeRates(MeasureUnitTypeCode customMeasureUnitTypeCode, IDictionary<string, decimal> customExchangeRateCollection);
+    void InitiateCustomExchangeRates(MeasureUnitTypeCode measureUnitTypeCode, IDictionary<string, decimal> customExchangeRateCollection);
 }

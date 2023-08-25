@@ -7,14 +7,14 @@ public interface IBaseMeasure : IMeasurable, IQuantifiable, IRateComponent<IBase
 
     IBaseMeasure? GetBaseMeasure(ValueType quantity, string name);
     IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit);
-    bool TryGetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string? customName, [NotNullWhen(true)] out IBaseMeasure? baseMeasure);
-    IBaseMeasure GetBaseMeasure(ValueType quantity, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, string? customName = null);
+    IBaseMeasure GetBaseMeasure(ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate);
     IBaseMeasure GetBaseMeasure(ValueType quantity, IMeasurement? measurement = null);
     IBaseMeasure GetBaseMeasure(IBaseMeasure? baseMeasure = null);
     IBaseMeasure GetDefault(RateComponentCode rateComponentCode, MeasureUnitTypeCode? measureUnitTypeCode = null);
-
+    bool TryGetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName, [NotNullWhen(true)] out IBaseMeasure? baseMeasure);
     IBaseMeasureFactory GetBaseMeasureFactory();
-    decimal GetDecimalQuantity(IBaseMeasure? baseMeasure = null);
     LimitMode? GetLimitMode();
     RateComponentCode GetRateComponentCode(IBaseMeasure baseMeasure);
 }
+
+    //decimal GetDecimalQuantity(IBaseMeasure? baseMeasure = null);

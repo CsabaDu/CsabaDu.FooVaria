@@ -3,7 +3,8 @@
 public interface ICustomMeasureUnit : ICustomMeasureUnitType
 {
     bool IsCustomMeasureUnit(Enum measureUnit);
-    bool TrySetCustomMeasureUnit(Enum measureUnit, decimal exchangeRate, string? customName = null);
-    IEnumerable<Enum> GetNotUsedCustomMeasureUnits(MeasureUnitTypeCode? customMeasureUnitTypeCode = null);
-    IEnumerable<T> GetNotUsedCustomMeasureUnits<T>() where T : struct, Enum;
+    bool TrySetCustomMeasureUnit(Enum measureUnit, decimal exchangeRate/*, string? customName = null*/);
+    IEnumerable<Enum> GetNotUsedCustomMeasureUnits(MeasureUnitTypeCode? measureUnitTypeCode = null);
+
+    void SetCustomMeasureUnit(Enum measureUnit, decimal exchangeRate);
 }

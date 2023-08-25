@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Behaviors;
 
-public interface IValidMeasureUnit
+public interface IMeasureUnitCollection
 {
     Enum? GetMeasureUnit(string name);
 

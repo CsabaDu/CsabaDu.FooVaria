@@ -19,25 +19,25 @@ internal sealed class Limit : BaseMeasure, ILimit
     public Limit(IBaseMeasureFactory baseMeasureFactory, ValueType? quantity, Enum measureUnit, LimitMode? limitMode) : base(baseMeasureFactory, quantity ?? DefaultLimitQuantity, measureUnit)
     {
         Quantity = GetLimitQuantity(quantity);
-        LimitMode = GetValidLimitMode(LimitMode);
+        LimitMode = GetValidLimitMode(limitMode);
     }
 
     public Limit(IBaseMeasureFactory baseMeasureFactory, ValueType? quantity, IMeasurement measurement, LimitMode? limitMode) : base(baseMeasureFactory, quantity ?? DefaultLimitQuantity, measurement)
     {
         Quantity = GetLimitQuantity(quantity);
-        LimitMode = GetValidLimitMode(LimitMode);
+        LimitMode = GetValidLimitMode(limitMode);
     }
 
-    public Limit(IBaseMeasureFactory baseMeasureFactory, ValueType? quantity, MeasureUnitTypeCode customMeasureUnitTypeCode, decimal exchangeRate, string? customName) : base(baseMeasureFactory, quantity ?? DefaultLimitQuantity, customMeasureUnitTypeCode, exchangeRate, customName)
+    public Limit(IBaseMeasureFactory baseMeasureFactory, ValueType? quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, LimitMode? limitMode) : base(baseMeasureFactory, quantity ?? DefaultLimitQuantity, customName, measureUnitTypeCode, exchangeRate)
     {
         Quantity = GetLimitQuantity(quantity);
-        LimitMode = GetValidLimitMode(LimitMode);
+        LimitMode = GetValidLimitMode(limitMode);
     }
 
-    public Limit(IBaseMeasureFactory baseMeasureFactory, ValueType? quantity, Enum measureUnit, decimal exchangeRate, string? customName) : base(baseMeasureFactory, quantity ?? DefaultLimitQuantity, measureUnit, exchangeRate, customName)
+    public Limit(IBaseMeasureFactory baseMeasureFactory, ValueType? quantity, Enum measureUnit, decimal exchangeRate, string customName, LimitMode? limitMode) : base(baseMeasureFactory, quantity ?? DefaultLimitQuantity, measureUnit, exchangeRate, customName)
     {
         Quantity = GetLimitQuantity(quantity);
-        LimitMode = GetValidLimitMode(LimitMode);
+        LimitMode = GetValidLimitMode(limitMode);
     }
     #endregion
 
@@ -54,9 +54,9 @@ internal sealed class Limit : BaseMeasure, ILimit
 
         if (x == null || y == null) return false;
 
-        if (!x.Equals(y)) return false;
+        if (x.LimitMode != y.LimitMode) return false;
 
-        return x.LimitMode == y.LimitMode;
+        return x.Equals(y);
     }
 
     public override bool Equals(IBaseMeasure? other)
@@ -84,7 +84,7 @@ internal sealed class Limit : BaseMeasure, ILimit
         return GetLimit(measurement ?? Measurement, quantity);
     }
 
-    public override IBaseMeasure GetBaseMeasure(ValueType quantity, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, string? customName = null)
+    public override IBaseMeasure GetBaseMeasure(ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
     {
         return GetLimit(measureUnitTypeCode, exchangeRate, customName, quantity);
     }
@@ -96,9 +96,9 @@ internal sealed class Limit : BaseMeasure, ILimit
 
     public override IMeasurable GetDefault()
     {
-        IMeasurement measurement = (IMeasurement)Measurement.GetDefault();
+        Enum measureUnit = GetDefaultMeasureUnit();
 
-        return GetLimit(measurement);
+        return GetLimit(measureUnit);
     }
 
     public override ValueType GetDefaultRateComponentQuantity()
@@ -145,7 +145,7 @@ internal sealed class Limit : BaseMeasure, ILimit
         return GetLimitFactory().Create(measureUnit, quantity, limitMode);
     }
 
-    public ILimit GetLimit(MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, string? customName = null, ValueType? quantity = null, LimitMode? limitMode = null)
+    public ILimit GetLimit(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity = null, LimitMode? limitMode = null)
     {
         return GetLimitFactory().Create(measureUnitTypeCode, exchangeRate, customName, quantity, limitMode);
     }

@@ -8,11 +8,11 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         Measurement = baseMeasure.Measurement;
     }
 
-    private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, MeasureUnitTypeCode customMeasureUnitTypeCode, decimal exchangeRate, string? customName) : base(baseMeasureFactory, customMeasureUnitTypeCode)
+    private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate) : base(baseMeasureFactory, measureUnitTypeCode) // TODO
     {
         ValidateQuantity(quantity);
 
-        Measurement = GetMeasurementFactory(baseMeasureFactory).Create(customMeasureUnitTypeCode, exchangeRate, customName);
+        Measurement = GetMeasurementFactory(baseMeasureFactory).Create(customName, measureUnitTypeCode, exchangeRate);
     }
 
     private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, Enum measureUnit) : base(baseMeasureFactory, measureUnit)
@@ -22,7 +22,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         Measurement = GetMeasurementFactory(baseMeasureFactory).Create(measureUnit);
     }
 
-    private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, Enum measureUnit, decimal exchangeRate, string? customName) : base(baseMeasureFactory, measureUnit)
+    private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName) : base(baseMeasureFactory, measureUnit) // TODO
     {
         ValidateQuantity(quantity);
 
@@ -101,9 +101,9 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return MeasurableFactory as IBaseMeasureFactory ?? throw new InvalidOperationException(null);
     }
 
-    public decimal GetDecimalQuantity(IBaseMeasure? baseMeasure = null)
+    public decimal GetDecimalQuantity(IBaseMeasure? other = null)
     {
-        ValueType quantity = (baseMeasure ?? this).GetQuantity();
+        ValueType quantity = (other ?? this).GetQuantity();
 
         return (decimal?)quantity.ToQuantity(TypeCode.Decimal) ?? throw new InvalidOperationException(null);
     }
@@ -288,24 +288,24 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     #region Abstract methods
     public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit);
-    public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string? customName = null);
+    public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName);
     public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, IMeasurement? measurement = null);
-    public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, string? customName = null);
+    public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate);
     public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, string name);
     public abstract ValueType GetDefaultRateComponentQuantity();
     #endregion
     #endregion
 
     #region Protected methods
-    protected static bool Equals<T>(T rateComponent, IBaseMeasure? other) where T : class, IBaseMeasure
+    protected static bool Equals<T>(T baseMeasure, IBaseMeasure? other) where T : class, IBaseMeasure
     {
-        return rateComponent.Equals(other)
-            && rateComponent.GetRateComponentCode() == other.GetRateComponentCode();
+        return baseMeasure.Equals(other)
+            && baseMeasure.GetRateComponentCode() == other.GetRateComponentCode();
     }
 
-    protected static int GetHashCode<T>(T rateComponent) where T : class, IBaseMeasure
+    protected static int GetHashCode<T>(T baseMeasure) where T : class, IBaseMeasure
     {
-        return HashCode.Combine(rateComponent.GetHashCode(), rateComponent.GetRateComponentCode());
+        return HashCode.Combine(baseMeasure.GetHashCode(), baseMeasure.GetRateComponentCode());
     }
     #endregion
 

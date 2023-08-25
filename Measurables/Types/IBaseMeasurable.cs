@@ -3,9 +3,4 @@
 public interface IBaseMeasurable : IMeasureUnitType, IDefaultMeasureUnit
 {
     MeasureUnitTypeCode MeasureUnitTypeCode { get; init; }
-
-    Enum GetMeasureUnit();
-    bool IsDefinedMeasureUnit(Enum measureUnit);
-
-    void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode? measureUnitTypeCode = null);
 }
