@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿using System;
+
+namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal abstract class BaseMeasure : Measurable, IBaseMeasure
 {
@@ -22,7 +24,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         Measurement = GetMeasurementFactory(baseMeasureFactory).Create(measureUnit);
     }
 
-    private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName) : base(baseMeasureFactory, measureUnit) // TODO
+    private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName) : base(baseMeasureFactory, measureUnit)
     {
         ValidateQuantity(quantity);
 
@@ -39,7 +41,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     #region Properties
     public IMeasurement Measurement { get; init; }
-    public decimal DefaultQuantity => GetDecimalQuantity() * GetExchangeRate();
+    public decimal DefaultQuantity => CorrectQuantityDecimals(GetDecimalQuantity() * GetExchangeRate());
 
     #region Abstract properties
     public abstract object Quantity { get; init; }
@@ -73,7 +75,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     {
         if (exchangeRate <= 0) return null;
 
-        ValueType exchanged = DefaultQuantity / exchangeRate;
+        ValueType exchanged = CorrectQuantityDecimals(DefaultQuantity / exchangeRate);
 
         return exchanged.ToQuantity(QuantityTypeCode);
     }
@@ -103,9 +105,14 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     public decimal GetDecimalQuantity(IBaseMeasure? other = null)
     {
-        ValueType quantity = (other ?? this).GetQuantity();
-
-        return (decimal?)quantity.ToQuantity(TypeCode.Decimal) ?? throw new InvalidOperationException(null);
+        try
+        {
+            return (decimal)(other ?? this).GetQuantity(TypeCode.Decimal);
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException(ex.Message, ex.InnerException);
+        }
     }
 
     public IBaseMeasure GetDefault(MeasureUnitTypeCode measureUnitTypeCode)
@@ -145,9 +152,9 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     public virtual ValueType GetQuantity(ValueType? quantity = null)
     {
-        if (quantity == null) return (ValueType)Quantity;
+        if (TryGetQuantity(quantity, out ValueType? rateComponentQuantity)) return rateComponentQuantity;
 
-        return quantity.ToQuantity(QuantityTypeCode) ?? throw QuantityArgumentOutOfRangeException(quantity);
+        throw QuantityArgumentOutOfRangeException(quantity);
     }
 
     public ValueType GetQuantity(RoundingMode roundingMode)
@@ -213,9 +220,9 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return GetBaseMeasureFactory().RateComponentCode;
     }
 
-    public RateComponentCode GetRateComponentCode(IBaseMeasure? baseMeasure = null)
+    public RateComponentCode GetRateComponentCode(IBaseMeasure baseMeasure)
     {
-        return (baseMeasure ?? this).GetBaseMeasureFactory().RateComponentCode;
+        return NullChecked(baseMeasure, nameof(baseMeasure)).GetBaseMeasureFactory().RateComponentCode;
     }
 
     public bool IsExchangeableTo(Enum? context)
@@ -247,14 +254,41 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return exchanged != null;
     }
 
+    public bool TryGetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName, [NotNullWhen(true)] out IBaseMeasure? baseMeasure)
+    {
+        baseMeasure = null;
+
+        if (!Measurement.TryGetCustomMeasurement(measureUnit, exchangeRate, customName, out ICustomMeasurement? customMasurement)) return false;
+
+        if (!TryGetQuantity(quantity, out ValueType? rateComponentQuantity)) return false;
+
+        try
+        {
+            baseMeasure = GetBaseMeasure(rateComponentQuantity, customMasurement as IMeasurement);
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public bool TryGetQuantity(ValueType? quantity, [NotNullWhen(true)] out ValueType? rateComponentQuantity)
+    {
+        rateComponentQuantity = quantity == null ?
+            (ValueType)Quantity
+            : quantity.ToQuantity(QuantityTypeCode);
+
+        return rateComponentQuantity != null;
+    }
+
     public bool TryExchangeTo(Enum measureUnit, [NotNullWhen(true)] out IBaseMeasure? exchanged)
     {
         exchanged = ExchangeTo(measureUnit);
 
         return exchanged != null;
     }
-
-    public abstract bool TryGetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string? customName, [NotNullWhen(true)] out IBaseMeasure? baseMeasure);
 
     public override sealed void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
@@ -305,7 +339,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     protected static int GetHashCode<T>(T baseMeasure) where T : class, IBaseMeasure
     {
-        return HashCode.Combine(baseMeasure.GetHashCode(), baseMeasure.GetRateComponentCode());
+        return HashCode.Combine(baseMeasure as IBaseMeasure, baseMeasure.GetRateComponentCode());
     }
     #endregion
 
@@ -313,6 +347,11 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     private static IMeasurementFactory GetMeasurementFactory(IBaseMeasureFactory baseMeasureFactory)
     {
         return baseMeasureFactory.MeasurementFactory;
+    }
+
+    private static decimal CorrectQuantityDecimals(decimal quantity)
+    {
+        return decimal.Round(Convert.ToDecimal(quantity), 8);
     }
     #endregion
 }

@@ -282,11 +282,6 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
         public abstract IMeasure GetMeasure(Enum measureUnit);
         public abstract IMeasure GetMeasure(string name);
 
-        public override bool TryGetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string? customName, [NotNullWhen(true)] out IBaseMeasure? baseMeasure)
-        {
-            throw new NotImplementedException();
-        }
-
         public override ValueType GetDefaultRateComponentQuantity()
         {
             return DefaultMeasureQuantity;

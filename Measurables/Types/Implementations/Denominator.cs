@@ -54,7 +54,7 @@ internal sealed class Denominator : BaseMeasure, IDenominator
         return GetDenominator(measureUnit, quantity);
     }
 
-    public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string? customName = null)
+    public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName)
     {
         return GetDenominator(measureUnit, exchangeRate, customName, quantity);
     }
@@ -83,7 +83,7 @@ internal sealed class Denominator : BaseMeasure, IDenominator
 
     public override ValueType GetDefaultRateComponentQuantity()
     {
-        throw new NotImplementedException();
+        return DefaultDenominatorQuantity;
     }
 
     public IDenominator GetDenominator(IMeasurement measurement, ValueType? quantity = null)
@@ -101,14 +101,14 @@ internal sealed class Denominator : BaseMeasure, IDenominator
         return GetDenominatorFactory().Create(measureUnit, quantity);
     }
 
-    public IDenominator GetDenominator(Enum measureUnit, decimal exchangeRate, string? customName = null, ValueType? quantity = null)
+    public IDenominator GetDenominator(Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity = null)
     {
         return GetDenominatorFactory().Create(measureUnit, exchangeRate, customName, quantity);
     }
 
     public IDenominator GetDenominator(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity = null)
     {
-        return GetDenominatorFactory().Create(measureUnitTypeCode, exchangeRate, customName, quantity);
+        return GetDenominatorFactory().Create(customName, measureUnitTypeCode, exchangeRate, quantity);
     }
 
     public IDenominator GetDenominator(string name, ValueType? quantity = null)
@@ -130,14 +130,9 @@ internal sealed class Denominator : BaseMeasure, IDenominator
     {
         quantity = base.GetQuantity(quantity);
 
-        if ((decimal)quantity <= 0) throw QuantityArgumentOutOfRangeException(quantity);
+        if ((decimal)quantity > 0) return quantity;
 
-        return quantity;
-    }
-
-    public override bool TryGetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string? customName, [NotNullWhen(true)] out IBaseMeasure? baseMeasure)
-    {
-        throw new NotImplementedException();
+        throw QuantityArgumentOutOfRangeException(quantity);
     }
     #endregion
 
