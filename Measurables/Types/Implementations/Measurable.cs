@@ -24,12 +24,10 @@
             MeasurableFactory = measurable.MeasurableFactory;
         }
 
-        //private protected Measurable(IMeasurableFactory measurableFactory, params IBaseMeasure[] baseMeasures) : this(measurableFactory)
-        //{
-        //    _ = NullChecked(baseMeasures, nameof(baseMeasures));
-
-        //    MeasureUnitTypeCode = GetMeasureUnitTypeCode(measurableFactory, baseMeasures);
-        //}
+        private protected Measurable(IMeasurableFactory measurableFactory, params IQuantifiable[] quantifiables) : base(quantifiables)
+        {
+            MeasurableFactory = NullChecked(measurableFactory, nameof(measurableFactory));
+        }
         #endregion
 
         #region Properties
@@ -70,6 +68,7 @@
         public abstract IMeasurable GetDefault();
         #endregion
         #endregion
+
     }
 
     internal abstract class Rate : Measurable, IRate
@@ -87,6 +86,10 @@
         }
 
         private protected Rate(IMeasurableFactory measurableFactory, IMeasurable measurable) : base(measurableFactory, measurable)
+        {
+        }
+
+        private protected Rate(IMeasurableFactory measurableFactory, params IQuantifiable[] quantifiables) : base(measurableFactory, quantifiables)
         {
         }
 

@@ -21,6 +21,11 @@ internal abstract class BaseMeasurable : IBaseMeasurable
     {
         MeasureUnitTypeCode = NullChecked(baseMeasurable, nameof(baseMeasurable)).MeasureUnitTypeCode;
     }
+
+    private protected BaseMeasurable(IQuantifiable[] quantifiables)
+    {
+        MeasureUnitTypeCode = GetMeasureUnitTypeCode(quantifiables);
+    }
     #endregion
 
     #region Properties
@@ -53,25 +58,27 @@ internal abstract class BaseMeasurable : IBaseMeasurable
 
     public IEnumerable<string> GetDefaultNames(MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
-        if (measureUnitTypeCode == null)
+        if (measureUnitTypeCode != null) return getDefaultNames(measureUnitTypeCode.Value);
+
+        IEnumerable<MeasureUnitTypeCode> measureUnitTypeCodes = GetMeasureUnitTypeCodes();
+        IEnumerable<string> defaultNames = getDefaultNames(measureUnitTypeCodes.First());
+
+        for (int i = 1; i < measureUnitTypeCodes.Count(); i++)
         {
-            IEnumerable<string> defaultNames = new List<string>();
-
-            foreach (MeasureUnitTypeCode item in GetMeasureUnitTypeCodes())
-            {
-                Type measureUnitType = GetMeasureUnitType(item);
-                IEnumerable<string> next = Enum.GetNames(measureUnitType);
-                defaultNames = defaultNames.Union(next);
-            }
-
-            return defaultNames;
+            IEnumerable<string> next = getDefaultNames(measureUnitTypeCodes.ElementAt(i));
+            defaultNames = defaultNames.Union(next);
         }
-        else
+
+        return defaultNames;
+
+        #region Local methods
+        IEnumerable<string> getDefaultNames(MeasureUnitTypeCode measureUnitTypeCode)
         {
             Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode);
 
             return Enum.GetNames(measureUnitType);
         }
+        #endregion
     }
 
     public Type GetMeasureUnitType(MeasureUnitTypeCode? measureUnitTypeCode = null)
@@ -139,5 +146,64 @@ internal abstract class BaseMeasurable : IBaseMeasurable
     #region Abstract methods
     public abstract Enum GetMeasureUnit();
     #endregion
+    #endregion
+
+    #region Private methods
+    private static MeasureUnitTypeCode GetMeasureUnitTypeCode(IQuantifiable[] quantifiables)
+    {
+        int count = NullChecked(quantifiables, nameof(quantifiables)).Length;
+
+        return count switch
+        {
+            1 => (quantifiables![0] as IMeasurable)!.MeasureUnitTypeCode,
+
+            2 or
+            3 => getRateMeasureUnitTypeCode(),
+
+            _ => throw quantifiablesArgumentOutOfRangeException(),
+        };
+
+        #region Local methods
+        MeasureUnitTypeCode getRateMeasureUnitTypeCode()
+        {
+            if (quantifiables!.Any(x => x is not IBaseMeasure))
+            {
+                throw quantifiablesArgumentOutOfRangeException();
+            }
+
+            return count switch
+            {
+                2 => getFlatRateMeasureUnitTypeCode(),
+                3 => getLimitedRateMeasureUnitTypeCode(),
+
+                _ => throw new InvalidOperationException(null),
+            };
+        }
+
+        MeasureUnitTypeCode getFlatRateMeasureUnitTypeCode()
+        {
+            IEnumerable<IDenominator> denominators = quantifiables!.OfType<IDenominator>();
+
+            if (denominators.Count() == 1 && quantifiables!.Any(x => x is IMeasure))
+            {
+                return denominators.First().MeasureUnitTypeCode;
+            }
+
+            throw quantifiablesArgumentOutOfRangeException();
+        }
+
+        MeasureUnitTypeCode getLimitedRateMeasureUnitTypeCode()
+        {
+            if (quantifiables!.Any(x => x is ILimit)) return getFlatRateMeasureUnitTypeCode();
+
+            throw quantifiablesArgumentOutOfRangeException();
+        }
+
+        ArgumentOutOfRangeException quantifiablesArgumentOutOfRangeException()
+        {
+            return new ArgumentOutOfRangeException(nameof(quantifiables));
+        }
+        #endregion
+    }
     #endregion
 }
