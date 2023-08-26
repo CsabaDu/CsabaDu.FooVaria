@@ -74,13 +74,6 @@ internal sealed class Denominator : BaseMeasure, IDenominator
         return GetDenominator(name, quantity);
     }
 
-    public override IMeasurable GetDefault()
-    {
-        Enum measureUnit = GetDefaultMeasureUnit();
-
-        return GetDenominator(measureUnit);
-    }
-
     public override ValueType GetDefaultRateComponentQuantity()
     {
         return DefaultDenominatorQuantity;

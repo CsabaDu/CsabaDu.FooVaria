@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal abstract class BaseMeasure : Measurable, IBaseMeasure
 {
@@ -113,6 +111,11 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         {
             throw new InvalidOperationException(ex.Message, ex.InnerException);
         }
+    }
+
+    public override sealed IMeasurable GetDefault()
+    {
+        return GetDefault(MeasureUnitTypeCode);
     }
 
     public IBaseMeasure GetDefault(MeasureUnitTypeCode measureUnitTypeCode)

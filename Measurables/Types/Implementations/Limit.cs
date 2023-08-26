@@ -91,13 +91,6 @@ internal sealed class Limit : BaseMeasure, ILimit
         return GetLimit(name, quantity);
     }
 
-    public override IMeasurable GetDefault()
-    {
-        Enum measureUnit = GetDefaultMeasureUnit();
-
-        return GetLimit(measureUnit);
-    }
-
     public override ValueType GetDefaultRateComponentQuantity()
     {
         return DefaultLimitQuantity;

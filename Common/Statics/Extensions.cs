@@ -20,6 +20,11 @@ public static class Extensions
         }
     }
 
+    public static IEnumerable<Type> GetQuantityTypes()
+    {
+        return QuantityTypes;
+    }
+
     #region System.Int32
     public static bool? FitsIn(this int comparison, LimitMode? limitMode)
     {
@@ -61,8 +66,10 @@ public static class Extensions
             {
                 TypeCode.Int32 or
                 TypeCode.Int64 => getIntQuantity(),
+
                 TypeCode.UInt32 or
                 TypeCode.UInt64 => getUIntQuantityOrNull(),
+
                 TypeCode.Double or
                 TypeCode.Decimal => getRoundedQuantity(roundingDecimals),
 
