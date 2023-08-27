@@ -2,42 +2,45 @@
 {
     internal abstract class Rate : Measurable, IRate
     {
+        #region Constructors
         private protected Rate(IRate rate) : base(rate)
         {
             Numerator = rate.Numerator;
             Denominator = rate.Denominator;
         }
 
-        private protected Rate(IRateFactory rateFactory, IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity, ILimit? limit) : base(rateFactory, measureUnitTypeCode)
+        private protected Rate(IRateFactory rateFactory, IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity) : base(rateFactory, measureUnitTypeCode)
         {
             Numerator = NullChecked(numerator, nameof(numerator));
             Denominator = GetDenominatorFactory(rateFactory).Create(customName, measureUnitTypeCode, exchangeRate, quantity);
         }
 
-        private protected Rate(IRateFactory rateFactory, IMeasure numerator, Enum measureUnit, ValueType? quantity, ILimit? limit) : base(rateFactory, measureUnit)
+        private protected Rate(IRateFactory rateFactory, IMeasure numerator, Enum measureUnit, ValueType? quantity) : base(rateFactory, measureUnit)
         {
             Numerator = NullChecked(numerator, nameof(numerator));
             Denominator = GetDenominatorFactory(rateFactory).Create(measureUnit, quantity);
         }
 
-        private protected Rate(IRateFactory rateFactory, IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity, ILimit? limit) : base(rateFactory, measureUnit)
+        private protected Rate(IRateFactory rateFactory, IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity) : base(rateFactory, measureUnit)
         {
             Numerator = NullChecked(numerator, nameof(numerator));
             Denominator = GetDenominatorFactory(rateFactory).Create(measureUnit, exchangeRate, customName, quantity);
         }
 
-        private protected Rate(IRateFactory rateFactory, IRate rate, ILimit? limit) : base(rateFactory, rate)
+        private protected Rate(IRateFactory rateFactory, IRate rate) : base(rateFactory, rate)
         {
             Numerator = rate.Numerator;
             Denominator = rate.Denominator;
         }
 
-        private protected Rate(IRateFactory rateFactory, IMeasure numerator, IDenominator denominator, ILimit? limit) : base(rateFactory, denominator)
+        private protected Rate(IRateFactory rateFactory, IMeasure numerator, IDenominator denominator) : base(rateFactory, denominator)
         {
             Numerator = NullChecked(numerator, nameof(numerator));
             Denominator = NullChecked(denominator, nameof(denominator));
         }
+        #endregion
 
+        #region Properties
         public IBaseMeasure? this[RateComponentCode rateComponentCode] => rateComponentCode switch
         {
             RateComponentCode.Denominator => Denominator,
@@ -46,25 +49,63 @@
 
             _ => null,
         };
-
         public IDenominator Denominator { get; init; }
         public IMeasure Numerator { get; init; }
+        #endregion
 
-        public abstract int CompareTo(IRate? other);
-        public abstract bool Equals(IRate? other);
-        public abstract IRate? ExchangeTo(IDenominator context);
+        #region Public methods
+        public int CompareTo(IRate? other)
+        {
+            if (other == null) return 1;
+
+            if (!IsExchangeableTo(other)) throw new ArgumentOutOfRangeException(nameof(other));
+
+            return GetDefaultRateRatio(this).CompareTo(GetDefaultRateRatio(other));
+        }
+
+        public bool Equals(IRate? other)
+        {
+            return other is IRate rate
+                && Numerator.Equals(rate.Numerator)
+                && Denominator.Equals(rate.Denominator);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is IRate other
+                && Equals(other);
+        }
+
+        public IRate? ExchangeTo(IDenominator denominator)
+        {
+            if (!denominator.IsExchangeableTo(MeasureUnitTypeCode)) return null;
+
+            throw new NotImplementedException();
+        }
 
         public override IMeasurable GetDefault()
         {
             throw new NotImplementedException();
         }
 
-        public abstract decimal GetDefaultQuantity();
-        public abstract ILimit? GetLimit();
-
-        public override Enum GetMeasureUnit()
+        public decimal GetDefaultQuantity()
         {
-            throw new NotImplementedException();
+            return Numerator.DefaultQuantity;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Numerator, Denominator);
+        }
+
+        public virtual ILimit? GetLimit()
+        {
+            return null;
+        }
+
+        public override sealed Enum GetMeasureUnit()
+        {
+            return Denominator.GetMeasureUnit();
         }
 
         public override sealed TypeCode GetQuantityTypeCode(MeasureUnitTypeCode? measureUnitTypeCode = null)
@@ -79,15 +120,41 @@
         public abstract IRate GetRate(IMeasure numerator, IMeasurement measurement, ValueType? quantity = null, ILimit? limit = null);
         public abstract IRate GetRate(IMeasure numerator, IDenominator? denominator = null, ILimit? limit = null);
         public abstract IRate GetRate(IRate? other = null);
-        public abstract IBaseMeasure? GetRateComponent(RateComponentCode rateComponentCode);
-        public abstract bool IsExchangeableTo(IRate? context);
-        public abstract decimal ProportionalTo(IRate comparable);
-        public abstract bool TryExchangeTo(IDenominator context, [NotNullWhen(true)] out IRate? exchanged);
+
+        public IBaseMeasure? GetRateComponent(RateComponentCode rateComponentCode)
+        {
+            return this[rateComponentCode];
+        }
+
+        public bool IsExchangeableTo(IRate? other)
+        {
+            return other != null
+                && Numerator.IsExchangeableTo(other.Numerator.MeasureUnitTypeCode)
+                && Denominator.IsExchangeableTo(other.Denominator.MeasureUnitTypeCode);
+        }
+
+        public decimal ProportionalTo(IRate rate)
+        {
+            return GetDefaultRateRatio(this) / GetDefaultRateRatio(NullChecked(rate, nameof(rate)));
+        }
+
+        #region Abstract methods
+        public abstract bool TryExchangeTo(IDenominator denominator, [NotNullWhen(true)] out IRate? exchanged);
+        #endregion
+        #endregion
 
         #region Private methods
         private static IDenominatorFactory GetDenominatorFactory(IRateFactory rateFactory)
         {
             return rateFactory.DenominatorFactory;
+        }
+
+        private static decimal GetDefaultRateRatio(IRate rate)
+        {
+            decimal numeratorQuantity = rate.Numerator.DefaultQuantity;
+            decimal denominatorQuantity = rate.Denominator.DefaultQuantity;
+
+            return numeratorQuantity / denominatorQuantity;
         }
         #endregion
     }
