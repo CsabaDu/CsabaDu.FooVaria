@@ -45,5 +45,4 @@ public static class Validate
     {
         return new InvalidEnumArgumentException(nameof(limitMode), (int)limitMode, limitMode.GetType());
     }
-
 }

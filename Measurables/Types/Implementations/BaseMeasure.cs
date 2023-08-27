@@ -8,7 +8,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         Measurement = baseMeasure.Measurement;
     }
 
-    private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate) : base(baseMeasureFactory, measureUnitTypeCode) // TODO
+    private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate) : base(baseMeasureFactory, measureUnitTypeCode)
     {
         ValidateQuantity(quantity);
 
@@ -211,6 +211,11 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         if (GetQuantityTypeCodes().Contains(quantityTypeCode)) return quantityTypeCode;
 
         return null;
+    }
+
+    public override sealed TypeCode GetQuantityTypeCode(MeasureUnitTypeCode? measureUnitTypeCode = null)
+    {
+        return base.GetQuantityTypeCode(measureUnitTypeCode);
     }
 
     public IBaseMeasure? GetRateComponent(IRate rate, RateComponentCode rateComponentCode)

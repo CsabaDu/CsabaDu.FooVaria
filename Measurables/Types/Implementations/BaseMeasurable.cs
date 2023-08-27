@@ -21,11 +21,6 @@ internal abstract class BaseMeasurable : IBaseMeasurable
     {
         MeasureUnitTypeCode = NullChecked(baseMeasurable, nameof(baseMeasurable)).MeasureUnitTypeCode;
     }
-
-    private protected BaseMeasurable(IQuantifiable[] quantifiables)
-    {
-        MeasureUnitTypeCode = GetMeasureUnitTypeCode(quantifiables);
-    }
     #endregion
 
     #region Properties
@@ -146,64 +141,5 @@ internal abstract class BaseMeasurable : IBaseMeasurable
     #region Abstract methods
     public abstract Enum GetMeasureUnit();
     #endregion
-    #endregion
-
-    #region Private methods
-    private static MeasureUnitTypeCode GetMeasureUnitTypeCode(IQuantifiable[] quantifiables)
-    {
-        int count = NullChecked(quantifiables, nameof(quantifiables)).Length;
-
-        return count switch
-        {
-            1 => (quantifiables![0] as IMeasurable)!.MeasureUnitTypeCode,
-
-            2 or
-            3 => getRateMeasureUnitTypeCode(),
-
-            _ => throw quantifiablesArgumentOutOfRangeException(),
-        };
-
-        #region Local methods
-        MeasureUnitTypeCode getRateMeasureUnitTypeCode()
-        {
-            if (quantifiables!.Any(x => x is not IBaseMeasure))
-            {
-                throw quantifiablesArgumentOutOfRangeException();
-            }
-
-            return count switch
-            {
-                2 => getFlatRateMeasureUnitTypeCode(),
-                3 => getLimitedRateMeasureUnitTypeCode(),
-
-                _ => throw new InvalidOperationException(null),
-            };
-        }
-
-        MeasureUnitTypeCode getFlatRateMeasureUnitTypeCode()
-        {
-            IEnumerable<IDenominator> denominators = quantifiables!.OfType<IDenominator>();
-
-            if (denominators.Count() == 1 && quantifiables!.Any(x => x is IMeasure))
-            {
-                return denominators.First().MeasureUnitTypeCode;
-            }
-
-            throw quantifiablesArgumentOutOfRangeException();
-        }
-
-        MeasureUnitTypeCode getLimitedRateMeasureUnitTypeCode()
-        {
-            if (quantifiables!.Any(x => x is ILimit)) return getFlatRateMeasureUnitTypeCode();
-
-            throw quantifiablesArgumentOutOfRangeException();
-        }
-
-        ArgumentOutOfRangeException quantifiablesArgumentOutOfRangeException()
-        {
-            return new ArgumentOutOfRangeException(nameof(quantifiables));
-        }
-        #endregion
-    }
     #endregion
 }
