@@ -6,7 +6,7 @@ public interface IRate : IMeasurable, IQuantifiable, IProportional<IRate, IRate>
     IMeasure Numerator { get; init; }
     IBaseMeasure? this[RateComponentCode rateComponentCode] { get; }
 
-    decimal GetDefaultQuantity();
+    decimal GetDefaultQuantity(IRate? rate = null);
     ILimit? GetLimit();
     IRate GetRate(IMeasure numerator, string customName, ValueType? quantity = null, ILimit? limit = null);
     IRate GetRate(IMeasure numerator, Enum measureUnit, ValueType? quantity = null, ILimit? limit = null);

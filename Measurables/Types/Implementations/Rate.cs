@@ -60,7 +60,7 @@
 
             if (!IsExchangeableTo(other)) throw new ArgumentOutOfRangeException(nameof(other));
 
-            return GetDefaultRateRatio(this).CompareTo(GetDefaultRateRatio(other));
+            return GetDefaultQuantity().CompareTo(GetDefaultQuantity(other));
         }
 
         public bool Equals(IRate? other)
@@ -85,12 +85,19 @@
 
         public override IMeasurable GetDefault()
         {
-            throw new NotImplementedException();
+            IMeasure numerator = (IMeasure)Numerator.GetDefault();
+            IDenominator denominator = (IDenominator)Denominator.GetDefault();
+
+            return GetRate(numerator, denominator);
         }
 
-        public decimal GetDefaultQuantity()
+        public decimal GetDefaultQuantity(IRate? rate = null)
         {
-            return Numerator.DefaultQuantity;
+            rate ??= this;
+            decimal numeratorQuantity = rate.Numerator.DefaultQuantity;
+            decimal denominatorQuantity = rate.Denominator.DefaultQuantity;
+
+            return numeratorQuantity / denominatorQuantity;
         }
 
         public override int GetHashCode()
@@ -135,11 +142,18 @@
 
         public decimal ProportionalTo(IRate rate)
         {
-            return GetDefaultRateRatio(this) / GetDefaultRateRatio(NullChecked(rate, nameof(rate)));
+            decimal defaultQuantity = GetDefaultQuantity(NullChecked(rate, nameof(rate)));
+
+            return GetDefaultQuantity() / defaultQuantity;
         }
 
+        public bool TryExchangeTo(IDenominator denominator, [NotNullWhen(true)] out IRate? exchanged)
+        {
+            exchanged = ExchangeTo(denominator);
+
+            return exchanged != null;
+        }
         #region Abstract methods
-        public abstract bool TryExchangeTo(IDenominator denominator, [NotNullWhen(true)] out IRate? exchanged);
         #endregion
         #endregion
 
@@ -147,14 +161,6 @@
         private static IDenominatorFactory GetDenominatorFactory(IRateFactory rateFactory)
         {
             return rateFactory.DenominatorFactory;
-        }
-
-        private static decimal GetDefaultRateRatio(IRate rate)
-        {
-            decimal numeratorQuantity = rate.Numerator.DefaultQuantity;
-            decimal denominatorQuantity = rate.Denominator.DefaultQuantity;
-
-            return numeratorQuantity / denominatorQuantity;
         }
         #endregion
     }
