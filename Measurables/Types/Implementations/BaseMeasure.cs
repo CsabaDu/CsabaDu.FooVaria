@@ -240,11 +240,9 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     public decimal ProportionalTo(IBaseMeasure baseMeasure)
     {
-        MeasureUnitTypeCode measureUnitTypeCode = NullChecked(baseMeasure, nameof(baseMeasure)).MeasureUnitTypeCode;
+        if (NullChecked(baseMeasure, nameof(baseMeasure)).IsExchangeableTo(MeasureUnitTypeCode)) return DefaultQuantity / baseMeasure.DefaultQuantity;
 
-        if (IsExchangeableTo(measureUnitTypeCode)) return DefaultQuantity / baseMeasure.DefaultQuantity;
-
-        throw new ArgumentOutOfRangeException(nameof(baseMeasure), measureUnitTypeCode, null);
+        throw new ArgumentOutOfRangeException(nameof(baseMeasure), baseMeasure.MeasureUnitTypeCode, null);
     }
 
     public IBaseMeasure Round(RoundingMode roundingMode)

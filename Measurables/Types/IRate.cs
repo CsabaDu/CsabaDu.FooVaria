@@ -6,14 +6,15 @@ public interface IRate : IMeasurable, IQuantifiable, IProportional<IRate, IRate>
     IMeasure Numerator { get; init; }
     IBaseMeasure? this[RateComponentCode rateComponentCode] { get; }
 
-    decimal GetDefaultQuantity(IRate? rate = null);
+    decimal GetDefaultQuantity();
     ILimit? GetLimit();
-    IRate GetRate(IMeasure numerator, string customName, ValueType? quantity = null, ILimit? limit = null);
-    IRate GetRate(IMeasure numerator, Enum measureUnit, ValueType? quantity = null, ILimit? limit = null);
-    IRate GetRate(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity = null, ILimit? limit = null);
-    IRate GetRate(IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity = null, ILimit? limit = null);
-    IRate GetRate(IMeasure numerator, IMeasurement measurement, ValueType? quantity = null, ILimit? limit = null);
+    IRate GetRate(IMeasure numerator, string customName, decimal? quantity = null, ILimit? limit = null);
+    IRate GetRate(IMeasure numerator, Enum measureUnit, decimal? quantity = null, ILimit? limit = null);
+    IRate GetRate(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, decimal? quantity = null, ILimit? limit = null);
+    IRate GetRate(IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, decimal? quantity = null, ILimit? limit = null);
+    IRate GetRate(IMeasure numerator, IMeasurement measurement, decimal? quantity = null, ILimit? limit = null);
     IRate GetRate(IMeasure numerator, IDenominator? denominator = null, ILimit? limit = null);
     IRate GetRate(IRate? other = null);
     IBaseMeasure? GetRateComponent(RateComponentCode rateComponentCode);
+    IRateFactory GetRateFactory();
 }
