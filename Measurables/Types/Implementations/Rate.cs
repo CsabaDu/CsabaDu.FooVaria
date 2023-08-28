@@ -36,7 +36,7 @@
         private protected Rate(IRateFactory rateFactory, IMeasure numerator, IDenominator denominator) : base(rateFactory, denominator)
         {
             Numerator = NullChecked(numerator, nameof(numerator));
-            Denominator = NullChecked(denominator, nameof(denominator));
+            Denominator = denominator;
         }
         #endregion
 
@@ -60,7 +60,7 @@
 
             if (!IsExchangeableTo(other)) throw new ArgumentOutOfRangeException(nameof(other));
 
-            return GetDefaultQuantity().CompareTo(GetDefaultQuantity(other));
+            return GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
         }
 
         public bool Equals(IRate? other)
@@ -78,9 +78,11 @@
 
         public IRate? ExchangeTo(IDenominator denominator)
         {
-            if (!denominator.IsExchangeableTo(MeasureUnitTypeCode)) return null;
+            if (!denominator?.IsExchangeableTo(MeasureUnitTypeCode) == true) return null;
+            
+            IMeasure numerator = Numerator.Divide(Denominator.ProportionalTo(denominator!));
 
-            throw new NotImplementedException();
+            return GetRate(numerator, denominator);
         }
 
         public override IMeasurable GetDefault()
@@ -94,10 +96,10 @@
         public decimal GetDefaultQuantity(IRate? rate = null)
         {
             rate ??= this;
-            decimal numeratorQuantity = rate.Numerator.DefaultQuantity;
-            decimal denominatorQuantity = rate.Denominator.DefaultQuantity;
+            decimal numeratorDefaultQuantity = rate.Numerator.DefaultQuantity;
+            decimal denominatorDefaultQuantity = rate.Denominator.DefaultQuantity;
 
-            return numeratorQuantity / denominatorQuantity;
+            return numeratorDefaultQuantity / denominatorDefaultQuantity;
         }
 
         public override int GetHashCode()
@@ -120,14 +122,6 @@
             return base.GetQuantityTypeCode(measureUnitTypeCode ?? Numerator.MeasureUnitTypeCode);
         }
 
-        public abstract IRate GetRate(IMeasure numerator, string customName, ValueType? quantity = null, ILimit? limit = null);
-        public abstract IRate GetRate(IMeasure numerator, Enum measureUnit, ValueType? quantity = null, ILimit? limit = null);
-        public abstract IRate GetRate(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity = null, ILimit? limit = null);
-        public abstract IRate GetRate(IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity = null, ILimit? limit = null);
-        public abstract IRate GetRate(IMeasure numerator, IMeasurement measurement, ValueType? quantity = null, ILimit? limit = null);
-        public abstract IRate GetRate(IMeasure numerator, IDenominator? denominator = null, ILimit? limit = null);
-        public abstract IRate GetRate(IRate? other = null);
-
         public IBaseMeasure? GetRateComponent(RateComponentCode rateComponentCode)
         {
             return this[rateComponentCode];
@@ -142,7 +136,7 @@
 
         public decimal ProportionalTo(IRate rate)
         {
-            decimal defaultQuantity = GetDefaultQuantity(NullChecked(rate, nameof(rate)));
+            decimal defaultQuantity = NullChecked(rate, nameof(rate)).GetDefaultQuantity();
 
             return GetDefaultQuantity() / defaultQuantity;
         }
@@ -153,7 +147,15 @@
 
             return exchanged != null;
         }
+
         #region Abstract methods
+        public abstract IRate GetRate(IMeasure numerator, string customName, ValueType? quantity = null, ILimit? limit = null);
+        public abstract IRate GetRate(IMeasure numerator, Enum measureUnit, ValueType? quantity = null, ILimit? limit = null);
+        public abstract IRate GetRate(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity = null, ILimit? limit = null);
+        public abstract IRate GetRate(IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity = null, ILimit? limit = null);
+        public abstract IRate GetRate(IMeasure numerator, IMeasurement measurement, ValueType? quantity = null, ILimit? limit = null);
+        public abstract IRate GetRate(IMeasure numerator, IDenominator? denominator = null, ILimit? limit = null);
+        public abstract IRate GetRate(IRate? other = null);
         #endregion
         #endregion
 
