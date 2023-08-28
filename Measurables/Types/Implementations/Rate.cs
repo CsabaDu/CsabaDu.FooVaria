@@ -65,9 +65,8 @@
 
         public bool Equals(IRate? other)
         {
-            return other is IRate rate
-                && Numerator.Equals(rate.Numerator)
-                && Denominator.Equals(rate.Denominator);
+            return other?.Numerator.Equals(Numerator) == true
+                && other.Denominator.Equals(Denominator);
         }
 
         public override bool Equals(object? obj)
