@@ -10,4 +10,3 @@ global using CsabaDu.FooVaria.Measurables.Types;
 global using System.Diagnostics.CodeAnalysis;
 global using static CsabaDu.FooVaria.Common.Statics.Extensions;
 global using static CsabaDu.FooVaria.Common.Statics.Validate;
-global using static CsabaDu.FooVaria.Measurables.Statics.Validate;

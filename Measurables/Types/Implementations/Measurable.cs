@@ -3,7 +3,6 @@
 internal abstract class Measurable : BaseMeasurable, IMeasurable
 {
     #region Constructors
-
     private protected Measurable(IMeasurableFactory measurableFactory, MeasureUnitTypeCode measureUnitTypeCode) : base(measureUnitTypeCode)
     {
         MeasurableFactory = NullChecked(measurableFactory, nameof(measurableFactory));

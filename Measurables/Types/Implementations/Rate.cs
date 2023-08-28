@@ -85,7 +85,7 @@
             return GetRate(numerator, denominator, GetLimit());
         }
 
-        public override IMeasurable GetDefault()
+        public override sealed IMeasurable GetDefault()
         {
             IMeasure numerator = (IMeasure)Numerator.GetDefault();
             IDenominator denominator = (IDenominator)Denominator.GetDefault();
@@ -169,5 +169,260 @@
             return rateFactory.DenominatorFactory;
         }
         #endregion
+    }
+
+    internal sealed class FlatRate : Rate, IFlatRate
+    {
+        internal FlatRate(IFlatRate flatRate) : base(flatRate)
+        {
+        }
+
+        internal FlatRate(IFlatRateFactory flatRateFactory, IRate rate) : base(flatRateFactory, rate)
+        {
+        }
+
+        internal FlatRate(IFlatRateFactory flatRateFactory, IMeasure numerator, IDenominator denominator) : base(flatRateFactory, numerator, denominator)
+        {
+        }
+
+        internal FlatRate(IFlatRateFactory flatRateFactory, IMeasure numerator, Enum measureUnit, decimal? quantity) : base(flatRateFactory, numerator, measureUnit, quantity)
+        {
+        }
+
+        internal FlatRate(IFlatRateFactory flatRateFactory, IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, decimal? quantity) : base(flatRateFactory, numerator, customName, measureUnitTypeCode, exchangeRate, quantity)
+        {
+        }
+
+        internal FlatRate(IFlatRateFactory flatRateFactory, IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, decimal? quantity) : base(flatRateFactory, numerator, measureUnit, exchangeRate, customName, quantity)
+        {
+        }
+
+        public IFlatRate Add(IFlatRate? other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IFlatRate Divide(decimal divisor)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IFlatRate GetFlatRate(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, decimal? quantity = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IFlatRate GetFlatRate(IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, decimal? quantity = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IFlatRate GetFlatRate(IMeasure numerator, string customName, decimal? quantity = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IFlatRate GetFlatRate(IMeasure numerator, Enum measureUnit, decimal? quantity = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IFlatRate GetFlatRate(IMeasure numerator, IMeasurement measurement, decimal? quantity = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IFlatRate GetFlatRate(IMeasure numerator, IDenominator? denominator = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IFlatRate GetFlatRate(IRate rate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IFlatRate GetFlatRate(IFlatRate? other = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IRate GetRate(IMeasure numerator, string customName, decimal? quantity = null, ILimit? limit = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IRate GetRate(IMeasure numerator, Enum measureUnit, decimal? quantity = null, ILimit? limit = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IRate GetRate(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, decimal? quantity = null, ILimit? limit = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IRate GetRate(IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, decimal? quantity = null, ILimit? limit = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IRate GetRate(IMeasure numerator, IMeasurement measurement, decimal? quantity = null, ILimit? limit = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IRate GetRate(IMeasure numerator, IDenominator? denominator = null, ILimit? limit = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IFlatRate Multiply(decimal multiplier)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IMeasure Multiply(IMeasure multiplier)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IFlatRate Subtract(IFlatRate? other)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    internal sealed class LimitedRate : Rate, ILimitedRate
+    {
+        public LimitedRate(IRate rate) : base(rate)
+        {
+        }
+
+        public LimitedRate(IFlatRateFactory rateFactory, IRate rate, ILimit? limit) : base(rateFactory, rate)
+        {
+        }
+
+        public LimitedRate(IRateFactory rateFactory, IMeasure numerator, IDenominator denominator, ILimit? limit) : base(rateFactory, numerator, denominator)
+        {
+        }
+
+        public LimitedRate(IRateFactory rateFactory, IMeasure numerator, Enum measureUnit, decimal? quantity, ILimit? limit) : base(rateFactory, numerator, measureUnit, quantity)
+        {
+        }
+
+        public LimitedRate(IRateFactory rateFactory, IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, decimal? quantity, ILimit? limit) : base(rateFactory, numerator, customName, measureUnitTypeCode, exchangeRate, quantity)
+        {
+        }
+
+        public LimitedRate(IRateFactory rateFactory, IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, decimal? quantity, ILimit? limit) : base(rateFactory, numerator, measureUnit, exchangeRate, customName, quantity)
+        {
+        }
+
+        public ILimit Limit { get => throw new NotImplementedException(); init => throw new NotImplementedException(); }
+
+        public bool Equals(ILimitedRate? x, ILimitedRate? y)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetHashCode([DisallowNull] ILimitedRate obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override ILimit? GetLimit()
+        {
+            return Limit;
+        }
+        public ILimitedRate GetLimitedRate(IMeasure numerator, string customName, decimal? quantity = null, ILimit? limit = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ILimitedRate GetLimitedRate(IMeasure numerator, Enum measureUnit, decimal? quantity = null, ILimit? limit = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ILimitedRate GetLimitedRate(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, decimal? quantity = null, ILimit? limit = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ILimitedRate GetLimitedRate(IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCoce, decimal exchangeRate, decimal? quantity = null, ILimit? limit = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ILimitedRate GetLimitedRate(IMeasure numerator, IMeasurement measurement, decimal? quantity = null, ILimit? limit = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ILimitedRate GetLimitedRate(IMeasure numerator, IDenominator? denominator = null, ILimit? limit = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ILimitedRate GetLimitedRate(IRate rate, ILimit? limit = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ILimitedRate GetLimitedRate(ILimitedRate? other = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ILimitedRateFactory GetLimitedRateFactory()
+        {
+            throw new NotImplementedException();
+        }
+
+        public LimitMode GetLimitMode(ILimitedRate? limiter = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IRate GetRate(IMeasure numerator, string customName, decimal? quantity = null, ILimit? limit = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IRate GetRate(IMeasure numerator, Enum measureUnit, decimal? quantity = null, ILimit? limit = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IRate GetRate(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, decimal? quantity = null, ILimit? limit = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IRate GetRate(IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, decimal? quantity = null, ILimit? limit = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IRate GetRate(IMeasure numerator, IMeasurement measurement, decimal? quantity = null, ILimit? limit = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IRate GetRate(IMeasure numerator, IDenominator? denominator = null, ILimit? limit = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool? Includes(IMeasure limitable)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ValidateLimitMode(LimitMode limitMode)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

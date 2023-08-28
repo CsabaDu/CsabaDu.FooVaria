@@ -9,7 +9,7 @@ internal sealed class Measurement : Measurable, IMeasurement
 
     #region Static properties
     private static IDictionary<Enum, decimal> ExchangeRateCollection { get; set; }
-    private static IDictionary<Enum, string> CustomNameCollection { get; set; }
+    private static IDictionary<Enum, string> CustomNameCollection { get; set; } = new SortedList<Enum, string>();
     #endregion
 
     #region Constructors
@@ -17,7 +17,6 @@ internal sealed class Measurement : Measurable, IMeasurement
     static Measurement()
     {
         ExchangeRateCollection = GetConstantExchangeRates(new SortedList<Enum, decimal>());
-        CustomNameCollection = new SortedList<Enum, string>();
     }
     #endregion
 

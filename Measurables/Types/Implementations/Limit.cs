@@ -7,31 +7,31 @@ internal sealed class Limit : BaseMeasure, ILimit
     #endregion
 
     #region Constructors
-    public Limit(ILimit limit) : base(limit)
+    internal Limit(ILimit limit) : base(limit)
     {
         Quantity = limit.Quantity;
         LimitMode = limit.LimitMode;
     }
 
-    public Limit(IBaseMeasureFactory baseMeasureFactory, ValueType? quantity, Enum measureUnit, LimitMode? limitMode) : base(baseMeasureFactory, quantity ?? DefaultLimitQuantity, measureUnit)
+    internal Limit(IBaseMeasureFactory baseMeasureFactory, ValueType? quantity, Enum measureUnit, LimitMode? limitMode) : base(baseMeasureFactory, quantity ?? DefaultLimitQuantity, measureUnit)
     {
         Quantity = GetLimitQuantity(quantity);
         LimitMode = GetValidLimitMode(limitMode);
     }
 
-    public Limit(IBaseMeasureFactory baseMeasureFactory, ValueType? quantity, IMeasurement measurement, LimitMode? limitMode) : base(baseMeasureFactory, quantity ?? DefaultLimitQuantity, measurement)
+    internal Limit(IBaseMeasureFactory baseMeasureFactory, ValueType? quantity, IMeasurement measurement, LimitMode? limitMode) : base(baseMeasureFactory, quantity ?? DefaultLimitQuantity, measurement)
     {
         Quantity = GetLimitQuantity(quantity);
         LimitMode = GetValidLimitMode(limitMode);
     }
 
-    public Limit(IBaseMeasureFactory baseMeasureFactory, ValueType? quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, LimitMode? limitMode) : base(baseMeasureFactory, quantity ?? DefaultLimitQuantity, customName, measureUnitTypeCode, exchangeRate)
+    internal Limit(IBaseMeasureFactory baseMeasureFactory, ValueType? quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, LimitMode? limitMode) : base(baseMeasureFactory, quantity ?? DefaultLimitQuantity, customName, measureUnitTypeCode, exchangeRate)
     {
         Quantity = GetLimitQuantity(quantity);
         LimitMode = GetValidLimitMode(limitMode);
     }
 
-    public Limit(IBaseMeasureFactory baseMeasureFactory, ValueType? quantity, Enum measureUnit, decimal exchangeRate, string customName, LimitMode? limitMode) : base(baseMeasureFactory, quantity ?? DefaultLimitQuantity, measureUnit, exchangeRate, customName)
+    internal Limit(IBaseMeasureFactory baseMeasureFactory, ValueType? quantity, Enum measureUnit, decimal exchangeRate, string customName, LimitMode? limitMode) : base(baseMeasureFactory, quantity ?? DefaultLimitQuantity, measureUnit, exchangeRate, customName)
     {
         Quantity = GetLimitQuantity(quantity);
         LimitMode = GetValidLimitMode(limitMode);
