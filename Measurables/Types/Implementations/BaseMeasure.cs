@@ -59,9 +59,8 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     public virtual bool Equals(IBaseMeasure? other)
     {
-        return other is IBaseMeasure baseMeasure
-            && baseMeasure.IsExchangeableTo(MeasureUnitTypeCode)
-            && baseMeasure.DefaultQuantity == DefaultQuantity;
+        return other?.IsExchangeableTo(MeasureUnitTypeCode) == true
+            && other.DefaultQuantity == DefaultQuantity;
     }
 
     public override bool Equals(object? obj)

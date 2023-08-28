@@ -60,13 +60,14 @@ internal sealed class Measurement : Measurable, IMeasurement
 
     public bool Equals(IMeasurement? other)
     {
-        return IsExchangeableTo(other?.MeasureUnitTypeCode)
-            && other!.ExchangeRate == ExchangeRate;
+        return other?.IsExchangeableTo(MeasureUnitTypeCode) == true
+            && other.ExchangeRate == ExchangeRate;
     }
 
     public override bool Equals(object? obj)
     {
-        return obj is IMeasurement other && Equals(other);
+        return obj is IMeasurement other
+            && Equals(other);
     }
 
     public IDictionary<Enum, decimal> GetConstantExchangeRateCollection()
