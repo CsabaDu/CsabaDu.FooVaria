@@ -40,9 +40,11 @@ internal sealed class LimitedRate : Rate, ILimitedRate
 
         if (x == null || y == null) return false;
 
-        if (!x.Limit.Equals(y.Limit)) return false;
+        if (!x.Equals(y)) return false;
 
-        return x.Equals(y);
+        ILimit xLimit = x.Limit;
+
+        return xLimit.Equals(xLimit, y.Limit);
     }
 
     public int GetHashCode([DisallowNull] ILimitedRate limitedRate)
@@ -54,6 +56,7 @@ internal sealed class LimitedRate : Rate, ILimitedRate
     {
         return Limit;
     }
+
     public ILimitedRate GetLimitedRate(IMeasure numerator, string customName, decimal? quantity = null, ILimit? limit = null)
     {
         throw new NotImplementedException();
