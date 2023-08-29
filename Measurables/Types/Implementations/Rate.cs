@@ -285,14 +285,12 @@
         {
             if (NullChecked(multiplier, nameof(multiplier)).IsExchangeableTo(MeasureUnitTypeCode))
             {
-                throw new ArgumentOutOfRangeException(nameof(multiplier), multiplier.MeasureUnitTypeCode, null);
+                decimal quantity = Numerator.GetDecimalQuantity() / Denominator.DefaultQuantity * multiplier.DefaultQuantity;
+
+                return multiplier.GetMeasure(quantity, Numerator.Measurement);
             }
 
-            decimal quantity = (decimal)multiplier.ExchangeTo(Denominator.GetExchangeRate())!.ToQuantity(TypeCode.Decimal)!;
-            quantity *= Numerator.GetDecimalQuantity();
-            quantity /= Denominator.GetDecimalQuantity();
-
-            return multiplier.GetMeasure(quantity, Numerator.GetMeasureUnit());
+            throw new ArgumentOutOfRangeException(nameof(multiplier), multiplier.MeasureUnitTypeCode, null);
         }
 
         public IFlatRate Subtract(IFlatRate? other)

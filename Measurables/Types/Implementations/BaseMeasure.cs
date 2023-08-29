@@ -72,7 +72,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     {
         if (exchangeRate <= 0) return null;
 
-        ValueType exchanged = CorrectQuantityDecimals(DefaultQuantity / exchangeRate);
+        decimal exchanged = CorrectQuantityDecimals(DefaultQuantity / exchangeRate);
 
         return exchanged.ToQuantity(QuantityTypeCode);
     }
