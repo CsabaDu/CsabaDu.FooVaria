@@ -2,6 +2,8 @@
 
 internal sealed class LimitedRate : Rate, ILimitedRate
 {
+    private IMeasure numerator;
+    #region Constructors
     public LimitedRate(ILimitedRate limitedRate) : base(limitedRate)
     {
         Limit = limitedRate.Limit;
@@ -31,9 +33,13 @@ internal sealed class LimitedRate : Rate, ILimitedRate
     {
         Limit = GetOrCreateLimit(limitedRateFactory, limit);
     }
+    #endregion
 
+    #region Properties
     public ILimit Limit { get; init; }
+    #endregion
 
+    #region Public methods
     public bool Equals(ILimitedRate? x, ILimitedRate? y)
     {
         if (x == null && y == null) return true;
@@ -57,49 +63,49 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         return Limit;
     }
 
-    public ILimitedRate GetLimitedRate(IMeasure numerator, string customName, decimal? quantity = null, ILimit? limit = null)
+    public ILimitedRate GetLimitedRate(IMeasure numerator, string name, decimal? quantity = null, ILimit? limit = null)
     {
-        throw new NotImplementedException();
+        return GetLimitedRateFactory().Create(numerator, name, quantity, GetLimit(limit));
     }
 
     public ILimitedRate GetLimitedRate(IMeasure numerator, Enum measureUnit, decimal? quantity = null, ILimit? limit = null)
     {
-        throw new NotImplementedException();
+        return GetLimitedRateFactory().Create(numerator, measureUnit, quantity, GetLimit(limit));
     }
 
     public ILimitedRate GetLimitedRate(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, decimal? quantity = null, ILimit? limit = null)
     {
-        throw new NotImplementedException();
+        return GetLimitedRateFactory().Create(numerator, measureUnit, exchangeRate, customName, quantity, GetLimit(limit));
     }
 
-    public ILimitedRate GetLimitedRate(IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCoce, decimal exchangeRate, decimal? quantity = null, ILimit? limit = null)
+    public ILimitedRate GetLimitedRate(IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, decimal? quantity = null, ILimit? limit = null)
     {
-        throw new NotImplementedException();
+        return GetLimitedRateFactory().Create(numerator, customName, measureUnitTypeCode, exchangeRate, quantity, GetLimit(limit));
     }
 
     public ILimitedRate GetLimitedRate(IMeasure numerator, IMeasurement measurement, decimal? quantity = null, ILimit? limit = null)
     {
-        throw new NotImplementedException();
+        return GetLimitedRateFactory().Create(numerator, measurement, quantity, GetLimit(limit));
     }
 
     public ILimitedRate GetLimitedRate(IMeasure numerator, IDenominator? denominator = null, ILimit? limit = null)
     {
-        throw new NotImplementedException();
+        return GetLimitedRateFactory().Create(numerator, denominator ?? Denominator, GetLimit(limit));
     }
 
     public ILimitedRate GetLimitedRate(IRate rate, ILimit? limit = null)
     {
-        throw new NotImplementedException();
+        return GetLimitedRateFactory().Create(rate, GetLimit(limit));
     }
 
     public ILimitedRate GetLimitedRate(ILimitedRate? other = null)
     {
-        throw new NotImplementedException();
+        return GetLimitedRateFactory().Create(other ?? this);
     }
 
     public ILimitedRateFactory GetLimitedRateFactory()
     {
-        throw new NotImplementedException();
+        return MeasurableFactory as ILimitedRateFactory ?? throw new InvalidOperationException(null);
     }
 
     public LimitMode GetLimitMode(ILimitedRate? limitedRate = null)
@@ -109,32 +115,32 @@ internal sealed class LimitedRate : Rate, ILimitedRate
 
     public override IRate GetRate(IMeasure numerator, string customName, decimal? quantity = null, ILimit? limit = null)
     {
-        throw new NotImplementedException();
+        return GetLimitedRate(numerator, customName, quantity, limit);
     }
 
     public override IRate GetRate(IMeasure numerator, Enum measureUnit, decimal? quantity = null, ILimit? limit = null)
     {
-        throw new NotImplementedException();
+        return GetLimitedRate(numerator, measureUnit, quantity, limit);
     }
 
     public override IRate GetRate(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, decimal? quantity = null, ILimit? limit = null)
     {
-        throw new NotImplementedException();
+        return GetLimitedRate(numerator, measureUnit, exchangeRate, customName, quantity, limit);
     }
 
     public override IRate GetRate(IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, decimal? quantity = null, ILimit? limit = null)
     {
-        throw new NotImplementedException();
+        return GetLimitedRate(numerator, customName, measureUnitTypeCode, exchangeRate, quantity, limit);
     }
 
     public override IRate GetRate(IMeasure numerator, IMeasurement measurement, decimal? quantity = null, ILimit? limit = null)
     {
-        throw new NotImplementedException();
+        return GetLimitedRate(numerator, measurement, quantity, limit);
     }
 
     public override IRate GetRate(IMeasure numerator, IDenominator? denominator = null, ILimit? limit = null)
     {
-        throw new NotImplementedException();
+        return GetLimitedRate(numerator, denominator, limit);
     }
 
     public bool? Includes(IMeasure measure)
@@ -146,11 +152,17 @@ internal sealed class LimitedRate : Rate, ILimitedRate
     {
         Limit.ValidateLimitMode(limitMode);
     }
+    #endregion
 
     #region Private methods
     private ILimit GetOrCreateLimit(ILimitedRateFactory limitedRateFactory, ILimit? limit)
     {
         return limit ?? limitedRateFactory.LimitFactory.Create(Denominator);
+    }
+
+    private ILimit GetLimit(ILimit? limit)
+    {
+        return limit ?? Limit;
     }
     #endregion
 }
