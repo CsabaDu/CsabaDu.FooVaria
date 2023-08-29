@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Measurables.Factories;
-
-namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal abstract class Measure : BaseMeasure, IMeasure
 {
