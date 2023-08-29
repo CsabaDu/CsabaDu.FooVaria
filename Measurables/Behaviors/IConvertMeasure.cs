@@ -1,7 +1,7 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Behaviors;
 
-public interface IConvertMeasure<T, U, V> where T : class, IMeasure where U : notnull where V : struct, Enum
+public interface IConvertMeasure<T, U> where T : class, IMeasure where U : notnull
 {
-    T ConvertFrom(U other, V? measureUnit = null);
-    U ConvertMeasure(T? convertibleMeasure = null);
+    T ConvertFrom(U other);
+    U ConvertMeasure(T convertibleMeasure);
 }

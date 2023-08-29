@@ -262,16 +262,16 @@
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Markers.ICalculable" FixedFromPoint="true">
       <Path>
-        <Point X="9.125" Y="21.312" />
-        <Point X="9.125" Y="21.875" />
+        <Point X="9.375" Y="21.312" />
+        <Point X="9.375" Y="21.875" />
         <Point X="7.75" Y="21.875" />
         <Point X="7.75" Y="22.25" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Behaviors.ICalculate&lt;U, T&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="9" Y="20.2" />
-        <Point X="9" Y="20.5" />
+        <Point X="9.25" Y="20.2" />
+        <Point X="9.25" Y="20.5" />
         <Point X="7.75" Y="20.5" />
         <Point X="7.75" Y="22.25" />
       </Path>
@@ -366,8 +366,8 @@
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Markers.ICalculable" FixedFromPoint="true">
       <Path>
-        <Point X="9.625" Y="21.312" />
-        <Point X="9.625" Y="21.625" />
+        <Point X="9.875" Y="21.312" />
+        <Point X="9.875" Y="21.625" />
         <Point X="11.5" Y="21.625" />
         <Point X="11.5" Y="22" />
       </Path>
@@ -380,8 +380,8 @@
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Behaviors.ICalculate&lt;U, T&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="9.5" Y="20.2" />
-        <Point X="9.5" Y="20.5" />
+        <Point X="9.75" Y="20.2" />
+        <Point X="9.75" Y="20.5" />
         <Point X="11.5" Y="20.5" />
         <Point X="11.5" Y="22" />
       </Path>
@@ -460,7 +460,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Types.MeasureTypes.IDistance" Collapsed="true">
-    <Position X="8.25" Y="24.5" Width="3" />
+    <Position X="8.25" Y="24.5" Width="2.25" />
     <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Types.IMeasure" FixedFromPoint="true">
       <Path>
         <Point X="8" Y="23.329" />
@@ -474,7 +474,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Types.MeasureTypes.IExtent" Collapsed="true">
-    <Position X="8.25" Y="25.5" Width="2.75" />
+    <Position X="8.25" Y="25.5" Width="2.25" />
     <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Types.IMeasure" FixedFromPoint="true">
       <Path>
         <Point X="8" Y="23.329" />
@@ -502,7 +502,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Types.MeasureTypes.ITimePeriod" Collapsed="true">
-    <Position X="8.25" Y="26.5" Width="3.5" />
+    <Position X="8.25" Y="26.5" Width="2.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Types.IMeasure" FixedFromPoint="true">
       <Path>
         <Point X="8" Y="23.329" />
@@ -550,8 +550,8 @@
       <FileName>Markers\ISpreadMeasure.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.Measurables.Behaviors.IConvertMeasure&lt;T, U, V&gt;" Collapsed="true">
-    <Position X="11.5" Y="25.5" Width="2" />
+  <Interface Name="CsabaDu.FooVaria.Measurables.Behaviors.IConvertMeasure&lt;T, U&gt;" Collapsed="true">
+    <Position X="11" Y="25.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
       <FileName>Behaviors\IConvertMeasure.cs</FileName>
@@ -565,7 +565,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Markers.ICalculable" Collapsed="true">
-    <Position X="8.75" Y="20.75" Width="1.25" />
+    <Position X="9" Y="20.75" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Markers\ICalculable.cs</FileName>
@@ -600,13 +600,13 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Behaviors.ICalculate&lt;U, T&gt;" Collapsed="true">
-    <Position X="8.5" Y="19.25" Width="1.5" />
+    <Position X="8.75" Y="19.25" Width="1.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Behaviors.IMultiply&lt;U, T&gt;" FixedFromPoint="true">
       <Path>
         <Point X="11" Y="18.562" />
         <Point X="11" Y="18.875" />
-        <Point X="9.25" Y="18.875" />
-        <Point X="9.25" Y="19.25" />
+        <Point X="9.5" Y="18.875" />
+        <Point X="9.5" Y="19.25" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>

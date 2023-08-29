@@ -59,12 +59,12 @@
         {
         }
 
-        public ITimePeriod ConvertFrom(TimeSpan other, TimePeriodUnit? timePeriodUnit = null)
+        public ITimePeriod ConvertFrom(TimeSpan timeSpan)
         {
             throw new NotImplementedException();
         }
 
-        public TimeSpan ConvertMeasure(ITimePeriod? timePeriod = null)
+        public TimeSpan ConvertMeasure(ITimePeriod timePeriod)
         {
             throw new NotImplementedException();
         }
@@ -108,12 +108,12 @@
         internal Distance(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
         {
         }
-        public IDistance ConvertFrom(IExtent extent, DistanceUnit? distanceUnit = null)
+        public IDistance ConvertFrom(IExtent extent)
         {
             throw new NotImplementedException();
         }
 
-        public IExtent ConvertMeasure(IDistance? distance = null)
+        public IExtent ConvertMeasure(IDistance distance)
         {
             throw new NotImplementedException();
         }

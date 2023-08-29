@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Types.MeasureTypes;
 
-public interface IDistance : IMeasure, IConvertMeasure<IDistance, IExtent, DistanceUnit>
+public interface IDistance : IMeasure, IConvertMeasure<IDistance, IExtent>
 {
     IDistance GetDistance(double quantity, DistanceUnit distanceUnit);
     IDistance GetDistance(ValueType quantity, string name);
