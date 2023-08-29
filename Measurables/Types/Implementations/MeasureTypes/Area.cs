@@ -45,6 +45,56 @@
         }
     }
 
+    internal class TimePeriod : Measure, ITimePeriod
+    {
+        public TimePeriod(ITimePeriod timePeriod) : base(timePeriod)
+        {
+        }
+
+        public TimePeriod(IMeasureFactory measureFactory, ValueType quantity, Enum measureUnit) : base(measureFactory, quantity, measureUnit)
+        {
+        }
+
+        public TimePeriod(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
+        {
+        }
+
+        public ITimePeriod ConvertFrom(TimeSpan other, TimePeriodUnit? timePeriodUnit = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TimeSpan ConvertMeasure(ITimePeriod? timePeriod = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ITimePeriod GetTimePeriod(double quantity, TimePeriodUnit timePeriodUnit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ITimePeriod GetTimePeriod(ValueType quantity, string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ITimePeriod GetTimePeriod(ValueType quantity, IMeasurement measurement)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ITimePeriod GetTimePeriod(IBaseMeasure baseMeasure)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ITimePeriod GetTimePeriod(ITimePeriod? other = null)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     internal sealed class Distance : Measure, IDistance
     {
         internal Distance(IDistance distance) : base(distance)
@@ -58,12 +108,12 @@
         internal Distance(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
         {
         }
-        public IDistance ConvertFrom(IExtent other, Enum? measureUnit = null)
+        public IDistance ConvertFrom(IExtent extent, DistanceUnit? distanceUnit = null)
         {
             throw new NotImplementedException();
         }
 
-        public IExtent ConvertMeasure(IDistance? convertibleMeasure = null)
+        public IExtent ConvertMeasure(IDistance? distance = null)
         {
             throw new NotImplementedException();
         }

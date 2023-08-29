@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Types.MeasureTypes;
 
-public interface IExtent : IMeasure, IConvertMeasure<IExtent, IDistance>
+public interface IExtent : IMeasure, IConvertMeasure<IExtent, IDistance, ExtentUnit>
 {
     IExtent GetExtent(double quantity, ExtentUnit extentUnit);
     IExtent GetExtent(ValueType quantity, string name);

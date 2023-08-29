@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Types.MeasureTypes;
 
-public interface ITimePeriod : IMeasure, IConvertMeasure<ITimePeriod, TimeSpan>
+public interface ITimePeriod : IMeasure, IConvertMeasure<ITimePeriod, TimeSpan, TimePeriodUnit>
 {
     ITimePeriod GetTimePeriod(double quantity, TimePeriodUnit timePeriodUnit);
     ITimePeriod GetTimePeriod(ValueType quantity, string name);
