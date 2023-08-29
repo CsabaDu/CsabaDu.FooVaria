@@ -3,6 +3,7 @@
 public interface IVolume : IMeasure, ISpreadMeasure
 {
     IVolume GetVolume(double quantity, VolumeUnit volumeUnit);
+    IVolume GetVolume(ValueType quantity, string name);
     IVolume GetVolume(ValueType quantity, IMeasurement measurement);
     IVolume GetVolume(IBaseMeasure baseMeasure);
     IVolume GetVolume(IVolume? other = null);

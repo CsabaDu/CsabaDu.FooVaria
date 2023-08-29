@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿using CsabaDu.FooVaria.Measurables.Factories;
+
+namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal abstract class Measure : BaseMeasure, IMeasure
 {
@@ -141,6 +143,12 @@ internal abstract class Measure : BaseMeasure, IMeasure
     {
         return GetHashCode(this);
     }
+
+    public IMeasure GetMeasure(IBaseMeasure baseMeasure)
+    {
+        return (IMeasure)GetMeasureFactory().Create(baseMeasure);
+    }
+
     public IMeasure GetMeasure(ValueType quantity, Enum measureUnit)
     {
         return GetMeasureFactory().Create(quantity, measureUnit);
@@ -178,13 +186,6 @@ internal abstract class Measure : BaseMeasure, IMeasure
         return GetMeasure(excchanged);
     }
 
-    public IMeasure GetMeasure(string name)
-    {
-        if (Measurement.TryGetMeasureUnit(name, out Enum? measureUnit)) return GetMeasure(measureUnit);
-
-        throw new ArgumentOutOfRangeException(nameof(name), name, null);
-    }
-
     public IMeasureFactory GetMeasureFactory()
     {
         return MeasurableFactory as IMeasureFactory ?? throw new InvalidOperationException(null);
@@ -211,9 +212,5 @@ internal abstract class Measure : BaseMeasure, IMeasure
     {
         return GetSum(this, other, SummingMode.Subtract);
     }
-
-    #region Abstract methods
-    public abstract IMeasure GetMeasure(IBaseMeasure baseMeasure);
-    #endregion
     #endregion
 }
