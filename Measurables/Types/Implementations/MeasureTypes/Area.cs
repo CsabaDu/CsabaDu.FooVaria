@@ -4,15 +4,15 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes
 {
     internal sealed class Area : Measure, IArea
     {
-        public Area(IArea area) : base(area)
+        internal Area(IArea area) : base(area)
         {
         }
 
-        public Area(IMeasureFactory measureFactory, ValueType quantity, Enum measureUnit) : base(measureFactory, quantity, measureUnit)
+        internal Area(IMeasureFactory measureFactory, ValueType quantity, Enum measureUnit) : base(measureFactory, quantity, measureUnit)
         {
         }
 
-        public Area(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
+        internal Area(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
         {
         }
 
