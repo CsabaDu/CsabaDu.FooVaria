@@ -2,6 +2,14 @@
 
 internal abstract class Measurable : BaseMeasurable, IMeasurable
 {
+    #region Enums
+    protected enum SummingMode
+    {
+        Add,
+        Subtract,
+    }
+    #endregion
+
     #region Constructors
     private protected Measurable(IMeasurableFactory measurableFactory, MeasureUnitTypeCode measureUnitTypeCode) : base(measureUnitTypeCode)
     {
@@ -62,4 +70,34 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
     public abstract IMeasurable GetDefault();
     #endregion
     #endregion
+
+    protected static  IMeasure GetSum(IMeasure measure, IMeasure? other, SummingMode summingMode)
+    {
+        if (other == null) return measure.GetMeasure();
+
+        if (other.IsExchangeableTo(measure.MeasureUnitTypeCode))
+        {
+            decimal quantity = getDefaultQuantitySum() / measure.GetExchangeRate();
+
+            return measure.GetMeasure(quantity);
+        }
+
+        throw new ArgumentOutOfRangeException(nameof(other), other.MeasureUnitTypeCode, null);
+
+        #region Local methods
+        decimal getDefaultQuantitySum()
+        {
+            decimal thisQuantity = measure.DefaultQuantity;
+            decimal otherQuantity = other!.DefaultQuantity;
+
+            return summingMode switch
+            {
+                SummingMode.Add => decimal.Add(thisQuantity, otherQuantity),
+                SummingMode.Subtract => decimal.Subtract(thisQuantity, otherQuantity),
+
+                _ => throw new InvalidOperationException(null),
+            };
+        }
+        #endregion
+    }
 }

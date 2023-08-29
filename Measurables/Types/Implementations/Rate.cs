@@ -198,12 +198,12 @@
 
         public IFlatRate Add(IFlatRate? other)
         {
-            throw new NotImplementedException();
+            return GetSum(other, SummingMode.Add);
         }
 
         public IFlatRate Divide(decimal divisor)
         {
-            throw new NotImplementedException();
+            return GetFlatRate(Numerator.Divide(divisor));
         }
 
         public IFlatRate GetFlatRate(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, decimal? quantity = null)
@@ -278,18 +278,48 @@
 
         public IFlatRate Multiply(decimal multiplier)
         {
-            throw new NotImplementedException();
+            return GetFlatRate(Numerator.Multiply(multiplier));
         }
 
         public IMeasure Multiply(IMeasure multiplier)
         {
-            throw new NotImplementedException();
+            if (NullChecked(multiplier, nameof(multiplier)).IsExchangeableTo(MeasureUnitTypeCode))
+            {
+                throw new ArgumentOutOfRangeException(nameof(multiplier), multiplier.MeasureUnitTypeCode, null);
+            }
+
+            decimal quantity = (decimal)multiplier.ExchangeTo(Denominator.GetExchangeRate())!.ToQuantity(TypeCode.Decimal)!;
+            quantity *= Numerator.GetDecimalQuantity();
+            quantity /= Denominator.GetDecimalQuantity();
+
+            return multiplier.GetMeasure(quantity, Numerator.GetMeasureUnit());
         }
 
         public IFlatRate Subtract(IFlatRate? other)
         {
-            throw new NotImplementedException();
+            return GetSum(other, SummingMode.Subtract);
         }
+
+        #region Private methods
+        private IFlatRate GetSum(IFlatRate? other, SummingMode summingMode)
+        {
+            if (other == null) return GetFlatRate();
+
+            if (!other.Denominator.IsExchangeableTo(MeasureUnitTypeCode))
+            {
+                throw new ArgumentOutOfRangeException(nameof(other), other.MeasureUnitTypeCode, null);
+            }
+
+            if (!other.Numerator.TryExchangeTo(Numerator.GetMeasureUnit(), out IBaseMeasure? exchanged))
+            {
+                throw new ArgumentOutOfRangeException(nameof(other), other.Numerator.MeasureUnitTypeCode, null);
+            }
+
+            IMeasure numerator = GetSum(Numerator, (IMeasure)exchanged, summingMode);
+
+            return GetFlatRate(numerator);
+        }
+        #endregion
     }
 
     internal sealed class LimitedRate : Rate, ILimitedRate

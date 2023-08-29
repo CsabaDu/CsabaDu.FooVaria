@@ -2,13 +2,13 @@
 
 internal abstract class Measure : BaseMeasure, IMeasure
 {
-    #region Enums
-    protected enum SummingMode
-    {
-        Add,
-        Subtract,
-    }
-    #endregion
+    //#region Enums
+    //private enum SummingMode
+    //{
+    //    Add,
+    //    Subtract,
+    //}
+    //#endregion
 
     #region Private constants
     private const int DefaultMeasureQuantity = 0;
@@ -49,7 +49,7 @@ internal abstract class Measure : BaseMeasure, IMeasure
     #region Public methods
     public IMeasure Add(IMeasure? other)
     {
-        return GetSum(other, SummingMode.Add);
+        return GetSum(this, other, SummingMode.Add);
     }
 
     public IMeasure Divide(decimal divisor)
@@ -217,43 +217,11 @@ internal abstract class Measure : BaseMeasure, IMeasure
 
     public IMeasure Subtract(IMeasure? other)
     {
-        return GetSum(other, SummingMode.Subtract);
+        return GetSum(this, other, SummingMode.Subtract);
     }
 
     #region Abstract methods
     public abstract IMeasure GetMeasure(IBaseMeasure baseMeasure);
     #endregion
-    #endregion
-
-    #region Private methods
-    private IMeasure GetSum(IMeasure? other, SummingMode summingMode)
-    {
-        if (other == null) return GetMeasure();
-
-        if (IsExchangeableTo(other.MeasureUnitTypeCode))
-        {
-            decimal quantity = getDefaultQuantitySum() / GetExchangeRate();
-
-            return GetMeasure(quantity);
-        }
-
-        throw new ArgumentOutOfRangeException(nameof(other), other.MeasureUnitTypeCode, null);
-
-        #region Local methods
-        decimal getDefaultQuantitySum()
-        {
-            decimal thisQuantity = DefaultQuantity;
-            decimal otherQuantity = other!.DefaultQuantity;
-
-            return summingMode switch
-            {
-                SummingMode.Add => decimal.Add(thisQuantity, otherQuantity),
-                SummingMode.Subtract => decimal.Subtract(thisQuantity, otherQuantity),
-
-                _ => throw new InvalidOperationException(null),
-            };
-        }
-        #endregion
-    }
     #endregion
 }
