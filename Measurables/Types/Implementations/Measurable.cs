@@ -54,7 +54,7 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
         return MeasurableFactory.Create(measurable ?? this);
     }
 
-    public virtual IMeasurable GetMeasurable(IMeasurableFactory measurableFactory, IMeasurable measurable)
+    public IMeasurable GetMeasurable(IMeasurableFactory measurableFactory, IMeasurable measurable)
     {
         return NullChecked(measurableFactory, nameof(measurableFactory)).Create(measurable);
     }

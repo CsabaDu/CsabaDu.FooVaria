@@ -65,11 +65,11 @@ internal abstract class Rate : Measurable, IRate
 
     public bool Equals(IRate? other)
     {
-        return other?.Numerator.Equals(Numerator) == true
-            && other.Denominator.Equals(Denominator);
+        return other?.Denominator.Equals(Denominator) == true
+            && other.Numerator.Equals(Numerator);
     }
 
-    public override bool Equals(object? obj)
+    public override sealed bool Equals(object? obj)
     {
         return obj is IRate other
             && Equals(other);
@@ -98,7 +98,7 @@ internal abstract class Rate : Measurable, IRate
         return Numerator.DefaultQuantity / Denominator.DefaultQuantity;
     }
 
-    public override int GetHashCode()
+    public override sealed int GetHashCode()
     {
         return HashCode.Combine(Numerator, Denominator);
     }
@@ -135,9 +135,8 @@ internal abstract class Rate : Measurable, IRate
 
     public bool IsExchangeableTo(IRate? other)
     {
-        return other != null
-            && Numerator.IsExchangeableTo(other.Numerator.MeasureUnitTypeCode)
-            && Denominator.IsExchangeableTo(other.Denominator.MeasureUnitTypeCode);
+        return other?.Denominator.IsExchangeableTo(MeasureUnitTypeCode) == true
+            && other.Numerator.IsExchangeableTo(Numerator.MeasureUnitTypeCode);
     }
 
     public decimal ProportionalTo(IRate rate)

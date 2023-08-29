@@ -156,16 +156,6 @@ internal sealed class Measurement : Measurable, IMeasurement
         return HashCode.Combine(MeasureUnitTypeCode, ExchangeRate);
     }
 
-    public override IMeasurable GetMeasurable(IMeasurableFactory measurableFactory, IMeasurable measurable) // Check
-    {
-        if (measurableFactory is IMeasurementFactory measurementFactory && measurable is IMeasurement measurement)
-        {
-            return measurementFactory.Create(measurement);
-        }
-
-        return base.GetMeasurable(measurableFactory, measurable);
-    }
-
     public IMeasurement GetMeasurement(Enum measureUnit)
     {
         return GetMeasurementFactory().Create(measureUnit);
