@@ -11,6 +11,4 @@ public interface IMeasure : IBaseMeasure, ILimitable, ICalculable, ICalculate<de
     IMeasure GetMeasure(IMeasure? other = null);
 
     IMeasureFactory GetMeasureFactory();
-
-    //bool TryGetValidMeasureQuantity(ValueType quantity, Enum measureUnit, out ValueType? measureQuantity);
 }
