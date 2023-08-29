@@ -12,6 +12,3 @@ public interface IMeasurement : IMeasurable, ICustomMeasurement, IMeasureUnitCol
     string GetName(Enum? measureUnit = null);
     IMeasurementFactory GetMeasurementFactory();
 }
-
-    //IMeasurement GetMeasurement(Enum measureUnit, string? customName = null);
-    //bool TryGetMeasurement(Enum measureUnit, decimal exchangeRate, string? customName, [NotNullWhen(true)] out IMeasurement? measurement);

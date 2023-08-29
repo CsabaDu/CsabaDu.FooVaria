@@ -71,6 +71,7 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
     #endregion
     #endregion
 
+    #region Protected methods
     protected static  IMeasure GetSum(IMeasure measure, IMeasure? other, SummingMode summingMode)
     {
         if (other == null) return measure.GetMeasure();
@@ -100,4 +101,5 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
         }
         #endregion
     }
+    #endregion
 }

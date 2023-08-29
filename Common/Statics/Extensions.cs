@@ -1,30 +1,9 @@
-﻿namespace CsabaDu.FooVaria.Common.Statics;
+﻿using static CsabaDu.FooVaria.Common.Statics.QuantityType;
+
+namespace CsabaDu.FooVaria.Common.Statics;
 
 public static class Extensions
 {
-    private static HashSet<Type> QuantityTypes => new()
-    {
-        typeof(int),
-        typeof(uint),
-        typeof(long),
-        typeof(ulong),
-        typeof(double),
-        typeof(decimal),
-    };
-
-    public static IEnumerable<TypeCode> GetQuantityTypeCodes()
-    {
-        foreach (Type item in QuantityTypes)
-        {
-            yield return Type.GetTypeCode(item);
-        }
-    }
-
-    public static IEnumerable<Type> GetQuantityTypes()
-    {
-        return QuantityTypes;
-    }
-
     #region System.Int32
     public static bool? FitsIn(this int comparison, LimitMode? limitMode)
     {
@@ -53,7 +32,7 @@ public static class Extensions
     {
         Type quantityType = quantity.GetType();
 
-        if (!QuantityTypes.Contains(quantityType)) return null;
+        if (!GetQuantityTypes().Contains(quantityType)) return null;
 
         TypeCode quantityTypeCode = Type.GetTypeCode(quantityType);
         int roundingDecimals = 8;

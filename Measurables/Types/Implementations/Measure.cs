@@ -2,14 +2,6 @@
 
 internal abstract class Measure : BaseMeasure, IMeasure
 {
-    //#region Enums
-    //private enum SummingMode
-    //{
-    //    Add,
-    //    Subtract,
-    //}
-    //#endregion
-
     #region Private constants
     private const int DefaultMeasureQuantity = 0;
     #endregion
