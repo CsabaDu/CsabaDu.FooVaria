@@ -2,7 +2,6 @@
 
 internal sealed class LimitedRate : Rate, ILimitedRate
 {
-    private IMeasure numerator;
     #region Constructors
     public LimitedRate(ILimitedRate limitedRate) : base(limitedRate)
     {
