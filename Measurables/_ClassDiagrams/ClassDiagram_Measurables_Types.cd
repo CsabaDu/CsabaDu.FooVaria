@@ -429,12 +429,12 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Types.MeasureTypes.IExtent" Collapsed="true">
-    <Position X="5" Y="29.75" Width="2.25" />
+    <Position X="5.25" Y="29.75" Width="2.25" />
     <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Types.IMeasure" FixedFromPoint="true">
       <Path>
         <Point X="8" Y="23.329" />
         <Point X="8" Y="30.225" />
-        <Point X="7.25" Y="30.225" />
+        <Point X="7.5" Y="30.225" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -457,12 +457,12 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Types.MeasureTypes.ITimePeriod" Collapsed="true">
-    <Position X="5" Y="28.75" Width="2.75" />
+    <Position X="4.75" Y="28.75" Width="2.75" />
     <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Types.IMeasure" FixedFromPoint="true">
       <Path>
         <Point X="8" Y="23.329" />
         <Point X="8" Y="29.225" />
-        <Point X="7.75" Y="29.225" />
+        <Point X="7.5" Y="29.225" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -506,7 +506,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Behaviors.IConvertMeasure&lt;T, U&gt;" Collapsed="true">
-    <Position X="2" Y="30" Width="2" />
+    <Position X="2.75" Y="30" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
       <FileName>Behaviors\IConvertMeasure.cs</FileName>
@@ -563,7 +563,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Behaviors.IVolumetricWeight&lt;T&gt;" Collapsed="true">
-    <Position X="2.25" Y="28" Width="2" />
+    <Position X="2.5" Y="28" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Behaviors\IVolumetricWeight.cs</FileName>
@@ -629,7 +629,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Behaviors.IToVolumetricWeight" Collapsed="true">
-    <Position X="1" Y="27" Width="1.75" />
+    <Position X="2.75" Y="27.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Behaviors\IToVolumetricWeight.cs</FileName>
