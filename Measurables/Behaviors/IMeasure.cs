@@ -2,6 +2,7 @@
 
 public interface IMeasure<T, U, V> where T : class, IMeasure where U : struct where V : struct, Enum
 {
+    T GetMeasure(IBaseMeasure baseMeasure);
     T GetMeasure(U quantity, V measureUnit);
     T GetMeasure(U quantity, string name);
     T GetMeasure(U quantity, IMeasurement? measurement = null);

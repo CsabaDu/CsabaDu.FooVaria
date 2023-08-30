@@ -25,6 +25,13 @@ internal sealed class Weight : Measure, IWeight
         return (IVolume)GetMeasure(quantity, default(VolumeUnit));
     }
 
+    public override IWeight GetMeasure(IBaseMeasure baseMeasure)
+    {
+        ValidateBaseMeasure(baseMeasure);
+
+        return (IWeight)base.GetMeasure(baseMeasure);
+    }
+
     public IWeight GetMeasure(double quantity, WeightUnit measureUnit)
     {
         return (IWeight)base.GetMeasure(quantity, measureUnit);
@@ -54,11 +61,13 @@ internal sealed class Weight : Measure, IWeight
     {
         return (double)Quantity;
     }
+}
 
-    public IWeight GetWeight(IBaseMeasure baseMeasure)
-    {
-        return (IWeight)GetMeasure(baseMeasure);
-    }
+
+    //public IWeight GetWeight(IBaseMeasure baseMeasure)
+    //{
+    //    return (IWeight)GetMeasure(baseMeasure);
+    //}
 
     //public IWeight GetVolumetricWeight(IVolume volume, decimal ratio, bool isGreater = true)
     //{
@@ -84,4 +93,3 @@ internal sealed class Weight : Measure, IWeight
     //{
     //    throw new NotImplementedException();
     //}
-}

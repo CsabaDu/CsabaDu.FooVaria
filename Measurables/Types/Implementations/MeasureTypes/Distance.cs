@@ -13,6 +13,7 @@ internal sealed class Distance : Measure, IDistance
     internal Distance(IMeasureFactory measureFactory, double quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
     {
     }
+
     public IDistance ConvertFrom(IExtent extent)
     {
         return NullChecked(extent, nameof(extent)).ConvertMeasure();
@@ -26,9 +27,11 @@ internal sealed class Distance : Measure, IDistance
 
     }
 
-    public IDistance GetDistance(IBaseMeasure baseMeasure)
+    public override IDistance GetMeasure(IBaseMeasure baseMeasure)
     {
-        return (IDistance)GetMeasure(baseMeasure);
+        ValidateBaseMeasure(baseMeasure);
+
+        return (IDistance)base.GetMeasure(baseMeasure);
     }
 
     public IDistance GetMeasure(double quantity, DistanceUnit measureUnit)
@@ -60,7 +63,12 @@ internal sealed class Distance : Measure, IDistance
     {
         return (double)Quantity;
     }
+}
 
+    //public IDistance GetDistance(IBaseMeasure baseMeasure)
+    //{
+    //    return (IDistance)GetMeasure(baseMeasure);
+    //}
     //public IDistance GetDistance(double quantity, DistanceUnit distanceUnit)
     //{
     //    return (IDistance)GetMeasure(quantity, distanceUnit);
@@ -80,4 +88,3 @@ internal sealed class Distance : Measure, IDistance
     //{
     //    return (IDistance)GetMeasure(other);
     //}
-}

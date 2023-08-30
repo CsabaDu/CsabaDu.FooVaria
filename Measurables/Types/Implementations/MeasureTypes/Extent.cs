@@ -29,9 +29,11 @@ internal sealed class Extent : Measure, IExtent
         return (IDistance)GetMeasure(quantity, default(DistanceUnit));
     }
 
-    public IExtent GetExtent(IBaseMeasure baseMeasure)
+    public override IExtent GetMeasure(IBaseMeasure baseMeasure)
     {
-        return (IExtent)GetMeasure(baseMeasure);
+        ValidateBaseMeasure(baseMeasure);
+
+        return (IExtent)base.GetMeasure(baseMeasure);
     }
 
     public IExtent GetMeasure(double quantity, ExtentUnit measureUnit)
@@ -67,22 +69,27 @@ internal sealed class Extent : Measure, IExtent
 }
 
 
-//public IExtent GetExtent(double quantity, ExtentUnit extentUnit)
-//{
-//    return (IExtent)GetMeasure(quantity, extentUnit);
-//}
 
-//public IExtent GetExtent(ValueType quantity, string name)
-//{
-//    return (IExtent)GetMeasure(quantity, name);
-//}
+    //public IExtent GetExtent(IBaseMeasure baseMeasure)
+    //{
+    //    return (IExtent)GetMeasure(baseMeasure);
+    //}
+    //public IExtent GetExtent(double quantity, ExtentUnit extentUnit)
+    //{
+    //    return (IExtent)GetMeasure(quantity, extentUnit);
+    //}
 
-//public IExtent GetExtent(ValueType quantity, IMeasurement? measurement = null)
-//{
-//    return (IExtent)GetMeasure(quantity, measurement);
-//}
+    //public IExtent GetExtent(ValueType quantity, string name)
+    //{
+    //    return (IExtent)GetMeasure(quantity, name);
+    //}
 
-//public IExtent GetExtent(IExtent? other = null)
-//{
-//    return (IExtent)GetMeasure(other);
-//}
+    //public IExtent GetExtent(ValueType quantity, IMeasurement? measurement = null)
+    //{
+    //    return (IExtent)GetMeasure(quantity, measurement);
+    //}
+
+    //public IExtent GetExtent(IExtent? other = null)
+    //{
+    //    return (IExtent)GetMeasure(other);
+    //}

@@ -22,9 +22,11 @@ internal sealed class Cash : Measure, ICash
     {
     }
 
-    public ICash GetCash(IBaseMeasure baseMeasure)
+    public override ICash GetMeasure(IBaseMeasure baseMeasure)
     {
-        return (ICash)GetMeasure(baseMeasure);
+        ValidateBaseMeasure(baseMeasure);
+
+        return (ICash)base.GetMeasure(baseMeasure);
     }
 
     public ICash GetCustomMeasure(decimal quantity, Currency currency, decimal exchangeRate, string customName)
@@ -66,6 +68,12 @@ internal sealed class Cash : Measure, ICash
     {
         return (decimal)Quantity;
     }
+}
+
+    //public ICash GetCash(IBaseMeasure baseMeasure)
+    //{
+    //    return (ICash)GetMeasure(baseMeasure);
+    //}
     //public ICash GetCash(ICash? other = null)
     //{
     //    return (ICash)GetMeasure(other ?? this);
@@ -84,4 +92,3 @@ internal sealed class Cash : Measure, ICash
     //{
     //    return (ICash)GetMeasure(quantity, measurement);
     //}
-}

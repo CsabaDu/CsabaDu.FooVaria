@@ -28,6 +28,13 @@ internal sealed class TimePeriod : Measure, ITimePeriod
         return new TimeSpan(ticks);
     }
 
+    public override ITimePeriod GetMeasure(IBaseMeasure baseMeasure)
+    {
+        ValidateBaseMeasure(baseMeasure);
+
+        return (ITimePeriod)base.GetMeasure(baseMeasure);
+    }
+
     public ITimePeriod GetMeasure(double quantity, TimePeriodUnit measureUnit)
     {
         return (ITimePeriod)base.GetMeasure(quantity, measureUnit);
@@ -57,11 +64,13 @@ internal sealed class TimePeriod : Measure, ITimePeriod
     {
         return (double)Quantity;
     }
+}
 
-    public ITimePeriod GetTimePeriod(IBaseMeasure baseMeasure)
-    {
-        return (ITimePeriod)GetMeasure(baseMeasure);
-    }
+
+    //public ITimePeriod GetTimePeriod(IBaseMeasure baseMeasure)
+    //{
+    //    return (ITimePeriod)GetMeasure(baseMeasure);
+    //}
 
     //public ITimePeriod GetTimePeriod(double quantity, TimePeriodUnit timePeriodUnit)
     //{
@@ -82,4 +91,3 @@ internal sealed class TimePeriod : Measure, ITimePeriod
     //{
     //    return (ITimePeriod)GetMeasure(other);
     //}
-}

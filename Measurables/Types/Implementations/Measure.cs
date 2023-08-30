@@ -145,11 +145,10 @@ internal abstract class Measure : BaseMeasure, IMeasure
         return GetHashCode(this);
     }
 
-    public IMeasure GetMeasure(IBaseMeasure baseMeasure)
+    public virtual IMeasure GetMeasure(IBaseMeasure baseMeasure)
     {
         return (IMeasure)GetMeasureFactory().Create(baseMeasure);
     }
-
     public IMeasure GetMeasure(ValueType quantity, Enum measureUnit)
     {
         return GetMeasureFactory().Create(quantity, measureUnit);
@@ -218,6 +217,12 @@ internal abstract class Measure : BaseMeasure, IMeasure
         return GetSum(this, other, SummingMode.Subtract);
     }
 
+    public void ValidateBaseMeasure(IBaseMeasure baseMeasure)
+    {
+        if (NullChecked(baseMeasure, nameof(baseMeasure)).MeasureUnitTypeCode == MeasureUnitTypeCode) return;
+
+        throw new ArgumentOutOfRangeException(nameof(baseMeasure), baseMeasure.MeasureUnitTypeCode, null);
+    }
     public void ValidateMeasurement(IMeasurement? measurement)
     {
         if (measurement == null) return;

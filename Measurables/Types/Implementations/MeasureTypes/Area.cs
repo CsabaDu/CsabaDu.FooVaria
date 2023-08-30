@@ -17,9 +17,11 @@ internal sealed class Area : Measure, IArea
     #endregion
 
     #region Public methods
-    public IArea GetArea(IBaseMeasure baseMeasure)
+    public override IArea GetMeasure(IBaseMeasure baseMeasure)
     {
-        return (IArea)GetMeasure(baseMeasure);
+        ValidateBaseMeasure(baseMeasure);
+
+        return (IArea)base.GetMeasure(baseMeasure);
     }
 
     public IArea GetMeasure(double quantity, AreaUnit measureUnit)
@@ -59,19 +61,23 @@ internal sealed class Area : Measure, IArea
     #endregion
 }
 
-    //public IArea GetArea(ValueType quantity, string name)
-    //{
-    //    return (IArea)GetMeasure(quantity, name);
-    //}
-    //public IArea GetArea(ValueType quantity, IMeasurement? measurement = null)
-    //{
-    //    return (IArea)GetMeasure(quantity, measurement);
-    //}
-    //public IArea GetArea(double quantity, AreaUnit areaUnit)
-    //{
-    //    return (IArea)GetMeasure(quantity, areaUnit);
-    //}
-    //public IArea GetArea(IArea? other = null)
-    //{
-    //    return (IArea)GetMeasure(other);
-    //}
+//public IArea GetArea(IBaseMeasure baseMeasure)
+//{
+//    return (IArea)GetMeasure(baseMeasure);
+//}
+//public IArea GetArea(ValueType quantity, string name)
+//{
+//    return (IArea)GetMeasure(quantity, name);
+//}
+//public IArea GetArea(ValueType quantity, IMeasurement? measurement = null)
+//{
+//    return (IArea)GetMeasure(quantity, measurement);
+//}
+//public IArea GetArea(double quantity, AreaUnit areaUnit)
+//{
+//    return (IArea)GetMeasure(quantity, areaUnit);
+//}
+//public IArea GetArea(IArea? other = null)
+//{
+//    return (IArea)GetMeasure(other);
+//}

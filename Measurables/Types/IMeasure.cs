@@ -12,6 +12,7 @@ public interface IMeasure : IBaseMeasure, ILimitable, ICalculable, ICalculate<de
 
     IMeasureFactory GetMeasureFactory();
 
+    void ValidateBaseMeasure(IBaseMeasure baseMeasure);
     void ValidateMeasurement(IMeasurement? measurement);
     void ValidateName(string name);
 }

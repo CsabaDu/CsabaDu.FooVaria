@@ -27,6 +27,13 @@ internal sealed class PieceCount : Measure, IPieceCount
         return (IPieceCount)GetMeasure(quantity, pieces, exchangeRate, customName);
     }
 
+    public override IPieceCount GetMeasure(IBaseMeasure baseMeasure)
+    {
+        ValidateBaseMeasure(baseMeasure);
+
+        return (IPieceCount)base.GetMeasure(baseMeasure);
+    }
+
     public IPieceCount GetMeasure(double quantity, Pieces measureUnit)
     {
         return (IPieceCount)base.GetMeasure(quantity, measureUnit);
@@ -57,15 +64,17 @@ internal sealed class PieceCount : Measure, IPieceCount
         return (IPieceCount)GetMeasure(quantity, customName, exchangeRate);
     }
 
-    public IPieceCount GetPieceCount(IBaseMeasure baseMeasure)
-    {
-        return (IPieceCount)GetMeasure(baseMeasure);
-    }
-
     public double GetQuantity()
     {
         return (long)Quantity;
     }
+}
+
+
+    //public IPieceCount GetPieceCount(IBaseMeasure baseMeasure)
+    //{
+    //    return (IPieceCount)GetMeasure(baseMeasure);
+    //}
 
     //public IPieceCount GetPieceCount(ValueType quantity, string name)
     //{
@@ -81,4 +90,3 @@ internal sealed class PieceCount : Measure, IPieceCount
     //{
     //    return (IPieceCount)GetMeasure(quantity, measurement);
     //}
-}
