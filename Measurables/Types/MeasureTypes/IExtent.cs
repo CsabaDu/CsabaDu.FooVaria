@@ -4,7 +4,7 @@ public interface IExtent : IMeasure, IConvertMeasure<IExtent, IDistance>
 {
     IExtent GetExtent(double quantity, ExtentUnit extentUnit);
     IExtent GetExtent(ValueType quantity, string name);
-    IExtent GetExtent(ValueType quantity, IMeasurement measurement);
+    IExtent GetExtent(ValueType quantity, IMeasurement? measurement = null);
     IExtent GetExtent(IBaseMeasure baseMeasure);
     IExtent GetExtent(IExtent? other = null);
 }

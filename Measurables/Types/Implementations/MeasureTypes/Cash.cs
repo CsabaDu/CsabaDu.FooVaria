@@ -6,19 +6,19 @@ internal sealed class Cash : Measure, ICash
     {
     }
 
-    internal Cash(IMeasureFactory measureFactory, ValueType quantity, Enum measureUnit) : base(measureFactory, quantity, measureUnit)
+    internal Cash(IMeasureFactory measureFactory, decimal quantity, Enum measureUnit) : base(measureFactory, quantity, measureUnit)
     {
     }
 
-    internal Cash(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
+    internal Cash(IMeasureFactory measureFactory, decimal quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
     {
     }
 
-    internal Cash(IMeasureFactory measureFactory, ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate) : base(measureFactory, quantity, customName, measureUnitTypeCode, exchangeRate)
+    internal Cash(IMeasureFactory measureFactory, decimal quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate) : base(measureFactory, quantity, customName, measureUnitTypeCode, exchangeRate)
     {
     }
 
-    internal Cash(IMeasureFactory measureFactory, ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName) : base(measureFactory, quantity, measureUnit, exchangeRate, customName)
+    internal Cash(IMeasureFactory measureFactory, decimal quantity, Enum measureUnit, decimal exchangeRate, string customName) : base(measureFactory, quantity, measureUnit, exchangeRate, customName)
     {
     }
 
@@ -32,17 +32,12 @@ internal sealed class Cash : Measure, ICash
         return (ICash)GetMeasure(quantity, currency);
     }
 
-    public ICash GetCash(decimal quantity, Currency currency, decimal exchangeRate, string customName)
+    public ICash GetCustomMeasure(decimal quantity, Currency currency, decimal exchangeRate, string customName)
     {
         return (ICash)GetMeasure(quantity, currency, exchangeRate, customName);
     }
 
-    public ICash GetCash(ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
-    {
-        return (ICash)GetMeasure(quantity, customName, measureUnitTypeCode, exchangeRate);
-    }
-
-    public ICash GetCash(ValueType quantity, IMeasurement measurement)
+    public ICash GetCash(ValueType quantity, IMeasurement? measurement = null)
     {
         return (ICash)GetMeasure(quantity, measurement);
     }
@@ -57,7 +52,7 @@ internal sealed class Cash : Measure, ICash
         return (ICash)GetMeasure(other ?? this);
     }
 
-    public ICash GetNextCustomMeasure(decimal quantity, decimal exchangeRate, string customName)
+    public ICash GetNextCustomMeasure(decimal quantity, string customName, decimal exchangeRate)
     {
         return (ICash)GetMeasure(quantity, customName, MeasureUnitTypeCode, exchangeRate);
     }

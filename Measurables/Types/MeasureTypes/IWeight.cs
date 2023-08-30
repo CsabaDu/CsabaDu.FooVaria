@@ -4,7 +4,7 @@ public interface IWeight : IMeasure, IVolumetricWeight<IWeight>
 {
     IWeight GetWeight(double quantity, WeightUnit weightUnit);
     IWeight GetWeight(ValueType quantity, string name);
-    IWeight GetWeight(ValueType quantity, IMeasurement measurement);
+    IWeight GetWeight(ValueType quantity, IMeasurement? measurement = null);
     IWeight GetWeight(IBaseMeasure baseMeasure);
     IWeight GetWeight(IWeight? other = null);
 }

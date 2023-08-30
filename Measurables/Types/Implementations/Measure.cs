@@ -2,8 +2,9 @@
 
 internal abstract class Measure : BaseMeasure, IMeasure
 {
-    #region Private constants
+    #region Constants
     private const int DefaultMeasureQuantity = 0;
+    protected const decimal DistancePerExtent = 1000;
     #endregion
 
     #region Constructors
@@ -12,22 +13,22 @@ internal abstract class Measure : BaseMeasure, IMeasure
         Quantity = measure.Quantity;
     }
 
-    private protected Measure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, Enum measureUnit) : base(baseMeasureFactory, quantity, measureUnit)
+    private protected Measure(IMeasureFactory measureFactory, ValueType quantity, Enum measureUnit) : base(measureFactory, quantity, measureUnit)
     {
         Quantity = GetQuantity(quantity);
     }
 
-    private protected Measure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, IMeasurement measurement) : base(baseMeasureFactory, quantity, measurement)
+    private protected Measure(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
     {
         Quantity = GetQuantity(quantity);
     }
 
-    private protected Measure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate) : base(baseMeasureFactory, quantity, customName, measureUnitTypeCode, exchangeRate)
+    private protected Measure(IMeasureFactory measureFactory, ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate) : base(measureFactory, quantity, customName, measureUnitTypeCode, exchangeRate)
     {
         Quantity = GetQuantity(quantity);
     }
 
-    private protected Measure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName) : base(baseMeasureFactory, quantity, measureUnit, exchangeRate, customName)
+    private protected Measure(IMeasureFactory measureFactory, ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName) : base(measureFactory, quantity, measureUnit, exchangeRate, customName)
     {
         Quantity = GetQuantity(quantity);
     }
