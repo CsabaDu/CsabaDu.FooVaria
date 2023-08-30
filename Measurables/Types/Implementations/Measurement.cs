@@ -423,7 +423,9 @@ internal sealed class Measurement : Measurable, IMeasurement
 
     public void ValidateCustomName(string? customName)
     {
-        if (!IsValidCustomName(customName)) throw CustomNameArgumentOutOfRangeException(customName);
+        if (IsValidCustomName(customName)) return;
+        
+        throw CustomNameArgumentOutOfRangeException(customName);
     }
 
     public void ValidateExchangeRate(decimal? exchangeRate, Enum? measureUnit = null)

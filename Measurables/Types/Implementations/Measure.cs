@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations
+﻿using System.ComponentModel;
+
+namespace CsabaDu.FooVaria.Measurables.Types.Implementations
 {
     internal abstract class Measure : BaseMeasure, IMeasure
     {
@@ -155,6 +157,8 @@
 
         public IMeasure GetMeasure(ValueType quantity, string name)
         {
+            ValidateName(name);
+
             return GetMeasureFactory().Create(quantity, name);
         }
 
@@ -163,13 +167,15 @@
             return GetMeasureFactory().Create(quantity, measureUnit, exchangeRate, customName);
         }
 
-        public IMeasure GetMeasure(ValueType quantity, string customName, /*MeasureUnitTypeCode measureUnitTypeCode, */decimal exchangeRate)
+        public IMeasure GetMeasure(ValueType quantity, string customName, decimal exchangeRate)
         {
             return GetMeasureFactory().Create(quantity, customName, MeasureUnitTypeCode, exchangeRate);
         }
 
         public IMeasure GetMeasure(ValueType quantity, IMeasurement? measurement = null)
         {
+            ValidateMeasurement(measurement);
+
             return GetMeasureFactory().Create(quantity, measurement ?? Measurement);
         }
 
@@ -210,6 +216,33 @@
         public IMeasure Subtract(IMeasure? other)
         {
             return GetSum(this, other, SummingMode.Subtract);
+        }
+
+        public void ValidateMeasurement(IMeasurement? measurement)
+        {
+            if (measurement == null) return;
+
+            try
+            {
+                measurement.ValidateMeasureUnitTypeCode(MeasureUnitTypeCode);
+            }
+            catch (InvalidEnumArgumentException)
+            {
+                throw new ArgumentOutOfRangeException(nameof(measurement), measurement.MeasureUnitTypeCode, null);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(ex.Message, ex.InnerException);
+            }
+        }
+
+        public void ValidateName(string name)
+        {
+            if (GetDefaultNames(MeasureUnitTypeCode).Contains(NullChecked(name, nameof(name)))) return;
+
+            if (Measurement.GetCustomNameCollection(MeasureUnitTypeCode).Values.Contains(name)) return;
+
+            throw new ArgumentOutOfRangeException(nameof(name), name, null);
         }
         #endregion
     }

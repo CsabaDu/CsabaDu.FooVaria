@@ -1,4 +1,5 @@
-﻿using static CsabaDu.FooVaria.Common.Statics.QuantityType;
+﻿using System.ComponentModel;
+using static CsabaDu.FooVaria.Common.Statics.QuantityType;
 
 namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
