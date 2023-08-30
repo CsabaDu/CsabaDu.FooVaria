@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Types.MeasureTypes;
 
-public interface IWeight : IMeasure, IMeasure<IWeight, double, WeightUnit>/*, IVolumetricWeight<IWeight>*/, IConvertMeasure<IWeight, IVolume>
+public interface IWeight : IMeasure, IMeasure<IWeight, double, WeightUnit>, IConvertMeasure<IWeight, IVolume>
 {
     IWeight GetWeight(IBaseMeasure baseMeasure);
 }

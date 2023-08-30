@@ -513,7 +513,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Markers.ICustomMeasure" Collapsed="true">
-    <Position X="11.5" Y="21.25" Width="1.5" />
+    <Position X="11.5" Y="21.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Markers\ICustomMeasure.cs</FileName>

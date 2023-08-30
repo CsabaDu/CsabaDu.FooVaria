@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Measurables.Types.MeasureTypes;
-
-namespace CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes;
+﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes;
 
 internal sealed class Weight : Measure, IWeight
 {

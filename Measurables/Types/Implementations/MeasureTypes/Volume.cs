@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Measurables.Types.MeasureTypes;
-
-namespace CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes;
+﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes;
 
 internal sealed class Volume : Measure, IVolume
 {
@@ -15,6 +13,7 @@ internal sealed class Volume : Measure, IVolume
     internal Volume(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
     {
     }
+
     public IVolume ConvertFrom(IWeight weight)
     {
         return NullChecked(weight, nameof(weight)).ConvertMeasure();
