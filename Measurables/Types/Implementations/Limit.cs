@@ -2,7 +2,7 @@
 
 internal sealed class Limit : BaseMeasure, ILimit
 {
-    #region Private constants
+    #region Constants
     private const ulong DefaultLimitQuantity = default;
     #endregion
 

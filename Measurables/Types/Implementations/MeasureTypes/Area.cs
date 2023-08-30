@@ -2,6 +2,7 @@
 
 internal sealed class Area : Measure, IArea
 {
+    #region Constructors
     internal Area(IArea area) : base(area)
     {
     }
@@ -13,11 +14,12 @@ internal sealed class Area : Measure, IArea
     internal Area(IMeasureFactory measureFactory, double quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
     {
     }
+    #endregion
 
+    #region Public methods
     public IArea GetArea(IBaseMeasure baseMeasure)
     {
         return (IArea)GetMeasure(baseMeasure);
-
     }
 
     public IArea GetMeasure(double quantity, AreaUnit measureUnit)
@@ -54,6 +56,8 @@ internal sealed class Area : Measure, IArea
     {
         return GetMeasure();
     }
+    #endregion
+}
 
     //public IArea GetArea(ValueType quantity, string name)
     //{
@@ -71,5 +75,3 @@ internal sealed class Area : Measure, IArea
     //{
     //    return (IArea)GetMeasure(other);
     //}
-
-}

@@ -2,7 +2,7 @@
 
 internal sealed class Denominator : BaseMeasure, IDenominator
 {
-    #region Private constants
+    #region Constants
     private const decimal DefaultDenominatorQuantity = decimal.One;
     #endregion
 

@@ -485,10 +485,8 @@ internal sealed class Measurement : Measurable, IMeasurement
 
     private IDictionary<Enum, T> GetMeasureUnitBasedCollection<T>(IDictionary<Enum, T> measureUnitBasedCollection, MeasureUnitTypeCode measureUnitTypeCode) where T : notnull
     {
-        Type meeasureUnitType = GetMeasureUnitType(measureUnitTypeCode);
-
         return measureUnitBasedCollection
-            .Where(x => x.Key.GetType() == meeasureUnitType)
+            .Where(x => x.Key.GetType() == GetMeasureUnitType(measureUnitTypeCode))
             .OrderBy(x => x.Key)
             .ToDictionary(x => x.Key, x => x.Value);
     }

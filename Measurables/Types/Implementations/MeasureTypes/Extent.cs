@@ -2,6 +2,7 @@
 
 internal sealed class Extent : Measure, IExtent
 {
+    #region Constructors
     internal Extent(IExtent extent) : base(extent)
     {
     }
@@ -13,7 +14,9 @@ internal sealed class Extent : Measure, IExtent
     internal Extent(IMeasureFactory measureFactory, double quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
     {
     }
+    #endregion
 
+    #region Public methos
     public IExtent ConvertFrom(IDistance distance)
     {
         return NullChecked(distance, nameof(distance)).ConvertMeasure();
@@ -60,24 +63,26 @@ internal sealed class Extent : Measure, IExtent
     {
         return (double)Quantity;
     }
-
-    //public IExtent GetExtent(double quantity, ExtentUnit extentUnit)
-    //{
-    //    return (IExtent)GetMeasure(quantity, extentUnit);
-    //}
-
-    //public IExtent GetExtent(ValueType quantity, string name)
-    //{
-    //    return (IExtent)GetMeasure(quantity, name);
-    //}
-
-    //public IExtent GetExtent(ValueType quantity, IMeasurement? measurement = null)
-    //{
-    //    return (IExtent)GetMeasure(quantity, measurement);
-    //}
-
-    //public IExtent GetExtent(IExtent? other = null)
-    //{
-    //    return (IExtent)GetMeasure(other);
-    //}
+    #endregion
 }
+
+
+//public IExtent GetExtent(double quantity, ExtentUnit extentUnit)
+//{
+//    return (IExtent)GetMeasure(quantity, extentUnit);
+//}
+
+//public IExtent GetExtent(ValueType quantity, string name)
+//{
+//    return (IExtent)GetMeasure(quantity, name);
+//}
+
+//public IExtent GetExtent(ValueType quantity, IMeasurement? measurement = null)
+//{
+//    return (IExtent)GetMeasure(quantity, measurement);
+//}
+
+//public IExtent GetExtent(IExtent? other = null)
+//{
+//    return (IExtent)GetMeasure(other);
+//}
