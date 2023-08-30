@@ -6,7 +6,7 @@ internal abstract class Measure : BaseMeasure, IMeasure
 {
     #region Constants
     private const int DefaultMeasureQuantity = 0;
-    protected const int DistancePerExtent = 1000;
+    protected const int CrossMeasureRatio = 1000;
     #endregion
 
     #region Constructors

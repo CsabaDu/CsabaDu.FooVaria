@@ -20,7 +20,7 @@ internal sealed class Distance : Measure, IDistance
 
     public IExtent ConvertMeasure()
     {
-        decimal quantity = DefaultQuantity * DistancePerExtent;
+        decimal quantity = DefaultQuantity * CrossMeasureRatio;
 
         return (IExtent)GetMeasure(quantity, default(ExtentUnit));
 

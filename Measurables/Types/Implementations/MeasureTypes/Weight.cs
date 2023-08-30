@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes;
+﻿using CsabaDu.FooVaria.Measurables.Types.MeasureTypes;
+
+namespace CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes;
 
 internal sealed class Weight : Measure, IWeight
 {
@@ -12,6 +14,17 @@ internal sealed class Weight : Measure, IWeight
 
     internal Weight(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
     {
+    }
+    public IWeight ConvertFrom(IVolume volume)
+    {
+        return NullChecked(volume, nameof(volume)).ConvertMeasure();
+    }
+
+    public IVolume ConvertMeasure()
+    {
+        decimal quantity = DefaultQuantity * CrossMeasureRatio;
+
+        return (IVolume)GetMeasure(quantity, default(VolumeUnit));
     }
 
     public IWeight GetMeasure(double quantity, WeightUnit measureUnit)
@@ -44,15 +57,15 @@ internal sealed class Weight : Measure, IWeight
         return (double)Quantity;
     }
 
-    public IWeight GetVolumetricWeight(IVolume volume, decimal ratio, bool isGreater = true)
-    {
-        throw new NotImplementedException();
-    }
-
     public IWeight GetWeight(IBaseMeasure baseMeasure)
     {
         return (IWeight)GetMeasure(baseMeasure);
     }
+
+    //public IWeight GetVolumetricWeight(IVolume volume, decimal ratio, bool isGreater = true)
+    //{
+    //    throw new NotImplementedException();
+    //}
 
     //public IWeight GetWeight(double quantity, WeightUnit weightUnit)
     //{

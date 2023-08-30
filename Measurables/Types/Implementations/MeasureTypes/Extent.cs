@@ -24,7 +24,7 @@ internal sealed class Extent : Measure, IExtent
 
     public IDistance ConvertMeasure()
     {
-        decimal quantity = DefaultQuantity / DistancePerExtent;
+        decimal quantity = DefaultQuantity / CrossMeasureRatio;
 
         return (IDistance)GetMeasure(quantity, default(DistanceUnit));
     }
