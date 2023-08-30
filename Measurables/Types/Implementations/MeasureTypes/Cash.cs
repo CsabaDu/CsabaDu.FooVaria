@@ -22,14 +22,9 @@ internal sealed class Cash : Measure, ICash
     {
     }
 
-    public ICash GetCash(ValueType quantity, string name)
+    public ICash GetCash(IBaseMeasure baseMeasure)
     {
-        return (ICash)GetMeasure(quantity, name);
-    }
-
-    public ICash GetCash(decimal quantity, Currency currency)
-    {
-        return (ICash)GetMeasure(quantity, currency);
+        return (ICash)GetMeasure(baseMeasure);
     }
 
     public ICash GetCustomMeasure(decimal quantity, Currency currency, decimal exchangeRate, string customName)
@@ -37,23 +32,56 @@ internal sealed class Cash : Measure, ICash
         return (ICash)GetMeasure(quantity, currency, exchangeRate, customName);
     }
 
-    public ICash GetCash(ValueType quantity, IMeasurement? measurement = null)
+    public ICash GetMeasure(decimal quantity, Currency measureUnit)
     {
-        return (ICash)GetMeasure(quantity, measurement);
+        return (ICash)base.GetMeasure(quantity, measureUnit);
     }
 
-    public ICash GetCash(IBaseMeasure baseMeasure)
+    public ICash GetMeasure(decimal quantity, string name)
     {
-        return (ICash)GetMeasure(baseMeasure);
+        return (ICash)base.GetMeasure(quantity, name);
     }
 
-    public ICash GetCash(ICash? other = null)
+    public ICash GetMeasure(decimal quantity, IMeasurement? measurement = null)
     {
-        return (ICash)GetMeasure(other ?? this);
+        return (ICash)base.GetMeasure(quantity, measurement);
+    }
+
+    public ICash GetMeasure(ICash? other = null)
+    {
+        return (ICash)base.GetMeasure(other);
+    }
+
+    public override Enum GetMeasureUnit()
+    {
+        return (Currency)Measurement.MeasureUnit;
     }
 
     public ICash GetNextCustomMeasure(decimal quantity, string customName, decimal exchangeRate)
     {
-        return (ICash)GetMeasure(quantity, customName, MeasureUnitTypeCode, exchangeRate);
+        return (ICash)GetMeasure(quantity, customName, /*MeasureUnitTypeCode, */exchangeRate);
     }
+
+    public decimal GetQuantity()
+    {
+        return (decimal)Quantity;
+    }
+    //public ICash GetCash(ICash? other = null)
+    //{
+    //    return (ICash)GetMeasure(other ?? this);
+    //}
+    //public ICash GetCash(ValueType quantity, string name)
+    //{
+    //    return (ICash)GetMeasure(quantity, name);
+    //}
+
+    //public ICash GetCash(decimal quantity, Currency currency)
+    //{
+    //    return (ICash)GetMeasure(quantity, currency);
+    //}
+
+    //public ICash GetCash(ValueType quantity, IMeasurement? measurement = null)
+    //{
+    //    return (ICash)GetMeasure(quantity, measurement);
+    //}
 }

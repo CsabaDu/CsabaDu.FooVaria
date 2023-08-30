@@ -5,4 +5,3 @@ public interface ICustomMeasure<T, U, V> : ICustomMeasure where T : class, IMeas
     T GetNextCustomMeasure(U quantity, string customName, decimal exchangeRate);
     T GetCustomMeasure(U quantity, V measureUnit, decimal exchangeRate, string customName);
 }
-
