@@ -56,11 +56,6 @@ internal sealed class Weight : Measure, IWeight
         return (IWeight)base.GetMeasure(other);
     }
 
-    public override Enum GetMeasureUnit()
-    {
-        return (WeightUnit)Measurement.MeasureUnit;
-    }
-
     public double GetQuantity()
     {
         return (double)Quantity;

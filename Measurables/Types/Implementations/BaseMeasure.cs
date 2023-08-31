@@ -150,7 +150,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return null;
     }
 
-    public override Enum GetMeasureUnit()
+    public override sealed Enum GetMeasureUnit()
     {
         return Measurement.GetMeasureUnit();
     }

@@ -57,14 +57,9 @@ internal sealed class Cash : Measure, ICash
         return (ICash)base.GetMeasure(other);
     }
 
-    public override Enum GetMeasureUnit()
-    {
-        return (Currency)Measurement.MeasureUnit;
-    }
-
     public ICash GetNextCustomMeasure(decimal quantity, string customName, decimal exchangeRate)
     {
-        return (ICash)GetMeasure(quantity, customName, /*MeasureUnitTypeCode, */exchangeRate);
+        return (ICash)GetMeasure(quantity, customName, exchangeRate);
     }
 
     public decimal GetQuantity()

@@ -56,11 +56,6 @@ internal sealed class Extent : Measure, IExtent
         return (IExtent)base.GetMeasure(other);
     }
 
-    public override Enum GetMeasureUnit()
-    {
-        return (ExtentUnit)Measurement.MeasureUnit;
-    }
-
     public double GetQuantity()
     {
         return (double)Quantity;

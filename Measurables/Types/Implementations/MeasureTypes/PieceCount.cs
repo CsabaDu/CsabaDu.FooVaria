@@ -14,9 +14,7 @@ internal sealed class PieceCount : Measure, IPieceCount
     internal PieceCount(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
     {
     }
-    #endregion
 
-    #region Public methods
     internal PieceCount(IMeasureFactory measureFactory, ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate) : base(measureFactory, quantity, customName, measureUnitTypeCode, exchangeRate)
     {
     }
@@ -24,7 +22,9 @@ internal sealed class PieceCount : Measure, IPieceCount
     internal PieceCount(IMeasureFactory measureFactory, ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName) : base(measureFactory, quantity, measureUnit, exchangeRate, customName)
     {
     }
+    #endregion
 
+    #region Public methods
     public IPieceCount GetCustomMeasure(long quantity, Pieces pieces, decimal exchangeRate, string customName)
     {
         return (IPieceCount)GetMeasure(quantity, pieces, exchangeRate, customName);
@@ -55,11 +55,6 @@ internal sealed class PieceCount : Measure, IPieceCount
     public IPieceCount GetMeasure(IPieceCount? other = null)
     {
         return (IPieceCount)base.GetMeasure(other);
-    }
-
-    public override Enum GetMeasureUnit()
-    {
-        return (Pieces)Measurement.MeasureUnit;
     }
 
     public IPieceCount GetNextCustomMeasure(long quantity, string customName, decimal exchangeRate)

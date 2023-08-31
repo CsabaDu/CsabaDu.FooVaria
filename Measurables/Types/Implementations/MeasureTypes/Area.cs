@@ -44,11 +44,6 @@ internal sealed class Area : Measure, IArea
         return (IArea)base.GetMeasure(quantity, measurement);
     }
 
-    public override Enum GetMeasureUnit()
-    {
-        return (AreaUnit)Measurement.MeasureUnit;
-    }
-
     public double GetQuantity()
     {
         return (double)Quantity;

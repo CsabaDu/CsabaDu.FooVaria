@@ -57,11 +57,6 @@ internal sealed class Distance : Measure, IDistance
         return (IDistance)base.GetMeasure(other);
     }
 
-    public override Enum GetMeasureUnit()
-    {
-        return (DistanceUnit)Measurement.MeasureUnit;
-    }
-
     public double GetQuantity()
     {
         return (double)Quantity;

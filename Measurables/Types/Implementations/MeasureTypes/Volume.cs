@@ -56,11 +56,6 @@ internal sealed class Volume : Measure, IVolume
         return (IVolume)base.GetMeasure(other);
     }
 
-    public override Enum GetMeasureUnit()
-    {
-        return (VolumeUnit)Measurement.MeasureUnit;
-    }
-
     public double GetQuantity()
     {
         return (double)Quantity;

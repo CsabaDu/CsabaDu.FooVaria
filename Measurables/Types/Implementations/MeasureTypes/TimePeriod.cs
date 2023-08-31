@@ -58,11 +58,6 @@ internal sealed class TimePeriod : Measure, ITimePeriod
         return (ITimePeriod)base.GetMeasure(other);
     }
 
-    public override Enum GetMeasureUnit()
-    {
-        return (TimePeriodUnit)Measurement.MeasureUnit;
-    }
-
     public double GetQuantity()
     {
         return (double)Quantity;
