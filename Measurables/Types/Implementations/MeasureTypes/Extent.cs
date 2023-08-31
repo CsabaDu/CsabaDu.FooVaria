@@ -67,29 +67,3 @@ internal sealed class Extent : Measure, IExtent
     }
     #endregion
 }
-
-
-
-    //public IExtent GetExtent(IBaseMeasure baseMeasure)
-    //{
-    //    return (IExtent)GetMeasure(baseMeasure);
-    //}
-    //public IExtent GetExtent(double quantity, ExtentUnit extentUnit)
-    //{
-    //    return (IExtent)GetMeasure(quantity, extentUnit);
-    //}
-
-    //public IExtent GetExtent(ValueType quantity, string name)
-    //{
-    //    return (IExtent)GetMeasure(quantity, name);
-    //}
-
-    //public IExtent GetExtent(ValueType quantity, IMeasurement? measurement = null)
-    //{
-    //    return (IExtent)GetMeasure(quantity, measurement);
-    //}
-
-    //public IExtent GetExtent(IExtent? other = null)
-    //{
-    //    return (IExtent)GetMeasure(other);
-    //}

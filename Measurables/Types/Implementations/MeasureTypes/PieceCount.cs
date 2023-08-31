@@ -2,6 +2,7 @@
 
 internal sealed class PieceCount : Measure, IPieceCount
 {
+    #region Constructors
     internal PieceCount(IPieceCount pieceCount) : base(pieceCount)
     {
     }
@@ -13,7 +14,9 @@ internal sealed class PieceCount : Measure, IPieceCount
     internal PieceCount(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
     {
     }
+    #endregion
 
+    #region Public methods
     internal PieceCount(IMeasureFactory measureFactory, ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate) : base(measureFactory, quantity, customName, measureUnitTypeCode, exchangeRate)
     {
     }
@@ -68,25 +71,5 @@ internal sealed class PieceCount : Measure, IPieceCount
     {
         return (long)Quantity;
     }
+    #endregion
 }
-
-
-    //public IPieceCount GetPieceCount(IBaseMeasure baseMeasure)
-    //{
-    //    return (IPieceCount)GetMeasure(baseMeasure);
-    //}
-
-    //public IPieceCount GetPieceCount(ValueType quantity, string name)
-    //{
-    //    return (IPieceCount)GetMeasure(quantity, name);
-    //}
-
-    //public IPieceCount GetPieceCount(long quantity, Pieces pieces)
-    //{
-    //    return (IPieceCount)GetMeasure(quantity, pieces);
-    //}
-
-    //public IPieceCount GetPieceCount(ValueType quantity, IMeasurement? measurement = null)
-    //{
-    //    return (IPieceCount)GetMeasure(quantity, measurement);
-    //}

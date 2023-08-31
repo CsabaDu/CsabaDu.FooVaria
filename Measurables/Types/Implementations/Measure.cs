@@ -223,6 +223,7 @@ internal abstract class Measure : BaseMeasure, IMeasure
 
         throw new ArgumentOutOfRangeException(nameof(baseMeasure), baseMeasure.MeasureUnitTypeCode, null);
     }
+
     public void ValidateMeasurement(IMeasurement? measurement)
     {
         if (measurement == null) return;

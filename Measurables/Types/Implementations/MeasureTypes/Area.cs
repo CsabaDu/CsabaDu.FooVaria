@@ -60,24 +60,3 @@ internal sealed class Area : Measure, IArea
     }
     #endregion
 }
-
-//public IArea GetArea(IBaseMeasure baseMeasure)
-//{
-//    return (IArea)GetMeasure(baseMeasure);
-//}
-//public IArea GetArea(ValueType quantity, string name)
-//{
-//    return (IArea)GetMeasure(quantity, name);
-//}
-//public IArea GetArea(ValueType quantity, IMeasurement? measurement = null)
-//{
-//    return (IArea)GetMeasure(quantity, measurement);
-//}
-//public IArea GetArea(double quantity, AreaUnit areaUnit)
-//{
-//    return (IArea)GetMeasure(quantity, areaUnit);
-//}
-//public IArea GetArea(IArea? other = null)
-//{
-//    return (IArea)GetMeasure(other);
-//}

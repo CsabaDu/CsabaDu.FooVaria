@@ -2,6 +2,7 @@
 
 internal sealed class Volume : Measure, IVolume
 {
+    #region Constructors
     internal Volume(IVolume volume) : base(volume)
     {
     }
@@ -13,7 +14,9 @@ internal sealed class Volume : Measure, IVolume
     internal Volume(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
     {
     }
+    #endregion
 
+    #region Public methods
     public IVolume ConvertFrom(IWeight weight)
     {
         return NullChecked(weight, nameof(weight)).ConvertMeasure();
@@ -67,35 +70,5 @@ internal sealed class Volume : Measure, IVolume
     {
         return GetMeasure();
     }
+    #endregion
 }
-
-
-    //public IVolume GetVolume(IBaseMeasure baseMeasure)
-    //{
-    //    return (IVolume)GetMeasure(baseMeasure);
-    //}
-
-    //public IWeight ToVolumetricWeight(decimal ratio, WeightUnit weightUnit = WeightUnit.g)
-    //{
-    //    throw new NotImplementedException();
-    //}
-
-    //public IVolume GetVolume(double quantity, VolumeUnit volumeUnit)
-    //{
-    //    throw new NotImplementedException();
-    //}
-
-    //public IVolume GetVolume(ValueType quantity, string name)
-    //{
-    //    throw new NotImplementedException();
-    //}
-
-    //public IVolume GetVolume(ValueType quantity, IMeasurement? measurement = null)
-    //{
-    //    throw new NotImplementedException();
-    //}
-
-    //public IVolume GetVolume(IVolume? other = null)
-    //{
-    //    throw new NotImplementedException();
-    //}

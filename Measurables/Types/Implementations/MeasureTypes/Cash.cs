@@ -2,6 +2,7 @@
 
 internal sealed class Cash : Measure, ICash
 {
+    #region Constructors
     internal Cash(ICash cash) : base(cash)
     {
     }
@@ -21,7 +22,9 @@ internal sealed class Cash : Measure, ICash
     internal Cash(IMeasureFactory measureFactory, decimal quantity, Enum measureUnit, decimal exchangeRate, string customName) : base(measureFactory, quantity, measureUnit, exchangeRate, customName)
     {
     }
+    #endregion
 
+    #region Public methods
     public override ICash GetMeasure(IBaseMeasure baseMeasure)
     {
         ValidateBaseMeasure(baseMeasure);
@@ -68,27 +71,5 @@ internal sealed class Cash : Measure, ICash
     {
         return (decimal)Quantity;
     }
+    #endregion
 }
-
-    //public ICash GetCash(IBaseMeasure baseMeasure)
-    //{
-    //    return (ICash)GetMeasure(baseMeasure);
-    //}
-    //public ICash GetCash(ICash? other = null)
-    //{
-    //    return (ICash)GetMeasure(other ?? this);
-    //}
-    //public ICash GetCash(ValueType quantity, string name)
-    //{
-    //    return (ICash)GetMeasure(quantity, name);
-    //}
-
-    //public ICash GetCash(decimal quantity, Currency currency)
-    //{
-    //    return (ICash)GetMeasure(quantity, currency);
-    //}
-
-    //public ICash GetCash(ValueType quantity, IMeasurement? measurement = null)
-    //{
-    //    return (ICash)GetMeasure(quantity, measurement);
-    //}

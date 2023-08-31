@@ -2,6 +2,7 @@
 
 internal sealed class TimePeriod : Measure, ITimePeriod
 {
+    #region Constructors
     internal TimePeriod(ITimePeriod timePeriod) : base(timePeriod)
     {
     }
@@ -13,7 +14,9 @@ internal sealed class TimePeriod : Measure, ITimePeriod
     internal TimePeriod(IMeasureFactory measureFactory, double quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
     {
     }
+    #endregion
 
+    #region Public methods
     public ITimePeriod ConvertFrom(TimeSpan timeSpan)
     {
         long quantity = timeSpan.Ticks / TimeSpan.TicksPerMinute;
@@ -64,30 +67,5 @@ internal sealed class TimePeriod : Measure, ITimePeriod
     {
         return (double)Quantity;
     }
+    #endregion
 }
-
-
-    //public ITimePeriod GetTimePeriod(IBaseMeasure baseMeasure)
-    //{
-    //    return (ITimePeriod)GetMeasure(baseMeasure);
-    //}
-
-    //public ITimePeriod GetTimePeriod(double quantity, TimePeriodUnit timePeriodUnit)
-    //{
-    //    throw new NotImplementedException();
-    //}
-
-    //public ITimePeriod GetTimePeriod(ValueType quantity, string name)
-    //{
-    //    return (ITimePeriod)GetMeasure(quantity, name);
-    //}
-
-    //public ITimePeriod GetTimePeriod(ValueType quantity, IMeasurement? measurement = null)
-    //{
-    //    return (ITimePeriod)GetMeasure(quantity, measurement);
-    //}
-
-    //public ITimePeriod GetTimePeriod(ITimePeriod? other = null)
-    //{
-    //    return (ITimePeriod)GetMeasure(other);
-    //}

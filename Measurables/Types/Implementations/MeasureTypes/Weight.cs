@@ -2,6 +2,7 @@
 
 internal sealed class Weight : Measure, IWeight
 {
+    #region Constructors
     internal Weight(IWeight weight) : base(weight)
     {
     }
@@ -13,6 +14,9 @@ internal sealed class Weight : Measure, IWeight
     internal Weight(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
     {
     }
+    #endregion
+
+    #region Public methods
     public IWeight ConvertFrom(IVolume volume)
     {
         return NullChecked(volume, nameof(volume)).ConvertMeasure();
@@ -61,35 +65,5 @@ internal sealed class Weight : Measure, IWeight
     {
         return (double)Quantity;
     }
+    #endregion
 }
-
-
-    //public IWeight GetWeight(IBaseMeasure baseMeasure)
-    //{
-    //    return (IWeight)GetMeasure(baseMeasure);
-    //}
-
-    //public IWeight GetVolumetricWeight(IVolume volume, decimal ratio, bool isGreater = true)
-    //{
-    //    throw new NotImplementedException();
-    //}
-
-    //public IWeight GetWeight(double quantity, WeightUnit weightUnit)
-    //{
-    //    throw new NotImplementedException();
-    //}
-
-    //public IWeight GetWeight(ValueType quantity, string name)
-    //{
-    //    throw new NotImplementedException();
-    //}
-
-    //public IWeight GetWeight(ValueType quantity, IMeasurement? measurement = null)
-    //{
-    //    throw new NotImplementedException();
-    //}
-
-    //public IWeight GetWeight(IWeight? other = null)
-    //{
-    //    throw new NotImplementedException();
-    //}
