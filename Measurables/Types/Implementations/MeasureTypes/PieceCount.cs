@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes;
+﻿using CsabaDu.FooVaria.Measurables.Behaviors;
+
+namespace CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes;
 
 internal sealed class PieceCount : Measure, IPieceCount
 {
@@ -25,41 +27,39 @@ internal sealed class PieceCount : Measure, IPieceCount
     #endregion
 
     #region Public methods
-    public IPieceCount GetCustomMeasure(long quantity, Pieces pieces, decimal exchangeRate, string customName)
+    public IPieceCount GetCustomMeasure(long quantity, Pieces measureUnit, decimal exchangeRate, string customName)
     {
-        return (IPieceCount)GetMeasure(quantity, pieces, exchangeRate, customName);
+        return GetMeasure(this, quantity, measureUnit, exchangeRate, customName);
     }
 
     public override IPieceCount GetMeasure(IBaseMeasure baseMeasure)
     {
-        ValidateBaseMeasure(baseMeasure);
-
-        return (IPieceCount)base.GetMeasure(baseMeasure);
+        return GetMeasure(this, baseMeasure);
     }
 
     public IPieceCount GetMeasure(double quantity, Pieces measureUnit)
     {
-        return (IPieceCount)base.GetMeasure(quantity, measureUnit);
+        return GetMeasure(this, quantity, measureUnit);
     }
 
     public IPieceCount GetMeasure(double quantity, string name)
     {
-        return (IPieceCount)base.GetMeasure(quantity, name);
+        return GetMeasure(this, quantity, name);
     }
 
     public IPieceCount GetMeasure(double quantity, IMeasurement? measurement = null)
     {
-        return (IPieceCount)base.GetMeasure(quantity, measurement);
+        return GetMeasure(this, quantity, measurement);
     }
 
     public IPieceCount GetMeasure(IPieceCount? other = null)
     {
-        return (IPieceCount)base.GetMeasure(other);
+        return GetMeasure(this, other as PieceCount);
     }
 
     public IPieceCount GetNextCustomMeasure(long quantity, string customName, decimal exchangeRate)
     {
-        return (IPieceCount)GetMeasure(quantity, customName, exchangeRate);
+        return GetMeasure(this, quantity, customName, exchangeRate);
     }
 
     public double GetQuantity()

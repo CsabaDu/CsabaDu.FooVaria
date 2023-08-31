@@ -24,36 +24,34 @@ internal sealed class Extent : Measure, IExtent
 
     public IDistance ConvertMeasure()
     {
-        decimal quantity = DefaultQuantity / CrossMeasureRatio;
+        decimal quantity = DefaultQuantity / ConvertMeasureRatio;
 
         return (IDistance)GetMeasure(quantity, default(DistanceUnit));
     }
 
     public override IExtent GetMeasure(IBaseMeasure baseMeasure)
     {
-        ValidateBaseMeasure(baseMeasure);
-
-        return (IExtent)base.GetMeasure(baseMeasure);
+        return GetMeasure(this, baseMeasure);
     }
 
     public IExtent GetMeasure(double quantity, ExtentUnit measureUnit)
     {
-        return (IExtent)base.GetMeasure(quantity, measureUnit);
+        return GetMeasure(this, quantity, measureUnit);
     }
 
     public IExtent GetMeasure(double quantity, string name)
     {
-        return (IExtent)base.GetMeasure(quantity, name);
+        return GetMeasure(this, quantity, name);
     }
 
     public IExtent GetMeasure(double quantity, IMeasurement? measurement = null)
     {
-        return (IExtent)base.GetMeasure(quantity, measurement);
+        return GetMeasure(this, quantity, measurement);
     }
 
     public IExtent GetMeasure(IExtent? other = null)
     {
-        return (IExtent)base.GetMeasure(other);
+        return GetMeasure(this, other as Extent);
     }
 
     public double GetQuantity()

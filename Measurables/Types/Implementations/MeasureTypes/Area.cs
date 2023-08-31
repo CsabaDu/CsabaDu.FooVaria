@@ -19,29 +19,27 @@ internal sealed class Area : Measure, IArea
     #region Public methods
     public override IArea GetMeasure(IBaseMeasure baseMeasure)
     {
-        ValidateBaseMeasure(baseMeasure);
-
-        return (IArea)base.GetMeasure(baseMeasure);
+        return GetMeasure(this, baseMeasure);
     }
 
     public IArea GetMeasure(double quantity, AreaUnit measureUnit)
     {
-        return (IArea)base.GetMeasure(quantity, measureUnit);
+        return GetMeasure(this, quantity, measureUnit);
     }
 
     public IArea GetMeasure(IArea? other = null)
     {
-        return (IArea)base.GetMeasure(other);
+        return GetMeasure(this, other as Area);
     }
 
     public IArea GetMeasure(double quantity, string name)
     {
-        return(IArea)base.GetMeasure(quantity, name);
+        return GetMeasure(this, quantity, name);
     }
 
     public IArea GetMeasure(double quantity, IMeasurement? measurement = null)
     {
-        return (IArea)base.GetMeasure(quantity, measurement);
+        return GetMeasure(this, quantity, measurement);
     }
 
     public double GetQuantity()

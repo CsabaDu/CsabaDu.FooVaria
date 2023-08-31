@@ -24,36 +24,34 @@ internal sealed class Volume : Measure, IVolume
 
     public IWeight ConvertMeasure()
     {
-        decimal quantity = DefaultQuantity / CrossMeasureRatio;
+        decimal quantity = DefaultQuantity / ConvertMeasureRatio;
 
         return (IWeight)GetMeasure(quantity, default(WeightUnit));
     }
 
     public override IVolume GetMeasure(IBaseMeasure baseMeasure)
     {
-        ValidateBaseMeasure(baseMeasure);
-
-        return (IVolume)base.GetMeasure(baseMeasure);
+        return GetMeasure(this, baseMeasure);
     }
 
     public IVolume GetMeasure(double quantity, VolumeUnit measureUnit)
     {
-        return (IVolume)base.GetMeasure(quantity, measureUnit);
+        return GetMeasure(this, quantity, measureUnit);
     }
 
     public IVolume GetMeasure(double quantity, string name)
     {
-        return (IVolume)base.GetMeasure(quantity, name);
+        return GetMeasure(this, quantity, name);
     }
 
     public IVolume GetMeasure(double quantity, IMeasurement? measurement = null)
     {
-        return (IVolume)base.GetMeasure(quantity, measurement);
+        return GetMeasure(this, quantity, measurement);
     }
 
     public IVolume GetMeasure(IVolume? other = null)
     {
-        return (IVolume)base.GetMeasure(other);
+        return GetMeasure(this, other as Volume);
     }
 
     public double GetQuantity()

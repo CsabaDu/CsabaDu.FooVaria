@@ -33,29 +33,27 @@ internal sealed class TimePeriod : Measure, ITimePeriod
 
     public override ITimePeriod GetMeasure(IBaseMeasure baseMeasure)
     {
-        ValidateBaseMeasure(baseMeasure);
-
-        return (ITimePeriod)base.GetMeasure(baseMeasure);
+        return GetMeasure(this, baseMeasure);
     }
 
     public ITimePeriod GetMeasure(double quantity, TimePeriodUnit measureUnit)
     {
-        return (ITimePeriod)base.GetMeasure(quantity, measureUnit);
+        return GetMeasure(this, quantity, measureUnit);
     }
 
     public ITimePeriod GetMeasure(double quantity, string name)
     {
-        return (ITimePeriod)base.GetMeasure(quantity, name);
+        return GetMeasure(this, quantity, name);
     }
 
     public ITimePeriod GetMeasure(double quantity, IMeasurement? measurement = null)
     {
-        return (ITimePeriod)base.GetMeasure(quantity, measurement);
+        return GetMeasure(this, quantity, measurement);
     }
 
     public ITimePeriod GetMeasure(ITimePeriod? other = null)
     {
-        return (ITimePeriod)base.GetMeasure(other);
+        return GetMeasure(this, other as TimePeriod);
     }
 
     public double GetQuantity()

@@ -27,39 +27,37 @@ internal sealed class Cash : Measure, ICash
     #region Public methods
     public override ICash GetMeasure(IBaseMeasure baseMeasure)
     {
-        ValidateBaseMeasure(baseMeasure);
-
-        return (ICash)base.GetMeasure(baseMeasure);
+        return GetMeasure(this, baseMeasure);
     }
 
-    public ICash GetCustomMeasure(decimal quantity, Currency currency, decimal exchangeRate, string customName)
+    public ICash GetCustomMeasure(decimal quantity, Currency measureUnit, decimal exchangeRate, string customName)
     {
-        return (ICash)GetMeasure(quantity, currency, exchangeRate, customName);
+        return GetMeasure(this, quantity, measureUnit, exchangeRate, customName);
     }
 
     public ICash GetMeasure(decimal quantity, Currency measureUnit)
     {
-        return (ICash)base.GetMeasure(quantity, measureUnit);
+        return GetMeasure(this, quantity, measureUnit);
     }
 
     public ICash GetMeasure(decimal quantity, string name)
     {
-        return (ICash)base.GetMeasure(quantity, name);
+        return GetMeasure(this, quantity, name);
     }
 
     public ICash GetMeasure(decimal quantity, IMeasurement? measurement = null)
     {
-        return (ICash)base.GetMeasure(quantity, measurement);
+        return GetMeasure(this, quantity, measurement);
     }
 
     public ICash GetMeasure(ICash? other = null)
     {
-        return (ICash)base.GetMeasure(other);
+        return GetMeasure(this, other as Cash);
     }
 
     public ICash GetNextCustomMeasure(decimal quantity, string customName, decimal exchangeRate)
     {
-        return (ICash)GetMeasure(quantity, customName, exchangeRate);
+        return GetMeasure(this, quantity, customName, exchangeRate);
     }
 
     public decimal GetQuantity()

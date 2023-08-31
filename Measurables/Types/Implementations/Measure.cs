@@ -6,7 +6,7 @@ internal abstract class Measure : BaseMeasure, IMeasure
 {
     #region Constants
     private const int DefaultMeasureQuantity = 0;
-    protected const int CrossMeasureRatio = 1000;
+    protected const int ConvertMeasureRatio = 1000;
     #endregion
 
     #region Constructors
@@ -156,8 +156,6 @@ internal abstract class Measure : BaseMeasure, IMeasure
 
     public IMeasure GetMeasure(ValueType quantity, string name)
     {
-        ValidateName(name);
-
         return GetMeasureFactory().Create(quantity, name);
     }
 
@@ -173,8 +171,6 @@ internal abstract class Measure : BaseMeasure, IMeasure
 
     public IMeasure GetMeasure(ValueType quantity, IMeasurement? measurement = null)
     {
-        ValidateMeasurement(measurement);
-
         return GetMeasureFactory().Create(quantity, measurement ?? Measurement);
     }
 
@@ -216,39 +212,88 @@ internal abstract class Measure : BaseMeasure, IMeasure
     {
         return GetSum(this, other, SummingMode.Subtract);
     }
+    #endregion
 
-    public void ValidateBaseMeasure(IBaseMeasure baseMeasure)
+    #region Protected methods
+    protected static T GetMeasure<T, U>(T measure, U quantity, string name) where T : class, IMeasure where U : struct
     {
-        if (NullChecked(baseMeasure, nameof(baseMeasure)).MeasureUnitTypeCode == MeasureUnitTypeCode) return;
+        validateName();
 
-        throw new ArgumentOutOfRangeException(nameof(baseMeasure), baseMeasure.MeasureUnitTypeCode, null);
+        return (T)measure.GetMeasure(quantity, name);
+
+        #region Local methods
+        void validateName()
+        {
+            if (measure.GetDefaultNames(measure.MeasureUnitTypeCode).Contains(NullChecked(name, nameof(name)))) return;
+
+            if (measure.Measurement.GetCustomNameCollection(measure.MeasureUnitTypeCode).Values.Contains(name)) return;
+
+            throw new ArgumentOutOfRangeException(nameof(name), name, null);
+        }
+        #endregion
     }
 
-    public void ValidateMeasurement(IMeasurement? measurement)
+    protected static T GetMeasure<T, U>(T measure, U quantity, IMeasurement? measurement) where T : class, IMeasure where U : struct
     {
-        if (measurement == null) return;
+        validateMeasurement();
 
-        try
+        return (T)measure.GetMeasure(quantity, measurement);
+
+        #region Local methods
+        void validateMeasurement()
         {
-            measurement.ValidateMeasureUnitTypeCode(MeasureUnitTypeCode);
+            if (measurement == null) return;
+
+            try
+            {
+                measurement.ValidateMeasureUnitTypeCode(measure.MeasureUnitTypeCode);
+            }
+            catch (InvalidEnumArgumentException)
+            {
+                throw new ArgumentOutOfRangeException(nameof(measurement), measurement.MeasureUnitTypeCode, null);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(ex.Message, ex.InnerException);
+            }
         }
-        catch (InvalidEnumArgumentException)
-        {
-            throw new ArgumentOutOfRangeException(nameof(measurement), measurement.MeasureUnitTypeCode, null);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException(ex.Message, ex.InnerException);
-        }
+        #endregion
     }
 
-    public void ValidateName(string name)
+    protected static T GetMeasure<T>(T measure, IBaseMeasure baseMeasure) where T : class, IMeasure
     {
-        if (GetDefaultNames(MeasureUnitTypeCode).Contains(NullChecked(name, nameof(name)))) return;
+        validateBaseMeasure();
 
-        if (Measurement.GetCustomNameCollection(MeasureUnitTypeCode).Values.Contains(name)) return;
+        return (T)measure.GetMeasure(baseMeasure);
 
-        throw new ArgumentOutOfRangeException(nameof(name), name, null);
+        #region Local methods
+        void validateBaseMeasure()
+        {
+            if (NullChecked(baseMeasure, nameof(baseMeasure)).MeasureUnitTypeCode == measure.MeasureUnitTypeCode) return;
+
+            throw new ArgumentOutOfRangeException(nameof(baseMeasure), baseMeasure.MeasureUnitTypeCode, null);
+        }
+        #endregion
+    }
+
+    protected static T GetMeasure<T>(T measure, T? other) where T : class, IMeasure
+    {
+        return (T)measure.GetMeasure(other);
+    }
+
+    protected static T GetMeasure<T, U, V>(T measure, U quantity, V measureUnit) where T : class, IMeasure where U : struct where V : struct, Enum
+    {
+        return (T)measure.GetMeasure(quantity, measureUnit);
+    }
+
+    protected static T GetMeasure<T, U, V>(T measure, U quantity, V measureUnit, decimal exchangeRate, string customName) where T : class, IMeasure where U : struct where V : struct, Enum
+    {
+        return (T)measure.GetMeasure(quantity, measureUnit, exchangeRate, customName);
+    }
+
+    protected static T GetMeasure<T, U>(T measure, U quantity, string customName, decimal exchangeRate) where T : class, IMeasure where U : struct
+    {
+        return (T)measure.GetMeasure(quantity, customName, exchangeRate);
     }
     #endregion
 }
