@@ -1,13 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="CsabaDu.FooVaria.Measurables.Types.Implementations.BaseMeasurable" Collapsed="true">
-    <Position X="7" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAgAAACAAQAAAAACgIEASAAAAAAACAAAAAA=</HashCode>
-      <FileName>Types\Implementations\BaseMeasurable.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="CsabaDu.FooVaria.Measurables.Types.Implementations.BaseMeasure" Collapsed="true">
     <Position X="3" Y="3.25" Width="1.5" />
     <TypeIdentifier>
@@ -51,7 +43,7 @@
   <Class Name="CsabaDu.FooVaria.Measurables.Types.Implementations.Measurable" Collapsed="true">
     <Position X="7" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAkAAAAAAAAAAgAAEAAAAAAAAAIAgAAAABAAAAAA=</HashCode>
+      <HashCode>AAAAAkAAAAAAAACAgQAEAAACAAAACIAgAAAABAAAAAA=</HashCode>
       <FileName>Types\Implementations\Measurable.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -59,16 +51,8 @@
   <Class Name="CsabaDu.FooVaria.Measurables.Types.Implementations.Measure" Collapsed="true">
     <Position X="3" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAIAISAAgQgCAgIAgAADAEAAAAAAAoQAAACAgAAAAAA=</HashCode>
+      <HashCode>AAIAISAAgQgCAgIAgAADAgAAAAAAAIAAAACAgAAAAAA=</HashCode>
       <FileName>Types\Implementations\Measure.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="CsabaDu.FooVaria.Measurables.Types.Implementations.Measurement" Collapsed="true">
-    <Position X="7" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>cAACkAgACIAgAUaQqCkAgJAOAQAKQICgCQELChAAhgE=</HashCode>
-      <FileName>Types\Implementations\Measurement.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
@@ -83,7 +67,7 @@
   <Class Name="CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes.Area" Collapsed="true">
     <Position X="0.5" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAgAACAAAAAAAAAAAAAAAAEAAAAAAACAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAgAACAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
       <FileName>Types\Implementations\MeasureTypes\Area.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -91,7 +75,7 @@
   <Class Name="CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes.Cash" Collapsed="true">
     <Position X="2.25" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAEAgAACAABAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <HashCode>AAAAAAEAgAACAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Types\Implementations\MeasureTypes\Cash.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -99,7 +83,7 @@
   <Class Name="CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes.Distance" Collapsed="true">
     <Position X="4" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAgAAAgAACAAAAAAAAAAAAAAAAAAAAAAAACCAAAAA=</HashCode>
+      <HashCode>AAAAgAAAgAACAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
       <FileName>Types\Implementations\MeasureTypes\Distance.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -107,7 +91,7 @@
   <Class Name="CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes.Extent" Collapsed="true">
     <Position X="5.75" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAgAAAgAACAAAAAAAAAAAAAAAAAAAAAAAACCAAAAA=</HashCode>
+      <HashCode>AAAAgAAAgAACAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
       <FileName>Types\Implementations\MeasureTypes\Extent.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -115,7 +99,7 @@
   <Class Name="CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes.PieceCount" Collapsed="true">
     <Position X="7.5" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAEAgAACAABAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <HashCode>AAAAAAEAgAACAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Types\Implementations\MeasureTypes\PieceCount.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -123,7 +107,7 @@
   <Class Name="CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes.TimePeriod" Collapsed="true">
     <Position X="9.25" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAgAAAgAACAAAAAAAAAAAAAAAAAAAAAAAACCAAAAA=</HashCode>
+      <HashCode>AAAAgAAAgAACAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
       <FileName>Types\Implementations\MeasureTypes\TimePeriod.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -131,7 +115,7 @@
   <Class Name="CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes.Volume" Collapsed="true">
     <Position X="11" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAgAAAgAACAAAAAAAAAAAAAAAAEAAAAAAACCAAAAA=</HashCode>
+      <HashCode>AAAAgAAAgAACAAAAAAAAAAAAAAAAEAAAAAAAACAAAAA=</HashCode>
       <FileName>Types\Implementations\MeasureTypes\Volume.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -139,17 +123,18 @@
   <Class Name="CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes.Weight" Collapsed="true">
     <Position X="12.75" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAgAAAgAACAAAAAAAAAAAAAAAAAAAAAAAACCAAAAA=</HashCode>
+      <HashCode>AAAAgAAAgAACAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
       <FileName>Types\Implementations\MeasureTypes\Weight.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="CsabaDu.FooVaria.Measurables.Statics.Validate" Collapsed="true">
-    <Position X="0.5" Y="1.25" Width="1.5" />
+  <Class Name="CsabaDu.FooVaria.Measurables.Types.Implementations.Measurement" Collapsed="true">
+    <Position X="7" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
-      <FileName>Statics\Validate.cs</FileName>
+      <HashCode>cAACkAgACAAgAUaQoCgAgJAOAQQKQICgCQELChAAhgE=</HashCode>
+      <FileName>Types\Implementations\Measurement.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Enum Name="CsabaDu.FooVaria.Measurables.Enums.RateComponentCode" Collapsed="true">
     <Position X="0.5" Y="0.5" Width="1.75" />

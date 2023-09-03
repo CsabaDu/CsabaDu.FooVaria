@@ -66,13 +66,48 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
         return quantityTypeCode ?? throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode!.Value);
     }
 
+    public override MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum? measureUnit = null)
+    {
+        if (measureUnit == null) return MeasureUnitTypeCode;
+
+        ValidateMeasureUnit(measureUnit);
+
+        string measureUnitTypeName = measureUnit.GetType().Name;
+
+        return (MeasureUnitTypeCode)Enum.Parse(typeof(MeasureUnitTypeCode), measureUnitTypeName);
+    }
+
+    public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
+    {
+        return Enum.GetValues<MeasureUnitTypeCode>();
+    }
+
+    public override void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode? measureUnitTypeCode = null)
+    {
+        if (IsDefinedMeasureUnit(measureUnit))
+        {
+            if (measureUnitTypeCode == null) return;
+
+            if (measureUnitTypeCode == GetMeasureUnitTypeCode(measureUnit)) return;
+        }
+
+        throw InvalidMeasureUnitEnumArgumentException(measureUnit);
+    }
+
+    public override void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        if (Enum.IsDefined(measureUnitTypeCode)) return;
+
+        throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode);
+    }
+
     #region Abstract methods
     public abstract IMeasurable GetDefault();
     #endregion
     #endregion
 
     #region Protected methods
-    protected static  IMeasure GetSum(IMeasure measure, IMeasure? other, SummingMode summingMode)
+    protected static IMeasure GetSum(IMeasure measure, IMeasure? other, SummingMode summingMode)
     {
         if (other == null) return measure.GetMeasure();
 

@@ -5,7 +5,7 @@ public interface IMeasurementFactory : IMeasurableFactory, IRateComponentFactory
     IMeasurement Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate);
     IMeasurement Create(Enum measureUnit, decimal exchangeRate, string customName);
     IMeasurement Create(Enum measureUnit);
-    IMeasurement Create(IMeasurement measurement);
+    IMeasurement Create(IMeasurement other);
 
-    Enum GetOrCreateValidMeasureUnit(Enum measureUnit, decimal? exchangeRate, string? customName);
+    //Enum GetOrCreateValidMeasureUnit(Enum measureUnit, decimal? exchangeRate, string? customName);
 }

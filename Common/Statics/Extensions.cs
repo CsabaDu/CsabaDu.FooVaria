@@ -4,6 +4,79 @@ namespace CsabaDu.FooVaria.Common.Statics;
 
 public static class Extensions
 {
+    #region CsabaDu.FooVaria.Common.Enums.MeasureUnitTypeCode
+    public static TypeCode? GetQuantityTypeCode(this MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        return measureUnitTypeCode switch
+        {
+            MeasureUnitTypeCode.AreaUnit or
+            MeasureUnitTypeCode.DistanceUnit or
+            MeasureUnitTypeCode.ExtentUnit or
+            MeasureUnitTypeCode.TimePeriodUnit or
+            MeasureUnitTypeCode.VolumeUnit or
+            MeasureUnitTypeCode.WeightUnit => TypeCode.Double,
+
+            MeasureUnitTypeCode.Currency => TypeCode.Decimal,
+
+            MeasureUnitTypeCode.Pieces => TypeCode.Int64,
+
+            _ => null,
+        };
+    }
+
+    public static string GetName(this MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        string? name = Enum.GetName(typeof(MeasureUnitTypeCode), measureUnitTypeCode);
+
+        return name ?? throw new InvalidEnumArgumentException(nameof(measureUnitTypeCode), (int)measureUnitTypeCode, measureUnitTypeCode.GetType());
+    }
+
+    public static IEnumerable<string> GetMeasureUnitDefaultNames(this MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        Type measureUnitType = measureUnitTypeCode.GetMeasureUnitType();
+
+        return Enum.GetNames(measureUnitType);
+    }
+
+    public static Type GetMeasureUnitType(this MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        return measureUnitTypeCode switch
+        {
+            MeasureUnitTypeCode.AreaUnit => typeof(AreaUnit),
+            MeasureUnitTypeCode.Currency => typeof(Currency),
+            MeasureUnitTypeCode.DistanceUnit => typeof(DistanceUnit),
+            MeasureUnitTypeCode.ExtentUnit => typeof(ExtentUnit),
+            MeasureUnitTypeCode.TimePeriodUnit => typeof(TimePeriodUnit),
+            MeasureUnitTypeCode.Pieces => typeof(Pieces),
+            MeasureUnitTypeCode.VolumeUnit => typeof(VolumeUnit),
+            MeasureUnitTypeCode.WeightUnit => typeof(WeightUnit),
+
+            _ => throw new InvalidEnumArgumentException(nameof(measureUnitTypeCode), (int)measureUnitTypeCode, measureUnitTypeCode.GetType()),
+        };
+    }
+
+    public static Enum GetMeasureUnitDefault(this MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        Type measureUnitType = measureUnitTypeCode.GetMeasureUnitType();
+
+       return (Enum)Enum.ToObject(measureUnitType, default(int));
+    }
+    #endregion
+
+    #region System.Decimal
+    public static bool IsValidExchangeRate(this decimal exchangeRate)
+    {
+        return exchangeRate > 0;
+    }
+
+    public static void ValidateExchangeRate(this decimal exchangeRate)
+    {
+        if (exchangeRate.IsValidExchangeRate()) return;
+
+        throw new ArgumentOutOfRangeException(nameof(exchangeRate), exchangeRate, null);
+    }
+    #endregion
+
     #region System.Int32
     public static bool? FitsIn(this int comparison, LimitMode? limitMode)
     {
@@ -100,63 +173,6 @@ public static class Extensions
             };
         }
         #endregion
-    }
-    #endregion
-
-    #region CsabaDu.FooVaria.Common.Enums.MeasureUnitTypeCode
-    public static TypeCode? GetQuantityTypeCode(this MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        return measureUnitTypeCode switch
-        {
-            MeasureUnitTypeCode.AreaUnit or
-            MeasureUnitTypeCode.DistanceUnit or
-            MeasureUnitTypeCode.ExtentUnit or
-            MeasureUnitTypeCode.TimePeriodUnit or
-            MeasureUnitTypeCode.VolumeUnit or
-            MeasureUnitTypeCode.WeightUnit => TypeCode.Double,
-            MeasureUnitTypeCode.Currency => TypeCode.Decimal,
-            MeasureUnitTypeCode.Pieces => TypeCode.Int64,
-
-            _ => null,
-        };
-    }
-
-    public static string GetName(this MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        string? name = Enum.GetName(typeof(MeasureUnitTypeCode), measureUnitTypeCode);
-
-        return name ?? throw new InvalidEnumArgumentException(nameof(measureUnitTypeCode), (int)measureUnitTypeCode, measureUnitTypeCode.GetType());
-    }
-
-    public static IEnumerable<string> GetMeasureUnitDefaultNames(this MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        Type measureUnitType = measureUnitTypeCode.GetMeasureUnitType();
-
-        return Enum.GetNames(measureUnitType);
-    }
-
-    public static Type GetMeasureUnitType(this MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        return measureUnitTypeCode switch
-        {
-            MeasureUnitTypeCode.AreaUnit => typeof(AreaUnit),
-            MeasureUnitTypeCode.Currency => typeof(Currency),
-            MeasureUnitTypeCode.DistanceUnit => typeof(DistanceUnit),
-            MeasureUnitTypeCode.ExtentUnit => typeof(ExtentUnit),
-            MeasureUnitTypeCode.TimePeriodUnit => typeof(TimePeriodUnit),
-            MeasureUnitTypeCode.Pieces => typeof(Pieces),
-            MeasureUnitTypeCode.VolumeUnit => typeof(VolumeUnit),
-            MeasureUnitTypeCode.WeightUnit => typeof(WeightUnit),
-
-            _ => throw new InvalidEnumArgumentException(nameof(measureUnitTypeCode), (int)measureUnitTypeCode, measureUnitTypeCode.GetType()),
-        };
-    }
-
-    public static Enum GetMeasureUnitDefault(this MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        Type measureUnitType = measureUnitTypeCode.GetMeasureUnitType();
-
-       return (Enum)Enum.ToObject(measureUnitType, default(int));
     }
     #endregion
 }

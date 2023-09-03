@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using static CsabaDu.FooVaria.Common.Statics.QuantityType;
+﻿using static CsabaDu.FooVaria.Common.Statics.QuantityType;
 
 namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
@@ -222,7 +221,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     public IBaseMeasure? GetRateComponent(IRate rate, RateComponentCode rateComponentCode)
     {
-        return rate[rateComponentCode];
+        return NullChecked(rate, nameof(rate))[rateComponentCode];
     }
 
     public RateComponentCode? GetRateComponentCode()

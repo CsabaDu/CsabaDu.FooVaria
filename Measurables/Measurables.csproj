@@ -10,8 +10,4 @@
     <ProjectReference Include="..\Common\Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Factories\Implementations\" />
-  </ItemGroup>
-
 </Project>

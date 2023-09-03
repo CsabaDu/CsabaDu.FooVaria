@@ -9,36 +9,21 @@ internal sealed class Measurement : Measurable, IMeasurement
 
     #region Static properties
     private static IDictionary<Enum, decimal> ExchangeRateCollection { get; set; }
-    private static IDictionary<Enum, string> CustomNameCollection { get; set; } = new SortedList<Enum, string>();
+    private static IDictionary<Enum, string> CustomNameCollection { get; set; }
     #endregion
 
     #region Constructors
     #region Static constructor
     static Measurement()
     {
-        ExchangeRateCollection = GetConstantExchangeRates(new SortedList<Enum, decimal>());
+        ExchangeRateCollection = GetConstantExchangeRateCollection(new SortedList<Enum, decimal>());
+        CustomNameCollection = new SortedList<Enum, string>();
     }
     #endregion
 
     internal Measurement(IMeasurementFactory measurementFactory, Enum measureUnit) : base(measurementFactory, measureUnit)
     {
         ExchangeRate = GetExchangeRate(measureUnit);
-        MeasureUnit = measureUnit;
-    }
-
-    internal Measurement(IMeasurementFactory measurementFactory, Enum measureUnit, decimal exchangeRate, string customName) : base(measurementFactory, measureUnit)
-    {
-        SetCustomMeasurementValidatedParams(measureUnit, exchangeRate, customName);
-
-        ExchangeRate = exchangeRate;
-        MeasureUnit = measureUnit;
-    }
-
-    internal Measurement(IMeasurementFactory measurementFactory, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate) : base(measurementFactory, measureUnitTypeCode)
-    {
-        SetCustomMeasurementValidatedParams(customName, measureUnitTypeCode, exchangeRate, out Enum measureUnit);
-
-        ExchangeRate = exchangeRate;
         MeasureUnit = measureUnit;
     }
     #endregion
@@ -72,7 +57,7 @@ internal sealed class Measurement : Measurable, IMeasurement
 
     public IDictionary<Enum, decimal> GetConstantExchangeRateCollection()
     {
-        return GetConstantExchangeRates(new SortedList<Enum, decimal>());
+        return GetConstantExchangeRateCollection(new SortedList<Enum, decimal>());
     }
 
     public ICustomMeasurement? GetCustomMeasurement(Enum measureUnit, decimal exchangeRate, string customName)
@@ -81,7 +66,7 @@ internal sealed class Measurement : Measurable, IMeasurement
 
         if (!(IsValidMeasureUnit(measureUnit, exchangeRate) && TrySetCustomName(measureUnit, customName))) return null;
 
-        if (!(TrySetCustomMeasureUnit(measureUnit, exchangeRate) && TrySetCustomName(measureUnit, customName))) return null;
+        if (!TrySetCustomMeasureUnit(measureUnit, exchangeRate, customName)) return null;
 
         return GetMeasurementFactory().Create(measureUnit, exchangeRate, customName);
     }
@@ -197,7 +182,7 @@ internal sealed class Measurement : Measurable, IMeasurement
 
     public IDictionary<string, Enum> GetMeasureUnitCollection(MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
-        IDictionary<string, Enum> measureUnitCollection = CustomNameCollection.ToDictionary(x => x.Value, x => x.Key);
+        IDictionary<string, Enum> measureUnitCollection = getMeasureUnitCollection();
 
         foreach (Enum measureUnit in GetValidMeasureUnits(measureUnitTypeCode))
         {
@@ -206,6 +191,17 @@ internal sealed class Measurement : Measurable, IMeasurement
         }
 
         return measureUnitCollection;
+
+        #region Local methods
+        IDictionary<string, Enum> getMeasureUnitCollection()
+        {
+            if (measureUnitTypeCode == null) return CustomNameCollection.ToDictionary(x => x.Value, x => x.Key);
+
+            return CustomNameCollection
+                .Where(x => x.GetType() == GetMeasureUnitType(measureUnitTypeCode))
+                .ToDictionary(x => x.Value, x => x.Key);
+        }
+        #endregion
     }
 
     public string GetName(Enum? measureUnit = null)
@@ -279,6 +275,11 @@ internal sealed class Measurement : Measurable, IMeasurement
 
     public IEnumerable<Enum> GetValidMeasureUnits(MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
+        return GetValidMeasureUnits().Where(x => x.GetType() == GetMeasureUnitType(measureUnitTypeCode));
+    }
+
+    public static IEnumerable<Enum> GetValidMeasureUnits()
+    {
         return ExchangeRateCollection.Keys;
     }
 
@@ -306,12 +307,14 @@ internal sealed class Measurement : Measurable, IMeasurement
 
         MeasureUnitTypeCode measureUnitTypeCode = GetMeasureUnitTypeCode(measureUnit);
 
-        return IsCustomMeasureUnitTypeCode(measureUnitTypeCode);
+        return IsValidMeasureUnit(measureUnit) && HasMeasureUnitTypeCode(measureUnitTypeCode, measureUnit);
     }
 
     public bool IsCustomMeasureUnitTypeCode(MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
-        return IsCustomMeasureUnitTypeCode(measureUnitTypeCode ?? MeasureUnitTypeCode);
+        IEnumerable<string> defaultNames = GetDefaultNames(measureUnitTypeCode ?? MeasureUnitTypeCode);
+
+        return defaultNames?.First() == DefaultCustomMeasureUnitName;
     }
 
     public bool IsExchangeableTo(Enum? context)
@@ -344,12 +347,26 @@ internal sealed class Measurement : Measurable, IMeasurement
     public void RestoreConstantExchangeRateCollection()
     {
         CustomNameCollection.Clear();
-        ExchangeRateCollection = GetConstantExchangeRates(ExchangeRateCollection);
+        ExchangeRateCollection = GetConstantExchangeRateCollection(ExchangeRateCollection);
     }
 
-    public void SetCustomMeasureUnit(Enum measureUnit, decimal exchangeRate)
+    public void SetCustomMeasureUnit(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
     {
-        if (TrySetCustomMeasureUnit(measureUnit, exchangeRate)) return;
+        ValidateCustomMeasureUnitTypeCode(measureUnitTypeCode);
+
+        Enum measureUnit = GetNotUsedCustomMeasureUnits(measureUnitTypeCode).OrderBy(x => x).First();
+
+        SetCustomMeasureUnit(measureUnit, exchangeRate, customName);
+    }
+
+    public void SetCustomMeasureUnit(Enum measureUnit, decimal exchangeRate, string customName)
+    {
+        if (measureUnit is MeasureUnitTypeCode measureUnitTypeCode)
+        {
+            SetCustomMeasureUnit(customName, measureUnitTypeCode, exchangeRate);
+        }
+
+        if (TrySetCustomMeasureUnit(measureUnit, exchangeRate, customName)) return;
 
         throw InvalidMeasureUnitEnumArgumentException(measureUnit);
     }
@@ -395,23 +412,48 @@ internal sealed class Measurement : Measurable, IMeasurement
         return measureUnit != null;
     }
 
-    public bool TrySetCustomMeasureUnit(Enum measureUnit, decimal exchangeRate)
+    public bool TrySetCustomMeasureUnit(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
     {
-        ValidateExchangeRate(exchangeRate);
+        if (!IsCustomMeasureUnitTypeCode(measureUnitTypeCode)) return false;
+
+        Enum measureUnit = GetNotUsedCustomMeasureUnits(measureUnitTypeCode).OrderBy(x => x).First();
+
+        return TrySetCustomMeasureUnit(measureUnit, exchangeRate, customName);
+    }
+
+    public bool TrySetCustomMeasureUnit(Enum measureUnit, decimal exchangeRate, string customName)
+    {
+        if (measureUnit is MeasureUnitTypeCode measureUnitTypeCode)
+        {
+            return TrySetCustomMeasureUnit(customName, measureUnitTypeCode, exchangeRate);
+        }
 
         if (!IsCustomMeasureUnit(measureUnit)) return false;
 
-        return ExchangeRateCollection.TryAdd(measureUnit, exchangeRate);
+        if (!exchangeRate.IsValidExchangeRate()) return false;
+
+        if (!ExchangeRateCollection.TryAdd(measureUnit, exchangeRate)) return false;
+
+        if (TrySetCustomName(measureUnit, customName)) return true;
+
+        if (ExchangeRateCollection.Remove(measureUnit)) return false;
+
+        throw new InvalidOperationException(null);
     }
 
     public bool TrySetCustomName(Enum measureUnit, string customName)
     {
-        return measureUnit != null
-            && customName != null
-            && CustomNameCollection.FirstOrDefault(x => x.Key == measureUnit).Value == customName
-            || IsValidMeasureUnit(measureUnit)
-            && IsValidCustomName(customName)
-            && CustomNameCollection.TryAdd(measureUnit!, customName!);
+        if (measureUnit == null) return false;
+
+        if (customName == null) return false;
+
+        if (!IsValidMeasureUnit(measureUnit)) return false;
+
+        if (CustomNameCollection.FirstOrDefault(x => x.Key == measureUnit).Value == customName) return true;
+
+        if (!IsValidCustomNameParam(customName)) return false;
+
+        return CustomNameCollection.TryAdd(measureUnit, customName);
     }
 
     public void ValidateCustomMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
@@ -423,18 +465,18 @@ internal sealed class Measurement : Measurable, IMeasurement
 
     public void ValidateCustomName(string? customName)
     {
-        if (IsValidCustomName(customName)) return;
+        if (IsValidCustomNameParam(customName)) return;
         
         throw CustomNameArgumentOutOfRangeException(customName);
     }
 
-    public void ValidateExchangeRate(decimal? exchangeRate, Enum? measureUnit = null)
+    public void ValidateExchangeRate(decimal exchangeRate, Enum? measureUnit = null)
     {
-        if (NullChecked(exchangeRate, nameof(exchangeRate)) > 0)
+        if (exchangeRate > 0)
         {
             if (measureUnit == null) return;
 
-            if (GetExchangeRate(measureUnit) == exchangeRate) return;
+            if (exchangeRate == GetExchangeRate(measureUnit)) return;
         }
 
         throw ExchangeRateArgumentOutOfRangeException(exchangeRate);
@@ -467,15 +509,15 @@ internal sealed class Measurement : Measurable, IMeasurement
         return exchangeRate;
     }
 
-    private static IDictionary<Enum, decimal> GetConstantExchangeRates(IDictionary<Enum, decimal> exchangeRateCollection)
+    private static IDictionary<Enum, decimal> GetConstantExchangeRateCollection(IDictionary<Enum, decimal> exchangeRateCollection)
     {
         exchangeRateCollection.Clear();
 
         SetConstantExchangeRates<AreaUnit>(ref exchangeRateCollection, 100, 10000, 1000000);
         SetConstantExchangeRates<Currency>(ref exchangeRateCollection);
         SetConstantExchangeRates<DistanceUnit>(ref exchangeRateCollection, 1000);
-        SetConstantExchangeRates<Pieces>(ref exchangeRateCollection);
         SetConstantExchangeRates<ExtentUnit>(ref exchangeRateCollection, 10, 100, 1000);
+        SetConstantExchangeRates<Pieces>(ref exchangeRateCollection);
         SetConstantExchangeRates<TimePeriodUnit>(ref exchangeRateCollection, 60, 1440, 10080, 14400);
         SetConstantExchangeRates<VolumeUnit>(ref exchangeRateCollection, 1000, 1000000, 1000000000);
         SetConstantExchangeRates<WeightUnit>(ref exchangeRateCollection, 1000, 1000000);
@@ -491,19 +533,12 @@ internal sealed class Measurement : Measurable, IMeasurement
             .ToDictionary(x => x.Key, x => x.Value);
     }
 
-    private bool IsCustomMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        IEnumerable<string> defaultNames = GetDefaultNames(measureUnitTypeCode);
-
-        return defaultNames?.First() == DefaultCustomMeasureUnitName;
-    }
-
     private bool IsExchangeableTo(Enum? measureUnit, MeasureUnitTypeCode measureUnitTypeCode)
     {
         return IsValidMeasureUnit(measureUnit) && HasMeasureUnitTypeCode(measureUnitTypeCode, measureUnit);
     }
 
-    private static bool IsValidCustomName(string? customName)
+    private static bool IsValidCustomNameParam(string? customName)
     {
         return !string.IsNullOrWhiteSpace(customName)
             && customName != string.Empty
@@ -557,34 +592,13 @@ internal sealed class Measurement : Measurable, IMeasurement
 
             if (customName != null
                 && customName == newCustomName
-                || IsValidCustomName(newCustomName)
+                || IsValidCustomNameParam(newCustomName)
                 && CustomNameCollection.TryAdd(measureUnit, newCustomName!)
 )
             {
                 exchangeRateCollection.Add(measureUnit, exchangeRates.ElementAt(i));
             }
         }
-    }
-
-    private void SetCustomMeasurementValidatedParams(Enum measureUnit, decimal exchangeRate, string customName) // Check!
-    {
-        SetCustomMeasureUnit(measureUnit, exchangeRate);
-
-        if (TrySetCustomName(measureUnit, customName)) return;
-
-        if (ExchangeRateCollection.Remove(measureUnit))
-        {
-            throw CustomNameArgumentOutOfRangeException(customName);
-        }
-
-        throw new InvalidOperationException(null);
-    }
-
-    private void SetCustomMeasurementValidatedParams(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, out Enum measureUnit)
-    {
-        measureUnit = GetNotUsedCustomMeasureUnits(measureUnitTypeCode).OrderBy(x => x).First();
-
-        SetCustomMeasurementValidatedParams(measureUnit, exchangeRate, customName);
     }
     #endregion
 }
