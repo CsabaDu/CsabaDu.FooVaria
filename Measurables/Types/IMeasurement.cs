@@ -9,6 +9,6 @@ public interface IMeasurement : IMeasurable, ICustomMeasurement, IMeasureUnitCol
     IMeasurement GetMeasurement(IMeasurement? other = null);
     IMeasurement GetMeasurement(IBaseMeasure baseMeasure);
     IMeasurement GetMeasurement(string name);
-    string GetName(Enum? measureUnit = null);
     IMeasurementFactory GetMeasurementFactory();
+    string GetName(Enum? measureUnit = null);
 }

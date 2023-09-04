@@ -128,5 +128,62 @@ namespace CsabaDu.FooVaria.Measurables.Factories.Implementations
         {
             return MeasurementFactory.GetValidRateComponentCode(rateComponentCode);
         }
+
+
+        #region Protected methods
+        protected static ILimit CreateLimit(ILimitFactory limitFactory, IBaseMeasure baseMeasure)
+        {
+            if (baseMeasure is ILimit limit) return CreateLimit(limit);
+
+            return new Limit(limitFactory, baseMeasure, null);
+        }
+        #endregion
+
+        #region Private methods
+        //private static IBaseMeasure? CreateBaseMeasure(IRate rate, RateComponentCode? rateComponentCode)
+        //{
+        //    IBaseMeasure? baseMeasure = GetBaseMeasure(rate, rateComponentCode ?? default);
+
+        //    return baseMeasure == null ? null : CreateBaseMeasure(baseMeasure);
+        //}
+
+        private static IDenominator CreateDenominator(IDenominatorFactory denominatorFactory, IBaseMeasure baseMeasure)
+        {
+            if (baseMeasure is IDenominator denominator) return CreateDenominator(denominator);
+
+            return new Denominator(denominatorFactory, baseMeasure);
+        }
+
+        private static IMeasure CreateMeasure(IMeasureFactory measureFactory, IBaseMeasure baseMeasure)
+        {
+            if (baseMeasure is IMeasure measure) return CreateMeasure(measure);
+
+            return baseMeasure?.MeasureUnitTypeCode switch
+            {
+                null => throw new ArgumentNullException(nameof(baseMeasure)),
+
+                MeasureUnitTypeCode.AreaUnit => new Area(measureFactory, baseMeasure),
+                MeasureUnitTypeCode.Currency => new Cash(measureFactory, baseMeasure),
+                MeasureUnitTypeCode.DistanceUnit => new Distance(measureFactory, baseMeasure),
+                MeasureUnitTypeCode.ExtentUnit => new Extent(measureFactory, baseMeasure),
+                MeasureUnitTypeCode.TimePeriodUnit => new TimePeriod(measureFactory, baseMeasure),
+                MeasureUnitTypeCode.Pieces => new PieceCount(measureFactory, baseMeasure),
+                MeasureUnitTypeCode.VolumeUnit => new Volume(measureFactory, baseMeasure),
+                MeasureUnitTypeCode.WeightUnit => new Weight(measureFactory, baseMeasure),
+
+                _ => throw new InvalidOperationException(null),
+            };
+        }
+
+        //private void ValidateBaseMeasureFactoryParams(IMeasurementFactory measurementFactory, RateComponentCode rateComponentCode)
+        //{
+        //    _ = NullChecked(measurementFactory, nameof(measurementFactory));
+
+        //    if (Enum.IsDefined(typeof(RateComponentCode), rateComponentCode)) return;
+
+        //    throw InvalidRateComponentCodeArgumentException(RateComponentCode);
+        //}
+        #endregion
+
     }
 }

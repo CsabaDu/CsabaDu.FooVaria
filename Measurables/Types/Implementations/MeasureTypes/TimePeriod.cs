@@ -14,6 +14,10 @@ internal sealed class TimePeriod : Measure, ITimePeriod
     internal TimePeriod(IMeasureFactory measureFactory, double quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
     {
     }
+
+    public TimePeriod(IMeasureFactory measureFactory, IBaseMeasure baseMeasure) : base(measureFactory, baseMeasure)
+    {
+    }
     #endregion
 
     #region Public methods

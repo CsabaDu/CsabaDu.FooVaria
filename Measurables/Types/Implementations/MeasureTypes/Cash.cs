@@ -22,6 +22,10 @@ internal sealed class Cash : Measure, ICash
     internal Cash(IMeasureFactory measureFactory, decimal quantity, Enum measureUnit, decimal exchangeRate, string customName) : base(measureFactory, quantity, measureUnit, exchangeRate, customName)
     {
     }
+
+    public Cash(IMeasureFactory measureFactory, IBaseMeasure baseMeasure) : base(measureFactory, baseMeasure)
+    {
+    }
     #endregion
 
     #region Public methods

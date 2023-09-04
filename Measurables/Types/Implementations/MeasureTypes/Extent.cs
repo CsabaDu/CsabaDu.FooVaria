@@ -14,6 +14,10 @@ internal sealed class Extent : Measure, IExtent
     internal Extent(IMeasureFactory measureFactory, double quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
     {
     }
+
+    public Extent(IMeasureFactory measureFactory, IBaseMeasure baseMeasure) : base(measureFactory, baseMeasure)
+    {
+    }
     #endregion
 
     #region Public methos

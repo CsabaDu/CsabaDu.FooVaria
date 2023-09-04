@@ -14,6 +14,10 @@ internal sealed class Distance : Measure, IDistance
     internal Distance(IMeasureFactory measureFactory, double quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
     {
     }
+
+    public Distance(IMeasureFactory measureFactory, IBaseMeasure baseMeasure) : base(measureFactory, baseMeasure)
+    {
+    }
     #endregion
 
     #region Public methods

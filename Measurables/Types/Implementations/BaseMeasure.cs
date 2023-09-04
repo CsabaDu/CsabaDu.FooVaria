@@ -37,6 +37,14 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
         Measurement = measurement;
     }
+
+    private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, IBaseMeasure baseMeasure) : base(baseMeasureFactory, baseMeasure)
+    {
+        ValidateQuantity(baseMeasureFactory, baseMeasure);
+
+        Measurement = baseMeasure.Measurement;
+
+    }
     #endregion
 
     #region Properties
@@ -313,6 +321,8 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
         if (quantityTypeCode == null) return;
 
+        ValidateQuantityTypeCode(quantityTypeCode.Value);
+
         TypeCode? typeCode = GetQuantityTypeCode(quantity!);
 
         if (typeCode == quantityTypeCode) return;
@@ -359,6 +369,24 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     private static decimal CorrectQuantityDecimals(decimal quantity)
     {
         return decimal.Round(Convert.ToDecimal(quantity), 8);
+    }
+
+    private static void ValidateQuantity(IBaseMeasureFactory baseMeasureFactory, IBaseMeasure baseMeasure)
+    {
+        RateComponentCode rateComponentCode = baseMeasureFactory.RateComponentCode;
+        decimal quantity = baseMeasure.GetDecimalQuantity();
+        bool isValidQuantity = rateComponentCode switch
+        {
+            RateComponentCode.Denominator => quantity > 0,
+            RateComponentCode.Numerator => true,
+            RateComponentCode.Limit => quantity >= 0,
+
+            _ => throw new InvalidOperationException(null),
+        };
+
+        if (isValidQuantity) return;
+
+        throw new ArgumentOutOfRangeException(nameof(baseMeasure), quantity, null);
     }
     #endregion
 }

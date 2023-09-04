@@ -24,6 +24,10 @@ internal sealed class PieceCount : Measure, IPieceCount
     internal PieceCount(IMeasureFactory measureFactory, ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName) : base(measureFactory, quantity, measureUnit, exchangeRate, customName)
     {
     }
+
+    public PieceCount(IMeasureFactory measureFactory, IBaseMeasure baseMeasure) : base(measureFactory, baseMeasure)
+    {
+    }
     #endregion
 
     #region Public methods

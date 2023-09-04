@@ -31,6 +31,12 @@ internal sealed class Denominator : BaseMeasure, IDenominator
     {
         Quantity = GetDenominatorQuantity(quantity);
     }
+
+    public Denominator(IDenominatorFactory denominatorFactory, IBaseMeasure baseMeasure) : base(denominatorFactory, baseMeasure)
+    {
+        Quantity = GetDenominatorQuantity(baseMeasure.GetQuantity());
+    }
+
     #endregion
 
     #region Properties

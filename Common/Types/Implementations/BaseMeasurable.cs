@@ -1,23 +1,23 @@
 ﻿namespace CsabaDu.FooVaria.Common.Types.Implementations;
 
-internal abstract class BaseMeasurable : IBaseMeasurable
+public abstract class BaseMeasurable : IBaseMeasurable
 {
     #region Constructors
-    private protected BaseMeasurable(MeasureUnitTypeCode measureUnitTypeCode)
+    protected BaseMeasurable(MeasureUnitTypeCode measureUnitTypeCode)
     {
         ValidateMeasureUnitTypeCode(measureUnitTypeCode);
 
         MeasureUnitTypeCode = measureUnitTypeCode;
     }
 
-    private protected BaseMeasurable(Enum measureUnit)
+    protected BaseMeasurable(Enum measureUnit)
     {
-       ValidateMeasureUnit(measureUnit);
+        ValidateMeasureUnit(measureUnit);
 
         MeasureUnitTypeCode = GetMeasureUnitTypeCode(measureUnit);
     }
 
-    private protected BaseMeasurable(IBaseMeasurable baseMeasurable)
+    protected BaseMeasurable(IBaseMeasurable baseMeasurable)
     {
         MeasureUnitTypeCode = NullChecked(baseMeasurable, nameof(baseMeasurable)).MeasureUnitTypeCode;
     }
