@@ -10,7 +10,8 @@ public interface IBaseMeasure : IMeasurable, IQuantifiable, IRateComponent<IBase
     IBaseMeasure GetBaseMeasure(ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate);
     IBaseMeasure GetBaseMeasure(ValueType quantity, IMeasurement? measurement = null);
     IBaseMeasure GetBaseMeasure(IBaseMeasure? baseMeasure = null);
-    IBaseMeasure GetDefault(RateComponentCode rateComponentCode, MeasureUnitTypeCode? measureUnitTypeCode = null);
+    IBaseMeasure GetBaseMeasure(IBaseMeasureFactory baseMeasureFactory, IBaseMeasure baseMeasure);
+    //IBaseMeasure GetDefault(RateComponentCode rateComponentCode, MeasureUnitTypeCode? measureUnitTypeCode = null);
 
     bool TryGetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName, [NotNullWhen(true)] out IBaseMeasure? baseMeasure);
     IBaseMeasureFactory GetBaseMeasureFactory();

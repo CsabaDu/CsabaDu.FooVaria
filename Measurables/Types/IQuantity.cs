@@ -11,7 +11,7 @@
         TypeCode? GetQuantityTypeCode([DisallowNull] ValueType quantity);
         ValueType GetDefaultRateComponentQuantity();
         decimal GetDecimalQuantity(T? other = null);
-        bool TryGetQuantity(ValueType? quantity, [NotNullWhen(true)] out ValueType? rateComponentQuantity);
+        bool TryGetQuantity(ValueType? quantity, [NotNullWhen(true)] out ValueType? thisTypeQuantity);
 
         void ValidateQuantity(ValueType? quantity, TypeCode? quantityTypeCode = null);
         void ValidateQuantityTypeCode(TypeCode quantityTypeCode);

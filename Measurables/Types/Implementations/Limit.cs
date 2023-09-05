@@ -10,10 +10,10 @@ internal sealed class Limit : BaseMeasure, ILimit
     #endregion
 
     #region Constructors
-    internal Limit(ILimit limit) : base(limit)
+    internal Limit(ILimit limit, LimitMode? limitMode) : base(limit)
     {
         Quantity = limit.Quantity;
-        LimitMode = limit.LimitMode;
+        LimitMode = limitMode ?? limit.LimitMode;
     }
 
     internal Limit(ILimitFactory limitFactory, ValueType? quantity, Enum measureUnit, LimitMode? limitMode) : base(limitFactory, quantity ?? DefaultLimitQuantity, measureUnit)
@@ -129,9 +129,9 @@ internal sealed class Limit : BaseMeasure, ILimit
     {
         return GetLimitFactory().Create(baseMeasure, limitMode);
     }
-    public ILimit GetLimit(ILimit? other = null)
+    public ILimit GetLimit(ILimit? other = null, LimitMode? limitMode = null)
     {
-        return GetLimitFactory().Create(other ?? this);
+        return GetLimitFactory().Create(other ?? this, limitMode ?? other?.LimitMode);
     }
 
     public ILimit GetLimit(string name, ValueType? quantity = null, LimitMode? limitMode = null)

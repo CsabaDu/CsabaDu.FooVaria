@@ -152,7 +152,7 @@ internal abstract class Measure : BaseMeasure, IMeasure
 
     public virtual IMeasure GetMeasure(IBaseMeasure baseMeasure)
     {
-        return (IMeasure)GetMeasureFactory().Create(baseMeasure);
+        return GetMeasureFactory().Create(baseMeasure);
     }
     public IMeasure GetMeasure(ValueType quantity, Enum measureUnit)
     {
@@ -198,7 +198,7 @@ internal abstract class Measure : BaseMeasure, IMeasure
 
     public override sealed LimitMode? GetLimitMode()
     {
-        return base.GetLimitMode();
+        return null;
     }
 
     public override sealed ValueType GetQuantity(ValueType? quantity = null)

@@ -90,6 +90,11 @@ internal sealed class Denominator : BaseMeasure, IDenominator
         return GetDenominatorFactory().Create(measurement, quantity);
     }
 
+    public IDenominator GetDenominator(IBaseMeasure baseMeasure)
+    {
+        return GetDenominatorFactory().Create(baseMeasure);
+    }
+
     public IDenominator GetDenominator(IDenominator? other = null)
     {
         return GetDenominatorFactory().Create(other ?? this);
@@ -123,6 +128,11 @@ internal sealed class Denominator : BaseMeasure, IDenominator
     public override int GetHashCode()
     {
         return GetHashCode(this);
+    }
+
+    public override LimitMode? GetLimitMode()
+    {
+        return null;
     }
 
     public override ValueType GetQuantity(ValueType? quantity = null)

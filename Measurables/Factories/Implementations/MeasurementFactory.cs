@@ -20,9 +20,9 @@ public sealed class MeasurementFactory : MeasurableFactory, IMeasurementFactory
         return GetMeasurement(measureUnit);
     }
 
-    public IMeasurement Create(IMeasurement other)
+    public IMeasurement Create(IMeasurement measurement)
     {
-        return GetMeasurement(other);
+        return GetMeasurement(measurement);
     }
 
     public RateComponentCode GetValidRateComponentCode(RateComponentCode rateComponentCode)
@@ -36,30 +36,26 @@ public sealed class MeasurementFactory : MeasurableFactory, IMeasurementFactory
     #region Private methods
     private static IMeasurement GetOrCreateMeasurement(Enum measureUnit, decimal exchangeRate, string customName)
     {
-        IMeasurement measurement = GetMeasurement();
+        IMeasurement measurement = GetFirstMeasurement();
 
         if (!Measurements.ContainsKey(measureUnit))
         {
             measurement.SetCustomMeasureUnit(measureUnit, exchangeRate, customName);
 
-            return getMeasurement();
+            return GetMeasurement(measureUnit);
         }
 
-        measurement = getMeasurement();
+        measurement = GetMeasurement(measureUnit);
         measurement.ValidateExchangeRate(exchangeRate, measureUnit);
 
         if (customName == measurement.GetCustomName()) return measurement;
 
         throw CustomNameArgumentOutOfRangeException(customName);
-
-        #region Local methods
-        IMeasurement getMeasurement() => Measurements[measureUnit];
-        #endregion
     }
 
     private static IMeasurement CreateMeasurement(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
     {
-        IMeasurement measurement = GetMeasurement();
+        IMeasurement measurement = GetFirstMeasurement();
 
         measurement.SetCustomMeasureUnit(customName, measureUnitTypeCode, exchangeRate);
 
@@ -68,7 +64,7 @@ public sealed class MeasurementFactory : MeasurableFactory, IMeasurementFactory
         return GetMeasurement(measureUnit);
     }
 
-    private static IMeasurement GetMeasurement()
+    private static IMeasurement GetFirstMeasurement()
     {
         return Measurements.First().Value;
     }

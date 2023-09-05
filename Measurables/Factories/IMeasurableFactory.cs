@@ -2,5 +2,5 @@
 
 public interface IMeasurableFactory
 {
-    IMeasurable Create(IMeasurable other);
+    IMeasurable Create(IMeasurable measurable);
 }

@@ -4,7 +4,7 @@ public interface ILimitedRateFactory : IRateFactory
 {
     ILimitFactory LimitFactory { get; init; }
 
-    ILimitedRate Create(ILimitedRate other);
+    ILimitedRate Create(ILimitedRate limitedRate);
     ILimitedRate Create(IMeasure numerator, string name, decimal? quantity, ILimit? limit);
     ILimitedRate Create(IMeasure numerator, Enum measureUnit, decimal? quantity, ILimit? limit);
     ILimitedRate Create(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, decimal? quantity, ILimit? limit);

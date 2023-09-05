@@ -17,46 +17,46 @@ namespace CsabaDu.FooVaria.Measurables.Factories.Implementations
         #region Public methods
         public IMeasurable Create(IMeasurable measurable)
         {
-            return CreateMeasurable(measurable);
+            return CreateMeasurable(NullChecked(measurable, nameof(measurable)));
         }
         #endregion
 
         #region Protected methods
-        protected static IBaseMeasure CreateBaseMeasure(IBaseMeasure other)
+        protected static IBaseMeasure CreateBaseMeasure(IBaseMeasure baseMeasure)
         {
-            return NullChecked(other, nameof(other)) switch
+            return baseMeasure switch
             {
                 Denominator denominator => CreateDenominator(denominator),
                 Measure measure => CreateMeasure(measure),
-                Limit limit => CreateLimit(limit),
+                Limit limit => CreateLimit(limit, null),
 
                 _ => throw new InvalidOperationException(null),
             };
         }
 
-        protected static IDenominator CreateDenominator(IDenominator other)
+        protected static IDenominator CreateDenominator(IDenominator denominator)
         {
-            return new Denominator(other);
+            return new Denominator(denominator);
         }
 
-        protected static IFlatRate CreateFlatRate(IFlatRate other)
+        protected static IFlatRate CreateFlatRate(IFlatRate flatRate)
         {
-            return new FlatRate(other);
+            return new FlatRate(flatRate);
         }
 
-        protected static ILimit CreateLimit(ILimit other)
+        protected static ILimit CreateLimit(ILimit other, LimitMode? limitMode)
         {
-            return new Limit(other);
+            return new Limit(other, limitMode);
         }
 
-        protected static ILimitedRate CreateLimitedRate(ILimitedRate other)
+        protected static ILimitedRate CreateLimitedRate(ILimitedRate limitedRate)
         {
-            return new LimitedRate(other);
+            return new LimitedRate(limitedRate);
         }
 
-        protected static IMeasure CreateMeasure(IMeasure other)
+        protected static IMeasure CreateMeasure(IMeasure measure)
         {
-            return NullChecked(other, nameof(other)) switch
+            return measure switch
             {
                 Area area => new Area(area),
                 Cash cash => new Cash(cash),
@@ -71,9 +71,9 @@ namespace CsabaDu.FooVaria.Measurables.Factories.Implementations
             };
         }
 
-        protected static IRate CreateRate(IRate other)
+        protected static IRate CreateRate(IRate rate)
         {
-            return NullChecked(other, nameof(other)) switch
+            return rate switch
             {
                 FlatRate flatRate => CreateFlatRate(flatRate),
                 LimitedRate limitedRate => CreateLimitedRate(limitedRate),
@@ -82,23 +82,21 @@ namespace CsabaDu.FooVaria.Measurables.Factories.Implementations
             };
         }
 
-        protected static IMeasurement GetMeasurement(IMeasurement other)
+        protected static IMeasurement GetMeasurement(IMeasurement measurement)
         {
-            Enum measureUnit = NullChecked(other, nameof(other)).GetMeasureUnit();
-
-            return GetMeasurement(measureUnit);
+            return GetMeasurement(measurement.GetMeasureUnit());
         }
 
         protected static IMeasurement GetMeasurement(Enum measureUnit)
         {
-            return Measurements[NullChecked(measureUnit, nameof(measureUnit))];
+            return Measurements[measureUnit];
         }
         #endregion
 
         #region Private methods
-        private static IMeasurable CreateMeasurable(IMeasurable other)
+        private static IMeasurable CreateMeasurable(IMeasurable measurable)
         {
-            return NullChecked(other, nameof(other)) switch
+            return measurable switch
             {
                 Measurement measurement => GetMeasurement(measurement),
                 BaseMeasure baseMeasure => CreateBaseMeasure(baseMeasure),
@@ -112,17 +110,18 @@ namespace CsabaDu.FooVaria.Measurables.Factories.Implementations
 
     public abstract class BaseMeasureFactory : MeasurableFactory, IBaseMeasureFactory
     {
-        private protected BaseMeasureFactory(IMeasurementFactory measurementFactory, RateComponentCode rateComponentCode)
+        private protected BaseMeasureFactory(IMeasurementFactory measurementFactory)
         {
             MeasurementFactory = NullChecked(measurementFactory, nameof(measurementFactory));
-            RateComponentCode = GetValidRateComponentCode(rateComponentCode);
         }
 
         public IMeasurementFactory MeasurementFactory { get; init; }
-        public RateComponentCode RateComponentCode { get; init; }
+        public abstract RateComponentCode RateComponentCode { get; }
 
-        public abstract IBaseMeasure Create(IBaseMeasureFactory baseMeasureFactory, IBaseMeasure baseMeasure);
-        public abstract IBaseMeasure CreateDefault(RateComponentCode rateComponentCode, MeasureUnitTypeCode measureUnitTypeCode);
+        public IBaseMeasure Create(IBaseMeasureFactory baseMeasureFactory, IBaseMeasure baseMeasure)
+        {
+            return CreateBaseMeasure(NullChecked(baseMeasureFactory, nameof(baseMeasureFactory)), baseMeasure);
+        }
 
         public RateComponentCode GetValidRateComponentCode(RateComponentCode rateComponentCode)
         {
@@ -131,22 +130,15 @@ namespace CsabaDu.FooVaria.Measurables.Factories.Implementations
 
 
         #region Protected methods
-        protected static ILimit CreateLimit(ILimitFactory limitFactory, IBaseMeasure baseMeasure)
+        protected static ILimit CreateLimit(ILimitFactory limitFactory, IBaseMeasure baseMeasure, LimitMode? limitMode)
         {
-            if (baseMeasure is ILimit limit) return CreateLimit(limit);
+            if (baseMeasure is ILimit limit) return CreateLimit(limit, limitMode);
 
-            return new Limit(limitFactory, baseMeasure, null);
+            return new Limit(limitFactory, baseMeasure, limitMode);
         }
         #endregion
 
         #region Private methods
-        //private static IBaseMeasure? CreateBaseMeasure(IRate rate, RateComponentCode? rateComponentCode)
-        //{
-        //    IBaseMeasure? baseMeasure = GetBaseMeasure(rate, rateComponentCode ?? default);
-
-        //    return baseMeasure == null ? null : CreateBaseMeasure(baseMeasure);
-        //}
-
         private static IDenominator CreateDenominator(IDenominatorFactory denominatorFactory, IBaseMeasure baseMeasure)
         {
             if (baseMeasure is IDenominator denominator) return CreateDenominator(denominator);
@@ -158,10 +150,8 @@ namespace CsabaDu.FooVaria.Measurables.Factories.Implementations
         {
             if (baseMeasure is IMeasure measure) return CreateMeasure(measure);
 
-            return baseMeasure?.MeasureUnitTypeCode switch
+            return baseMeasure.MeasureUnitTypeCode switch
             {
-                null => throw new ArgumentNullException(nameof(baseMeasure)),
-
                 MeasureUnitTypeCode.AreaUnit => new Area(measureFactory, baseMeasure),
                 MeasureUnitTypeCode.Currency => new Cash(measureFactory, baseMeasure),
                 MeasureUnitTypeCode.DistanceUnit => new Distance(measureFactory, baseMeasure),
@@ -175,6 +165,28 @@ namespace CsabaDu.FooVaria.Measurables.Factories.Implementations
             };
         }
 
+        private static IBaseMeasure CreateBaseMeasure(IBaseMeasureFactory baseMeasureFactory, IBaseMeasure baseMeasure)
+        {
+            return baseMeasureFactory switch
+            {
+                DenominatorFactory denominatorFactory => CreateDenominator(denominatorFactory, baseMeasure),
+                MeasureFactory measureFactory => CreateMeasure(measureFactory, baseMeasure),
+                LimitFactory limitFactory => CreateLimit(limitFactory, baseMeasure, baseMeasure.GetLimitMode()),
+
+                _ => throw new InvalidOperationException(null),
+            };
+        }
+        #endregion
+
+       //public abstract IBaseMeasure CreateDefault(RateComponentCode rateComponentCode, MeasureUnitTypeCode measureUnitTypeCode);
+
+        //private static IBaseMeasure? CreateBaseMeasure(IRate rate, RateComponentCode? rateComponentCode)
+        //{
+        //    IBaseMeasure? baseMeasure = GetBaseMeasure(rate, rateComponentCode ?? default);
+
+        //    return baseMeasure == null ? null : CreateBaseMeasure(baseMeasure);
+        //}
+
         //private void ValidateBaseMeasureFactoryParams(IMeasurementFactory measurementFactory, RateComponentCode rateComponentCode)
         //{
         //    _ = NullChecked(measurementFactory, nameof(measurementFactory));
@@ -183,7 +195,143 @@ namespace CsabaDu.FooVaria.Measurables.Factories.Implementations
 
         //    throw InvalidRateComponentCodeArgumentException(RateComponentCode);
         //}
-        #endregion
-
     }
+
+    public sealed class DenominatorFactory : BaseMeasureFactory, IDenominatorFactory
+    {
+        public DenominatorFactory(IMeasurementFactory measurementFactory) : base(measurementFactory)
+        {
+        }
+
+        public override RateComponentCode RateComponentCode => RateComponentCode.Denominator;
+
+        public IDenominator Create(string name, ValueType? quantity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IDenominator Create(Enum measureUnit, ValueType? quantity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IDenominator Create(Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IDenominator Create(IMeasurement measurement, ValueType? quantity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IDenominator Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IDenominator Create(IBaseMeasure baseMeasure)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IDenominator Create(IDenominator denominator)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public sealed class MeasureFactory : BaseMeasureFactory, IMeasureFactory
+    {
+        public MeasureFactory(IMeasurementFactory measurementFactory) : base(measurementFactory)
+        {
+        }
+
+        public override RateComponentCode RateComponentCode => RateComponentCode.Numerator;
+
+        public IMeasure Create(ValueType quantity, Enum measureUnit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IMeasure Create(ValueType quantity, string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IMeasure Create(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IMeasure Create(ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IMeasure Create(ValueType quantity, IMeasurement measurement)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IMeasure Create(IBaseMeasure baseMeasure)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IMeasure Create(IMeasure measure)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public sealed class LimitFactory : BaseMeasureFactory, ILimitFactory
+    {
+        public LimitFactory(IMeasurementFactory measurementFactory) : base(measurementFactory)
+        {
+        }
+
+        public override RateComponentCode RateComponentCode => RateComponentCode.Limit;
+
+        public ILimit Create(string name, ValueType? quantity, LimitMode? limitMode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ILimit Create(Enum measureUnit, ValueType? quantity, LimitMode? limitMode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ILimit Create(Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity, LimitMode? limitMode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ILimit Create(string name, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity, LimitMode? limitMode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ILimit Create(IMeasurement measurement, ValueType? quantity, LimitMode? limitMode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ILimit Create(IBaseMeasure baseMeasure, LimitMode? limitMode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ILimit Create(IDenominator denominator)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ILimit Create(ILimit limit, LimitMode? limitMode)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 }

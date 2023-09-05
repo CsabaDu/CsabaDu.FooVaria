@@ -10,7 +10,7 @@ public interface ILimit : IBaseMeasure, ILimiter<ILimit, IMeasure>
     ILimit GetLimit(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity = null, LimitMode? limitMode = null);
     ILimit GetLimit(IMeasurement measurement, ValueType? quantity = null, LimitMode? limitMode = null);
     ILimit GetLimit(IBaseMeasure baseMeasure, LimitMode? limitMode = null);
-    ILimit GetLimit(ILimit? other = null);
+    ILimit GetLimit(ILimit? other = null, LimitMode? limitMode = null);
 
     ILimitFactory GetLimitFactory();
 }

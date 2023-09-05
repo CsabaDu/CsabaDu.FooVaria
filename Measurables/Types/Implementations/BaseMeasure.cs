@@ -100,6 +100,11 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return GetBaseMeasure(quantity, measureUnit);
     }
 
+    public IBaseMeasure GetBaseMeasure(IBaseMeasureFactory baseMeasureFactory, IBaseMeasure baseMeasure)
+    {
+        return GetBaseMeasureFactory().Create(baseMeasureFactory, baseMeasure);
+    }
+
     public IBaseMeasure GetBaseMeasure(IBaseMeasure? other = null)
     {
         return (IBaseMeasure)GetBaseMeasureFactory().Create(other ?? this);
@@ -137,11 +142,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return GetBaseMeasure(quantity, measureUnit);
     }
 
-    public IBaseMeasure GetDefault(RateComponentCode rateComponentCode, MeasureUnitTypeCode? measureUnitTypeCode = null)
-    {
-        return GetBaseMeasureFactory().CreateDefault(rateComponentCode, measureUnitTypeCode ?? MeasureUnitTypeCode);
-    }
-
     public decimal GetExchangeRate()
     {
         return Measurement.ExchangeRate;
@@ -152,11 +152,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return HashCode.Combine(DefaultQuantity, MeasureUnitTypeCode);
     }
 
-    public virtual LimitMode? GetLimitMode()
-    {
-        return null;
-    }
-
     public override sealed Enum GetMeasureUnit()
     {
         return Measurement.GetMeasureUnit();
@@ -164,7 +159,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     public virtual ValueType GetQuantity(ValueType? quantity = null)
     {
-        if (TryGetQuantity(quantity, out ValueType? rateComponentQuantity)) return rateComponentQuantity;
+        if (TryGetQuantity(quantity, out ValueType? thisTypeQuantity)) return thisTypeQuantity;
 
         throw QuantityArgumentOutOfRangeException(quantity);
     }
@@ -289,13 +284,13 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return true;
     }
 
-    public bool TryGetQuantity(ValueType? quantity, [NotNullWhen(true)] out ValueType? rateComponentQuantity)
+    public bool TryGetQuantity(ValueType? quantity, [NotNullWhen(true)] out ValueType? thisTypeQuantity)
     {
-        rateComponentQuantity = quantity == null ?
+        thisTypeQuantity = quantity == null ?
             (ValueType)Quantity
             : quantity.ToQuantity(QuantityTypeCode);
 
-        return rateComponentQuantity != null;
+        return thisTypeQuantity != null;
     }
 
     public bool TryExchangeTo(Enum measureUnit, [NotNullWhen(true)] out IBaseMeasure? exchanged)
@@ -344,6 +339,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate);
     public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, string name);
     public abstract ValueType GetDefaultRateComponentQuantity();
+    public abstract LimitMode? GetLimitMode();
     #endregion
     #endregion
 

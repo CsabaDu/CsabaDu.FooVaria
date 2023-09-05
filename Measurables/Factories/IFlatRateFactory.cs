@@ -2,7 +2,7 @@
 
 public interface IFlatRateFactory : IRateFactory
 {
-    IFlatRate Create(IFlatRate other);
+    IFlatRate Create(IFlatRate flatRate);
     IFlatRate Create(IMeasure numerator, string customName, decimal? quantity);
     IFlatRate Create(IMeasure numerator, Enum measureUnit, decimal? quantity);
     IFlatRate Create(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, decimal? quantity);

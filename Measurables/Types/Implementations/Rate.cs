@@ -103,10 +103,7 @@ internal abstract class Rate : Measurable, IRate
         return HashCode.Combine(Numerator, Denominator);
     }
 
-    public virtual ILimit? GetLimit()
-    {
-        return null;
-    }
+    public abstract ILimit? GetLimit();
 
     public override sealed Enum GetMeasureUnit()
     {

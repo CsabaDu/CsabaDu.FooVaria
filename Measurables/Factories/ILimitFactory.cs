@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Factories;
+﻿
+
+namespace CsabaDu.FooVaria.Measurables.Factories;
 
 public interface ILimitFactory : IBaseMeasureFactory
 {
@@ -9,5 +11,5 @@ public interface ILimitFactory : IBaseMeasureFactory
     ILimit Create(IMeasurement measurement, ValueType? quantity, LimitMode? limitMode);
     ILimit Create(IBaseMeasure baseMeasure, LimitMode? limitMode);
     ILimit Create(IDenominator denominator);
-    ILimit Create(ILimit limit);
+    ILimit Create(ILimit limit, LimitMode? limitMode);
 }

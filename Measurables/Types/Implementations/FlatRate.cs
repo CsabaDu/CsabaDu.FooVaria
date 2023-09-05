@@ -83,6 +83,12 @@ internal sealed class FlatRate : Rate, IFlatRate
     {
         return MeasurableFactory as IFlatRateFactory ?? throw new InvalidOperationException(null);
     }
+
+    public override ILimit? GetLimit()
+    {
+        return null;
+    }
+
     public override IRate GetRate(IMeasure numerator, string customName, decimal? quantity = null, ILimit? limit = null)
     {
         return GetFlatRate(numerator, customName, quantity);
