@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿using CsabaDu.FooVaria.Common.Behaviors;
+
+namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal sealed class Measurement : Measurable, IMeasurement
 {
@@ -158,11 +160,7 @@ internal sealed class Measurement : Measurable, IMeasurement
 
     public IMeasurement GetMeasurement(string name)
     {
-        Enum? measureUnit = GetMeasureUnit(name);
-
-        if (measureUnit != null) return GetMeasurement(measureUnit);
-
-        throw new ArgumentOutOfRangeException(nameof(name), name, null);
+        return GetMeasurementFactory().Create(name);
     }
 
     public IMeasurementFactory GetMeasurementFactory()
@@ -593,8 +591,7 @@ internal sealed class Measurement : Measurable, IMeasurement
             if (customName != null
                 && customName == newCustomName
                 || IsValidCustomNameParam(newCustomName)
-                && CustomNameCollection.TryAdd(measureUnit, newCustomName!)
-)
+                && CustomNameCollection.TryAdd(measureUnit, newCustomName!))
             {
                 exchangeRateCollection.Add(measureUnit, exchangeRates.ElementAt(i));
             }

@@ -110,14 +110,19 @@ namespace CsabaDu.FooVaria.Measurables.Factories.Implementations
 
     public abstract class BaseMeasureFactory : MeasurableFactory, IBaseMeasureFactory
     {
+        #region Constructors
         private protected BaseMeasureFactory(IMeasurementFactory measurementFactory)
         {
             MeasurementFactory = NullChecked(measurementFactory, nameof(measurementFactory));
         }
+        #endregion
 
+        #region Properties
         public IMeasurementFactory MeasurementFactory { get; init; }
         public abstract RateComponentCode RateComponentCode { get; }
+        #endregion
 
+        #region Public methods
         public IBaseMeasure Create(IBaseMeasureFactory baseMeasureFactory, IBaseMeasure baseMeasure)
         {
             return CreateBaseMeasure(NullChecked(baseMeasureFactory, nameof(baseMeasureFactory)), baseMeasure);
@@ -127,7 +132,7 @@ namespace CsabaDu.FooVaria.Measurables.Factories.Implementations
         {
             return MeasurementFactory.GetValidRateComponentCode(rateComponentCode);
         }
-
+        #endregion
 
         #region Protected methods
         protected static ILimit CreateLimit(ILimitFactory limitFactory, IBaseMeasure baseMeasure, LimitMode? limitMode)
@@ -136,17 +141,15 @@ namespace CsabaDu.FooVaria.Measurables.Factories.Implementations
 
             return new Limit(limitFactory, baseMeasure, limitMode);
         }
-        #endregion
 
-        #region Private methods
-        private static IDenominator CreateDenominator(IDenominatorFactory denominatorFactory, IBaseMeasure baseMeasure)
+        protected static IDenominator CreateDenominator(IDenominatorFactory denominatorFactory, IBaseMeasure baseMeasure)
         {
             if (baseMeasure is IDenominator denominator) return CreateDenominator(denominator);
 
             return new Denominator(denominatorFactory, baseMeasure);
         }
 
-        private static IMeasure CreateMeasure(IMeasureFactory measureFactory, IBaseMeasure baseMeasure)
+        protected static IMeasure CreateMeasure(IMeasureFactory measureFactory, IBaseMeasure baseMeasure)
         {
             if (baseMeasure is IMeasure measure) return CreateMeasure(measure);
 
@@ -164,7 +167,9 @@ namespace CsabaDu.FooVaria.Measurables.Factories.Implementations
                 _ => throw new InvalidOperationException(null),
             };
         }
+        #endregion
 
+        #region Private methods
         private static IBaseMeasure CreateBaseMeasure(IBaseMeasureFactory baseMeasureFactory, IBaseMeasure baseMeasure)
         {
             return baseMeasureFactory switch
@@ -177,68 +182,85 @@ namespace CsabaDu.FooVaria.Measurables.Factories.Implementations
             };
         }
         #endregion
-
-       //public abstract IBaseMeasure CreateDefault(RateComponentCode rateComponentCode, MeasureUnitTypeCode measureUnitTypeCode);
-
-        //private static IBaseMeasure? CreateBaseMeasure(IRate rate, RateComponentCode? rateComponentCode)
-        //{
-        //    IBaseMeasure? baseMeasure = GetBaseMeasure(rate, rateComponentCode ?? default);
-
-        //    return baseMeasure == null ? null : CreateBaseMeasure(baseMeasure);
-        //}
-
-        //private void ValidateBaseMeasureFactoryParams(IMeasurementFactory measurementFactory, RateComponentCode rateComponentCode)
-        //{
-        //    _ = NullChecked(measurementFactory, nameof(measurementFactory));
-
-        //    if (Enum.IsDefined(typeof(RateComponentCode), rateComponentCode)) return;
-
-        //    throw InvalidRateComponentCodeArgumentException(RateComponentCode);
-        //}
     }
 
     public sealed class DenominatorFactory : BaseMeasureFactory, IDenominatorFactory
     {
+        #region Constructors
         public DenominatorFactory(IMeasurementFactory measurementFactory) : base(measurementFactory)
         {
         }
+        #endregion
 
+        #region Properties
         public override RateComponentCode RateComponentCode => RateComponentCode.Denominator;
+        #endregion
 
+        #region Public methods
         public IDenominator Create(string name, ValueType? quantity)
         {
-            throw new NotImplementedException();
+            return CreateDenominator(name, quantity);
         }
 
         public IDenominator Create(Enum measureUnit, ValueType? quantity)
         {
-            throw new NotImplementedException();
+            return CreateDenominator(measureUnit, quantity);
         }
 
         public IDenominator Create(Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity)
         {
-            throw new NotImplementedException();
+            return CreateDenominator(measureUnit, exchangeRate, customName, quantity);
         }
 
         public IDenominator Create(IMeasurement measurement, ValueType? quantity)
         {
-            throw new NotImplementedException();
+            return CreateDenominator(measurement, quantity);
         }
 
         public IDenominator Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity)
         {
-            throw new NotImplementedException();
+            return CreateDenominator(customName, measureUnitTypeCode, exchangeRate, quantity);
         }
 
         public IDenominator Create(IBaseMeasure baseMeasure)
         {
-            throw new NotImplementedException();
+            return CreateDenominator(this, baseMeasure);
         }
 
         public IDenominator Create(IDenominator denominator)
         {
-            throw new NotImplementedException();
+            return CreateDenominator(denominator);
         }
+        #endregion
+
+        #region Private methods
+        private IDenominator CreateDenominator(Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity)
+        {
+            return new Denominator(this, quantity, measureUnit, exchangeRate, customName);
+        }
+
+        private IDenominator CreateDenominator(IMeasurement measurement, ValueType? quantity)
+        {
+            return new Denominator(this, quantity, measurement);
+        }
+
+        private IDenominator CreateDenominator(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity)
+        {
+            return new Denominator(this, quantity, customName, measureUnitTypeCode, exchangeRate);
+        }
+
+        private IDenominator CreateDenominator(Enum measureUnit, ValueType? quantity)
+        {
+            return new Denominator(this, quantity, measureUnit);
+        }
+
+        private IDenominator CreateDenominator(string name, ValueType? quantity)
+        {
+            IMeasurement measurement = MeasurementFactory.Create(name);
+
+            return CreateDenominator(measurement, quantity);
+        }
+        #endregion
     }
 
     public sealed class MeasureFactory : BaseMeasureFactory, IMeasureFactory
@@ -333,5 +355,4 @@ namespace CsabaDu.FooVaria.Measurables.Factories.Implementations
             throw new NotImplementedException();
         }
     }
-
 }

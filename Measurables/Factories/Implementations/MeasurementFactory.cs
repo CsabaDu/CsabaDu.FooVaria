@@ -25,6 +25,11 @@ public sealed class MeasurementFactory : MeasurableFactory, IMeasurementFactory
         return GetMeasurement(measurement);
     }
 
+    public IMeasurement Create(string name)
+    {
+        return GetMeasurement(name);
+    }
+
     public RateComponentCode GetValidRateComponentCode(RateComponentCode rateComponentCode)
     {
         if (Enum.IsDefined(rateComponentCode)) return rateComponentCode;
@@ -62,6 +67,17 @@ public sealed class MeasurementFactory : MeasurableFactory, IMeasurementFactory
         Enum measureUnit = measurement.GetMeasureUnit(customName)!;
 
         return GetMeasurement(measureUnit);
+    }
+
+    private static IMeasurement GetMeasurement(string name)
+    {
+        IMeasurement measurement = GetFirstMeasurement();
+
+        Enum? measureUnit = measurement.GetMeasureUnit(name);
+
+        if (measureUnit != null) return GetMeasurement(measureUnit);
+
+        throw new ArgumentOutOfRangeException(nameof(name), name, null);
     }
 
     private static IMeasurement GetFirstMeasurement()
