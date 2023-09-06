@@ -45,9 +45,9 @@ public sealed class LimitFactory : BaseMeasureFactory, ILimitFactory
         return CreateLimit(this, baseMeasure, limitMode);
     }
 
-    public ILimit Create(IDenominator measure)
+    public ILimit Create(IDenominator denominator)
     {
-        return Create(measure, null);
+        return Create(denominator, null);
     }
 
     public ILimit Create(ILimit limit, LimitMode? limitMode)

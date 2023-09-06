@@ -107,7 +107,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     public IBaseMeasure GetBaseMeasure(IBaseMeasure? other = null)
     {
-        return (IBaseMeasure)GetBaseMeasureFactory().Create(other ?? this);
+        return (IBaseMeasure)MeasurableFactory.Create(other ?? this);
     }
 
     public IBaseMeasureFactory GetBaseMeasureFactory()

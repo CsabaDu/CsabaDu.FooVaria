@@ -3,9 +3,9 @@
 internal sealed class LimitedRate : Rate, ILimitedRate
 {
     #region Constructors
-    public LimitedRate(ILimitedRate limitedRate) : base(limitedRate)
+    public LimitedRate(ILimitedRate limitedRate, ILimit? limit) : base(limitedRate)
     {
-        Limit = limitedRate.Limit;
+        Limit = limit ?? limitedRate.Limit;
     }
 
     public LimitedRate(ILimitedRateFactory limitedRateFactory, IRate rate, ILimit? limit) : base(limitedRateFactory, rate)

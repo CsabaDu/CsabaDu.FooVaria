@@ -1,7 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Enums;
-using CsabaDu.FooVaria.Measurables.Factories;
-
-namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal sealed class Limit : BaseMeasure, ILimit
 {
@@ -42,8 +39,8 @@ internal sealed class Limit : BaseMeasure, ILimit
 
     public Limit(ILimitFactory limitFactory, IBaseMeasure baseMeasure, LimitMode? limitMode) : base(limitFactory, baseMeasure) // TODO
     {
-        Quantity = GetLimitQuantity(baseMeasure.GetQuantity());
-        LimitMode = GetValidLimitMode(limitMode ?? baseMeasure.GetLimitMode());
+        Quantity = GetLimitQuantity(baseMeasure!.GetQuantity());
+        LimitMode = GetValidLimitMode(limitMode ?? baseMeasure!.GetLimitMode());
     }
     #endregion
 

@@ -122,7 +122,7 @@ internal abstract class Rate : Measurable, IRate
 
     public IRate GetRate(IRate? other = null)
     {
-        return GetRateFactory().Create(other ?? this);
+        return (IRate)MeasurableFactory.Create(other ?? this);
     }
 
     public IRateFactory GetRateFactory()

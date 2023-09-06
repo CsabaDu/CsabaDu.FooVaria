@@ -22,11 +22,6 @@ public abstract class BaseMeasureFactory : MeasurableFactory, IBaseMeasureFactor
     {
         return CreateBaseMeasure(NullChecked(baseMeasureFactory, nameof(baseMeasureFactory)), baseMeasure);
     }
-
-    //public RateComponentCode GetValidRateComponentCode(RateComponentCode rateComponentCode)
-    //{
-    //    return MeasurementFactory.GetValidRateComponentCode(rateComponentCode);
-    //}
     #endregion
 
     #region Protected methods
@@ -37,11 +32,11 @@ public abstract class BaseMeasureFactory : MeasurableFactory, IBaseMeasureFactor
         return new Limit(limitFactory, baseMeasure, limitMode);
     }
 
-    protected static IDenominator CreateDenominator(IDenominatorFactory measureFactory, IBaseMeasure baseMeasure)
+    protected static IDenominator CreateDenominator(IDenominatorFactory denominatorFactory, IBaseMeasure baseMeasure)
     {
-        if (baseMeasure is IDenominator measure) return CreateDenominator(measure);
+        if (baseMeasure is IDenominator denominator) return CreateDenominator(denominator);
 
-        return new Denominator(measureFactory, baseMeasure);
+        return new Denominator(denominatorFactory, baseMeasure);
     }
 
     protected static IMeasure CreateMeasure(IMeasureFactory measureFactory, IBaseMeasure baseMeasure)
@@ -71,9 +66,9 @@ public abstract class BaseMeasureFactory : MeasurableFactory, IBaseMeasureFactor
     {
         return baseMeasureFactory switch
         {
-            DenominatorFactory measureFactory => CreateDenominator(measureFactory, baseMeasure),
+            DenominatorFactory denominatorFactory => CreateDenominator(denominatorFactory, baseMeasure),
             MeasureFactory measureFactory => CreateMeasure(measureFactory, baseMeasure),
-            LimitFactory limitFactory => CreateLimit(limitFactory, baseMeasure, baseMeasure.GetLimitMode()),
+            LimitFactory limitFactory => CreateLimit(limitFactory, baseMeasure, baseMeasure?.GetLimitMode()),
 
             _ => throw new InvalidOperationException(null),
         };

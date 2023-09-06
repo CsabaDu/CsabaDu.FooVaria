@@ -7,5 +7,3 @@ public interface IBaseMeasureFactory : IMeasurableFactory/*, IRateComponentFacto
 
     IBaseMeasure Create(IBaseMeasureFactory baseMeasureFactory, IBaseMeasure baseMeasure);
 }
-
-    //IBaseMeasure CreateDefault(RateComponentCode rateComponentCode, MeasureUnitTypeCode measureUnitTypeCode);

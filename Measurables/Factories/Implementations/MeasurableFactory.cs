@@ -26,7 +26,7 @@ namespace CsabaDu.FooVaria.Measurables.Factories.Implementations
         {
             return baseMeasure switch
             {
-                Denominator measure => CreateDenominator(measure),
+                Denominator denominator => CreateDenominator(denominator),
                 Measure measure => CreateMeasure(measure),
                 Limit limit => CreateLimit(limit, null),
 
@@ -34,9 +34,9 @@ namespace CsabaDu.FooVaria.Measurables.Factories.Implementations
             };
         }
 
-        protected static IDenominator CreateDenominator(IDenominator measure)
+        protected static IDenominator CreateDenominator(IDenominator denominator)
         {
-            return new Denominator(measure);
+            return new Denominator(denominator);
         }
 
         protected static IFlatRate CreateFlatRate(IFlatRate flatRate)
@@ -44,14 +44,14 @@ namespace CsabaDu.FooVaria.Measurables.Factories.Implementations
             return new FlatRate(flatRate);
         }
 
-        protected static ILimit CreateLimit(ILimit other, LimitMode? limitMode)
+        protected static ILimit CreateLimit(ILimit limit, LimitMode? limitMode)
         {
-            return new Limit(other, limitMode);
+            return new Limit(limit, limitMode);
         }
 
-        protected static ILimitedRate CreateLimitedRate(ILimitedRate limitedRate)
+        protected static ILimitedRate CreateLimitedRate(ILimitedRate limitedRate, ILimit? limit)
         {
-            return new LimitedRate(limitedRate);
+            return new LimitedRate(limitedRate, limit);
         }
 
         protected static IMeasure CreateMeasure(IMeasure measure)
@@ -76,7 +76,7 @@ namespace CsabaDu.FooVaria.Measurables.Factories.Implementations
             return rate switch
             {
                 FlatRate flatRate => CreateFlatRate(flatRate),
-                LimitedRate limitedRate => CreateLimitedRate(limitedRate),
+                LimitedRate limitedRate => CreateLimitedRate(limitedRate, null),
 
                 _ => throw new InvalidOperationException(null),
             };
@@ -106,5 +106,152 @@ namespace CsabaDu.FooVaria.Measurables.Factories.Implementations
             };
         }
         #endregion
+    }
+
+    public abstract class RateFactory : MeasurableFactory, IRateFactory
+    {
+        #region Constructors
+        protected RateFactory(IDenominatorFactory denominatorFactory)
+        {
+            DenominatorFactory = NullChecked(denominatorFactory, nameof(denominatorFactory));
+        }
+        #endregion
+
+        #region Properties
+        public IDenominatorFactory DenominatorFactory { get; init; }
+        #endregion
+
+        #region Public methods
+        public IRate Create(IRateFactory rateFactory, IRate rate)
+        {
+            return CreateRate(rateFactory, rate);
+        }
+        #endregion
+
+        #region Protected methods
+        protected static IFlatRate CreateFlatRate(IFlatRateFactory flatRateFactory, IRate rate)
+        {
+            if (rate is IFlatRate flatRate) return CreateFlatRate(flatRate);
+
+            return new FlatRate(flatRateFactory, rate);
+        }
+
+        protected static ILimitedRate CreateLimitedRate(ILimitedRateFactory limitedRateFactory, IRate rate, ILimit? limit)
+        {
+            if (rate is ILimitedRate limitedRate) return CreateLimitedRate(limitedRate, limit);
+
+            return new LimitedRate(limitedRateFactory, rate, limit);
+        }
+        #endregion
+
+        #region Private methods
+        private static IRate CreateRate(IRateFactory rateFactory, IRate rate)
+        {
+            return rateFactory switch
+            {
+                FlatRateFactory flatRateFactory => CreateFlatRate(flatRateFactory, rate),
+                LimitedRateFactory limitedRateFactory => CreateLimitedRate(limitedRateFactory, rate, rate?.GetLimit()),
+
+                _ => throw new InvalidOperationException(null),
+            };
+        }
+        #endregion
+    }
+
+    public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
+    {
+        public FlatRateFactory(IDenominatorFactory denominatorFactory) : base(denominatorFactory)
+        {
+        }
+
+        public IFlatRate Create(IFlatRate flatRate)
+        {
+            return CreateFlatRate(flatRate);
+        }
+
+        public IFlatRate Create(IMeasure numerator, string customName, decimal? quantity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IFlatRate Create(IMeasure numerator, Enum measureUnit, decimal? quantity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IFlatRate Create(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, decimal? quantity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IFlatRate Create(IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, decimal? quantity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IFlatRate Create(IMeasure numerator, IMeasurement measurement, decimal? quantity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IFlatRate Create(IMeasure numerator, IDenominator denominator)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IFlatRate Create(IRate rate)
+        {
+            return CreateFlatRate(this, rate);
+        }
+    }
+
+    public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
+    {
+        public LimitedRateFactory(IDenominatorFactory denominatorFactory, ILimitFactory limitFactory) : base(denominatorFactory)
+        {
+            LimitFactory = NullChecked(limitFactory, nameof(limitFactory));
+        }
+
+        public ILimitFactory LimitFactory { get; init; }
+
+        public ILimitedRate Create(ILimitedRate limitedRate, ILimit? limit)
+        {
+            return CreateLimitedRate(limitedRate, limit);
+        }
+
+        public ILimitedRate Create(IMeasure numerator, string name, decimal? quantity, ILimit? limit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ILimitedRate Create(IMeasure numerator, Enum measureUnit, decimal? quantity, ILimit? limit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ILimitedRate Create(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, decimal? quantity, ILimit? limit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ILimitedRate Create(IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, decimal? quantity, ILimit? limit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ILimitedRate Create(IMeasure numerator, IMeasurement measurement, decimal? quantity, ILimit? limit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ILimitedRate Create(IMeasure numerator, IDenominator denominator, ILimit? limit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ILimitedRate Create(IRate rate, ILimit? limit)
+        {
+            return CreateLimitedRate(this, rate, limit);
+        }
     }
 }

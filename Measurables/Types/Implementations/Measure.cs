@@ -37,7 +37,7 @@ internal abstract class Measure : BaseMeasure, IMeasure
 
     private protected Measure(IMeasureFactory measureFactory, IBaseMeasure baseMeasure) : base(measureFactory, baseMeasure)
     {
-        Quantity = GetQuantity(baseMeasure.GetQuantity());
+        Quantity = GetQuantity(baseMeasure!.GetQuantity());
     }
     #endregion
 

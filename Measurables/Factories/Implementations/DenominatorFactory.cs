@@ -45,9 +45,9 @@ public sealed class DenominatorFactory : BaseMeasureFactory, IDenominatorFactory
         return CreateDenominator(this, baseMeasure);
     }
 
-    public IDenominator Create(IDenominator measure)
+    public IDenominator Create(IDenominator denominator)
     {
-        return CreateDenominator(measure);
+        return CreateDenominator(denominator);
     }
     #endregion
 
