@@ -15,15 +15,19 @@ internal sealed class FlatRate : Rate, IFlatRate
     {
     }
 
-    internal FlatRate(IFlatRateFactory flatRateFactory, IMeasure numerator, Enum measureUnit, decimal? quantity) : base(flatRateFactory, numerator, measureUnit, quantity)
+    public FlatRate(IRateFactory rateFactory, IMeasure numerator, IMeasurement measurement, ValueType? quantity) : base(rateFactory, numerator, measurement, quantity)
     {
     }
 
-    internal FlatRate(IFlatRateFactory flatRateFactory, IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, decimal? quantity) : base(flatRateFactory, numerator, customName, measureUnitTypeCode, exchangeRate, quantity)
+    internal FlatRate(IFlatRateFactory flatRateFactory, IMeasure numerator, Enum measureUnit, ValueType? quantity) : base(flatRateFactory, numerator, measureUnit, quantity)
     {
     }
 
-    internal FlatRate(IFlatRateFactory flatRateFactory, IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, decimal? quantity) : base(flatRateFactory, numerator, measureUnit, exchangeRate, customName, quantity)
+    internal FlatRate(IFlatRateFactory flatRateFactory, IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity) : base(flatRateFactory, numerator, customName, measureUnitTypeCode, exchangeRate, quantity)
+    {
+    }
+
+    internal FlatRate(IFlatRateFactory flatRateFactory, IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity) : base(flatRateFactory, numerator, measureUnit, exchangeRate, customName, quantity)
     {
     }
     #endregion

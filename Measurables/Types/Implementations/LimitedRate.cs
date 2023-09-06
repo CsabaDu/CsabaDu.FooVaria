@@ -18,17 +18,22 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         Limit = GetOrCreateLimit(limit);
     }
 
-    public LimitedRate(ILimitedRateFactory limitedRateFactory, IMeasure numerator, Enum measureUnit, decimal? quantity, ILimit? limit) : base(limitedRateFactory, numerator, measureUnit, quantity)
+    public LimitedRate(IRateFactory rateFactory, IMeasure numerator, IMeasurement measurement, ValueType? quantity, ILimit? limit) : base(rateFactory, numerator, measurement, quantity)
     {
         Limit = GetOrCreateLimit(limit);
     }
 
-    public LimitedRate(ILimitedRateFactory limitedRateFactory, IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, decimal? quantity, ILimit? limit) : base(limitedRateFactory, numerator, customName, measureUnitTypeCode, exchangeRate, quantity)
+    public LimitedRate(ILimitedRateFactory limitedRateFactory, IMeasure numerator, Enum measureUnit, ValueType? quantity, ILimit? limit) : base(limitedRateFactory, numerator, measureUnit, quantity)
     {
         Limit = GetOrCreateLimit(limit);
     }
 
-    public LimitedRate(ILimitedRateFactory limitedRateFactory, IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, decimal? quantity, ILimit? limit) : base(limitedRateFactory, numerator, measureUnit, exchangeRate, customName, quantity)
+    public LimitedRate(ILimitedRateFactory limitedRateFactory, IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity, ILimit? limit) : base(limitedRateFactory, numerator, customName, measureUnitTypeCode, exchangeRate, quantity)
+    {
+        Limit = GetOrCreateLimit(limit);
+    }
+
+    public LimitedRate(ILimitedRateFactory limitedRateFactory, IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity, ILimit? limit) : base(limitedRateFactory, numerator, measureUnit, exchangeRate, customName, quantity)
     {
         Limit = GetOrCreateLimit(limit);
     }
@@ -97,9 +102,9 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         return GetLimitedRateFactory().Create(rate, limit ?? Limit);
     }
 
-    public ILimitedRate GetLimitedRate(ILimitedRate? other = null)
+    public ILimitedRate GetLimitedRate(ILimitedRate? other = null, ILimit? limit = null)
     {
-        return GetLimitedRateFactory().Create(other ?? this);
+        return GetLimitedRateFactory().Create(other ?? this, limit ?? other?.Limit);
     }
 
     public ILimitedRateFactory GetLimitedRateFactory()

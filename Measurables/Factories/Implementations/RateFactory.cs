@@ -1,0 +1,61 @@
+﻿using CsabaDu.FooVaria.Measurables.Types.Implementations;
+
+namespace CsabaDu.FooVaria.Measurables.Factories.Implementations
+{
+    public abstract class RateFactory : MeasurableFactory, IRateFactory
+    {
+        #region Constructors
+        protected RateFactory(IDenominatorFactory denominatorFactory)
+        {
+            DenominatorFactory = NullChecked(denominatorFactory, nameof(denominatorFactory));
+        }
+        #endregion
+
+        #region Properties
+        public IDenominatorFactory DenominatorFactory { get; init; }
+        #endregion
+
+        #region Public methods
+        public IRate Create(IRateFactory rateFactory, IRate rate)
+        {
+            return CreateRate(rateFactory, rate);
+        }
+        #endregion
+
+        #region Protected methods
+        protected static IFlatRate CreateFlatRate(IFlatRateFactory flatRateFactory, IRate rate)
+        {
+            if (rate is IFlatRate flatRate) return CreateFlatRate(flatRate);
+
+            return new FlatRate(flatRateFactory, rate);
+        }
+
+        protected static ILimitedRate CreateLimitedRate(ILimitedRateFactory limitedRateFactory, IRate rate, ILimit? limit)
+        {
+            if (rate is ILimitedRate limitedRate) return CreateLimitedRate(limitedRate, limit);
+
+            return new LimitedRate(limitedRateFactory, rate, limit);
+        }
+
+        protected IMeasurement GetMeasurement(string name)
+        {
+            IMeasurementFactory measurementFactory = DenominatorFactory.MeasurementFactory;
+
+            return measurementFactory.Create(name);
+        }
+        #endregion
+
+        #region Private methods
+        private static IRate CreateRate(IRateFactory rateFactory, IRate rate)
+        {
+            return rateFactory switch
+            {
+                FlatRateFactory flatRateFactory => CreateFlatRate(flatRateFactory, rate),
+                LimitedRateFactory limitedRateFactory => CreateLimitedRate(limitedRateFactory, rate, rate?.GetLimit()),
+
+                _ => throw new InvalidOperationException(null),
+            };
+        }
+        #endregion
+    }
+}

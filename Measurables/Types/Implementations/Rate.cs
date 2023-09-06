@@ -9,22 +9,28 @@ internal abstract class Rate : Measurable, IRate
         Denominator = rate.Denominator;
     }
 
-    private protected Rate(IRateFactory rateFactory, IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, decimal? quantity) : base(rateFactory, measureUnitTypeCode)
+    private protected Rate(IRateFactory rateFactory, IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity) : base(rateFactory, measureUnitTypeCode)
     {
         Numerator = NullChecked(numerator, nameof(numerator));
         Denominator = GetDenominatorFactory(rateFactory).Create(customName, measureUnitTypeCode, exchangeRate, quantity);
     }
 
-    private protected Rate(IRateFactory rateFactory, IMeasure numerator, Enum measureUnit, decimal? quantity) : base(rateFactory, measureUnit)
+    private protected Rate(IRateFactory rateFactory, IMeasure numerator, Enum measureUnit, ValueType? quantity) : base(rateFactory, measureUnit)
     {
         Numerator = NullChecked(numerator, nameof(numerator));
         Denominator = GetDenominatorFactory(rateFactory).Create(measureUnit, quantity);
     }
 
-    private protected Rate(IRateFactory rateFactory, IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, decimal? quantity) : base(rateFactory, measureUnit)
+    private protected Rate(IRateFactory rateFactory, IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity) : base(rateFactory, measureUnit)
     {
         Numerator = NullChecked(numerator, nameof(numerator));
         Denominator = GetDenominatorFactory(rateFactory).Create(measureUnit, exchangeRate, customName, quantity);
+    }
+
+    private protected Rate(IRateFactory rateFactory, IMeasure numerator, IMeasurement measurement, ValueType? quantity) : base(rateFactory, measurement)
+    {
+        Numerator = NullChecked(numerator, nameof(numerator));
+        Denominator = GetDenominatorFactory(rateFactory).Create(measurement, quantity);
     }
 
     private protected Rate(IRateFactory rateFactory, IRate rate) : base(rateFactory, rate)
