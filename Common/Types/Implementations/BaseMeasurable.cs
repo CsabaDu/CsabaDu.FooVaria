@@ -97,10 +97,7 @@ public abstract class BaseMeasurable : IBaseMeasurable
 
     public bool IsDefinedMeasureUnit(Enum measureUnit)
     {
-        MeasureUnitTypeCode measureUnitTypeCode = GetMeasureUnitTypeCode(NullChecked(measureUnit, nameof(measureUnit)));
-        Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode);
-
-        return Enum.IsDefined(measureUnitType, measureUnit);
+        return Statics.Validate.IsDefinedMeasureUnit(measureUnit);
     }
 
     #region Abstract methods

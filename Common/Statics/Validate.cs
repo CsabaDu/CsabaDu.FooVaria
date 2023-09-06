@@ -45,4 +45,13 @@ public static class Validate
     {
         return new InvalidEnumArgumentException(nameof(limitMode), (int)limitMode, limitMode.GetType());
     }
+
+    public static bool IsDefinedMeasureUnit(Enum measureUnit)
+    {
+        Type measureUnitType = NullChecked(measureUnit, nameof(measureUnit)).GetType();
+        string measureUnitTypeName = measureUnitType.Name;
+        string[] meaureUnitTypeCodeNames = Enum.GetNames(typeof(MeasureUnitTypeCode));
+
+        return meaureUnitTypeCodeNames.Contains(measureUnitTypeName) && Enum.IsDefined(measureUnitType, measureUnit);
+    }
 }

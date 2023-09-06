@@ -7,11 +7,11 @@ internal sealed class Distance : Measure, IDistance
     {
     }
 
-    internal Distance(IMeasureFactory measureFactory, double quantity, Enum measureUnit) : base(measureFactory, quantity, measureUnit)
+    internal Distance(IMeasureFactory measureFactory, ValueType quantity, Enum measureUnit) : base(measureFactory, quantity, measureUnit)
     {
     }
 
-    internal Distance(IMeasureFactory measureFactory, double quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
+    internal Distance(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
     {
     }
 

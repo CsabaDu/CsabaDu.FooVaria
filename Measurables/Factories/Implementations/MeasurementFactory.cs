@@ -7,7 +7,7 @@ public sealed class MeasurementFactory : MeasurableFactory, IMeasurementFactory
     #region Public methods
     public IMeasurement Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
     {
-        return CreateMeasurement(customName, measureUnitTypeCode, exchangeRate);
+        return CreateCustomMeasurement(customName, measureUnitTypeCode, exchangeRate);
     }
 
     public IMeasurement Create(Enum measureUnit, decimal exchangeRate, string customName)
@@ -30,12 +30,12 @@ public sealed class MeasurementFactory : MeasurableFactory, IMeasurementFactory
         return GetMeasurement(name);
     }
 
-    public RateComponentCode GetValidRateComponentCode(RateComponentCode rateComponentCode)
-    {
-        if (Enum.IsDefined(rateComponentCode)) return rateComponentCode;
+    //public RateComponentCode GetValidRateComponentCode(RateComponentCode rateComponentCode)
+    //{
+    //    if (Enum.IsDefined(rateComponentCode)) return rateComponentCode;
 
-        throw new InvalidEnumArgumentException(nameof(rateComponentCode), (int)rateComponentCode, rateComponentCode.GetType());
-    }
+    //    throw new InvalidEnumArgumentException(nameof(rateComponentCode), (int)rateComponentCode, rateComponentCode.GetType());
+    //}
     #endregion
 
     #region Private methods
@@ -58,7 +58,7 @@ public sealed class MeasurementFactory : MeasurableFactory, IMeasurementFactory
         throw CustomNameArgumentOutOfRangeException(customName);
     }
 
-    private static IMeasurement CreateMeasurement(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
+    private static IMeasurement CreateCustomMeasurement(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
     {
         IMeasurement measurement = GetFirstMeasurement();
 
