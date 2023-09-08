@@ -7,17 +7,9 @@ internal sealed class Area : Measure, IArea
     {
     }
 
-    //internal Area(IMeasureFactory measureFactory, ValueType quantity, Enum measureUnit) : base(measureFactory, quantity, measureUnit)
-    //{
-    //}
-
     internal Area(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
     {
     }
-
-    //public Area(IMeasureFactory measureFactory, IBaseMeasure baseMeasure) : base(measureFactory, baseMeasure)
-    //{
-    //}
     #endregion
 
     #region Public methods

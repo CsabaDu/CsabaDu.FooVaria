@@ -7,17 +7,9 @@ internal sealed class TimePeriod : Measure, ITimePeriod
     {
     }
 
-    //internal TimePeriod(IMeasureFactory measureFactory, ValueType quantity, Enum measureUnit) : base(measureFactory, quantity, measureUnit)
-    //{
-    //}
-
     internal TimePeriod(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
     {
     }
-
-    //public TimePeriod(IMeasureFactory measureFactory, IBaseMeasure baseMeasure) : base(measureFactory, baseMeasure)
-    //{
-    //}
     #endregion
 
     #region Public methods

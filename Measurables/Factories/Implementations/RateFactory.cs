@@ -18,7 +18,13 @@ namespace CsabaDu.FooVaria.Measurables.Factories.Implementations
         #region Public methods
         public IRate Create(IRateFactory rateFactory, IRate rate)
         {
-            return CreateRate(rateFactory, rate);
+            return rateFactory switch
+            {
+                FlatRateFactory flatRateFactory => CreateFlatRate(flatRateFactory, rate),
+                LimitedRateFactory limitedRateFactory => CreateLimitedRate(limitedRateFactory, rate, rate?.GetLimit()),
+
+                _ => throw new InvalidOperationException(null),
+            };
         }
         #endregion
 
@@ -42,19 +48,6 @@ namespace CsabaDu.FooVaria.Measurables.Factories.Implementations
             IMeasurementFactory measurementFactory = DenominatorFactory.MeasurementFactory;
 
             return measurementFactory.Create(name);
-        }
-        #endregion
-
-        #region Private methods
-        private static IRate CreateRate(IRateFactory rateFactory, IRate rate)
-        {
-            return rateFactory switch
-            {
-                FlatRateFactory flatRateFactory => CreateFlatRate(flatRateFactory, rate),
-                LimitedRateFactory limitedRateFactory => CreateLimitedRate(limitedRateFactory, rate, rate?.GetLimit()),
-
-                _ => throw new InvalidOperationException(null),
-            };
         }
         #endregion
     }

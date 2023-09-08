@@ -7,17 +7,9 @@ internal sealed class Volume : Measure, IVolume
     {
     }
 
-    //internal Volume(IMeasureFactory measureFactory, ValueType quantity, Enum measureUnit) : base(measureFactory, quantity, measureUnit)
-    //{
-    //}
-
     internal Volume(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
     {
     }
-
-    //public Volume(IMeasureFactory measureFactory, IBaseMeasure baseMeasure) : base(measureFactory, baseMeasure)
-    //{
-    //}
     #endregion
 
     #region Public methods

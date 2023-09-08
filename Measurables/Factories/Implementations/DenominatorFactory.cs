@@ -56,39 +56,4 @@ public sealed class DenominatorFactory : BaseMeasureFactory, IDenominatorFactory
         return CreateDenominator(denominator);
     }
     #endregion
-
-    #region Private methods
-    //private IDenominator CreateDenominator(Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity)
-    //{
-    //    IMeasurement measurement = MeasurementFactory.Create(measureUnit, exchangeRate, customName);
-
-    //    return CreateDenominator(measurement, quantity);
-    //}
-
-    ////private IDenominator CreateDenominator(IMeasurement measurement, ValueType? quantity)
-    ////{
-    ////    return CreateDenominator(this, quantity, measurement);
-    ////}
-
-    //private IDenominator CreateDenominator(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity)
-    //{
-    //    IMeasurement measurement = MeasurementFactory.Create(customName, measureUnitTypeCode, exchangeRate);
-
-    //    return CreateDenominator(measurement, quantity);
-    //}
-
-    //private IDenominator CreateDenominator(Enum measureUnit, ValueType? quantity)
-    //{
-    //    IMeasurement measurement = MeasurementFactory.Create(measureUnit);
-
-    //    return CreateDenominator(measurement, quantity);
-    //}
-
-    //private IDenominator CreateDenominator(string name, ValueType? quantity)
-    //{
-    //    IMeasurement measurement = MeasurementFactory.Create(name);
-
-    //    return CreateDenominator(measurement, quantity);
-    //}
-    #endregion
 }

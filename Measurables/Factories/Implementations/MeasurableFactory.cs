@@ -20,8 +20,21 @@ public abstract class MeasurableFactory : IMeasurableFactory
         return NullChecked(measurable, nameof(measurable)) switch
         {
             Measurement measurement => GetMeasurement(measurement),
-            BaseMeasure baseMeasure => CreateBaseMeasure(baseMeasure),
-            Rate rate => CreateRate(rate),
+            BaseMeasure baseMeasure => baseMeasure switch
+            {
+                Denominator denominator => CreateDenominator(denominator),
+                Measure measure => CreateMeasure(measure),
+                Limit limit => CreateLimit(limit, null),
+
+                _ => throw new InvalidOperationException(null),
+            },
+            Rate rate => rate switch
+            {
+                FlatRate flatRate => CreateFlatRate(flatRate),
+                LimitedRate limitedRate => CreateLimitedRate(limitedRate, null),
+
+                _ => throw new InvalidOperationException(null),
+            },
 
             _ => throw new InvalidOperationException(null),
         };
@@ -29,24 +42,14 @@ public abstract class MeasurableFactory : IMeasurableFactory
     #endregion
 
     #region Protected methods
+    protected static IMeasurement GetMeasurement(IMeasurement measurement)
+    {
+        return GetMeasurement(measurement.GetMeasureUnit());
+    }
+
     protected static IDenominator CreateDenominator(IDenominator denominator)
     {
         return new Denominator(denominator);
-    }
-
-    protected static IFlatRate CreateFlatRate(IFlatRate flatRate)
-    {
-        return new FlatRate(flatRate);
-    }
-
-    protected static ILimit CreateLimit(ILimit limit, LimitMode? limitMode)
-    {
-        return new Limit(limit, limitMode);
-    }
-
-    protected static ILimitedRate CreateLimitedRate(ILimitedRate limitedRate, ILimit? limit)
-    {
-        return new LimitedRate(limitedRate, limit);
     }
 
     protected static IMeasure CreateMeasure(IMeasure measure)
@@ -66,39 +69,24 @@ public abstract class MeasurableFactory : IMeasurableFactory
         };
     }
 
-    protected static IMeasurement GetMeasurement(IMeasurement measurement)
+    protected static ILimit CreateLimit(ILimit limit, LimitMode? limitMode)
     {
-        return GetMeasurement(measurement.GetMeasureUnit());
+        return new Limit(limit, limitMode);
+    }
+
+    protected static IFlatRate CreateFlatRate(IFlatRate flatRate)
+    {
+        return new FlatRate(flatRate);
+    }
+
+    protected static ILimitedRate CreateLimitedRate(ILimitedRate limitedRate, ILimit? limit)
+    {
+        return new LimitedRate(limitedRate, limit);
     }
 
     protected static IMeasurement GetMeasurement(Enum measureUnit)
     {
         return Measurements[measureUnit];
-    }
-    #endregion
-
-    #region Private methods
-    private static IBaseMeasure CreateBaseMeasure(IBaseMeasure baseMeasure)
-    {
-        return baseMeasure switch
-        {
-            Denominator denominator => CreateDenominator(denominator),
-            Measure measure => CreateMeasure(measure),
-            Limit limit => CreateLimit(limit, null),
-
-            _ => throw new InvalidOperationException(null),
-        };
-    }
-
-    private static IRate CreateRate(IRate rate)
-    {
-        return rate switch
-        {
-            FlatRate flatRate => CreateFlatRate(flatRate),
-            LimitedRate limitedRate => CreateLimitedRate(limitedRate, null),
-
-            _ => throw new InvalidOperationException(null),
-        };
     }
     #endregion
 }

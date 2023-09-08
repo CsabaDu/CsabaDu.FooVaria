@@ -15,30 +15,10 @@ internal abstract class Measure : BaseMeasure, IMeasure
         Quantity = measure.Quantity;
     }
 
-    //private protected Measure(IMeasureFactory measureFactory, ValueType quantity, Enum measureUnit) : base(measureFactory, quantity, measureUnit)
-    //{
-    //    Quantity = GetQuantity(quantity);
-    //}
-
     private protected Measure(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
     {
         Quantity = GetQuantity(quantity);
     }
-
-    //private protected Measure(IMeasureFactory measureFactory, ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate) : base(measureFactory, quantity, customName, measureUnitTypeCode, exchangeRate)
-    //{
-    //    Quantity = GetQuantity(quantity);
-    //}
-
-    //private protected Measure(IMeasureFactory measureFactory, ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName) : base(measureFactory, quantity, measureUnit, exchangeRate, customName)
-    //{
-    //    Quantity = GetQuantity(quantity);
-    //}
-
-    //private protected Measure(IMeasureFactory measureFactory, IBaseMeasure baseMeasure) : base(measureFactory, baseMeasure)
-    //{
-    //    Quantity = GetQuantity(baseMeasure!.GetQuantity());
-    //}
     #endregion
 
     #region Properties
