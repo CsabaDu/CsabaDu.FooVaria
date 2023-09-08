@@ -20,9 +20,7 @@ internal sealed class Extent : Measure, IExtent
 
     public IDistance ConvertMeasure()
     {
-        decimal quantity = DefaultQuantity / ConvertMeasureRatio;
-
-        return (IDistance)GetMeasure(quantity, default(DistanceUnit));
+        return ConvertMeasure<IDistance, DistanceUnit>(this, ConvertMode.Divide);
     }
 
     public override IExtent GetMeasure(IBaseMeasure baseMeasure)

@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes;
+﻿using CsabaDu.FooVaria.Common.Enums.MeasureUnits;
+
+namespace CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes;
 
 internal sealed class Distance : Measure, IDistance
 {
@@ -20,10 +22,7 @@ internal sealed class Distance : Measure, IDistance
 
     public IExtent ConvertMeasure()
     {
-        decimal quantity = DefaultQuantity * ConvertMeasureRatio;
-
-        return (IExtent)GetMeasure(quantity, default(ExtentUnit));
-
+        return ConvertMeasure<IExtent, ExtentUnit>(this, ConvertMode.Multiply);
     }
 
     public override IDistance GetMeasure(IBaseMeasure baseMeasure)

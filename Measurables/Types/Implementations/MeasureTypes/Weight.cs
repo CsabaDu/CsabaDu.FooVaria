@@ -20,9 +20,7 @@ internal sealed class Weight : Measure, IWeight
 
     public IVolume ConvertMeasure()
     {
-        decimal quantity = DefaultQuantity * ConvertMeasureRatio;
-
-        return (IVolume)GetMeasure(quantity, default(VolumeUnit));
+        return ConvertMeasure<IVolume, VolumeUnit>(this, ConvertMode.Multiply);
     }
 
     public override IWeight GetMeasure(IBaseMeasure baseMeasure)

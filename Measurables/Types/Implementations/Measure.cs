@@ -4,9 +4,16 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal abstract class Measure : BaseMeasure, IMeasure
 {
+    #region Enums
+    protected enum ConvertMode
+    {
+        Multiply,
+        Divide,
+    }
+    #endregion
+
     #region Constants
     private const int DefaultMeasureQuantity = 0;
-    protected const int ConvertMeasureRatio = 1000;
     #endregion
 
     #region Constructors
@@ -279,6 +286,21 @@ internal abstract class Measure : BaseMeasure, IMeasure
     protected static T GetMeasure<T, U>(T measure, U quantity, string customName, decimal exchangeRate) where T : class, IMeasure where U : struct
     {
         return (T)measure.GetMeasure(quantity, customName, exchangeRate);
+    }
+
+    protected static T ConvertMeasure<T, U>(IMeasure measure, ConvertMode convertMode) where T : class, IMeasure where U : struct, Enum
+    {
+        decimal quantity = measure.DefaultQuantity;
+        decimal ratio = 1000;
+        quantity = convertMode switch
+        {
+            ConvertMode.Multiply => quantity * ratio,
+            ConvertMode.Divide => quantity / ratio,
+
+            _ => throw new InvalidOperationException(null),
+        };
+
+        return (T)measure.GetMeasure(quantity, default(U));
     }
     #endregion
 }
