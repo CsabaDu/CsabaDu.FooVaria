@@ -12,30 +12,30 @@ internal sealed class Denominator : BaseMeasure, IDenominator
         Quantity = denominator.Quantity;
     }
 
-    internal Denominator(IDenominatorFactory denominatorFactory, ValueType? quantity, Enum measureUnit) : base(denominatorFactory, quantity ?? DefaultDenominatorQuantity, measureUnit)
-    {
-        Quantity = GetDenominatorQuantity(quantity);
-    }
+    //internal Denominator(IDenominatorFactory denominatorFactory, ValueType? quantity, Enum measureUnit) : base(denominatorFactory, quantity ?? DefaultDenominatorQuantity, measureUnit)
+    //{
+    //    Quantity = GetDenominatorQuantity(quantity);
+    //}
 
     internal Denominator(IDenominatorFactory denominatorFactory, ValueType? quantity, IMeasurement measurement) : base(denominatorFactory, quantity ?? DefaultDenominatorQuantity, measurement)
     {
         Quantity = GetDenominatorQuantity(quantity);
     }
 
-    internal Denominator(IDenominatorFactory denominatorFactory, ValueType? quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate) : base(denominatorFactory, quantity ?? DefaultDenominatorQuantity, customName, measureUnitTypeCode, exchangeRate)
-    {
-        Quantity = GetDenominatorQuantity(quantity);
-    }
+    //internal Denominator(IDenominatorFactory denominatorFactory, ValueType? quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate) : base(denominatorFactory, quantity ?? DefaultDenominatorQuantity, customName, measureUnitTypeCode, exchangeRate)
+    //{
+    //    Quantity = GetDenominatorQuantity(quantity);
+    //}
 
-    internal Denominator(IDenominatorFactory denominatorFactory, ValueType? quantity, Enum measureUnit, decimal exchangeRate, string customName) : base(denominatorFactory, quantity ?? DefaultDenominatorQuantity, measureUnit, exchangeRate, customName)
-    {
-        Quantity = GetDenominatorQuantity(quantity);
-    }
+    //internal Denominator(IDenominatorFactory denominatorFactory, ValueType? quantity, Enum measureUnit, decimal exchangeRate, string customName) : base(denominatorFactory, quantity ?? DefaultDenominatorQuantity, measureUnit, exchangeRate, customName)
+    //{
+    //    Quantity = GetDenominatorQuantity(quantity);
+    //}
 
-    internal Denominator(IDenominatorFactory denominatorFactory, IBaseMeasure baseMeasure) : base(denominatorFactory, baseMeasure)
-    {
-        Quantity = GetDenominatorQuantity(baseMeasure!.GetQuantity());
-    }
+    //internal Denominator(IDenominatorFactory denominatorFactory, IBaseMeasure baseMeasure) : base(denominatorFactory, baseMeasure)
+    //{
+    //    Quantity = GetDenominatorQuantity(baseMeasure!.GetQuantity());
+    //}
 
     #endregion
 

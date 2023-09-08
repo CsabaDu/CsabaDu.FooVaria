@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Measurables.Types.Implementations;
-
-namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
+﻿namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
 
 public sealed class DenominatorFactory : BaseMeasureFactory, IDenominatorFactory
 {
@@ -17,27 +15,35 @@ public sealed class DenominatorFactory : BaseMeasureFactory, IDenominatorFactory
     #region Public methods
     public IDenominator Create(string name, ValueType? quantity)
     {
-        return CreateDenominator(name, quantity);
+        IMeasurement measurement = MeasurementFactory.Create(name);
+
+        return CreateDenominator(this, quantity, measurement);
     }
 
     public IDenominator Create(Enum measureUnit, ValueType? quantity)
     {
-        return CreateDenominator(measureUnit, quantity);
+        IMeasurement measurement = MeasurementFactory.Create(measureUnit);
+
+        return CreateDenominator(this, quantity, measurement);
     }
 
     public IDenominator Create(Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity)
     {
-        return CreateDenominator(measureUnit, exchangeRate, customName, quantity);
+        IMeasurement measurement = MeasurementFactory.Create(measureUnit, exchangeRate, customName);
+
+        return CreateDenominator(this, quantity, measurement);
     }
 
     public IDenominator Create(IMeasurement measurement, ValueType? quantity)
     {
-        return CreateDenominator(measurement, quantity);
+        return CreateDenominator(this, quantity, measurement);
     }
 
     public IDenominator Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity)
     {
-        return CreateDenominator(customName, measureUnitTypeCode, exchangeRate, quantity);
+        IMeasurement measurement = MeasurementFactory.Create(customName, measureUnitTypeCode, exchangeRate);
+
+        return CreateDenominator(this, quantity, measurement);
     }
 
     public IDenominator Create(IBaseMeasure baseMeasure)
@@ -52,31 +58,37 @@ public sealed class DenominatorFactory : BaseMeasureFactory, IDenominatorFactory
     #endregion
 
     #region Private methods
-    private IDenominator CreateDenominator(Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity)
-    {
-        return new Denominator(this, quantity, measureUnit, exchangeRate, customName);
-    }
+    //private IDenominator CreateDenominator(Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity)
+    //{
+    //    IMeasurement measurement = MeasurementFactory.Create(measureUnit, exchangeRate, customName);
 
-    private IDenominator CreateDenominator(IMeasurement measurement, ValueType? quantity)
-    {
-        return new Denominator(this, quantity, measurement);
-    }
+    //    return CreateDenominator(measurement, quantity);
+    //}
 
-    private IDenominator CreateDenominator(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity)
-    {
-        return new Denominator(this, quantity, customName, measureUnitTypeCode, exchangeRate);
-    }
+    ////private IDenominator CreateDenominator(IMeasurement measurement, ValueType? quantity)
+    ////{
+    ////    return CreateDenominator(this, quantity, measurement);
+    ////}
 
-    private IDenominator CreateDenominator(Enum measureUnit, ValueType? quantity)
-    {
-        return new Denominator(this, quantity, measureUnit);
-    }
+    //private IDenominator CreateDenominator(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity)
+    //{
+    //    IMeasurement measurement = MeasurementFactory.Create(customName, measureUnitTypeCode, exchangeRate);
 
-    private IDenominator CreateDenominator(string name, ValueType? quantity)
-    {
-        IMeasurement measurement = MeasurementFactory.Create(name);
+    //    return CreateDenominator(measurement, quantity);
+    //}
 
-        return CreateDenominator(measurement, quantity);
-    }
+    //private IDenominator CreateDenominator(Enum measureUnit, ValueType? quantity)
+    //{
+    //    IMeasurement measurement = MeasurementFactory.Create(measureUnit);
+
+    //    return CreateDenominator(measurement, quantity);
+    //}
+
+    //private IDenominator CreateDenominator(string name, ValueType? quantity)
+    //{
+    //    IMeasurement measurement = MeasurementFactory.Create(name);
+
+    //    return CreateDenominator(measurement, quantity);
+    //}
     #endregion
 }

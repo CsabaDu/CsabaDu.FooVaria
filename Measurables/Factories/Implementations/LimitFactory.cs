@@ -59,7 +59,9 @@ public sealed class LimitFactory : BaseMeasureFactory, ILimitFactory
     #region Private methods
     private ILimit CreateLimit(Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity, LimitMode? limitMode)
     {
-        return new Limit(this, quantity, measureUnit, exchangeRate, customName, limitMode);
+        IMeasurement measurement = MeasurementFactory.Create(measureUnit, exchangeRate, customName);
+
+        return CreateLimit(measurement, quantity, limitMode);
     }
 
     private ILimit CreateLimit(IMeasurement measurement, ValueType? quantity, LimitMode? limitMode)
@@ -69,12 +71,16 @@ public sealed class LimitFactory : BaseMeasureFactory, ILimitFactory
 
     private ILimit CreateLimit(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity, LimitMode? limitMode)
     {
-        return new Limit(this, quantity, customName, measureUnitTypeCode, exchangeRate, limitMode);
+        IMeasurement measurement = MeasurementFactory.Create(customName, measureUnitTypeCode, exchangeRate);
+
+        return CreateLimit(measurement, quantity, limitMode);
     }
 
     private ILimit CreateLimit(Enum measureUnit, ValueType? quantity, LimitMode? limitMode)
     {
-        return new Limit(this, quantity, measureUnit, limitMode);
+        IMeasurement measurement = MeasurementFactory.Create(measureUnit);
+
+        return CreateLimit(measurement, quantity, limitMode);
     }
 
     private ILimit CreateLimit(string name, ValueType? quantity, LimitMode? limitMode)

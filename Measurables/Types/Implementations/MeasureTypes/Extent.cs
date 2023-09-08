@@ -7,17 +7,17 @@ internal sealed class Extent : Measure, IExtent
     {
     }
 
-    internal Extent(IMeasureFactory measureFactory, ValueType quantity, Enum measureUnit) : base(measureFactory, quantity, measureUnit)
-    {
-    }
+    //internal Extent(IMeasureFactory measureFactory, ValueType quantity, Enum measureUnit) : base(measureFactory, quantity, measureUnit)
+    //{
+    //}
 
     internal Extent(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
     {
     }
 
-    public Extent(IMeasureFactory measureFactory, IBaseMeasure baseMeasure) : base(measureFactory, baseMeasure)
-    {
-    }
+    //public Extent(IMeasureFactory measureFactory, IBaseMeasure baseMeasure) : base(measureFactory, baseMeasure)
+    //{
+    //}
     #endregion
 
     #region Public methos

@@ -7,17 +7,17 @@ internal sealed class Distance : Measure, IDistance
     {
     }
 
-    internal Distance(IMeasureFactory measureFactory, ValueType quantity, Enum measureUnit) : base(measureFactory, quantity, measureUnit)
-    {
-    }
+    //internal Distance(IMeasureFactory measureFactory, ValueType quantity, Enum measureUnit) : base(measureFactory, quantity, measureUnit)
+    //{
+    //}
 
     internal Distance(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
     {
     }
 
-    public Distance(IMeasureFactory measureFactory, IBaseMeasure baseMeasure) : base(measureFactory, baseMeasure)
-    {
-    }
+    //public Distance(IMeasureFactory measureFactory, IBaseMeasure baseMeasure) : base(measureFactory, baseMeasure)
+    //{
+    //}
     #endregion
 
     #region Public methods

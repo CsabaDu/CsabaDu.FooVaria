@@ -54,60 +54,28 @@ public sealed class MeasureFactory : BaseMeasureFactory, IMeasureFactory
     #region Private methods
     private IMeasure CreateCustomMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName)
     {
-        return GetMeasureUnitTypeCode(measureUnit) switch
-        {
-            MeasureUnitTypeCode.Currency => new Cash(this, quantity, measureUnit, exchangeRate, customName),
-            MeasureUnitTypeCode.Pieces => new PieceCount(this, quantity, measureUnit, exchangeRate, customName),
+        IMeasurement measurement = MeasurementFactory.Create(measureUnit, exchangeRate, customName);
 
-            _ => throw InvalidMeasureUnitEnumArgumentException(measureUnit),
-        };
+        return CreateMeasure(quantity, measurement);
     }
 
     private IMeasure CreateMeasure(ValueType quantity, IMeasurement measurement)
     {
-        MeasureUnitTypeCode measureUnitTypeCode = NullChecked(measurement, nameof(measurement)).MeasureUnitTypeCode;
-
-        return measureUnitTypeCode switch
-        {
-            MeasureUnitTypeCode.AreaUnit => new Area(this, quantity, measurement),
-            MeasureUnitTypeCode.Currency => new Cash(this, quantity, measurement),
-            MeasureUnitTypeCode.DistanceUnit => new Distance(this, quantity, measurement),
-            MeasureUnitTypeCode.ExtentUnit => new Extent(this, quantity, measurement),
-            MeasureUnitTypeCode.TimePeriodUnit => new TimePeriod(this, quantity, measurement),
-            MeasureUnitTypeCode.Pieces => new PieceCount(this, quantity, measurement),
-            MeasureUnitTypeCode.VolumeUnit => new Volume(this, quantity, measurement),
-            MeasureUnitTypeCode.WeightUnit => new Weight(this, quantity, measurement),
-
-            _ => throw new InvalidOperationException(null),
-        };
+        return CreateMeasure(this, quantity, measurement);
     }
 
     private IMeasure CreateCustomMeasure(ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
     {
-        return measureUnitTypeCode switch
-        {
-            MeasureUnitTypeCode.Currency => new Cash(this, quantity, customName, measureUnitTypeCode, exchangeRate),
-            MeasureUnitTypeCode.Pieces => new PieceCount(this, quantity, customName, measureUnitTypeCode, exchangeRate),
+        IMeasurement measurement = MeasurementFactory.Create(customName, measureUnitTypeCode, exchangeRate);
 
-            _ => throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode),
-        };
+        return CreateMeasure(quantity, measurement);
     }
 
     private IMeasure CreateMeasure(ValueType quantity, Enum measureUnit)
     {
-        return GetMeasureUnitTypeCode(measureUnit) switch
-        {
-            MeasureUnitTypeCode.AreaUnit => new Area(this, quantity, measureUnit),
-            MeasureUnitTypeCode.Currency => new Cash(this, quantity, measureUnit),
-            MeasureUnitTypeCode.DistanceUnit => new Distance(this, quantity, measureUnit),
-            MeasureUnitTypeCode.ExtentUnit => new Extent(this, quantity, measureUnit),
-            MeasureUnitTypeCode.TimePeriodUnit => new TimePeriod(this, quantity, measureUnit),
-            MeasureUnitTypeCode.Pieces => new PieceCount(this, quantity, measureUnit),
-            MeasureUnitTypeCode.VolumeUnit => new Volume(this, quantity, measureUnit),
-            MeasureUnitTypeCode.WeightUnit => new Weight(this, quantity, measureUnit),
+        IMeasurement measurement = MeasurementFactory.Create(measureUnit);
 
-            _ => throw new InvalidOperationException(null),
-        };
+        return CreateMeasure(quantity, measurement);
     }
 
     private IMeasure CreateMeasure(ValueType quantity, string name)
@@ -117,13 +85,13 @@ public sealed class MeasureFactory : BaseMeasureFactory, IMeasureFactory
         return CreateMeasure(quantity, measurement);
     }
 
-    private static MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum measureUnit)
-    {
-        if (!IsDefinedMeasureUnit(measureUnit)) throw InvalidMeasureUnitEnumArgumentException(measureUnit);
+    //private static MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum measureUnit)
+    //{
+    //    if (!IsDefinedMeasureUnit(measureUnit)) throw InvalidMeasureUnitEnumArgumentException(measureUnit);
 
-        string measureUnitTypeName = measureUnit.GetType().Name;
+    //    string measureUnitTypeName = measureUnit.GetType().Name;
 
-        return (MeasureUnitTypeCode)Enum.Parse(typeof(MeasureUnitTypeCode), measureUnitTypeName);
-    }
+    //    return (MeasureUnitTypeCode)Enum.Parse(typeof(MeasureUnitTypeCode), measureUnitTypeName);
+    //}
     #endregion
 }

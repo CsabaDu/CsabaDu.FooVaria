@@ -11,7 +11,7 @@ public interface ILimitedRate : IRate, ILimiter<ILimitedRate, IMeasure>
     ILimitedRate GetLimitedRate(IMeasure numerator, IMeasurement measurement, decimal? quantity = null, ILimit? limit = null);
     ILimitedRate GetLimitedRate(IMeasure numerator, IDenominator? denominator = null, ILimit? limit = null);
     ILimitedRate GetLimitedRate(IRate rate, ILimit? limit = null);
-    ILimitedRate GetLimitedRate(ILimitedRate? other = null);
+    ILimitedRate GetLimitedRate(ILimitedRate? other = null, ILimit? limit = null);
     ILimitedRateFactory GetLimitedRateFactory();
     ILimit GetOrCreateLimit(ILimit limit);
 }

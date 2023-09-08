@@ -13,11 +13,11 @@ internal sealed class Limit : BaseMeasure, ILimit
         LimitMode = limitMode ?? limit.LimitMode;
     }
 
-    internal Limit(ILimitFactory limitFactory, ValueType? quantity, Enum measureUnit, LimitMode? limitMode) : base(limitFactory, quantity ?? DefaultLimitQuantity, measureUnit)
-    {
-        Quantity = GetLimitQuantity(quantity);
-        LimitMode = GetValidLimitMode(limitMode);
-    }
+    //internal Limit(ILimitFactory limitFactory, ValueType? quantity, Enum measureUnit, LimitMode? limitMode) : base(limitFactory, quantity ?? DefaultLimitQuantity, measureUnit)
+    //{
+    //    Quantity = GetLimitQuantity(quantity);
+    //    LimitMode = GetValidLimitMode(limitMode);
+    //}
 
     internal Limit(ILimitFactory limitFactory, ValueType? quantity, IMeasurement measurement, LimitMode? limitMode) : base(limitFactory, quantity ?? DefaultLimitQuantity, measurement)
     {
@@ -25,23 +25,23 @@ internal sealed class Limit : BaseMeasure, ILimit
         LimitMode = GetValidLimitMode(limitMode);
     }
 
-    internal Limit(ILimitFactory limitFactory, ValueType? quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, LimitMode? limitMode) : base(limitFactory, quantity ?? DefaultLimitQuantity, customName, measureUnitTypeCode, exchangeRate)
-    {
-        Quantity = GetLimitQuantity(quantity);
-        LimitMode = GetValidLimitMode(limitMode);
-    }
+    //internal Limit(ILimitFactory limitFactory, ValueType? quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, LimitMode? limitMode) : base(limitFactory, quantity ?? DefaultLimitQuantity, customName, measureUnitTypeCode, exchangeRate)
+    //{
+    //    Quantity = GetLimitQuantity(quantity);
+    //    LimitMode = GetValidLimitMode(limitMode);
+    //}
 
-    internal Limit(ILimitFactory limitFactory, ValueType? quantity, Enum measureUnit, decimal exchangeRate, string customName, LimitMode? limitMode) : base(limitFactory, quantity ?? DefaultLimitQuantity, measureUnit, exchangeRate, customName)
-    {
-        Quantity = GetLimitQuantity(quantity);
-        LimitMode = GetValidLimitMode(limitMode);
-    }
+    //internal Limit(ILimitFactory limitFactory, ValueType? quantity, Enum measureUnit, decimal exchangeRate, string customName, LimitMode? limitMode) : base(limitFactory, quantity ?? DefaultLimitQuantity, measureUnit, exchangeRate, customName)
+    //{
+    //    Quantity = GetLimitQuantity(quantity);
+    //    LimitMode = GetValidLimitMode(limitMode);
+    //}
 
-    public Limit(ILimitFactory limitFactory, IBaseMeasure baseMeasure, LimitMode? limitMode) : base(limitFactory, baseMeasure) // TODO
-    {
-        Quantity = GetLimitQuantity(baseMeasure!.GetQuantity());
-        LimitMode = GetValidLimitMode(limitMode ?? baseMeasure!.GetLimitMode());
-    }
+    //public Limit(ILimitFactory limitFactory, IBaseMeasure baseMeasure, LimitMode? limitMode) : base(limitFactory, baseMeasure) // TODO
+    //{
+    //    Quantity = GetLimitQuantity(baseMeasure!.GetQuantity());
+    //    LimitMode = GetValidLimitMode(limitMode ?? baseMeasure!.GetLimitMode());
+    //}
     #endregion
 
     #region Properties

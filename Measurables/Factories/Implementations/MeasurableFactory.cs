@@ -17,23 +17,18 @@ public abstract class MeasurableFactory : IMeasurableFactory
     #region Public methods
     public IMeasurable Create(IMeasurable measurable)
     {
-        return CreateMeasurable(NullChecked(measurable, nameof(measurable)));
-    }
-    #endregion
-
-    #region Protected methods
-    protected static IBaseMeasure CreateBaseMeasure(IBaseMeasure baseMeasure)
-    {
-        return baseMeasure switch
+        return NullChecked(measurable, nameof(measurable)) switch
         {
-            Denominator denominator => CreateDenominator(denominator),
-            Measure measure => CreateMeasure(measure),
-            Limit limit => CreateLimit(limit, null),
+            Measurement measurement => GetMeasurement(measurement),
+            BaseMeasure baseMeasure => CreateBaseMeasure(baseMeasure),
+            Rate rate => CreateRate(rate),
 
             _ => throw new InvalidOperationException(null),
         };
     }
+    #endregion
 
+    #region Protected methods
     protected static IDenominator CreateDenominator(IDenominator denominator)
     {
         return new Denominator(denominator);
@@ -71,17 +66,6 @@ public abstract class MeasurableFactory : IMeasurableFactory
         };
     }
 
-    protected static IRate CreateRate(IRate rate)
-    {
-        return rate switch
-        {
-            FlatRate flatRate => CreateFlatRate(flatRate),
-            LimitedRate limitedRate => CreateLimitedRate(limitedRate, null),
-
-            _ => throw new InvalidOperationException(null),
-        };
-    }
-
     protected static IMeasurement GetMeasurement(IMeasurement measurement)
     {
         return GetMeasurement(measurement.GetMeasureUnit());
@@ -94,13 +78,24 @@ public abstract class MeasurableFactory : IMeasurableFactory
     #endregion
 
     #region Private methods
-    private static IMeasurable CreateMeasurable(IMeasurable measurable)
+    private static IBaseMeasure CreateBaseMeasure(IBaseMeasure baseMeasure)
     {
-        return measurable switch
+        return baseMeasure switch
         {
-            Measurement measurement => GetMeasurement(measurement),
-            BaseMeasure baseMeasure => CreateBaseMeasure(baseMeasure),
-            Rate rate => CreateRate(rate),
+            Denominator denominator => CreateDenominator(denominator),
+            Measure measure => CreateMeasure(measure),
+            Limit limit => CreateLimit(limit, null),
+
+            _ => throw new InvalidOperationException(null),
+        };
+    }
+
+    private static IRate CreateRate(IRate rate)
+    {
+        return rate switch
+        {
+            FlatRate flatRate => CreateFlatRate(flatRate),
+            LimitedRate limitedRate => CreateLimitedRate(limitedRate, null),
 
             _ => throw new InvalidOperationException(null),
         };

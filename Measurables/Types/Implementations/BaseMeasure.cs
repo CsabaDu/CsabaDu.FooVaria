@@ -10,41 +10,41 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         Measurement = baseMeasure.Measurement;
     }
 
-    private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate) : base(baseMeasureFactory, measureUnitTypeCode)
-    {
-        ValidateQuantity(quantity);
+    //private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate) : base(baseMeasureFactory, measureUnitTypeCode)
+    //{
+    //    ValidateQuantity(quantity);
 
-        Measurement = GetMeasurementFactory(baseMeasureFactory).Create(customName, measureUnitTypeCode, exchangeRate);
-    }
+    //    Measurement = GetMeasurementFactory(baseMeasureFactory).Create(customName, measureUnitTypeCode, exchangeRate);
+    //}
 
-    private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, Enum measureUnit) : base(baseMeasureFactory, measureUnit)
-    {
-        ValidateQuantity(quantity);
+    //private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, Enum measureUnit) : base(baseMeasureFactory, measureUnit)
+    //{
+    //    ValidateQuantity(quantity);
 
-        Measurement = GetMeasurementFactory(baseMeasureFactory).Create(measureUnit);
-    }
+    //    Measurement = GetMeasurementFactory(baseMeasureFactory).Create(measureUnit);
+    //}
 
-    private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName) : base(baseMeasureFactory, measureUnit)
-    {
-        ValidateQuantity(quantity);
+    //private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName) : base(baseMeasureFactory, measureUnit)
+    //{
+    //    ValidateQuantity(quantity);
 
-        Measurement = GetMeasurementFactory(baseMeasureFactory).Create(measureUnit, exchangeRate, customName);
-    }
+    //    Measurement = GetMeasurementFactory(baseMeasureFactory).Create(measureUnit, exchangeRate, customName);
+    //}
 
     private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, IMeasurement measurement) : base(baseMeasureFactory, measurement)
     {
-        ValidateQuantity(quantity);
+        ValidateQuantity(baseMeasureFactory, quantity);
 
         Measurement = measurement;
     }
 
-    private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, IBaseMeasure baseMeasure) : base(baseMeasureFactory, baseMeasure)
-    {
-        ValidateQuantity(baseMeasureFactory, baseMeasure);
+    //private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, IBaseMeasure baseMeasure) : base(baseMeasureFactory, baseMeasure)
+    //{
+    //    ValidateQuantity(baseMeasureFactory, baseMeasure);
 
-        Measurement = baseMeasure.Measurement;
+    //    Measurement = baseMeasure.Measurement;
 
-    }
+    //}
     #endregion
 
     #region Properties
@@ -357,32 +357,50 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     #endregion
 
     #region Private methods
-    private static IMeasurementFactory GetMeasurementFactory(IBaseMeasureFactory baseMeasureFactory)
-    {
-        return baseMeasureFactory.MeasurementFactory;
-    }
+    //private static IMeasurementFactory GetMeasurementFactory(IBaseMeasureFactory baseMeasureFactory)
+    //{
+    //    return baseMeasureFactory.MeasurementFactory;
+    //}
 
     private static decimal CorrectQuantityDecimals(decimal quantity)
     {
         return decimal.Round(Convert.ToDecimal(quantity), 8);
     }
 
-    private static void ValidateQuantity(IBaseMeasureFactory baseMeasureFactory, IBaseMeasure baseMeasure)
+    private static void ValidateQuantity(IBaseMeasureFactory baseMeasureFactory, ValueType quantity)
     {
         RateComponentCode rateComponentCode = baseMeasureFactory.RateComponentCode;
-        decimal quantity = baseMeasure.GetDecimalQuantity();
+        decimal decimalQquantity = (decimal?)quantity.ToQuantity(TypeCode.Decimal) ?? throw QuantityArgumentOutOfRangeException(quantity);
         bool isValidQuantity = rateComponentCode switch
         {
-            RateComponentCode.Denominator => quantity > 0,
+            RateComponentCode.Denominator => decimalQquantity > 0,
             RateComponentCode.Numerator => true,
-            RateComponentCode.Limit => quantity >= 0,
+            RateComponentCode.Limit => decimalQquantity >= 0,
 
             _ => throw new InvalidOperationException(null),
         };
 
         if (isValidQuantity) return;
 
-        throw new ArgumentOutOfRangeException(nameof(baseMeasure), quantity, null);
+        throw QuantityArgumentOutOfRangeException(quantity);
     }
+
+    //private static void ValidateQuantity(IBaseMeasureFactory baseMeasureFactory, IBaseMeasure baseMeasure)
+    //{
+    //    RateComponentCode rateComponentCode = baseMeasureFactory.RateComponentCode;
+    //    decimal quantity = baseMeasure.GetDecimalQuantity();
+    //    bool isValidQuantity = rateComponentCode switch
+    //    {
+    //        RateComponentCode.Denominator => quantity > 0,
+    //        RateComponentCode.Numerator => true,
+    //        RateComponentCode.Limit => quantity >= 0,
+
+    //        _ => throw new InvalidOperationException(null),
+    //    };
+
+    //    if (isValidQuantity) return;
+
+    //    throw new ArgumentOutOfRangeException(nameof(baseMeasure), quantity, null);
+    //}
     #endregion
 }

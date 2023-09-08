@@ -20,51 +20,7 @@ public abstract class BaseMeasureFactory : MeasurableFactory, IBaseMeasureFactor
     #region Public methods
     public IBaseMeasure Create(IBaseMeasureFactory baseMeasureFactory, IBaseMeasure baseMeasure)
     {
-        return CreateBaseMeasure(NullChecked(baseMeasureFactory, nameof(baseMeasureFactory)), baseMeasure);
-    }
-    #endregion
-
-    #region Protected methods
-    protected static ILimit CreateLimit(ILimitFactory limitFactory, IBaseMeasure baseMeasure, LimitMode? limitMode)
-    {
-        if (baseMeasure is ILimit limit) return CreateLimit(limit, limitMode);
-
-        return new Limit(limitFactory, baseMeasure, limitMode);
-    }
-
-    protected static IDenominator CreateDenominator(IDenominatorFactory denominatorFactory, IBaseMeasure baseMeasure)
-    {
-        if (baseMeasure is IDenominator denominator) return CreateDenominator(denominator);
-
-        return new Denominator(denominatorFactory, baseMeasure);
-    }
-
-    protected static IMeasure CreateMeasure(IMeasureFactory measureFactory, IBaseMeasure baseMeasure)
-    {
-        if (baseMeasure is IMeasure measure) return CreateMeasure(measure);
-
-        MeasureUnitTypeCode measureUnitTypeCode = NullChecked(baseMeasure, nameof(baseMeasure)).MeasureUnitTypeCode;
-
-        return measureUnitTypeCode switch
-        {
-            MeasureUnitTypeCode.AreaUnit => new Area(measureFactory, baseMeasure),
-            MeasureUnitTypeCode.Currency => new Cash(measureFactory, baseMeasure),
-            MeasureUnitTypeCode.DistanceUnit => new Distance(measureFactory, baseMeasure),
-            MeasureUnitTypeCode.ExtentUnit => new Extent(measureFactory, baseMeasure),
-            MeasureUnitTypeCode.TimePeriodUnit => new TimePeriod(measureFactory, baseMeasure),
-            MeasureUnitTypeCode.Pieces => new PieceCount(measureFactory, baseMeasure),
-            MeasureUnitTypeCode.VolumeUnit => new Volume(measureFactory, baseMeasure),
-            MeasureUnitTypeCode.WeightUnit => new Weight(measureFactory, baseMeasure),
-
-            _ => throw new InvalidOperationException(null),
-        };
-    }
-    #endregion
-
-    #region Private methods
-    private static IBaseMeasure CreateBaseMeasure(IBaseMeasureFactory baseMeasureFactory, IBaseMeasure baseMeasure)
-    {
-        return baseMeasureFactory switch
+        return NullChecked(baseMeasureFactory, nameof(baseMeasureFactory)) switch
         {
             DenominatorFactory denominatorFactory => CreateDenominator(denominatorFactory, baseMeasure),
             MeasureFactory measureFactory => CreateMeasure(measureFactory, baseMeasure),
@@ -73,5 +29,80 @@ public abstract class BaseMeasureFactory : MeasurableFactory, IBaseMeasureFactor
             _ => throw new InvalidOperationException(null),
         };
     }
+    #endregion
+
+    #region Protected methods
+    protected static IDenominator CreateDenominator(IDenominatorFactory denominatorFactory, IBaseMeasure baseMeasure)
+    {
+        if (baseMeasure is IDenominator denominator) return CreateDenominator(denominator);
+
+        IMeasurement measurement = NullChecked(baseMeasure, nameof(baseMeasure)).Measurement;
+        ValueType quantity = baseMeasure.GetQuantity();
+
+        return new Denominator(denominatorFactory, quantity, measurement);
+    }
+
+    protected static IMeasure CreateMeasure(IMeasureFactory measureFactory, IBaseMeasure baseMeasure)
+    {
+        if (baseMeasure is IMeasure measure) return CreateMeasure(measure);
+
+        IMeasurement measurement = NullChecked(baseMeasure, nameof(baseMeasure)).Measurement;
+        ValueType quantity = baseMeasure.GetQuantity();
+
+        return CreateMeasure(measureFactory, quantity, measurement);
+    }
+
+    protected static ILimit CreateLimit(ILimitFactory limitFactory, IBaseMeasure baseMeasure, LimitMode? limitMode)
+    {
+        if (baseMeasure is ILimit limit) return CreateLimit(limit, limitMode);
+
+        IMeasurement measurement = NullChecked(baseMeasure, nameof(baseMeasure)).Measurement;
+        ValueType quantity = baseMeasure.GetQuantity();
+
+        return new Limit(limitFactory, quantity, measurement, limitMode ?? baseMeasure.GetLimitMode());
+    }
+
+    protected static IDenominator CreateDenominator(IDenominatorFactory denominatorFactory, ValueType? quantity, IMeasurement measurement)
+    {
+        return new Denominator(denominatorFactory, quantity, measurement);
+    }
+
+    protected static IMeasure CreateMeasure(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement)
+    {
+        MeasureUnitTypeCode measureUnitTypeCode = NullChecked(measurement, nameof(measurement)).MeasureUnitTypeCode;
+
+        return measureUnitTypeCode switch
+        {
+            MeasureUnitTypeCode.AreaUnit => new Area(measureFactory, quantity, measurement),
+            MeasureUnitTypeCode.Currency => new Cash(measureFactory, quantity, measurement),
+            MeasureUnitTypeCode.DistanceUnit => new Distance(measureFactory, quantity, measurement),
+            MeasureUnitTypeCode.ExtentUnit => new Extent(measureFactory, quantity, measurement),
+            MeasureUnitTypeCode.TimePeriodUnit => new TimePeriod(measureFactory, quantity, measurement),
+            MeasureUnitTypeCode.Pieces => new PieceCount(measureFactory, quantity, measurement),
+            MeasureUnitTypeCode.VolumeUnit => new Volume(measureFactory, quantity, measurement),
+            MeasureUnitTypeCode.WeightUnit => new Weight(measureFactory, quantity, measurement),
+
+            _ => throw new InvalidOperationException(null),
+        };
+    }
+
+    protected static ILimit CreateLimit(ILimitFactory limitFactory, ValueType? quantity, IMeasurement measurement, LimitMode? limitMode)
+    {
+        return new Limit(limitFactory, quantity, measurement, limitMode);
+    }
+    #endregion
+
+    #region Private methods
+    //private static IBaseMeasure CreateBaseMeasure(IBaseMeasureFactory baseMeasureFactory, IBaseMeasure baseMeasure)
+    //{
+    //    return baseMeasureFactory switch
+    //    {
+    //        DenominatorFactory denominatorFactory => CreateDenominator(denominatorFactory, baseMeasure),
+    //        MeasureFactory measureFactory => CreateMeasure(measureFactory, baseMeasure),
+    //        LimitFactory limitFactory => CreateLimit(limitFactory, baseMeasure, baseMeasure?.GetLimitMode()),
+
+    //        _ => throw new InvalidOperationException(null),
+    //    };
+    //}
     #endregion
 }

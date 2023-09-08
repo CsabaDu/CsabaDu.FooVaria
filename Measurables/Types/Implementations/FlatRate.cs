@@ -75,7 +75,7 @@ internal sealed class FlatRate : Rate, IFlatRate
 
     public IFlatRate GetFlatRate(IRate rate) // Check!
     {
-        return GetFlatRateFactory().Create(rate, null)!;
+        return GetFlatRateFactory().Create(rate);
     }
 
     public IFlatRate GetFlatRate(IFlatRate? other = null)

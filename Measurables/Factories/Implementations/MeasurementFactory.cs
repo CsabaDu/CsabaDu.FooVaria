@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
+﻿namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
 
 public sealed class MeasurementFactory : MeasurableFactory, IMeasurementFactory
 {
