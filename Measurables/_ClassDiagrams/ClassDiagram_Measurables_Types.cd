@@ -471,21 +471,21 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Markers.ISpreadMeasure" Collapsed="true">
-    <Position X="10" Y="28.5" Width="1.5" />
+    <Position X="10.5" Y="28.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
       <FileName>Markers\ISpreadMeasure.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Behaviors.IConvertMeasure&lt;T, U&gt;" Collapsed="true">
-    <Position X="10.75" Y="24.5" Width="2" />
+    <Position X="11.5" Y="24.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
       <FileName>Behaviors\IConvertMeasure.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Markers.ICustomMeasure" Collapsed="true">
-    <Position X="11" Y="21.5" Width="1.5" />
+    <Position X="10.75" Y="21.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Markers\ICustomMeasure.cs</FileName>
@@ -566,7 +566,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Behaviors.ICustomMeasure&lt;T, U, V&gt;" Collapsed="true">
-    <Position X="10.75" Y="22.5" Width="2" />
+    <Position X="10.5" Y="22.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAEAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Behaviors\ICustomMeasure.cs</FileName>
@@ -603,6 +603,13 @@
   <Interface Name="CsabaDu.FooVaria.Common.Behaviors.IMeasureUnit" Collapsed="true">
     <Position X="5.5" Y="9.25" Width="1.25" />
     <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Measurables.Markers.IConvertMeasure" Collapsed="true">
+    <Position X="11.75" Y="23.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Markers\IConvertMeasure.cs</FileName>
+    </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

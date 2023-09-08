@@ -288,7 +288,7 @@ internal abstract class Measure : BaseMeasure, IMeasure
         return (T)measure.GetMeasure(quantity, customName, exchangeRate);
     }
 
-    protected static T ConvertMeasure<T, U>(IMeasure measure, ConvertMode convertMode) where T : class, IMeasure where U : struct, Enum
+    protected static T ConvertMeasure<T, U>(IMeasure measure, ConvertMode convertMode) where T : class, IMeasure, IConvertMeasure where U : struct, Enum
     {
         decimal quantity = measure.DefaultQuantity;
         decimal ratio = 1000;
