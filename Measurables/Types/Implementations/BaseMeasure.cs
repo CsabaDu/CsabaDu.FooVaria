@@ -328,11 +328,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     #endregion
 
     #region Private methods
-    //private static IMeasurementFactory GetMeasurementFactory(IBaseMeasureFactory baseMeasureFactory)
-    //{
-    //    return baseMeasureFactory.MeasurementFactory;
-    //}
-
     private static decimal CorrectQuantityDecimals(decimal quantity)
     {
         return decimal.Round(Convert.ToDecimal(quantity), 8);
@@ -355,23 +350,5 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
         throw QuantityArgumentOutOfRangeException(quantity);
     }
-
-    //private static void ValidateQuantity(IBaseMeasureFactory baseMeasureFactory, IBaseMeasure baseMeasure)
-    //{
-    //    RateComponentCode rateComponentCode = baseMeasureFactory.RateComponentCode;
-    //    decimal quantity = baseMeasure.GetDecimalQuantity();
-    //    bool isValidQuantity = rateComponentCode switch
-    //    {
-    //        RateComponentCode.Denominator => quantity > 0,
-    //        RateComponentCode.Numerator => true,
-    //        RateComponentCode.Limit => quantity >= 0,
-
-    //        _ => throw new InvalidOperationException(null),
-    //    };
-
-    //    if (isValidQuantity) return;
-
-    //    throw new ArgumentOutOfRangeException(nameof(baseMeasure), quantity, null);
-    //}
     #endregion
 }
