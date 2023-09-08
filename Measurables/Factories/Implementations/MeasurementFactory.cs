@@ -56,54 +56,6 @@ public sealed class MeasurementFactory : MeasurableFactory, IMeasurementFactory
     #endregion
 
     #region Private methods
-    //public RateComponentCode GetValidRateComponentCode(RateComponentCode rateComponentCode)
-    //{
-    //    if (Enum.IsDefined(rateComponentCode)) return rateComponentCode;
-
-    //    throw new InvalidEnumArgumentException(nameof(rateComponentCode), (int)rateComponentCode, rateComponentCode.GetType());
-    //}
-
-    //private static IMeasurement GetOrCreateMeasurement(Enum measureUnit, decimal exchangeRate, string customName)
-    //{
-    //    IMeasurement measurement = GetFirstMeasurement();
-
-    //    if (!Measurements.ContainsKey(measureUnit))
-    //    {
-    //        measurement.SetCustomMeasureUnit(measureUnit, exchangeRate, customName);
-
-    //        return GetMeasurement(measureUnit);
-    //    }
-
-    //    measurement = GetMeasurement(measureUnit);
-    //    measurement.ValidateExchangeRate(exchangeRate, measureUnit);
-
-    //    if (customName == measurement.GetCustomName()) return measurement;
-
-    //    throw CustomNameArgumentOutOfRangeException(customName);
-    //}
-
-    //private static IMeasurement CreateCustomMeasurement(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
-    //{
-    //    IMeasurement measurement = GetFirstMeasurement();
-
-    //    measurement.SetCustomMeasureUnit(customName, measureUnitTypeCode, exchangeRate);
-
-    //    Enum measureUnit = measurement.GetMeasureUnit(customName)!;
-
-    //    return GetMeasurement(measureUnit);
-    //}
-
-    //private static IMeasurement GetMeasurement(string name)
-    //{
-    //    IMeasurement measurement = GetFirstMeasurement();
-
-    //    Enum? measureUnit = measurement.GetMeasureUnit(name);
-
-    //    if (measureUnit != null) return GetMeasurement(measureUnit);
-
-    //    throw new ArgumentOutOfRangeException(nameof(name), name, null);
-    //}
-
     private static IMeasurement GetFirstMeasurement()
     {
         return Measurements.First().Value;

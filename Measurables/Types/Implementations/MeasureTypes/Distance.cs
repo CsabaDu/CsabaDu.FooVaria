@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Enums.MeasureUnits;
-
-namespace CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes;
+﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes;
 
 internal sealed class Distance : Measure, IDistance
 {
