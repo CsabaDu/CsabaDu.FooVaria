@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Measurables.Types.Implementations;
-
-namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
+﻿namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
 
 public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
 {
@@ -18,69 +16,47 @@ public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
 
     public IFlatRate Create(IMeasure numerator, string name, ValueType? quantity)
     {
-        return CreateFlatRate(numerator, name, quantity);
+        IDenominator denominator = DenominatorFactory.Create(name, quantity);
+
+        return CreateFlatRate(this, numerator, denominator);
     }
 
     public IFlatRate Create(IMeasure numerator, Enum measureUnit, ValueType? quantity)
     {
-        return CreateFlatRate(numerator, measureUnit, quantity);
+        IDenominator denominator = DenominatorFactory.Create(measureUnit, quantity);
+
+        return CreateFlatRate(this, numerator, denominator);
     }
 
     public IFlatRate Create(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity)
     {
-        return CreateFlatRate(numerator, measureUnit, exchangeRate, customName, quantity);
+        IDenominator denominator = DenominatorFactory.Create(measureUnit, exchangeRate, customName, quantity);
+
+        return CreateFlatRate(this, numerator, denominator);
     }
 
     public IFlatRate Create(IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity)
     {
-        return CreateFlatRate(numerator, customName, measureUnitTypeCode, exchangeRate, quantity);
+        IDenominator denominator = DenominatorFactory.Create(customName, measureUnitTypeCode, exchangeRate, quantity);
+
+        return CreateFlatRate(this, numerator, denominator);
     }
 
     public IFlatRate Create(IMeasure numerator, IMeasurement measurement, ValueType? quantity)
     {
-        return CreateFlatRate(numerator, measurement, quantity);
+        IDenominator denominator = DenominatorFactory.Create(measurement, quantity);
+
+        return CreateFlatRate(this, numerator, denominator);
     }
 
     public IFlatRate Create(IMeasure numerator, IDenominator denominator)
     {
-        return CreateFlatRate(numerator, denominator);
+        return CreateFlatRate(this, numerator, denominator);
     }
 
     public IFlatRate Create(IRate rate)
     {
         return CreateFlatRate(this, rate);
-    }
-    #endregion
-
-    #region Private methods
-    private IFlatRate CreateFlatRate(IMeasure numerator, string name, ValueType? quantity)
-    {
-        return CreateFlatRate(numerator, GetMeasurement(name), quantity);
-    }
-
-    private IFlatRate CreateFlatRate(IMeasure numerator, IMeasurement measurement, ValueType? quantity)
-    {
-        return new FlatRate(this, numerator, measurement, quantity);
-    }
-
-    private IFlatRate CreateFlatRate(IMeasure numerator, Enum measureUnit, ValueType? quantity)
-    {
-        return new FlatRate(this, numerator, measureUnit, quantity);
-    }
-
-    private IFlatRate CreateFlatRate(IMeasure numerator, IDenominator denominator)
-    {
-        return new FlatRate(this, numerator, denominator);
-    }
-
-    private IFlatRate CreateFlatRate(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity)
-    {
-        return new FlatRate(this, numerator, measureUnit, exchangeRate, customName, quantity);
-    }
-
-    private IFlatRate CreateFlatRate(IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity)
-    {
-        return new FlatRate(this, numerator, customName, measureUnitTypeCode, exchangeRate, quantity);
     }
     #endregion
 }

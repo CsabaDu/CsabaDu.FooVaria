@@ -91,18 +91,4 @@ public abstract class BaseMeasureFactory : MeasurableFactory, IBaseMeasureFactor
         return new Limit(limitFactory, quantity, measurement, limitMode);
     }
     #endregion
-
-    #region Private methods
-    //private static IBaseMeasure CreateBaseMeasure(IBaseMeasureFactory baseMeasureFactory, IBaseMeasure baseMeasure)
-    //{
-    //    return baseMeasureFactory switch
-    //    {
-    //        DenominatorFactory denominatorFactory => CreateDenominator(denominatorFactory, baseMeasure),
-    //        MeasureFactory measureFactory => CreateMeasure(measureFactory, baseMeasure),
-    //        LimitFactory limitFactory => CreateLimit(limitFactory, baseMeasure, baseMeasure?.GetLimitMode()),
-
-    //        _ => throw new InvalidOperationException(null),
-    //    };
-    //}
-    #endregion
 }

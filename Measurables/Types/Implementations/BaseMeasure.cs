@@ -10,41 +10,12 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         Measurement = baseMeasure.Measurement;
     }
 
-    //private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate) : base(baseMeasureFactory, measureUnitTypeCode)
-    //{
-    //    ValidateQuantity(quantity);
-
-    //    Measurement = GetMeasurementFactory(baseMeasureFactory).Create(customName, measureUnitTypeCode, exchangeRate);
-    //}
-
-    //private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, Enum measureUnit) : base(baseMeasureFactory, measureUnit)
-    //{
-    //    ValidateQuantity(quantity);
-
-    //    Measurement = GetMeasurementFactory(baseMeasureFactory).Create(measureUnit);
-    //}
-
-    //private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName) : base(baseMeasureFactory, measureUnit)
-    //{
-    //    ValidateQuantity(quantity);
-
-    //    Measurement = GetMeasurementFactory(baseMeasureFactory).Create(measureUnit, exchangeRate, customName);
-    //}
-
     private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, IMeasurement measurement) : base(baseMeasureFactory, measurement)
     {
         ValidateQuantity(baseMeasureFactory, quantity);
 
         Measurement = measurement;
     }
-
-    //private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, IBaseMeasure baseMeasure) : base(baseMeasureFactory, baseMeasure)
-    //{
-    //    ValidateQuantity(baseMeasureFactory, baseMeasure);
-
-    //    Measurement = baseMeasure.Measurement;
-
-    //}
     #endregion
 
     #region Properties

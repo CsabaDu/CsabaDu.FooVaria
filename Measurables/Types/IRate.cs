@@ -15,6 +15,8 @@ public interface IRate : IMeasurable, IQuantifiable, IProportional<IRate, IRate>
     IRate GetRate(IMeasure numerator, IMeasurement measurement, decimal? quantity = null, ILimit? limit = null);
     IRate GetRate(IMeasure numerator, IDenominator? denominator = null, ILimit? limit = null);
     IRate GetRate(IRate? other = null);
+    IRate GetRate(IRateFactory rateFactory, IRate rate);
+
     IBaseMeasure? GetRateComponent(RateComponentCode rateComponentCode);
     IRateFactory GetRateFactory();
 }

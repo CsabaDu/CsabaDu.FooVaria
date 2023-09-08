@@ -8,32 +8,7 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         Limit = limit ?? limitedRate.Limit;
     }
 
-    public LimitedRate(ILimitedRateFactory limitedRateFactory, IRate rate, ILimit? limit) : base(limitedRateFactory, rate)
-    {
-        Limit = GetOrCreateLimit(limit);
-    }
-
     public LimitedRate(ILimitedRateFactory limitedRateFactory, IMeasure numerator, IDenominator denominator, ILimit? limit) : base(limitedRateFactory, numerator, denominator)
-    {
-        Limit = GetOrCreateLimit(limit);
-    }
-
-    public LimitedRate(IRateFactory rateFactory, IMeasure numerator, IMeasurement measurement, ValueType? quantity, ILimit? limit) : base(rateFactory, numerator, measurement, quantity)
-    {
-        Limit = GetOrCreateLimit(limit);
-    }
-
-    public LimitedRate(ILimitedRateFactory limitedRateFactory, IMeasure numerator, Enum measureUnit, ValueType? quantity, ILimit? limit) : base(limitedRateFactory, numerator, measureUnit, quantity)
-    {
-        Limit = GetOrCreateLimit(limit);
-    }
-
-    public LimitedRate(ILimitedRateFactory limitedRateFactory, IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity, ILimit? limit) : base(limitedRateFactory, numerator, customName, measureUnitTypeCode, exchangeRate, quantity)
-    {
-        Limit = GetOrCreateLimit(limit);
-    }
-
-    public LimitedRate(ILimitedRateFactory limitedRateFactory, IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity, ILimit? limit) : base(limitedRateFactory, numerator, measureUnit, exchangeRate, customName, quantity)
     {
         Limit = GetOrCreateLimit(limit);
     }
