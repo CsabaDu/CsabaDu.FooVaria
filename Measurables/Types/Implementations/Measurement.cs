@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Behaviors;
-
-namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal sealed class Measurement : Measurable, IMeasurement
 {
@@ -289,10 +287,10 @@ internal sealed class Measurement : Measurable, IMeasurement
 
         if (count == 0) throw new ArgumentOutOfRangeException(nameof(customExchangeRateCollection), count, null);
 
-        IDictionary<Enum, decimal> exchangeRateCollection = ExchangeRateCollection;
-        Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode);
         IEnumerable<string> customNames = customExchangeRateCollection!.Keys;
         IEnumerable<decimal> exchangeRates = customExchangeRateCollection.Values;
+        Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode);
+        IDictionary<Enum, decimal> exchangeRateCollection = ExchangeRateCollection;
 
         SetExchangeRateCollection(ref exchangeRateCollection, measureUnitType, exchangeRates, customNames);
 
@@ -567,12 +565,13 @@ internal sealed class Measurement : Measurable, IMeasurement
         Type measureUnitType = typeof(T);
         int namesCount = Enum.GetNames(measureUnitType).Length;
         int exchangeRatesCount = exchangeRates?.Length ?? 0;
+        bool areExchangeRates = exchangeRatesCount > 0;
 
-        if (exchangeRatesCount != 0 && exchangeRatesCount != namesCount - 1) throw new InvalidOperationException(null);
+        if (areExchangeRates && exchangeRatesCount != namesCount - 1) throw new InvalidOperationException(null);
 
-        ExchangeRateCollection.Add(default(T), DefaultExchangeRate);
+        exchangeRateCollection.Add(default(T), DefaultExchangeRate);
 
-        if (exchangeRatesCount > 0)
+        if (areExchangeRates)
         {
             SetExchangeRateCollection(ref exchangeRateCollection, measureUnitType, exchangeRates!, null);
         }
