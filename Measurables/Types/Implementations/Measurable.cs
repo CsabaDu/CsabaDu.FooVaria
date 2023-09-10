@@ -70,11 +70,7 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
     {
         if (measureUnit == null) return MeasureUnitTypeCode;
 
-        ValidateMeasureUnit(measureUnit);
-
-        string measureUnitTypeName = measureUnit.GetType().Name;
-
-        return (MeasureUnitTypeCode)Enum.Parse(typeof(MeasureUnitTypeCode), measureUnitTypeName);
+        return GetValidMeasureUnitTypeCode(measureUnit);
     }
 
     public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
@@ -84,21 +80,12 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
 
     public override void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
-        if (IsDefinedMeasureUnit(measureUnit))
-        {
-            if (measureUnitTypeCode == null) return;
-
-            if (measureUnitTypeCode == GetMeasureUnitTypeCode(measureUnit)) return;
-        }
-
-        throw InvalidMeasureUnitEnumArgumentException(measureUnit);
+        MeasureUnitTypes.ValidateMeasureUnit(measureUnit, measureUnitTypeCode);
     }
 
     public override void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
     {
-        if (Enum.IsDefined(measureUnitTypeCode)) return;
-
-        throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode);
+        MeasureUnitTypes.ValidateMeasureUnitTypeCode(measureUnitTypeCode);
     }
 
     #region Abstract methods

@@ -1,4 +1,4 @@
-﻿using static CsabaDu.FooVaria.Common.Statics.QuantityType;
+﻿using static CsabaDu.FooVaria.Common.Statics.QuantityTypes;
 
 namespace CsabaDu.FooVaria.Common.Statics;
 

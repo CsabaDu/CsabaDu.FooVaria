@@ -1,8 +1,8 @@
 ﻿namespace CsabaDu.FooVaria.Common.Statics;
 
-public static class QuantityType
+public static class QuantityTypes
 {
-    private static HashSet<Type> QuantityTypes => new()
+    private static HashSet<Type> QuantityTypeSet => new()
     {
         typeof(int),
         typeof(uint),
@@ -14,7 +14,7 @@ public static class QuantityType
 
     public static IEnumerable<TypeCode> GetQuantityTypeCodes()
     {
-        foreach (Type item in QuantityTypes)
+        foreach (Type item in QuantityTypeSet)
         {
             yield return Type.GetTypeCode(item);
         }
@@ -22,7 +22,7 @@ public static class QuantityType
 
     public static IEnumerable<Type> GetQuantityTypes()
     {
-        return QuantityTypes;
+        return QuantityTypeSet;
     }
 }
 

@@ -1,20 +1,18 @@
-﻿namespace CsabaDu.FooVaria.Common.Types.Implementations;
+﻿using CsabaDu.FooVaria.Common.Statics;
+
+namespace CsabaDu.FooVaria.Common.Types.Implementations;
 
 public abstract class BaseMeasurable : IBaseMeasurable
 {
     #region Constructors
     protected BaseMeasurable(MeasureUnitTypeCode measureUnitTypeCode)
     {
-        ValidateMeasureUnitTypeCode(measureUnitTypeCode);
-
-        MeasureUnitTypeCode = measureUnitTypeCode;
+        MeasureUnitTypeCode = GetValidMeasureUnitTypeCode(measureUnitTypeCode);
     }
 
     protected BaseMeasurable(Enum measureUnit)
     {
-        ValidateMeasureUnit(measureUnit);
-
-        MeasureUnitTypeCode = GetMeasureUnitTypeCode(measureUnit);
+        MeasureUnitTypeCode = GetValidMeasureUnitTypeCode(measureUnit);
     }
 
     protected BaseMeasurable(IBaseMeasurable baseMeasurable)
@@ -30,9 +28,9 @@ public abstract class BaseMeasurable : IBaseMeasurable
     #region Public methods
     public Enum GetDefaultMeasureUnit(MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
-        Type enumType = GetMeasureUnitType(measureUnitTypeCode)!;
+        Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode)!;
 
-        return (Enum)Enum.ToObject(enumType, 0);
+        return (Enum)Enum.ToObject(measureUnitType, 0);
     }
     
     public string GetDefaultName(Enum? measureUnit = null)
@@ -78,16 +76,11 @@ public abstract class BaseMeasurable : IBaseMeasurable
 
     public Type GetMeasureUnitType(MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
-        Type measureUnitType = GetMeasureUnit().GetType();
+        if (measureUnitTypeCode == null) return GetMeasureUnit().GetType();
 
-        if (measureUnitTypeCode == null) return measureUnitType;
+        measureUnitTypeCode = GetValidMeasureUnitTypeCode(measureUnitTypeCode);
 
-        ValidateMeasureUnitTypeCode(measureUnitTypeCode.Value);
-
-        string measureUnitTypeName = Enum.GetName(typeof(MeasureUnitTypeCode), measureUnitTypeCode.Value)!;
-        measureUnitTypeName = measureUnitType.FullName!.Replace(measureUnitType.Name, measureUnitTypeName);
-
-        return Type.GetType(measureUnitTypeName)!;
+        return MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode.Value);
     }
 
     public bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, Enum? measureUnit = null)
@@ -97,15 +90,57 @@ public abstract class BaseMeasurable : IBaseMeasurable
 
     public bool IsDefinedMeasureUnit(Enum measureUnit)
     {
-        return Statics.Validate.IsDefinedMeasureUnit(measureUnit);
+        return MeasureUnitTypes.IsDefinedMeasureUnit(measureUnit);
     }
+
+    #region Virtual methods
+    public virtual MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum? measureUnit = null)
+    {
+        if (measureUnit == null) return MeasureUnitTypeCode;
+
+        ValidateMeasureUnit(measureUnit);
+
+        return MeasureUnitTypes.GetMeasureUnitTypeCode(measureUnit);
+    }
+
+    public virtual IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
+    {
+        return Enum.GetValues<MeasureUnitTypeCode>();
+    }
+
+    public virtual void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode? measureUnitTypeCode = null)
+    {
+        MeasureUnitTypes.ValidateMeasureUnit(measureUnit, measureUnitTypeCode);
+    }
+
+    public virtual void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        MeasureUnitTypes.ValidateMeasureUnitTypeCode(measureUnitTypeCode);
+    }
+    #endregion
 
     #region Abstract methods
     public abstract Enum GetMeasureUnit();
-    public abstract MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum? measureUnit = null);
-    public abstract IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes();
-    public abstract void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode? measureUnitTypeCode = null);
-    public abstract void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode);
     #endregion
+    #endregion
+
+    #region Protected methods
+    protected MeasureUnitTypeCode GetValidMeasureUnitTypeCode(Enum measureUnit)
+    {
+        ValidateMeasureUnit(measureUnit);
+
+        string measureUnitTypeName = measureUnit.GetType().Name;
+
+        return (MeasureUnitTypeCode)Enum.Parse(typeof(MeasureUnitTypeCode), measureUnitTypeName);
+    }
+    #endregion
+
+    #region Private methods
+    private MeasureUnitTypeCode GetValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        ValidateMeasureUnitTypeCode(measureUnitTypeCode);
+
+        return measureUnitTypeCode;
+    }
     #endregion
 }
