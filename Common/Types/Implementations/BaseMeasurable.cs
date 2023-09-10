@@ -76,9 +76,14 @@ public abstract class BaseMeasurable : IBaseMeasurable
 
     public Type GetMeasureUnitType(MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
-        if (measureUnitTypeCode == null) return GetMeasureUnit().GetType();
-
-        measureUnitTypeCode = GetValidMeasureUnitTypeCode(measureUnitTypeCode);
+        if (measureUnitTypeCode == null)
+        {
+            measureUnitTypeCode = MeasureUnitTypeCode;
+        }
+        else
+        {
+            ValidateMeasureUnitTypeCode(measureUnitTypeCode.Value);
+        }
 
         return MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode.Value);
     }
