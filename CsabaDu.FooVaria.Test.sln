@@ -8,9 +8,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Measurables", "Measurables\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{38929641-2582-46C0-8FDB-CE49B84C82A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonTests", "_Tests\CommonTests\CommonTests.csproj", "{B83C0197-A39F-4586-B805-0910DD3ADD6B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSupport", "_Tests\TestSupport\TestSupport.csproj", "{633356B4-6790-473C-AB93-5203455D8E4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonTests", "_Tests\CommonTests\CommonTests.csproj", "{B83C0197-A39F-4586-B805-0910DD3ADD6B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,17 +28,12 @@ Global
 		{B83C0197-A39F-4586-B805-0910DD3ADD6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B83C0197-A39F-4586-B805-0910DD3ADD6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B83C0197-A39F-4586-B805-0910DD3ADD6B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{633356B4-6790-473C-AB93-5203455D8E4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{633356B4-6790-473C-AB93-5203455D8E4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{633356B4-6790-473C-AB93-5203455D8E4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{633356B4-6790-473C-AB93-5203455D8E4B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B83C0197-A39F-4586-B805-0910DD3ADD6B} = {38929641-2582-46C0-8FDB-CE49B84C82A8}
-		{633356B4-6790-473C-AB93-5203455D8E4B} = {38929641-2582-46C0-8FDB-CE49B84C82A8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A90722CA-9D20-419A-AA57-5766105110BF}
