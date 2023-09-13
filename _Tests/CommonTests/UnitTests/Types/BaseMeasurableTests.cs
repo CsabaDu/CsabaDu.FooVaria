@@ -40,7 +40,7 @@ public class BaseMeasurableTests
 
     #region BaseMeasurable(Enum)
     [TestMethod, TestCategory("UnitTest")]
-    public void Ctor_NullMeasureUnitArg_Enum_ThrowsArgumentNullException()
+    public void Ctor_NullArg_Enum_ThrowsArgumentNullException()
     {
         // Arrange
         Enum measureUnit = null;
@@ -54,7 +54,7 @@ public class BaseMeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void Ctor_NotMeasureUnitEnumg_measureUnit_ThrowsInvalidEnumArgumentException()
+    public void Ctor_InvalidArg_Enum_ThrowsInvalidEnumArgumentException()
     {
         // Arrange
         Enum measureUnit = SampleParams.DefaultLimitMode;
