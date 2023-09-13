@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{38929641
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonTests", "_Tests\CommonTests\CommonTests.csproj", "{B83C0197-A39F-4586-B805-0910DD3ADD6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSupport", "TestSupport\TestSupport.csproj", "{9A29FEBD-B0E6-465B-A010-F862FBEC9CA4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSupport", "_Tests\_TestSupport\TestSupport.csproj", "{9A29FEBD-B0E6-465B-A010-F862FBEC9CA4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

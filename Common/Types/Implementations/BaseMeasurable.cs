@@ -30,7 +30,7 @@ public abstract class BaseMeasurable : IBaseMeasurable
     {
         Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode)!;
 
-        return (Enum)Enum.ToObject(measureUnitType, 0);
+        return MeasureUnitTypes.GetDefaultMeasureUnit(measureUnitType);
     }
     
     public string GetDefaultName(Enum? measureUnit = null)
@@ -132,7 +132,7 @@ public abstract class BaseMeasurable : IBaseMeasurable
     #region Protected methods
     protected MeasureUnitTypeCode GetValidMeasureUnitTypeCode(Enum measureUnit)
     {
-        ValidateMeasureUnit(measureUnit);
+        MeasureUnitTypes.ValidateMeasureUnit(measureUnit);
 
         string measureUnitTypeName = measureUnit.GetType().Name;
 

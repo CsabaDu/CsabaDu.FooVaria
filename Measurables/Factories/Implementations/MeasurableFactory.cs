@@ -1,4 +1,5 @@
-﻿using CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿using CsabaDu.FooVaria.Measurables.Statics;
+using CsabaDu.FooVaria.Measurables.Types.Implementations;
 using CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes;
 
 namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
@@ -6,12 +7,19 @@ namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
 public abstract class MeasurableFactory : IMeasurableFactory
 {
     #region Static Properties
-    protected static IDictionary<Enum, IMeasurement> Measurements
-    => Measurement.GetValidMeasureUnits().ToDictionary
-    (
-        x => x,
-        x => new Measurement(new MeasurementFactory(), x) as IMeasurement
-    );
+    protected static IDictionary<Enum, IMeasurement> Measurements => GetMeasurements();
+
+    private static Dictionary<Enum, IMeasurement> GetMeasurements()
+    {
+        var measurements = new Dictionary<Enum, IMeasurement>();
+
+        foreach (object item in ExchangeRates.GetValidMeasureUnits())
+        {
+            measurements.Add((Enum)item, new Measurement(new MeasurementFactory(), (Enum)item));
+        }
+
+        return measurements;
+    }
     #endregion
 
     #region Public methods

@@ -6,5 +6,5 @@ public interface ICustomMeasurement : IBaseMeasurable, ICustomMeasureUnit
     ICustomMeasurement? GetCustomMeasurement(Enum measureUnit, decimal exchangeRate, string customName);
     bool TryGetCustomMeasurement(Enum measureUnit, decimal exchangeRate, string customName, [NotNullWhen(true)] out ICustomMeasurement? customMeasurement);
 
-    void InitiateCustomExchangeRates(MeasureUnitTypeCode measureUnitTypeCode, IDictionary<string, decimal> customExchangeRateCollection);
+    void InitializeCustomExchangeRates(MeasureUnitTypeCode measureUnitTypeCode, IDictionary<string, decimal> customExchangeRateCollection);
 }

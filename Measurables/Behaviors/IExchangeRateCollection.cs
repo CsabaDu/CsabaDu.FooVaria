@@ -7,7 +7,7 @@ public interface IExchangeRateCollection
     decimal GetExchangeRate(Enum measureUnit);
     decimal GetExchangeRate(string name);
 
-    void RestoreConstantExchangeRateCollection();
+    void RestoreConstantExchangeRates();
 
     void ValidateExchangeRate(decimal exchangeRate, Enum? measureUnit = null);
 }

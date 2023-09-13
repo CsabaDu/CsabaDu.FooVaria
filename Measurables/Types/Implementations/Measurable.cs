@@ -66,7 +66,7 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
         return quantityTypeCode ?? throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode!.Value);
     }
 
-    public override MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum? measureUnit = null)
+    public override MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum? measureUnit = null) // 2
     {
         if (measureUnit == null) return MeasureUnitTypeCode;
 

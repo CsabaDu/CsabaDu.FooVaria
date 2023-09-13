@@ -54,6 +54,20 @@
             throw InvalidMeasureUnitEnumArgumentException(measureUnit);
         }
 
+        public static void ValidateMeasureUnitType(Type measureUnitType, MeasureUnitTypeCode? measureUnitTypeCode = null)
+        {
+            if (MeasureUnitTypeSet.Contains(NullChecked(measureUnitType, nameof(measureUnitType))))
+            {
+                if (measureUnitTypeCode == null) return;
+
+                ValidateMeasureUnitTypeCode(measureUnitTypeCode.Value);
+
+                if (measureUnitType == GetMeasureUnitType(measureUnitTypeCode.Value)) return;
+            }
+
+            throw new ArgumentOutOfRangeException(nameof(measureUnitType), measureUnitType.FullName, null);
+        }
+
         public static MeasureUnitTypeCode GetValidMeasureUnitTypeCode(Enum measureUnit)
         {
             ValidateMeasureUnit(measureUnit);
@@ -84,6 +98,13 @@
             Type measureUnitType = measureUnit.GetType();
 
             return GetMeasureUnitTypeCollection().First(x => x.Value == measureUnitType).Key;
+        }
+
+        public static Enum GetDefaultMeasureUnit(Type measureUnitType)
+        {
+            ValidateMeasureUnitType(measureUnitType);
+
+            return (Enum)Enum.ToObject(measureUnitType, default(int));
         }
     }
 }
