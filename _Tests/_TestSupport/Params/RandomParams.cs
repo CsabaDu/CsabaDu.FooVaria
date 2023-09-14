@@ -54,13 +54,12 @@
             {
                 for (int i = 0; i < count; i++)
                 {
-                    if (measureUnit.Equals(getAllMeasureUnits().ElementAt(i)))
-                    {
-                        return i;
-                    }
+                    Enum other = getAllMeasureUnits().ElementAt(i);
+
+                    if (measureUnit.Equals(other)) return i;
                 }
 
-                throw new InvalidOperationException(null);
+                throw ExceptionMethods.InvalidMeasureUnitEnumArgumentException(measureUnit);
             }
 
             Enum getRandomMeasureUnit()

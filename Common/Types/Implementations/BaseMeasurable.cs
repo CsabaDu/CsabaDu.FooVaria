@@ -41,18 +41,7 @@ public abstract class BaseMeasurable : IBaseMeasurable
     
     public string GetDefaultName(Enum? measureUnit = null)
     {
-        if (measureUnit == null)
-        {
-            measureUnit = GetMeasureUnit();
-        }
-        else
-        {
-            ValidateMeasureUnit(measureUnit);
-        }
-
-        Type measureUnitType = measureUnit.GetType();
-
-        return Enum.GetName(measureUnitType, measureUnit)!;
+        return MeasureUnitTypes.GetDefaultName(measureUnit ?? GetMeasureUnit());
     }
 
     public IEnumerable<string> GetDefaultNames(MeasureUnitTypeCode? measureUnitTypeCode = null)
@@ -87,16 +76,7 @@ public abstract class BaseMeasurable : IBaseMeasurable
 
     public Type GetMeasureUnitType(MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
-        if (measureUnitTypeCode == null)
-        {
-            measureUnitTypeCode = MeasureUnitTypeCode;
-        }
-        else
-        {
-            ValidateMeasureUnitTypeCode(measureUnitTypeCode.Value);
-        }
-
-        return MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode.Value);
+        return MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode ?? MeasureUnitTypeCode);
     }
 
     public bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, Enum? measureUnit = null)

@@ -1,7 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Behaviors;
-using System.Collections.Generic;
-
-namespace CsabaDu.FooVaria.Common.Statics;
+﻿namespace CsabaDu.FooVaria.Common.Statics;
 
 public static class MeasureUnitTypes
 {
@@ -28,7 +25,8 @@ public static class MeasureUnitTypes
 
             foreach (Type item in GetMeasureUnitTypes())
             {
-                allMeasureUnits = allMeasureUnits.Union(getAllMeasureUnits(item));
+                IEnumerable<Enum> next = getAllMeasureUnits(item);
+                allMeasureUnits = allMeasureUnits.Union(next);
             }
 
             return allMeasureUnits;
@@ -61,6 +59,15 @@ public static class MeasureUnitTypes
         ValidateMeasureUnitType(measureUnitType);
 
         return (Enum)Enum.ToObject(measureUnitType, default(int));
+    }
+
+    public static string GetDefaultName(Enum measureUnit)
+    {
+        ValidateMeasureUnit(measureUnit);
+
+        Type measureUnitType = measureUnit.GetType();
+
+        return Enum.GetName(measureUnitType, measureUnit)!;
     }
 
     public static Type GetMeasureUnitType(MeasureUnitTypeCode measureUnitTypeCode)

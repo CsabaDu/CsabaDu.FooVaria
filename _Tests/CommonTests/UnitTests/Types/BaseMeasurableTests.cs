@@ -152,7 +152,6 @@ public class BaseMeasurableTests
     }
     #endregion
     #endregion
-
     #endregion
 
     #region Private methods
