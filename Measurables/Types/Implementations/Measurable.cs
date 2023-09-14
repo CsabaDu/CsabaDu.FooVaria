@@ -16,9 +16,9 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
         MeasurableFactory = NullChecked(measurableFactory, nameof(measurableFactory));
     }
 
-    private protected Measurable(IMeasurableFactory measurableFactory, Enum measureUnit) : base(measureUnit)
+    private protected Measurable(IMeasurableFactory factory, Enum measureUnit) : base(measureUnit)
     {
-        MeasurableFactory = NullChecked(measurableFactory, nameof(measurableFactory));
+        MeasurableFactory = NullChecked(factory, nameof(factory));
     }
 
     private protected Measurable(IMeasurableFactory measurableFactory, IMeasurable measurable) : base(measurable)
@@ -26,9 +26,9 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
         MeasurableFactory = NullChecked(measurableFactory, nameof(measurableFactory));
     }
 
-    private protected Measurable(IMeasurable measurable) : base(measurable)
+    private protected Measurable(IMeasurable other) : base(other)
     {
-        MeasurableFactory = measurable.MeasurableFactory;
+        MeasurableFactory = other.MeasurableFactory;
     }
     #endregion
 
@@ -66,11 +66,11 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
         return quantityTypeCode ?? throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode!.Value);
     }
 
-    public override MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum? measureUnit = null) // 2
+    public override MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum? measureUnit = null)
     {
         if (measureUnit == null) return MeasureUnitTypeCode;
 
-        return GetValidMeasureUnitTypeCode(measureUnit);
+        return MeasureUnitTypes.GetValidMeasureUnitTypeCode(measureUnit);
     }
 
     public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()

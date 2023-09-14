@@ -2,8 +2,11 @@
 
 internal static class ExchangeRates
 {
+    #region Constants
     public const decimal DefaultExchangeRate = decimal.One;
+    #endregion
 
+    #region Properties
     private static readonly IDictionary<object, decimal> ConstantExchangeRateCollection = new Dictionary<object, decimal>()
     {
         // AreaUnits
@@ -48,6 +51,36 @@ internal static class ExchangeRates
     };
 
     private static IDictionary<object, decimal> ExchangeRateCollection { get; set; } = new Dictionary<object, decimal>(ConstantExchangeRateCollection);
+    #endregion
+
+    #region Internal mehods
+    internal static IDictionary<Enum, decimal> GetConstantExchangeRateCollection()
+    {
+        return GetExchangeRateCollection(ConstantExchangeRateCollection);
+    }
+
+    internal static IDictionary<Enum, decimal> GetExchangeRateCollection()
+    {
+        return GetExchangeRateCollection(ExchangeRateCollection);
+    }
+
+    internal static IEnumerable<object> GetValidMeasureUnits()
+    {
+        foreach (object item in ExchangeRateCollection.Keys)
+        {
+            yield return item;
+        }
+    }
+
+    internal static bool RemoveExchangeRate(Enum measureUnit)
+    {
+        return ExchangeRateCollection.Remove(measureUnit);
+    }
+
+    internal static void RestoreConstantExchangeRates()
+    {
+        ExchangeRateCollection = new Dictionary<object, decimal>(ConstantExchangeRateCollection);
+    }
 
     internal static void SetExchangeRate(Enum measureUnit, decimal exchangeRate)
     {
@@ -62,35 +95,9 @@ internal static class ExchangeRates
 
         return MeasureUnitTypes.IsDefinedMeasureUnit(measureUnit) && ExchangeRateCollection.TryAdd(measureUnit, exchangeRate);
     }
+    #endregion
 
-    internal static bool RemoveExchangeRate(Enum measureUnit)
-    {
-        return ExchangeRateCollection.Remove(measureUnit);
-    }
-
-    internal static void RestoreConstantExchangeRates()
-    {
-        ExchangeRateCollection = new Dictionary<object, decimal>(ConstantExchangeRateCollection);
-    }
-
-    internal static IEnumerable<object> GetValidMeasureUnits()
-    {
-        foreach (object item in ExchangeRateCollection.Keys)
-        {
-            yield return item;
-        }
-    }
-
-    internal static IDictionary<Enum, decimal> GetExchangeRateCollection()
-    {
-        return GetExchangeRateCollection(ExchangeRateCollection);
-    }
-
-    internal static IDictionary<Enum, decimal> GetConstantExchangeRateCollection()
-    {
-        return GetExchangeRateCollection(ConstantExchangeRateCollection);
-    }
-
+    #region Private methods
     private static IDictionary<Enum, decimal> GetExchangeRateCollection(IDictionary<object, decimal> collection)
     {
         Dictionary<Enum, decimal> exchangeRateCollection = new();
@@ -105,4 +112,5 @@ internal static class ExchangeRates
 
         return exchangeRateCollection;
     }
+    #endregion
 }

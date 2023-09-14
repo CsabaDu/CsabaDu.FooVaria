@@ -3,7 +3,7 @@
 internal sealed class Cash : Measure, ICash
 {
     #region Constructors
-    internal Cash(ICash cash) : base(cash)
+    internal Cash(ICash other) : base(other)
     {
     }
 

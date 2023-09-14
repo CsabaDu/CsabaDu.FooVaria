@@ -5,14 +5,14 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 internal abstract class BaseMeasure : Measurable, IBaseMeasure
 {
     #region Constructors
-    private protected BaseMeasure(IBaseMeasure baseMeasure) : base(baseMeasure)
+    private protected BaseMeasure(IBaseMeasure other) : base(other)
     {
-        Measurement = baseMeasure.Measurement;
+        Measurement = other.Measurement;
     }
 
-    private protected BaseMeasure(IBaseMeasureFactory baseMeasureFactory, ValueType quantity, IMeasurement measurement) : base(baseMeasureFactory, measurement)
+    private protected BaseMeasure(IBaseMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, measurement)
     {
-        ValidateQuantity(baseMeasureFactory, quantity);
+        ValidateQuantity(factory, quantity);
 
         Measurement = measurement;
     }

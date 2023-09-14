@@ -3,7 +3,7 @@
 internal sealed class Distance : Measure, IDistance
 {
     #region Constructors
-    internal Distance(IDistance distance) : base(distance)
+    internal Distance(IDistance other) : base(other)
     {
     }
 

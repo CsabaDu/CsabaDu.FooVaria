@@ -3,7 +3,7 @@
 internal sealed class Area : Measure, IArea
 {
     #region Constructors
-    internal Area(IArea area) : base(area)
+    internal Area(IArea other) : base(other)
     {
     }
 

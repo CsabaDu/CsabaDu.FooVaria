@@ -3,7 +3,7 @@
 internal sealed class Extent : Measure, IExtent
 {
     #region Constructors
-    internal Extent(IExtent extent) : base(extent)
+    internal Extent(IExtent other) : base(other)
     {
     }
 

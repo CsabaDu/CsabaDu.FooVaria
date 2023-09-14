@@ -17,12 +17,12 @@ internal abstract class Measure : BaseMeasure, IMeasure
     #endregion
 
     #region Constructors
-    private protected Measure(IMeasure measure) : base(measure)
+    private protected Measure(IMeasure other) : base(other)
     {
-        Quantity = measure.Quantity;
+        Quantity = other.Quantity;
     }
 
-    private protected Measure(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
+    private protected Measure(IMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
     {
         Quantity = GetQuantity(quantity);
     }

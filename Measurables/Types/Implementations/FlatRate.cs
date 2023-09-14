@@ -3,11 +3,11 @@
 internal sealed class FlatRate : Rate, IFlatRate
 {
     #region Constructors
-    internal FlatRate(IFlatRate flatRate) : base(flatRate)
+    internal FlatRate(IFlatRate other) : base(other)
     {
     }
 
-    internal FlatRate(IFlatRateFactory flatRateFactory, IMeasure numerator, IDenominator denominator) : base(flatRateFactory, numerator, denominator)
+    internal FlatRate(IFlatRateFactory factory, IMeasure numerator, IDenominator denominator) : base(factory, numerator, denominator)
     {
     }
     #endregion

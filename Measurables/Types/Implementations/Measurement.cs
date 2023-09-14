@@ -1,5 +1,4 @@
-﻿using CsabaDu.FooVaria.Measurables.Behaviors;
-using CsabaDu.FooVaria.Measurables.Statics;
+﻿using CsabaDu.FooVaria.Measurables.Statics;
 
 namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
@@ -14,17 +13,7 @@ internal sealed class Measurement : Measurable, IMeasurement
     #endregion
 
     #region Constructors
-    //#region Static constructor
-    //static Measurement()
-    //{
-    //    //ExchangeRateCollection = new SortedList<Enum, decimal>();
-    //    CustomNameCollection = new SortedList<Enum, string>();
-    //    SetConstantExchangeRateCollection();
-
-    //}
-    //#endregion
-
-    internal Measurement(IMeasurementFactory measurementFactory, Enum measureUnit) : base(measurementFactory, measureUnit)
+    internal Measurement(IMeasurementFactory factory, Enum measureUnit) : base(factory, measureUnit)
     {
         ExchangeRate = GetExchangeRate(measureUnit);
         MeasureUnit = measureUnit;
@@ -48,7 +37,7 @@ internal sealed class Measurement : Measurable, IMeasurement
 
     public bool Equals(IMeasurement? other)
     {
-        return other?.IsExchangeableTo(MeasureUnitTypeCode) == true
+        return other?.MeasureUnitTypeCode.Equals(MeasureUnitTypeCode) == true
             && other.ExchangeRate == ExchangeRate;
     }
 

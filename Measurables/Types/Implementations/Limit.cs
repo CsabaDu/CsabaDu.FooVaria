@@ -7,13 +7,13 @@ internal sealed class Limit : BaseMeasure, ILimit
     #endregion
 
     #region Constructors
-    internal Limit(ILimit limit, LimitMode? limitMode) : base(limit)
+    internal Limit(ILimit other, LimitMode? limitMode) : base(other)
     {
-        Quantity = limit.Quantity;
-        LimitMode = limitMode ?? limit.LimitMode;
+        Quantity = other.Quantity;
+        LimitMode = limitMode ?? other.LimitMode;
     }
 
-    internal Limit(ILimitFactory limitFactory, ValueType? quantity, IMeasurement measurement, LimitMode? limitMode) : base(limitFactory, quantity ?? DefaultLimitQuantity, measurement)
+    internal Limit(ILimitFactory factory, ValueType? quantity, IMeasurement measurement, LimitMode? limitMode) : base(factory, quantity ?? DefaultLimitQuantity, measurement)
     {
         Quantity = GetLimitQuantity(quantity);
         LimitMode = GetValidLimitMode(limitMode);

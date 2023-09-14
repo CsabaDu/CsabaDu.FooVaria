@@ -3,12 +3,12 @@
 internal sealed class LimitedRate : Rate, ILimitedRate
 {
     #region Constructors
-    public LimitedRate(ILimitedRate limitedRate, ILimit? limit) : base(limitedRate)
+    public LimitedRate(ILimitedRate other, ILimit? limit) : base(other)
     {
-        Limit = limit ?? limitedRate.Limit;
+        Limit = limit ?? other.Limit;
     }
 
-    public LimitedRate(ILimitedRateFactory limitedRateFactory, IMeasure numerator, IDenominator denominator, ILimit? limit) : base(limitedRateFactory, numerator, denominator)
+    public LimitedRate(ILimitedRateFactory factory, IMeasure numerator, IDenominator denominator, ILimit? limit) : base(factory, numerator, denominator)
     {
         Limit = GetOrCreateLimit(limit);
     }

@@ -7,12 +7,12 @@ internal sealed class Denominator : BaseMeasure, IDenominator
     #endregion
 
     #region Constructors
-    internal Denominator(IDenominator denominator) : base(denominator)
+    internal Denominator(IDenominator other) : base(other)
     {
-        Quantity = denominator.Quantity;
+        Quantity = other.Quantity;
     }
 
-    internal Denominator(IDenominatorFactory denominatorFactory, ValueType? quantity, IMeasurement measurement) : base(denominatorFactory, quantity ?? DefaultDenominatorQuantity, measurement)
+    internal Denominator(IDenominatorFactory factory, ValueType? quantity, IMeasurement measurement) : base(factory, quantity ?? DefaultDenominatorQuantity, measurement)
     {
         Quantity = GetDenominatorQuantity(quantity);
     }

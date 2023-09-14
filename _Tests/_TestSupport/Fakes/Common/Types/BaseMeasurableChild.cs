@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Tests.CommonTests.Fakes.Types;
+﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Types;
 
 internal sealed class BaseMeasurableChild : BaseMeasurable
 {
@@ -10,7 +10,7 @@ internal sealed class BaseMeasurableChild : BaseMeasurable
     {
     }
 
-    public BaseMeasurableChild(IBaseMeasurable baseMeasurable) : base(baseMeasurable)
+    public BaseMeasurableChild(IBaseMeasurable other) : base(other)
     {
     }
 

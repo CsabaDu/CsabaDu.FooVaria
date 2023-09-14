@@ -5,7 +5,7 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes;
 internal sealed class PieceCount : Measure, IPieceCount
 {
     #region Constructors
-    internal PieceCount(IPieceCount pieceCount) : base(pieceCount)
+    internal PieceCount(IPieceCount other) : base(other)
     {
     }
 

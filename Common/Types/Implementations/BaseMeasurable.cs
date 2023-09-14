@@ -12,12 +12,12 @@ public abstract class BaseMeasurable : IBaseMeasurable
 
     protected BaseMeasurable(Enum measureUnit)
     {
-        MeasureUnitTypeCode = GetValidMeasureUnitTypeCode(measureUnit);
+        MeasureUnitTypeCode = MeasureUnitTypes.GetValidMeasureUnitTypeCode(measureUnit);
     }
 
-    protected BaseMeasurable(IBaseMeasurable baseMeasurable)
+    protected BaseMeasurable(IBaseMeasurable other)
     {
-        MeasureUnitTypeCode = NullChecked(baseMeasurable, nameof(baseMeasurable)).MeasureUnitTypeCode;
+        MeasureUnitTypeCode = NullChecked(other, nameof(other)).MeasureUnitTypeCode;
     }
     #endregion
 
@@ -26,6 +26,12 @@ public abstract class BaseMeasurable : IBaseMeasurable
     #endregion
 
     #region Public methods
+    public override bool Equals(object? obj)
+    {
+        return obj is IBaseMeasurable other
+            && other.MeasureUnitTypeCode == MeasureUnitTypeCode;
+    }
+
     public Enum GetDefaultMeasureUnit(MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
         Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode)!;
@@ -72,6 +78,11 @@ public abstract class BaseMeasurable : IBaseMeasurable
             return Enum.GetNames(measureUnitType);
         }
         #endregion
+    }
+
+    public override int GetHashCode()
+    {
+        return MeasureUnitTypeCode.GetHashCode();
     }
 
     public Type GetMeasureUnitType(MeasureUnitTypeCode? measureUnitTypeCode = null)
@@ -130,14 +141,6 @@ public abstract class BaseMeasurable : IBaseMeasurable
     #endregion
 
     #region Protected methods
-    protected MeasureUnitTypeCode GetValidMeasureUnitTypeCode(Enum measureUnit)
-    {
-        MeasureUnitTypes.ValidateMeasureUnit(measureUnit);
-
-        string measureUnitTypeName = measureUnit.GetType().Name;
-
-        return (MeasureUnitTypeCode)Enum.Parse(typeof(MeasureUnitTypeCode), measureUnitTypeName);
-    }
     #endregion
 
     #region Private methods

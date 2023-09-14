@@ -3,7 +3,7 @@
 internal sealed class TimePeriod : Measure, ITimePeriod
 {
     #region Constructors
-    internal TimePeriod(ITimePeriod timePeriod) : base(timePeriod)
+    internal TimePeriod(ITimePeriod other) : base(other)
     {
     }
 

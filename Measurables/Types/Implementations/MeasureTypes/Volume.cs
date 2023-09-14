@@ -3,7 +3,7 @@
 internal sealed class Volume : Measure, IVolume
 {
     #region Constructors
-    internal Volume(IVolume volume) : base(volume)
+    internal Volume(IVolume other) : base(other)
     {
     }
 

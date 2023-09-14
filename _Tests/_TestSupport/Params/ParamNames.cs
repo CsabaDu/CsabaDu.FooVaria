@@ -1,8 +1,8 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Params
+﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
+
+public static class ParamNames
 {
-    public static class ParamNames
-    {
-        public static string measureUnit = "measureUnit";
-        public static string measureUnitTypeCode = "measureUnitTypeCode";
-    }
+    public const string measureUnit = "measureUnit";
+    public const string measureUnitTypeCode = "measureUnitTypeCode";
+    public const string other = "other";
 }

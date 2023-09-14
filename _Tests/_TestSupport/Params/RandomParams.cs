@@ -1,27 +1,77 @@
-﻿using CsabaDu.FooVaria.Common.Enums;
-using CsabaDu.FooVaria.Common.Statics;
-using static CsabaDu.FooVaria.Tests.TestSupport.Params.SampleParams;
+﻿using static CsabaDu.FooVaria.Tests.TestSupport.Params.SampleParams;
 
 
 namespace CsabaDu.FooVaria.Tests.TestSupport.Params
 {
-    public class RandomParams
+    public static class RandomParams
     {
         private static readonly Random Random = Random.Shared;
-        //private static readonly IEnumerable<Enum> ValidMeasureUnits = ExchangeRates.GetValidMeasureUnits();
 
-        public static MeasureUnitTypeCode GetRandomMeasureUnitTypeCode()
+        public static MeasureUnitTypeCode GetRandomMeasureUnitTypeCode(MeasureUnitTypeCode? measureUnitTypeCode = null)
         {
-            int randomIndex = Random.Next(MeasureUnitTypeCodeCount);
+            int randomIndex = getRandomIndex();
 
-            return (MeasureUnitTypeCode)randomIndex;
+            if (measureUnitTypeCode == null) return getRandomMeasureUnitTypeCode();
+
+            MeasureUnitTypes.ValidateMeasureUnitTypeCode(measureUnitTypeCode.Value);
+
+            while (randomIndex == (int)measureUnitTypeCode)
+            {
+                randomIndex = getRandomIndex();
+            }
+
+            return getRandomMeasureUnitTypeCode();
+
+            #region Local methods
+            static int getRandomIndex()
+            {
+                return Random.Next(MeasureUnitTypeCodeCount);
+            }
+
+            MeasureUnitTypeCode getRandomMeasureUnitTypeCode()
+            {
+                return (MeasureUnitTypeCode)randomIndex;
+            }
+            #endregion
         }
 
-        public static Enum GetRandomMeasureUnit()
+        public static Enum GetRandomMeasureUnit(Enum measureUnit = null)
         {
-            int randomIndex = Random.Next(getAllMeasureUnits().Count());
+            int count = getAllMeasureUnits().Count();
+            int randomIndex = getRandomIndex();
 
-            return getAllMeasureUnits().ElementAt(randomIndex);
+            if (measureUnit == null) return getRandomMeasureUnit();
+
+            while (randomIndex == getMeasureUnitIndex())
+            {
+                randomIndex = getRandomIndex();
+            }
+
+            return getRandomMeasureUnit();
+
+            #region Local methods
+            int getRandomIndex()
+            {
+                return Random.Next(count);
+            }
+
+            int getMeasureUnitIndex()
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    if (measureUnit.Equals(getAllMeasureUnits().ElementAt(i)))
+                    {
+                        return i;
+                    }
+                }
+
+                throw new InvalidOperationException(null);
+            }
+
+            Enum getRandomMeasureUnit()
+            {
+                return getAllMeasureUnits().ElementAt(randomIndex);
+            }
 
             static IEnumerable<Enum> getAllMeasureUnits()
             {
@@ -33,6 +83,7 @@ namespace CsabaDu.FooVaria.Tests.TestSupport.Params
                     }
                 }
             }
+            #endregion
         }
     }
 }

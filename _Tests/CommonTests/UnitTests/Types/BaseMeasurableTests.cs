@@ -1,4 +1,5 @@
-using CsabaDu.FooVaria.Tests.CommonTests.Fakes.Types;
+using CsabaDu.FooVaria.Common.Statics;
+using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Types;
 using CsabaDu.FooVaria.Tests.TestSupport.Params;
 using System.ComponentModel;
 
@@ -7,6 +8,18 @@ namespace CsabaDu.FooVaria.Tests.CommonTests.UnitTests.Types;
 [TestClass, TestCategory("UnitTest")]
 public class BaseMeasurableTests
 {
+    #region ClassInitialize
+    [ClassInitialize]
+    public static void InitializeMeasurementTestsClass(TestContext context)
+    {
+        DynamicDataSources = new();
+    }
+    #endregion
+
+    #region Private fields
+    private static DynamicDataSources DynamicDataSources;
+    #endregion
+
     #region Constructors
     #region BaseMeasurable(MeasureUnitTypeCode)
     [TestMethod, TestCategory("UnitTest")]
@@ -30,7 +43,7 @@ public class BaseMeasurableTests
         MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
 
         // Act
-        IBaseMeasurable actual = new BaseMeasurableChild(measureUnitTypeCode);
+        var actual = new BaseMeasurableChild(measureUnitTypeCode);
 
         // Assert
         Assert.IsInstanceOfType(actual, typeof(IBaseMeasurable));
@@ -72,15 +85,70 @@ public class BaseMeasurableTests
     {
         // Arrange
         Enum measureUnit = RandomParams.GetRandomMeasureUnit();
-        MeasureUnitTypeCode measureUnitTypeCode = Common.Statics.MeasureUnitTypes.GetMeasureUnitTypeCode(measureUnit);
+        MeasureUnitTypeCode measureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(measureUnit);
 
         // Act
-        IBaseMeasurable actual = new BaseMeasurableChild(measureUnit);
+        var actual = new BaseMeasurableChild(measureUnit);
 
         // Assert
         Assert.IsInstanceOfType(actual, typeof(IBaseMeasurable));
         Assert.AreEqual(measureUnitTypeCode, actual.MeasureUnitTypeCode);
     }
     #endregion
+
+    #region BaseMeasurable(IBaseMeasurable)
+    [TestMethod, TestCategory("UnitTest")]
+    public void Ctor_NullArg_IBaseMeasurable_ThrowsArgumentNullException()
+    {
+        // Arrange
+        IBaseMeasurable other = null;
+
+        // Act
+        void attempt() => _ = new BaseMeasurableChild(other);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
+        Assert.AreEqual(ParamNames.other, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void Ctor_ValidArg_IBaseMeasurable_CreatesInstance()
+    {
+        // Arrange
+        MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        var expected = new BaseMeasurableChild(measureUnitTypeCode);
+
+        // Act
+        IBaseMeasurable actual = new BaseMeasurableChild(expected);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region Equals
+    #region Equals(object?)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetBaseMeasurableEqualsObjectArgsArrayList), DynamicDataSourceType.Method)]
+    public void Equals_Arg_object_ReturnsExpected(bool expected, object obj, MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        // Arrange
+        IBaseMeasurable baseMeasurable = new BaseMeasurableChild(measureUnitTypeCode);
+
+        // Act
+        var actual = baseMeasurable.Equals(obj);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region Private methods
+    private static IEnumerable<object[]> GetBaseMeasurableEqualsObjectArgsArrayList()
+    {
+        return DynamicDataSources.GetBaseMeasurableEqualsObjectArgsArrayList();
+    }
     #endregion
 }

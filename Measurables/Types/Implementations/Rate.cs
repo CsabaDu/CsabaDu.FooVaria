@@ -3,10 +3,10 @@
 internal abstract class Rate : Measurable, IRate
 {
     #region Constructors
-    private protected Rate(IRate rate) : base(rate)
+    private protected Rate(IRate other) : base(other)
     {
-        Numerator = rate.Numerator;
-        Denominator = rate.Denominator;
+        Numerator = other.Numerator;
+        Denominator = other.Denominator;
     }
     private protected Rate(IRateFactory rateFactory, IMeasure numerator, IDenominator denominator) : base(rateFactory, denominator)
     {

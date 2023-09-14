@@ -3,7 +3,7 @@
 internal sealed class Weight : Measure, IWeight
 {
     #region Constructors
-    internal Weight(IWeight weight) : base(weight)
+    internal Weight(IWeight other) : base(other)
     {
     }
 
