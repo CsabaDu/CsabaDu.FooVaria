@@ -74,9 +74,7 @@ public static class MeasureUnitTypes
     {
         ValidateMeasureUnitTypeCode(measureUnitTypeCode);
 
-        string? measureUnitTypeCodeName = Enum.GetName(measureUnitTypeCode);
-
-        return MeasureUnitTypeSet.First(x => x.Name == measureUnitTypeCodeName);
+        return MeasureUnitTypeSet.First(x => x.Name == measureUnitTypeCode.GetName());
     }
 
     public static MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum measureUnit)

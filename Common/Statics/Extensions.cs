@@ -139,7 +139,7 @@ public static class Extensions
 
     public static string GetName(this MeasureUnitTypeCode measureUnitTypeCode)
     {
-        string? name = Enum.GetName(typeof(MeasureUnitTypeCode), measureUnitTypeCode);
+        string? name = Enum.GetName(measureUnitTypeCode);
 
         return name ?? throw new InvalidEnumArgumentException(nameof(measureUnitTypeCode), (int)measureUnitTypeCode, measureUnitTypeCode.GetType());
     }

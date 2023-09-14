@@ -134,6 +134,38 @@ public class BaseMeasurableTests
     #endregion
     #endregion
 
+    #region GetDefaultMeasureUnit
+    #region GetDefaultMeasureUnit(MeasureUnitTypeCode? = null)
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetDefaultMeasureUnit_ReturnsExpected()
+    {
+        // Arrange
+        MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        IBaseMeasurable baseMeasurable = new BaseMeasurableChild(measureUnitTypeCode);
+        Type measureUnitType = MeasureUnitTypes.GetMeasureUnitTypes().First(x => x.Name == measureUnitTypeCode.GetName());
+        Enum expected = (Enum)Enum.ToObject(measureUnitType, default(int));
+
+        // Act
+        var actual = baseMeasurable.GetDefaultMeasureUnit();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetBaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgs), DynamicDataSourceType.Method)]
+    public void GetMeasureUnit_Arg_NullableMeasureUnitTpeCode_ReturnsExpected(MeasureUnitTypeCode? measureUnitTypeCode, Enum expected, IBaseMeasurable baseMeasurable)
+    {
+        // Arrange
+        // Act
+        var actual = baseMeasurable.GetDefaultMeasureUnit(measureUnitTypeCode);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
     #region GetHashCode
     #region GetHashCode()
     [TestMethod, TestCategory("UnitTest")]
@@ -158,6 +190,12 @@ public class BaseMeasurableTests
     private static IEnumerable<object[]> GetBaseMeasurableEqualsObjectArgsArrayList()
     {
         return DynamicDataSources.GetBaseMeasurableEqualsObjectArgsArrayList();
+    }
+
+    private static IEnumerable<object[]> GetBaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgs()
+    {
+        return DynamicDataSources.GetBaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgs();
+
     }
     #endregion
 }

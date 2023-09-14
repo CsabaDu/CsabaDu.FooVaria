@@ -79,6 +79,49 @@ internal static class DynamicDataSources
             };
         }
     }
+
+    protected class NullableMeasureUnitTypeCode
+    {
+        internal MeasureUnitTypeCode? MeasureUnitTypeCode { get; init; }
+
+        public virtual object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                MeasureUnitTypeCode,
+            };
+        }
+    }
+
+    protected class NullableMeasureUnitTypeCodeEnum : NullableMeasureUnitTypeCode
+    {
+        internal Enum MeasureUnit { get; init; }
+
+        public override object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                MeasureUnitTypeCode,
+                MeasureUnit,
+            };
+        }
+
+    }
+
+    protected class BaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgs : NullableMeasureUnitTypeCodeEnum
+    {
+        internal IBaseMeasurable BaseMeasurable { get; init; }
+
+        public override object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                MeasureUnitTypeCode,
+                MeasureUnit,
+                BaseMeasurable,
+            };
+        }
+    }
     #endregion
 
     #region Internal ArrayList methods
@@ -110,6 +153,39 @@ internal static class DynamicDataSources
                 MeasureUnitTypeCode = measureUnitTypeCode,
             }
             .ToObjectArray();
+        }
+        #endregion
+    }
+
+    internal static IEnumerable<object[]> GetBaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgs()
+    {
+        MeasureUnitTypeCode? measureUnitTypeCode = null;
+        Enum expected = getDefaultMeasureUnit(RandomParams.GetRandomMeasureUnitTypeCode());
+        IBaseMeasurable baseMeasurable = new BaseMeasurableChild(expected);
+
+        yield return toObjectArray();
+
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode(MeasureUnitTypes.GetMeasureUnitTypeCode(expected));
+        expected = getDefaultMeasureUnit(measureUnitTypeCode.Value);
+
+        yield return toObjectArray();
+
+        #region Local methods
+        object[] toObjectArray()
+        {
+            return new BaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgs
+            {
+                MeasureUnitTypeCode = measureUnitTypeCode,
+                MeasureUnit = expected,
+                BaseMeasurable = baseMeasurable,
+            }
+            .ToObjectArray();
+        }
+
+        Enum getDefaultMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode)
+        {
+            Type measureUnitType = MeasureUnitTypes.GetMeasureUnitTypes().First(x => x.Name == measureUnitTypeCode.GetName());
+            return (Enum)Enum.ToObject(measureUnitType, default(int));
         }
         #endregion
     }
