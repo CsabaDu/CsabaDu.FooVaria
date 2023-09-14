@@ -8,18 +8,7 @@ namespace CsabaDu.FooVaria.Tests.CommonTests.UnitTests.Types;
 [TestClass, TestCategory("UnitTest")]
 public class BaseMeasurableTests
 {
-    #region ClassInitialize
-    [ClassInitialize]
-    public static void InitializeMeasurementTestsClass(TestContext context)
-    {
-        DynamicDataSources = new();
-    }
-    #endregion
-
-    #region Private fields
-    private static DynamicDataSources DynamicDataSources;
-    #endregion
-
+    #region Test methods
     #region Constructors
     #region BaseMeasurable(MeasureUnitTypeCode)
     [TestMethod, TestCategory("UnitTest")]
@@ -143,6 +132,27 @@ public class BaseMeasurableTests
         Assert.AreEqual(expected, actual);
     }
     #endregion
+    #endregion
+
+    #region GetHashCode
+    #region GetHashCode()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetHashCode_ReturnsExpected()
+    {
+        // Arrange
+        MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        IBaseMeasurable baseMeasurable = new BaseMeasurableChild(measureUnitTypeCode);
+        int expected = measureUnitTypeCode.GetHashCode();
+
+        // Act
+        var actual = baseMeasurable.GetHashCode();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
     #endregion
 
     #region Private methods

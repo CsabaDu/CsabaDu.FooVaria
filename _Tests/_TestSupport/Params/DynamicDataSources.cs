@@ -1,10 +1,12 @@
-﻿using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Types;
+﻿using CsabaDu.FooVaria.Measurables.Factories;
+using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Types;
 
 namespace CsabaDu.FooVaria.Tests.TestSupport.Params
 {
     internal class DynamicDataSources
     {
-        protected class EqualsArg : IObjectToArray
+        #region Protected types
+        protected class EqualsArg
         {
             internal bool AreEqual { get; init; }
 
@@ -46,7 +48,41 @@ namespace CsabaDu.FooVaria.Tests.TestSupport.Params
             }
         }
 
-        internal IEnumerable<object[]> GetBaseMeasurableEqualsObjectArgsArrayList()
+        protected class MeasurableEqualsObjectArgs : BaseMeasurableEqualsObjectArgs
+        {
+            IMeasurableFactory MeasurableFactory { get; init; }
+
+            public override object[] ToObjectArray()
+            {
+                return new object[]
+                {
+                    AreEqual,
+                    Obj,
+                    MeasureUnitTypeCode,
+                    MeasurableFactory,
+                };
+            }
+        }
+
+        protected class MeasurementEqualsObjectArgs : BaseMeasurableEqualsObjectArgs
+        {
+            decimal ExchangeRate { get; init; }
+
+            public override object[] ToObjectArray()
+            {
+                return new object[]
+                {
+                    AreEqual,
+                    Obj,
+                    MeasureUnitTypeCode,
+                    ExchangeRate,
+                };
+            }
+        }
+        #endregion
+
+        #region Internal ArrayList methods
+        internal static IEnumerable<object[]> GetBaseMeasurableEqualsObjectArgsArrayList()
         {
             bool expected = false;
             object obj = null;
@@ -77,5 +113,6 @@ namespace CsabaDu.FooVaria.Tests.TestSupport.Params
             }
             #endregion
         }
+        #endregion
     }
 }

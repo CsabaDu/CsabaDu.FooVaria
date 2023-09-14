@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Common.Statics;
+﻿using CsabaDu.FooVaria.Common.Behaviors;
+using System.Collections.Generic;
+
+namespace CsabaDu.FooVaria.Common.Statics;
 
 public static class MeasureUnitTypes
 {
@@ -17,6 +20,33 @@ public static class MeasureUnitTypes
     #endregion
 
     #region Public methods
+    public static IEnumerable<Enum> GetAllMeasureUnits(MeasureUnitTypeCode? measureUnitTypeCode = null)
+    {
+        if (measureUnitTypeCode == null)
+        {
+            IEnumerable<Enum> allMeasureUnits = new List<Enum>();
+
+            foreach (Type item in GetMeasureUnitTypes())
+            {
+                allMeasureUnits = allMeasureUnits.Union(getAllMeasureUnits(item));
+            }
+
+            return allMeasureUnits;
+        }
+
+        return getAllMeasureUnits(GetMeasureUnitType(measureUnitTypeCode!.Value));
+
+        #region Local methods
+        static IEnumerable<Enum> getAllMeasureUnits(Type measureUnitType)
+        {
+            foreach (Enum item in Enum.GetValues(measureUnitType))
+            {
+                yield return item;
+            }
+        }
+        #endregion
+    }
+
     public static IDictionary<MeasureUnitTypeCode, Type> GetMeasureUnitTypeCollection()
     {
         return MeasureUnitTypeSet.ToDictionary

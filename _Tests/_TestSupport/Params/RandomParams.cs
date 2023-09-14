@@ -1,7 +1,4 @@
-﻿using static CsabaDu.FooVaria.Tests.TestSupport.Params.SampleParams;
-
-
-namespace CsabaDu.FooVaria.Tests.TestSupport.Params
+﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Params
 {
     public static class RandomParams
     {
@@ -13,8 +10,6 @@ namespace CsabaDu.FooVaria.Tests.TestSupport.Params
 
             if (measureUnitTypeCode == null) return getRandomMeasureUnitTypeCode();
 
-            MeasureUnitTypes.ValidateMeasureUnitTypeCode(measureUnitTypeCode.Value);
-
             while (randomIndex == (int)measureUnitTypeCode)
             {
                 randomIndex = getRandomIndex();
@@ -25,7 +20,7 @@ namespace CsabaDu.FooVaria.Tests.TestSupport.Params
             #region Local methods
             static int getRandomIndex()
             {
-                return Random.Next(MeasureUnitTypeCodeCount);
+                return Random.Next(SampleParams.MeasureUnitTypeCodeCount);
             }
 
             MeasureUnitTypeCode getRandomMeasureUnitTypeCode()
@@ -35,7 +30,7 @@ namespace CsabaDu.FooVaria.Tests.TestSupport.Params
             #endregion
         }
 
-        public static Enum GetRandomMeasureUnit(Enum measureUnit = null)
+        public static Enum GetRandomMeasureUnit(MeasureUnitTypeCode? measureUnitTypeCode = null, Enum measureUnit = null)
         {
             int count = getAllMeasureUnits().Count();
             int randomIndex = getRandomIndex();
@@ -73,15 +68,9 @@ namespace CsabaDu.FooVaria.Tests.TestSupport.Params
                 return getAllMeasureUnits().ElementAt(randomIndex);
             }
 
-            static IEnumerable<Enum> getAllMeasureUnits()
+            IEnumerable<Enum> getAllMeasureUnits()
             {
-                foreach (Type item in MeasureUnitTypes.GetMeasureUnitTypes())
-                {
-                    foreach (Enum measureUnit in Enum.GetValues(item))
-                    {
-                        yield return measureUnit;
-                    }
-                }
+                return MeasureUnitTypes.GetAllMeasureUnits(measureUnitTypeCode);
             }
             #endregion
         }
