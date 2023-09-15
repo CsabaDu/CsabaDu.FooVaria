@@ -167,12 +167,5 @@ public static class Extensions
             _ => throw new InvalidEnumArgumentException(nameof(measureUnitTypeCode), (int)measureUnitTypeCode, measureUnitTypeCode.GetType()),
         };
     }
-
-    public static Enum GetMeasureUnitDefault(this MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        Type measureUnitType = measureUnitTypeCode.GetMeasureUnitType();
-
-        return (Enum)Enum.ToObject(measureUnitType, default(int));
-    }
     #endregion
 }

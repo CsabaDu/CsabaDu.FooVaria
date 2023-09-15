@@ -21,7 +21,7 @@ public static class MeasureUnitTypes
     {
         ValidateMeasureUnitTypeCode(measureUnitTypeCode);
 
-        Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode);
+        Type measureUnitType = measureUnitTypeCode.GetMeasureUnitType();
 
         return (Enum)Enum.ToObject(measureUnitType, value);
     }
@@ -89,11 +89,12 @@ public static class MeasureUnitTypes
         return GetAllMeasureUnits(measureUnitTypeCode).Select(x => GetDefaultName(x));
     }
 
-    public static Type GetMeasureUnitType(MeasureUnitTypeCode measureUnitTypeCode)
+    public static Type GetMeasureUnitType(MeasureUnitTypeCode measureUnitTypeCode) // Extensions
     {
         ValidateMeasureUnitTypeCode(measureUnitTypeCode);
 
-        return MeasureUnitTypeSet.First(x => x.Name == measureUnitTypeCode.GetName());
+        return measureUnitTypeCode.GetMeasureUnitType();
+        //return MeasureUnitTypeSet.First(x => x.Name == measureUnitTypeCode.GetName());
     }
 
     public static MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum measureUnit)
