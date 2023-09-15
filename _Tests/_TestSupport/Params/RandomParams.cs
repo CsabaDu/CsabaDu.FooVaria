@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Params
+﻿using CsabaDu.FooVaria.Common.Behaviors;
+
+namespace CsabaDu.FooVaria.Tests.TestSupport.Params
 {
     public class RandomParams
     {
@@ -75,6 +77,15 @@
                 return MeasureUnitTypes.GetAllMeasureUnits(measureUnitTypeCode);
             }
             #endregion
+        }
+
+        public Enum GetRandomInvalidMeasureUnit()
+        {
+            MeasureUnitTypeCode measureUnitTypeCode = GetRandomMeasureUnitTypeCode();
+            int count = MeasureUnitTypes.GetDefaultNames(measureUnitTypeCode).Count();
+            Type measureUnitType = MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode);
+
+            return (Enum)Enum.ToObject(measureUnitType, count);
         }
         #endregion
     }

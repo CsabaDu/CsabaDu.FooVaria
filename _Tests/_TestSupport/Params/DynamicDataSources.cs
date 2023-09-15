@@ -6,7 +6,7 @@ namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
 internal class DynamicDataSources
 {
     #region Private fields
-    private RandomParams RandomParams = new();
+    private readonly RandomParams RandomParams = new();
     #endregion
 
     #region Protected types
@@ -150,7 +150,29 @@ internal class DynamicDataSources
     #endregion
 
     #region Internal ArrayList methods
-    #region BaseMeasurabée
+    #region General
+    internal IEnumerable<object[]> GetInvalidEnumMeasureUnitArgArrayList()
+    {
+        Enum measureUnit = SampleParams.DefaultLimitMode;
+        yield return toObjectArray();
+
+        measureUnit = RandomParams.GetRandomInvalidMeasureUnit();
+        yield return toObjectArray();
+
+        #region Local methods
+        object[] toObjectArray()
+        {
+            return new EnumMeasureUnit
+            {
+                MeasureUnit = measureUnit,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+    }
+    #endregion
+
+    #region BaseMeasurable
     internal IEnumerable<object[]> GetBaseMeasurableEqualsObjectArgsArrayList()
     {
         bool expected = false;
@@ -212,28 +234,6 @@ internal class DynamicDataSources
             return (Enum)Enum.ToObject(measureUnitType, default(int));
         }
         #endregion
-    }
-
-    internal IEnumerable<object[]> GetEnumMeasureUnitArgArrayList()
-    {
-        Enum measureUnit = SampleParams.DefaultLimitMode;
-        yield return toObjectArray();
-
-        MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
-        int count = MeasureUnitTypes.GetDefaultNames(measureUnitTypeCode).Count();
-        Type measureUnitType = MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode);
-        measureUnit = (Enum)Enum.ToObject(measureUnitType, count);
-        yield return toObjectArray();
-
-        object[] toObjectArray()
-        {
-            return new EnumMeasureUnit
-            {
-                MeasureUnit = measureUnit,
-            }
-            .ToObjectArray();
-        }
-
     }
     #endregion
     #endregion

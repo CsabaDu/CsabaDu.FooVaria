@@ -70,7 +70,7 @@ public class BaseMeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetEnumMeasureUnitArgArrayList), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetInvalidEnumMeasureUnitArgArrayList), DynamicDataSourceType.Method)]
     public void Ctor_InvalidArg_Enum_ThrowsInvalidEnumArgumentException(Enum measureUnit)
     {
         // Arrange
@@ -235,9 +235,9 @@ public class BaseMeasurableTests
 
     }
 
-    private static IEnumerable<object[]> GetEnumMeasureUnitArgArrayList()
+    private static IEnumerable<object[]> GetInvalidEnumMeasureUnitArgArrayList()
     {
-        return DynamicDataSources.GetEnumMeasureUnitArgArrayList();
+        return DynamicDataSources.GetInvalidEnumMeasureUnitArgArrayList();
     }
     #endregion
 }
