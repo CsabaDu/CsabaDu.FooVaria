@@ -16,6 +16,6 @@ internal sealed class BaseMeasurableChild : BaseMeasurable
 
     public override Enum GetMeasureUnit()
     {
-        return GetDefaultMeasureUnit();
+        throw new NotImplementedException();
     }
 }
