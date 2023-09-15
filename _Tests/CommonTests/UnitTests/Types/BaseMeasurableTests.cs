@@ -8,6 +8,17 @@ namespace CsabaDu.FooVaria.Tests.CommonTests.UnitTests.Types;
 [TestClass, TestCategory("UnitTest")]
 public class BaseMeasurableTests
 {
+    #region ClassInitialize
+    [ClassInitialize]
+    public static void InitializeMeasurementTestsClass(TestContext context)
+    {
+        DynamicDataSources = new();
+    }
+    #endregion
+
+    #region Private fields
+    private static DynamicDataSources DynamicDataSources;
+    #endregion
     #region Test methods
     #region Constructors
     #region BaseMeasurable(MeasureUnitTypeCode)
@@ -56,7 +67,7 @@ public class BaseMeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void Ctor_InvalidArg_Enum_ThrowsInvalidEnumArgumentException()
+    public void Ctor_InvalidArg_Enum_ThrowsInvalidEnumArgumentException() // Dynamic invalid measureUintType
     {
         // Arrange
         Enum measureUnit = SampleParams.DefaultLimitMode;
@@ -153,8 +164,8 @@ public class BaseMeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetBaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgs), DynamicDataSourceType.Method)]
-    public void GetMeasureUnit_Arg_NullableMeasureUnitTpeCode_ReturnsExpected(MeasureUnitTypeCode? measureUnitTypeCode, Enum expected, IBaseMeasurable baseMeasurable)
+    [DynamicData(nameof(GetBaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgsArrayList), DynamicDataSourceType.Method)]
+    public void GetMeasureUnit_ValidArg_NullableMeasureUnitTpeCode_ReturnsExpected(MeasureUnitTypeCode? measureUnitTypeCode, Enum expected, IBaseMeasurable baseMeasurable)
     {
         // Arrange
         // Act
@@ -163,6 +174,39 @@ public class BaseMeasurableTests
         // Assert
         Assert.AreEqual(expected, actual);
     }
+
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetEnumMeasureUnitArgArrayList), DynamicDataSourceType.Method)]
+    public void GetDefaultMeasureUnit_InvalidArg_ThrowsInvalidEnumArgumentException(Enum measureUnit)
+    {
+        // Arrange
+        // Act
+        void attempt() => _ = new BaseMeasurableChild(measureUnit);
+
+        // Assert
+        try
+        {
+            var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+            Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
+        }
+        catch (InvalidEnumArgumentException)
+        {
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException(ex.Message, ex.InnerException);
+        }
+    }
+    #endregion
+    #endregion
+
+    #region GetDefaultName
+    #region GetDefaultName(Enum? = null)
+    //[TestMethod, TestCategory("UnitTest")]
+    //public void GetDefaultName_ReturnsExpected()
+    //{
+    //    Enum measureUnit = RandomParams.GetRandomMeasureUnit();
+    //}
     #endregion
     #endregion
 
@@ -192,10 +236,15 @@ public class BaseMeasurableTests
         return DynamicDataSources.GetBaseMeasurableEqualsObjectArgsArrayList();
     }
 
-    private static IEnumerable<object[]> GetBaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgs()
+    private static IEnumerable<object[]> GetBaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgsArrayList()
     {
-        return DynamicDataSources.GetBaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgs();
+        return DynamicDataSources.GetBaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgsArrayList();
 
+    }
+
+    private static IEnumerable<object[]> GetEnumMeasureUnitArgArrayList()
+    {
+        return DynamicDataSources.GetEnumMeasureUnitArgArrayList();
     }
     #endregion
 }

@@ -70,6 +70,11 @@ public static class MeasureUnitTypes
         return Enum.GetName(measureUnitType, measureUnit)!;
     }
 
+    public static IEnumerable<string> GetDefaultNames(MeasureUnitTypeCode? measureUnitTypeCode = null)
+    {
+        return GetAllMeasureUnits(measureUnitTypeCode).Select(x => GetDefaultName(x));
+    }
+
     public static Type GetMeasureUnitType(MeasureUnitTypeCode measureUnitTypeCode)
     {
         ValidateMeasureUnitTypeCode(measureUnitTypeCode);
