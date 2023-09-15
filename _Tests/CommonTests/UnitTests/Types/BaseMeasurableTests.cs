@@ -10,7 +10,7 @@ public class BaseMeasurableTests
 {
     #region ClassInitialize
     [ClassInitialize]
-    public static void InitializeMeasurementTestsClass(TestContext context)
+    public static void InitializeBaseMeasurableTestsClass(TestContext context)
     {
         DynamicDataSources = new();
     }
@@ -19,6 +19,7 @@ public class BaseMeasurableTests
     #region Private fields
     private static DynamicDataSources DynamicDataSources;
     #endregion
+
     #region Test methods
     #region Constructors
     #region BaseMeasurable(MeasureUnitTypeCode)
@@ -66,12 +67,12 @@ public class BaseMeasurableTests
         Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
     }
 
+
     [TestMethod, TestCategory("UnitTest")]
-    public void Ctor_InvalidArg_Enum_ThrowsInvalidEnumArgumentException() // Dynamic invalid measureUintType
+    [DynamicData(nameof(GetEnumMeasureUnitArgArrayList), DynamicDataSourceType.Method)]
+    public void Ctor_InvalidArg_Enum_ThrowsInvalidEnumArgumentException(Enum measureUnit)
     {
         // Arrange
-        Enum measureUnit = SampleParams.DefaultLimitMode;
-
         // Act
         void attempt() => _ = new BaseMeasurableChild(measureUnit);
 
@@ -173,29 +174,6 @@ public class BaseMeasurableTests
 
         // Assert
         Assert.AreEqual(expected, actual);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetEnumMeasureUnitArgArrayList), DynamicDataSourceType.Method)]
-    public void GetDefaultMeasureUnit_InvalidArg_ThrowsInvalidEnumArgumentException(Enum measureUnit)
-    {
-        // Arrange
-        // Act
-        void attempt() => _ = new BaseMeasurableChild(measureUnit);
-
-        // Assert
-        try
-        {
-            var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
-            Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
-        }
-        catch (InvalidEnumArgumentException)
-        {
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException(ex.Message, ex.InnerException);
-        }
     }
     #endregion
     #endregion
