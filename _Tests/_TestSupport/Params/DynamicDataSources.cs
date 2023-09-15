@@ -1,11 +1,14 @@
-﻿using CsabaDu.FooVaria.Common.Behaviors;
-using CsabaDu.FooVaria.Measurables.Factories;
+﻿using CsabaDu.FooVaria.Measurables.Factories;
 using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Types;
 
 namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
 
 internal class DynamicDataSources
 {
+    #region Private fields
+    private RandomParams RandomParams = new();
+    #endregion
+
     #region Protected types
     #region bool
     protected class EqualsArg

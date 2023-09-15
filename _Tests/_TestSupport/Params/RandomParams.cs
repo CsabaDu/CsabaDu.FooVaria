@@ -1,10 +1,13 @@
 ﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Params
 {
-    public static class RandomParams
+    public class RandomParams
     {
+        #region Private fields
         private static readonly Random Random = Random.Shared;
+        #endregion
 
-        public static MeasureUnitTypeCode GetRandomMeasureUnitTypeCode(MeasureUnitTypeCode? measureUnitTypeCode = null)
+        #region Public methods
+        public MeasureUnitTypeCode GetRandomMeasureUnitTypeCode(MeasureUnitTypeCode? measureUnitTypeCode = null)
         {
             int randomIndex = getRandomIndex();
 
@@ -30,7 +33,7 @@
             #endregion
         }
 
-        public static Enum GetRandomMeasureUnit(MeasureUnitTypeCode? measureUnitTypeCode = null, Enum measureUnit = null)
+        public Enum GetRandomMeasureUnit(MeasureUnitTypeCode? measureUnitTypeCode = null, Enum measureUnit = null)
         {
             int count = getAllMeasureUnits().Count();
             int randomIndex = getRandomIndex();
@@ -73,5 +76,6 @@
             }
             #endregion
         }
+        #endregion
     }
 }

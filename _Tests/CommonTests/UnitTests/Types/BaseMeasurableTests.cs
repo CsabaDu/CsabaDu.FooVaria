@@ -13,11 +13,13 @@ public class BaseMeasurableTests
     public static void InitializeBaseMeasurableTestsClass(TestContext context)
     {
         DynamicDataSources = new();
+        RandomParams = new();
     }
     #endregion
 
     #region Private fields
     private static DynamicDataSources DynamicDataSources;
+    private static RandomParams RandomParams;
     #endregion
 
     #region Test methods
@@ -66,7 +68,6 @@ public class BaseMeasurableTests
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
         Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
     }
-
 
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetEnumMeasureUnitArgArrayList), DynamicDataSourceType.Method)]
@@ -165,8 +166,22 @@ public class BaseMeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
+    public void GetMeasureUnit_InvalidArg_NullableMeasureUnitTpeCode_ThrowsInvalidEnumArgumentException()
+    {
+        // Arrange
+        MeasureUnitTypeCode measureUnitTypeCode = SampleParams.InvalidMeasureUnitTypeCode;
+
+        // Act
+        void attempt() => _ = new BaseMeasurableChild(measureUnitTypeCode);
+
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(ParamNames.measureUnitTypeCode, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetBaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgsArrayList), DynamicDataSourceType.Method)]
-    public void GetMeasureUnit_ValidArg_NullableMeasureUnitTpeCode_ReturnsExpected(MeasureUnitTypeCode? measureUnitTypeCode, Enum expected, IBaseMeasurable baseMeasurable)
+    public void GetMeasureUnit_VaLidArg_NullableMeasureUnitTpeCode_ReturnsExpected(MeasureUnitTypeCode? measureUnitTypeCode, Enum expected, IBaseMeasurable baseMeasurable)
     {
         // Arrange
         // Act
