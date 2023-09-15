@@ -220,66 +220,66 @@ public class BaseMeasurableTests
     #endregion
     #endregion
 
-    #region GetDefaultName
-    #region GetDefaultName(Enum? = null)
-    [TestMethod, TestCategory("UnitTest")]
-    public void GetDefaultName_ReturnsExpected()
-    {
-        // Arrange
-        Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
-        string expected = Enum.GetName(measureUnit.GetType(), measureUnit);
-        IBaseMeasurable baseMeasurable = new BaseMeasurableChild(measureUnit);
+    //#region GetDefaultName
+    //#region GetDefaultName(Enum? = null)
+    //[TestMethod, TestCategory("UnitTest")]
+    //public void GetDefaultName_ReturnsExpected()
+    //{
+    //    // Arrange
+    //    Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
+    //    string expected = Enum.GetName(measureUnit.GetType(), measureUnit);
+    //    IBaseMeasurable baseMeasurable = new BaseMeasurableChild(measureUnit);
 
-        // Act
-        var actual = baseMeasurable.GetDefaultName();
+    //    // Act
+    //    var actual = baseMeasurable.GetDefaultName();
 
-        // Assert
-        Assert.AreEqual(expected, actual);
-    }
+    //    // Assert
+    //    Assert.AreEqual(expected, actual);
+    //}
 
-    [TestMethod, TestCategory("UnitTest")]
-    public void GetDefaultName_NullArg_Enum_ReturnsExpected()
-    {
-        // Arrange
-        Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
-        string expected = Enum.GetName(measureUnit.GetType(), measureUnit);
-        IBaseMeasurable baseMeasurable = new BaseMeasurableChild(measureUnit);
+    //[TestMethod, TestCategory("UnitTest")]
+    //public void GetDefaultName_NullArg_Enum_ReturnsExpected()
+    //{
+    //    // Arrange
+    //    Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
+    //    string expected = Enum.GetName(measureUnit.GetType(), measureUnit);
+    //    IBaseMeasurable baseMeasurable = new BaseMeasurableChild(measureUnit);
 
-        // Act
-        var actual = baseMeasurable.GetDefaultName(null);
+    //    // Act
+    //    var actual = baseMeasurable.GetDefaultName(null);
 
-        // Assert
-        Assert.AreEqual(expected, actual);
-    }
+    //    // Assert
+    //    Assert.AreEqual(expected, actual);
+    //}
 
-    [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetInvalidEnumMeasureUnitArgArrayList), DynamicDataSourceType.Method)]
-    public void GetDefaultName_InvalidArg_Enum_ThrowsInvalidEnumArgumentException(Enum measureUnit)
-    {
-        // Arrange
-        // Act
-        void attempt() => _ = BaseMeasurable.GetDefaultName(measureUnit);
+    //[TestMethod, TestCategory("UnitTest")]
+    //[DynamicData(nameof(GetInvalidEnumMeasureUnitArgArrayList), DynamicDataSourceType.Method)]
+    //public void GetDefaultName_InvalidArg_Enum_ThrowsInvalidEnumArgumentException(Enum measureUnit)
+    //{
+    //    // Arrange
+    //    // Act
+    //    void attempt() => _ = BaseMeasurable.GetDefaultName(measureUnit);
 
-        // Assert
-        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
-        Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
-    }
+    //    // Assert
+    //    var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+    //    Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
+    //}
 
-    [TestMethod, TestCategory("UnitTest")]
-    public void GetDefaultName_ValidArg_Enum_ReturnsExpeccted()
-    {
-        // Arrange
-        Enum measureUnit = RandomParams.GetRandomMeasureUnit();
-        string expected = Enum.GetName(measureUnit.GetType(), measureUnit);
+    //[TestMethod, TestCategory("UnitTest")]
+    //public void GetDefaultName_ValidArg_Enum_ReturnsExpeccted()
+    //{
+    //    // Arrange
+    //    Enum measureUnit = RandomParams.GetRandomMeasureUnit();
+    //    string expected = Enum.GetName(measureUnit.GetType(), measureUnit);
 
-        // Act
-        var actual = BaseMeasurable.GetDefaultName(measureUnit);
+    //    // Act
+    //    var actual = BaseMeasurable.GetDefaultName(measureUnit);
 
-        // Assert
-        Assert.AreEqual(expected, actual);
-    }
-    #endregion
-    #endregion
+    //    // Assert
+    //    Assert.AreEqual(expected, actual);
+    //}
+    //#endregion
+    //#endregion
 
     #region GetHashCode
     #region GetHashCode()

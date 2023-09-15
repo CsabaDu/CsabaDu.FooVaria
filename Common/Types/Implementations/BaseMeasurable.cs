@@ -38,11 +38,6 @@ public abstract class BaseMeasurable : IBaseMeasurable
 
         return MeasureUnitTypes.GetDefaultMeasureUnit(measureUnitType);
     }
-    
-    public string GetDefaultName(Enum? measureUnit = null)
-    {
-        return MeasureUnitTypes.GetDefaultName(measureUnit ?? GetMeasureUnit());
-    }
 
     public IEnumerable<string> GetDefaultNames(MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
@@ -118,9 +113,6 @@ public abstract class BaseMeasurable : IBaseMeasurable
     #region Abstract methods
     public abstract Enum GetMeasureUnit();
     #endregion
-    #endregion
-
-    #region Protected methods
     #endregion
 
     #region Private methods

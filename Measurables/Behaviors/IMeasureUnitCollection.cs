@@ -3,6 +3,7 @@
 public interface IMeasureUnitCollection
 {
     Enum? GetMeasureUnit(string name);
+    string GetDefaultName(Enum? measureUnit = null);
 
     bool IsValidMeasureUnit(Enum measureUnit, decimal? exchangeRate = null);
     bool TryGetMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, [NotNullWhen(true)] out Enum? measureUnit);

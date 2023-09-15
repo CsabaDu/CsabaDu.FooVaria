@@ -206,6 +206,11 @@ internal sealed class Measurement : Measurable, IMeasurement
         return GetMeasurementFactory().Create(measureUnitTypeCode, exchangeRate, customName);
     }
 
+    public string GetDefaultName(Enum? measureUnit = null)
+    {
+        return MeasureUnitTypes.GetDefaultName(measureUnit ?? GetMeasureUnit());
+    }
+
     public IEnumerable<Enum> GetNotUsedCustomMeasureUnits(MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
         IEnumerable<MeasureUnitTypeCode> customMeasureUnitTypeCodes = getCustomMeasureUnitTypeCodes();
