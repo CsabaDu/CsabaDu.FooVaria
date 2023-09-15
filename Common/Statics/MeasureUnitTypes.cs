@@ -3,25 +3,23 @@
 public static class MeasureUnitTypes
 {
     #region Properties
-    private static HashSet<Type> MeasureUnitTypeSet => new()
+    private static readonly Dictionary<MeasureUnitTypeCode, Type> MeasureUnitTypeCollection = new()
     {
-        typeof(AreaUnit),
-        typeof(Currency),
-        typeof(DistanceUnit),
-        typeof(ExtentUnit),
-        typeof(Pieces),
-        typeof(TimePeriodUnit),
-        typeof(VolumeUnit),
-        typeof(WeightUnit),
+            { MeasureUnitTypeCode.AreaUnit, typeof(AreaUnit) },
+            { MeasureUnitTypeCode.Currency, typeof(Currency) },
+            { MeasureUnitTypeCode.DistanceUnit, typeof(DistanceUnit) },
+            { MeasureUnitTypeCode.ExtentUnit, typeof(ExtentUnit) },
+            { MeasureUnitTypeCode.TimePeriodUnit, typeof(TimePeriodUnit) },
+            { MeasureUnitTypeCode.Pieces, typeof(Pieces) },
+            { MeasureUnitTypeCode.VolumeUnit, typeof(VolumeUnit) },
+            { MeasureUnitTypeCode.WeightUnit, typeof(WeightUnit) },
     };
     #endregion
 
     #region Public methods
     public static Enum GetMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode, int value)
     {
-        ValidateMeasureUnitTypeCode(measureUnitTypeCode);
-
-        Type measureUnitType = measureUnitTypeCode.GetMeasureUnitType();
+        Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode);
 
         return (Enum)Enum.ToObject(measureUnitType, value);
     }
@@ -61,11 +59,7 @@ public static class MeasureUnitTypes
 
     public static IDictionary<MeasureUnitTypeCode, Type> GetMeasureUnitTypeCollection()
     {
-        return MeasureUnitTypeSet.ToDictionary
-            (
-                x => (MeasureUnitTypeCode)Enum.Parse(typeof(MeasureUnitTypeCode), x.Name),
-                x => x
-            );
+        return MeasureUnitTypeCollection;
     }
 
     public static Enum GetDefaultMeasureUnit(Type measureUnitType)
@@ -82,6 +76,7 @@ public static class MeasureUnitTypes
         Type measureUnitType = measureUnit.GetType();
 
         return Enum.GetName(measureUnitType, measureUnit)!;
+    
     }
 
     public static IEnumerable<string> GetDefaultNames(MeasureUnitTypeCode? measureUnitTypeCode = null)
@@ -93,8 +88,7 @@ public static class MeasureUnitTypes
     {
         ValidateMeasureUnitTypeCode(measureUnitTypeCode);
 
-        return measureUnitTypeCode.GetMeasureUnitType();
-        //return MeasureUnitTypeSet.First(x => x.Name == measureUnitTypeCode.GetName());
+        return MeasureUnitTypeCollection[measureUnitTypeCode];
     }
 
     public static MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum measureUnit)
@@ -108,7 +102,7 @@ public static class MeasureUnitTypes
 
     public static IEnumerable<Type> GetMeasureUnitTypes()
     {
-        return MeasureUnitTypeSet;
+        return MeasureUnitTypeCollection.Values;
     }
 
     public static MeasureUnitTypeCode GetValidMeasureUnitTypeCode(Enum measureUnit)
@@ -124,7 +118,7 @@ public static class MeasureUnitTypes
     {
         Type measureUnitType = NullChecked(measureUnit, nameof(measureUnit)).GetType();
 
-        return MeasureUnitTypeSet.Contains(measureUnitType)
+        return GetMeasureUnitTypes().Contains(measureUnitType)
             && Enum.IsDefined(measureUnitType, measureUnit);
     }
 
@@ -146,11 +140,9 @@ public static class MeasureUnitTypes
 
     public static void ValidateMeasureUnitType(Type measureUnitType, MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
-        if (MeasureUnitTypeSet.Contains(NullChecked(measureUnitType, nameof(measureUnitType))))
+        if (GetMeasureUnitTypes().Contains(NullChecked(measureUnitType, nameof(measureUnitType))))
         {
             if (measureUnitTypeCode == null) return;
-
-            ValidateMeasureUnitTypeCode(measureUnitTypeCode.Value);
 
             if (measureUnitType == GetMeasureUnitType(measureUnitTypeCode.Value)) return;
         }

@@ -153,19 +153,7 @@ public static class Extensions
 
     public static Type GetMeasureUnitType(this MeasureUnitTypeCode measureUnitTypeCode)
     {
-        return measureUnitTypeCode switch
-        {
-            MeasureUnitTypeCode.AreaUnit => typeof(AreaUnit),
-            MeasureUnitTypeCode.Currency => typeof(Currency),
-            MeasureUnitTypeCode.DistanceUnit => typeof(DistanceUnit),
-            MeasureUnitTypeCode.ExtentUnit => typeof(ExtentUnit),
-            MeasureUnitTypeCode.TimePeriodUnit => typeof(TimePeriodUnit),
-            MeasureUnitTypeCode.Pieces => typeof(Pieces),
-            MeasureUnitTypeCode.VolumeUnit => typeof(VolumeUnit),
-            MeasureUnitTypeCode.WeightUnit => typeof(WeightUnit),
-
-            _ => throw new InvalidEnumArgumentException(nameof(measureUnitTypeCode), (int)measureUnitTypeCode, measureUnitTypeCode.GetType()),
-        };
+        return MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode);
     }
     #endregion
 }

@@ -85,5 +85,12 @@ public class RandomParams
 
         return (Enum)Enum.ToObject(measureUnitType, count);
     }
+
+    public Enum GetRandomDefaultMeasureUnit()
+    {
+        MeasureUnitTypeCode measurementUnitTypeCode = GetRandomMeasureUnitTypeCode();
+
+        return MeasureUnitTypes.GetDefaultMeasureUnit(measurementUnitTypeCode);
+    }
     #endregion
 }
