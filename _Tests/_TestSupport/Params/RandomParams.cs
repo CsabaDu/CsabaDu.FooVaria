@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Behaviors;
-
-namespace CsabaDu.FooVaria.Tests.TestSupport.Params
+﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Params
 {
     public class RandomParams
     {

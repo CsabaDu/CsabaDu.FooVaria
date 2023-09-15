@@ -208,12 +208,12 @@ internal class DynamicDataSources
     internal IEnumerable<object[]> GetBaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgsArrayList()
     {
         MeasureUnitTypeCode? measureUnitTypeCode = null;
-        Enum expected = getDefaultMeasureUnit(RandomParams.GetRandomMeasureUnitTypeCode());
+        Enum expected = MeasureUnitTypes.GetDefaultMeasureUnit(RandomParams.GetRandomMeasureUnitTypeCode());
         IBaseMeasurable baseMeasurable = new BaseMeasurableChild(expected);
         yield return toObjectArray();
 
         measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode(MeasureUnitTypes.GetMeasureUnitTypeCode(expected));
-        expected = getDefaultMeasureUnit(measureUnitTypeCode.Value);
+        expected = MeasureUnitTypes.GetDefaultMeasureUnit(measureUnitTypeCode.Value);
         yield return toObjectArray();
 
         #region Local methods
@@ -226,12 +226,6 @@ internal class DynamicDataSources
                 BaseMeasurable = baseMeasurable,
             }
             .ToObjectArray();
-        }
-
-        Enum getDefaultMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode)
-        {
-            Type measureUnitType = MeasureUnitTypes.GetMeasureUnitTypes().First(x => x.Name == measureUnitTypeCode.GetName());
-            return (Enum)Enum.ToObject(measureUnitType, default(int));
         }
         #endregion
     }

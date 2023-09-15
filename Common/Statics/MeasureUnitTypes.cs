@@ -17,6 +17,20 @@ public static class MeasureUnitTypes
     #endregion
 
     #region Public methods
+    public static Enum GetMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode, int value)
+    {
+        ValidateMeasureUnitTypeCode(measureUnitTypeCode);
+
+        Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode);
+
+        return (Enum)Enum.ToObject(measureUnitType, value);
+    }
+
+    public static Enum GetDefaultMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        return GetMeasureUnit(measureUnitTypeCode, default);
+    }
+
     public static IEnumerable<Enum> GetAllMeasureUnits(MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
         if (measureUnitTypeCode == null)
