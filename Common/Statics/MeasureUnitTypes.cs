@@ -26,7 +26,7 @@ public static class MeasureUnitTypes
 
     public static Enum GetDefaultMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode)
     {
-        return GetMeasureUnit(measureUnitTypeCode, default);
+        return GetAllMeasureUnits(measureUnitTypeCode).OrderBy(x => x).First();
     }
 
     public static IEnumerable<Enum> GetAllMeasureUnits(MeasureUnitTypeCode? measureUnitTypeCode = null)
@@ -43,6 +43,8 @@ public static class MeasureUnitTypes
 
             return allMeasureUnits;
         }
+
+        ValidateMeasureUnitTypeCode(measureUnitTypeCode.Value);
 
         return getAllMeasureUnits(GetMeasureUnitType(measureUnitTypeCode!.Value));
 
@@ -75,7 +77,7 @@ public static class MeasureUnitTypes
 
         Type measureUnitType = measureUnit.GetType();
 
-        return Enum.GetName(measureUnitType, measureUnit)!;
+        return measureUnit.GetType().Name + "." + Enum.GetName(measureUnitType, measureUnit)!;
     
     }
 
@@ -100,6 +102,11 @@ public static class MeasureUnitTypes
         return GetMeasureUnitTypeCollection().First(x => x.Value == measureUnitType).Key;
     }
 
+    public static IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
+    {
+        return MeasureUnitTypeCollection.Keys;
+    }
+
     public static IEnumerable<Type> GetMeasureUnitTypes()
     {
         return MeasureUnitTypeCollection.Values;
@@ -111,7 +118,7 @@ public static class MeasureUnitTypes
 
         string measureUnitTypeName = measureUnit.GetType().Name;
 
-        return (MeasureUnitTypeCode)Enum.Parse(typeof(MeasureUnitTypeCode), measureUnitTypeName);
+        return GetMeasureUnitTypeCodes().First(x => Enum.GetName(x) == measureUnitTypeName);
     }
 
     public static bool IsDefinedMeasureUnit(Enum measureUnit)

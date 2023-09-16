@@ -3,7 +3,7 @@
 public static class SampleParams
 {
     public static readonly int MeasureUnitTypeCodeCount = Enum.GetNames(typeof(MeasureUnitTypeCode)).Length;
-    public static readonly MeasureUnitTypeCode InvalidMeasureUnitTypeCode = (MeasureUnitTypeCode)MeasureUnitTypeCodeCount;
+    public static readonly MeasureUnitTypeCode NotDefinedMeasureUnitTypeCode = (MeasureUnitTypeCode)MeasureUnitTypeCodeCount;
 
     public const LimitMode DefaultLimitMode = default;
 }

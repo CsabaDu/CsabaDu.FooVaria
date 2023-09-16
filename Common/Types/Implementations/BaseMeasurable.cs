@@ -41,27 +41,7 @@ public abstract class BaseMeasurable : IBaseMeasurable
 
     public IEnumerable<string> GetDefaultNames(MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
-        if (measureUnitTypeCode != null) return getDefaultNames(measureUnitTypeCode.Value);
-
-        IEnumerable<MeasureUnitTypeCode> measureUnitTypeCodes = GetMeasureUnitTypeCodes();
-        IEnumerable<string> defaultNames = getDefaultNames(measureUnitTypeCodes.First());
-
-        for (int i = 1; i < measureUnitTypeCodes.Count(); i++)
-        {
-            IEnumerable<string> next = getDefaultNames(measureUnitTypeCodes.ElementAt(i));
-            defaultNames = defaultNames.Union(next);
-        }
-
-        return defaultNames;
-
-        #region Local methods
-        IEnumerable<string> getDefaultNames(MeasureUnitTypeCode measureUnitTypeCode)
-        {
-            Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode);
-
-            return Enum.GetNames(measureUnitType);
-        }
-        #endregion
+        return MeasureUnitTypes.GetDefaultNames(measureUnitTypeCode);
     }
 
     public override int GetHashCode()
@@ -76,7 +56,8 @@ public abstract class BaseMeasurable : IBaseMeasurable
 
     public bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, Enum? measureUnit = null)
     {
-        return measureUnitTypeCode == GetMeasureUnitTypeCode(measureUnit);
+        return Enum.IsDefined(measureUnitTypeCode)
+            && measureUnitTypeCode == GetMeasureUnitTypeCode(measureUnit);
     }
 
     public bool IsDefinedMeasureUnit(Enum measureUnit)
@@ -88,8 +69,6 @@ public abstract class BaseMeasurable : IBaseMeasurable
     public virtual MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum? measureUnit = null)
     {
         if (measureUnit == null) return MeasureUnitTypeCode;
-
-        ValidateMeasureUnit(measureUnit);
 
         return MeasureUnitTypes.GetMeasureUnitTypeCode(measureUnit);
     }

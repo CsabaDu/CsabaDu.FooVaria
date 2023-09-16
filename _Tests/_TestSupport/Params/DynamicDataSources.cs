@@ -86,7 +86,7 @@ internal class DynamicDataSources
     }
     #endregion
 
-    #region nullableMeasureUnitTypeCode
+    #region NullableMeasureUnitTypeCode
     protected class NullableMeasureUnitTypeCode
     {
         internal MeasureUnitTypeCode? MeasureUnitTypeCode { get; init; }
@@ -156,7 +156,7 @@ internal class DynamicDataSources
         Enum measureUnit = SampleParams.DefaultLimitMode;
         yield return toObjectArray();
 
-        measureUnit = RandomParams.GetRandomInvalidMeasureUnit();
+        measureUnit = RandomParams.GetRandomNotDefinedMeasureUnit();
         yield return toObjectArray();
 
         #region Local methods
@@ -169,6 +169,48 @@ internal class DynamicDataSources
             .ToObjectArray();
         }
         #endregion
+    }
+
+    internal IEnumerable<object[]> GetNullableEnumMeasureUnitArgArrayList()
+    {
+        Enum measureUnit = null;
+        yield return toObjectArray();
+
+        measureUnit = RandomParams.GetRandomMeasureUnit();
+        yield return toObjectArray();
+
+        #region Local methods
+        object[] toObjectArray()
+        {
+            return new EnumMeasureUnit
+            {
+                MeasureUnit = measureUnit,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+    }
+
+
+    internal IEnumerable<object[]> GetNullableMeasureUnitTypeCodeArgArrayList()
+    {
+        MeasureUnitTypeCode? measureUnitTypeCode = null;
+        yield return toObjectArray();
+
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        yield return toObjectArray();
+
+        #region Local methods
+        object[] toObjectArray()
+        {
+            return new NullableMeasureUnitTypeCode
+            {
+                MeasureUnitTypeCode = measureUnitTypeCode,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+
     }
     #endregion
 

@@ -17,4 +17,8 @@
     </AssemblyAttribute>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Variants\Common\" />
+  </ItemGroup>
+
 </Project>

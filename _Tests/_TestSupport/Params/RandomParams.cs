@@ -77,7 +77,7 @@ public class RandomParams
         #endregion
     }
 
-    public Enum GetRandomInvalidMeasureUnit()
+    public Enum GetRandomNotDefinedMeasureUnit()
     {
         MeasureUnitTypeCode measureUnitTypeCode = GetRandomMeasureUnitTypeCode();
         int count = MeasureUnitTypes.GetDefaultNames(measureUnitTypeCode).Count();
@@ -91,6 +91,13 @@ public class RandomParams
         MeasureUnitTypeCode measurementUnitTypeCode = GetRandomMeasureUnitTypeCode();
 
         return MeasureUnitTypes.GetDefaultMeasureUnit(measurementUnitTypeCode);
+    }
+
+    public Type GetRandomMeasureUnitType(out MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        measureUnitTypeCode = GetRandomMeasureUnitTypeCode();
+
+        return MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode);
     }
     #endregion
 }

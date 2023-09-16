@@ -176,8 +176,10 @@ internal sealed class Measurement : Measurable, IMeasurement
 
         foreach (Enum measureUnit in GetValidMeasureUnits(measureUnitTypeCode))
         {
+            string measureUnitTypeName = measureUnit.GetType().Name;
             string defaultName = GetDefaultName(measureUnit);
-            measureUnitCollection.Add(defaultName, measureUnit);
+            string measureUnitName = measureUnitTypeName + "." + defaultName;
+            measureUnitCollection.Add(measureUnitName, measureUnit);
         }
 
         return measureUnitCollection;
@@ -206,7 +208,7 @@ internal sealed class Measurement : Measurable, IMeasurement
         return GetMeasurementFactory().Create(measureUnitTypeCode, exchangeRate, customName);
     }
 
-    public string GetDefaultName(Enum? measureUnit = null)
+    public string GetDefaultName(Enum? measureUnit = null) // TODO
     {
         return MeasureUnitTypes.GetDefaultName(measureUnit ?? GetMeasureUnit());
     }
