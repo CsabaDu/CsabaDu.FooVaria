@@ -141,7 +141,7 @@ public class BaseMeasurableTests
     #region Equals
     #region Equals(object?)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetBaseMeasurableEqualsObjectArgsArrayList), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(BaseMeasurableEqualsObjectArgsArrayList), DynamicDataSourceType.Method)]
     public void Equals_Arg_object_ReturnsExpected(bool expected, object obj, MeasureUnitTypeCode measureUnitTypeCode)
     {
         // Arrange
@@ -410,23 +410,51 @@ public class BaseMeasurableTests
     #endregion
     #endregion
 
+    #region IsDefinedMeasureUnit
+    #region IsDefinedMeasureUnit(Enum)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(IsDefinedMeasureUnitArgsArrayList), DynamicDataSourceType.Method)]
+    public void IsDefinedMeasureUnit_Arg_Enum_ReturnsExpected(bool expected, Enum measureUnit)
+    {
+        // Arrange
+        // Act
+        var actual = BaseMeasurable.IsDefinedMeasureUnit(measureUnit);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region ValidateMeasureUnit
+    #region ValidateMeasureUnit(Enum)
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateMeasureUnit_NullArg_Enum_ThrowsArgumentNullException()
+    {
+        // Arrange
+        Enum measureUnit = null;
+
+        // Act
+        void attempt() => BaseMeasurable.ValidateMeasureUnit(measureUnit);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
+        Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
+    }
+
+    #endregion
+
+    #region ValidateMeasureUnit(Enum, MeasureUnitTypeCode?)
+
+    #endregion
+    #endregion
     #endregion
 
     #region Private methods
     #region ObjectArrayLists
-    private static IEnumerable<object[]> GetNullableMeasureUnitTypeCodeArgArrayList()
+    private static IEnumerable<object[]> BaseMeasurableEqualsObjectArgsArrayList()
     {
-        return DynamicDataSources.GetNullableMeasureUnitTypeCodeArgArrayList();
-    }
-
-    private static IEnumerable<object[]> GetNullableEnumMeasureUnitArgArrayList()
-    {
-        return DynamicDataSources.GetNullableEnumMeasureUnitArgArrayList();
-    }
-
-    private static IEnumerable<object[]> GetBaseMeasurableEqualsObjectArgsArrayList()
-    {
-        return DynamicDataSources.GetBaseMeasurableEqualsObjectArgsArrayList();
+        return DynamicDataSources.BaseMeasurableEqualsObjectArgsArrayList();
     }
 
     private static IEnumerable<object[]> GetBaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgsArrayList()
@@ -435,9 +463,24 @@ public class BaseMeasurableTests
 
     }
 
+    private static IEnumerable<object[]> GetInvalidEnumMeasureUnitArgArrayList()
+    {
+        return DynamicDataSources.GetInvalidEnumMeasureUnitArgArrayList();
+    }
+
     private static IEnumerable<object[]> HasMeasureUnitTypeCodeArgsArrayList()
     {
         return DynamicDataSources.HasMeasureUnitTypeCodeArgsArrayList();
+    }
+
+    private static IEnumerable<object[]> GetNullableEnumMeasureUnitArgArrayList()
+    {
+        return DynamicDataSources.GetNullableEnumMeasureUnitArgArrayList();
+    }
+
+    private static IEnumerable<object[]> GetNullableMeasureUnitTypeCodeArgArrayList()
+    {
+        return DynamicDataSources.GetNullableMeasureUnitTypeCodeArgArrayList();
     }
 
     private static IEnumerable<object[]> HasMeasureUnitTypeCodeMeasureUnitArgsArrayList()
@@ -445,9 +488,9 @@ public class BaseMeasurableTests
         return DynamicDataSources.HasMeasureUnitTypeCodeMeasureUnitArgsArrayList();
     }
 
-    private static IEnumerable<object[]> GetInvalidEnumMeasureUnitArgArrayList()
+    private static IEnumerable<object[]> IsDefinedMeasureUnitArgsArrayList()
     {
-        return DynamicDataSources.GetInvalidEnumMeasureUnitArgArrayList();
+        return DynamicDataSources.IsDefinedMeasureUnitArgsArrayList();
     }
     #endregion
     #endregion

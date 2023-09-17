@@ -1,4 +1,5 @@
-﻿using CsabaDu.FooVaria.Measurables.Factories;
+﻿using CsabaDu.FooVaria.Common.Enums;
+using CsabaDu.FooVaria.Measurables.Factories;
 using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Types;
 
 namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
@@ -24,9 +25,36 @@ internal class DynamicDataSources
         }
     }
 
-    protected class HasMeasureUnitTypeCodeArgs : EqualsArg
+    protected class EqualMeasureUnitEnumsArgs : EqualsArg
+    {
+        internal Enum MeasureUnit { get; init; }
+
+        public override object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                IsTrue,
+                MeasureUnit,
+            };
+        }
+    }
+
+    protected class EqualsMeasureUnitTypeCodeArgs : EqualsArg
     {
         internal MeasureUnitTypeCode MeasureUnitTypeCode { get; init; }
+
+        public override object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                IsTrue,
+                MeasureUnitTypeCode,
+            };
+        }
+    }
+
+    protected class HasMeasureUnitTypeCodeArgs : EqualsMeasureUnitTypeCodeArgs
+    {
         internal IBaseMeasurable BaseMeasurable { get; init; }
 
         public override object[] ToObjectArray()
@@ -219,7 +247,6 @@ internal class DynamicDataSources
         #endregion
     }
 
-
     internal IEnumerable<object[]> GetNullableMeasureUnitTypeCodeArgArrayList()
     {
         MeasureUnitTypeCode? measureUnitTypeCode = null;
@@ -238,12 +265,43 @@ internal class DynamicDataSources
             .ToObjectArray();
         }
         #endregion
+    }
 
+    internal IEnumerable<object[]> IsDefinedMeasureUnitArgsArrayList()
+    {
+        bool expected = false;
+        Enum measureUnit = null;
+        yield return toObjectArray();
+
+        measureUnit = SampleParams.DefaultLimitMode;
+        yield return toObjectArray();
+
+        measureUnit = RandomParams.GetRandomMeasureUnitTypeCode();
+        yield return toObjectArray();
+
+        measureUnit = RandomParams.GetRandomNotDefinedMeasureUnit();
+        yield return toObjectArray();
+
+        expected = true;
+        measureUnit = RandomParams.GetRandomMeasureUnit();
+        yield return toObjectArray();
+
+        #region Local methods
+        object[] toObjectArray()
+        {
+            return new EqualMeasureUnitEnumsArgs
+            {
+                IsTrue = expected,
+                MeasureUnit = measureUnit,
+            }
+            .ToObjectArray();
+        }
+        #endregion
     }
     #endregion
 
     #region BaseMeasurable
-    internal IEnumerable<object[]> GetBaseMeasurableEqualsObjectArgsArrayList()
+    internal IEnumerable<object[]> BaseMeasurableEqualsObjectArgsArrayList()
     {
         bool expected = false;
         object obj = null;
