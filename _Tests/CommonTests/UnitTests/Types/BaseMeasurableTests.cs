@@ -442,9 +442,72 @@ public class BaseMeasurableTests
         Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
     }
 
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetInvalidEnumMeasureUnitArgArrayList), DynamicDataSourceType.Method)]
+    public void ValidateMeasureUnit_InvalidArg_Enum_ThrowsArgumentNullException(Enum measureUnit)
+    {
+        // Arrange
+        // Act
+        void attempt() => BaseMeasurable.ValidateMeasureUnit(measureUnit);
+
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateMeasureUnit_ValidArg_Enum_Returns()
+    {
+        // Arrange
+        Enum measureUnit = RandomParams.GetRandomMeasureUnit();
+
+        // Act
+        bool returns()
+        {
+            try
+            {
+                BaseMeasurable.ValidateMeasureUnit(measureUnit);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        // Assert
+        Assert.IsTrue(returns());
+    }
     #endregion
 
     #region ValidateMeasureUnit(Enum, MeasureUnitTypeCode?)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(ValidateMeasureUnitNullArgsArrayList), DynamicDataSourceType.Method)]
+    public void ValidateMeasureUnit_NullArg_Enum_Arg_MeasureUnitTypeCode_ThrowsArgumentNullException(MeasureUnitTypeCode? measureUnitTypeCode, Enum measureUnit)
+    {
+        // Arrange
+        // Act
+        void attempt() => BaseMeasurable.ValidateMeasureUnit(measureUnit, measureUnitTypeCode);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
+        Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateMeasureUnit_InvalidArg_Enum_Arg_MeasureUnitTypeCode_ThrowsArgumentNullException()
+    {
+        //// Arrange
+        //Enum measureUnit = null;
+        //MeasureUnitTypeCode? measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+
+        //// Act
+        //void attempt() => BaseMeasurable.ValidateMeasureUnit(measureUnit, measureUnitTypeCode);
+
+        //// Assert
+        //var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
+        //Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
+    }
 
     #endregion
     #endregion
@@ -492,6 +555,12 @@ public class BaseMeasurableTests
     {
         return DynamicDataSources.IsDefinedMeasureUnitArgsArrayList();
     }
+
+    private static IEnumerable<object[]> ValidateMeasureUnitNullArgsArrayList()
+    {
+        return DynamicDataSources.ValidateMeasureUnitNullArgsArrayList();
+    }
+
     #endregion
     #endregion
 }

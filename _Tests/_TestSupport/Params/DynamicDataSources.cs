@@ -267,6 +267,31 @@ internal class DynamicDataSources
         #endregion
     }
 
+    internal IEnumerable<object[]> ValidateMeasureUnitNullArgsArrayList()
+    {
+        MeasureUnitTypeCode? measureUnitTypeCode = null;
+        Enum measureUnit = null;
+        yield return toObjectArray();
+
+        measureUnitTypeCode = SampleParams.NotDefinedMeasureUnitTypeCode;
+        yield return toObjectArray();
+
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        yield return toObjectArray();
+
+        #region Local methods
+        object[] toObjectArray()
+        {
+            return new NullableMeasureUnitTypeCodeEnum
+            {
+                MeasureUnitTypeCode = measureUnitTypeCode,
+                MeasureUnit = measureUnit,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+    }
+
     internal IEnumerable<object[]> IsDefinedMeasureUnitArgsArrayList()
     {
         bool expected = false;
