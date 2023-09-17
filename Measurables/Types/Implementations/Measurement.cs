@@ -305,7 +305,7 @@ internal sealed class Measurement : Measurable, IMeasurement
 
         MeasureUnitTypeCode measureUnitTypeCode = GetMeasureUnitTypeCode(measureUnit);
 
-        return IsValidMeasureUnit(measureUnit) && HasMeasureUnitTypeCode(measureUnitTypeCode, measureUnit);
+        return IsCustomMeasureUnitTypeCode(measureUnitTypeCode);
     }
 
     public bool IsCustomMeasureUnitTypeCode(MeasureUnitTypeCode? measureUnitTypeCode = null)

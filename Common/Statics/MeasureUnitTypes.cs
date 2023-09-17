@@ -5,14 +5,14 @@ public static class MeasureUnitTypes
     #region Properties
     private static readonly Dictionary<MeasureUnitTypeCode, Type> MeasureUnitTypeCollection = new()
     {
-            { MeasureUnitTypeCode.AreaUnit, typeof(AreaUnit) },
-            { MeasureUnitTypeCode.Currency, typeof(Currency) },
-            { MeasureUnitTypeCode.DistanceUnit, typeof(DistanceUnit) },
-            { MeasureUnitTypeCode.ExtentUnit, typeof(ExtentUnit) },
-            { MeasureUnitTypeCode.TimePeriodUnit, typeof(TimePeriodUnit) },
-            { MeasureUnitTypeCode.Pieces, typeof(Pieces) },
-            { MeasureUnitTypeCode.VolumeUnit, typeof(VolumeUnit) },
-            { MeasureUnitTypeCode.WeightUnit, typeof(WeightUnit) },
+        { MeasureUnitTypeCode.AreaUnit, typeof(AreaUnit) },
+        { MeasureUnitTypeCode.Currency, typeof(Currency) },
+        { MeasureUnitTypeCode.DistanceUnit, typeof(DistanceUnit) },
+        { MeasureUnitTypeCode.ExtentUnit, typeof(ExtentUnit) },
+        { MeasureUnitTypeCode.TimePeriodUnit, typeof(TimePeriodUnit) },
+        { MeasureUnitTypeCode.Pieces, typeof(Pieces) },
+        { MeasureUnitTypeCode.VolumeUnit, typeof(VolumeUnit) },
+        { MeasureUnitTypeCode.WeightUnit, typeof(WeightUnit) },
     };
     #endregion
 
@@ -123,7 +123,9 @@ public static class MeasureUnitTypes
 
     public static bool IsDefinedMeasureUnit(Enum measureUnit)
     {
-        Type measureUnitType = NullChecked(measureUnit, nameof(measureUnit)).GetType();
+        if (measureUnit == null) return false;
+
+        Type measureUnitType = measureUnit.GetType();
 
         return GetMeasureUnitTypes().Contains(measureUnitType)
             && Enum.IsDefined(measureUnitType, measureUnit);
@@ -131,7 +133,7 @@ public static class MeasureUnitTypes
 
     public static void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
-        if (IsDefinedMeasureUnit(measureUnit))
+        if (IsDefinedMeasureUnit(NullChecked(measureUnit, nameof(measureUnit))))
         {
             if (measureUnitTypeCode == null) return;
 

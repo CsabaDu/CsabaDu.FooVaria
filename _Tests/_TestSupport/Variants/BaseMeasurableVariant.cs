@@ -64,5 +64,11 @@ public class BaseMeasurableVariant
 
         return (MeasureUnitTypeCode)Enum.Parse(typeof(MeasureUnitTypeCode), measureUnitTypeName);
     }
+
+    internal IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
+    {
+        return Enum.GetValues<MeasureUnitTypeCode>();
+    }
+
     #endregion
 }
