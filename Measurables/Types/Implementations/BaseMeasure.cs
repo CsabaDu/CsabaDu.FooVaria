@@ -105,7 +105,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     public IBaseMeasure GetDefault(MeasureUnitTypeCode measureUnitTypeCode)
     {
-        base.ValidateMeasureUnitTypeCode(measureUnitTypeCode);
+        (this as IBaseMeasurable).ValidateMeasureUnitTypeCode(measureUnitTypeCode);
 
         Enum measureUnit = GetDefaultMeasureUnit(measureUnitTypeCode);
         ValueType quantity = GetDefaultRateComponentQuantity();
@@ -274,11 +274,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     public override sealed void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode? measureUnitTypeCode = null)
     {
         Measurement.ValidateMeasureUnit(measureUnit, measureUnitTypeCode);
-    }
-
-    public override sealed void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        Measurement.ValidateMeasureUnitTypeCode(measureUnitTypeCode);
     }
 
     public void ValidateQuantity(ValueType? quantity, TypeCode? quantityTypeCode = null)

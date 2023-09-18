@@ -23,6 +23,13 @@ public class BaseMeasurableVariant
         return MeasureUnitTypes.GetMeasureUnit(measureUnitTypeCode, default);
     }
 
+    public Enum GetDefaultMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode)!;
+
+        return MeasureUnitTypes.GetDefaultMeasureUnit(measureUnitType);
+    }
+
     internal IEnumerable<string> GetDefaultNames(MeasureUnitTypeCode? measureUnitTypeCode)
     {
         if (measureUnitTypeCode != null) return getDefaultNames(measureUnitTypeCode.Value);

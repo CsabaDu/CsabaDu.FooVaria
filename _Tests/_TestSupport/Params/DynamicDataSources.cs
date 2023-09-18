@@ -273,11 +273,64 @@ internal class DynamicDataSources
         Enum measureUnit = null;
         yield return toObjectArray();
 
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        yield return toObjectArray();
+
         measureUnitTypeCode = SampleParams.NotDefinedMeasureUnitTypeCode;
+        yield return toObjectArray();
+
+        #region Local methods
+        object[] toObjectArray()
+        {
+            return new NullableMeasureUnitTypeCodeEnum
+            {
+                MeasureUnitTypeCode = measureUnitTypeCode,
+                MeasureUnit = measureUnit,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> ValidateMeasureUnitInvalidEnumArgArrayList()
+    {
+        MeasureUnitTypeCode? measureUnitTypeCode = null;
+        Enum measureUnit = SampleParams.DefaultLimitMode;
+        yield return toObjectArray();
+
+        measureUnit = RandomParams.GetRandomNotDefinedMeasureUnit();
         yield return toObjectArray();
 
         measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
         yield return toObjectArray();
+
+        measureUnit = RandomParams.GetRandomMeasureUnit(RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
+        yield return toObjectArray();
+
+        #region Local methods
+        object[] toObjectArray()
+        {
+            return new NullableMeasureUnitTypeCodeEnum
+            {
+                MeasureUnitTypeCode = measureUnitTypeCode,
+                MeasureUnit = measureUnit,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> ValidateMeasureUnitInvalidMeasureUnitTypeCodeArgArrayList()
+    {
+        Enum measureUnit = RandomParams.GetRandomMeasureUnit();
+        MeasureUnitTypeCode? measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        yield return toObjectArray();
+
+        //measureUnitTypeCode = null;
+        //yield return toObjectArray();
+
+        //measureUnit = RandomParams.GetRandomNotDefinedMeasureUnit();
+        //yield return toObjectArray();
 
         #region Local methods
         object[] toObjectArray()

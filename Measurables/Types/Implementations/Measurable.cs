@@ -66,26 +66,16 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
         return quantityTypeCode ?? throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode!.Value);
     }
 
-    public override MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum? measureUnit = null)
-    {
-        if (measureUnit == null) return MeasureUnitTypeCode;
-
-        return MeasureUnitTypes.GetValidMeasureUnitTypeCode(measureUnit);
-    }
-
     public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
     {
-        return Enum.GetValues<MeasureUnitTypeCode>();
+        return base.GetMeasureUnitTypeCodes();
     }
 
-    public override void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode? measureUnitTypeCode = null)
+    public override sealed void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
     {
-        MeasureUnitTypes.ValidateMeasureUnit(measureUnit, measureUnitTypeCode);
-    }
+        if (measureUnitTypeCode == MeasureUnitTypeCode) return;
 
-    public override void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        MeasureUnitTypes.ValidateMeasureUnitTypeCode(measureUnitTypeCode);
+        throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode);
     }
 
     #region Abstract methods

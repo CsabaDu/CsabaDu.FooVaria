@@ -71,6 +71,13 @@ public static class MeasureUnitTypes
         return (Enum)Enum.ToObject(measureUnitType, default(int));
     }
 
+    public static Enum GetDefaultMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode);
+
+        return GetDefaultMeasureUnit(measureUnitType);
+    }
+
     public static string GetDefaultName(Enum measureUnit)
     {
         ValidateMeasureUnit(measureUnit);
@@ -93,7 +100,7 @@ public static class MeasureUnitTypes
         return MeasureUnitTypeCollection[measureUnitTypeCode];
     }
 
-    public static MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum measureUnit)
+    public static MeasureUnitTypeCode GetValidMeasureUnitTypeCode(Enum measureUnit)
     {
         ValidateMeasureUnit(measureUnit);
 
@@ -112,11 +119,9 @@ public static class MeasureUnitTypes
         return MeasureUnitTypeCollection.Values;
     }
 
-    public static MeasureUnitTypeCode GetValidMeasureUnitTypeCode(Enum measureUnit)
+    public static MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum measureUnit)
     {
-        ValidateMeasureUnit(measureUnit);
-
-        string measureUnitTypeName = measureUnit.GetType().Name;
+        string measureUnitTypeName = NullChecked(measureUnit, nameof(measureUnit)).GetType().Name;
 
         return GetMeasureUnitTypeCodes().First(x => Enum.GetName(x) == measureUnitTypeName);
     }
@@ -137,7 +142,10 @@ public static class MeasureUnitTypes
         {
             if (measureUnitTypeCode == null) return;
 
-            measureUnitTypeCode ??= GetValidMeasureUnitTypeCode(measureUnit);
+            measureUnitTypeCode ??= GetMeasureUnitTypeCode(measureUnit);
+
+            ValidateMeasureUnitTypeCode(measureUnitTypeCode.Value);
+
             string measureUnitTypeCodeName = Enum.GetName(typeof(MeasureUnitTypeCode), measureUnitTypeCode)!;
             string measureUnitTypeName = measureUnit.GetType().Name;
 

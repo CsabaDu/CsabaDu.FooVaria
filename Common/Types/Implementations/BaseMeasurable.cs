@@ -7,11 +7,14 @@ public abstract class BaseMeasurable : IBaseMeasurable
     #region Constructors
     protected BaseMeasurable(MeasureUnitTypeCode measureUnitTypeCode)
     {
-        MeasureUnitTypeCode = GetValidMeasureUnitTypeCode(measureUnitTypeCode);
+        ValidateMeasureUnitTypeCode(measureUnitTypeCode);
+
+        MeasureUnitTypeCode = measureUnitTypeCode;
     }
 
     protected BaseMeasurable(Enum measureUnit)
     {
+
         MeasureUnitTypeCode = MeasureUnitTypes.GetValidMeasureUnitTypeCode(measureUnit);
     }
 
@@ -54,6 +57,13 @@ public abstract class BaseMeasurable : IBaseMeasurable
         return MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode ?? MeasureUnitTypeCode);
     }
 
+    public MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum? measureUnit = null)
+    {
+        if (measureUnit == null) return MeasureUnitTypeCode;
+
+        return MeasureUnitTypes.GetValidMeasureUnitTypeCode(measureUnit);
+    }
+
     public bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, Enum? measureUnit = null)
     {
         if (measureUnit == null) return hasMeasureUnitTypeCode();
@@ -74,13 +84,6 @@ public abstract class BaseMeasurable : IBaseMeasurable
     }
 
     #region Virtual methods
-    public virtual MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum? measureUnit = null)
-    {
-        if (measureUnit == null) return MeasureUnitTypeCode;
-
-        return MeasureUnitTypes.GetMeasureUnitTypeCode(measureUnit);
-    }
-
     public virtual IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
     {
         return MeasureUnitTypes.GetMeasureUnitTypeCodes();
@@ -100,14 +103,5 @@ public abstract class BaseMeasurable : IBaseMeasurable
     #region Abstract methods
     public abstract Enum GetMeasureUnit();
     #endregion
-    #endregion
-
-    #region Private methods
-    private MeasureUnitTypeCode GetValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        ValidateMeasureUnitTypeCode(measureUnitTypeCode);
-
-        return measureUnitTypeCode;
-    }
     #endregion
 }

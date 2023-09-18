@@ -489,13 +489,6 @@ internal sealed class Measurement : Measurable, IMeasurement
 
         throw InvalidMeasureUnitEnumArgumentException(measureUnit);
     }
-
-    public override void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        if (measureUnitTypeCode == MeasureUnitTypeCode) return;
-
-        throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode);
-    }
     #endregion
 
     #region Private methods
