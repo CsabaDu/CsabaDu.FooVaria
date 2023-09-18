@@ -20,10 +20,10 @@ public class BaseMeasurableVariant
     {
         measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
 
-        return MeasureUnitTypes.GetMeasureUnit(measureUnitTypeCode, default);
+        return GetDefaultMeasureUnit(measureUnitTypeCode);
     }
 
-    public Enum GetDefaultMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode)
+    internal Enum GetDefaultMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode)
     {
         Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode)!;
 

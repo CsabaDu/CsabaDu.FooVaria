@@ -71,13 +71,6 @@ public static class MeasureUnitTypes
         return (Enum)Enum.ToObject(measureUnitType, default(int));
     }
 
-    public static Enum GetDefaultMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode);
-
-        return GetDefaultMeasureUnit(measureUnitType);
-    }
-
     public static string GetDefaultName(Enum measureUnit)
     {
         ValidateMeasureUnit(measureUnit);
