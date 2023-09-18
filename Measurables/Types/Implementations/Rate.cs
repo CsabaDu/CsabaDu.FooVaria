@@ -128,6 +128,10 @@ internal abstract class Rate : Measurable, IRate
         return exchanged != null;
     }
 
+    public override sealed void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode? measureUnitTypeCode = null)
+    {
+        Denominator.ValidateMeasureUnit(measureUnit, measureUnitTypeCode);
+    }
     #region Abstract methods
     public abstract IRate GetRate(IMeasure numerator, string customName, decimal? quantity = null, ILimit? limit = null);
     public abstract IRate GetRate(IMeasure numerator, Enum measureUnit, decimal? quantity = null, ILimit? limit = null);

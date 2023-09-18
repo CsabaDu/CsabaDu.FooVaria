@@ -1,5 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Enums;
-using CsabaDu.FooVaria.Measurables.Factories;
+﻿using CsabaDu.FooVaria.Measurables.Factories;
 using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Types;
 
 namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
@@ -320,17 +319,14 @@ internal class DynamicDataSources
         #endregion
     }
 
-    internal IEnumerable<object[]> ValidateMeasureUnitInvalidMeasureUnitTypeCodeArgArrayList()
+    internal IEnumerable<object[]> ValidateMeasureUnitValidMeasureUnitTypeCodeArgArrayList()
     {
-        Enum measureUnit = RandomParams.GetRandomMeasureUnit();
         MeasureUnitTypeCode? measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        Enum measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitTypeCode);
         yield return toObjectArray();
 
-        //measureUnitTypeCode = null;
-        //yield return toObjectArray();
-
-        //measureUnit = RandomParams.GetRandomNotDefinedMeasureUnit();
-        //yield return toObjectArray();
+        measureUnitTypeCode = null;
+        yield return toObjectArray();
 
         #region Local methods
         object[] toObjectArray()

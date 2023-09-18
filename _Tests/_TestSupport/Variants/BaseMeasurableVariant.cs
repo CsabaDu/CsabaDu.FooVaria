@@ -46,7 +46,7 @@ public class BaseMeasurableVariant
         return defaultNames;
 
         #region Local methods
-        IEnumerable<string> getDefaultNames(MeasureUnitTypeCode measureUnitTypeCode)
+        static IEnumerable<string> getDefaultNames(MeasureUnitTypeCode measureUnitTypeCode)
         {
             Type measureUnitType = MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode);
 
