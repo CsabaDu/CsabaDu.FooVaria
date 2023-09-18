@@ -271,11 +271,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return exchanged != null;
     }
 
-    public override sealed void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode? measureUnitTypeCode = null)
-    {
-        Measurement.ValidateMeasureUnit(measureUnit, measureUnitTypeCode);
-    }
-
     public void ValidateQuantity(ValueType? quantity, TypeCode? quantityTypeCode = null)
     {
         _ = NullChecked(quantity, nameof(quantity));

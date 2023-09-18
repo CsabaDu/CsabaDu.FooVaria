@@ -481,14 +481,6 @@ internal sealed class Measurement : Measurable, IMeasurement
 
         throw ExchangeRateArgumentOutOfRangeException(exchangeRate);
     }
-
-    public override void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode? measureUnitTypeCode = null)
-    {
-        measureUnitTypeCode ??= MeasureUnitTypeCode;
-        if (IsExchangeableTo(measureUnit, measureUnitTypeCode.Value)) return;
-
-        throw InvalidMeasureUnitEnumArgumentException(measureUnit);
-    }
     #endregion
 
     #region Private methods

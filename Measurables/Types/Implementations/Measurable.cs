@@ -71,6 +71,11 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
         return base.GetMeasureUnitTypeCodes();
     }
 
+    public override sealed void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode? measureUnitTypeCode = null)
+    {
+        base.ValidateMeasureUnit(measureUnit, measureUnitTypeCode ?? MeasureUnitTypeCode);
+    }
+
     public override sealed void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
     {
         if (measureUnitTypeCode == MeasureUnitTypeCode) return;
