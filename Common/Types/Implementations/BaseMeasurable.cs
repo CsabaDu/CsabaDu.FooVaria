@@ -7,14 +7,11 @@ public abstract class BaseMeasurable : IBaseMeasurable
     #region Constructors
     protected BaseMeasurable(MeasureUnitTypeCode measureUnitTypeCode)
     {
-        ValidateMeasureUnitTypeCode(measureUnitTypeCode);
-
-        MeasureUnitTypeCode = measureUnitTypeCode;
+        MeasureUnitTypeCode = DefinedEnum(measureUnitTypeCode, nameof(measureUnitTypeCode), null);
     }
 
     protected BaseMeasurable(Enum measureUnit)
     {
-
         MeasureUnitTypeCode = MeasureUnitTypes.GetValidMeasureUnitTypeCode(measureUnit);
     }
 

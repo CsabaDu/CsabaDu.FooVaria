@@ -73,7 +73,7 @@ public static class MeasureUnitTypes
 
     public static string GetDefaultName(Enum measureUnit)
     {
-        ValidateMeasureUnit(measureUnit);
+        ValidateMeasureUnit(measureUnit, null);
 
         Type measureUnitType = measureUnit.GetType();
 
@@ -95,7 +95,7 @@ public static class MeasureUnitTypes
 
     public static MeasureUnitTypeCode GetValidMeasureUnitTypeCode(Enum measureUnit)
     {
-        ValidateMeasureUnit(measureUnit);
+        ValidateMeasureUnit(measureUnit, null);
 
         Type measureUnitType = measureUnit.GetType();
 
@@ -129,7 +129,7 @@ public static class MeasureUnitTypes
             && Enum.IsDefined(measureUnitType, measureUnit);
     }
 
-    public static void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode? measureUnitTypeCode = null)
+    public static void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode? measureUnitTypeCode)
     {
         if (IsDefinedMeasureUnit(NullChecked(measureUnit, nameof(measureUnit))))
         {

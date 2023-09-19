@@ -3,13 +3,21 @@
 public static class ExceptionMethods
 {
     #region ArgumentNullException
-    public static T NullChecked<T>(T? param, string name)
+    public static T NullChecked<T>(T? param, string? name)
     {
         return param ?? throw new ArgumentNullException(name);
     }
     #endregion
 
     #region InvalidEnumArgumentException
+    public static T DefinedEnum<T>(T param, string? name, Type? enumType) where T : Enum
+    {
+        enumType ??= typeof(T);
+
+        if (Enum.IsDefined(enumType, param)) return param;
+
+        throw new InvalidEnumArgumentException(name, (int)(object)param, enumType);
+    }
     public static InvalidEnumArgumentException InvalidMeasureUnitEnumArgumentException(Enum measureUnit)
     {
         return new InvalidEnumArgumentException(nameof(measureUnit), (int)(object)measureUnit, measureUnit.GetType());
