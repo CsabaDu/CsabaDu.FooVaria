@@ -10,14 +10,20 @@ public static class ExceptionMethods
     #endregion
 
     #region InvalidEnumArgumentException
-    public static T DefinedEnum<T>(T param, string? name, Type? enumType) where T : Enum
+    public static T DefinedEnum<T>(T param, string? name, Type enumType) where T : Enum
     {
-        enumType ??= typeof(T);
-
         if (Enum.IsDefined(enumType, param)) return param;
 
         throw new InvalidEnumArgumentException(name, (int)(object)param, enumType);
     }
+
+    public static T DefinedEnum<T>(T param, string? name) where T : struct, Enum
+    {
+        if (Enum.IsDefined(param)) return param;
+
+        throw new InvalidEnumArgumentException(name, (int)(object)param, typeof(T));
+    }
+
     public static InvalidEnumArgumentException InvalidMeasureUnitEnumArgumentException(Enum measureUnit)
     {
         return new InvalidEnumArgumentException(nameof(measureUnit), (int)(object)measureUnit, measureUnit.GetType());

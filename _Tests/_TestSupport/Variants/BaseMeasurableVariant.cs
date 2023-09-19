@@ -25,7 +25,7 @@ public class BaseMeasurableVariant
 
     internal Enum GetDefaultMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode)
     {
-        Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode)!;
+        Type measureUnitType = MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode)!;
 
         return MeasureUnitTypes.GetDefaultMeasureUnit(measureUnitType);
     }

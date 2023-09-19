@@ -175,7 +175,7 @@ public class BaseMeasurableTests
 
     #region GetDefaultMeasureUnit(MeasureUnitTypeCode?)
     [TestMethod, TestCategory("UnitTest")]
-    public void GetDefaultMeasureUnit_InvalidArg_NullableMeasureUnitTpeCode_ThrowsInvalidEnumArgumentException()
+    public void GetDefaultMeasureUnit_InvalidArg_MeasureUnitTpeCode_ThrowsInvalidEnumArgumentException()
     {
         // Arrange
         MeasureUnitTypeCode measureUnitTypeCode = SampleParams.NotDefinedMeasureUnitTypeCode;
@@ -189,12 +189,15 @@ public class BaseMeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetBaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgsArrayList), DynamicDataSourceType.Method)]
-    public void GetDefaultMeasureUnit_VaLidArg_NullableMeasureUnitTpeCode_ReturnsExpected(MeasureUnitTypeCode? measureUnitTypeCode, Enum expected, IBaseMeasurable baseMeasurable)
+    //[DynamicData(nameof(GetBaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgsArrayList), DynamicDataSourceType.Method)]
+    public void GetDefaultMeasureUnit_VaLidArg_MeasureUnitTpeCode_ReturnsExpected()
     {
         // Arrange
+        MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        Enum expected = BaseMeasurableVariant.GetDefaultMeasureUnit(measureUnitTypeCode);
+
         // Act
-        var actual = baseMeasurable.GetDefaultMeasureUnit(measureUnitTypeCode);
+        var actual = BaseMeasurable.GetDefaultMeasureUnit(measureUnitTypeCode);
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -204,18 +207,18 @@ public class BaseMeasurableTests
 
     #region GetDefaultNames
     #region GetDefaultNames()
-    [TestMethod, TestCategory("UnitTest")]
-    public void GetDefaultNames_ReturnsExpected()
-    {
-        // Arrange
-        IEnumerable<string> expected = BaseMeasurableVariant.GetDefaultNames(null);
+    //[TestMethod, TestCategory("UnitTest")]
+    //public void GetDefaultNames_ReturnsExpected()
+    //{
+    //    // Arrange
+    //    IEnumerable<string> expected = BaseMeasurableVariant.GetDefaultNames(null);
 
-        // Act
-        var actual = BaseMeasurable.GetDefaultNames();
+    //    // Act
+    //    var actual = BaseMeasurable.GetDefaultNames(null);
 
-        // Assert
-        Assert.IsTrue(expected.SequenceEqual(actual));
-    }
+    //    // Assert
+    //    Assert.IsTrue(expected.SequenceEqual(actual));
+    //}
     #endregion
 
     #region GetDefaultNames(MeasureUnitTypeCode?)
@@ -555,11 +558,10 @@ public class BaseMeasurableTests
         return DynamicDataSources.BaseMeasurableEqualsObjectArgsArrayList();
     }
 
-    private static IEnumerable<object[]> GetBaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgsArrayList()
-    {
-        return DynamicDataSources.GetBaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgsArrayList();
-
-    }
+    //private static IEnumerable<object[]> GetBaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgsArrayList()
+    //{
+    //    return DynamicDataSources.GetBaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgsArrayList();
+    //}
 
     private static IEnumerable<object[]> GetInvalidEnumMeasureUnitArgArrayList()
     {

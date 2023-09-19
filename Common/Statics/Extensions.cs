@@ -1,4 +1,5 @@
-﻿using static CsabaDu.FooVaria.Common.Statics.QuantityTypes;
+﻿using CsabaDu.FooVaria.Common.Behaviors;
+using static CsabaDu.FooVaria.Common.Statics.QuantityTypes;
 
 namespace CsabaDu.FooVaria.Common.Statics;
 
@@ -122,6 +123,10 @@ public static class Extensions
     {
         return measureUnitTypeCode switch
         {
+            MeasureUnitTypeCode.Currency => TypeCode.Decimal,
+
+            MeasureUnitTypeCode.Pieces => TypeCode.Int64,
+
             MeasureUnitTypeCode.AreaUnit or
             MeasureUnitTypeCode.DistanceUnit or
             MeasureUnitTypeCode.ExtentUnit or
@@ -129,19 +134,13 @@ public static class Extensions
             MeasureUnitTypeCode.VolumeUnit or
             MeasureUnitTypeCode.WeightUnit => TypeCode.Double,
 
-            MeasureUnitTypeCode.Currency => TypeCode.Decimal,
-
-            MeasureUnitTypeCode.Pieces => TypeCode.Int64,
-
             _ => null,
         };
     }
 
     public static string GetName(this MeasureUnitTypeCode measureUnitTypeCode)
     {
-        string? name = Enum.GetName(measureUnitTypeCode);
-
-        return name ?? throw new InvalidEnumArgumentException(nameof(measureUnitTypeCode), (int)measureUnitTypeCode, measureUnitTypeCode.GetType());
+        return Enum.GetName(DefinedEnum(measureUnitTypeCode, nameof(measureUnitTypeCode)))!;
     }
 
     public static IEnumerable<string> GetMeasureUnitDefaultNames(this MeasureUnitTypeCode measureUnitTypeCode)
@@ -154,6 +153,22 @@ public static class Extensions
     public static Type GetMeasureUnitType(this MeasureUnitTypeCode measureUnitTypeCode)
     {
         return MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode);
+    }
+
+    public static IEnumerable<Enum> GetAllMeasureUnits(this MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        Type measureUnitType = measureUnitTypeCode.GetMeasureUnitType();
+
+        foreach (Enum item in Enum.GetValues(measureUnitType))
+        {
+            yield return item;
+        }
+
+    }
+
+    public static Enum GetDefaultMeasureUnit(this MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        return measureUnitTypeCode.GetAllMeasureUnits().First();
     }
     #endregion
 }

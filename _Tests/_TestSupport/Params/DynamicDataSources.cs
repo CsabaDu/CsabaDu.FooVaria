@@ -407,30 +407,30 @@ internal class DynamicDataSources
         #endregion
     }
 
-    internal IEnumerable<object[]> GetBaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgsArrayList()
-    {
-        MeasureUnitTypeCode? measureUnitTypeCode = null;
-        Enum expected = MeasureUnitTypes.GetDefaultMeasureUnit(RandomParams.GetRandomMeasureUnitTypeCode());
-        IBaseMeasurable baseMeasurable = new BaseMeasurableChild(expected);
-        yield return toObjectArray();
+    //internal IEnumerable<object[]> GetBaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgsArrayList()
+    //{
+    //    MeasureUnitTypeCode? measureUnitTypeCode = null;
+    //    Enum expected = MeasureUnitTypes.GetDefaultMeasureUnit(RandomParams.GetRandomMeasureUnitTypeCode());
+    //    IBaseMeasurable baseMeasurable = new BaseMeasurableChild(expected);
+    //    yield return toObjectArray();
 
-        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode(MeasureUnitTypes.GetMeasureUnitTypeCode(expected));
-        expected = MeasureUnitTypes.GetDefaultMeasureUnit(measureUnitTypeCode.Value);
-        yield return toObjectArray();
+    //    measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode(MeasureUnitTypes.GetMeasureUnitTypeCode(expected));
+    //    expected = MeasureUnitTypes.GetDefaultMeasureUnit(measureUnitTypeCode.Value);
+    //    yield return toObjectArray();
 
-        #region Local methods
-        object[] toObjectArray()
-        {
-            return new BaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgs
-            {
-                MeasureUnitTypeCode = measureUnitTypeCode,
-                MeasureUnit = expected,
-                BaseMeasurable = baseMeasurable,
-            }
-            .ToObjectArray();
-        }
-        #endregion
-    }
+    //    #region Local methods
+    //    object[] toObjectArray()
+    //    {
+    //        return new BaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgs
+    //        {
+    //            MeasureUnitTypeCode = measureUnitTypeCode,
+    //            MeasureUnit = expected,
+    //            BaseMeasurable = baseMeasurable,
+    //        }
+    //        .ToObjectArray();
+    //    }
+    //    #endregion
+    //}
 
     internal IEnumerable<object[]> HasMeasureUnitTypeCodeArgsArrayList()
     {

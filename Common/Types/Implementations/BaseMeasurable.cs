@@ -7,7 +7,7 @@ public abstract class BaseMeasurable : IBaseMeasurable
     #region Constructors
     protected BaseMeasurable(MeasureUnitTypeCode measureUnitTypeCode)
     {
-        MeasureUnitTypeCode = DefinedEnum(measureUnitTypeCode, nameof(measureUnitTypeCode), null);
+        MeasureUnitTypeCode = DefinedEnum(measureUnitTypeCode, nameof(measureUnitTypeCode));
     }
 
     protected BaseMeasurable(Enum measureUnit)
@@ -32,14 +32,17 @@ public abstract class BaseMeasurable : IBaseMeasurable
             && other.MeasureUnitTypeCode == MeasureUnitTypeCode;
     }
 
-    public Enum GetDefaultMeasureUnit(MeasureUnitTypeCode? measureUnitTypeCode = null)
+    public Enum GetDefaultMeasureUnit()
     {
-        Type measureUnitType = GetMeasureUnitType(measureUnitTypeCode)!;
-
-        return MeasureUnitTypes.GetDefaultMeasureUnit(measureUnitType);
+        return GetDefaultMeasureUnit(MeasureUnitTypeCode);
     }
 
-    public IEnumerable<string> GetDefaultNames(MeasureUnitTypeCode? measureUnitTypeCode = null)
+    public Enum GetDefaultMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        return MeasureUnitTypes.GetDefaultMeasureUnit(measureUnitTypeCode);
+    }
+
+    public IEnumerable<string> GetDefaultNames(MeasureUnitTypeCode? measureUnitTypeCode)
     {
         return MeasureUnitTypes.GetDefaultNames(measureUnitTypeCode);
     }

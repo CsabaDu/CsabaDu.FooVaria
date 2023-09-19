@@ -2,6 +2,7 @@
 
 public interface IDefaultMeasureUnit : IMeasureUnit
 {
-    Enum GetDefaultMeasureUnit(MeasureUnitTypeCode? measureUnitTypeCode = null);
-    IEnumerable<string> GetDefaultNames(MeasureUnitTypeCode? measureUnitTypeCode = null);
+    Enum GetDefaultMeasureUnit();
+    Enum GetDefaultMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode);
+    IEnumerable<string> GetDefaultNames(MeasureUnitTypeCode? measureUnitTypeCode);
 }

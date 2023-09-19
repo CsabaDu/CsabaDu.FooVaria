@@ -26,37 +26,27 @@ public static class MeasureUnitTypes
 
     public static Enum GetDefaultMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode)
     {
-        return GetAllMeasureUnits(measureUnitTypeCode).OrderBy(x => x).First();
+        return measureUnitTypeCode.GetDefaultMeasureUnit();
     }
 
-    public static IEnumerable<Enum> GetAllMeasureUnits(MeasureUnitTypeCode? measureUnitTypeCode = null)
+    public static IEnumerable<Enum> GetAllMeasureUnits(MeasureUnitTypeCode? measureUnitTypeCode)
     {
         if (measureUnitTypeCode == null)
         {
-            IEnumerable<Enum> allMeasureUnits = new List<Enum>();
+            IEnumerable<MeasureUnitTypeCode> measureUnitTypeCodes = GetMeasureUnitTypeCodes();
 
-            foreach (Type item in GetMeasureUnitTypes())
+            IEnumerable<Enum> allMeasureUnits = measureUnitTypeCodes.First().GetAllMeasureUnits();
+
+            for (int i = 1; i < measureUnitTypeCodes.Count(); i++)
             {
-                IEnumerable<Enum> next = getAllMeasureUnits(item);
+                IEnumerable<Enum> next = measureUnitTypeCodes.ElementAt(i).GetAllMeasureUnits();
                 allMeasureUnits = allMeasureUnits.Union(next);
             }
 
             return allMeasureUnits;
         }
 
-        ValidateMeasureUnitTypeCode(measureUnitTypeCode.Value);
-
-        return getAllMeasureUnits(GetMeasureUnitType(measureUnitTypeCode!.Value));
-
-        #region Local methods
-        static IEnumerable<Enum> getAllMeasureUnits(Type measureUnitType)
-        {
-            foreach (Enum item in Enum.GetValues(measureUnitType))
-            {
-                yield return item;
-            }
-        }
-        #endregion
+        return DefinedEnum(measureUnitTypeCode.Value, nameof(measureUnitTypeCode)).GetAllMeasureUnits();
     }
 
     public static IDictionary<MeasureUnitTypeCode, Type> GetMeasureUnitTypeCollection()
@@ -81,7 +71,7 @@ public static class MeasureUnitTypes
     
     }
 
-    public static IEnumerable<string> GetDefaultNames(MeasureUnitTypeCode? measureUnitTypeCode = null)
+    public static IEnumerable<string> GetDefaultNames(MeasureUnitTypeCode? measureUnitTypeCode)
     {
         return GetAllMeasureUnits(measureUnitTypeCode).Select(x => GetDefaultName(x));
     }
