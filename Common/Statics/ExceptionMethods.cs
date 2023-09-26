@@ -3,25 +3,25 @@
 public static class ExceptionMethods
 {
     #region ArgumentNullException
-    public static T NullChecked<T>(T? param, string? name)
+    public static T NullChecked<T>(T? param, string? paramName)
     {
-        return param ?? throw new ArgumentNullException(name);
+        return param ?? throw new ArgumentNullException(paramName);
     }
     #endregion
 
     #region InvalidEnumArgumentException
-    public static T DefinedEnum<T>(T param, string? name, Type enumType) where T : Enum
+    public static T Defined<T>(T param, string? paramName, Type enumType) where T : Enum
     {
         if (Enum.IsDefined(enumType, param)) return param;
 
-        throw new InvalidEnumArgumentException(name, (int)(object)param, enumType);
+        throw new InvalidEnumArgumentException(paramName, (int)(object)param, enumType);
     }
 
-    public static T DefinedEnum<T>(T param, string? name) where T : struct, Enum
+    public static T Defined<T>(T param, string? paramName) where T : struct, Enum
     {
         if (Enum.IsDefined(param)) return param;
 
-        throw new InvalidEnumArgumentException(name, (int)(object)param, typeof(T));
+        throw new InvalidEnumArgumentException(paramName, (int)(object)param, typeof(T));
     }
 
     public static InvalidEnumArgumentException InvalidMeasureUnitEnumArgumentException(Enum measureUnit)

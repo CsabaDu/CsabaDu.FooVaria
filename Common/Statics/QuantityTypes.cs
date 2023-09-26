@@ -12,6 +12,18 @@ public static class QuantityTypes
         typeof(decimal),
     };
 
+    private const int QuantityRoundingDecimals = 8;
+
+    public static decimal RoundQuantity(decimal quantity)
+    {
+        return decimal.Round(quantity, QuantityRoundingDecimals);
+    }
+
+    public static double RoundQuantity(double quantity)
+    {
+        return Math.Round(quantity, QuantityRoundingDecimals);
+    }
+
     public static IEnumerable<TypeCode> GetQuantityTypeCodes()
     {
         foreach (Type item in QuantityTypeSet)

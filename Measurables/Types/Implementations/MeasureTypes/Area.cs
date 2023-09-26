@@ -23,9 +23,9 @@ internal sealed class Area : Measure, IArea
         return GetMeasure(this, quantity, measureUnit);
     }
 
-    public IArea GetMeasure(IArea? other = null)
+    public IArea GetMeasure(IArea other)
     {
-        return GetMeasure(this, other as Area);
+        return GetMeasure(this as IArea, other);
     }
 
     public IArea GetMeasure(double quantity, string name)
@@ -33,19 +33,19 @@ internal sealed class Area : Measure, IArea
         return GetMeasure(this, quantity, name);
     }
 
-    public IArea GetMeasure(double quantity, IMeasurement? measurement = null)
+    public IArea GetMeasure(double quantity, IMeasurement measurement)
     {
         return GetMeasure(this, quantity, measurement);
     }
 
-    public double GetQuantity()
+    public IArea GetMeasure(double quantity)
     {
-        return (double)Quantity;
+        return GetMeasure(this, quantity);
     }
 
     public ISpreadMeasure GetSpreadMeasure()
     {
-        return GetMeasure();
+        return this;
     }
     #endregion
 }

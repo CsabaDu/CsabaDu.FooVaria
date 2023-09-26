@@ -6,9 +6,11 @@ public interface IMeasure : IBaseMeasure, ILimitable, ICalculable, ICalculate<de
     IMeasure GetMeasure(ValueType quantity, Enum measureUnit);
     IMeasure GetMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName);
     IMeasure GetMeasure(ValueType quantity, string customName, decimal exchangeRate);
-    IMeasure GetMeasure(ValueType quantity, IMeasurement? measurement = null);
+    IMeasure GetMeasure(ValueType quantity);
+    IMeasure GetMeasure(Enum measureUnit);
+    IMeasure GetMeasure(ValueType quantity, IMeasurement measurement);
     IMeasure GetMeasure(IBaseMeasure baseMeasure);
-    IMeasure GetMeasure(IMeasure? other = null);
+    IMeasure GetMeasure(IMeasure other);
 
     IMeasureFactory GetMeasureFactory();
 

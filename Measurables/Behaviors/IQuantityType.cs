@@ -2,5 +2,5 @@
 
 public interface IQuantityType
 {
-    TypeCode GetQuantityTypeCode(MeasureUnitTypeCode? measureUnitTypeCode = null);
+    TypeCode GetQuantityTypeCode();
 }

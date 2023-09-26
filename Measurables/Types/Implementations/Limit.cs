@@ -3,27 +3,28 @@
 internal sealed class Limit : BaseMeasure, ILimit
 {
     #region Constants
-    private const ulong DefaultLimitQuantity = default;
+    private const ulong DefaultRateComponentQuantity = default;
     #endregion
 
     #region Constructors
-    internal Limit(ILimit other, LimitMode? limitMode) : base(other)
+    internal Limit(ILimit other) : base(other)
     {
-        Quantity = other.Quantity;
-        LimitMode = limitMode ?? other.LimitMode;
+        LimitMode = other.LimitMode;
     }
 
-    internal Limit(ILimitFactory factory, ValueType? quantity, IMeasurement measurement, LimitMode? limitMode) : base(factory, quantity ?? DefaultLimitQuantity, measurement)
+    internal Limit(ILimit other, ValueType quantity) : base(other, quantity)
     {
-        Quantity = GetLimitQuantity(quantity);
+        LimitMode = other.LimitMode;
+    }
+
+    internal Limit(ILimitFactory factory, ValueType quantity, IMeasurement measurement, LimitMode limitMode) : base(factory, quantity, measurement)
+    {
         LimitMode = GetValidLimitMode(limitMode);
     }
     #endregion
 
     #region Properties
     public LimitMode LimitMode { get; init; }
-    public override object Quantity { get; init; }
-    public override TypeCode QuantityTypeCode => TypeCode.UInt64;
     #endregion
 
     #region Public methods
@@ -38,6 +39,74 @@ internal sealed class Limit : BaseMeasure, ILimit
         return x.Equals(y);
     }
 
+    public int GetHashCode([DisallowNull] ILimit limit)
+    {
+        return HashCode.Combine(limit as IBaseMeasure, limit.LimitMode);
+    }
+
+    public ILimit GetLimit(Enum measureUnit, decimal exchangeRate, string customName, ValueType quantity, LimitMode limitMode)
+    {
+        return GetLimitFactory().Create(measureUnit, exchangeRate, customName, quantity, limitMode);
+    }
+
+    public ILimit GetLimit(IMeasurement measurement, ValueType quantity, LimitMode limitMode)
+    {
+        return GetLimitFactory().Create(measurement, quantity, limitMode);
+    }
+
+    public ILimit GetLimit(IBaseMeasure baseMeasure, LimitMode limitMode)
+    {
+        return GetLimitFactory().Create(baseMeasure, limitMode);
+    }
+
+    public ILimit GetLimit(ILimit other)
+    {
+        return (ILimit)GetMeasurable(other);
+    }
+
+    public ILimit GetLimit(ValueType quantity)
+    {
+        return GetLimitFactory().Create(this, quantity);
+    }
+
+    public ILimit GetLimit(string name, ValueType quantity, LimitMode limitMode)
+    {
+        return GetLimitFactory().Create(name, quantity, limitMode);
+    }
+
+    public ILimit GetLimit(Enum measureUnit, ValueType quantity, LimitMode limitMode)
+    {
+        return GetLimitFactory().Create(measureUnit, quantity, limitMode);
+    }
+
+    public ILimit GetLimit(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity, LimitMode limitMode)
+    {
+        return GetLimitFactory().Create(customName, measureUnitTypeCode, exchangeRate, quantity, limitMode);
+    }
+
+    public ILimitFactory GetLimitFactory()
+    {
+        return MeasurableFactory as ILimitFactory ?? throw new InvalidOperationException(null);
+    }
+
+    public LimitMode GetLimitMode(ILimit limit)
+    {
+        return NullChecked(limit, nameof(limit)).LimitMode;
+    }
+
+    public bool? Includes(IMeasure measure)
+    {
+        return NullChecked(measure, nameof(measure)).FitsIn(this);
+    }
+
+    public void ValidateLimitMode(LimitMode limitMode)
+    {
+        if (Enum.IsDefined(limitMode)) return;
+        
+        throw InvalidLimitModeEnumArgumentException(limitMode);
+    }
+
+    #region Overriden methods
     public override bool Equals(IBaseMeasure? other)
     {
         return Equals(this, other);
@@ -50,37 +119,32 @@ internal sealed class Limit : BaseMeasure, ILimit
 
     public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit)
     {
-        return GetLimit(measureUnit, quantity);
+        return GetLimit(measureUnit, quantity, default);
     }
 
     public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName)
     {
-        return GetLimit(measureUnit, exchangeRate, customName, quantity);
+        return GetLimit(measureUnit, exchangeRate, customName, quantity, default);
     }
 
-    public override IBaseMeasure GetBaseMeasure(ValueType quantity, IMeasurement? measurement = null)
+    public override IBaseMeasure GetBaseMeasure(ValueType quantity, IMeasurement measurement)
     {
-        return GetLimit(measurement ?? Measurement, quantity);
+        return GetLimit(measurement, quantity, default);
     }
 
     public override IBaseMeasure GetBaseMeasure(ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
     {
-        return GetLimit(measureUnitTypeCode, exchangeRate, customName, quantity);
+        return GetLimit(measureUnitTypeCode, exchangeRate, customName, quantity, default);
     }
 
     public override IBaseMeasure GetBaseMeasure(ValueType quantity, string name)
     {
-        return GetLimit(name, quantity);
+        return GetLimit(name, quantity, default);
     }
 
     public override ValueType GetDefaultRateComponentQuantity()
     {
-        return DefaultLimitQuantity;
-    }
-
-    public int GetHashCode([DisallowNull] ILimit limit)
-    {
-        return HashCode.Combine(limit as IBaseMeasure, limit.LimitMode);
+        return DefaultRateComponentQuantity;
     }
 
     public override int GetHashCode()
@@ -88,78 +152,24 @@ internal sealed class Limit : BaseMeasure, ILimit
         return GetHashCode(this);
     }
 
-    public ILimit GetLimit(Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity = null, LimitMode? limitMode = null)
-    {
-        return GetLimitFactory().Create(measureUnit, exchangeRate, customName, quantity, limitMode);
-    }
-
-    public ILimit GetLimit(IMeasurement measurement, ValueType? quantity = null, LimitMode? limitMode = null)
-    {
-        return GetLimitFactory().Create(measurement, quantity, limitMode);
-    }
-
-    public ILimit GetLimit(IBaseMeasure baseMeasure, LimitMode? limitMode = null)
-    {
-        return GetLimitFactory().Create(baseMeasure, limitMode);
-    }
-    public ILimit GetLimit(ILimit? other = null, LimitMode? limitMode = null)
-    {
-        return GetLimitFactory().Create(other ?? this, limitMode ?? other?.LimitMode);
-    }
-
-    public ILimit GetLimit(string name, ValueType? quantity = null, LimitMode? limitMode = null)
-    {
-        return GetLimitFactory().Create(name, quantity, limitMode);
-    }
-
-    public ILimit GetLimit(Enum measureUnit, ValueType? quantity = null, LimitMode? limitMode = null)
-    {
-        return GetLimitFactory().Create(measureUnit, quantity, limitMode);
-    }
-
-    public ILimit GetLimit(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity = null, LimitMode? limitMode = null)
-    {
-        return GetLimitFactory().Create(customName, measureUnitTypeCode, exchangeRate, quantity, limitMode);
-    }
-
-    public ILimitFactory GetLimitFactory()
-    {
-        return MeasurableFactory as ILimitFactory ?? throw new InvalidOperationException(null);
-    }
-
     public override LimitMode? GetLimitMode()
     {
-        return GetLimitMode(this);
-    }
-    public LimitMode GetLimitMode(ILimit? limit = null)
-    {
-        return (limit ?? this).LimitMode;
+        return LimitMode;
     }
 
-    public bool? Includes(IMeasure measure)
+    public override TypeCode GetQuantityTypeCode()
     {
-        return NullChecked(measure, nameof(measure)).FitsIn(this);
+        return TypeCode.UInt64;
     }
-
-    public void ValidateLimitMode(LimitMode limitMode)
-    {
-        if (!Enum.IsDefined(limitMode)) throw InvalidLimitModeEnumArgumentException(limitMode);
-    }
+    #endregion
     #endregion
 
     #region Private methods
-    private ValueType GetLimitQuantity(ValueType? quantity)
+    private LimitMode GetValidLimitMode(LimitMode limitMode)
     {
-        return GetQuantity(quantity ?? DefaultLimitQuantity);
-    }
+        ValidateLimitMode(limitMode);
 
-    private LimitMode GetValidLimitMode(LimitMode? limitMode)
-    {
-        limitMode ??= default;
-
-        ValidateLimitMode(limitMode.Value);
-
-        return limitMode.Value;
+        return limitMode;
     }
     #endregion
 }

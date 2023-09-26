@@ -1,6 +1,6 @@
-﻿using CsabaDu.FooVaria.Measurables.Behaviors;
+﻿using CsabaDu.FooVaria.Measurables.Types.Implementations;
 
-namespace CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes;
+namespace Measurables.Types.Implementations.MeasureTypes;
 
 internal sealed class PieceCount : Measure, IPieceCount
 {
@@ -25,34 +25,34 @@ internal sealed class PieceCount : Measure, IPieceCount
         return GetMeasure(this, baseMeasure);
     }
 
-    public IPieceCount GetMeasure(double quantity, Pieces measureUnit)
+    public IPieceCount GetMeasure(long quantity, Pieces measureUnit)
     {
         return GetMeasure(this, quantity, measureUnit);
     }
 
-    public IPieceCount GetMeasure(double quantity, string name)
+    public IPieceCount GetMeasure(long quantity, string name)
     {
         return GetMeasure(this, quantity, name);
     }
 
-    public IPieceCount GetMeasure(double quantity, IMeasurement? measurement = null)
+    public IPieceCount GetMeasure(long quantity, IMeasurement measurement)
     {
         return GetMeasure(this, quantity, measurement);
     }
 
-    public IPieceCount GetMeasure(IPieceCount? other = null)
+    public IPieceCount GetMeasure(IPieceCount other)
     {
-        return GetMeasure(this, other as PieceCount);
+        return GetMeasure(this as IPieceCount, other);
+    }
+
+    public IPieceCount GetMeasure(long quantity)
+    {
+        return GetMeasure(this, quantity);
     }
 
     public IPieceCount GetNextCustomMeasure(long quantity, string customName, decimal exchangeRate)
     {
         return GetMeasure(this, quantity, customName, exchangeRate);
-    }
-
-    public double GetQuantity()
-    {
-        return (long)Quantity;
     }
     #endregion
 }

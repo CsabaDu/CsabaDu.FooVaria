@@ -42,19 +42,19 @@ internal sealed class TimePeriod : Measure, ITimePeriod
         return GetMeasure(this, quantity, name);
     }
 
-    public ITimePeriod GetMeasure(double quantity, IMeasurement? measurement = null)
+    public ITimePeriod GetMeasure(double quantity, IMeasurement measurement)
     {
         return GetMeasure(this, quantity, measurement);
     }
 
-    public ITimePeriod GetMeasure(ITimePeriod? other = null)
+    public ITimePeriod GetMeasure(ITimePeriod other)
     {
-        return GetMeasure(this, other as TimePeriod);
+        return GetMeasure(this as ITimePeriod, other);
     }
 
-    public double GetQuantity()
+    public ITimePeriod GetMeasure(double quantity)
     {
-        return (double)Quantity;
+        return GetMeasure(this, quantity);
     }
     #endregion
 }

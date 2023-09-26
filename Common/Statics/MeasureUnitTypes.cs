@@ -2,18 +2,50 @@
 
 public static class MeasureUnitTypes
 {
-    #region Properties
-    private static readonly Dictionary<MeasureUnitTypeCode, Type> MeasureUnitTypeCollection = new()
+    static MeasureUnitTypes()
     {
-        { MeasureUnitTypeCode.AreaUnit, typeof(AreaUnit) },
-        { MeasureUnitTypeCode.Currency, typeof(Currency) },
-        { MeasureUnitTypeCode.DistanceUnit, typeof(DistanceUnit) },
-        { MeasureUnitTypeCode.ExtentUnit, typeof(ExtentUnit) },
-        { MeasureUnitTypeCode.TimePeriodUnit, typeof(TimePeriodUnit) },
-        { MeasureUnitTypeCode.Pieces, typeof(Pieces) },
-        { MeasureUnitTypeCode.VolumeUnit, typeof(VolumeUnit) },
-        { MeasureUnitTypeCode.WeightUnit, typeof(WeightUnit) },
+        MeasureUnitTypeCollection = InitMeasureUnitTypeCollection();
+    }
+    #region Properties
+
+    private static readonly HashSet<Type> MeasureUnitTypSet = new()
+    {
+        typeof(AreaUnit),
+        typeof(Currency),
+        typeof(DistanceUnit),
+        typeof(ExtentUnit),
+        typeof(TimePeriodUnit),
+        typeof(Pieces),
+        typeof(VolumeUnit),
+        typeof(WeightUnit),
     };
+
+    private static Dictionary<MeasureUnitTypeCode, Type> InitMeasureUnitTypeCollection()
+    {
+        return initMeasureUnitTypeCollection().ToDictionary(x => x.Key, x => x.Value);
+
+        IEnumerable<KeyValuePair<MeasureUnitTypeCode, Type>> initMeasureUnitTypeCollection()
+        {
+            foreach (MeasureUnitTypeCode item in GetMeasureUnitTypeCodes())
+            {
+                Type measureUnitType = MeasureUnitTypSet.First(x => x.Name == Enum.GetName(item));
+
+                yield return new KeyValuePair<MeasureUnitTypeCode, Type>(item, measureUnitType);
+            }
+        }
+    }
+
+    private static IDictionary<MeasureUnitTypeCode, Type> MeasureUnitTypeCollection { get; }
+    //{
+    //    { MeasureUnitTypeCode.AreaUnit, typeof(AreaUnit) },
+    //    { MeasureUnitTypeCode.Currency, typeof(Currency) },
+    //    { MeasureUnitTypeCode.DistanceUnit, typeof(DistanceUnit) },
+    //    { MeasureUnitTypeCode.ExtentUnit, typeof(ExtentUnit) },
+    //    { MeasureUnitTypeCode.TimePeriodUnit, typeof(TimePeriodUnit) },
+    //    { MeasureUnitTypeCode.Pieces, typeof(Pieces) },
+    //    { MeasureUnitTypeCode.VolumeUnit, typeof(VolumeUnit) },
+    //    { MeasureUnitTypeCode.WeightUnit, typeof(WeightUnit) },
+    //};
     #endregion
 
     #region Public methods
@@ -46,7 +78,7 @@ public static class MeasureUnitTypes
             return allMeasureUnits;
         }
 
-        return DefinedEnum(measureUnitTypeCode.Value, nameof(measureUnitTypeCode)).GetAllMeasureUnits();
+        return Defined(measureUnitTypeCode.Value, nameof(measureUnitTypeCode)).GetAllMeasureUnits();
     }
 
     public static IDictionary<MeasureUnitTypeCode, Type> GetMeasureUnitTypeCollection()
@@ -56,7 +88,7 @@ public static class MeasureUnitTypes
 
     public static Enum GetDefaultMeasureUnit(Type measureUnitType)
     {
-        ValidateMeasureUnitType(measureUnitType);
+        ValidateMeasureUnitType(measureUnitType, null);
 
         return (Enum)Enum.ToObject(measureUnitType, default(int));
     }
@@ -66,8 +98,10 @@ public static class MeasureUnitTypes
         ValidateMeasureUnit(measureUnit, null);
 
         Type measureUnitType = measureUnit.GetType();
+        string defaultName = Enum.GetName(measureUnitType, measureUnit)!;
+        string measureUnitTypeName = measureUnit.GetType().Name;
 
-        return measureUnit.GetType().Name + "." + Enum.GetName(measureUnitType, measureUnit)!;
+        return defaultName + measureUnitTypeName;
     
     }
 
@@ -94,12 +128,12 @@ public static class MeasureUnitTypes
 
     public static IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
     {
-        return MeasureUnitTypeCollection.Keys;
+        return Enum.GetValues<MeasureUnitTypeCode>();
     }
 
     public static IEnumerable<Type> GetMeasureUnitTypes()
     {
-        return MeasureUnitTypeCollection.Values;
+        return MeasureUnitTypSet;
     }
 
     public static MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum measureUnit)
@@ -111,9 +145,7 @@ public static class MeasureUnitTypes
 
     public static bool IsDefinedMeasureUnit(Enum measureUnit)
     {
-        if (measureUnit == null) return false;
-
-        Type measureUnitType = measureUnit.GetType();
+        Type measureUnitType = NullChecked(measureUnit, nameof(measureUnit)).GetType();
 
         return GetMeasureUnitTypes().Contains(measureUnitType)
             && Enum.IsDefined(measureUnitType, measureUnit);
@@ -138,7 +170,7 @@ public static class MeasureUnitTypes
         throw InvalidMeasureUnitEnumArgumentException(measureUnit);
     }
 
-    public static void ValidateMeasureUnitType(Type measureUnitType, MeasureUnitTypeCode? measureUnitTypeCode = null)
+    public static void ValidateMeasureUnitType(Type measureUnitType, MeasureUnitTypeCode? measureUnitTypeCode)
     {
         if (GetMeasureUnitTypes().Contains(NullChecked(measureUnitType, nameof(measureUnitType))))
         {

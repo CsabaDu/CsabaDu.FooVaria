@@ -2,9 +2,11 @@
 
 public interface ICustomNameCollection
 {
-    string? GetCustomName(Enum? measureUnit = null);
+    string? GetCustomName(Enum measureUnit);
+    string? GetCustomName();
     bool TrySetCustomName(Enum measureUnit, string customName);
-    IDictionary<Enum, string> GetCustomNameCollection(MeasureUnitTypeCode? measureUnitTypeCode = null);
+    IDictionary<object, string> GetCustomNameCollection(MeasureUnitTypeCode measureUnitTypeCode);
+    IDictionary<object, string> GetCustomNameCollection();
 
     void SetCustomName(Enum measureUnit, string customName);
     void SetOrReplaceCustomName(string customName);

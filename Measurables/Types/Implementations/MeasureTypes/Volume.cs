@@ -38,24 +38,24 @@ internal sealed class Volume : Measure, IVolume
         return GetMeasure(this, quantity, name);
     }
 
-    public IVolume GetMeasure(double quantity, IMeasurement? measurement = null)
+    public IVolume GetMeasure(double quantity, IMeasurement measurement)
     {
         return GetMeasure(this, quantity, measurement);
     }
 
-    public IVolume GetMeasure(IVolume? other = null)
+    public IVolume GetMeasure(IVolume other)
     {
-        return GetMeasure(this, other as Volume);
+        return GetMeasure(this as IVolume, other);
     }
 
-    public double GetQuantity()
+    public IVolume GetMeasure(double quantity)
     {
-        return (double)Quantity;
+        return GetMeasure(this, quantity);
     }
 
     public ISpreadMeasure GetSpreadMeasure()
     {
-        return GetMeasure();
+        return this;
     }
     #endregion
 }

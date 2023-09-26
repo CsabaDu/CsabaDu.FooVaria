@@ -1,6 +1,7 @@
 ﻿using CsabaDu.FooVaria.Measurables.Statics;
 using CsabaDu.FooVaria.Measurables.Types.Implementations;
 using CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes;
+using Measurables.Types.Implementations.MeasureTypes;
 
 namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
 
@@ -23,9 +24,9 @@ public abstract class MeasurableFactory : IMeasurableFactory
     #endregion
 
     #region Public methods
-    public IMeasurable Create(IMeasurable measurable)
+    public IMeasurable Create(IMeasurable other)
     {
-        return NullChecked(measurable, nameof(measurable)) switch
+        return NullChecked(other, nameof(other)) switch
         {
             Measurement measurement => GetMeasurement(measurement),
             BaseMeasure baseMeasure => baseMeasure switch

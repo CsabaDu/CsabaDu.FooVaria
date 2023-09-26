@@ -33,24 +33,24 @@ internal sealed class Cash : Measure, ICash
         return GetMeasure(this, quantity, name);
     }
 
-    public ICash GetMeasure(decimal quantity, IMeasurement? measurement = null)
+    public ICash GetMeasure(decimal quantity, IMeasurement measurement)
     {
         return GetMeasure(this, quantity, measurement);
     }
 
-    public ICash GetMeasure(ICash? other = null)
+    public ICash GetMeasure(ICash other)
     {
-        return GetMeasure(this, other as Cash);
+        return GetMeasure(other);
+    }
+
+    public ICash GetMeasure(decimal quantity)
+    {
+        return GetMeasure(this, quantity);
     }
 
     public ICash GetNextCustomMeasure(decimal quantity, string customName, decimal exchangeRate)
     {
         return GetMeasure(this, quantity, customName, exchangeRate);
-    }
-
-    public decimal GetQuantity()
-    {
-        return (decimal)Quantity;
     }
     #endregion
 }

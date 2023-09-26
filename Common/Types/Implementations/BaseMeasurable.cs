@@ -7,12 +7,12 @@ public abstract class BaseMeasurable : IBaseMeasurable
     #region Constructors
     protected BaseMeasurable(MeasureUnitTypeCode measureUnitTypeCode)
     {
-        MeasureUnitTypeCode = DefinedEnum(measureUnitTypeCode, nameof(measureUnitTypeCode));
+        MeasureUnitTypeCode = Defined(measureUnitTypeCode, nameof(measureUnitTypeCode));
     }
 
     protected BaseMeasurable(Enum measureUnit)
     {
-        MeasureUnitTypeCode = MeasureUnitTypes.GetValidMeasureUnitTypeCode(measureUnit);
+        MeasureUnitTypeCode = GetMeasureUnitTypeCode(measureUnit);
     }
 
     protected BaseMeasurable(IBaseMeasurable other)
@@ -26,56 +26,39 @@ public abstract class BaseMeasurable : IBaseMeasurable
     #endregion
 
     #region Public methods
-    public override bool Equals(object? obj)
-    {
-        return obj is IBaseMeasurable other
-            && other.MeasureUnitTypeCode == MeasureUnitTypeCode;
-    }
-
     public Enum GetDefaultMeasureUnit()
     {
-        return GetDefaultMeasureUnit(MeasureUnitTypeCode);
+        return MeasureUnitTypes.GetDefaultMeasureUnit(MeasureUnitTypeCode);
     }
 
-    public Enum GetDefaultMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode)
+    public IEnumerable<string> GetDefaultNames()
     {
-        return MeasureUnitTypes.GetDefaultMeasureUnit(measureUnitTypeCode);
+        return MeasureUnitTypes.GetDefaultNames(MeasureUnitTypeCode);
     }
 
-    public IEnumerable<string> GetDefaultNames(MeasureUnitTypeCode? measureUnitTypeCode)
+    public Type GetMeasureUnitType()
     {
-        return MeasureUnitTypes.GetDefaultNames(measureUnitTypeCode);
+        return MeasureUnitTypes.GetMeasureUnitType(MeasureUnitTypeCode);
     }
 
-    public override int GetHashCode()
+    public Type GetMeasureUnitType(MeasureUnitTypeCode measureUnitTypeCode)
     {
-        return MeasureUnitTypeCode.GetHashCode();
+        return MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode);
     }
 
-    public Type GetMeasureUnitType(MeasureUnitTypeCode? measureUnitTypeCode = null)
+    public MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum measureUnit)
     {
-        return MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode ?? MeasureUnitTypeCode);
+        return MeasureUnitTypes.GetValidMeasureUnitTypeCode(NullChecked(measureUnit, nameof(measureUnit)));
     }
 
-    public MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum? measureUnit = null)
+    public bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, Enum measureUnit)
     {
-        if (measureUnit == null) return MeasureUnitTypeCode;
-
-        return MeasureUnitTypes.GetValidMeasureUnitTypeCode(measureUnit);
+        return IsDefinedMeasureUnit(measureUnit) && measureUnitTypeCode == MeasureUnitTypes.GetMeasureUnitTypeCode(measureUnit!);
     }
 
-    public bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, Enum? measureUnit = null)
+    public bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
     {
-        if (measureUnit == null) return hasMeasureUnitTypeCode();
-
-        return IsDefinedMeasureUnit(measureUnit) && hasMeasureUnitTypeCode();
-
-        #region Local methods
-        bool hasMeasureUnitTypeCode()
-        {
-            return measureUnitTypeCode == GetMeasureUnitTypeCode(measureUnit);
-        }
-        #endregion
+        return HasMeasureUnitTypeCode(measureUnitTypeCode, GetDefaultMeasureUnit());
     }
 
     public bool IsDefinedMeasureUnit(Enum measureUnit)
@@ -83,15 +66,33 @@ public abstract class BaseMeasurable : IBaseMeasurable
         return MeasureUnitTypes.IsDefinedMeasureUnit(measureUnit);
     }
 
+    public void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        MeasureUnitTypes.ValidateMeasureUnit(measureUnit, measureUnitTypeCode);
+    }
+
+    #region Overriden methods
+    public override bool Equals(object? obj)
+    {
+        return obj is IBaseMeasurable other
+            && other.MeasureUnitTypeCode == MeasureUnitTypeCode;
+    }
+
+    public override int GetHashCode()
+    {
+        return MeasureUnitTypeCode.GetHashCode();
+    }
+    #endregion
+
     #region Virtual methods
     public virtual IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
     {
         return MeasureUnitTypes.GetMeasureUnitTypeCodes();
     }
 
-    public virtual void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode? measureUnitTypeCode = null)
+    public virtual void ValidateMeasureUnit(Enum measureUnit)
     {
-        MeasureUnitTypes.ValidateMeasureUnit(measureUnit, measureUnitTypeCode);
+        ValidateMeasureUnit(measureUnit, MeasureUnitTypeCode);
     }
 
     public virtual void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)

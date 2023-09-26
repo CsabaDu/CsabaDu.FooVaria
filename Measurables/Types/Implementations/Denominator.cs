@@ -3,27 +3,95 @@
 internal sealed class Denominator : BaseMeasure, IDenominator
 {
     #region Constants
-    private const decimal DefaultDenominatorQuantity = decimal.One;
+    private const decimal DefaultRateComponentQuantity = decimal.One;
     #endregion
 
     #region Constructors
     internal Denominator(IDenominator other) : base(other)
     {
-        Quantity = other.Quantity;
     }
 
-    internal Denominator(IDenominatorFactory factory, ValueType? quantity, IMeasurement measurement) : base(factory, quantity ?? DefaultDenominatorQuantity, measurement)
+    internal Denominator(IDenominatorFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
     {
-        Quantity = GetDenominatorQuantity(quantity);
     }
-    #endregion
 
-    #region Properties
-    public override object Quantity { get; init; }
-    public override TypeCode QuantityTypeCode => TypeCode.Decimal;
+    internal Denominator(IDenominatorFactory factory, IMeasurement measurement) : base(factory, DefaultRateComponentQuantity, measurement)
+    {
+    }
     #endregion
 
     #region Public methods
+    public IDenominator GetDenominator(IMeasurement measurement, ValueType quantity)
+    {
+        return GetDenominatorFactory().Create(measurement, quantity);
+    }
+
+    public IDenominator GetDenominator(IMeasurement measurement)
+    {
+        return GetDenominator(measurement, DefaultRateComponentQuantity);
+    }
+
+    public IDenominator GetDenominator(IBaseMeasure baseMeasure)
+    {
+        return GetDenominatorFactory().Create(baseMeasure, DefaultRateComponentQuantity);
+    }
+
+    public IDenominator GetDenominator(IDenominator other)
+    {
+        return GetDenominatorFactory().Create(other);
+    }
+
+    public IDenominator GetDenominator(Enum measureUnit, ValueType quantity)
+    {
+        return GetDenominatorFactory().Create(measureUnit, quantity);
+    }
+
+    public IDenominator GetDenominator(Enum measureUnit)
+    {
+        return GetDenominator(measureUnit, DefaultRateComponentQuantity);
+    }
+
+    public IDenominator GetDenominator(Enum measureUnit, decimal exchangeRate, string customName, ValueType quantity)
+    {
+        return GetDenominatorFactory().Create(measureUnit, exchangeRate, customName, quantity);
+    }
+
+    public IDenominator GetDenominator(Enum measureUnit, decimal exchangeRate, string customName)
+    {
+        return GetDenominator(measureUnit, exchangeRate, customName, DefaultRateComponentQuantity);
+    }
+
+    public IDenominator GetDenominator(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
+    {
+        return GetDenominatorFactory().Create(customName, measureUnitTypeCode, exchangeRate, quantity);
+    }
+
+    public IDenominator GetDenominator(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
+    {
+        return GetDenominator(customName, measureUnitTypeCode, exchangeRate, DefaultRateComponentQuantity);
+    }
+
+    public IDenominator GetDenominator(string name, ValueType quantity)
+    {
+        return GetDenominatorFactory().Create(name, quantity);
+    }
+
+    public IDenominator GetDenominator(string name)
+    {
+        return GetDenominator(name, DefaultRateComponentQuantity);
+    }
+
+    public IDenominator GetDenominator(IBaseMeasure baseMeasure, ValueType quantity)
+    {
+        return GetDenominatorFactory().Create(baseMeasure, quantity);
+    }
+
+    public IDenominatorFactory GetDenominatorFactory()
+    {
+        return MeasurableFactory as IDenominatorFactory ?? throw new InvalidOperationException(null);
+    }
+
+    #region Overriden methods
     public override bool Equals(IBaseMeasure? other)
     {
         return Equals(this, other);
@@ -44,9 +112,9 @@ internal sealed class Denominator : BaseMeasure, IDenominator
         return GetDenominator(measureUnit, exchangeRate, customName, quantity);
     }
 
-    public override IBaseMeasure GetBaseMeasure(ValueType quantity, IMeasurement? measurement = null)
+    public override IBaseMeasure GetBaseMeasure(ValueType quantity, IMeasurement measurement)
     {
-        return GetDenominator(measurement ?? Measurement, quantity);
+        return GetDenominator(measurement, quantity);
     }
 
     public override IBaseMeasure GetBaseMeasure(ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
@@ -61,47 +129,7 @@ internal sealed class Denominator : BaseMeasure, IDenominator
 
     public override ValueType GetDefaultRateComponentQuantity()
     {
-        return DefaultDenominatorQuantity;
-    }
-
-    public IDenominator GetDenominator(IMeasurement measurement, ValueType? quantity = null)
-    {
-        return GetDenominatorFactory().Create(measurement, quantity);
-    }
-
-    public IDenominator GetDenominator(IBaseMeasure baseMeasure)
-    {
-        return GetDenominatorFactory().Create(baseMeasure);
-    }
-
-    public IDenominator GetDenominator(IDenominator? other = null)
-    {
-        return GetDenominatorFactory().Create(other ?? this);
-    }
-
-    public IDenominator GetDenominator(Enum measureUnit, ValueType? quantity = null)
-    {
-        return GetDenominatorFactory().Create(measureUnit, quantity);
-    }
-
-    public IDenominator GetDenominator(Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity = null)
-    {
-        return GetDenominatorFactory().Create(measureUnit, exchangeRate, customName, quantity);
-    }
-
-    public IDenominator GetDenominator(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity = null)
-    {
-        return GetDenominatorFactory().Create(customName, measureUnitTypeCode, exchangeRate, quantity);
-    }
-
-    public IDenominator GetDenominator(string name, ValueType? quantity = null)
-    {
-        return GetDenominatorFactory().Create(name, quantity);
-    }
-
-    public IDenominatorFactory GetDenominatorFactory()
-    {
-        return MeasurableFactory as IDenominatorFactory ?? throw new InvalidOperationException(null);
+        return DefaultRateComponentQuantity;
     }
 
     public override int GetHashCode()
@@ -114,20 +142,10 @@ internal sealed class Denominator : BaseMeasure, IDenominator
         return null;
     }
 
-    public override ValueType GetQuantity(ValueType? quantity = null)
+    public override TypeCode GetQuantityTypeCode()
     {
-        quantity = base.GetQuantity(quantity);
-
-        if ((decimal)quantity > 0) return quantity;
-
-        throw QuantityArgumentOutOfRangeException(quantity);
+        return TypeCode.Decimal;
     }
     #endregion
-
-    #region Private methods
-    private ValueType GetDenominatorQuantity(ValueType? quantity)
-    {
-        return GetQuantity(quantity ?? DefaultDenominatorQuantity);
-    }
     #endregion
 }

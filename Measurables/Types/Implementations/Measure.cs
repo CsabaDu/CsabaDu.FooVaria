@@ -19,18 +19,11 @@ internal abstract class Measure : BaseMeasure, IMeasure
     #region Constructors
     private protected Measure(IMeasure other) : base(other)
     {
-        Quantity = other.Quantity;
     }
 
     private protected Measure(IMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
     {
-        Quantity = GetQuantity(quantity);
     }
-    #endregion
-
-    #region Properties
-    public override sealed object Quantity { get; init; }
-    public override sealed TypeCode QuantityTypeCode => GetQuantityTypeCode();
     #endregion
 
     #region Public methods
@@ -46,16 +39,6 @@ internal abstract class Measure : BaseMeasure, IMeasure
         decimal quantity = decimal.Divide(GetDecimalQuantity(), divisor);
 
         return GetMeasure(quantity);
-    }
-
-    public override sealed bool Equals(IBaseMeasure? other)
-    {
-        return Equals(this, other);
-    }
-
-    public override sealed bool Equals(object? obj)
-    {
-        return obj is IMeasure measure && Equals(measure);
     }
 
     public bool? FitsIn(ILimit? limit)
@@ -102,6 +85,88 @@ internal abstract class Measure : BaseMeasure, IMeasure
         #endregion
     }
 
+    public IMeasure GetMeasure(ValueType quantity, Enum measureUnit)
+    {
+        return GetMeasureFactory().Create(quantity, measureUnit);
+    }
+
+    public IMeasure GetMeasure(ValueType quantity, string name)
+    {
+        return GetMeasureFactory().Create(quantity, name);
+    }
+
+    public IMeasure GetMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName)
+    {
+        return GetMeasureFactory().Create(quantity, measureUnit, exchangeRate, customName);
+    }
+
+    public IMeasure GetMeasure(ValueType quantity, string customName, decimal exchangeRate)
+    {
+        return GetMeasureFactory().Create(quantity, customName, MeasureUnitTypeCode, exchangeRate);
+    }
+
+    public IMeasure GetMeasure(ValueType quantity, IMeasurement measurement)
+    {
+        return GetMeasureFactory().Create(quantity, measurement);
+    }
+
+    public IMeasure GetMeasure(IMeasure other)
+    {
+        return GetMeasureFactory().Create(other);
+    }
+
+    public IMeasure GetMeasure(ValueType quantity)
+    {
+        if (quantity is Enum measureUnit) return GetMeasure(measureUnit);
+
+        return GetMeasure(quantity, Measurement);
+    }
+
+    public IMeasure GetMeasure(Enum measureUnit)
+    {
+        IBaseMeasure excchanged = ExchangeTo(measureUnit) ?? throw InvalidMeasureUnitEnumArgumentException(measureUnit);
+
+        return GetMeasure(excchanged);
+    }
+
+    public IMeasureFactory GetMeasureFactory()
+    {
+        return MeasurableFactory as IMeasureFactory ?? throw new InvalidOperationException(null);
+    }
+
+    #region Overriden methods
+    public override sealed LimitMode? GetLimitMode()
+    {
+        return null;
+    }
+
+    public override sealed TypeCode GetQuantityTypeCode()
+    {
+        return base.GetQuantityTypeCode();
+    }
+
+    public IMeasure Multiply(decimal multiplier)
+    {
+        decimal quantity = decimal.Multiply(GetDecimalQuantity(), multiplier);
+
+        return GetMeasure(quantity);
+    }
+
+    public IMeasure Subtract(IMeasure? other)
+    {
+        return GetSum(this, other, SummingMode.Subtract);
+    }
+
+    public override sealed bool Equals(IBaseMeasure? other)
+    {
+        return Equals(this, other);
+    }
+
+    public override sealed bool Equals(object? obj)
+    {
+        return obj is IMeasure measure && Equals(measure);
+    }
+
     public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit)
     {
         return GetMeasure(quantity, measureUnit);
@@ -112,7 +177,7 @@ internal abstract class Measure : BaseMeasure, IMeasure
         return GetMeasure(quantity, measureUnit, exchangeRate, customName);
     }
 
-    public override IBaseMeasure GetBaseMeasure(ValueType quantity, IMeasurement? measurement = null)
+    public override IBaseMeasure GetBaseMeasure(ValueType quantity, IMeasurement measurement)
     {
         return GetMeasure(quantity, measurement);
     }
@@ -136,77 +201,15 @@ internal abstract class Measure : BaseMeasure, IMeasure
     {
         return GetHashCode(this);
     }
+    #endregion
 
-    public virtual IMeasure GetMeasure(IBaseMeasure baseMeasure)
-    {
-        return GetMeasureFactory().Create(baseMeasure);
-    }
-    public IMeasure GetMeasure(ValueType quantity, Enum measureUnit)
-    {
-        return GetMeasureFactory().Create(quantity, measureUnit);
-    }
-
-    public IMeasure GetMeasure(ValueType quantity, string name)
-    {
-        return GetMeasureFactory().Create(quantity, name);
-    }
-
-    public IMeasure GetMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName)
-    {
-        return GetMeasureFactory().Create(quantity, measureUnit, exchangeRate, customName);
-    }
-
-    public IMeasure GetMeasure(ValueType quantity, string customName, decimal exchangeRate)
-    {
-        return GetMeasureFactory().Create(quantity, customName, MeasureUnitTypeCode, exchangeRate);
-    }
-
-    public IMeasure GetMeasure(ValueType quantity, IMeasurement? measurement = null)
-    {
-        return GetMeasureFactory().Create(quantity, measurement ?? Measurement);
-    }
-
-    public IMeasure GetMeasure(IMeasure? other = null)
-    {
-        return GetMeasureFactory().Create(other ?? this);
-    }
-
-    public IMeasure GetMeasure(Enum measureUnit)
-    {
-        IBaseMeasure excchanged = ExchangeTo(measureUnit) ?? throw InvalidMeasureUnitEnumArgumentException(measureUnit);
-
-        return GetMeasure(excchanged);
-    }
-
-    public IMeasureFactory GetMeasureFactory()
-    {
-        return MeasurableFactory as IMeasureFactory ?? throw new InvalidOperationException(null);
-    }
-
-    public override sealed LimitMode? GetLimitMode()
-    {
-        return null;
-    }
-
-    public override sealed ValueType GetQuantity(ValueType? quantity = null)
-    {
-        return base.GetQuantity(quantity);
-    }
-
-    public IMeasure Multiply(decimal multiplier)
-    {
-        decimal quantity = decimal.Multiply(GetDecimalQuantity(), multiplier);
-
-        return GetMeasure(quantity);
-    }
-
-    public IMeasure Subtract(IMeasure? other)
-    {
-        return GetSum(this, other, SummingMode.Subtract);
-    }
+    #region Abstract methods
+    public abstract IMeasure GetMeasure(IBaseMeasure baseMeasure);
+    #endregion
     #endregion
 
     #region Protected methods
+    #region Static methods
     protected static T GetMeasure<T, U>(T measure, U quantity, string name) where T : class, IMeasure where U : struct
     {
         validateName();
@@ -216,7 +219,7 @@ internal abstract class Measure : BaseMeasure, IMeasure
         #region Local methods
         void validateName()
         {
-            if (measure.GetDefaultNames(measure.MeasureUnitTypeCode).Contains(NullChecked(name, nameof(name)))) return;
+            if (MeasureUnitTypes.GetDefaultNames(measure.MeasureUnitTypeCode).Contains(NullChecked(name, nameof(name)))) return;
 
             if (measure.Measurement.GetCustomNameCollection(measure.MeasureUnitTypeCode).Values.Contains(name)) return;
 
@@ -225,50 +228,21 @@ internal abstract class Measure : BaseMeasure, IMeasure
         #endregion
     }
 
-    protected static T GetMeasure<T, U>(T measure, U quantity, IMeasurement? measurement) where T : class, IMeasure where U : struct
+    protected static T GetMeasure<T, U>(T measure, U quantity, IMeasurement measurement) where T : class, IMeasure where U : struct
     {
-        validateMeasurement();
+        ValidateMeasurabe(measurement, nameof(measurement));
 
         return (T)measure.GetMeasure(quantity, measurement);
-
-        #region Local methods
-        void validateMeasurement()
-        {
-            if (measurement == null) return;
-
-            try
-            {
-                measurement.ValidateMeasureUnitTypeCode(measure.MeasureUnitTypeCode);
-            }
-            catch (InvalidEnumArgumentException)
-            {
-                throw new ArgumentOutOfRangeException(nameof(measurement), measurement.MeasureUnitTypeCode, null);
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException(ex.Message, ex.InnerException);
-            }
-        }
-        #endregion
     }
 
     protected static T GetMeasure<T>(T measure, IBaseMeasure baseMeasure) where T : class, IMeasure
     {
-        validateBaseMeasure();
+        ValidateMeasurabe(baseMeasure, nameof(baseMeasure));
 
         return (T)measure.GetMeasure(baseMeasure);
-
-        #region Local methods
-        void validateBaseMeasure()
-        {
-            if (NullChecked(baseMeasure, nameof(baseMeasure)).MeasureUnitTypeCode == measure.MeasureUnitTypeCode) return;
-
-            throw new ArgumentOutOfRangeException(nameof(baseMeasure), baseMeasure.MeasureUnitTypeCode, null);
-        }
-        #endregion
     }
 
-    protected static T GetMeasure<T>(T measure, T? other) where T : class, IMeasure
+    protected static T GetMeasure<T>(T measure, T other) where T : class, IMeasure
     {
         return (T)measure.GetMeasure(other);
     }
@@ -288,7 +262,12 @@ internal abstract class Measure : BaseMeasure, IMeasure
         return (T)measure.GetMeasure(quantity, customName, exchangeRate);
     }
 
-    protected static T ConvertMeasure<T, U>(IMeasure measure, ConvertMode convertMode) where T : class, IMeasure, IConvertMeasure where U : struct, Enum
+    protected static T GetMeasure<T, U>(T measure, U quantity) where T : class, IMeasure where U : struct
+    {
+        return (T)measure.GetMeasure(quantity);
+    }
+
+    protected static T ConvertMeasure<T, V>(IMeasure measure, ConvertMode convertMode) where T : class, IMeasure, IConvertMeasure where V : struct, Enum
     {
         decimal quantity = measure.DefaultQuantity;
         decimal ratio = 1000;
@@ -300,7 +279,30 @@ internal abstract class Measure : BaseMeasure, IMeasure
             _ => throw new InvalidOperationException(null),
         };
 
-        return (T)measure.GetMeasure(quantity, default(U));
+        return (T)measure.GetMeasure(quantity, default(V));
     }
+    #endregion
+    #endregion
+
+    #region Private methods
+    #region Static methods
+    private static void ValidateMeasurabe<T>(T measurable, string measurableName) where T : class, IMeasurable, IRateComponent
+    {
+        MeasureUnitTypeCode measureUnitTypeCode = NullChecked(measurable, measurableName).MeasureUnitTypeCode;
+
+        try
+        {
+            measurable.ValidateMeasureUnitTypeCode(measureUnitTypeCode);
+        }
+        catch (InvalidEnumArgumentException)
+        {
+            throw new ArgumentOutOfRangeException(measurableName, measureUnitTypeCode, null);
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException(ex.Message, ex.InnerException);
+        }
+    }
+    #endregion
     #endregion
 }

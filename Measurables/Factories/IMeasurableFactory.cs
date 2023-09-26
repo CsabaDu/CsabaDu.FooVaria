@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Factories;
 
-public interface IMeasurableFactory
+public interface IMeasurableFactory : IFactory<IMeasurable>
 {
-    IMeasurable Create(IMeasurable measurable);
+    //IMeasurable Create(IMeasurable other);
 }

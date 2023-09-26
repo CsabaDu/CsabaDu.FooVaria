@@ -37,6 +37,24 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
     #endregion
 
     #region Public methods
+    public IMeasurable GetMeasurable(IMeasurable measurable)
+    {
+        return MeasurableFactory.Create(measurable);
+    }
+
+    public IMeasurable GetMeasurable(IMeasurableFactory measurableFactory, IMeasurable measurable)
+    {
+        return NullChecked(measurableFactory, nameof(measurableFactory)).Create(measurable);
+    }
+
+    #region Virtual methods
+    public virtual TypeCode GetQuantityTypeCode()
+    {
+        return MeasureUnitTypeCode.GetQuantityTypeCode();
+    }
+    #endregion
+
+    #region Overriden methods
     public override bool Equals(object? obj)
     {
         return obj is IMeasurable other
@@ -49,31 +67,14 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
         return HashCode.Combine(MeasureUnitTypeCode, MeasurableFactory);
     }
 
-    public IMeasurable GetMeasurable(IMeasurable? measurable = null)
-    {
-        return MeasurableFactory.Create(measurable ?? this);
-    }
-
-    public IMeasurable GetMeasurable(IMeasurableFactory measurableFactory, IMeasurable measurable)
-    {
-        return NullChecked(measurableFactory, nameof(measurableFactory)).Create(measurable);
-    }
-
-    public virtual TypeCode GetQuantityTypeCode(MeasureUnitTypeCode? measureUnitTypeCode = null)
-    {
-        TypeCode? quantityTypeCode = (measureUnitTypeCode ?? MeasureUnitTypeCode).GetQuantityTypeCode();
-
-        return quantityTypeCode ?? throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode!.Value);
-    }
-
     public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
     {
         return base.GetMeasureUnitTypeCodes();
     }
 
-    public override sealed void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode? measureUnitTypeCode = null)
+    public override sealed void ValidateMeasureUnit(Enum measureUnit)
     {
-        base.ValidateMeasureUnit(measureUnit, measureUnitTypeCode ?? MeasureUnitTypeCode);
+        base.ValidateMeasureUnit(measureUnit);
     }
 
     public override sealed void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
@@ -82,6 +83,7 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
 
         throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode);
     }
+    #endregion
 
     #region Abstract methods
     public abstract IMeasurable GetDefault();
@@ -91,7 +93,7 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
     #region Protected methods
     protected static IMeasure GetSum(IMeasure measure, IMeasure? other, SummingMode summingMode)
     {
-        if (other == null) return measure.GetMeasure();
+        if (other == null) return measure.GetMeasure(measure);
 
         if (other.IsExchangeableTo(measure.MeasureUnitTypeCode))
         {

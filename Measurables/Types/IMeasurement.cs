@@ -6,9 +6,9 @@ public interface IMeasurement : IMeasurable, ICustomMeasurement, IMeasureUnitCol
     decimal ExchangeRate { get; init; }
 
     IMeasurement GetMeasurement(Enum measureUnit);
-    IMeasurement GetMeasurement(IMeasurement? other = null);
+    IMeasurement GetMeasurement(IMeasurement other);
     IMeasurement GetMeasurement(IBaseMeasure baseMeasure);
     IMeasurement GetMeasurement(string name);
     IMeasurementFactory GetMeasurementFactory();
-    string GetName(Enum? measureUnit = null);
+    string GetName();
 }

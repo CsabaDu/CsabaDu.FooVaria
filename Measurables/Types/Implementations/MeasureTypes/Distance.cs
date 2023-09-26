@@ -38,19 +38,19 @@ internal sealed class Distance : Measure, IDistance
         return GetMeasure(this, quantity, name);
     }
 
-    public IDistance GetMeasure(double quantity, IMeasurement? measurement = null)
+    public IDistance GetMeasure(double quantity, IMeasurement measurement)
     {
         return GetMeasure(this, quantity, measurement);
     }
 
-    public IDistance GetMeasure(IDistance? other = null)
+    public IDistance GetMeasure(IDistance other)
     {
-        return GetMeasure(this, other as Distance);
+        return GetMeasure(this as IDistance, other);
     }
 
-    public double GetQuantity()
+    public IDistance GetMeasure(double quantity)
     {
-        return (double)Quantity;
+        return GetMeasure(this, quantity);
     }
     #endregion
 }

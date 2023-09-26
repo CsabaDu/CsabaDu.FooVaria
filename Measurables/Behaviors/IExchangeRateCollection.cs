@@ -2,12 +2,15 @@
 
 public interface IExchangeRateCollection
 {
-    IDictionary<Enum, decimal> GetExchangeRateCollection(MeasureUnitTypeCode? measureUnitTypeCode = null);
-    IDictionary<Enum, decimal> GetConstantExchangeRateCollection();
+    IDictionary<object, decimal> GetExchangeRateCollection(MeasureUnitTypeCode measureUnitTypeCode);
+    IDictionary<object, decimal> GetExchangeRateCollection();
+    IDictionary<object, decimal> GetConstantExchangeRateCollection();
     decimal GetExchangeRate(Enum measureUnit);
     decimal GetExchangeRate(string name);
+    bool IsValidExchangeRate(decimal exchangeRate, Enum measureUnit);
 
     void RestoreConstantExchangeRates();
 
-    void ValidateExchangeRate(decimal exchangeRate, Enum? measureUnit = null);
+    void ValidateExchangeRate(decimal exchangeRate, Enum measureUnit);
+    void ValidateExchangeRate(decimal exchangeRate);
 }

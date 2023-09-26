@@ -1,5 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Behaviors;
-using static CsabaDu.FooVaria.Common.Statics.QuantityTypes;
+﻿using static CsabaDu.FooVaria.Common.Statics.QuantityTypes;
 
 namespace CsabaDu.FooVaria.Common.Statics;
 
@@ -50,9 +49,8 @@ public static class Extensions
         if (!GetQuantityTypes().Contains(quantityType)) return null;
 
         TypeCode quantityTypeCode = Type.GetTypeCode(quantityType);
-        int roundingDecimals = 8;
 
-        if (quantityTypeCode == conversionTypeCode) return getRoundedQuantity(roundingDecimals);
+        if (quantityTypeCode == conversionTypeCode) return getRoundedQuantity();
 
         try
         {
@@ -65,7 +63,7 @@ public static class Extensions
                 TypeCode.UInt64 => getUIntQuantityOrNull(),
 
                 TypeCode.Double or
-                TypeCode.Decimal => getRoundedQuantity(roundingDecimals),
+                TypeCode.Decimal => getRoundedQuantity(),
 
                 _ => null,
             };
@@ -104,12 +102,12 @@ public static class Extensions
             };
         }
 
-        ValueType getRoundedQuantity(int decimals)
+        ValueType getRoundedQuantity()
         {
             return conversionTypeCode switch
             {
-                TypeCode.Double => Math.Round(Convert.ToDouble(quantity), decimals),
-                TypeCode.Decimal => decimal.Round(Convert.ToDecimal(quantity), decimals),
+                TypeCode.Double => RoundQuantity(Convert.ToDouble(quantity)),
+                TypeCode.Decimal => RoundQuantity(Convert.ToDecimal(quantity)),
 
                 _ => quantity,
             };
@@ -119,7 +117,7 @@ public static class Extensions
     #endregion
 
     #region CsabaDu.FooVaria.Common.Enums.MeasureUnitTypeCode
-    public static TypeCode? GetQuantityTypeCode(this MeasureUnitTypeCode measureUnitTypeCode)
+    public static TypeCode GetQuantityTypeCode(this MeasureUnitTypeCode measureUnitTypeCode)
     {
         return measureUnitTypeCode switch
         {
@@ -134,13 +132,16 @@ public static class Extensions
             MeasureUnitTypeCode.VolumeUnit or
             MeasureUnitTypeCode.WeightUnit => TypeCode.Double,
 
-            _ => null,
+            _ => throw new InvalidEnumArgumentException(nameof(measureUnitTypeCode), (int)(object)measureUnitTypeCode, typeof(MeasureUnitTypeCode)
+            
+            
+            ),
         };
     }
 
     public static string GetName(this MeasureUnitTypeCode measureUnitTypeCode)
     {
-        return Enum.GetName(DefinedEnum(measureUnitTypeCode, nameof(measureUnitTypeCode)))!;
+        return Enum.GetName(Defined(measureUnitTypeCode, nameof(measureUnitTypeCode)))!;
     }
 
     public static IEnumerable<string> GetMeasureUnitDefaultNames(this MeasureUnitTypeCode measureUnitTypeCode)

@@ -5,10 +5,11 @@ public interface IMeasureUnitCollection
     Enum? GetMeasureUnit(string name);
     string GetDefaultName(Enum? measureUnit = null);
 
-    bool IsValidMeasureUnit(Enum measureUnit, decimal? exchangeRate = null);
+    bool IsValidMeasureUnit(Enum? measureUnit);
     bool TryGetMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, [NotNullWhen(true)] out Enum? measureUnit);
     bool TryGetMeasureUnit(string name, [NotNullWhen(true)] out Enum? measureUnit);
 
-    IDictionary<string, Enum> GetMeasureUnitCollection(MeasureUnitTypeCode? measureUnitTypeCode = null);
-    IEnumerable<Enum> GetValidMeasureUnits(MeasureUnitTypeCode? measureUnitTypeCode = null);
+    IDictionary<string, object> GetMeasureUnitCollection(MeasureUnitTypeCode measureUnitTypeCode);
+    IDictionary<string, object> GetMeasureUnitCollection();
+    IEnumerable<object> GetValidMeasureUnits(MeasureUnitTypeCode measureUnitTypeCode);
 }

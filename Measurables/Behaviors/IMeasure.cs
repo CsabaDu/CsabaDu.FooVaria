@@ -5,7 +5,7 @@ public interface IMeasure<T, U, V> where T : class, IMeasure where U : struct wh
     T GetMeasure(IBaseMeasure baseMeasure);
     T GetMeasure(U quantity, V measureUnit);
     T GetMeasure(U quantity, string name);
-    T GetMeasure(U quantity, IMeasurement? measurement = null);
-    T GetMeasure(T? other = null);
-    U GetQuantity();
+    T GetMeasure(U quantity);
+    T GetMeasure(U quantity, IMeasurement measurement);
+    T GetMeasure(T other);
 }

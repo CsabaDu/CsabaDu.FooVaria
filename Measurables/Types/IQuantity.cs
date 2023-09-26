@@ -5,15 +5,16 @@
         TypeCode QuantityTypeCode { get; }
         object Quantity { get; init; }
 
-        ValueType GetQuantity(ValueType? quantity = null);
+        ValueType GetQuantity(/*ValueType? quantity = null*/);
         ValueType GetQuantity(RoundingMode roundingMode);
         ValueType GetQuantity(TypeCode quantityTypeCode);
-        TypeCode? GetQuantityTypeCode([DisallowNull] ValueType quantity);
+        TypeCode? GetQuantityTypeCode(ValueType quantity);
         ValueType GetDefaultRateComponentQuantity();
-        decimal GetDecimalQuantity(T? other = null);
+        decimal GetDecimalQuantity(/*T? other = null*/);
         bool TryGetQuantity(ValueType? quantity, [NotNullWhen(true)] out ValueType? thisTypeQuantity);
 
-        void ValidateQuantity(ValueType? quantity, TypeCode? quantityTypeCode = null);
+        void ValidateQuantity(ValueType? quantity);
+        void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode);
         void ValidateQuantityTypeCode(TypeCode quantityTypeCode);
     }
 

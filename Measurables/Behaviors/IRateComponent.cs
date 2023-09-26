@@ -4,7 +4,7 @@ public interface IRateComponent<out T> : IRateComponent where T : class, IMeasur
 {
     T? GetRateComponent(IRate rate, RateComponentCode rateComponentCode);
 
-    T GetDefault(MeasureUnitTypeCode measureUnitTypeCode);
     RateComponentCode? GetRateComponentCode();
 }
 
+    //T GetDefault(MeasureUnitTypeCode measureUnitTypeCode);

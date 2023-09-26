@@ -38,19 +38,19 @@ internal sealed class Weight : Measure, IWeight
         return GetMeasure(this, quantity, name);
     }
 
-    public IWeight GetMeasure(double quantity, IMeasurement? measurement = null)
+    public IWeight GetMeasure(double quantity, IMeasurement measurement)
     {
         return GetMeasure(this, quantity, measurement);
     }
 
-    public IWeight GetMeasure(IWeight? other = null)
+    public IWeight GetMeasure(IWeight other)
     {
-        return GetMeasure(this, other as Weight);
+        return GetMeasure(this as IWeight, other);
     }
 
-    public double GetQuantity()
+    public IWeight GetMeasure(double quantity)
     {
-        return (double)Quantity;
+        return GetMeasure(this, quantity);
     }
     #endregion
 }

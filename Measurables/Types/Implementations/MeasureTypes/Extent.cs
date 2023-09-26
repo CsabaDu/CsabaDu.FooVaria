@@ -38,19 +38,19 @@ internal sealed class Extent : Measure, IExtent
         return GetMeasure(this, quantity, name);
     }
 
-    public IExtent GetMeasure(double quantity, IMeasurement? measurement = null)
+    public IExtent GetMeasure(double quantity, IMeasurement measurement)
     {
         return GetMeasure(this, quantity, measurement);
     }
 
-    public IExtent GetMeasure(IExtent? other = null)
+    public IExtent GetMeasure(IExtent other)
     {
-        return GetMeasure(this, other as Extent);
+        return GetMeasure(this as IExtent, other);
     }
 
-    public double GetQuantity()
+    public IExtent GetMeasure(double quantity)
     {
-        return (double)Quantity;
+        return GetMeasure(this, quantity);
     }
     #endregion
 }

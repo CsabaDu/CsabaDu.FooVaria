@@ -1,3 +1,4 @@
+using CsabaDu.FooVaria.Common.Enums;
 using CsabaDu.FooVaria.Common.Statics;
 using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Types;
 using CsabaDu.FooVaria.Tests.TestSupport.Params;
@@ -237,10 +238,11 @@ public class BaseMeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetNullableMeasureUnitTypeCodeArgArrayList), DynamicDataSourceType.Method)]
-    public void GetDefaultNames_ValidArg_NullableMeasureUnitTypeCode_ReturnsExpected(MeasureUnitTypeCode? measureUnitTypeCode)
+    //[DynamicData(nameof(GetNullableMeasureUnitTypeCodeArgArrayList), DynamicDataSourceType.Method)]
+    public void GetDefaultNames_ValidArg_NullableMeasureUnitTypeCode_ReturnsExpected()
     {
         // Arrange
+        MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
         IEnumerable<string> expected = BaseMeasurableVariant.GetDefaultNames(measureUnitTypeCode);
 
         // Act
@@ -438,7 +440,7 @@ public class BaseMeasurableTests
         Enum measureUnit = null;
 
         // Act
-        void attempt() => BaseMeasurable.ValidateMeasureUnit(measureUnit);
+        void attempt() => BaseMeasurable.ValidateMeasureUnit(measureUnit, null);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
@@ -451,7 +453,7 @@ public class BaseMeasurableTests
     {
         // Arrange
         // Act
-        void attempt() => BaseMeasurable.ValidateMeasureUnit(measureUnit);
+        void attempt() => BaseMeasurable.ValidateMeasureUnit(measureUnit, null);
 
         // Assert
         var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
@@ -469,7 +471,7 @@ public class BaseMeasurableTests
         {
             try
             {
-                BaseMeasurable.ValidateMeasureUnit(measureUnit);
+                BaseMeasurable.ValidateMeasureUnit(measureUnit, null);
                 return true;
             }
             catch
