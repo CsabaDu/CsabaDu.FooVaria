@@ -43,5 +43,5 @@ public interface IRate : IMeasurable, IQuantifiable, IProportional<IRate, IRate>
     IRate GetRate(IRateFactory rateFactory, IRate rate);
 
     IBaseMeasure? GetRateComponent(RateComponentCode rateComponentCode);
-    IRateFactory GetRateFactory();
+    //IRateFactory GetFactory();
 }

@@ -12,10 +12,6 @@ internal abstract class Measure : BaseMeasure, IMeasure
     }
     #endregion
 
-    #region Constants
-    private const int DefaultMeasureQuantity = 0;
-    #endregion
-
     #region Constructors
     private protected Measure(IMeasure other) : base(other)
     {
@@ -87,32 +83,32 @@ internal abstract class Measure : BaseMeasure, IMeasure
 
     public IMeasure GetMeasure(ValueType quantity, Enum measureUnit)
     {
-        return GetMeasureFactory().Create(quantity, measureUnit);
+        return GetFactory().Create(quantity, measureUnit);
     }
 
     public IMeasure GetMeasure(ValueType quantity, string name)
     {
-        return GetMeasureFactory().Create(quantity, name);
+        return GetFactory().Create(quantity, name);
     }
 
     public IMeasure GetMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName)
     {
-        return GetMeasureFactory().Create(quantity, measureUnit, exchangeRate, customName);
+        return GetFactory().Create(quantity, measureUnit, exchangeRate, customName);
     }
 
     public IMeasure GetMeasure(ValueType quantity, string customName, decimal exchangeRate)
     {
-        return GetMeasureFactory().Create(quantity, customName, MeasureUnitTypeCode, exchangeRate);
+        return GetFactory().Create(quantity, customName, MeasureUnitTypeCode, exchangeRate);
     }
 
     public IMeasure GetMeasure(ValueType quantity, IMeasurement measurement)
     {
-        return GetMeasureFactory().Create(quantity, measurement);
+        return GetFactory().Create(quantity, measurement);
     }
 
     public IMeasure GetMeasure(IMeasure other)
     {
-        return GetMeasureFactory().Create(other);
+        return GetFactory().Create(other);
     }
 
     public IMeasure GetMeasure(ValueType quantity)
@@ -129,12 +125,7 @@ internal abstract class Measure : BaseMeasure, IMeasure
         return GetMeasure(excchanged);
     }
 
-    public IMeasureFactory GetMeasureFactory()
-    {
-        return MeasurableFactory as IMeasureFactory ?? throw new InvalidOperationException(null);
-    }
-
-    #region Overriden methods
+    #region Override methods
     public override sealed LimitMode? GetLimitMode()
     {
         return null;
@@ -167,34 +158,46 @@ internal abstract class Measure : BaseMeasure, IMeasure
         return obj is IMeasure measure && Equals(measure);
     }
 
-    public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit)
+    public override IMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit)
     {
         return GetMeasure(quantity, measureUnit);
     }
 
-    public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName)
-    {
-        return GetMeasure(quantity, measureUnit, exchangeRate, customName);
-    }
+    //public override IMeasure GetBaseMeasure(IBaseMeasure other)
+    //{
+    //    if (other is IMeasure measure) return GetMeasure(measure);
 
-    public override IBaseMeasure GetBaseMeasure(ValueType quantity, IMeasurement measurement)
-    {
-        return GetMeasure(quantity, measurement);
-    }
+    //    return GetFactory().Create(other);
+    //}
 
-    public override IBaseMeasure GetBaseMeasure(ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
-    {
-        return GetMeasure(quantity, measureUnitTypeCode, exchangeRate, customName);
-    }
+    //public IMeasureFactory GetFactory()
+    //{
+    //    return Factory as IMeasureFactory ?? throw new InvalidOperationException(null);
+    //}
 
-    public override IBaseMeasure GetBaseMeasure(ValueType quantity, string name)
-    {
-        return GetMeasure(quantity, name);
-    }
+    //public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName)
+    //{
+    //    return GetMeasure(quantity, measureUnit, exchangeRate, customName);
+    //}
 
-    public override sealed ValueType GetDefaultRateComponentQuantity()
+    //public override IBaseMeasure GetBaseMeasure(ValueType quantity, IMeasurement measurement)
+    //{
+    //    return GetMeasure(quantity, measurement);
+    //}
+
+    //public override IBaseMeasure GetBaseMeasure(ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
+    //{
+    //    return GetMeasure(quantity, measureUnitTypeCode, exchangeRate, customName);
+    //}
+
+    //public override IBaseMeasure GetBaseMeasure(ValueType quantity, string name)
+    //{
+    //    return GetMeasure(quantity, name);
+    //}
+
+    public override sealed IMeasureFactory GetFactory()
     {
-        return DefaultMeasureQuantity;
+        return (IMeasureFactory)Factory;
     }
 
     public override sealed int GetHashCode()
@@ -302,6 +305,11 @@ internal abstract class Measure : BaseMeasure, IMeasure
         {
             throw new InvalidOperationException(ex.Message, ex.InnerException);
         }
+    }
+
+    public IMeasure GetDefaultRateComponent()
+    {
+        return (IMeasure)GetDefault();
     }
     #endregion
     #endregion

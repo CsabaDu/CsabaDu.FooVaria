@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Types;
 
-public interface IDenominator : IBaseMeasure
+public interface IDenominator : IBaseMeasure, IDefaultRateComponent<IDenominator>
 {
     IDenominator GetDenominator(Enum measureUnit);
     IDenominator GetDenominator(Enum measureUnit, ValueType quantity);
@@ -22,5 +22,5 @@ public interface IDenominator : IBaseMeasure
 
     IDenominator GetDenominator(IDenominator other);
 
-    IDenominatorFactory GetDenominatorFactory();
+    //IDenominatorFactory GetFactory();
 }

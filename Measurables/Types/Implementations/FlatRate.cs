@@ -25,48 +25,48 @@ internal sealed class FlatRate : Rate, IFlatRate
 
     public IFlatRate GetFlatRate(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, decimal? quantity = null)
     {
-        return GetFlatRateFactory().Create(numerator, measureUnit, exchangeRate, customName, quantity);
+        return GetFactory().Create(numerator, measureUnit, exchangeRate, customName, quantity);
     }
 
     public IFlatRate GetFlatRate(IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, decimal? quantity = null)
     {
-        return GetFlatRateFactory().Create(numerator, customName, measureUnitTypeCode, exchangeRate, quantity);
+        return GetFactory().Create(numerator, customName, measureUnitTypeCode, exchangeRate, quantity);
     }
 
     public IFlatRate GetFlatRate(IMeasure numerator, string customName, decimal? quantity = null)
     {
-        return GetFlatRateFactory().Create(numerator, customName, quantity);
+        return GetFactory().Create(numerator, customName, quantity);
     }
 
     public IFlatRate GetFlatRate(IMeasure numerator, Enum measureUnit, decimal? quantity = null)
     {
-        return GetFlatRateFactory().Create(numerator, measureUnit, quantity);
+        return GetFactory().Create(numerator, measureUnit, quantity);
     }
 
     public IFlatRate GetFlatRate(IMeasure numerator, IMeasurement measurement, decimal? quantity = null)
     {
-        return GetFlatRateFactory().Create(numerator, measurement, quantity);
+        return GetFactory().Create(numerator, measurement, quantity);
     }
 
     public IFlatRate GetFlatRate(IMeasure numerator, IDenominator? denominator = null)
     {
-        return GetFlatRateFactory().Create(numerator, denominator ?? Denominator);
+        return GetFactory().Create(numerator, denominator ?? Denominator);
     }
 
     public IFlatRate GetFlatRate(IRate rate) // Check!
     {
-        return GetFlatRateFactory().Create(rate);
+        return GetFactory().Create(rate);
     }
 
     public IFlatRate GetFlatRate(IFlatRate? other = null)
     {
-        return GetFlatRateFactory().Create(other ?? this);
+        return GetFactory().Create(other ?? this);
     }
 
-    public IFlatRateFactory GetFlatRateFactory()
-    {
-        return MeasurableFactory as IFlatRateFactory ?? throw new InvalidOperationException(null);
-    }
+    //public IFlatRateFactory GetFactory()
+    //{
+    //    return Factory as IFlatRateFactory ?? throw new InvalidOperationException(null);
+    //}
 
     public override ILimit? GetLimit()
     {
@@ -124,6 +124,14 @@ internal sealed class FlatRate : Rate, IFlatRate
     {
         return GetSum(other, SummingMode.Subtract);
     }
+
+    #region Override methods
+    public override IFlatRateFactory GetFactory()
+    {
+        return (IFlatRateFactory)Factory;
+    }
+    #endregion
+
     #endregion
 
     #region Private methods

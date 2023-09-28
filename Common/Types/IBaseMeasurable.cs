@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Common.Types;
 
-public interface IBaseMeasurable : IDefaultMeasureUnit, IMeasureUnitType
+public interface IBaseMeasurable : ICommonBase, IDefaultMeasureUnit, IMeasureUnitType
 {
     MeasureUnitTypeCode MeasureUnitTypeCode { get; init; }
 }

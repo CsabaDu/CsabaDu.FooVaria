@@ -3,7 +3,7 @@ using CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes;
 
 namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
 
-public abstract class BaseMeasureFactory : MeasurableFactory, IBaseMeasureFactory
+public abstract class BaseMeasureFactory : IBaseMeasureFactory
 {
     #region Constructors
     private protected BaseMeasureFactory(IMeasurementFactory measurementFactory)
@@ -15,32 +15,25 @@ public abstract class BaseMeasureFactory : MeasurableFactory, IBaseMeasureFactor
     #region Properties
     public IMeasurementFactory MeasurementFactory { get; init; }
     public abstract RateComponentCode RateComponentCode { get; }
+    public abstract object DefaultRateComponentQuantity { get; }
     #endregion
 
     #region Public methods
-    public IBaseMeasure Create(IBaseMeasureFactory baseMeasureFactory, IBaseMeasure baseMeasure)
-    {
-        return NullChecked(baseMeasureFactory, nameof(baseMeasureFactory)) switch
-        {
-            DenominatorFactory denominatorFactory => CreateDenominator(denominatorFactory, baseMeasure),
-            MeasureFactory measureFactory => CreateMeasure(measureFactory, baseMeasure),
-            LimitFactory limitFactory => CreateLimit(limitFactory, baseMeasure, baseMeasure?.GetLimitMode()),
+    public abstract IMeasurable Create(IMeasurable other);
 
-            _ => throw new InvalidOperationException(null),
-        };
-    }
+    public abstract IBaseMeasure CreateDefault(MeasureUnitTypeCode measureUnitTypeCode);
     #endregion
 
     #region Protected methods
-    protected static IDenominator CreateDenominator(IDenominatorFactory denominatorFactory, IBaseMeasure baseMeasure)
-    {
-        if (baseMeasure is IDenominator denominator) return CreateDenominator(denominator);
+    //protected static IDenominator CreateDenominator(IDenominatorFactory denominatorFactory, IBaseMeasure baseMeasure)
+    //{
+    //    if (baseMeasure is IDenominator denominator) return CreateDenominator(denominator);
 
-        IMeasurement measurement = NullChecked(baseMeasure, nameof(baseMeasure)).Measurement;
-        ValueType quantity = baseMeasure.GetQuantity();
+    //    IMeasurement measurement = NullChecked(baseMeasure, nameof(baseMeasure)).Measurement;
+    //    ValueType quantity = baseMeasure.GetQuantity();
 
-        return new Denominator(denominatorFactory, quantity, measurement);
-    }
+    //    return new Denominator(denominatorFactory, quantity, measurement);
+    //}
 
     protected static IMeasure CreateMeasure(IMeasureFactory measureFactory, IBaseMeasure baseMeasure)
     {
@@ -62,10 +55,10 @@ public abstract class BaseMeasureFactory : MeasurableFactory, IBaseMeasureFactor
         return new Limit(limitFactory, quantity, measurement, limitMode ?? baseMeasure.GetLimitMode());
     }
 
-    protected static IDenominator CreateDenominator(IDenominatorFactory denominatorFactory, ValueType? quantity, IMeasurement measurement)
-    {
-        return new Denominator(denominatorFactory, quantity, measurement);
-    }
+    //protected static IDenominator CreateDenominator(IDenominatorFactory denominatorFactory, ValueType? quantity, IMeasurement measurement)
+    //{
+    //    return new Denominator(denominatorFactory, quantity, measurement);
+    //}
 
     protected static IMeasure CreateMeasure(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement)
     {

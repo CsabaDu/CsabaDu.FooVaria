@@ -23,5 +23,5 @@ public interface IFlatRate : IRate, ICalculable, ICalculate<decimal, IFlatRate>,
     IFlatRate GetFlatRate(IRate rate);
 
     IFlatRate GetFlatRate(IFlatRate other);
-    IFlatRateFactory GetFlatRateFactory();
+    //IFlatRateFactory GetFactory();
 }

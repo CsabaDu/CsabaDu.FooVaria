@@ -7,7 +7,7 @@ internal sealed class Area : Measure, IArea
     {
     }
 
-    internal Area(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
+    internal Area(IMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
     {
     }
     #endregion

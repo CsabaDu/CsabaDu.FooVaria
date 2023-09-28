@@ -104,6 +104,13 @@ internal static class ExchangeRates
     {
         return ExchangeRateCollection.ContainsKey(measureUnit) && exchangeRate == ExchangeRateCollection[measureUnit];
     }
+
+    internal static bool IsValidMeasureUnit(Enum measureUnit)
+    {
+        if (measureUnit == null) return false;
+
+        return GetValidMeasureUnits().Contains(measureUnit);
+    }
     #endregion
 
     #region Private methods

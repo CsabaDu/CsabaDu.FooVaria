@@ -7,7 +7,7 @@ internal sealed class Extent : Measure, IExtent
     {
     }
 
-    internal Extent(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
+    internal Extent(IMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
     {
     }
     #endregion

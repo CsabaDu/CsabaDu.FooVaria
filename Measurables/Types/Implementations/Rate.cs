@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿using CsabaDu.FooVaria.Common.Enums;
+
+namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal abstract class Rate : Measurable, IRate
 {
@@ -8,7 +10,19 @@ internal abstract class Rate : Measurable, IRate
         Numerator = other.Numerator;
         Denominator = other.Denominator;
     }
-    private protected Rate(IRateFactory rateFactory, IMeasure numerator, IDenominator denominator) : base(rateFactory, denominator)
+    private protected Rate(IRateFactory factory, IMeasure numerator, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
+    {
+        Numerator = NullChecked(numerator, nameof(numerator));
+        Denominator = GetDefaultDenominator(factory, measureUnitTypeCode);
+    }
+
+    private protected Rate(IRateFactory factory, IMeasure numerator, IMeasurement measurement) : base(factory, measurement)
+    {
+        Numerator = NullChecked(numerator, nameof(numerator));
+        Denominator = GetDefaultQuantityDenominator(factory, measurement);
+    }
+
+    private protected Rate(IRateFactory factory, IMeasure numerator, IDenominator denominator) : base(factory, denominator)
     {
         Numerator = NullChecked(numerator, nameof(numerator));
         Denominator = denominator;
@@ -59,11 +73,11 @@ internal abstract class Rate : Measurable, IRate
         return GetRate(numerator, denominator, GetLimit());
     }
 
-    public override sealed IMeasurable GetDefault()
+    public override sealed IRate GetDefault()
     {
-        IMeasure numerator = (IMeasure)Numerator.GetDefault();
-        IDenominator denominator = (IDenominator)Denominator.GetDefault();
-        ILimit? limit = (ILimit?)GetLimit()?.GetDefault();
+        IMeasure numerator = Numerator.GetDefaultRateComponent();
+        IDenominator denominator = Denominator.GetDefaultRateComponent();
+        ILimit? limit = GetLimit()?.GetDefaultRateComponent();
 
         return GetRate(numerator, denominator, limit);
     }
@@ -85,9 +99,9 @@ internal abstract class Rate : Measurable, IRate
         return Denominator.GetMeasureUnit();
     }
 
-    public override sealed TypeCode GetQuantityTypeCode(MeasureUnitTypeCode? measureUnitTypeCode = null)
+    public override sealed TypeCode GetQuantityTypeCode()
     {
-        return base.GetQuantityTypeCode(measureUnitTypeCode ?? Numerator.MeasureUnitTypeCode);
+        return Numerator.GetQuantityTypeCode();
     }
 
     public IBaseMeasure? GetRateComponent(RateComponentCode rateComponentCode)
@@ -95,20 +109,20 @@ internal abstract class Rate : Measurable, IRate
         return this[rateComponentCode];
     }
 
-    public IRate GetRate(IRateFactory rateFactory, IRate rate)
+    public IRate GetRate(IRateFactory factory, IRate rate)
     {
-        return GetRateFactory().Create(rateFactory, rate);
+        return GetFactory().Create(factory, rate);
     }
 
     public IRate GetRate(IRate? other = null)
     {
-        return (IRate)MeasurableFactory.Create(other ?? this);
+        return (IRate)GetFactory().Create(other ?? this);
     }
 
-    public IRateFactory GetRateFactory()
-    {
-        return MeasurableFactory as IRateFactory ?? throw new InvalidOperationException(null);
-    }
+    //public IRateFactory GetFactory()
+    //{
+    //    return Factory as IRateFactory ?? throw new InvalidOperationException(null);
+    //}
 
     public bool IsExchangeableTo(IRate? other)
     {
@@ -127,13 +141,33 @@ internal abstract class Rate : Measurable, IRate
 
         return exchanged != null;
     }
+
+    #region Override methods
+    public override IRateFactory GetFactory()
+    {
+        return (IRateFactory)Factory;
+    }
+    #endregion
+
     #region Abstract methods
-    public abstract IRate GetRate(IMeasure numerator, string customName, decimal? quantity = null, ILimit? limit = null);
-    public abstract IRate GetRate(IMeasure numerator, Enum measureUnit, decimal? quantity = null, ILimit? limit = null);
-    public abstract IRate GetRate(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, decimal? quantity = null, ILimit? limit = null);
-    public abstract IRate GetRate(IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, decimal? quantity = null, ILimit? limit = null);
-    public abstract IRate GetRate(IMeasure numerator, IMeasurement measurement, decimal? quantity = null, ILimit? limit = null);
-    public abstract IRate GetRate(IMeasure numerator, IDenominator? denominator = null, ILimit? limit = null);
+    public abstract IRate GetRate(IMeasure numerator, string customName, decimal quantity);
+    public abstract IRate GetRate(IMeasure numerator, Enum measureUnit, decimal quantity);
+    public abstract IRate GetRate(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, decimal quantity);
+    public abstract IRate GetRate(IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, decimal quantity);
+    public abstract IRate GetRate(IMeasure numerator, IMeasurement measurement, decimal quantity);
+    public abstract IRate GetRate(IMeasure numerator, IMeasurement measurement);
+    public abstract IRate GetRate(IMeasure numerator, MeasureUnitTypeCode measureUnitTypeCode);
+    public abstract IRate GetRate(IMeasure numerator, IDenominator denominator);
     #endregion
     #endregion
+
+    private static IDenominator GetDefaultQuantityDenominator(IRateFactory factory, IMeasurement measurement)
+    {
+        return factory.DenominatorFactory.Create(measurement);
+    }
+    private static IDenominator GetDefaultDenominator(IRateFactory factory, MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        return (IDenominator)factory.DenominatorFactory.CreateDefault(measureUnitTypeCode);
+    }
+
 }

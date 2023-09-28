@@ -9,7 +9,6 @@
         ValueType GetQuantity(RoundingMode roundingMode);
         ValueType GetQuantity(TypeCode quantityTypeCode);
         TypeCode? GetQuantityTypeCode(ValueType quantity);
-        ValueType GetDefaultRateComponentQuantity();
         decimal GetDecimalQuantity(/*T? other = null*/);
         bool TryGetQuantity(ValueType? quantity, [NotNullWhen(true)] out ValueType? thisTypeQuantity);
 

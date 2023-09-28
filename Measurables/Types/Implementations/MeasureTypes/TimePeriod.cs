@@ -7,7 +7,7 @@ internal sealed class TimePeriod : Measure, ITimePeriod
     {
     }
 
-    internal TimePeriod(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
+    internal TimePeriod(IMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
     {
     }
     #endregion

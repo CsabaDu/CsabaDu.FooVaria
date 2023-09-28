@@ -7,7 +7,7 @@ internal sealed class Distance : Measure, IDistance
     {
     }
 
-    internal Distance(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
+    internal Distance(IMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
     {
     }
     #endregion

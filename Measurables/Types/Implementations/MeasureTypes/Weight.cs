@@ -7,7 +7,7 @@ internal sealed class Weight : Measure, IWeight
     {
     }
 
-    internal Weight(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
+    internal Weight(IMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
     {
     }
     #endregion

@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Measurables.Types.Implementations;
-
-namespace Measurables.Types.Implementations.MeasureTypes;
+﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes;
 
 internal sealed class PieceCount : Measure, IPieceCount
 {
@@ -9,7 +7,7 @@ internal sealed class PieceCount : Measure, IPieceCount
     {
     }
 
-    internal PieceCount(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
+    internal PieceCount(IMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
     {
     }
     #endregion

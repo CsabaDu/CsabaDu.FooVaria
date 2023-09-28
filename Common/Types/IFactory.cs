@@ -4,7 +4,7 @@
     {
     }
 
-    public interface IFactory<T> : IFactory where T : class
+    public interface IFactory<T> : IFactory where T : class, ICommonBase
     {
         T Create(T other);
     }

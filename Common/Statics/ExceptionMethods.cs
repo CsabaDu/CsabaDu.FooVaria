@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Common.Statics;
+﻿using CsabaDu.FooVaria.Common.Behaviors;
+
+namespace CsabaDu.FooVaria.Common.Statics;
 
 public static class ExceptionMethods
 {
@@ -58,17 +60,22 @@ public static class ExceptionMethods
 
     public static ArgumentOutOfRangeException NameArgumentOutOfRangeException(string? name)
     {
-        throw new ArgumentOutOfRangeException(nameof(name), name, null);
+        return new ArgumentOutOfRangeException(nameof(name), name, null);
     }
 
     public static ArgumentOutOfRangeException CustomNameArgumentOutOfRangeException(string? customName)
     {
-        throw new ArgumentOutOfRangeException(nameof(customName), customName, null);
+        return new ArgumentOutOfRangeException(nameof(customName), customName, null);
     }
 
     public static ArgumentOutOfRangeException QuantityArgumentOutOfRangeException(ValueType? quantity)
     {
-        throw new ArgumentOutOfRangeException(nameof(quantity), Type.GetTypeCode(quantity?.GetType()), null);
+        return new ArgumentOutOfRangeException(nameof(quantity), Type.GetTypeCode(quantity?.GetType()), null);
+    }
+
+    public static ArgumentOutOfRangeException MeasureUnitTypeArgumentOutOfRangeException(Type measureUnitType)
+    {
+        return new ArgumentOutOfRangeException(nameof(measureUnitType), measureUnitType.FullName, null);
     }
     #endregion
 }

@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
 
-public abstract class RateFactory : MeasurableFactory, IRateFactory
+public abstract class RateFactory : Factory, IRateFactory
 {
     #region Constructors
     protected RateFactory(IDenominatorFactory denominatorFactory)

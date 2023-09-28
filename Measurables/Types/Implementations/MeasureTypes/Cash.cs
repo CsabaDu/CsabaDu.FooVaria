@@ -7,7 +7,7 @@ internal sealed class Cash : Measure, ICash
     {
     }
 
-    internal Cash(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(measureFactory, quantity, measurement)
+    internal Cash(IMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
     {
     }
     #endregion

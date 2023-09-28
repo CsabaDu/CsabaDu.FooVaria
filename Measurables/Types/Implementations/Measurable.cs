@@ -11,35 +11,27 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
     #endregion
 
     #region Constructors
-    private protected Measurable(IMeasurableFactory measurableFactory, MeasureUnitTypeCode measureUnitTypeCode) : base(measureUnitTypeCode)
+    private protected Measurable(IMeasurableFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
     {
-        MeasurableFactory = NullChecked(measurableFactory, nameof(measurableFactory));
     }
 
-    private protected Measurable(IMeasurableFactory factory, Enum measureUnit) : base(measureUnit)
+    private protected Measurable(IMeasurableFactory factory, Enum measureUnit) : base(factory, measureUnit)
     {
-        MeasurableFactory = NullChecked(factory, nameof(factory));
     }
 
-    private protected Measurable(IMeasurableFactory measurableFactory, IMeasurable measurable) : base(measurable)
+    private protected Measurable(IMeasurableFactory factory, IMeasurable measurable) : base(factory, measurable)
     {
-        MeasurableFactory = NullChecked(measurableFactory, nameof(measurableFactory));
     }
 
     private protected Measurable(IMeasurable other) : base(other)
     {
-        MeasurableFactory = other.MeasurableFactory;
     }
-    #endregion
-
-    #region Properties
-    public IMeasurableFactory MeasurableFactory { get; init; }
     #endregion
 
     #region Public methods
     public IMeasurable GetMeasurable(IMeasurable measurable)
     {
-        return MeasurableFactory.Create(measurable);
+        return GetFactory().Create(measurable);
     }
 
     public IMeasurable GetMeasurable(IMeasurableFactory measurableFactory, IMeasurable measurable)
@@ -54,19 +46,25 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
     }
     #endregion
 
-    #region Overriden methods
+    #region Override methods
     public override bool Equals(object? obj)
     {
         return obj is IMeasurable other
             && MeasureUnitTypeCode == other.MeasureUnitTypeCode
-            && MeasurableFactory.Equals(other.MeasurableFactory);
+            && Factory.Equals(other.Factory);
+    }
+
+    public override IMeasurableFactory GetFactory()
+    {
+        return (IMeasurableFactory)Factory;
     }
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(MeasureUnitTypeCode, MeasurableFactory);
+        return HashCode.Combine(MeasureUnitTypeCode, Factory);
     }
 
+    #region Sealed methods
     public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
     {
         return base.GetMeasureUnitTypeCodes();
@@ -84,6 +82,7 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
         throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode);
     }
     #endregion
+    #endregion
 
     #region Abstract methods
     public abstract IMeasurable GetDefault();
@@ -91,6 +90,7 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
     #endregion
 
     #region Protected methods
+    #region Static methods
     protected static IMeasure GetSum(IMeasure measure, IMeasure? other, SummingMode summingMode)
     {
         if (other == null) return measure.GetMeasure(measure);
@@ -120,5 +120,6 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
         }
         #endregion
     }
+    #endregion
     #endregion
 }

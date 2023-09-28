@@ -10,6 +10,8 @@ public sealed class LimitFactory : BaseMeasureFactory, ILimitFactory
 
     #region Properties
     public override RateComponentCode RateComponentCode => RateComponentCode.Limit;
+
+    public override object DefaultRateComponentQuantity => default(ulong);
     #endregion
 
     #region Public methods
@@ -59,6 +61,41 @@ public sealed class LimitFactory : BaseMeasureFactory, ILimitFactory
     public ILimit Create(ILimit limit, LimitMode? limitMode)
     {
         return CreateLimit(limit, limitMode);
+    }
+
+    public override IMeasurable Create(IMeasurable other)
+    {
+        throw new NotImplementedException();
+    }
+
+    public ILimit Create(string name, ValueType quantity, LimitMode limitMode)
+    {
+        throw new NotImplementedException();
+    }
+
+    public ILimit Create(Enum measureUnit, ValueType quantity, LimitMode limitMode)
+    {
+        throw new NotImplementedException();
+    }
+
+    public ILimit Create(IMeasurement measurement, ValueType quantity, LimitMode limitMode)
+    {
+        throw new NotImplementedException();
+    }
+
+    public ILimit Create(IBaseMeasure baseMeasure, LimitMode limitMode)
+    {
+        throw new NotImplementedException();
+    }
+
+    public ILimit Create(ILimit limit, ValueType quantity)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override IBaseMeasure CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        throw new NotImplementedException();
     }
     #endregion
 }

@@ -2,22 +2,27 @@
 
 namespace CsabaDu.FooVaria.Common.Types.Implementations;
 
-public abstract class BaseMeasurable : IBaseMeasurable
+public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
 {
     #region Constructors
-    protected BaseMeasurable(MeasureUnitTypeCode measureUnitTypeCode)
+    protected BaseMeasurable(IFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory)
     {
         MeasureUnitTypeCode = Defined(measureUnitTypeCode, nameof(measureUnitTypeCode));
     }
 
-    protected BaseMeasurable(Enum measureUnit)
+    protected BaseMeasurable(IFactory factory, Enum measureUnit) : base(factory)
     {
         MeasureUnitTypeCode = GetMeasureUnitTypeCode(measureUnit);
     }
 
-    protected BaseMeasurable(IBaseMeasurable other)
+    protected BaseMeasurable(IFactory factory, IBaseMeasurable baseMeasurable) : base(factory)
     {
-        MeasureUnitTypeCode = NullChecked(other, nameof(other)).MeasureUnitTypeCode;
+        MeasureUnitTypeCode = NullChecked(baseMeasurable, nameof(baseMeasurable)).MeasureUnitTypeCode;
+    }
+
+    protected BaseMeasurable(IBaseMeasurable other) : base(other)
+    {
+        MeasureUnitTypeCode = other.MeasureUnitTypeCode;
     }
     #endregion
 
@@ -48,7 +53,7 @@ public abstract class BaseMeasurable : IBaseMeasurable
 
     public MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum measureUnit)
     {
-        return MeasureUnitTypes.GetValidMeasureUnitTypeCode(NullChecked(measureUnit, nameof(measureUnit)));
+        return MeasureUnitTypes.GetValidMeasureUnitTypeCode(measureUnit);
     }
 
     public bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, Enum measureUnit)
@@ -71,7 +76,7 @@ public abstract class BaseMeasurable : IBaseMeasurable
         MeasureUnitTypes.ValidateMeasureUnit(measureUnit, measureUnitTypeCode);
     }
 
-    #region Overriden methods
+    #region Override methods
     public override bool Equals(object? obj)
     {
         return obj is IBaseMeasurable other

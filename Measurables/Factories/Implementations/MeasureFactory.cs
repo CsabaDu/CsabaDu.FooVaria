@@ -10,6 +10,8 @@ public sealed class MeasureFactory : BaseMeasureFactory, IMeasureFactory
 
     #region Properties
     public override RateComponentCode RateComponentCode => RateComponentCode.Numerator;
+
+    public override object DefaultRateComponentQuantity => default(int);
     #endregion
 
     #region Public methods
@@ -54,6 +56,16 @@ public sealed class MeasureFactory : BaseMeasureFactory, IMeasureFactory
     public IMeasure Create(IMeasure measure)
     {
         return CreateMeasure(measure);
+    }
+
+    public override IMeasurable Create(IMeasurable other)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override IBaseMeasure CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        throw new NotImplementedException();
     }
     #endregion
 }

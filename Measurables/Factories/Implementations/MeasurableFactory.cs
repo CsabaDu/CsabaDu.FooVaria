@@ -1,25 +1,27 @@
 ﻿using CsabaDu.FooVaria.Measurables.Statics;
 using CsabaDu.FooVaria.Measurables.Types.Implementations;
 using CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes;
-using Measurables.Types.Implementations.MeasureTypes;
 
 namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
 
 public abstract class MeasurableFactory : IMeasurableFactory
 {
     #region Static Properties
-    protected static IDictionary<Enum, IMeasurement> Measurements => GetMeasurements();
+    protected static IDictionary<object, IMeasurement> Measurements => GetMeasurements();
 
-    private static Dictionary<Enum, IMeasurement> GetMeasurements()
+    private static Dictionary<object, IMeasurement> GetMeasurements()
     {
-        var measurements = new Dictionary<Enum, IMeasurement>();
+        return getMeasurements().ToDictionary(x => x.Key, x => x.Value);
 
-        foreach (object item in ExchangeRates.GetValidMeasureUnits())
+        #region Local methods
+        static IEnumerable<KeyValuePair<object, IMeasurement>> getMeasurements()
         {
-            measurements.Add((Enum)item, new Measurement(new MeasurementFactory(), (Enum)item));
+            foreach (object item in ExchangeRates.GetValidMeasureUnits())
+            {
+                yield return new KeyValuePair<object, IMeasurement>(item, new Measurement(new MeasurementFactory(), (Enum)item));
+            }
         }
-
-        return measurements;
+        #endregion
     }
     #endregion
 
@@ -33,7 +35,7 @@ public abstract class MeasurableFactory : IMeasurableFactory
             {
                 Denominator denominator => CreateDenominator(denominator),
                 Measure measure => CreateMeasure(measure),
-                Limit limit => CreateLimit(limit, null),
+                Limit limit => CreateLimit(limit, limit.LimitMode),
 
                 _ => throw new InvalidOperationException(null),
             },
@@ -56,10 +58,10 @@ public abstract class MeasurableFactory : IMeasurableFactory
         return GetMeasurement(measurement.GetMeasureUnit());
     }
 
-    protected static IDenominator CreateDenominator(IDenominator denominator)
-    {
-        return new Denominator(denominator);
-    }
+    //protected static IDenominator CreateDenominator(IDenominator denominator)
+    //{
+    //    return new Denominator(denominator);
+    //}
 
     protected static IMeasure CreateMeasure(IMeasure measure)
     {
@@ -78,7 +80,7 @@ public abstract class MeasurableFactory : IMeasurableFactory
         };
     }
 
-    protected static ILimit CreateLimit(ILimit limit, LimitMode? limitMode)
+    protected static ILimit CreateLimit(ILimit limit, LimitMode limitMode)
     {
         return new Limit(limit, limitMode);
     }
@@ -95,7 +97,9 @@ public abstract class MeasurableFactory : IMeasurableFactory
 
     protected static IMeasurement GetMeasurement(Enum measureUnit)
     {
-        return Measurements[measureUnit];
+        if (ExchangeRates.IsValidMeasureUnit(measureUnit)) return Measurements[measureUnit];
+
+        throw InvalidMeasureUnitEnumArgumentException(measureUnit);
     }
     #endregion
 }

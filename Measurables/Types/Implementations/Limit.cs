@@ -2,10 +2,6 @@
 
 internal sealed class Limit : BaseMeasure, ILimit
 {
-    #region Constants
-    private const ulong DefaultRateComponentQuantity = default;
-    #endregion
-
     #region Constructors
     internal Limit(ILimit other) : base(other)
     {
@@ -46,17 +42,17 @@ internal sealed class Limit : BaseMeasure, ILimit
 
     public ILimit GetLimit(Enum measureUnit, decimal exchangeRate, string customName, ValueType quantity, LimitMode limitMode)
     {
-        return GetLimitFactory().Create(measureUnit, exchangeRate, customName, quantity, limitMode);
+        return GetFactory().Create(measureUnit, exchangeRate, customName, quantity, limitMode);
     }
 
     public ILimit GetLimit(IMeasurement measurement, ValueType quantity, LimitMode limitMode)
     {
-        return GetLimitFactory().Create(measurement, quantity, limitMode);
+        return GetFactory().Create(measurement, quantity, limitMode);
     }
 
     public ILimit GetLimit(IBaseMeasure baseMeasure, LimitMode limitMode)
     {
-        return GetLimitFactory().Create(baseMeasure, limitMode);
+        return GetFactory().Create(baseMeasure, limitMode);
     }
 
     public ILimit GetLimit(ILimit other)
@@ -66,27 +62,22 @@ internal sealed class Limit : BaseMeasure, ILimit
 
     public ILimit GetLimit(ValueType quantity)
     {
-        return GetLimitFactory().Create(this, quantity);
+        return GetFactory().Create(this, quantity);
     }
 
     public ILimit GetLimit(string name, ValueType quantity, LimitMode limitMode)
     {
-        return GetLimitFactory().Create(name, quantity, limitMode);
+        return GetFactory().Create(name, quantity, limitMode);
     }
 
     public ILimit GetLimit(Enum measureUnit, ValueType quantity, LimitMode limitMode)
     {
-        return GetLimitFactory().Create(measureUnit, quantity, limitMode);
+        return GetFactory().Create(measureUnit, quantity, limitMode);
     }
 
     public ILimit GetLimit(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity, LimitMode limitMode)
     {
-        return GetLimitFactory().Create(customName, measureUnitTypeCode, exchangeRate, quantity, limitMode);
-    }
-
-    public ILimitFactory GetLimitFactory()
-    {
-        return MeasurableFactory as ILimitFactory ?? throw new InvalidOperationException(null);
+        return GetFactory().Create(customName, measureUnitTypeCode, exchangeRate, quantity, limitMode);
     }
 
     public LimitMode GetLimitMode(ILimit limit)
@@ -106,7 +97,7 @@ internal sealed class Limit : BaseMeasure, ILimit
         throw InvalidLimitModeEnumArgumentException(limitMode);
     }
 
-    #region Overriden methods
+    #region Override methods
     public override bool Equals(IBaseMeasure? other)
     {
         return Equals(this, other);
@@ -122,29 +113,34 @@ internal sealed class Limit : BaseMeasure, ILimit
         return GetLimit(measureUnit, quantity, default);
     }
 
-    public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName)
-    {
-        return GetLimit(measureUnit, exchangeRate, customName, quantity, default);
-    }
+    //public ILimitFactory GetFactory()
+    //{
+    //    return Factory as ILimitFactory ?? throw new InvalidOperationException(null);
+    //}
 
-    public override IBaseMeasure GetBaseMeasure(ValueType quantity, IMeasurement measurement)
-    {
-        return GetLimit(measurement, quantity, default);
-    }
+    //public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName)
+    //{
+    //    return GetLimit(measureUnit, exchangeRate, customName, quantity, default);
+    //}
 
-    public override IBaseMeasure GetBaseMeasure(ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
-    {
-        return GetLimit(measureUnitTypeCode, exchangeRate, customName, quantity, default);
-    }
+    //public override IBaseMeasure GetBaseMeasure(ValueType quantity, IMeasurement measurement)
+    //{
+    //    return GetLimit(measurement, quantity, default);
+    //}
 
-    public override IBaseMeasure GetBaseMeasure(ValueType quantity, string name)
-    {
-        return GetLimit(name, quantity, default);
-    }
+    //public override IBaseMeasure GetBaseMeasure(ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
+    //{
+    //    return GetLimit(measureUnitTypeCode, exchangeRate, customName, quantity, default);
+    //}
 
-    public override ValueType GetDefaultRateComponentQuantity()
+    //public override IBaseMeasure GetBaseMeasure(ValueType quantity, string name)
+    //{
+    //    return GetLimit(name, quantity, default);
+    //}
+
+    public override ILimitFactory GetFactory()
     {
-        return DefaultRateComponentQuantity;
+        return (ILimitFactory)Factory;
     }
 
     public override int GetHashCode()
@@ -170,6 +166,11 @@ internal sealed class Limit : BaseMeasure, ILimit
         ValidateLimitMode(limitMode);
 
         return limitMode;
+    }
+
+    public ILimit GetDefaultRateComponent()
+    {
+        return (ILimit)GetDefault();
     }
     #endregion
 }
