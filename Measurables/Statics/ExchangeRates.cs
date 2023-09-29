@@ -114,21 +114,6 @@ internal static class ExchangeRates
     #endregion
 
     #region Private methods
-    //private static IDictionary<object, decimal> GetExchangeRateCollection(IDictionary<object, decimal> collection)
-    //{
-    //    Dictionary<object, decimal> exchangeRateCollection = new();
-
-    //    for (int i = 0; i < collection.Count; i++)
-    //    {
-    //        object measureUnit = collection.Keys.ElementAt(i);
-    //        decimal exchangeRate = collection.Values.ElementAt(i);
-
-    //        exchangeRateCollection.Add(measureUnit, exchangeRate);
-    //    }
-
-    //    return exchangeRateCollection;
-    //}
-
     private static IDictionary<object, decimal> InitConstantExchangeRateCollection()
     {
         return initConstantExchangeRates<AreaUnit>(100, 10000, 1000000)
@@ -169,3 +154,19 @@ internal static class ExchangeRates
     }
     #endregion
 }
+
+
+    //private static IDictionary<object, decimal> GetExchangeRateCollection(IDictionary<object, decimal> collection)
+    //{
+    //    Dictionary<object, decimal> exchangeRateCollection = new();
+
+    //    for (int i = 0; i < collection.Count; i++)
+    //    {
+    //        object measureUnit = collection.Keys.ElementAt(i);
+    //        decimal exchangeRate = collection.Values.ElementAt(i);
+
+    //        exchangeRateCollection.Add(measureUnit, exchangeRate);
+    //    }
+
+    //    return exchangeRateCollection;
+    //}

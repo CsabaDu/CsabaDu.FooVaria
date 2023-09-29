@@ -439,21 +439,6 @@
       <FileName>Markers\ICalculable.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.Measurables.Behaviors.IRateComponent&lt;T&gt;" Collapsed="true">
-    <Position X="5.5" Y="8" Width="1.75" />
-    <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Markers.IRateComponent" FixedFromPoint="true">
-      <Path>
-        <Point X="8.75" Y="7.562" />
-        <Point X="8.75" Y="7.812" />
-        <Point X="6.375" Y="7.812" />
-        <Point X="6.375" Y="8" />
-      </Path>
-    </InheritanceLine>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAIAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Behaviors\IRateComponent.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Behaviors.ICalculate&lt;U, T&gt;" Collapsed="true">
     <Position X="6.75" Y="18.25" Width="1.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Behaviors.IMultiply&lt;U, T&gt;" FixedFromPoint="true">
@@ -551,6 +536,21 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Markers\IConvertMeasure.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Measurables.Behaviors.IRateComponent&lt;T&gt;" Collapsed="true">
+    <Position X="6.5" Y="8" Width="2" />
+    <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Markers.IRateComponent" FixedFromPoint="true">
+      <Path>
+        <Point X="8.812" Y="7.562" />
+        <Point X="8.812" Y="7.75" />
+        <Point X="7.5" Y="7.75" />
+        <Point X="7.5" Y="8" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Behaviors\IRateComponent.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />
