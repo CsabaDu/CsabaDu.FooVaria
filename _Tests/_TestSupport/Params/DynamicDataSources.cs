@@ -9,6 +9,7 @@ internal class DynamicDataSources
     private readonly RandomParams RandomParams = new();
     #endregion
 
+
     #region Protected types
     #region bool
     protected class EqualsArg
@@ -24,169 +25,169 @@ internal class DynamicDataSources
         }
     }
 
-    protected class EqualMeasureUnitEnumsArgs : EqualsArg
-    {
-        internal Enum MeasureUnit { get; init; }
+    //protected class EqualMeasureUnitEnumsArgs : EqualsArg
+    //{
+    //    internal Enum MeasureUnit { get; init; }
 
-        public override object[] ToObjectArray()
-        {
-            return new object[]
-            {
-                IsTrue,
-                MeasureUnit,
-            };
-        }
-    }
+    //    public override object[] ToObjectArray()
+    //    {
+    //        return new object[]
+    //        {
+    //            IsTrue,
+    //            MeasureUnit,
+    //        };
+    //    }
+    //}
 
-    protected class EqualsMeasureUnitTypeCodeArgs : EqualsArg
-    {
-        internal MeasureUnitTypeCode MeasureUnitTypeCode { get; init; }
+    //protected class EqualsMeasureUnitTypeCodeArgs : EqualsArg
+    //{
+    //    internal MeasureUnitTypeCode MeasureUnitTypeCode { get; init; }
 
-        public override object[] ToObjectArray()
-        {
-            return new object[]
-            {
-                IsTrue,
-                MeasureUnitTypeCode,
-            };
-        }
-    }
+    //    public override object[] ToObjectArray()
+    //    {
+    //        return new object[]
+    //        {
+    //            IsTrue,
+    //            MeasureUnitTypeCode,
+    //        };
+    //    }
+    //}
 
-    protected class HasMeasureUnitTypeCodeArgs : EqualsMeasureUnitTypeCodeArgs
-    {
-        internal IBaseMeasurable BaseMeasurable { get; init; }
+    //protected class HasMeasureUnitTypeCodeArgs : EqualsMeasureUnitTypeCodeArgs
+    //{
+    //    internal IBaseMeasurable BaseMeasurable { get; init; }
 
-        public override object[] ToObjectArray()
-        {
-            return new object[]
-            {
-                IsTrue,
-                MeasureUnitTypeCode,
-                BaseMeasurable,
-            };
-        }
-    }
+    //    public override object[] ToObjectArray()
+    //    {
+    //        return new object[]
+    //        {
+    //            IsTrue,
+    //            MeasureUnitTypeCode,
+    //            BaseMeasurable,
+    //        };
+    //    }
+    //}
 
-    protected class HasMeasureUnitTypeCodeMeasureUnitArgs : HasMeasureUnitTypeCodeArgs
-    {
-        internal Enum MeasureUnit { get; init; }
+    //protected class HasMeasureUnitTypeCodeMeasureUnitArgs : HasMeasureUnitTypeCodeArgs
+    //{
+    //    internal Enum MeasureUnit { get; init; }
 
-        public override object[] ToObjectArray()
-        {
-            return new object[]
-            {
-                IsTrue,
-                MeasureUnitTypeCode,
-                BaseMeasurable,
-                MeasureUnit,
-            };
-        }
-    }
+    //    public override object[] ToObjectArray()
+    //    {
+    //        return new object[]
+    //        {
+    //            IsTrue,
+    //            MeasureUnitTypeCode,
+    //            BaseMeasurable,
+    //            MeasureUnit,
+    //        };
+    //    }
+    //}
 
-    protected class EqualsObjectArgs : EqualsArg
-    {
-        internal object Obj { get; init; }
+    //protected class EqualsObjectArgs : EqualsArg
+    //{
+    //    internal object Obj { get; init; }
 
-        public override object[] ToObjectArray()
-        {
-            return new object[]
-            {
-                IsTrue,
-                Obj,
-            };
-        }
-    }
+    //    public override object[] ToObjectArray()
+    //    {
+    //        return new object[]
+    //        {
+    //            IsTrue,
+    //            Obj,
+    //        };
+    //    }
+    //}
 
-    protected class BaseMeasurableEqualsObjectArgs : EqualsObjectArgs
-    {
-        internal MeasureUnitTypeCode MeasureUnitTypeCode { get; init; }
+    //protected class BaseMeasurableEqualsObjectArgs : EqualsObjectArgs
+    //{
+    //    internal MeasureUnitTypeCode MeasureUnitTypeCode { get; init; }
 
-        public override object[] ToObjectArray()
-        {
-            return new object[]
-            {
-                IsTrue,
-                Obj,
-                MeasureUnitTypeCode,
-            };
-        }
-    }
+    //    public override object[] ToObjectArray()
+    //    {
+    //        return new object[]
+    //        {
+    //            IsTrue,
+    //            Obj,
+    //            MeasureUnitTypeCode,
+    //        };
+    //    }
+    //}
 
-    protected class MeasurableEqualsObjectArgs : BaseMeasurableEqualsObjectArgs
-    {
-        IMeasurableFactory MeasurableFactory { get; init; }
+    //protected class MeasurableEqualsObjectArgs : BaseMeasurableEqualsObjectArgs
+    //{
+    //    IMeasurableFactory MeasurableFactory { get; init; }
 
-        public override object[] ToObjectArray()
-        {
-            return new object[]
-            {
-                IsTrue,
-                Obj,
-                MeasureUnitTypeCode,
-                MeasurableFactory,
-            };
-        }
-    }
+    //    public override object[] ToObjectArray()
+    //    {
+    //        return new object[]
+    //        {
+    //            IsTrue,
+    //            Obj,
+    //            MeasureUnitTypeCode,
+    //            MeasurableFactory,
+    //        };
+    //    }
+    //}
 
-    protected class MeasurementEqualsObjectArgs : BaseMeasurableEqualsObjectArgs
-    {
-        decimal ExchangeRate { get; init; }
+    //protected class MeasurementEqualsObjectArgs : BaseMeasurableEqualsObjectArgs
+    //{
+    //    decimal ExchangeRate { get; init; }
 
-        public override object[] ToObjectArray()
-        {
-            return new object[]
-            {
-                IsTrue,
-                Obj,
-                MeasureUnitTypeCode,
-                ExchangeRate,
-            };
-        }
-    }
-    #endregion
+    //    public override object[] ToObjectArray()
+    //    {
+    //        return new object[]
+    //        {
+    //            IsTrue,
+    //            Obj,
+    //            MeasureUnitTypeCode,
+    //            ExchangeRate,
+    //        };
+    //    }
+    //}
+    //#endregion
 
-    #region NullableMeasureUnitTypeCode
-    protected class NullableMeasureUnitTypeCode
-    {
-        internal MeasureUnitTypeCode? MeasureUnitTypeCode { get; init; }
-        public virtual object[] ToObjectArray()
-        {
-            return new object[]
-            {
-                MeasureUnitTypeCode,
-            };
-        }
-    }
+    //#region NullableMeasureUnitTypeCode
+    //protected class NullableMeasureUnitTypeCode
+    //{
+    //    internal MeasureUnitTypeCode? MeasureUnitTypeCode { get; init; }
+    //    public virtual object[] ToObjectArray()
+    //    {
+    //        return new object[]
+    //        {
+    //            MeasureUnitTypeCode,
+    //        };
+    //    }
+    //}
 
-    protected class NullableMeasureUnitTypeCodeEnum : NullableMeasureUnitTypeCode
-    {
-        internal Enum MeasureUnit { get; init; }
+    //protected class NullableMeasureUnitTypeCodeEnum : NullableMeasureUnitTypeCode
+    //{
+    //    internal Enum MeasureUnit { get; init; }
 
-        public override object[] ToObjectArray()
-        {
-            return new object[]
-            {
-                MeasureUnitTypeCode,
-                MeasureUnit,
-            };
-        }
-    }
+    //    public override object[] ToObjectArray()
+    //    {
+    //        return new object[]
+    //        {
+    //            MeasureUnitTypeCode,
+    //            MeasureUnit,
+    //        };
+    //    }
+    //}
 
-    protected class BaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgs : NullableMeasureUnitTypeCodeEnum
-    {
-        internal IBaseMeasurable BaseMeasurable { get; init; }
+    //protected class BaseMeasurableGetDefaultMeasureUnitMeasureUnitTypeCodeArgs : NullableMeasureUnitTypeCodeEnum
+    //{
+    //    internal IBaseMeasurable BaseMeasurable { get; init; }
 
-        public override object[] ToObjectArray()
-        {
-            return new object[]
-            {
-                MeasureUnitTypeCode,
-                MeasureUnit,
-                BaseMeasurable,
-            };
-        }
-    }
-    #endregion
+    //    public override object[] ToObjectArray()
+    //    {
+    //        return new object[]
+    //        {
+    //            MeasureUnitTypeCode,
+    //            MeasureUnit,
+    //            BaseMeasurable,
+    //        };
+    //    }
+    //}
+    //#endregion
 
     #region EnumMeasureUnit
     protected class EnumMeasureUnit
@@ -202,29 +203,29 @@ internal class DynamicDataSources
         }
     }
     #endregion
-    #endregion
+    //#endregion
 
     #region Internal ArrayList methods
     #region General
-    //internal IEnumerable<object[]> GetInvalidEnumMeasureUnitArgArrayList()
-    //{
-    //    Enum measureUnit = SampleParams.DefaultLimitMode;
-    //    yield return toObjectArray();
+    internal IEnumerable<object[]> GetInvalidEnumMeasureUnitArgArrayList()
+    {
+        Enum measureUnit = SampleParams.DefaultLimitMode;
+        yield return toObjectArray();
 
-    //    measureUnit = RandomParams.GetRandomNotDefinedMeasureUnit();
-    //    yield return toObjectArray();
+        measureUnit = RandomParams.GetRandomNotDefinedMeasureUnit();
+        yield return toObjectArray();
 
-    //    #region Local methods
-    //    object[] toObjectArray()
-    //    {
-    //        return new EnumMeasureUnit
-    //        {
-    //            MeasureUnit = measureUnit,
-    //        }
-    //        .ToObjectArray();
-    //    }
-    //    #endregion
-    //}
+        #region Local methods
+        object[] toObjectArray()
+        {
+            return new EnumMeasureUnit
+            {
+                MeasureUnit = measureUnit,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+    }
 
     //internal IEnumerable<object[]> GetNullableEnumMeasureUnitArgArrayList()
     //{
@@ -373,7 +374,7 @@ internal class DynamicDataSources
     //    #endregion
     //}
     #endregion
-
+    #endregion
     #region BaseMeasurable
     //internal IEnumerable<object[]> BaseMeasurableEqualsObjectArgsArrayList()
     //{
@@ -499,6 +500,7 @@ internal class DynamicDataSources
     //    #endregion
     //}
 
+    #endregion
     #endregion
     #endregion
 }

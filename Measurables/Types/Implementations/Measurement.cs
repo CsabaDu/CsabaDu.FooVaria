@@ -463,7 +463,7 @@ internal sealed class Measurement : Measurable, IMeasurement
         IEnumerable<object> validMeasureUnits;
         IDictionary<object, string> customNameCollection;
 
-        if (measureUnitTypeCode == null)
+        if (!measureUnitTypeCode.HasValue)
         {
             validMeasureUnits = ExchangeRates.GetValidMeasureUnits();
             customNameCollection = CustomNameCollection;
@@ -517,7 +517,7 @@ internal sealed class Measurement : Measurable, IMeasurement
 
         IEnumerable<MeasureUnitTypeCode> getCustomMeasureUnitTypeCodes()
         {
-            if (measureUnitTypeCode == null) return GetCustomMeasureUnitTypeCodes();
+            if (!measureUnitTypeCode.HasValue) return GetCustomMeasureUnitTypeCodes();
 
             return getCustomMeasureUnitTypeCodesShortList();
         }
