@@ -2,7 +2,9 @@
 
 public interface IDenominatorFactory : IBaseMeasureFactory
 {
+    IDenominator Create(string name);
     IDenominator Create(string name, ValueType quantity);
+    IDenominator Create(Enum measureUnit);
     IDenominator Create(Enum measureUnit, ValueType quantity);
     IDenominator Create(IMeasurement measurement);
     IDenominator Create(IMeasurement measurement, ValueType quantity);

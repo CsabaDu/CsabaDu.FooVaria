@@ -13,21 +13,9 @@ internal abstract class Measure : BaseMeasure, IMeasure
     #endregion
 
     #region Constructors
-    //private protected Measure(IMeasure other) : base(other)
-    //{
-    //}
-
-    //private protected Measure(IMeasureFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
-    //{
-    //}
-
     private protected Measure(IMeasureFactory factory, ValueType quantity, Enum measureUnit) : base(factory, quantity, measureUnit)
     {
     }
-
-    //private protected Measure(IMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
-    //{
-    //}
     #endregion
 
     #region Public methods
@@ -170,38 +158,6 @@ internal abstract class Measure : BaseMeasure, IMeasure
     {
         return GetMeasure(quantity, measureUnit);
     }
-
-    //public override IMeasure GetBaseMeasure(IBaseMeasure other)
-    //{
-    //    if (other is IMeasure measure) return GetMeasure(measure);
-
-    //    return GetFactory().Create(other);
-    //}
-
-    //public IMeasureFactory GetFactory()
-    //{
-    //    return Factory as IMeasureFactory ?? throw new InvalidOperationException(null);
-    //}
-
-    //public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName)
-    //{
-    //    return GetMeasure(quantity, measureUnit, exchangeRate, customName);
-    //}
-
-    //public override IBaseMeasure GetBaseMeasure(ValueType quantity, IMeasurement measurement)
-    //{
-    //    return GetMeasure(quantity, measurement);
-    //}
-
-    //public override IBaseMeasure GetBaseMeasure(ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
-    //{
-    //    return GetMeasure(quantity, measureUnitTypeCode, exchangeRate, customName);
-    //}
-
-    //public override IBaseMeasure GetBaseMeasure(ValueType quantity, string name)
-    //{
-    //    return GetMeasure(quantity, name);
-    //}
 
     public override sealed IMeasureFactory GetFactory()
     {

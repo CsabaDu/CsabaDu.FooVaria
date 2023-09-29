@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
+﻿using CsabaDu.FooVaria.Measurables.Types.Implementations;
+
+namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
 
 public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
 {
@@ -11,52 +13,73 @@ public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
     #region Public methods
     public IFlatRate Create(IFlatRate flatRate)
     {
-        return CreateFlatRate(flatRate);
-    }
-
-    public IFlatRate Create(IMeasure numerator, string name, ValueType? quantity)
-    {
-        IDenominator denominator = DenominatorFactory.Create(name, quantity);
-
-        return CreateFlatRate(this, numerator, denominator);
-    }
-
-    public IFlatRate Create(IMeasure numerator, Enum measureUnit, ValueType? quantity)
-    {
-        IDenominator denominator = DenominatorFactory.Create(measureUnit, quantity);
-
-        return CreateFlatRate(this, numerator, denominator);
-    }
-
-    public IFlatRate Create(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity)
-    {
-        IDenominator denominator = DenominatorFactory.Create(measureUnit, exchangeRate, customName, quantity);
-
-        return CreateFlatRate(this, numerator, denominator);
-    }
-
-    public IFlatRate Create(IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity)
-    {
-        IDenominator denominator = DenominatorFactory.Create(customName, measureUnitTypeCode, exchangeRate, quantity);
-
-        return CreateFlatRate(this, numerator, denominator);
-    }
-
-    public IFlatRate Create(IMeasure numerator, IMeasurement measurement, ValueType? quantity)
-    {
-        IDenominator denominator = DenominatorFactory.Create(measurement, quantity);
-
-        return CreateFlatRate(this, numerator, denominator);
+        return new FlatRate(flatRate);
     }
 
     public IFlatRate Create(IMeasure numerator, IDenominator denominator)
     {
-        return CreateFlatRate(this, numerator, denominator);
+        return new FlatRate(this, numerator, denominator);
+    }
+
+    public IFlatRate Create(IMeasure numerator, string name, ValueType quantity)
+    {
+        IDenominator denominator = DenominatorFactory.Create(name, quantity);
+
+        return Create(numerator, denominator);
+    }
+
+    public IFlatRate Create(IMeasure numerator, Enum measureUnit, ValueType quantity)
+    {
+        IDenominator denominator = DenominatorFactory.Create(measureUnit, quantity);
+
+        return Create(numerator, denominator);
+    }
+
+    public IFlatRate Create(IMeasure numerator, string name)
+    {
+        IDenominator denominator = DenominatorFactory.Create(name);
+
+        return Create(numerator, denominator);
+    }
+
+    public IFlatRate Create(IMeasure numerator, Enum measureUnit)
+    {
+        IDenominator denominator = DenominatorFactory.Create(measureUnit);
+
+        return Create(numerator, denominator);
+    }
+
+    public IFlatRate Create(IMeasure numerator, IMeasurement measurement)
+    {
+        IDenominator denominator = DenominatorFactory.Create(measurement);
+
+        return Create(numerator, denominator);
+    }
+
+    public IFlatRate Create(IMeasure numerator, IMeasurement measurement, ValueType quantity)
+    {
+        IDenominator denominator = DenominatorFactory.Create(measurement, quantity);
+
+        return Create(numerator, denominator);
     }
 
     public IFlatRate Create(IRate rate)
     {
-        return CreateFlatRate(this, rate);
+        IMeasure numerator = NullChecked(rate, nameof(rate)).Numerator;
+        IDenominator denominator = rate.Denominator;
+
+        return Create(numerator, denominator);
+    }
+
+    public override IFlatRate Create(IMeasurable other)
+    {
+        _ = NullChecked(other, nameof(other));
+
+        if (other is IFlatRate flatRate) return Create(flatRate);
+
+        if (other is IRate rate) return Create(rate);
+
+        throw new ArgumentOutOfRangeException(nameof(other), other.GetType(), null);
     }
     #endregion
 }

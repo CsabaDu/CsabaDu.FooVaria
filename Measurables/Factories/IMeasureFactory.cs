@@ -8,5 +8,4 @@ public interface IMeasureFactory : IBaseMeasureFactory
     IMeasure Create(ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate);
     IMeasure Create(ValueType quantity, IMeasurement measurement);
     IMeasure Create(IBaseMeasure baseMeasure);
-    //IMeasure Create(IMeasure measure);
 }

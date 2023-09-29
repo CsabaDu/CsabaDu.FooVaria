@@ -3,11 +3,6 @@
 internal sealed class Limit : BaseMeasure, ILimit
 {
     #region Constructors
-    //internal Limit(ILimit other) : base(other)
-    //{
-    //    LimitMode = other.LimitMode;
-    //}
-
     internal Limit(ILimitFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
     {
         LimitMode = default;

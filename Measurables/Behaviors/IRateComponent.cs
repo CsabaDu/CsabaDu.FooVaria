@@ -4,7 +4,7 @@
     {
         T? GetRateComponent(IRate rate, RateComponentCode rateComponentCode);
         RateComponentCode GetRateComponentCode();
-        IMeasurement GetDefaultMeasurement();
+        //IMeasurement GetDefaultMeasurement();
     }
 
     public interface IDefaultRateComponent<out T> where T : class, IBaseMeasure

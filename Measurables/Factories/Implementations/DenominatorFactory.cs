@@ -36,11 +36,25 @@ public sealed class DenominatorFactory : BaseMeasureFactory, IDenominatorFactory
         return Create(denominator);
     }
 
+    public IDenominator Create(string name)
+    {
+        IMeasurement measurement = MeasurementFactory.Create(name);
+
+        return Create(measurement);
+    }
+
     public IDenominator Create(string name, ValueType quantity)
     {
         IMeasurement measurement = MeasurementFactory.Create(name);
 
         return Create(measurement, quantity);
+    }
+
+    public IDenominator Create(Enum measureUnit)
+    {
+        IMeasurement measurement = MeasurementFactory.Create(measureUnit);
+
+        return Create(measurement);
     }
 
     public IDenominator Create(Enum measureUnit, ValueType quantity)

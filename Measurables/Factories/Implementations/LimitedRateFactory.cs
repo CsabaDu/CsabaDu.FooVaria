@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
+﻿using CsabaDu.FooVaria.Measurables.Types.Implementations;
+
+namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
 
 public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
 {
@@ -14,54 +16,80 @@ public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
     #endregion
 
     #region Public methods
-    public IFlatRate Create(IFlatRate limitedRate, ILimit? limit)
+    public ILimitedRate Create(ILimitedRate other)
     {
-        return CreateLimitedRate(limitedRate, limit);
+        return new LimitedRate(other);
     }
 
-    public IFlatRate Create(IMeasure numerator, string name, ValueType? quantity, ILimit? limit)
+    public ILimitedRate Create(IMeasure numerator, string name, ValueType quantity, ILimit limit)
     {
         IDenominator denominator = DenominatorFactory.Create(name, quantity);
 
-        return CreateLimitedRate(this, numerator, denominator, limit);
+        return Create(numerator, denominator, limit);
     }
 
-    public IFlatRate Create(IMeasure numerator, Enum measureUnit, ValueType? quantity, ILimit? limit)
+    public ILimitedRate Create(IMeasure numerator, Enum measureUnit, ValueType quantity, ILimit limit)
     {
         IDenominator denominator = DenominatorFactory.Create(measureUnit, quantity);
 
-        return CreateLimitedRate(this, numerator, denominator, limit);
+        return Create(numerator, denominator, limit);
     }
 
-    public IFlatRate Create(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity, ILimit? limit)
+    public ILimitedRate Create(IMeasure numerator, string name, ILimit limit)
     {
-        IDenominator denominator = DenominatorFactory.Create(measureUnit, exchangeRate, customName, quantity);
+        IDenominator denominator = DenominatorFactory.Create(name);
 
-        return CreateLimitedRate(this, numerator, denominator, limit);
+        return Create(numerator, denominator, limit);
     }
 
-    public IFlatRate Create(IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity, ILimit? limit)
+    public ILimitedRate Create(IMeasure numerator, Enum measureUnit, ILimit limit)
     {
-        IDenominator denominator = DenominatorFactory.Create(customName, measureUnitTypeCode, exchangeRate, quantity);
+        IDenominator denominator = DenominatorFactory.Create(measureUnit);
 
-        return CreateLimitedRate(this, numerator, denominator, limit);
+        return Create(numerator, denominator, limit);
     }
 
-    public IFlatRate Create(IMeasure numerator, IMeasurement measurement, ValueType? quantity, ILimit? limit)
+    public ILimitedRate Create(IMeasure numerator, IMeasurement measurement, ILimit limit)
+    {
+        IDenominator denominator = DenominatorFactory.Create(measurement);
+
+        return Create(numerator, denominator, limit);
+    }
+
+    public ILimitedRate Create(IMeasure numerator, IMeasurement measurement, ValueType quantity, ILimit limit)
     {
         IDenominator denominator = DenominatorFactory.Create(measurement, quantity);
 
-        return CreateLimitedRate(this, numerator, denominator, limit);
+        return Create(numerator, denominator, limit);
     }
 
-    public IFlatRate Create(IMeasure numerator, IDenominator denominator, ILimit? limit)
+    public ILimitedRate Create(IMeasure numerator, IDenominator denominator, ILimit limit)
     {
-        return CreateLimitedRate(this, numerator, denominator, limit);
+        return new LimitedRate(this, numerator, denominator, limit);
     }
 
-    public IFlatRate Create(IRate rate, ILimit? limit)
+    public ILimitedRate Create(IRate rate, ILimit limit)
     {
-        return CreateLimitedRate(this, rate, limit);
+        IMeasure numerator = NullChecked(rate, nameof(rate)).Numerator;
+        IDenominator denominator = rate.Denominator;
+
+        return Create(numerator, denominator, limit);
+    }
+
+    public override ILimitedRate Create(IMeasurable other)
+    {
+        _ = NullChecked(other, nameof(other));
+
+        if (other is ILimitedRate limitedRate) return Create(limitedRate);
+
+        if (other is IRate rate) return Create(rate, CreateLimit(rate.Denominator));
+
+        throw new ArgumentOutOfRangeException(nameof(other), other.GetType(), null);
+    }
+
+    public ILimit CreateLimit(IDenominator denominator)
+    {
+        return (ILimit)LimitFactory.Create(denominator);
     }
     #endregion
 }

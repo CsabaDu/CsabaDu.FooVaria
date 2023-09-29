@@ -3,14 +3,6 @@
 internal sealed class Cash : Measure, ICash
 {
     #region Constructors
-    //internal Cash(ICash other) : base(other)
-    //{
-    //}
-
-    //internal Cash(IMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
-    //{
-    //}
-
     internal Cash(IMeasureFactory factory, ValueType quantity, Currency currency) : base(factory, quantity, currency)
     {
     }

@@ -3,14 +3,6 @@
 internal sealed class Extent : Measure, IExtent
 {
     #region Constructors
-    //internal Extent(IExtent other) : base(other)
-    //{
-    //}
-
-    //internal Extent(IMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
-    //{
-    //}
-
     internal Extent(IMeasureFactory factory, ValueType quantity, ExtentUnit extentUnit) : base(factory, quantity, extentUnit)
     {
     }

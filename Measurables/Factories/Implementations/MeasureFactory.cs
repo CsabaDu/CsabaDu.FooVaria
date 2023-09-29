@@ -16,6 +16,13 @@ public sealed class MeasureFactory : BaseMeasureFactory, IMeasureFactory
     #endregion
 
     #region Public methods
+    public override IMeasure CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        Enum measureUnit = measureUnitTypeCode.GetDefaultMeasureUnit();
+
+        return Create((ValueType)DefaultRateComponentQuantity, measureUnit);
+    }
+
     public IMeasure Create(ValueType quantity, Enum measureUnit)
     {
         return NullChecked(measureUnit, nameof(measureUnit)) switch
@@ -80,13 +87,6 @@ public sealed class MeasureFactory : BaseMeasureFactory, IMeasureFactory
         if (other is IRate rate) return Create(rate.Numerator);
 
         throw new InvalidOperationException(null);
-    }
-
-    public override IMeasure CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        Enum measureUnit = measureUnitTypeCode.GetDefaultMeasureUnit();
-
-        return Create((ValueType)DefaultRateComponentQuantity, measureUnit);
     }
     #endregion
 }

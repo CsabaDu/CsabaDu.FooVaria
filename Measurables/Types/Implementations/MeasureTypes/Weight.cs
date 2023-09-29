@@ -3,14 +3,6 @@
 internal sealed class Weight : Measure, IWeight
 {
     #region Constructors
-    //internal Weight(IWeight other) : base(other)
-    //{
-    //}
-
-    //internal Weight(IMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
-    //{
-    //}
-
     internal Weight(IMeasureFactory factory, ValueType quantity, WeightUnit weightUnit) : base(factory, quantity, weightUnit)
     {
     }

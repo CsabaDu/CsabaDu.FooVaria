@@ -20,13 +20,13 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     private protected BaseMeasure(IBaseMeasureFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
     {
         Quantity = factory.DefaultRateComponentQuantity;
-        Measurement = GetDefaultMeasurement();
+        Measurement = factory.MeasurementFactory.CreateDefault(measureUnitTypeCode);
     }
 
     private protected BaseMeasure(IBaseMeasureFactory factory, ValueType quantity, Enum measureUnit) : base(factory, measureUnit)
     {
         Quantity = GetValidQuantity(quantity);
-        Measurement = GetMeasurement(measureUnit);
+        Measurement = factory.MeasurementFactory.Create(measureUnit);
     }
 
     private protected BaseMeasure(IBaseMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, measurement)
@@ -80,24 +80,9 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return (IBaseMeasure) GetFactory().Create(other);
     }
 
-    //public IBaseMeasure GetBaseMeasure(IBaseMeasureFactory baseMeasureFactory, IBaseMeasure baseMeasure)
-    //{
-    //    return GetFactory().Create(baseMeasureFactory, baseMeasure);
-    //}
-
-    //public IBaseMeasureFactory GetFactory()
-    //{
-    //    return Factory as IBaseMeasureFactory ?? throw new InvalidOperationException(null);
-    //}
-
     public decimal GetDecimalQuantity()
     {
         return (decimal)GetQuantity(TypeCode.Decimal);
-    }
-
-    public IMeasurement GetDefaultMeasurement()
-    {
-        return GetFactory().MeasurementFactory.CreateDefault(MeasureUnitTypeCode);
     }
 
     public ValueType GetDefaultRateComponentQuantity()
@@ -175,11 +160,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     {
         return GetFactory().RateComponentCode;
     }
-
-    //public RateComponentCode GetRateComponentCode(IBaseMeasure baseMeasure)
-    //{
-    //    return ((IBaseMeasureFactory)NullChecked(baseMeasure, nameof(baseMeasure)).GetFactory()).RateComponentCode;
-    //}
 
     public bool IsExchangeableTo(Enum? context)
     {
@@ -309,16 +289,27 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     #region Abstract methods
     public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit);
-    //public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName);
-    //public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, IMeasurement measurement);
-    //public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate);
-    //public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, string name);
     public abstract LimitMode? GetLimitMode();
     #endregion
     #endregion
 
     #region Protected methods
-    protected object GetValidQuantity(ValueType? quantity)
+    #region Static methods
+    protected static bool Equals<T>(T baseMeasure, IBaseMeasure? other) where T : class, IBaseMeasure
+    {
+        return baseMeasure.Equals(other)
+            && baseMeasure.GetRateComponentCode() == other.GetRateComponentCode();
+    }
+
+    protected static int GetHashCode<T>([DisallowNull] T baseMeasure) where T : class, IBaseMeasure
+    {
+        return HashCode.Combine(baseMeasure as IBaseMeasure, baseMeasure.GetRateComponentCode());
+    }
+    #endregion
+    #endregion
+
+    #region Private methods
+    private object GetValidQuantity(ValueType? quantity)
     {
         quantity = NullChecked(quantity, nameof(quantity)).ToQuantity(QuantityTypeCode);
 
@@ -348,27 +339,5 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         }
         #endregion
     }
-
-    #region Static methods
-    private IMeasurement GetMeasurement(Enum measureUnit)
-    {
-        return GetFactory().MeasurementFactory.Create(measureUnit);
-    }
-    protected static bool Equals<T>(T baseMeasure, IBaseMeasure? other) where T : class, IBaseMeasure
-    {
-        return baseMeasure.Equals(other)
-            && baseMeasure.GetRateComponentCode() == other.GetRateComponentCode();
-    }
-
-    protected static int GetHashCode<T>([DisallowNull] T baseMeasure) where T : class, IBaseMeasure
-    {
-        return HashCode.Combine(baseMeasure as IBaseMeasure, baseMeasure.GetRateComponentCode());
-    }
-    #endregion
-    #endregion
-
-    #region Private methods
-    #region Static methods
-    #endregion
     #endregion
 }
