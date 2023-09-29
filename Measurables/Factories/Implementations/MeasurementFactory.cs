@@ -7,7 +7,12 @@ public sealed class MeasurementFactory : IMeasurementFactory
 {
     #region Properties
     #region Static properties
-    private static IDictionary<object, IMeasurement> Measurements => GetMeasurements();
+    private static IDictionary<object, IMeasurement> MeasurementCollection
+        => ExchangeRates.GetValidMeasureUnits().ToDictionary
+        (
+            x => x,
+            x => new Measurement(new MeasurementFactory(), (Enum)x) as IMeasurement
+        );
     #endregion
     #endregion
 
@@ -18,7 +23,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
         measurement.SetCustomMeasureUnit(customName, measureUnitTypeCode, exchangeRate);
         Enum measureUnit = measurement.GetMeasureUnit(customName)!;
 
-        return Create(measureUnit);
+        return GetStoredMeasurement(measureUnit);
     }
 
     public IMeasurement Create(Enum measureUnit, decimal exchangeRate, string customName)
@@ -29,10 +34,10 @@ public sealed class MeasurementFactory : IMeasurementFactory
         {
             measurement.SetCustomMeasureUnit(measureUnit, exchangeRate, customName);
 
-            return Create(measureUnit);
+            return GetStoredMeasurement(measureUnit);
         }
 
-        measurement = Create(measureUnit);
+        measurement = GetStoredMeasurement(measureUnit);
         measurement.ValidateExchangeRate(exchangeRate);
 
         if (customName == measurement.GetCustomName()) return measurement;
@@ -42,7 +47,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
 
     public IMeasurement Create(Enum measureUnit)
     {
-        if (ExchangeRates.IsValidMeasureUnit(measureUnit)) return Measurements[measureUnit];
+        if (ExchangeRates.IsValidMeasureUnit(measureUnit)) return GetStoredMeasurement(measureUnit);
 
         throw InvalidMeasureUnitEnumArgumentException(measureUnit);
     }
@@ -51,7 +56,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
     {
         Enum measureUnit = NullChecked(measurement, nameof(measurement)).GetMeasureUnit();
 
-        return Create(measureUnit);
+        return GetStoredMeasurement(measureUnit);
     }
 
     public IMeasurement Create(string name)
@@ -59,7 +64,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
         IMeasurement measurement = GetFirstMeasurement();
         Enum? measureUnit = measurement.GetMeasureUnit(name);
 
-        if (measureUnit != null) return Create(measureUnit);
+        if (measureUnit != null) return GetStoredMeasurement(measureUnit);
 
         throw NameArgumentOutOfRangeException(name);
     }
@@ -68,14 +73,14 @@ public sealed class MeasurementFactory : IMeasurementFactory
     {
         Enum measureUnit = NullChecked(other, nameof(other)).GetMeasureUnit();
 
-        return Create(measureUnit);
+        return GetStoredMeasurement(measureUnit);
     }
 
     public IMeasurement CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
     {
         Enum measureUnit = measureUnitTypeCode.GetDefaultMeasureUnit();
 
-        return Create(measureUnit);
+        return GetStoredMeasurement(measureUnit);
     }
     #endregion
 
@@ -83,24 +88,12 @@ public sealed class MeasurementFactory : IMeasurementFactory
     #region Static methods
     private static IMeasurement GetFirstMeasurement()
     {
-        return Measurements.First().Value;
+        return MeasurementCollection.First().Value;
     }
 
-    private static Dictionary<object, IMeasurement> GetMeasurements()
+    private static IMeasurement GetStoredMeasurement(Enum measureUnit)
     {
-        return getMeasurements().ToDictionary(x => x.Key, x => x.Value);
-
-        #region Local methods
-        static IEnumerable<KeyValuePair<object, IMeasurement>> getMeasurements()
-        {
-            foreach (object item in ExchangeRates.GetValidMeasureUnits())
-            {
-                IMeasurement measurement = new Measurement(new MeasurementFactory(), (Enum)item);
-
-                yield return new KeyValuePair<object, IMeasurement>(item, measurement);
-            }
-        }
-        #endregion
+        return MeasurementCollection[measureUnit];
     }
     #endregion
     #endregion

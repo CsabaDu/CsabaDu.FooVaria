@@ -3,15 +3,7 @@
 internal sealed class Denominator : BaseMeasure, IDenominator
 {
     #region Constructors
-    internal Denominator(IDenominator other) : base(other)
-    {
-    }
-
     internal Denominator(IDenominatorFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
-    {
-    }
-
-    internal Denominator(IDenominatorFactory factory, IMeasurement measurement) : base(factory, DefaultDenominatorQuantity, measurement)
     {
     }
 
@@ -28,12 +20,12 @@ internal sealed class Denominator : BaseMeasure, IDenominator
 
     public IDenominator GetDenominator(IMeasurement measurement)
     {
-        return GetDenominator(measurement, DefaultDenominatorQuantity);
+        return GetFactory().Create(measurement);
     }
 
     public IDenominator GetDenominator(IBaseMeasure baseMeasure)
     {
-        return (IDenominator)GetFactory().Create(baseMeasure);
+        return GetFactory().Create(baseMeasure);
     }
 
     public IDenominator GetDenominator(IDenominator other)
@@ -48,7 +40,7 @@ internal sealed class Denominator : BaseMeasure, IDenominator
 
     public IDenominator GetDenominator(Enum measureUnit)
     {
-        return GetDenominator(measureUnit, DefaultDenominatorQuantity);
+        return GetFactory().Create(measureUnit, GetDefaultRateComponentQuantity());
     }
 
     public IDenominator GetDenominator(Enum measureUnit, decimal exchangeRate, string customName, ValueType quantity)
@@ -58,7 +50,7 @@ internal sealed class Denominator : BaseMeasure, IDenominator
 
     public IDenominator GetDenominator(Enum measureUnit, decimal exchangeRate, string customName)
     {
-        return GetDenominator(measureUnit, exchangeRate, customName, DefaultDenominatorQuantity);
+        return GetDenominator(measureUnit, exchangeRate, customName, GetDefaultRateComponentQuantity());
     }
 
     public IDenominator GetDenominator(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
@@ -68,7 +60,7 @@ internal sealed class Denominator : BaseMeasure, IDenominator
 
     public IDenominator GetDenominator(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
     {
-        return GetDenominator(customName, measureUnitTypeCode, exchangeRate, DefaultDenominatorQuantity);
+        return GetDenominator(customName, measureUnitTypeCode, exchangeRate, GetDefaultRateComponentQuantity());
     }
 
     public IDenominator GetDenominator(string name, ValueType quantity)
@@ -78,12 +70,12 @@ internal sealed class Denominator : BaseMeasure, IDenominator
 
     public IDenominator GetDenominator(string name)
     {
-        return GetDenominator(name, DefaultDenominatorQuantity);
+        return GetDenominator(name, GetDefaultRateComponentQuantity());
     }
 
     public IDenominator GetDenominator(IBaseMeasure baseMeasure, ValueType quantity)
     {
-        return GetFactory().Create(baseMeasure, quantity);
+        return GetFactory().Create(baseMeasure.Measurement, quantity);
     }
 
     #region Override methods
@@ -101,26 +93,6 @@ internal sealed class Denominator : BaseMeasure, IDenominator
     {
         return GetDenominator(measureUnit, quantity);
     }
-
-    //public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName)
-    //{
-    //    return GetDenominator(measureUnit, exchangeRate, customName, quantity);
-    //}
-
-    //public override IBaseMeasure GetBaseMeasure(ValueType quantity, IMeasurement measureUnitTypeCode)
-    //{
-    //    return GetDenominator(measureUnitTypeCode, quantity);
-    //}
-
-    //public override IBaseMeasure GetBaseMeasure(ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
-    //{
-    //    return GetDenominator(measureUnitTypeCode, exchangeRate, customName, quantity);
-    //}
-
-    //public override IBaseMeasure GetBaseMeasure(ValueType quantity, string name)
-    //{
-    //    return GetDenominator(name, quantity);
-    //}
 
     public override IDenominatorFactory GetFactory()
     {

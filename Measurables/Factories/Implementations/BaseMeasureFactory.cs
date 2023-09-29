@@ -25,16 +25,6 @@ public abstract class BaseMeasureFactory : IBaseMeasureFactory
     #endregion
 
     #region Protected methods
-    //protected static IDenominator CreateDenominator(IDenominatorFactory denominatorFactory, IBaseMeasure baseMeasure)
-    //{
-    //    if (baseMeasure is IDenominator denominator) return CreateDenominator(denominator);
-
-    //    IMeasurement measurement = NullChecked(baseMeasure, nameof(baseMeasure)).Measurement;
-    //    ValueType quantity = baseMeasure.GetQuantity();
-
-    //    return new Denominator(denominatorFactory, quantity, measurement);
-    //}
-
     protected static IMeasure CreateMeasure(IMeasureFactory measureFactory, IBaseMeasure baseMeasure)
     {
         if (baseMeasure is IMeasure measure) return CreateMeasure(measure);
@@ -54,11 +44,6 @@ public abstract class BaseMeasureFactory : IBaseMeasureFactory
 
         return new Limit(limitFactory, quantity, measurement, limitMode ?? baseMeasure.GetLimitMode());
     }
-
-    //protected static IDenominator CreateDenominator(IDenominatorFactory denominatorFactory, ValueType? quantity, IMeasurement measurement)
-    //{
-    //    return new Denominator(denominatorFactory, quantity, measurement);
-    //}
 
     protected static IMeasure CreateMeasure(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement)
     {

@@ -6,7 +6,7 @@ public interface IBaseMeasure : IMeasurable, IQuantifiable, IRateComponent<IBase
     decimal DefaultQuantity { get; }
 
     IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit);
-    IBaseMeasure GetBaseMeasure(IBaseMeasure other);
+    IBaseMeasure GetBaseMeasure(IMeasurable other);
     //IBaseMeasure GetBaseMeasure(IBaseMeasureFactory baseMeasureFactory, IBaseMeasure baseMeasure);
 
     bool TryGetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName, [NotNullWhen(true)] out IBaseMeasure? baseMeasure);

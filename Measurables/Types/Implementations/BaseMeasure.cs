@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Enums;
-using CsabaDu.FooVaria.Common.Types;
-using static CsabaDu.FooVaria.Common.Statics.QuantityTypes;
+﻿using static CsabaDu.FooVaria.Common.Statics.QuantityTypes;
 
 namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
@@ -39,10 +37,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     public TypeCode QuantityTypeCode => GetQuantityTypeCode();
     #endregion
 
-    //protected const decimal DefaultDenominatorQuantity = decimal.One;
-    //protected const ulong DefaultLimitQuantity = default;
-    //protected const int DefaultMeasureQuantity = default;
-
     #region Public methods
     public int CompareTo(IBaseMeasure? other)
     {
@@ -75,7 +69,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return GetBaseMeasure(quantity, measureUnit);
     }
 
-    public IBaseMeasure GetBaseMeasure(IBaseMeasure other)
+    public IBaseMeasure GetBaseMeasure(IMeasurable other)
     {
         return (IBaseMeasure) GetFactory().Create(other);
     }
@@ -273,14 +267,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return obj is IBaseMeasure other && Equals(other);
     }
 
-    public override sealed IBaseMeasure GetDefault()
-    {
-        Enum measureUnit = GetDefaultMeasureUnit();
-        ValueType quantity = GetDefaultRateComponentQuantity();
-
-        return GetBaseMeasure(quantity, measureUnit);
-    }
-
     public override IBaseMeasureFactory GetFactory()
     {
         return (IBaseMeasureFactory)Factory;
@@ -291,10 +277,20 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return HashCode.Combine(DefaultQuantity, MeasureUnitTypeCode);
     }
 
+    #region Sealed methods
+    public override sealed IBaseMeasure GetDefault()
+    {
+        Enum measureUnit = GetDefaultMeasureUnit();
+        ValueType quantity = GetDefaultRateComponentQuantity();
+
+        return GetBaseMeasure(quantity, measureUnit);
+    }
+
     public override sealed Enum GetMeasureUnit()
     {
         return Measurement.GetMeasureUnit();
     }
+    #endregion
     #endregion
 
     #region Virtual methods
