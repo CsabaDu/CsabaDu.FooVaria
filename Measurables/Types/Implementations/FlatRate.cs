@@ -111,7 +111,6 @@ internal sealed class FlatRate : Rate, IFlatRate
         return (IFlatRateFactory)Factory;
     }
     #endregion
-
     #endregion
 
     #region Private methods
@@ -135,48 +134,3 @@ internal sealed class FlatRate : Rate, IFlatRate
     }
     #endregion
 }
-
-    //public IFlatRate GetFlatRate(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, decimal? quantity = null)
-    //{
-    //    return GetFactory().Create(numerator, measureUnit, exchangeRate, customName, quantity);
-    //}
-
-    //public IFlatRate GetFlatRate(IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, decimal? quantity = null)
-    //{
-    //    return GetFactory().Create(numerator, customName, measureUnitTypeCode, exchangeRate, quantity);
-    //}
-
-    //public IFlatRate GetFlatRate(IMeasure numerator, string customName, decimal? quantity = null)
-    //{
-    //    return GetFactory().Create(numerator, customName, quantity);
-    //}
-
-    //public IFlatRate GetFlatRate(IMeasure numerator, Enum measureUnit, decimal? quantity = null)
-    //{
-    //    return GetFactory().Create(numerator, measureUnit, quantity);
-    //}
-
-    //public IFlatRate GetFlatRate(IMeasure numerator, IMeasurement measurement, decimal? quantity = null)
-    //{
-    //    return GetFactory().Create(numerator, measurement, quantity);
-    //}
-
-    //public IFlatRate GetFlatRate(IMeasure numerator, IDenominator? denominator = null)
-    //{
-    //    return GetFactory().Create(numerator, denominator ?? Denominator);
-    //}
-
-    //public IFlatRate GetFlatRate(IRate rate) // Check!
-    //{
-    //    return GetFactory().Create(rate);
-    //}
-
-    //public IFlatRate GetFlatRate(IFlatRate? other = null)
-    //{
-    //    return GetFactory().Create(other ?? this);
-    //}
-
-    //public IFlatRateFactory GetFactory()
-    //{
-    //    return Factory as IFlatRateFactory ?? throw new InvalidOperationException(null);
-    //}

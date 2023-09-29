@@ -13,7 +13,12 @@ public sealed class DenominatorFactory : BaseMeasureFactory, IDenominatorFactory
     #region Properties
     public override RateComponentCode RateComponentCode => RateComponentCode.Denominator;
     public override object DefaultRateComponentQuantity => decimal.One;
+
+    #region Private properties
+    #region Static properties
     private static SortedSet<IDenominator> DenominatorSet { get; set; } = new();
+    #endregion
+    #endregion
     #endregion
 
     #region Public methods

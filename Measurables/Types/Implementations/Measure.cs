@@ -77,6 +77,11 @@ internal abstract class Measure : BaseMeasure, IMeasure
         #endregion
     }
 
+    public IMeasure GetDefaultRateComponent()
+    {
+        return (IMeasure)GetDefault();
+    }
+
     public IMeasure GetMeasure(ValueType quantity, Enum measureUnit)
     {
         return GetFactory().Create(quantity, measureUnit);
@@ -121,17 +126,6 @@ internal abstract class Measure : BaseMeasure, IMeasure
         return GetMeasure(excchanged);
     }
 
-    #region Override methods
-    public override sealed LimitMode? GetLimitMode()
-    {
-        return null;
-    }
-
-    public override sealed TypeCode GetQuantityTypeCode()
-    {
-        return base.GetQuantityTypeCode();
-    }
-
     public IMeasure Multiply(decimal multiplier)
     {
         decimal quantity = decimal.Multiply(GetDecimalQuantity(), multiplier);
@@ -144,6 +138,8 @@ internal abstract class Measure : BaseMeasure, IMeasure
         return GetSum(this, other, SummingMode.Subtract);
     }
 
+    #region Override methods
+    #region Sealed methods
     public override sealed bool Equals(IBaseMeasure? other)
     {
         return Equals(this, other);
@@ -154,7 +150,7 @@ internal abstract class Measure : BaseMeasure, IMeasure
         return obj is IMeasure measure && Equals(measure);
     }
 
-    public override IMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit)
+    public override sealed IMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit)
     {
         return GetMeasure(quantity, measureUnit);
     }
@@ -168,6 +164,17 @@ internal abstract class Measure : BaseMeasure, IMeasure
     {
         return GetHashCode(this);
     }
+
+    public override sealed LimitMode? GetLimitMode()
+    {
+        return null;
+    }
+
+    public override sealed TypeCode GetQuantityTypeCode()
+    {
+        return base.GetQuantityTypeCode();
+    }
+    #endregion
     #endregion
 
     #region Abstract methods
@@ -269,11 +276,6 @@ internal abstract class Measure : BaseMeasure, IMeasure
         {
             throw new InvalidOperationException(ex.Message, ex.InnerException);
         }
-    }
-
-    public IMeasure GetDefaultRateComponent()
-    {
-        return (IMeasure)GetDefault();
     }
     #endregion
     #endregion

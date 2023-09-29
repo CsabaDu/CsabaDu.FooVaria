@@ -71,15 +71,6 @@ internal abstract class Rate : Measurable, IRate
         return GetRate(numerator, denominator, GetLimit());
     }
 
-    public override sealed IRate GetDefault()
-    {
-        IMeasure numerator = Numerator.GetDefaultRateComponent();
-        IDenominator denominator = Denominator.GetDefaultRateComponent();
-        ILimit? limit = GetLimit()?.GetDefaultRateComponent();
-
-        return GetRate(numerator, denominator, limit);
-    }
-
     public decimal GetRateDefaultQuantity()
     {
         return Numerator.DefaultQuantity / Denominator.DefaultQuantity;
@@ -91,16 +82,6 @@ internal abstract class Rate : Measurable, IRate
     }
 
     public abstract ILimit? GetLimit();
-
-    public override sealed Enum GetMeasureUnit()
-    {
-        return Denominator.GetMeasureUnit();
-    }
-
-    public override sealed TypeCode GetQuantityTypeCode()
-    {
-        return Numerator.GetQuantityTypeCode();
-    }
 
     public IBaseMeasure? GetRateComponent(RateComponentCode rateComponentCode)
     {
@@ -135,6 +116,27 @@ internal abstract class Rate : Measurable, IRate
     {
         return (IRateFactory)Factory;
     }
+
+    #region Sealed methods
+    public override sealed IRate GetDefault()
+    {
+        IMeasure numerator = Numerator.GetDefaultRateComponent();
+        IDenominator denominator = Denominator.GetDefaultRateComponent();
+        ILimit? limit = GetLimit()?.GetDefaultRateComponent();
+
+        return GetRate(numerator, denominator, limit);
+    }
+
+    public override sealed Enum GetMeasureUnit()
+    {
+        return Denominator.GetMeasureUnit();
+    }
+
+    public override sealed TypeCode GetQuantityTypeCode()
+    {
+        return Numerator.GetQuantityTypeCode();
+    }
+    #endregion
     #endregion
 
     #region Abstract methods
