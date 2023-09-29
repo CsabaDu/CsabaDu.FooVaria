@@ -33,71 +33,71 @@ public class RandomParams
         #endregion
     }
 
-    public Enum GetRandomMeasureUnit(MeasureUnitTypeCode? measureUnitTypeCode = null, Enum measureUnit = null)
-    {
-        int count = getAllMeasureUnits().Count();
-        int randomIndex = getRandomIndex();
+    //public Enum GetRandomMeasureUnit(MeasureUnitTypeCode? measureUnitTypeCode = null, Enum measureUnit = null)
+    //{
+    //    int count = getAllMeasureUnits().Count();
+    //    int randomIndex = getRandomIndex();
 
-        if (measureUnit == null) return getRandomMeasureUnit();
+    //    if (measureUnit == null) return getRandomMeasureUnit();
 
-        while (randomIndex == getMeasureUnitIndex())
-        {
-            randomIndex = getRandomIndex();
-        }
+    //    while (randomIndex == getMeasureUnitIndex())
+    //    {
+    //        randomIndex = getRandomIndex();
+    //    }
 
-        return getRandomMeasureUnit();
+    //    return getRandomMeasureUnit();
 
-        #region Local methods
-        int getRandomIndex()
-        {
-            return Random.Next(count);
-        }
+    //    #region Local methods
+    //    int getRandomIndex()
+    //    {
+    //        return Random.Next(count);
+    //    }
 
-        int getMeasureUnitIndex()
-        {
-            for (int i = 0; i < count; i++)
-            {
-                Enum other = getAllMeasureUnits().ElementAt(i);
+    //    int getMeasureUnitIndex()
+    //    {
+    //        for (int i = 0; i < count; i++)
+    //        {
+    //            Enum other = getAllMeasureUnits().ElementAt(i);
 
-                if (measureUnit.Equals(other)) return i;
-            }
+    //            if (measureUnit.Equals(other)) return i;
+    //        }
 
-            throw ExceptionMethods.InvalidMeasureUnitEnumArgumentException(measureUnit);
-        }
+    //        throw ExceptionMethods.InvalidMeasureUnitEnumArgumentException(measureUnit);
+    //    }
 
-        Enum getRandomMeasureUnit()
-        {
-            return getAllMeasureUnits().ElementAt(randomIndex);
-        }
+    //    Enum getRandomMeasureUnit()
+    //    {
+    //        return getAllMeasureUnits().ElementAt(randomIndex);
+    //    }
 
-        IEnumerable<Enum> getAllMeasureUnits()
-        {
-            return MeasureUnitTypes.GetAllMeasureUnits(measureUnitTypeCode);
-        }
-        #endregion
-    }
+    //    IEnumerable<Enum> getAllMeasureUnits()
+    //    {
+    //        return MeasureUnitTypes.GetAllMeasureUnits(measureUnitTypeCode);
+    //    }
+    //    #endregion
+    //}
 
-    public Enum GetRandomNotDefinedMeasureUnit()
-    {
-        MeasureUnitTypeCode measureUnitTypeCode = GetRandomMeasureUnitTypeCode();
-        int count = MeasureUnitTypes.GetDefaultNames(measureUnitTypeCode).Count();
-        Type measureUnitType = MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode);
+    //public Enum GetRandomNotDefinedMeasureUnit()
+    //{
+    //    MeasureUnitTypeCode measureUnitTypeCode = GetRandomMeasureUnitTypeCode();
+    //    int count = MeasureUnitTypes.GetDefaultNames(measureUnitTypeCode).Count();
+    //    Type measureUnitType = MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode);
 
-        return (Enum)Enum.ToObject(measureUnitType, count);
-    }
+    //    return (Enum)Enum.ToObject(measureUnitType, count);
+    //}
 
-    public Enum GetRandomDefaultMeasureUnit()
-    {
-        MeasureUnitTypeCode measurementUnitTypeCode = GetRandomMeasureUnitTypeCode();
+    //public Enum GetRandomDefaultMeasureUnit()
+    //{
+    //    MeasureUnitTypeCode measurementUnitTypeCode = GetRandomMeasureUnitTypeCode();
 
-        return MeasureUnitTypes.GetDefaultMeasureUnit(measurementUnitTypeCode);
-    }
+    //    return MeasureUnitTypes.GetDefaultMeasureUnit(measurementUnitTypeCode);
+    //}
 
-    public Type GetRandomMeasureUnitType(out MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        measureUnitTypeCode = GetRandomMeasureUnitTypeCode();
+    //public Type GetRandomMeasureUnitType(out MeasureUnitTypeCode measureUnitTypeCode)
+    //{
+    //    measureUnitTypeCode = GetRandomMeasureUnitTypeCode();
 
-        return MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode);
-    }
+    //    return MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode);
+    //}
     #endregion
 }

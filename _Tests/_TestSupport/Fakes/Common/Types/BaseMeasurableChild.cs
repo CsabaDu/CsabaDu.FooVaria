@@ -2,11 +2,15 @@
 
 internal sealed class BaseMeasurableChild : BaseMeasurable
 {
-    public BaseMeasurableChild(MeasureUnitTypeCode measureUnitTypeCode) : base(measureUnitTypeCode)
+    public BaseMeasurableChild(IFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
     {
     }
 
-    public BaseMeasurableChild(Enum measureUnit) : base(measureUnit)
+    public BaseMeasurableChild(IFactory factory, Enum measureUnit) : base(factory, measureUnit)
+    {
+    }
+
+    public BaseMeasurableChild(IFactory factory, IBaseMeasurable baseMeasurable) : base(factory, baseMeasurable)
     {
     }
 
@@ -15,6 +19,11 @@ internal sealed class BaseMeasurableChild : BaseMeasurable
     }
 
     public override Enum GetMeasureUnit()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override IFactory GetFactory()
     {
         throw new NotImplementedException();
     }

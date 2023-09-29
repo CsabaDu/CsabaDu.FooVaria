@@ -2,17 +2,25 @@
 
 public abstract class CommonBase : ICommonBase
 {
-    private protected CommonBase(IFactory factory)
+    #region Constructors
+    protected CommonBase(IFactory factory)
     {
         Factory = NullChecked(factory, nameof(factory));
     }
 
-    private protected CommonBase(ICommonBase other)
+    protected CommonBase(ICommonBase other)
     {
         Factory = NullChecked(other, nameof(other)).Factory;
     }
+    #endregion
 
+    #region Properties
     public IFactory Factory { get; init; }
+    #endregion
 
+    #region Public methods
+    #region Abstract methods
     public abstract IFactory GetFactory();
+    #endregion
+    #endregion
 }
