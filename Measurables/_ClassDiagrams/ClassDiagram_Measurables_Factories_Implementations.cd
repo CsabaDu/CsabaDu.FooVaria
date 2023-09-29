@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CsabaDu.FooVaria.Measurables.Factories.Implementations.BaseMeasureFactory" Collapsed="true">
+    <Position X="2.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAIAAAgAEAAgAAAAAAAAAA=</HashCode>
+      <FileName>Factories\Implementations\BaseMeasureFactory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Measurables.Factories.Implementations.DenominatorFactory" Collapsed="true">
+    <Position X="4.25" Y="2" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIAAAgAEAYgAAAAAAAAAA=</HashCode>
+      <FileName>Factories\Implementations\DenominatorFactory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Measurables.Factories.Implementations.FlatRateFactory" Collapsed="true">
+    <Position X="8.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Factories\Implementations\FlatRateFactory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Measurables.Factories.Implementations.LimitedRateFactory" Collapsed="true">
+    <Position X="6.25" Y="2" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAUAAAAAAAAAAAAA=</HashCode>
+      <FileName>Factories\Implementations\LimitedRateFactory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Measurables.Factories.Implementations.LimitFactory" Collapsed="true">
+    <Position X="0.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAIAAAgAEAAgAAAQAAAAAA=</HashCode>
+      <FileName>Factories\Implementations\LimitFactory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Measurables.Factories.Implementations.MeasureFactory" Collapsed="true">
+    <Position X="2.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIAAAgAEAAgAAAAAAAAAA=</HashCode>
+      <FileName>Factories\Implementations\MeasureFactory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Measurables.Factories.Implementations.MeasurementFactory" Collapsed="true">
+    <Position X="4.75" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAQAAAAAgAAAAIAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Factories\Implementations\MeasurementFactory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Measurables.Factories.Implementations.RateFactory" Collapsed="true">
+    <Position X="7.5" Y="0.75" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Factories\Implementations\RateFactory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
