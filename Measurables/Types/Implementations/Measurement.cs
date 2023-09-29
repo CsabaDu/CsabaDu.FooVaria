@@ -250,7 +250,7 @@ internal sealed class Measurement : Measurable, IMeasurement
         return exchangeRate == GetExchangeRate(measureUnit);
     }
 
-    public bool IsValidMeasureUnit(Enum measureUnit)
+    public bool IsValidMeasureUnit(Enum? measureUnit)
     {
         return ExchangeRates.IsValidMeasureUnit(measureUnit);
     }

@@ -21,46 +21,7 @@ public sealed class DenominatorFactory : BaseMeasureFactory, IDenominatorFactory
     {
         IDenominator denominator = new Denominator(this, measureUnitTypeCode);
 
-        return GetStoredDenominator(denominator);
-    }
-
-    public IDenominator Create(string name, ValueType quantity)
-    {
-        IMeasurement measurement = MeasurementFactory.Create(name);
-        IDenominator denominator = Create(measurement, quantity);
-
-        return GetStoredDenominator(denominator);
-    }
-
-    public IDenominator Create(Enum measureUnit, ValueType quantity)
-    {
-        IMeasurement measurement = MeasurementFactory.Create(measureUnit);
-        IDenominator denominator = Create(measurement, quantity);
-
-        return GetStoredDenominator(denominator);
-    }
-
-    public IDenominator Create(Enum measureUnit, decimal exchangeRate, string customName, ValueType quantity)
-    {
-        IMeasurement measurement = MeasurementFactory.Create(measureUnit, exchangeRate, customName);
-        IDenominator denominator = Create(measurement, quantity);
-
-        return GetStoredDenominator(denominator);
-    }
-
-    public IDenominator Create(IMeasurement measurement, ValueType quantity)
-    {
-        IDenominator denominator = new Denominator(this, quantity, measurement);
-
-        return GetStoredDenominator(denominator);
-    }
-
-    public IDenominator Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
-    {
-        IMeasurement measurement = MeasurementFactory.Create(customName, measureUnitTypeCode, exchangeRate);
-        IDenominator denominator = Create(measurement, quantity);
-
-        return GetStoredDenominator(denominator);
+        return Create(denominator);
     }
 
     public IDenominator Create(IDenominator denominator)
@@ -68,35 +29,67 @@ public sealed class DenominatorFactory : BaseMeasureFactory, IDenominatorFactory
         return GetStoredDenominator(denominator);
     }
 
+    public IDenominator Create(IMeasurement measurement, ValueType quantity)
+    {
+        IDenominator denominator = new Denominator(this, quantity, measurement);
+
+        return Create(denominator);
+    }
+
+    public IDenominator Create(string name, ValueType quantity)
+    {
+        IMeasurement measurement = MeasurementFactory.Create(name);
+
+        return Create(measurement, quantity);
+    }
+
+    public IDenominator Create(Enum measureUnit, ValueType quantity)
+    {
+        IMeasurement measurement = MeasurementFactory.Create(measureUnit);
+
+        return Create(measurement, quantity);
+    }
+
+    public IDenominator Create(Enum measureUnit, decimal exchangeRate, string customName, ValueType quantity)
+    {
+        IMeasurement measurement = MeasurementFactory.Create(measureUnit, exchangeRate, customName);
+
+        return Create(measurement, quantity);
+    }
+
+    public IDenominator Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
+    {
+        IMeasurement measurement = MeasurementFactory.Create(customName, measureUnitTypeCode, exchangeRate);
+
+        return Create(measurement, quantity);
+    }
+
     public IDenominator Create(IBaseMeasure baseMeasure)
     {
-        if (baseMeasure is IDenominator denominator) return GetStoredDenominator(denominator);
+        if (baseMeasure is IDenominator denominator) return Create(denominator);
 
         IMeasurement measurement = NullChecked(baseMeasure, nameof(baseMeasure)).Measurement;
         ValueType quantity = baseMeasure.GetQuantity();
-        denominator = Create(measurement, quantity);
 
-        return GetStoredDenominator(denominator);
+        return Create(measurement, quantity);
     }
 
     public IDenominator Create(IMeasurement measurement)
     {
-        IDenominator denominator = Create(measurement, (ValueType)DefaultRateComponentQuantity);
-
-        return GetStoredDenominator(denominator);
+        return Create(measurement, (decimal)DefaultRateComponentQuantity);
     }
 
     public override IDenominator Create(IMeasurable other)
     {
         _ = NullChecked(other, nameof(other));
 
-        if (other is IDenominator denominator) return GetStoredDenominator(denominator);
+        if (other is IDenominator denominator) return Create(denominator);
 
         if (other is IBaseMeasure baseMeasure) return Create(baseMeasure);
 
         if (other is IMeasurement measurement) return Create(measurement);
 
-        if (other is IRate rate) return GetStoredDenominator(rate.Denominator);
+        if (other is IRate rate) return Create(rate.Denominator);
 
         throw new InvalidOperationException(null);
     }

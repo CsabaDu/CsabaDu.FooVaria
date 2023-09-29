@@ -3,11 +3,15 @@
 internal sealed class TimePeriod : Measure, ITimePeriod
 {
     #region Constructors
-    internal TimePeriod(ITimePeriod other) : base(other)
-    {
-    }
+    //internal TimePeriod(ITimePeriod other) : base(other)
+    //{
+    //}
 
-    internal TimePeriod(IMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
+    //internal TimePeriod(IMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
+    //{
+    //}
+
+    internal TimePeriod(IMeasureFactory factory, ValueType quantity, TimePeriodUnit timePeriodUnit) : base(factory, quantity, timePeriodUnit)
     {
     }
     #endregion

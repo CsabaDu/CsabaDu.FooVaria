@@ -3,11 +3,15 @@
 internal sealed class Distance : Measure, IDistance
 {
     #region Constructors
-    internal Distance(IDistance other) : base(other)
-    {
-    }
+    //internal Distance(IDistance other) : base(other)
+    //{
+    //}
 
-    internal Distance(IMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
+    //internal Distance(IMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
+    //{
+    //}
+
+    internal Distance(IMeasureFactory factory, ValueType quantity, DistanceUnit distanceUnit) : base(factory, quantity, distanceUnit)
     {
     }
     #endregion

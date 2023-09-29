@@ -3,14 +3,14 @@
 internal sealed class Limit : BaseMeasure, ILimit
 {
     #region Constructors
-    internal Limit(ILimit other) : base(other)
-    {
-        LimitMode = other.LimitMode;
-    }
+    //internal Limit(ILimit other) : base(other)
+    //{
+    //    LimitMode = other.LimitMode;
+    //}
 
-    internal Limit(ILimit other, ValueType quantity) : base(other, quantity)
+    internal Limit(ILimitFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
     {
-        LimitMode = other.LimitMode;
+        LimitMode = default;
     }
 
     internal Limit(ILimitFactory factory, ValueType quantity, IMeasurement measurement, LimitMode limitMode) : base(factory, quantity, measurement)
@@ -112,31 +112,6 @@ internal sealed class Limit : BaseMeasure, ILimit
     {
         return GetLimit(measureUnit, quantity, default);
     }
-
-    //public ILimitFactory GetFactory()
-    //{
-    //    return Factory as ILimitFactory ?? throw new InvalidOperationException(null);
-    //}
-
-    //public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName)
-    //{
-    //    return GetLimit(measureUnit, exchangeRate, customName, quantity, default);
-    //}
-
-    //public override IBaseMeasure GetBaseMeasure(ValueType quantity, IMeasurement measurement)
-    //{
-    //    return GetLimit(measurement, quantity, default);
-    //}
-
-    //public override IBaseMeasure GetBaseMeasure(ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
-    //{
-    //    return GetLimit(measureUnitTypeCode, exchangeRate, customName, quantity, default);
-    //}
-
-    //public override IBaseMeasure GetBaseMeasure(ValueType quantity, string name)
-    //{
-    //    return GetLimit(name, quantity, default);
-    //}
 
     public override ILimitFactory GetFactory()
     {

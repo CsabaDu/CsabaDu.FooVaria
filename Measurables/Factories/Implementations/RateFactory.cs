@@ -43,16 +43,16 @@ public abstract class RateFactory : Factory, IRateFactory
         return new FlatRate(flatRateFactory, numerator, denominator);
     }
 
-    protected static ILimitedRate CreateLimitedRate(ILimitedRateFactory limitedRateFactory, IRate rate, ILimit? limit)
+    protected static IFlatRate CreateLimitedRate(ILimitedRateFactory limitedRateFactory, IRate rate, ILimit? limit)
     {
-        if (rate is ILimitedRate limitedRate) return CreateLimitedRate(limitedRate, limit);
+        if (rate is IFlatRate limitedRate) return CreateLimitedRate(limitedRate, limit);
 
         var (numerator, denominator) = GetRateParams(rate);
 
         return CreateLimitedRate(limitedRateFactory, numerator, denominator, limit ?? rate.GetLimit());
     }
 
-    protected static ILimitedRate CreateLimitedRate(ILimitedRateFactory limitedRateFactory, IMeasure numerator, IDenominator denominator, ILimit? limit)
+    protected static IFlatRate CreateLimitedRate(ILimitedRateFactory limitedRateFactory, IMeasure numerator, IDenominator denominator, ILimit? limit)
     {
         return new LimitedRate(limitedRateFactory, numerator, denominator, limit);
     }

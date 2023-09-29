@@ -3,11 +3,15 @@
 internal sealed class PieceCount : Measure, IPieceCount
 {
     #region Constructors
-    internal PieceCount(IPieceCount other) : base(other)
-    {
-    }
+    //internal PieceCount(IPieceCount other) : base(other)
+    //{
+    //}
 
-    internal PieceCount(IMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
+    //internal PieceCount(IMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
+    //{
+    //}
+
+    internal PieceCount(IMeasureFactory factory, ValueType quantity, Pieces pieces) : base(factory, quantity, pieces)
     {
     }
     #endregion

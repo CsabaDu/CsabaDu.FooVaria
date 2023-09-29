@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
+﻿using CsabaDu.FooVaria.Measurables.Types.Implementations;
+
+namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
 
 public sealed class LimitFactory : BaseMeasureFactory, ILimitFactory
 {
@@ -10,92 +12,106 @@ public sealed class LimitFactory : BaseMeasureFactory, ILimitFactory
 
     #region Properties
     public override RateComponentCode RateComponentCode => RateComponentCode.Limit;
-
     public override object DefaultRateComponentQuantity => default(ulong);
+    private static SortedSet<ILimit> LimitSet { get; set; } = new();
     #endregion
 
     #region Public methods
-    public ILimit Create(string name, ValueType? quantity, LimitMode? limitMode)
+    public override ILimit CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
     {
-        IMeasurement measurement = MeasurementFactory.Create(name);
+        ILimit limit = new Limit(this, measureUnitTypeCode);
 
-        return CreateLimit(this, quantity, measurement, limitMode);
+        return Create(limit);
     }
 
-    public ILimit Create(Enum measureUnit, ValueType? quantity, LimitMode? limitMode)
+    public ILimit Create(ILimit limit)
     {
-        IMeasurement measurement = MeasurementFactory.Create(measureUnit);
-
-        return CreateLimit(this, quantity, measurement, limitMode);
-    }
-
-    public ILimit Create(Enum measureUnit, decimal exchangeRate, string customName, ValueType? quantity, LimitMode? limitMode)
-    {
-        IMeasurement measurement = MeasurementFactory.Create(measureUnit, exchangeRate, customName);
-
-        return CreateLimit(this, quantity, measurement, limitMode);
-    }
-
-    public ILimit Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType? quantity, LimitMode? limitMode)
-    {
-        IMeasurement measurement = MeasurementFactory.Create(customName, measureUnitTypeCode, exchangeRate);
-
-        return CreateLimit(this, quantity, measurement, limitMode);
-    }
-
-    public ILimit Create(IMeasurement measurement, ValueType? quantity, LimitMode? limitMode)
-    {
-        return CreateLimit(this, quantity, measurement, limitMode);
-    }
-
-    public ILimit Create(IBaseMeasure baseMeasure, LimitMode? limitMode)
-    {
-        return CreateLimit(this, baseMeasure, limitMode);
-    }
-
-    public ILimit Create(IDenominator denominator)
-    {
-        return CreateLimit(this, denominator, null);
-    }
-
-    public ILimit Create(ILimit limit, LimitMode? limitMode)
-    {
-        return CreateLimit(limit, limitMode);
-    }
-
-    public override IMeasurable Create(IMeasurable other)
-    {
-        throw new NotImplementedException();
-    }
-
-    public ILimit Create(string name, ValueType quantity, LimitMode limitMode)
-    {
-        throw new NotImplementedException();
-    }
-
-    public ILimit Create(Enum measureUnit, ValueType quantity, LimitMode limitMode)
-    {
-        throw new NotImplementedException();
+        return GetStoredLimit(limit);
     }
 
     public ILimit Create(IMeasurement measurement, ValueType quantity, LimitMode limitMode)
     {
-        throw new NotImplementedException();
+        ILimit limit = new Limit(this, quantity, measurement, limitMode);
+
+        return Create(limit);
+    }
+
+    public ILimit Create(string name, ValueType quantity, LimitMode limitMode)
+    {
+        IMeasurement measurement = MeasurementFactory.Create(name);
+
+        return Create(measurement, quantity, limitMode);
+    }
+
+    public ILimit Create(Enum measureUnit, ValueType quantity, LimitMode limitMode)
+    {
+        IMeasurement measurement = MeasurementFactory.Create(measureUnit);
+
+        return Create(measurement, quantity, limitMode);
+    }
+
+    public ILimit Create(Enum measureUnit, decimal exchangeRate, string customName, ValueType quantity, LimitMode limitMode)
+    {
+        IMeasurement measurement = MeasurementFactory.Create(measureUnit, exchangeRate, customName);
+
+        return Create(measurement, quantity, limitMode);
+    }
+
+    public ILimit Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity, LimitMode limitMode)
+    {
+        IMeasurement measurement = MeasurementFactory.Create(customName, measureUnitTypeCode, exchangeRate);
+
+        return Create(measurement, quantity, limitMode);
     }
 
     public ILimit Create(IBaseMeasure baseMeasure, LimitMode limitMode)
     {
-        throw new NotImplementedException();
+        IMeasurement measurement = NullChecked(baseMeasure, nameof(baseMeasure)).Measurement;
+        ValueType quantity = baseMeasure.GetQuantity();
+
+        return Create(measurement, quantity, limitMode);
+    }
+
+    public override ILimit Create(IMeasurable other)
+    {
+        _ = NullChecked(other, nameof(other));
+
+        if (other is ILimit limit) return Create(limit);
+
+        if (other is IBaseMeasure baseMeasure) return Create(baseMeasure, default);
+
+        if (other is IMeasurement measurement) return CreateDefault(measurement.MeasureUnitTypeCode);
+
+        if (other is IFlatRate flatRate) return Create(flatRate.Denominator, default);
+
+        if (other is ILimitedRate limitedRate) return Create(limitedRate.Limit);
+
+        throw new InvalidOperationException(null);
     }
 
     public ILimit Create(ILimit limit, ValueType quantity)
     {
-        throw new NotImplementedException();
-    }
+        IMeasurement measurement = NullChecked(limit, nameof(limit)).Measurement;
+        LimitMode limitMode = limit.LimitMode;
 
-    public override IBaseMeasure CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        throw new NotImplementedException();
+        return Create(measurement, quantity, limitMode);
     }
+    #endregion
+
+    #region Private methods
+    #region Static methods
+    private static ILimit GetStoredLimit([DisallowNull] ILimit limit)
+    {
+        if (LimitSet.Contains(limit) || LimitSet.Add(limit))
+        {
+            if (LimitSet.TryGetValue(limit, out ILimit? storedLimit) && storedLimit != null)
+            {
+                return storedLimit;
+            }
+        }
+
+        throw new InvalidOperationException(null);
+    }
+    #endregion
     #endregion
 }

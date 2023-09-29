@@ -23,6 +23,12 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         Measurement = GetDefaultMeasurement();
     }
 
+    private protected BaseMeasure(IBaseMeasureFactory factory, ValueType quantity, Enum measureUnit) : base(factory, measureUnit)
+    {
+        Quantity = GetValidQuantity(quantity);
+        Measurement = GetMeasurement(measureUnit);
+    }
+
     private protected BaseMeasure(IBaseMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, measurement)
     {
         Quantity = GetValidQuantity(quantity);
@@ -344,6 +350,10 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     }
 
     #region Static methods
+    private IMeasurement GetMeasurement(Enum measureUnit)
+    {
+        return GetFactory().MeasurementFactory.Create(measureUnit);
+    }
     protected static bool Equals<T>(T baseMeasure, IBaseMeasure? other) where T : class, IBaseMeasure
     {
         return baseMeasure.Equals(other)

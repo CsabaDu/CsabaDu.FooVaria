@@ -1,9 +1,9 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
-internal sealed class LimitedRate : Rate, ILimitedRate
+internal sealed class LimitedRate : Rate, IFlatRate
 {
     #region Constructors
-    public LimitedRate(ILimitedRate other, ILimit? limit) : base(other)
+    public LimitedRate(IFlatRate other, ILimit? limit) : base(other)
     {
         Limit = limit ?? other.Limit;
     }
@@ -19,7 +19,7 @@ internal sealed class LimitedRate : Rate, ILimitedRate
     #endregion
 
     #region Public methods
-    public bool Equals(ILimitedRate? x, ILimitedRate? y)
+    public bool Equals(IFlatRate? x, IFlatRate? y)
     {
         if (x == null && y == null) return true;
 
@@ -32,7 +32,7 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         return xLimit.Equals(xLimit, y.Limit);
     }
 
-    public int GetHashCode([DisallowNull] ILimitedRate limitedRate)
+    public int GetHashCode([DisallowNull] IFlatRate limitedRate)
     {
         return HashCode.Combine(limitedRate as IRate, limitedRate.Limit);
     }
@@ -42,42 +42,42 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         return Limit;
     }
 
-    public ILimitedRate GetLimitedRate(IMeasure numerator, string name, decimal? quantity = null, ILimit? limit = null)
+    public IFlatRate GetLimitedRate(IMeasure numerator, string name, decimal? quantity = null, ILimit? limit = null)
     {
         return GetFactory().Create(numerator, name, quantity, limit ?? Limit);
     }
 
-    public ILimitedRate GetLimitedRate(IMeasure numerator, Enum measureUnit, decimal? quantity = null, ILimit? limit = null)
+    public IFlatRate GetLimitedRate(IMeasure numerator, Enum measureUnit, decimal? quantity = null, ILimit? limit = null)
     {
         return GetFactory().Create(numerator, measureUnit, quantity, limit ?? Limit);
     }
 
-    public ILimitedRate GetLimitedRate(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, decimal? quantity = null, ILimit? limit = null)
+    public IFlatRate GetLimitedRate(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, decimal? quantity = null, ILimit? limit = null)
     {
         return GetFactory().Create(numerator, measureUnit, exchangeRate, customName, quantity, limit ?? Limit);
     }
 
-    public ILimitedRate GetLimitedRate(IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, decimal? quantity = null, ILimit? limit = null)
+    public IFlatRate GetLimitedRate(IMeasure numerator, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, decimal? quantity = null, ILimit? limit = null)
     {
         return GetFactory().Create(numerator, customName, measureUnitTypeCode, exchangeRate, quantity, limit ?? Limit);
     }
 
-    public ILimitedRate GetLimitedRate(IMeasure numerator, IMeasurement measurement, decimal? quantity = null, ILimit? limit = null)
+    public IFlatRate GetLimitedRate(IMeasure numerator, IMeasurement measurement, decimal? quantity = null, ILimit? limit = null)
     {
         return GetFactory().Create(numerator, measurement, quantity, limit ?? Limit);
     }
 
-    public ILimitedRate GetLimitedRate(IMeasure numerator, IDenominator? denominator = null, ILimit? limit = null)
+    public IFlatRate GetLimitedRate(IMeasure numerator, IDenominator? denominator = null, ILimit? limit = null)
     {
         return GetFactory().Create(numerator, denominator ?? Denominator, limit ?? Limit);
     }
 
-    public ILimitedRate GetLimitedRate(IRate rate, ILimit? limit = null)
+    public IFlatRate GetLimitedRate(IRate rate, ILimit? limit = null)
     {
         return GetFactory().Create(rate, limit ?? Limit);
     }
 
-    public ILimitedRate GetLimitedRate(ILimitedRate? other = null, ILimit? limit = null)
+    public IFlatRate GetLimitedRate(IFlatRate? other = null, ILimit? limit = null)
     {
         return GetFactory().Create(other ?? this, limit ?? other?.Limit);
     }
@@ -92,7 +92,7 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         return limit ?? GetFactory().LimitFactory.Create(Denominator);
     }
 
-    public LimitMode GetLimitMode(ILimitedRate? limitedRate = null)
+    public LimitMode GetLimitMode(IFlatRate? limitedRate = null)
     {
         return Limit.GetLimitMode((limitedRate ?? this).Limit);
     }

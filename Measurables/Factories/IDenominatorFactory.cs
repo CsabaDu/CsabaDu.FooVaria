@@ -9,6 +9,6 @@ public interface IDenominatorFactory : IBaseMeasureFactory
     IDenominator Create(Enum measureUnit, decimal exchangeRate, string customName, ValueType quantity);
     IDenominator Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity);
     IDenominator Create(IBaseMeasure baseMeasure);
-    IDenominator Create(IDenominator other);
+    IDenominator Create(IDenominator denominator);
 }
 

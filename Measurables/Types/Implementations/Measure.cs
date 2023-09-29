@@ -13,13 +13,21 @@ internal abstract class Measure : BaseMeasure, IMeasure
     #endregion
 
     #region Constructors
-    private protected Measure(IMeasure other) : base(other)
+    //private protected Measure(IMeasure other) : base(other)
+    //{
+    //}
+
+    //private protected Measure(IMeasureFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
+    //{
+    //}
+
+    private protected Measure(IMeasureFactory factory, ValueType quantity, Enum measureUnit) : base(factory, quantity, measureUnit)
     {
     }
 
-    private protected Measure(IMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
-    {
-    }
+    //private protected Measure(IMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
+    //{
+    //}
     #endregion
 
     #region Public methods

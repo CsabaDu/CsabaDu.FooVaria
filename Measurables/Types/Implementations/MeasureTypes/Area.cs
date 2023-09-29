@@ -3,13 +3,18 @@
 internal sealed class Area : Measure, IArea
 {
     #region Constructors
-    internal Area(IArea other) : base(other)
+    //internal Area(IArea other) : base(other)
+    //{
+    //}
+
+    //internal Area(IMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
+    //{
+    //}
+
+    internal Area(IMeasureFactory factory, ValueType quantity, AreaUnit areaUnit) : base(factory, quantity, areaUnit)
     {
     }
 
-    internal Area(IMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
-    {
-    }
     #endregion
 
     #region Public methods
