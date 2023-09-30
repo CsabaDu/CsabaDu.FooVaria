@@ -108,6 +108,12 @@ internal sealed class LimitedRate : Rate, ILimitedRate
     }
 
     #region Override methods
+    public override bool Equals(IRate? other)
+    {
+        return other is ILimitedRate
+            && base.Equals(other);
+    }
+
     public override ILimitedRateFactory GetFactory()
     {
         return (ILimitedRateFactory)Factory;

@@ -435,9 +435,7 @@ internal sealed class Measurement : Measurable, IMeasurement
 
     public override IMeasurement GetDefault()
     {
-        Enum measureUnit = GetDefaultMeasureUnit();
-
-        return GetMeasurement(measureUnit);
+        return GetFactory().CreateDefault(MeasureUnitTypeCode);
     }
 
     public override IMeasurementFactory GetFactory()
@@ -463,15 +461,15 @@ internal sealed class Measurement : Measurable, IMeasurement
         IEnumerable<object> validMeasureUnits;
         IDictionary<object, string> customNameCollection;
 
-        if (!measureUnitTypeCode.HasValue)
-        {
-            validMeasureUnits = ExchangeRates.GetValidMeasureUnits();
-            customNameCollection = CustomNameCollection;
-        }
-        else
+        if (measureUnitTypeCode.HasValue)
         {
             validMeasureUnits = GetValidMeasureUnits(measureUnitTypeCode.Value);
             customNameCollection = GetMeasureUnitBasedCollection(CustomNameCollection, measureUnitTypeCode.Value);
+        }
+        else
+        {
+            validMeasureUnits = ExchangeRates.GetValidMeasureUnits();
+            customNameCollection = CustomNameCollection;
         }
 
         IDictionary<string, object> measureUnitCollection = validMeasureUnits.ToDictionary(x => MeasureUnitTypes.GetDefaultName((Enum)x), x => x);
@@ -517,9 +515,9 @@ internal sealed class Measurement : Measurable, IMeasurement
 
         IEnumerable<MeasureUnitTypeCode> getCustomMeasureUnitTypeCodes()
         {
-            if (!measureUnitTypeCode.HasValue) return GetCustomMeasureUnitTypeCodes();
+            if (measureUnitTypeCode.HasValue) return getCustomMeasureUnitTypeCodesShortList();
 
-            return getCustomMeasureUnitTypeCodesShortList();
+            return GetCustomMeasureUnitTypeCodes();
         }
 
         IEnumerable<MeasureUnitTypeCode> getCustomMeasureUnitTypeCodesShortList()

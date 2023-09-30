@@ -13,6 +13,16 @@ internal sealed class Denominator : BaseMeasure, IDenominator
     #endregion
 
     #region Public methods
+    public IDenominator GetDefaultRateComponent()
+    {
+        return (IDenominator)GetDefault();
+    }
+
+    public decimal GetDefaultRateComponentQuantity()
+    {
+        return GetDefaultRateComponentQuantity<decimal>();
+    }
+
     public IDenominator GetDenominator(IMeasurement measurement, ValueType quantity)
     {
         return GetFactory().Create(measurement, quantity);
@@ -81,12 +91,8 @@ internal sealed class Denominator : BaseMeasure, IDenominator
     #region Override methods
     public override bool Equals(IBaseMeasure? other)
     {
-        return Equals(this, other);
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return obj is IDenominator denominator && Equals(denominator);
+        return other is IDenominator
+            && base.Equals(other);
     }
 
     public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit)
@@ -99,11 +105,6 @@ internal sealed class Denominator : BaseMeasure, IDenominator
         return (IDenominatorFactory)Factory;
     }
 
-    public override int GetHashCode()
-    {
-        return GetHashCode(this);
-    }
-
     public override LimitMode? GetLimitMode()
     {
         return null;
@@ -112,11 +113,6 @@ internal sealed class Denominator : BaseMeasure, IDenominator
     public override TypeCode GetQuantityTypeCode()
     {
         return TypeCode.Decimal;
-    }
-
-    public IDenominator GetDefaultRateComponent()
-    {
-        return (IDenominator)GetDefault();
     }
     #endregion
     #endregion

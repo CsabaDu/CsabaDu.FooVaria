@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Behaviors;
 
-public interface IMeasure<T, U, V> where T : class, IMeasure where U : struct where V : struct, Enum
+public interface IMeasure<T, U, V> : IDefaultRateComponent<T, U> where T : class, IMeasure where U : struct where V : struct, Enum
 {
     T GetMeasure(IBaseMeasure baseMeasure);
     T GetMeasure(U quantity, V measureUnit);

@@ -16,19 +16,19 @@ public class BaseMeasurableVariant
     #endregion
 
     //    #region Public methods
-    //    internal Enum GetDefaultMeasureUnit(out MeasureUnitTypeCode measureUnitTypeCode)
-    //    {
-    //        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+    internal Enum GetDefaultMeasureUnit(out MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
 
-    //        return GetDefaultMeasureUnit(measureUnitTypeCode);
-    //    }
+        return GetDefaultMeasureUnit(measureUnitTypeCode);
+    }
 
-    //    internal Enum GetDefaultMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode)
-    //    {
-    //        Type measureUnitType = MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode)!;
+    internal Enum GetDefaultMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        Type measureUnitType = MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode)!;
 
-    //        return MeasureUnitTypes.GetDefaultMeasureUnit(measureUnitType);
-    //    }
+        return MeasureUnitTypes.GetDefaultMeasureUnit(measureUnitType);
+    }
 
     //    internal IEnumerable<string> GetDefaultNames(MeasureUnitTypeCode? measureUnitTypeCode)
     //    {

@@ -17,7 +17,7 @@ internal abstract class Measure : BaseMeasure, IMeasure
     {
     }
     #endregion
-
+    
     #region Public methods
     public IMeasure Add(IMeasure? other)
     {
@@ -75,11 +75,6 @@ internal abstract class Measure : BaseMeasure, IMeasure
             };
         }
         #endregion
-    }
-
-    public IMeasure GetDefaultRateComponent()
-    {
-        return (IMeasure)GetDefault();
     }
 
     public IMeasure GetMeasure(ValueType quantity, Enum measureUnit)
@@ -142,12 +137,8 @@ internal abstract class Measure : BaseMeasure, IMeasure
     #region Sealed methods
     public override sealed bool Equals(IBaseMeasure? other)
     {
-        return Equals(this, other);
-    }
-
-    public override sealed bool Equals(object? obj)
-    {
-        return obj is IMeasure measure && Equals(measure);
+        return other is IMeasure
+            && base.Equals(other);
     }
 
     public override sealed IMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit)
@@ -158,11 +149,6 @@ internal abstract class Measure : BaseMeasure, IMeasure
     public override sealed IMeasureFactory GetFactory()
     {
         return (IMeasureFactory)Factory;
-    }
-
-    public override sealed int GetHashCode()
-    {
-        return GetHashCode(this);
     }
 
     public override sealed LimitMode? GetLimitMode()

@@ -10,7 +10,9 @@ internal sealed class Limit : BaseMeasure, ILimit
 
     internal Limit(ILimitFactory factory, ValueType quantity, IMeasurement measurement, LimitMode limitMode) : base(factory, quantity, measurement)
     {
-        LimitMode = GetValidLimitMode(limitMode);
+        ValidateLimitMode(limitMode);
+
+        LimitMode = limitMode;
     }
     #endregion
 
@@ -30,9 +32,19 @@ internal sealed class Limit : BaseMeasure, ILimit
         return x.Equals(y);
     }
 
+    public ILimit GetDefaultRateComponent()
+    {
+        return (ILimit)GetDefault();
+    }
+
+    public ulong GetDefaultRateComponentQuantity()
+    {
+        return GetDefaultRateComponentQuantity<ulong>();
+    }
+
     public int GetHashCode([DisallowNull] ILimit limit)
     {
-        return HashCode.Combine(limit as IBaseMeasure, limit.LimitMode);
+        return HashCode.Combine(limit.DefaultQuantity, limit.MeasureUnitTypeCode, limit.LimitMode);
     }
 
     public ILimit GetLimit(Enum measureUnit, decimal exchangeRate, string customName, ValueType quantity, LimitMode limitMode)
@@ -95,12 +107,8 @@ internal sealed class Limit : BaseMeasure, ILimit
     #region Override methods
     public override bool Equals(IBaseMeasure? other)
     {
-        return Equals(this, other);
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return obj is ILimit limit && Equals(limit);
+        return other is ILimit
+            && base.Equals(other);
     }
 
     public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit)
@@ -113,11 +121,6 @@ internal sealed class Limit : BaseMeasure, ILimit
         return (ILimitFactory)Factory;
     }
 
-    public override int GetHashCode()
-    {
-        return GetHashCode(this);
-    }
-
     public override LimitMode? GetLimitMode()
     {
         return LimitMode;
@@ -128,19 +131,5 @@ internal sealed class Limit : BaseMeasure, ILimit
         return TypeCode.UInt64;
     }
     #endregion
-    #endregion
-
-    #region Private methods
-    private LimitMode GetValidLimitMode(LimitMode limitMode)
-    {
-        ValidateLimitMode(limitMode);
-
-        return limitMode;
-    }
-
-    public ILimit GetDefaultRateComponent()
-    {
-        return (ILimit)GetDefault();
-    }
     #endregion
 }

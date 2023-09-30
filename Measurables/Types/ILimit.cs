@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Types;
 
-public interface ILimit : IBaseMeasure, IDefaultRateComponent<ILimit>, ILimiter<ILimit, IMeasure>
+public interface ILimit : IBaseMeasure, IDefaultRateComponent<ILimit, ulong>, ILimiter<ILimit, IMeasure>
 {
     LimitMode LimitMode { get; init; }
 

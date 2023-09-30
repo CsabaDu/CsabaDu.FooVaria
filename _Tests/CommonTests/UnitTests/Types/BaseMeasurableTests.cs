@@ -227,103 +227,18 @@ public class BaseMeasurableTests
     #endregion
     #endregion
 
+    [TestMethod, TestCategory("UnitTest")]
 
     #endregion
+
+
+    #region ArrayList methods
     private static IEnumerable<object[]> GetInvalidEnumMeasureUnitArgArrayList()
     {
         return DynamicDataSources.GetInvalidEnumMeasureUnitArgArrayList();
     }
+    #endregion
 }
-
-//    [TestMethod, TestCategory("UnitTest")]
-//    public void BaseMeasurable_ValidArg_MeasureunitTypeCode_CreatesInstance()
-//    {
-//        // Arrange
-//        MeasureUnitTypeCode measureUnit = RandomParams.GetRandomMeasureUnitTypeCode();
-
-//        // Act
-//        var actual = new BaseMeasurableChild(measureUnit);
-
-//        // Assert
-//        Assert.IsInstanceOfType(actual, typeof(IBaseMeasurable));
-//        Assert.AreEqual(measureUnit, actual.MeasureUnitTypeCode);
-//    }
-//    #endregion
-
-//    #region BaseMeasurable(Enum)
-//    [TestMethod, TestCategory("UnitTest")]
-//    public void BaseMeasurable_NullArg_Enum_ThrowsArgumentNullException()
-//    {
-//        // Arrange
-//        Enum measureUnit = null;
-
-//        // Act
-//        void attempt() => _ = new BaseMeasurableChild(measureUnit);
-
-//        // Assert
-//        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-//        Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
-//    }
-
-//    [TestMethod, TestCategory("UnitTest")]
-//    [DynamicData(nameof(GetInvalidEnumMeasureUnitArgArrayList), DynamicDataSourceType.Method)]
-//    public void BaseMeasurable_InvalidArg_Enum_ThrowsInvalidEnumArgumentException(Enum measureUnit)
-//    {
-//        // Arrange
-//        // Act
-//        void attempt() => _ = new BaseMeasurableChild(measureUnit);
-
-//        // Assert
-//        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
-//        Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
-//    }
-
-//    [TestMethod, TestCategory("UnitTest")]
-//    public void BaseMeasurable_ValidArg_Enum_CreatesInstance()
-//    {
-//        // Arrange
-//        Enum measureUnit = RandomParams.GetRandomMeasureUnit();
-//        MeasureUnitTypeCode measureUnit = MeasureUnitTypes.GetMeasureUnitTypeCode(measureUnit);
-
-//        // Act
-//        var actual = new BaseMeasurableChild(measureUnit);
-
-//        // Assert
-//        Assert.IsInstanceOfType(actual, typeof(IBaseMeasurable));
-//        Assert.AreEqual(measureUnit, actual.MeasureUnitTypeCode);
-//    }
-//    #endregion
-
-//    #region BaseMeasurable(IBaseMeasurable)
-//    [TestMethod, TestCategory("UnitTest")]
-//    public void BaseMeasurable_NullArg_IBaseMeasurable_ThrowsArgumentNullException()
-//    {
-//        // Arrange
-//        IBaseMeasurable other = null;
-
-//        // Act
-//        void attempt() => _ = new BaseMeasurableChild(other);
-
-//        // Assert
-//        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-//        Assert.AreEqual(ParamNames.other, ex.ParamName);
-//    }
-
-//    [TestMethod, TestCategory("UnitTest")]
-//    public void BaseMeasurable_ValidArg_IBaseMeasurable_CreatesInstance()
-//    {
-//        // Arrange
-//        MeasureUnitTypeCode measureUnit = RandomParams.GetRandomMeasureUnitTypeCode();
-//        var expected = new BaseMeasurableChild(measureUnit);
-
-//        // Act
-//        IBaseMeasurable actual = new BaseMeasurableChild(expected);
-
-//        // Assert
-//        Assert.AreEqual(expected, actual);
-//    }
-//    #endregion
-//    #endregion
 
 //    #region Equals
 //    #region Equals(object?)

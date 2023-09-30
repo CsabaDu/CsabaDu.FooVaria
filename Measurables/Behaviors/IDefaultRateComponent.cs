@@ -1,7 +1,12 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Behaviors;
-
-public interface IDefaultRateComponent<out T> where T : class, IBaseMeasure
+﻿namespace CsabaDu.FooVaria.Measurables.Behaviors
 {
-    ValueType GetDefaultRateComponentQuantity();
-    T GetDefaultRateComponent();
+    public interface IDefaultRateComponent
+    {
+    }
+
+    public interface IDefaultRateComponent<out T, out U> : IDefaultRateComponent where T : class, IBaseMeasure where U : struct
+    {
+        U GetDefaultRateComponentQuantity();
+        T GetDefaultRateComponent();
+    }
 }

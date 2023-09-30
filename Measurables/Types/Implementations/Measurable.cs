@@ -50,18 +50,12 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
     public override bool Equals(object? obj)
     {
         return obj is IMeasurable other
-            && MeasureUnitTypeCode == other.MeasureUnitTypeCode
-            && Factory.Equals(other.Factory);
+            && base.Equals(other);
     }
 
     public override IMeasurableFactory GetFactory()
     {
         return (IMeasurableFactory)Factory;
-    }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(MeasureUnitTypeCode, Factory);
     }
 
     #region Sealed methods

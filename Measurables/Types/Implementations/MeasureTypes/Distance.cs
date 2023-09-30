@@ -19,6 +19,16 @@ internal sealed class Distance : Measure, IDistance
         return ConvertMeasure<IExtent, ExtentUnit>(this, ConvertMode.Multiply);
     }
 
+    public IDistance GetDefaultRateComponent()
+    {
+        return (IDistance)GetDefault();
+    }
+
+    public double GetDefaultRateComponentQuantity()
+    {
+        return GetDefaultRateComponentQuantity<double>();
+    }
+
     public override IDistance GetMeasure(IBaseMeasure baseMeasure)
     {
         return GetMeasure(this, baseMeasure);

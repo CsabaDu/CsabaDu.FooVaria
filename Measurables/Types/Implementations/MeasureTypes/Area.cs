@@ -6,7 +6,6 @@ internal sealed class Area : Measure, IArea
     internal Area(IMeasureFactory factory, ValueType quantity, AreaUnit areaUnit) : base(factory, quantity, areaUnit)
     {
     }
-
     #endregion
 
     #region Public methods
@@ -18,6 +17,16 @@ internal sealed class Area : Measure, IArea
     public IArea GetMeasure(double quantity, AreaUnit measureUnit)
     {
         return GetMeasure(this, quantity, measureUnit);
+    }
+
+    public IArea GetDefaultRateComponent()
+    {
+        return (IArea)GetDefault();
+    }
+
+    public double GetDefaultRateComponentQuantity()
+    {
+        return GetDefaultRateComponentQuantity<double>();
     }
 
     public IArea GetMeasure(IArea other)

@@ -14,6 +14,16 @@ internal sealed class PieceCount : Measure, IPieceCount
         return GetMeasure(this, quantity, measureUnit, exchangeRate, customName);
     }
 
+    public IPieceCount GetDefaultRateComponent()
+    {
+        return (IPieceCount)GetDefault();
+    }
+
+    public long GetDefaultRateComponentQuantity()
+    {
+        return GetDefaultRateComponentQuantity<long>();
+    }
+
     public override IPieceCount GetMeasure(IBaseMeasure baseMeasure)
     {
         return GetMeasure(this, baseMeasure);

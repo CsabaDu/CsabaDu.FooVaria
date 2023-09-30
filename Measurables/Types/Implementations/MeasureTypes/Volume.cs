@@ -19,6 +19,16 @@ internal sealed class Volume : Measure, IVolume
         return ConvertMeasure<IWeight, WeightUnit>(this, ConvertMode.Divide);
     }
 
+    public IVolume GetDefaultRateComponent()
+    {
+        return (IVolume)GetDefault();
+    }
+
+    public double GetDefaultRateComponentQuantity()
+    {
+        return GetDefaultRateComponentQuantity<double>();
+    }
+
     public override IVolume GetMeasure(IBaseMeasure baseMeasure)
     {
         return GetMeasure(this, baseMeasure);

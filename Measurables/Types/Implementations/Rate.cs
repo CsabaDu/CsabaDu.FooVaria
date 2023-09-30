@@ -50,16 +50,10 @@ internal abstract class Rate : Measurable, IRate
         return GetRateDefaultQuantity().CompareTo(other.GetRateDefaultQuantity());
     }
 
-    public bool Equals(IRate? other)
+    public virtual bool Equals(IRate? other)
     {
-        return other?.Denominator.Equals(Denominator) == true
-            && other.Numerator.Equals(Numerator);
-    }
-
-    public override sealed bool Equals(object? obj)
-    {
-        return obj is IRate other
-            && Equals(other);
+        return Denominator.Equals(other?.Denominator)
+            && Numerator.Equals(other?.Numerator);
     }
 
     public IRate? ExchangeTo(IDenominator denominator)
@@ -74,11 +68,6 @@ internal abstract class Rate : Measurable, IRate
     public decimal GetRateDefaultQuantity()
     {
         return Numerator.DefaultQuantity / Denominator.DefaultQuantity;
-    }
-
-    public override sealed int GetHashCode()
-    {
-        return HashCode.Combine(Numerator, Denominator);
     }
 
     public abstract ILimit? GetLimit();
@@ -118,13 +107,24 @@ internal abstract class Rate : Measurable, IRate
     }
 
     #region Sealed methods
+    public override sealed bool Equals(object? obj)
+    {
+        return obj is IRate other
+            && Equals(other);
+    }
+
     public override sealed IRate GetDefault()
     {
-        IMeasure numerator = Numerator.GetDefaultRateComponent();
+        IMeasure numerator = (IMeasure)Numerator.GetDefault();
         IDenominator denominator = Denominator.GetDefaultRateComponent();
         ILimit? limit = GetLimit()?.GetDefaultRateComponent();
 
         return GetRate(numerator, denominator, limit);
+    }
+
+    public override sealed int GetHashCode()
+    {
+        return HashCode.Combine(Numerator, Denominator);
     }
 
     public override sealed Enum GetMeasureUnit()

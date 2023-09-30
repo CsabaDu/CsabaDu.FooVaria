@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Types;
 
-public interface IMeasure : IBaseMeasure, ILimitable, ICalculable, IDefaultRateComponent<IMeasure>, ICalculate<decimal, IMeasure>
+public interface IMeasure : IBaseMeasure, ILimitable, ICalculable, ICalculate<decimal, IMeasure>
 {
     IMeasure GetMeasure(ValueType quantity, string name);
     IMeasure GetMeasure(ValueType quantity, Enum measureUnit);
@@ -13,8 +13,3 @@ public interface IMeasure : IBaseMeasure, ILimitable, ICalculable, IDefaultRateC
     IMeasure GetMeasure(IMeasure other);
 
 }
-
-    //IMeasureFactory GetFactory();
-    //void ValidateBaseMeasure(IBaseMeasure baseMeasure);
-    //void ValidateMeasurement(IMeasurement? measurement);
-    //void ValidateName(string name);

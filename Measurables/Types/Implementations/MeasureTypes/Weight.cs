@@ -19,6 +19,16 @@ internal sealed class Weight : Measure, IWeight
         return ConvertMeasure<IVolume, VolumeUnit>(this, ConvertMode.Multiply);
     }
 
+    public IWeight GetDefaultRateComponent()
+    {
+        return (IWeight)GetDefault();
+    }
+
+    public double GetDefaultRateComponentQuantity()
+    {
+        return GetDefaultRateComponentQuantity<double>();
+    }
+
     public override IWeight GetMeasure(IBaseMeasure baseMeasure)
     {
         return GetMeasure(this, baseMeasure);

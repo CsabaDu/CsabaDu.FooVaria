@@ -85,11 +85,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return (decimal)GetQuantity(TypeCode.Decimal);
     }
 
-    public ValueType GetDefaultRateComponentQuantity()
-    {
-        return (ValueType)GetFactory().DefaultRateComponentQuantity;
-    }
-
     public decimal GetExchangeRate()
     {
         return Measurement.ExchangeRate;
@@ -248,28 +243,25 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     }
 
     #region Override methods
-    public override bool Equals(object? obj)
-    {
-        return obj is IBaseMeasure other && Equals(other);
-    }
-
     public override IBaseMeasureFactory GetFactory()
     {
         return (IBaseMeasureFactory)Factory;
     }
 
-    public override int GetHashCode()
+    #region Sealed methods
+    public override sealed bool Equals(object? obj)
     {
-        return HashCode.Combine(DefaultQuantity, MeasureUnitTypeCode);
+        return obj is IBaseMeasure other && Equals(other);
     }
 
-    #region Sealed methods
     public override sealed IBaseMeasure GetDefault()
     {
-        Enum measureUnit = GetDefaultMeasureUnit();
-        ValueType quantity = GetDefaultRateComponentQuantity();
+        return GetFactory().CreateDefault(MeasureUnitTypeCode);
+    }
 
-        return GetBaseMeasure(quantity, measureUnit);
+    public override sealed int GetHashCode()
+    {
+        return HashCode.Combine(DefaultQuantity, MeasureUnitTypeCode);
     }
 
     public override sealed Enum GetMeasureUnit()
@@ -282,8 +274,8 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     #region Virtual methods
     public virtual bool Equals(IBaseMeasure? other)
     {
-        return other?.MeasureUnitTypeCode == MeasureUnitTypeCode
-            && other.DefaultQuantity == DefaultQuantity;
+        return MeasureUnitTypeCode == other?.MeasureUnitTypeCode
+            && DefaultQuantity == other?.DefaultQuantity;
     }
     #endregion
 
@@ -294,18 +286,10 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     #endregion
 
     #region Protected methods
-    #region Static methods
-    protected static bool Equals<T>(T baseMeasure, IBaseMeasure? other) where T : class, IBaseMeasure
+    protected T GetDefaultRateComponentQuantity<T>() where T : struct
     {
-        return baseMeasure.Equals(other)
-            && baseMeasure.GetRateComponentCode() == other.GetRateComponentCode();
+        return (T)GetFactory().DefaultRateComponentQuantity;
     }
-
-    protected static int GetHashCode<T>([DisallowNull] T baseMeasure) where T : class, IBaseMeasure
-    {
-        return HashCode.Combine(baseMeasure as IBaseMeasure, baseMeasure.GetRateComponentCode());
-    }
-    #endregion
     #endregion
 
     #region Private methods

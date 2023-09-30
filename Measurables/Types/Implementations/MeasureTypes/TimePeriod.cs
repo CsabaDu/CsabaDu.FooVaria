@@ -23,6 +23,16 @@ internal sealed class TimePeriod : Measure, ITimePeriod
         return new TimeSpan(ticks);
     }
 
+    public ITimePeriod GetDefaultRateComponent()
+    {
+        return (ITimePeriod)GetDefault();
+    }
+
+    public double GetDefaultRateComponentQuantity()
+    {
+        return GetDefaultRateComponentQuantity<double>();
+    }
+
     public override ITimePeriod GetMeasure(IBaseMeasure baseMeasure)
     {
         return GetMeasure(this, baseMeasure);
