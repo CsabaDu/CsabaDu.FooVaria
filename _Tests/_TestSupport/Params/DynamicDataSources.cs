@@ -9,14 +9,17 @@ internal class DynamicDataSources
     private readonly RandomParams RandomParams = new();
     #endregion
 
-
+    protected abstract class ObjectArray
+    {
+        public abstract object[] ToObjectArray();
+    }
     #region Protected types
     #region bool
-    protected class EqualsArg
+    protected class BoolArg : ObjectArray
     {
         internal bool IsTrue { get; init; }
 
-        public virtual object[] ToObjectArray()
+        public override object[] ToObjectArray()
         {
             return new object[]
             {
@@ -25,7 +28,65 @@ internal class DynamicDataSources
         }
     }
 
-    //protected class EqualMeasureUnitEnumsArgs : EqualsArg
+    protected class BoolObjectArgs : BoolArg
+    {
+        internal object Object { get; init; }
+
+        public override object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                IsTrue,
+                Object,
+            };
+        }
+    }
+
+    protected class BoolObjectMeasureUnitTypeCodeArgs : BoolObjectArgs
+    {
+        internal MeasureUnitTypeCode MeasureUnitTypeCode { get; init; }
+
+        public override object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                IsTrue,
+                Object,
+                MeasureUnitTypeCode,
+            };
+        }
+    }
+
+    protected class BoolMeasureUnitTypeCodeArgs : BoolArg
+    {
+        internal MeasureUnitTypeCode MeasureUnitTypeCode { get; init; }
+
+        public override object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                IsTrue,
+                MeasureUnitTypeCode,
+            };
+        }
+    }
+
+    protected class BoolMeasureUnitTypeCodeIBaseMeasurableArgs : BoolMeasureUnitTypeCodeArgs
+    {
+        internal IBaseMeasurable BaseMeasurable { get; init; }
+
+        public override object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                IsTrue,
+                MeasureUnitTypeCode,
+                BaseMeasurable,
+            };
+        }
+    }
+
+    //protected class EqualMeasureUnitEnumsArgs : BoolArg
     //{
     //    internal Enum MeasureUnit { get; init; }
 
@@ -39,7 +100,7 @@ internal class DynamicDataSources
     //    }
     //}
 
-    //protected class EqualsMeasureUnitTypeCodeArgs : EqualsArg
+    //protected class EqualsMeasureUnitTypeCodeArgs : BoolArg
     //{
     //    internal MeasureUnitTypeCode MeasureUnitTypeCode { get; init; }
 
@@ -84,7 +145,7 @@ internal class DynamicDataSources
     //    }
     //}
 
-    //protected class EqualsObjectArgs : EqualsArg
+    //protected class EqualsObjectArgs : BoolArg
     //{
     //    internal object Obj { get; init; }
 
@@ -221,6 +282,67 @@ internal class DynamicDataSources
             return new EnumMeasureUnit
             {
                 MeasureUnit = measureUnit,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> GetBaseMeasurableEqualsArgsArrayList()
+    {
+        bool expected = false;
+        object other = null;
+        MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        yield return toObjectArray();
+
+        other = new();
+        yield return toObjectArray();
+
+        IFactory factory = new FactoryImplementation();
+        expected = true;
+        other = new BaseMeasurableChild(factory, measureUnitTypeCode);
+        yield return toObjectArray();
+
+        expected = false;
+        other = new BaseMeasurableChild(factory, RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
+        yield return toObjectArray();
+
+        #region Local methods
+        object[] toObjectArray()
+        {
+            return new BoolObjectMeasureUnitTypeCodeArgs
+            {
+                IsTrue = expected,
+                Object = other,
+                MeasureUnitTypeCode = measureUnitTypeCode,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> GetBaseMeasurableHasMeasureUnitTypeCodeArgsArrayList()
+    {
+        bool expected = true;
+        MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        IBaseMeasurable baseMeasurable = new BaseMeasurableChild(new FactoryImplementation(), measureUnitTypeCode);
+        yield return toObjectArray();
+
+        expected = false;
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode);
+        yield return toObjectArray();
+
+        measureUnitTypeCode = SampleParams.NotDefinedMeasureUnitTypeCode;
+        yield return toObjectArray();
+
+        #region Local methods
+        object[] toObjectArray()
+        {
+            return new BoolMeasureUnitTypeCodeIBaseMeasurableArgs
+            {
+                IsTrue = expected,
+                MeasureUnitTypeCode = measureUnitTypeCode,
+                BaseMeasurable = baseMeasurable,
             }
             .ToObjectArray();
         }
@@ -379,19 +501,19 @@ internal class DynamicDataSources
     //internal IEnumerable<object[]> BaseMeasurableEqualsObjectArgsArrayList()
     //{
     //    bool expected = false;
-    //    object obj = null;
+    //    object baseMeasurable = null;
     //    MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
     //    yield return toObjectArray();
 
-    //    obj = new();
+    //    baseMeasurable = new();
     //    yield return toObjectArray();
 
     //    expected = true;
-    //    obj = new BaseMeasurableChild(measureUnitTypeCode);
+    //    baseMeasurable = new BaseMeasurableChild(measureUnitTypeCode);
     //    yield return toObjectArray();
 
     //    expected = false;
-    //    obj = new BaseMeasurableChild(RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
+    //    baseMeasurable = new BaseMeasurableChild(RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
     //    yield return toObjectArray();
 
     //    #region Local methods
@@ -400,7 +522,7 @@ internal class DynamicDataSources
     //        return new BaseMeasurableEqualsObjectArgs
     //        {
     //            IsTrue = expected,
-    //            Obj = obj,
+    //            Obj = baseMeasurable,
     //            MeasureUnitTypeCode = measureUnitTypeCode,
     //        }
     //        .ToObjectArray();

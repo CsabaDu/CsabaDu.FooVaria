@@ -86,11 +86,10 @@ public static class MeasureUnitTypes
         ValidateMeasureUnit(measureUnit);
 
         Type measureUnitType = measureUnit.GetType();
-        string defaultName = Enum.GetName(measureUnitType, measureUnit)!;
+        string measureUnitName = Enum.GetName(measureUnitType, measureUnit)!;
         string measureUnitTypeName = measureUnit.GetType().Name;
 
-        return defaultName + measureUnitTypeName;
-    
+        return measureUnitName + measureUnitTypeName;
     }
 
     public static IEnumerable<string> GetDefaultNames(MeasureUnitTypeCode measureUnitTypeCode)

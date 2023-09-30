@@ -56,14 +56,14 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
         return MeasureUnitTypes.GetValidMeasureUnitTypeCode(measureUnit);
     }
 
-    public bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, Enum measureUnit)
-    {
-        return IsDefinedMeasureUnit(measureUnit) && measureUnitTypeCode == MeasureUnitTypes.GetMeasureUnitTypeCode(measureUnit!);
-    }
-
     public bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
     {
         return HasMeasureUnitTypeCode(measureUnitTypeCode, GetDefaultMeasureUnit());
+    }
+
+    public bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, Enum measureUnit)
+    {
+        return IsDefinedMeasureUnit(measureUnit) && measureUnitTypeCode == MeasureUnitTypes.GetMeasureUnitTypeCode(measureUnit!);
     }
 
     public bool IsDefinedMeasureUnit(Enum measureUnit)

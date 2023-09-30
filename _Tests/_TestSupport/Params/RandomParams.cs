@@ -7,13 +7,13 @@ public class RandomParams
     #endregion
 
     #region Public methods
-    public MeasureUnitTypeCode GetRandomMeasureUnitTypeCode(MeasureUnitTypeCode? measureUnitTypeCode = null)
+    public MeasureUnitTypeCode GetRandomMeasureUnitTypeCode(MeasureUnitTypeCode? excludedMeasureUnitTypeCode = null)
     {
         int randomIndex = getRandomIndex();
 
-        if (!measureUnitTypeCode.HasValue) return getRandomMeasureUnitTypeCode();
+        if (!excludedMeasureUnitTypeCode.HasValue) return getRandomMeasureUnitTypeCode();
 
-        while (randomIndex == (int)measureUnitTypeCode)
+        while (randomIndex == (int)excludedMeasureUnitTypeCode)
         {
             randomIndex = getRandomIndex();
         }
@@ -33,14 +33,14 @@ public class RandomParams
         #endregion
     }
 
-    public Enum GetRandomMeasureUnit(MeasureUnitTypeCode? measureUnitTypeCode = null, Enum measureUnit = null)
+    public Enum GetRandomMeasureUnit(MeasureUnitTypeCode? measureUnitTypeCode = null, Enum excludedMeasureUnit = null)
     {
         int count = getAllMeasureUnits().Count();
         int randomIndex = getRandomIndex();
 
-        if (measureUnit == null) return getRandomMeasureUnit();
+        if (excludedMeasureUnit == null) return getRandomMeasureUnit();
 
-        while (randomIndex == getMeasureUnitIndex())
+        while (randomIndex == getExcludedMeasureUnitIndex())
         {
             randomIndex = getRandomIndex();
         }
@@ -53,16 +53,16 @@ public class RandomParams
             return Random.Next(count);
         }
 
-        int getMeasureUnitIndex()
+        int getExcludedMeasureUnitIndex()
         {
             for (int i = 0; i < count; i++)
             {
                 Enum other = getAllMeasureUnits().ElementAt(i);
 
-                if (measureUnit.Equals(other)) return i;
+                if (excludedMeasureUnit.Equals(other)) return i;
             }
 
-            throw ExceptionMethods.InvalidMeasureUnitEnumArgumentException(measureUnit);
+            throw ExceptionMethods.InvalidMeasureUnitEnumArgumentException(excludedMeasureUnit);
         }
 
         Enum getRandomMeasureUnit()
