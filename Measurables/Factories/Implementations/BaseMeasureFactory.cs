@@ -18,8 +18,6 @@ public abstract class BaseMeasureFactory : IBaseMeasureFactory
     #region Public methods
     #region Abstract methods
     public abstract IMeasurable Create(IMeasurable other);
-
-    public abstract IBaseMeasure CreateDefault(MeasureUnitTypeCode measureUnitTypeCode);
     #endregion
     #endregion
 }

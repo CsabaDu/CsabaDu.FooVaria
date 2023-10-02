@@ -1,5 +1,5 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Markers;
 
-public interface IRateComponent
+public interface IRateComponentType
 {
 }

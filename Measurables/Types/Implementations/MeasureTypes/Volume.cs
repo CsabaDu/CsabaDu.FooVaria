@@ -21,7 +21,7 @@ internal sealed class Volume : Measure, IVolume
 
     public IVolume GetDefaultRateComponent()
     {
-        return (IVolume)GetDefault();
+        return GetDefault(this);
     }
 
     public double GetDefaultRateComponentQuantity()

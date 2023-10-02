@@ -435,7 +435,7 @@ internal sealed class Measurement : Measurable, IMeasurement
 
     public override IMeasurement GetDefault()
     {
-        return GetFactory().CreateDefault(MeasureUnitTypeCode);
+        return GetDefault(this);
     }
 
     public override IMeasurementFactory GetFactory()
@@ -582,6 +582,11 @@ internal sealed class Measurement : Measurable, IMeasurement
         if (ExchangeRates.RemoveExchangeRate(measureUnit)) return false;
 
         throw new InvalidOperationException(null);
+    }
+
+    public IMeasurement? GetRateComponent(IRate rate, RateComponentCode rateComponentCode)
+    {
+        return NullChecked(rate, nameof(rate)).GetRateComponent(rateComponentCode)?.Measurement;
     }
     #endregion
     #endregion

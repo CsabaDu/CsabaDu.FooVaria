@@ -21,7 +21,7 @@ internal sealed class Distance : Measure, IDistance
 
     public IDistance GetDefaultRateComponent()
     {
-        return (IDistance)GetDefault();
+        return GetDefault(this);
     }
 
     public double GetDefaultRateComponentQuantity()

@@ -21,7 +21,7 @@ internal sealed class Weight : Measure, IWeight
 
     public IWeight GetDefaultRateComponent()
     {
-        return (IWeight)GetDefault();
+        return GetDefault(this);
     }
 
     public double GetDefaultRateComponentQuantity()

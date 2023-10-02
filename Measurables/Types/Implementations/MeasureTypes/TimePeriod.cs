@@ -25,7 +25,7 @@ internal sealed class TimePeriod : Measure, ITimePeriod
 
     public ITimePeriod GetDefaultRateComponent()
     {
-        return (ITimePeriod)GetDefault();
+        return GetDefault(this);
     }
 
     public double GetDefaultRateComponentQuantity()

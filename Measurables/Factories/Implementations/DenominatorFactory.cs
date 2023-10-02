@@ -22,7 +22,7 @@ public sealed class DenominatorFactory : BaseMeasureFactory, IDenominatorFactory
     #endregion
 
     #region Public methods
-    public override IDenominator CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
+    public IDenominator CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
     {
         IDenominator denominator = new Denominator(this, measureUnitTypeCode);
 

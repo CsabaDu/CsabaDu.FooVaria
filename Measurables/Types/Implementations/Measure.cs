@@ -135,6 +135,10 @@ internal abstract class Measure : BaseMeasure, IMeasure
 
     #region Override methods
     #region Sealed methods
+    public override sealed IMeasure GetDefault()
+    {
+        return GetDefault(this);
+    }
     public override sealed bool Equals(IBaseMeasure? other)
     {
         return other is IMeasure
@@ -246,7 +250,7 @@ internal abstract class Measure : BaseMeasure, IMeasure
 
     #region Private methods
     #region Static methods
-    private static void ValidateMeasurabe<T>(T measurable, string measurableName) where T : class, IMeasurable, IRateComponent
+    private static void ValidateMeasurabe<T>(T measurable, string measurableName) where T : class, IMeasurable, IRateComponentType
     {
         MeasureUnitTypeCode measureUnitTypeCode = NullChecked(measurable, measurableName).MeasureUnitTypeCode;
 

@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Factories;
 
-public interface IDenominatorFactory : IBaseMeasureFactory
+public interface IDenominatorFactory : IBaseMeasureFactory, IDefaultRateComponentFactory<IDenominator>
 {
     IDenominator Create(string name);
     IDenominator Create(string name, ValueType quantity);

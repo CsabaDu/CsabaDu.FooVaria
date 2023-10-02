@@ -16,7 +16,7 @@ internal sealed class PieceCount : Measure, IPieceCount
 
     public IPieceCount GetDefaultRateComponent()
     {
-        return (IPieceCount)GetDefault();
+        return GetDefault(this);
     }
 
     public long GetDefaultRateComponentQuantity()

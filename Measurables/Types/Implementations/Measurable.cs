@@ -58,6 +58,10 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
         return (IMeasurableFactory)Factory;
     }
 
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
     #region Sealed methods
     public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
     {
@@ -85,6 +89,11 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
 
     #region Protected methods
     #region Static methods
+    protected static T GetDefault<T>(T measurable) where T : class, IMeasurable, IRateComponentType
+    {
+        return (measurable.GetFactory() as IDefaultRateComponentFactory<T>)!.CreateDefault(measurable.MeasureUnitTypeCode);
+    }
+
     protected static IMeasure GetSum(IMeasure measure, IMeasure? other, SummingMode summingMode)
     {
         if (other == null) return measure.GetMeasure(measure);

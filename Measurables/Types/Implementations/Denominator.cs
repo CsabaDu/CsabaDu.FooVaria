@@ -15,7 +15,7 @@ internal sealed class Denominator : BaseMeasure, IDenominator
     #region Public methods
     public IDenominator GetDefaultRateComponent()
     {
-        return (IDenominator)GetDefault();
+        return GetDefault(this);
     }
 
     public decimal GetDefaultRateComponentQuantity()
@@ -113,6 +113,11 @@ internal sealed class Denominator : BaseMeasure, IDenominator
     public override TypeCode GetQuantityTypeCode()
     {
         return TypeCode.Decimal;
+    }
+
+    public override IDenominator GetDefault()
+    {
+        return GetDefaultRateComponent();
     }
     #endregion
     #endregion

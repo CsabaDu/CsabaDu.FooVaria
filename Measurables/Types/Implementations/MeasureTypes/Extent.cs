@@ -21,7 +21,7 @@ internal sealed class Extent : Measure, IExtent
 
     public IExtent GetDefaultRateComponent()
     {
-        return (IExtent)GetDefault();
+        return GetDefault(this);
     }
 
     public double GetDefaultRateComponentQuantity()

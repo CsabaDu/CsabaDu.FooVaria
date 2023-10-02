@@ -17,7 +17,7 @@ public sealed class LimitFactory : BaseMeasureFactory, ILimitFactory
     #endregion
 
     #region Public methods
-    public override ILimit CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
+    public ILimit CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
     {
         ILimit limit = new Limit(this, measureUnitTypeCode);
 

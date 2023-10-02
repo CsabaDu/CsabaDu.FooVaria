@@ -1,7 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Behaviors;
 
-public interface IRateComponent<out T> : IRateComponent where T : class, IMeasurable, IRateComponent
+public interface IRateComponent
 {
-    T? GetRateComponent(IRate rate, RateComponentCode rateComponentCode);
     RateComponentCode GetRateComponentCode();
 }

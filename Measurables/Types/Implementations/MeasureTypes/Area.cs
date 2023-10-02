@@ -21,7 +21,7 @@ internal sealed class Area : Measure, IArea
 
     public IArea GetDefaultRateComponent()
     {
-        return (IArea)GetDefault();
+        return GetDefault(this);
     }
 
     public double GetDefaultRateComponentQuantity()

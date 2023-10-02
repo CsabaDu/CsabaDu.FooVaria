@@ -16,7 +16,7 @@ public sealed class MeasureFactory : BaseMeasureFactory, IMeasureFactory
     #endregion
 
     #region Public methods
-    public override IMeasure CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
+    public IMeasure CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
     {
         Enum measureUnit = measureUnitTypeCode.GetDefaultMeasureUnit();
 

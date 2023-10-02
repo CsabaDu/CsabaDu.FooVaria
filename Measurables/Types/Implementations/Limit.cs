@@ -34,7 +34,7 @@ internal sealed class Limit : BaseMeasure, ILimit
 
     public ILimit GetDefaultRateComponent()
     {
-        return (ILimit)GetDefault();
+        return GetDefault(this);
     }
 
     public ulong GetDefaultRateComponentQuantity()
@@ -129,6 +129,11 @@ internal sealed class Limit : BaseMeasure, ILimit
     public override TypeCode GetQuantityTypeCode()
     {
         return TypeCode.UInt64;
+    }
+
+    public override ILimit GetDefault()
+    {
+        return GetDefaultRateComponent();
     }
     #endregion
     #endregion

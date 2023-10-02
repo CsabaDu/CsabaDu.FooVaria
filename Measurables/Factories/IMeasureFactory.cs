@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Factories;
 
-public interface IMeasureFactory : IBaseMeasureFactory
+public interface IMeasureFactory : IBaseMeasureFactory, IDefaultRateComponentFactory<IMeasure>
 {
     IMeasure Create(ValueType quantity, Enum measureUnit);
     IMeasure Create(ValueType quantity, string name);

@@ -16,7 +16,7 @@ internal sealed class Cash : Measure, ICash
 
     public ICash GetDefaultRateComponent()
     {
-        return (ICash)GetDefault();
+        return GetDefault(this);
     }
 
     public decimal GetDefaultRateComponentQuantity()

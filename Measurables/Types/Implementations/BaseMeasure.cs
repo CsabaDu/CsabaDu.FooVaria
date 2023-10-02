@@ -11,11 +11,11 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         Measurement = other.Measurement;
     }
 
-    private protected BaseMeasure(IBaseMeasure other, ValueType quantity) : base(other)
-    {
-        Quantity = GetValidQuantity(quantity);
-        Measurement = other.Measurement;
-    }
+    //private protected BaseMeasure(IBaseMeasure other, ValueType quantity) : base(other)
+    //{
+    //    Quantity = GetValidQuantity(quantity);
+    //    Measurement = other.Measurement;
+    //}
 
     private protected BaseMeasure(IBaseMeasureFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
     {
@@ -254,11 +254,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return obj is IBaseMeasure other && Equals(other);
     }
 
-    public override sealed IBaseMeasure GetDefault()
-    {
-        return GetFactory().CreateDefault(MeasureUnitTypeCode);
-    }
-
     public override sealed int GetHashCode()
     {
         return HashCode.Combine(DefaultQuantity, MeasureUnitTypeCode);
@@ -300,7 +295,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         if (quantity != null) return GetRateComponentCode() switch
         {
             RateComponentCode.Denominator => getValidDenominatorQuantity(),
-
             RateComponentCode.Numerator or
             RateComponentCode.Limit => quantity,
 

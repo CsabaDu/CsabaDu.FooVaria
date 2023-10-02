@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Factories;
 
-public interface ILimitFactory : IBaseMeasureFactory
+public interface ILimitFactory : IBaseMeasureFactory, IDefaultRateComponentFactory<ILimit>
 {
     ILimit Create(string name, ValueType quantity, LimitMode limitMode);
     ILimit Create(Enum measureUnit, ValueType quantity, LimitMode limitMode);
