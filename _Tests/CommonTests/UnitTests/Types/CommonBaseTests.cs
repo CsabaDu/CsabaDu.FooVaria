@@ -1,7 +1,4 @@
-﻿using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Types;
-using CsabaDu.FooVaria.Tests.TestSupport.Params;
-
-namespace CsabaDu.FooVaria.Tests.CommonTests.UnitTests.Types;
+﻿namespace CsabaDu.FooVaria.Tests.CommonTests.UnitTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
 public class CommonBaseTests

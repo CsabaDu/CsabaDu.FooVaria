@@ -1,7 +1,3 @@
-using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Types;
-using CsabaDu.FooVaria.Tests.TestSupport.Params;
-using CsabaDu.FooVaria.Tests.TestSupport.Variants;
-
 namespace CsabaDu.FooVaria.Tests.CommonTests.UnitTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
@@ -15,7 +11,7 @@ public class BaseMeasurableTests
     }
 
     [TestInitialize]
-    public void InitializeBaseMeasureTests()
+    public void InitializeBaseMeasurableTests()
     {
         RandomParams = new();
         BaseMeasurableVariant = new(RandomParams);

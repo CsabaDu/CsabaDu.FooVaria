@@ -2,3 +2,6 @@
 global using CsabaDu.FooVaria.Common.Statics;
 global using CsabaDu.FooVaria.Common.Types;
 global using CsabaDu.FooVaria.Common.Types.Implementations;
+global using CsabaDu.FooVaria.Measurables.Factories;
+global using CsabaDu.FooVaria.Measurables.Types;
+global using CsabaDu.FooVaria.Measurables.Types.Implementations;
