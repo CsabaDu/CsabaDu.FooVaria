@@ -197,7 +197,7 @@ public static class MeasureUnitTypes
     #endregion
 
     #region Private methods
-    private static Dictionary<MeasureUnitTypeCode, Type> InitMeasureUnitTypeCollection()
+    private static IDictionary<MeasureUnitTypeCode, Type> InitMeasureUnitTypeCollection()
     {
         return initMeasureUnitTypeCollection().ToDictionary(x => x.Key, x => x.Value);
 
