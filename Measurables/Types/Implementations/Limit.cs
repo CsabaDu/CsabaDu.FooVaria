@@ -135,6 +135,11 @@ internal sealed class Limit : BaseMeasure, ILimit
     {
         return GetDefaultRateComponent();
     }
+
+    public override void ValidateQuantity(ValueType? quantity)
+    {
+        _ = GetValidQuantity(quantity);
+    }
     #endregion
     #endregion
 }

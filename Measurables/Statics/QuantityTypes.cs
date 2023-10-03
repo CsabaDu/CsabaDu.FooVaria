@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Common.Statics;
+﻿namespace CsabaDu.FooVaria.Measurables.Statics;
 
 public static class QuantityTypes
 {

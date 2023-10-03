@@ -137,14 +137,15 @@ public static class MeasureUnitTypes
 
     public static bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, Enum measureUnit)
     {
-        return measureUnit != null
-            && IsDefinedMeasureUnit(measureUnit)
+        return IsDefinedMeasureUnit(measureUnit)
             && measureUnitTypeCode == GetMeasureUnitTypeCode(measureUnit!);
     }
 
     public static bool IsDefinedMeasureUnit(Enum measureUnit)
     {
-        Type measureUnitType = NullChecked(measureUnit, nameof(measureUnit)).GetType();
+        if (measureUnit == null) return false;
+
+        Type measureUnitType = measureUnit.GetType();
 
         return GetMeasureUnitTypes().Contains(measureUnitType)
             && Enum.IsDefined(measureUnitType, measureUnit);

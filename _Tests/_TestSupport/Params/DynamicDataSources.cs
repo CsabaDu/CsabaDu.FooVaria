@@ -1,4 +1,5 @@
-﻿using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Types;
+﻿using CsabaDu.FooVaria.Common.Behaviors;
+using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Types;
 
 namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
 
@@ -119,11 +120,25 @@ internal class DynamicDataSources
         }
     }
 
-    protected class Enum_arg
+    protected class Bool_Enum_args : Bool_arg
     {
         internal Enum MeasureUnit { get; init; }
 
-        public virtual object[] ToObjectArray()
+        public override object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                IsTrue,
+                MeasureUnit,
+            };
+        }
+    }
+
+    protected class Enum_arg : ObjectArray
+    {
+        internal Enum MeasureUnit { get; init; }
+
+        public override object[] ToObjectArray()
         {
             return new object[]
             {
@@ -131,6 +146,36 @@ internal class DynamicDataSources
             };
         }
     }
+
+    protected class Enum_MeasureUnitTypeCode_args : Enum_arg
+    {
+        internal MeasureUnitTypeCode MeasureUnitTypeCode { get; init; }
+
+        public override object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                MeasureUnit,
+                MeasureUnitTypeCode,
+            };
+        }
+    }
+
+    protected class Enum_MeasureUnitTypeCode_String_args : Enum_MeasureUnitTypeCode_args
+    {
+        internal string Name { get; init; }
+
+        public override object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                MeasureUnit,
+                MeasureUnitTypeCode,
+                Name,
+            };
+        }
+    }
+
     #endregion
 
     #region Internal ArrayList methods
@@ -142,7 +187,7 @@ internal class DynamicDataSources
         measureUnit = RandomParams.GetRandomNotDefinedMeasureUnit();
         yield return toObjectArray();
 
-        #region Local methods
+        #region toObjectArray method
         object[] toObjectArray()
         {
             return new Enum_arg
@@ -173,7 +218,7 @@ internal class DynamicDataSources
         other = new BaseMeasurableChild(factory, RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
         yield return toObjectArray();
 
-        #region Local methods
+        #region toObjectArray method
         object[] toObjectArray()
         {
             return new Bool_Object_MeasureUnitTypeCode_args
@@ -201,7 +246,7 @@ internal class DynamicDataSources
         measureUnitTypeCode = SampleParams.NotDefinedMeasureUnitTypeCode;
         yield return toObjectArray();
 
-        #region Local methods
+        #region toObjectArray method
         object[] toObjectArray()
         {
             return new Bool_MeasureUnitTypeCode_IBaseMeasurable_args
@@ -239,7 +284,7 @@ internal class DynamicDataSources
         measureUnit = RandomParams.GetRandomMeasureUnit();
         yield return toObjectArray();
 
-        #region Local methods
+        #region toObjectArray method
         object[] toObjectArray()
         {
             return new Bool_MeasureUnitTypeCode_Enum_args
@@ -251,6 +296,70 @@ internal class DynamicDataSources
             .ToObjectArray();
         }
         #endregion
+    }
+
+    internal IEnumerable<object[]> GetBoolEnumMeasureUnitArgArrayList()
+    {
+        bool expected = false;
+        Enum measureUnit = null;
+        yield return toObjectArray();
+
+        measureUnit = SampleParams.DefaultLimitMode;
+        yield return toObjectArray();
+
+        measureUnit = RandomParams.GetRandomNotDefinedMeasureUnit();
+        yield return toObjectArray();
+
+        expected = true;
+        measureUnit = RandomParams.GetRandomMeasureUnit();
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            return new Bool_Enum_args
+            {
+                IsTrue = expected,
+                MeasureUnit = measureUnit,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+
+    }
+
+    internal IEnumerable<object[]> GetInvalidEnumMeasureUnitMeasureUnitTypeCodeArgsArrayList()
+    {
+        Enum measureUnit = SampleParams.DefaultLimitMode;
+        MeasureUnitTypeCode measureUnitTypeCode = SampleParams.NotDefinedMeasureUnitTypeCode;
+        string name = ParamNames.measureUnit;
+        yield return toObjectArray();
+
+        measureUnit = RandomParams.GetRandomNotDefinedMeasureUnit();
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        yield return toObjectArray();
+
+        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitTypeCode);
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode);
+        yield return toObjectArray();
+
+        measureUnitTypeCode = SampleParams.NotDefinedMeasureUnitTypeCode;
+        name = ParamNames.measureUnitTypeCode;
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            return new Enum_MeasureUnitTypeCode_String_args
+            {
+                MeasureUnit = measureUnit,
+                MeasureUnitTypeCode = measureUnitTypeCode,
+                Name = name,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+
     }
 
     #endregion

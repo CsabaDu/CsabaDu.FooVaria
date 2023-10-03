@@ -119,6 +119,11 @@ internal sealed class Denominator : BaseMeasure, IDenominator
     {
         return GetDefaultRateComponent();
     }
+
+    public override void ValidateQuantity(ValueType? quantity)
+    {
+        _ = GetValidQuantity(quantity);
+    }
     #endregion
     #endregion
 }

@@ -10,7 +10,7 @@ public class CommonBaseTests
     #region Constructors
     #region CommonBase(IFactory)
     [TestMethod, TestCategory("UnitTest")]
-    public void CommonBase_NullArg_IFactory_ThrowsArgumentNullException()
+    public void CommonBase_nullArg_IFactory_throws_ArgumentNullException()
     {
         // Arrange
         IFactory factory = null;
@@ -24,7 +24,7 @@ public class CommonBaseTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void CommonBase_ValidArg_IFactory_CreatesInstance()
+    public void CommonBase_validArg_IFactory_createsInstance()
     {
         // Arrange
         IFactory factory = new FactoryImplementation();
@@ -40,7 +40,7 @@ public class CommonBaseTests
 
     #region CommonBase(ICommonBase)
     [TestMethod, TestCategory("UnitTest")]
-    public void CommonBase_NullArg_ICommonBase_ThrowsArgumentNullException()
+    public void CommonBase_nullArg_ICommonBase_throws_ArgumentNullException()
     {
         // Arrange
         ICommonBase other = null;
@@ -54,7 +54,7 @@ public class CommonBaseTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void CommonBase_ValidArg_ICommonBase_CreatesInstance()
+    public void CommonBase_validArg_ICommonBase_createsInstance()
     {
         // Arrange
         IFactory factory = new FactoryImplementation();

@@ -164,6 +164,11 @@ internal abstract class Measure : BaseMeasure, IMeasure
     {
         return base.GetQuantityTypeCode();
     }
+
+    public override sealed void ValidateQuantity(ValueType? quantity)
+    {
+        base.ValidateQuantity(quantity);
+    }
     #endregion
     #endregion
 

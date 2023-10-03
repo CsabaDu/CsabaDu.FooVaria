@@ -1,15 +1,15 @@
-﻿using static CsabaDu.FooVaria.Common.Statics.QuantityTypes;
+﻿using static CsabaDu.FooVaria.Measurables.Statics.QuantityTypes;
 
 namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal abstract class BaseMeasure : Measurable, IBaseMeasure
 {
     #region Constructors
-    private protected BaseMeasure(IBaseMeasure other) : base(other)
-    {
-        Quantity = GetValidQuantity(other.GetQuantity());
-        Measurement = other.Measurement;
-    }
+    //private protected BaseMeasure(IBaseMeasure other) : base(other)
+    //{
+    //    Quantity = GetValidQuantity(other.GetQuantity());
+    //    Measurement = other.Measurement;
+    //}
 
     //private protected BaseMeasure(IBaseMeasure other, ValueType quantity) : base(other)
     //{
@@ -219,9 +219,11 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return exchanged != null;
     }
 
-    public void ValidateQuantity(ValueType? quantity)
+    public virtual void ValidateQuantity(ValueType? quantity)
     {
-        _ = GetValidQuantity(quantity);
+        if (NullChecked(quantity, nameof(quantity)).IsValidTypeQuantity()) return;
+
+        throw QuantityArgumentOutOfRangeException(quantity);
     }
 
     public void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode)
@@ -288,7 +290,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     #endregion
 
     #region Private methods
-    private object GetValidQuantity(ValueType? quantity)
+    protected object GetValidQuantity(ValueType? quantity)
     {
         quantity = NullChecked(quantity, nameof(quantity)).ToQuantity(QuantityTypeCode);
 

@@ -58,11 +58,11 @@ public class BaseMeasurableVariant
         return measureUnit.GetType();
     }
 
-    //    internal MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum measureUnit)
+    //    internal Name GetMeasureUnitTypeCode(Enum measureUnit)
     //    {
     //        string measureUnitTypeName = measureUnit.GetType().Name;
 
-    //        return (MeasureUnitTypeCode)Enum.Parse(typeof(MeasureUnitTypeCode), measureUnitTypeName);
+    //        return (Name)Enum.Parse(typeof(Name), measureUnitTypeName);
     //    }
 
     internal IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
@@ -71,4 +71,7 @@ public class BaseMeasurableVariant
     }
 
     //    #endregion
+
+
 }
+        

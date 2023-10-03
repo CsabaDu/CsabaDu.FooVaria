@@ -85,7 +85,7 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
 
     public override int GetHashCode()
     {
-        return MeasureUnitTypeCode.GetHashCode();
+        return HashCode.Combine(typeof(IBaseMeasurable), MeasureUnitTypeCode);
     }
     #endregion
 

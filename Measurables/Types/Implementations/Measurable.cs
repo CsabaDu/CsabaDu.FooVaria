@@ -60,7 +60,7 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
 
     public override int GetHashCode()
     {
-        return base.GetHashCode();
+        return HashCode.Combine(typeof(IMeasurable), MeasureUnitTypeCode);
     }
     #region Sealed methods
     public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
