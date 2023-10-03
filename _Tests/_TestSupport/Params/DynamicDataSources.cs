@@ -1,5 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Behaviors;
-using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Types;
+﻿using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Types;
 
 namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
 
@@ -17,6 +16,7 @@ internal class DynamicDataSources
     }
     #endregion
 
+    #region bool
     protected class Bool_arg : ObjectArray
     {
         internal bool IsTrue { get; init; }
@@ -30,6 +30,7 @@ internal class DynamicDataSources
         }
     }
 
+    #region bool, object
     protected class Bool_Object_args : Bool_arg
     {
         internal object Object { get; init; }
@@ -44,6 +45,7 @@ internal class DynamicDataSources
         }
     }
 
+    #region bool, object, MeasureUnitTypeCode
     protected class Bool_Object_MeasureUnitTypeCode_args : Bool_Object_args
     {
         internal MeasureUnitTypeCode MeasureUnitTypeCode { get; init; }
@@ -58,7 +60,10 @@ internal class DynamicDataSources
             };
         }
     }
+    #endregion
+    #endregion
 
+    #region bool, MeasureUnitTypeCode
     protected class Bool_MeasureUnitTypeCode_args : Bool_arg
     {
         internal MeasureUnitTypeCode MeasureUnitTypeCode { get; init; }
@@ -73,6 +78,7 @@ internal class DynamicDataSources
         }
     }
 
+    #region bool, MeasureUnitTypeCode, Enum
     protected class Bool_MeasureUnitTypeCode_Enum_args : Bool_MeasureUnitTypeCode_args
     {
         internal Enum MeasureUnit { get; init; }
@@ -87,7 +93,9 @@ internal class DynamicDataSources
             };
         }
     }
+    #endregion
 
+    #region bool, MeasureUnitTypeCode, IBaseMeasurable
     protected class Bool_MeasureUnitTypeCode_IBaseMeasurable_args : Bool_MeasureUnitTypeCode_args
     {
         internal IBaseMeasurable BaseMeasurable { get; init; }
@@ -104,6 +112,7 @@ internal class DynamicDataSources
 
     }
 
+    #region bool, MeasureUnitTypeCode, IBaseMeasurable, Enum
     protected class Bool_MeasureUnitTypeCode_IBaseMeasurable_Enum_args : Bool_MeasureUnitTypeCode_IBaseMeasurable_args
     {
         internal Enum MeasureUnit { get; init; }
@@ -119,7 +128,11 @@ internal class DynamicDataSources
             };
         }
     }
+    #endregion
+    #endregion
+    #endregion
 
+    #region bool, Enum
     protected class Bool_Enum_args : Bool_arg
     {
         internal Enum MeasureUnit { get; init; }
@@ -133,7 +146,10 @@ internal class DynamicDataSources
             };
         }
     }
+    #endregion
+    #endregion
 
+    #region Enum
     protected class Enum_arg : ObjectArray
     {
         internal Enum MeasureUnit { get; init; }
@@ -147,6 +163,7 @@ internal class DynamicDataSources
         }
     }
 
+    #region Enum, MeasureUnitTypeCode
     protected class Enum_MeasureUnitTypeCode_args : Enum_arg
     {
         internal MeasureUnitTypeCode MeasureUnitTypeCode { get; init; }
@@ -161,6 +178,7 @@ internal class DynamicDataSources
         }
     }
 
+    #region Enum, MeasureUnitTypeCode, string
     protected class Enum_MeasureUnitTypeCode_String_args : Enum_MeasureUnitTypeCode_args
     {
         internal string Name { get; init; }
@@ -175,7 +193,9 @@ internal class DynamicDataSources
             };
         }
     }
-
+    #endregion
+    #endregion
+    #endregion
     #endregion
 
     #region Internal ArrayList methods
@@ -325,7 +345,6 @@ internal class DynamicDataSources
             .ToObjectArray();
         }
         #endregion
-
     }
 
     internal IEnumerable<object[]> GetInvalidEnumMeasureUnitMeasureUnitTypeCodeArgsArrayList()
@@ -359,8 +378,6 @@ internal class DynamicDataSources
             .ToObjectArray();
         }
         #endregion
-
     }
-
     #endregion
 }
