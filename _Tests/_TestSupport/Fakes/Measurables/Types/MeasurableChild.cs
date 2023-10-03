@@ -14,7 +14,7 @@ internal sealed class MeasurableChild : Measurable
     {
     }
 
-    public MeasurableChild(IMeasurableFactory factory, IMeasurable measurable) : base(factory, measurable)
+    public MeasurableChild(IMeasurableFactory factory, IBaseMeasurable baseMeasurable) : base(factory, baseMeasurable)
     {
     }
 

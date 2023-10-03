@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Types;
-
-namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
+﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
 
 internal class DynamicDataSources
 {
@@ -229,8 +227,8 @@ internal class DynamicDataSources
         other = new();
         yield return toObjectArray();
 
-        IFactory factory = new FactoryImplementation();
         expected = true;
+        IFactory factory = new FactoryImplementation();
         other = new BaseMeasurableChild(factory, measureUnitTypeCode);
         yield return toObjectArray();
 
@@ -379,5 +377,42 @@ internal class DynamicDataSources
         }
         #endregion
     }
+
+    internal IEnumerable<object[]> GetMeasurableEqualsArgsArrayList()
+    {
+        bool expected = false;
+        object other = null;
+        MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        yield return toObjectArray();
+
+        other = new();
+        yield return toObjectArray();
+
+        IMeasurableFactory factory = new MeasurableFactoryImplementation();
+        other = new BaseMeasurableChild(factory, measureUnitTypeCode);
+        yield return toObjectArray();
+
+        expected = true;
+        other = new MeasurableChild(factory, measureUnitTypeCode);
+        yield return toObjectArray();
+
+        expected = false;
+        other = new MeasurableChild(factory, RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            return new Bool_Object_MeasureUnitTypeCode_args
+            {
+                IsTrue = expected,
+                Object = other,
+                MeasureUnitTypeCode = measureUnitTypeCode,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+    }
+
     #endregion
 }

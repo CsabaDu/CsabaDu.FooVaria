@@ -1,3 +1,6 @@
+using CsabaDu.FooVaria.Common.Types;
+using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Types;
+
 namespace CsabaDu.FooVaria.Tests.MeasurablesTests.UnitTests.Types;
 
 [TestClass]
@@ -143,16 +146,16 @@ public class MeasurableTests
     }
     #endregion
 
-    #region Measurable(IMeasurableFactory, IMeasurable)
+    #region Measurable(IMeasurableFactory, IBaseMeasurable)
     [TestMethod, TestCategory("UnitTest")]
-    public void Measurable_nullArg_IMeasurableFactory_arg_IMeasurable_throws_ArgumentNullException()
+    public void Measurable_nullArg_IMeasurableFactory_arg_IBaseMeasurable_throws_ArgumentNullException()
     {
         // Arrange
         IMeasurableFactory factory = null;
-        IMeasurable measurable = null;
+        IBaseMeasurable baseMeasurable = null;
 
         // Act
-        void attempt() => _ = new MeasurableChild(factory, measurable);
+        void attempt() => _ = new MeasurableChild(factory, baseMeasurable);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
@@ -160,14 +163,14 @@ public class MeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void Measurable_validArg_IMeasurableFactory_nullArg_IMeasurable_throws_ArgumentNullException()
+    public void Measurable_validArg_IMeasurableFactory_nullArg_IBaseMeasurable_throws_ArgumentNullException()
     {
         // Arrange
         IMeasurableFactory factory = new MeasurableFactoryImplementation();
-        IMeasurable measurable = null;
+        IBaseMeasurable baseMeasurable = null;
 
         // Act
-        void attempt() => _ = new MeasurableChild(factory, measurable);
+        void attempt() => _ = new MeasurableChild(factory, baseMeasurable);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
@@ -175,19 +178,19 @@ public class MeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void Measurable_validArgs_IMeasurableFactory_IMeasurable_createsInstance()
+    public void Measurable_validArgs_IMeasurableFactory_IBaseMeasurable_createsInstance()
     {
         // Arrange
         IMeasurableFactory factory = new MeasurableFactoryImplementation();
-        MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
-        IMeasurable expected = new MeasurableChild(factory, measureUnitTypeCode);
+        MeasureUnitTypeCode expected_MeasureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        IBaseMeasurable baseMeasurable = new BaseMeasurableChild(factory, expected_MeasureUnitTypeCode);
 
         // Act
-        var actual = new MeasurableChild(factory, expected);
+        var actual = new MeasurableChild(factory, baseMeasurable);
 
         // Assert
         Assert.IsInstanceOfType(actual, typeof(IMeasurable));
-        Assert.AreEqual(expected, actual);
+        Assert.AreEqual(expected_MeasureUnitTypeCode, actual.MeasureUnitTypeCode);
     }
     #endregion
 
@@ -223,12 +226,36 @@ public class MeasurableTests
     }
     #endregion
     #endregion
+
+    #region Equals
+    #region Equals(object?)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetMeasurableEqualsArgsArrayList), DynamicDataSourceType.Method)]
+    public void Equals_arg_object_returnsExpected(bool expected, object other, MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        // Arrange
+        IMeasurable baseMeasurable = new MeasurableChild(Factory, measureUnitTypeCode);
+
+        // Act
+        var actual = baseMeasurable.Equals(other);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
     #endregion
 
     #region ArrayList methods
     private static IEnumerable<object[]> GetInvalidEnumMeasureUnitArgArrayList()
     {
         return DynamicDataSources.GetInvalidEnumMeasureUnitArgArrayList();
+    }
+
+    private static IEnumerable<object[]> GetMeasurableEqualsArgsArrayList()
+    {
+        return DynamicDataSources.GetMeasurableEqualsArgsArrayList();
     }
     #endregion
 }

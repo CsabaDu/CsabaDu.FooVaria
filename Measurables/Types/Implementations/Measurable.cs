@@ -19,7 +19,7 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
     {
     }
 
-    private protected Measurable(IMeasurableFactory factory, IMeasurable measurable) : base(factory, measurable)
+    private protected Measurable(IMeasurableFactory factory, IBaseMeasurable baseMeasurable) : base(factory, baseMeasurable)
     {
     }
 
