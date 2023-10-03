@@ -15,7 +15,7 @@ public class BaseMeasurableVariant
     private RandomParams RandomParams { get; init; }
     #endregion
 
-    //    #region Public methods
+    #region Public methods
     internal Enum GetDefaultMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode)
     {
         Type measureUnitType = MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode)!;
@@ -58,20 +58,19 @@ public class BaseMeasurableVariant
         return measureUnit.GetType();
     }
 
-    //    internal Name GetMeasureUnitTypeCode(Enum measureUnit)
-    //    {
-    //        string measureUnitTypeName = measureUnit.GetType().Name;
+    internal MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum measureUnit)
+    {
+        Type measureUnitType = measureUnit.GetType();
 
-    //        return (Name)Enum.Parse(typeof(Name), measureUnitTypeName);
-    //    }
+        string measureUnitTypeName = measureUnitType.Name;
+
+        return (MeasureUnitTypeCode)Enum.Parse(typeof(MeasureUnitTypeCode), measureUnitTypeName);
+    }
 
     internal IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
     {
         return Enum.GetValues<MeasureUnitTypeCode>();
     }
-
-    //    #endregion
-
-
+    #endregion
 }
-        
+

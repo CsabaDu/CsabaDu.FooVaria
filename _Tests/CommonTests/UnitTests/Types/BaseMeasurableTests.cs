@@ -1,6 +1,3 @@
-using CsabaDu.FooVaria.Common.Behaviors;
-using CsabaDu.FooVaria.Common.Enums;
-using CsabaDu.FooVaria.Common.Statics;
 using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Types;
 using CsabaDu.FooVaria.Tests.TestSupport.Params;
 using CsabaDu.FooVaria.Tests.TestSupport.Variants;
