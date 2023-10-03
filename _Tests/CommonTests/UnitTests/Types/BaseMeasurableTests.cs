@@ -413,8 +413,8 @@ public class BaseMeasurableTests
     #region HasMeasureUnitTypeCode
     #region HasMeasureUnitTypeCode(MeasureUnitTypeCode)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetBaseMeasurableHasMeasureUnitTypeCodeArgsArrayList), DynamicDataSourceType.Method)]
-    public void HasMeasureUnitTypeCode_ValidArg_MeasureUnitTypeCode_ReturnsExpected(bool expected, MeasureUnitTypeCode measureUnitTypeCode, IBaseMeasurable baseMeasurable)
+    [DynamicData(nameof(GetBaseMeasurableHasMeasureUnitTypeCodeArgArrayList), DynamicDataSourceType.Method)]
+    public void HasMeasureUnitTypeCode_Arg_MeasureUnitTypeCode_ReturnsExpected(bool expected, MeasureUnitTypeCode measureUnitTypeCode, IBaseMeasurable baseMeasurable)
     {
         // Arrange
         // Act
@@ -426,8 +426,17 @@ public class BaseMeasurableTests
     #endregion
 
     #region HasMeasureUnitTypeCode(MeasureUnitTypeCode, Enum)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetBaseMeasurableHasMeasureUnitTypeCodeArgsArrayList), DynamicDataSourceType.Method)]
+    public void HasMeasureUnitTypeCode_Args_MeasureUnitTypeCode_Enum_ReturnsExpected(bool expected, MeasureUnitTypeCode measureUnitTypeCode, Enum measureUnit)
+    {
+        // Arrange
+        // Act
+       var actual = BaseMeasurable.HasMeasureUnitTypeCode(measureUnitTypeCode, measureUnit);
 
-    #endregion
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
     #endregion
 
     #endregion
@@ -443,14 +452,19 @@ public class BaseMeasurableTests
         return DynamicDataSources.GetBaseMeasurableEqualsArgsArrayList();
     }
 
+    private static IEnumerable<object[]> GetBaseMeasurableHasMeasureUnitTypeCodeArgArrayList()
+    {
+        return DynamicDataSources.GetBaseMeasurableHasMeasureUnitTypeCodeArgArrayList();
+
+    }
+
     private static IEnumerable<object[]> GetBaseMeasurableHasMeasureUnitTypeCodeArgsArrayList()
     {
         return DynamicDataSources.GetBaseMeasurableHasMeasureUnitTypeCodeArgsArrayList();
-
     }
     #endregion
 }
-
+#endregion
 
 //#region GetDefaultMeasureUnit
 //#region GetDefaultMeasureUnit()

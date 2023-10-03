@@ -58,12 +58,12 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
 
     public bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
     {
-        return HasMeasureUnitTypeCode(measureUnitTypeCode, GetDefaultMeasureUnit());
+        return measureUnitTypeCode == MeasureUnitTypeCode;
     }
 
     public bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, Enum measureUnit)
     {
-        return IsDefinedMeasureUnit(measureUnit) && measureUnitTypeCode == MeasureUnitTypes.GetMeasureUnitTypeCode(measureUnit!);
+        return MeasureUnitTypes.HasMeasureUnitTypeCode(measureUnitTypeCode, measureUnit!);
     }
 
     public bool IsDefinedMeasureUnit(Enum measureUnit)
