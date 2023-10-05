@@ -27,7 +27,7 @@
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Factories.IDefaultRateComponentFactory&lt;T&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="7.375" Y="6.75" />
+        <Point X="7.375" Y="7" />
         <Point X="7.375" Y="6.07" />
       </Path>
     </InheritanceLine>
@@ -78,7 +78,7 @@
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Factories.IDefaultRateComponentFactory&lt;T&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="7.375" Y="6.75" />
+        <Point X="7.375" Y="7" />
         <Point X="7.375" Y="6.445" />
         <Point X="1.75" Y="6.445" />
         <Point X="1.75" Y="6.07" />
@@ -106,7 +106,7 @@
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Factories.IDefaultRateComponentFactory&lt;T&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="7.375" Y="6.75" />
+        <Point X="7.375" Y="7" />
         <Point X="7.375" Y="6.445" />
         <Point X="4.5" Y="6.445" />
         <Point X="4.5" Y="6.07" />
@@ -121,9 +121,9 @@
     <Position X="7.75" Y="3.75" Width="2.75" />
     <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Factories.IDefaultRateComponentFactory&lt;T&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="7.875" Y="6.75" />
-        <Point X="7.875" Y="6.375" />
-        <Point X="9.125" Y="6.375" />
+        <Point X="7.875" Y="7" />
+        <Point X="7.875" Y="6.625" />
+        <Point X="9.125" Y="6.625" />
         <Point X="9.125" Y="4.57" />
       </Path>
     </InheritanceLine>
@@ -148,7 +148,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Factories.IDefaultRateComponentFactory&lt;T&gt;" Collapsed="true">
-    <Position X="6.25" Y="6.75" Width="2.75" />
+    <Position X="6.25" Y="7" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\IDefaultRateComponentFactory.cs</FileName>
@@ -161,6 +161,13 @@
   <Interface Name="CsabaDu.FooVaria.Common.Types.IFactory&lt;T&gt;" Collapsed="true">
     <Position X="8.5" Y="1.5" Width="1.25" />
     <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Measurables.Factories.IDefaultRateComponentFactory" Collapsed="true">
+    <Position X="3" Y="7" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Factories\IDefaultRateComponentFactory.cs</FileName>
+    </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

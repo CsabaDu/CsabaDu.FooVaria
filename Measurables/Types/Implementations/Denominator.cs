@@ -110,6 +110,11 @@ internal sealed class Denominator : BaseMeasure, IDenominator
         return null;
     }
 
+    public override IDenominator GetMeasurable(IMeasurable other)
+    {
+        return (IDenominator)GetFactory().Create(other);
+    }
+
     public override TypeCode GetQuantityTypeCode()
     {
         return TypeCode.Decimal;

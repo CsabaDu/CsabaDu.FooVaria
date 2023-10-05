@@ -136,6 +136,10 @@ internal sealed class Limit : BaseMeasure, ILimit
         return GetDefaultRateComponent();
     }
 
+    public override ILimit GetMeasurable(IMeasurable other)
+    {
+        return (ILimit)GetFactory().Create(other);
+    }
     public override void ValidateQuantity(ValueType? quantity)
     {
         _ = GetValidQuantity(quantity);

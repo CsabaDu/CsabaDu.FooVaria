@@ -50,6 +50,8 @@ public sealed class MeasurementFactory : IMeasurementFactory
         if (ExchangeRates.IsValidMeasureUnit(measureUnit)) return GetStoredMeasurement(measureUnit);
 
         throw InvalidMeasureUnitEnumArgumentException(measureUnit);
+        throw InvalidMeasureUnitEnumArgumentException(measureUnit);
+        throw InvalidMeasureUnitEnumArgumentException(measureUnit);
     }
 
     public IMeasurement Create(IMeasurement measurement)

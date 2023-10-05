@@ -1,28 +1,28 @@
-﻿using CsabaDu.FooVaria.Measurables.Factories.Implementations;
-
-namespace CsabaDu.FooVaria.TestSupport.Fakes.Measurables.Factories;
+﻿namespace CsabaDu.FooVaria.TestSupport.Fakes.Measurables.Factories;
 
 internal class MeasurableFactoryImplementation : IMeasurableFactory
 {
     public IMeasurable Create(IMeasurable other)
     {
-        return other.GetFactory() switch
-        {
-            MeasurementFactory factory => create(factory),
-            DenominatorFactory factory => create(factory),
-            MeasureFactory factory => create(factory),
-            LimitFactory factory => create(factory),
-            FlatRateFactory factory => create(factory),
-            LimitedRateFactory factory => create(factory),
+        throw new NotImplementedException();
 
-            _ => throw new InvalidOperationException(null),
-        };
+    //    return other.GetFactory() switch
+    //    {
+    //        MeasurementFactory factory => create(factory),
+    //        DenominatorFactory factory => create(factory),
+    //        MeasureFactory factory => create(factory),
+    //        LimitFactory factory => create(factory),
+    //        FlatRateFactory factory => create(factory),
+    //        LimitedRateFactory factory => create(factory),
 
-        #region Local methods
-        IMeasurable create<T>(T factory) where T : class, IMeasurableFactory
-        {
-            return factory.Create(other);
-        }
-        #endregion
+    //        _ => throw new InvalidOperationException(null),
+    //    };
+
+    //    #region Local methods
+    //    IMeasurable create<T>(T factory) where T : class, IMeasurableFactory
+    //    {
+    //        return factory.Create(other);
+    //    }
+    //    #endregion
     }
 }

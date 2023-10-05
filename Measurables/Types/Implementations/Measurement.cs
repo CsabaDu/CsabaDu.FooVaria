@@ -451,6 +451,11 @@ internal sealed class Measurement : Measurable, IMeasurement
         return HashCode.Combine(MeasureUnitTypeCode, ExchangeRate);
     }
 
+    public override IMeasurable GetMeasurable(IMeasurable other)
+    {
+        return GetFactory().Create(other);
+    }
+
     public override Enum GetMeasureUnit()
     {
         return (Enum)MeasureUnit;

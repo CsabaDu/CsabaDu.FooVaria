@@ -29,11 +29,6 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
     #endregion
 
     #region Public methods
-    public IMeasurable GetMeasurable(IMeasurable other)
-    {
-        return GetFactory().Create(NullChecked(other, nameof(other)));
-    }
-
     #region Virtual methods
     public virtual TypeCode GetQuantityTypeCode()
     {
@@ -80,6 +75,7 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
 
     #region Abstract methods
     public abstract IMeasurable GetDefault();
+    public abstract IMeasurable GetMeasurable(IMeasurable other);
     #endregion
     #endregion
 

@@ -160,6 +160,10 @@ internal abstract class Measure : BaseMeasure, IMeasure
         return null;
     }
 
+    public override sealed IMeasure GetMeasurable(IMeasurable other)
+    {
+        return (IMeasure)GetFactory().Create(other);
+    }
     public override sealed TypeCode GetQuantityTypeCode()
     {
         return base.GetQuantityTypeCode();

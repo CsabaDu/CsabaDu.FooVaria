@@ -1,5 +1,4 @@
 using CsabaDu.FooVaria.Common.Types;
-using CsabaDu.FooVaria.Common.Types.Implementations;
 using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Types;
 
 namespace CsabaDu.FooVaria.Tests.MeasurablesTests.UnitTests.Types;
@@ -54,7 +53,7 @@ public class MeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void Measurable_validArg_IMeasurableFactory_invalidArg_MeasureunitTypeCode_throws_InvalidEnumArgumentException()
+    public void Measurable_invalidArg_IMeasurableFactory_invalidArg_MeasureunitTypeCode_throws_InvalidEnumArgumentException()
     {
         // Arrange
         IMeasurableFactory factory = new MeasurableFactoryImplementation();
@@ -279,41 +278,117 @@ public class MeasurableTests
     #endregion
     #endregion
 
-    #region GetMeasurable
-    #region GetMeasurable(IMeasurable)
+    #region GetMeasureUnitTypeCodes
+    #region GetMeasureUnitTypeCodes()
     [TestMethod, TestCategory("UnitTest")]
-    public void GetMeasurable_nullArg_IMeasurable_throws_ArgumentNullException()
+    public void GetMeasureUnitTypeCodes_returnsExpected()
     {
         // Arrange
-        IMeasurable measurable = null;
+        IEnumerable<MeasureUnitTypeCode> expected = new BaseMeasurableChild(Factory, MeasureUnitTypeCode).GetMeasureUnitTypeCodes();
 
         // Act
-        void attempt() => _ = Measurable.GetMeasurable(measurable);
+        var actual = Measurable.GetMeasureUnitTypeCodes();
+
+        // Assert
+        Assert.IsTrue(expected.SequenceEqual(actual));
+    }
+    #endregion
+    #endregion
+
+    #region ValidateMeasureUnit
+    #region ValidateMeasureUnit(Enum)
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateMeasureUnit_nullArg_Enum_throws_ArgumentNullException()
+    {
+        // Arrange
+        Enum measureUnit = null;
+
+        // Act
+        void attempt() => Measurable.ValidateMeasureUnit(measureUnit);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-        Assert.AreEqual(ParamNames.other, ex.ParamName);
+        Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void GetMeasurable_validArg_IMeasurable_returnsExpected()
+    [DynamicData(nameof(GetInvalidEnumMeasureUnitArgArrayList), DynamicDataSourceType.Method)]
+    public void ValidateMeasureUnit_invalidArg_Enum_throws_InvalidEnumArgumentException(Enum measureUnit)
     {
         // Arrange
-        IMeasurable expected = RandomParams.GetRandomDefaultMeasurable();
-        MeasureUnitTypeCode = expected.MeasureUnitTypeCode;
-        Factory = (IMeasurableFactory)expected.GetFactory();
-        Measurable = new MeasurableChild(Factory, MeasureUnitTypeCode);
-
         // Act
-        var actual = Measurable.GetMeasurable(expected);
+        void attempt() => Measurable.ValidateMeasureUnit(measureUnit);
 
         // Assert
-        Assert.AreEqual(expected, actual);
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
     }
 
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateMeasureUnit_validArg_Enum_returns()
+    {
+        // Arrange
+        MeasureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        Enum measureUnit = RandomParams.GetRandomMeasureUnit(MeasureUnitTypeCode);
+        Measurable = new MeasurableChild(Factory, MeasureUnitTypeCode);
+        bool returned;
+
+        // Act
+        try
+        {
+            Measurable.ValidateMeasureUnit(measureUnit);
+            returned = true;
+        }
+        catch
+        {
+            returned = false;
+        }
+
+        // Assert
+        Assert.IsTrue(returned);
+    }
     #endregion
     #endregion
 
+    #region ValidateMeasureUnitTypeCode
+    #region ValidateMeasureUnitTypeCode(MeasureUnitTypeCode)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetMeasurableValidateMeasureUnitTypeCodeArgsArrayList), DynamicDataSourceType.Method)]
+    public void ValidateMeasureUnitTypeCode_invalidArg_MeasureUnitTypeCode_throws_InvalidEnumArgumentException(MeasureUnitTypeCode measureUnitTypeCode, IMeasurable measurable)
+    {
+        // Arrange
+        // Act
+        void attempt() => measurable.ValidateMeasureUnitTypeCode(measureUnitTypeCode);
+
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(ParamNames.measureUnitTypeCode, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateMeasureUnitTypeCode_validArg_MeasureUnitTypeCode_returns()
+    {
+        // Arrange
+        MeasureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        Measurable = new MeasurableChild(Factory, MeasureUnitTypeCode);
+        bool returned;
+
+        // Act
+        try
+        {
+            Measurable.ValidateMeasureUnitTypeCode(MeasureUnitTypeCode);
+            returned = true;
+        }
+        catch
+        {
+            returned = false;
+        }
+
+        // Assert
+        Assert.IsTrue(returned);
+    }
+    #endregion
+    #endregion
     #endregion
 
     #region ArrayList methods
@@ -325,6 +400,11 @@ public class MeasurableTests
     private static IEnumerable<object[]> GetMeasurableEqualsArgsArrayList()
     {
         return DynamicDataSources.GetMeasurableEqualsArgsArrayList();
+    }
+
+    private static IEnumerable<object[]> GetMeasurableValidateMeasureUnitTypeCodeArgsArrayList()
+    {
+        return DynamicDataSources.GetMeasurableValidateMeasureUnitTypeCodeArgsArrayList();
     }
     #endregion
 }

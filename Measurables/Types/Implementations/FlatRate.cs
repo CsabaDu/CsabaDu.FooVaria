@@ -116,6 +116,11 @@ internal sealed class FlatRate : Rate, IFlatRate
     {
         return (IFlatRateFactory)Factory;
     }
+
+    public override IFlatRate GetMeasurable(IMeasurable other)
+    {
+        return (IFlatRate)GetFactory().Create(other);
+    }
     #endregion
     #endregion
 

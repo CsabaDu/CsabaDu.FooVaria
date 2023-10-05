@@ -48,7 +48,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     {
         if (other == null) return 1;
 
-        ValidateMeasureUnitTypeCode(other.MeasureUnitTypeCode);
+        other.ValidateMeasureUnitTypeCode(MeasureUnitTypeCode);
 
         return DefaultQuantity.CompareTo(other.DefaultQuantity);
     }

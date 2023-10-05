@@ -7,7 +7,7 @@ internal class DynamicDataSources
     #endregion
 
     #region Protected types
-    #region Abstract types
+    #region Abstract ObjectArray
     protected abstract class ObjectArray
     {
         public abstract object[] ToObjectArray();
@@ -192,6 +192,37 @@ internal class DynamicDataSources
         }
     }
     #endregion
+    #endregion
+    #endregion
+
+    #region MeasureUnitTypeCode
+    protected class MeasureUnitTypeCode_arg : ObjectArray
+    {
+        internal MeasureUnitTypeCode MeasureUnitTypeCode { get; init; }
+
+        public override object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                MeasureUnitTypeCode,
+            };
+        }
+    }
+
+    #region MeasureUnitTypeCode, IMeasurable
+    protected class MeasureUnitTypeCode_IMeasurable_args : MeasureUnitTypeCode_arg
+    {
+        internal IMeasurable Measurable { get; init; }
+
+        public override object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                MeasureUnitTypeCode,
+                Measurable,
+            };
+        }
+    }
     #endregion
     #endregion
     #endregion
@@ -408,6 +439,28 @@ internal class DynamicDataSources
                 IsTrue = expected,
                 Object = other,
                 MeasureUnitTypeCode = measureUnitTypeCode,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> GetMeasurableValidateMeasureUnitTypeCodeArgsArrayList()
+    {
+        MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        IMeasurable measurable = new MeasurableChild(new MeasurableFactoryImplementation(), RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
+        yield return toObjectArray();
+
+        measureUnitTypeCode = SampleParams.NotDefinedMeasureUnitTypeCode;
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            return new MeasureUnitTypeCode_IMeasurable_args
+            {
+                MeasureUnitTypeCode = measureUnitTypeCode,
+                Measurable = measurable,
             }
             .ToObjectArray();
         }
