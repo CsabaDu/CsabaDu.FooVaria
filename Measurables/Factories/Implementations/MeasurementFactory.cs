@@ -8,7 +8,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
     #region Properties
     #region Static properties
     private static IDictionary<object, IMeasurement> MeasurementCollection
-        => ExchangeRates.GetValidMeasureUnits().ToDictionary
+        => ExchangeRates.GetExchangeRateCollection().Keys.ToDictionary
         (
             x => x,
             x => new Measurement(new MeasurementFactory(), (Enum)x) as IMeasurement

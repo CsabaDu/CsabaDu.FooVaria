@@ -167,9 +167,7 @@ internal sealed class Measurement : Measurable, IMeasurement
 
     public string GetName()
     {
-        Enum measureUnit = GetMeasureUnit();
-
-        return GetCustomName(measureUnit) ?? GetDefaultName(measureUnit);
+        return GetCustomName() ?? GetDefaultName();
     }
 
     public ICustomMeasurement GetCustomMeasurement(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
@@ -177,9 +175,14 @@ internal sealed class Measurement : Measurable, IMeasurement
         return GetFactory().Create(measureUnitTypeCode, exchangeRate, customName);
     }
 
-    public string GetDefaultName(Enum? measureUnit = null) // TODO
+    public string GetDefaultName()
     {
-        return MeasureUnitTypes.GetDefaultName(measureUnit ?? GetMeasureUnit());
+        return GetDefaultName(GetMeasureUnit());
+    }
+
+    public string GetDefaultName(Enum measureUnit)
+    {
+        return MeasureUnitTypes.GetDefaultName(measureUnit);
     }
 
     public IEnumerable<Enum> GetNotUsedCustomMeasureUnits()

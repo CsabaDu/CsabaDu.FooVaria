@@ -1,7 +1,12 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Factories;
-
-public interface IDefaultRateComponentFactory<out T> where T : class, IMeasurable, IRateComponentType
+﻿namespace CsabaDu.FooVaria.Measurables.Factories
 {
-    T CreateDefault(MeasureUnitTypeCode measureUnitTypeCode);
+    public interface IDefaultRateComponentFactory
+    {
+    }
+
+    public interface IDefaultRateComponentFactory<out T> : IDefaultRateComponentFactory where T : class, IMeasurable, IRateComponentType
+    {
+        T CreateDefault(MeasureUnitTypeCode measureUnitTypeCode);
+    }
 }
 

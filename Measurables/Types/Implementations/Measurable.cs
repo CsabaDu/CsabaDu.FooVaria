@@ -29,14 +29,9 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
     #endregion
 
     #region Public methods
-    public IMeasurable GetMeasurable(IMeasurable measurable)
+    public IMeasurable GetMeasurable(IMeasurable other)
     {
-        return GetFactory().Create(measurable);
-    }
-
-    public IMeasurable GetMeasurable(IMeasurableFactory measurableFactory, IMeasurable measurable)
-    {
-        return NullChecked(measurableFactory, nameof(measurableFactory)).Create(measurable);
+        return GetFactory().Create(NullChecked(other, nameof(other)));
     }
 
     #region Virtual methods
@@ -62,6 +57,7 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
     {
         return HashCode.Combine(typeof(IMeasurable), MeasureUnitTypeCode);
     }
+
     #region Sealed methods
     public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
     {

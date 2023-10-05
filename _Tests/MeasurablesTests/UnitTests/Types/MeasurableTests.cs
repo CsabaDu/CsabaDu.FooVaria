@@ -1,4 +1,5 @@
 using CsabaDu.FooVaria.Common.Types;
+using CsabaDu.FooVaria.Common.Types.Implementations;
 using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Types;
 
 namespace CsabaDu.FooVaria.Tests.MeasurablesTests.UnitTests.Types;
@@ -234,14 +235,82 @@ public class MeasurableTests
     public void Equals_arg_object_returnsExpected(bool expected, object other, MeasureUnitTypeCode measureUnitTypeCode)
     {
         // Arrange
-        IMeasurable baseMeasurable = new MeasurableChild(Factory, measureUnitTypeCode);
+        Measurable = new MeasurableChild(Factory, measureUnitTypeCode);
 
         // Act
-        var actual = baseMeasurable.Equals(other);
+        var actual = Measurable.Equals(other);
 
         // Assert
         Assert.AreEqual(expected, actual);
     }
+    #endregion
+    #endregion
+
+    #region GetFactory
+    #region GetFactory()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetFactory_returnsExpected()
+    {
+        // Arrange
+        // Act
+        var actual = Measurable.GetFactory();
+
+        // Assert
+        Assert.IsNotNull(actual);
+        Assert.IsInstanceOfType(Measurable.GetFactory(), typeof(IMeasurableFactory));
+    }
+    #endregion
+    #endregion
+
+    #region GetHashCode
+    #region GetHashCode()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetHashCode_returnsExpected()
+    {
+        // Arrange
+        int expected = HashCode.Combine(typeof(IMeasurable), MeasureUnitTypeCode);
+
+        // Act
+        var actual = Measurable.GetHashCode();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region GetMeasurable
+    #region GetMeasurable(IMeasurable)
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetMeasurable_nullArg_IMeasurable_throws_ArgumentNullException()
+    {
+        // Arrange
+        IMeasurable measurable = null;
+
+        // Act
+        void attempt() => _ = Measurable.GetMeasurable(measurable);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
+        Assert.AreEqual(ParamNames.other, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetMeasurable_validArg_IMeasurable_returnsExpected()
+    {
+        // Arrange
+        IMeasurable expected = RandomParams.GetRandomDefaultMeasurable();
+        MeasureUnitTypeCode = expected.MeasureUnitTypeCode;
+        Factory = (IMeasurableFactory)expected.GetFactory();
+        Measurable = new MeasurableChild(Factory, MeasureUnitTypeCode);
+
+        // Act
+        var actual = Measurable.GetMeasurable(expected);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
     #endregion
     #endregion
 

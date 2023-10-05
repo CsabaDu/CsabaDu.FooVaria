@@ -233,10 +233,10 @@ public class BaseMeasurableTests
     public void Equals_arg_object_returnsExpected(bool expected, object other, MeasureUnitTypeCode measureUnitTypeCode)
     {
         // Arrange
-        IBaseMeasurable baseMeasurable = new BaseMeasurableChild(Factory, measureUnitTypeCode);
+        BaseMeasurable = new BaseMeasurableChild(Factory, measureUnitTypeCode);
 
         // Act
-        var actual = baseMeasurable.Equals(other);
+        var actual = BaseMeasurable.Equals(other);
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -483,15 +483,15 @@ public class BaseMeasurableTests
     public void ValidateMeasureUnit_validArg_Enum_returns()
     {
         // Arrange
-        MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
-        Enum measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitTypeCode);
-        IBaseMeasurable baseMeasurable = new BaseMeasurableChild(Factory, measureUnitTypeCode);
+        MeasureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        Enum measureUnit = RandomParams.GetRandomMeasureUnit(MeasureUnitTypeCode);
+        BaseMeasurable = new BaseMeasurableChild(Factory, MeasureUnitTypeCode);
         bool returned;
 
         // Act
         try
         {
-            baseMeasurable.ValidateMeasureUnit(measureUnit);
+            BaseMeasurable.ValidateMeasureUnit(measureUnit);
             returned = true;
         }
         catch

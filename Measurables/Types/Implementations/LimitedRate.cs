@@ -8,7 +8,7 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         Limit = other.Limit;
     }
 
-    public LimitedRate(ILimitedRateFactory factory, IMeasure numerator, IDenominator denominator, ILimit?limit) : base(factory, numerator, denominator)
+    public LimitedRate(ILimitedRateFactory factory, IMeasure numerator, IDenominator denominator, ILimit limit) : base(factory, numerator, denominator)
     {
         Limit = NullChecked(limit, nameof(limit));
     }

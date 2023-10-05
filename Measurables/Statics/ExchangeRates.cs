@@ -6,7 +6,7 @@ internal static class ExchangeRates
     static ExchangeRates()
     {
         ConstantExchangeRateCollection = InitConstantExchangeRateCollection();
-        ExchangeRateCollection = new SortedList<object, decimal>(ConstantExchangeRateCollection);
+        ExchangeRateCollection = new Dictionary<object, decimal>(ConstantExchangeRateCollection);
     }
     #endregion
 
