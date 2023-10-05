@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
+﻿using CsabaDu.FooVaria.Common.Enums;
+using CsabaDu.FooVaria.Measurables.Types.Implementations;
+
+namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
 
 internal class DynamicDataSources
 {
@@ -461,6 +464,29 @@ internal class DynamicDataSources
             {
                 MeasureUnitTypeCode = measureUnitTypeCode,
                 Measurable = measurable,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> GetBoolMeasureUnitTypeCodeArgsArrayList()
+    {
+        MeasureUnitTypeCode measureUnitTypeCode = SampleParams.NotDefinedMeasureUnitTypeCode;
+        bool expected = false;
+        yield return toObjectArray();
+
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        expected = true;
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            return new Bool_MeasureUnitTypeCode_args
+            {
+                IsTrue = expected,
+                MeasureUnitTypeCode = measureUnitTypeCode,
             }
             .ToObjectArray();
         }

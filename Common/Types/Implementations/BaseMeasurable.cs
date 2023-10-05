@@ -108,6 +108,7 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
 
     #region Abstract methods
     public abstract Enum GetMeasureUnit();
+    public abstract bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode);
     #endregion
     #endregion
 }

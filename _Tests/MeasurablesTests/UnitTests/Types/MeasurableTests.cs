@@ -3,7 +3,7 @@ using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Types;
 
 namespace CsabaDu.FooVaria.Tests.MeasurablesTests.UnitTests.Types;
 
-[TestClass]
+[TestClass, TestCategory("UnitTest")]
 public class MeasurableTests
 {
     #region Initialize
@@ -294,6 +294,22 @@ public class MeasurableTests
     #endregion
     #endregion
 
+    #region IsValidMeasureUnitTypeCode
+    #region IsValidMeasureUnitTypeCode(MeasureUnitTypeCode)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetBoolMeasureUnitTypeCodeArgsArrayList), DynamicDataSourceType.Method)]
+    public void IsValidMeasureUnitTypeCode_arg_MeasureUnitTypeCode_returnsExpected(bool expected, MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        // Arrange
+        // Act
+        var actual = Measurable.IsValidMeasureUnitTypeCode(measureUnitTypeCode);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
     #region ValidateMeasureUnit
     #region ValidateMeasureUnit(Enum)
     [TestMethod, TestCategory("UnitTest")]
@@ -399,6 +415,11 @@ public class MeasurableTests
     private static IEnumerable<object[]> GetMeasurableEqualsArgsArrayList()
     {
         return DynamicDataSources.GetMeasurableEqualsArgsArrayList();
+    }
+
+    private static IEnumerable<object[]> GetBoolMeasureUnitTypeCodeArgsArrayList()
+    {
+        return DynamicDataSources.GetBoolMeasureUnitTypeCodeArgsArrayList();
     }
 
     private static IEnumerable<object[]> GetMeasurableValidateMeasureUnitTypeCodeArgsArrayList()

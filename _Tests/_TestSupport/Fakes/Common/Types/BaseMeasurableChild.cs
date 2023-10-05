@@ -27,4 +27,9 @@ internal sealed class BaseMeasurableChild : BaseMeasurable
     {
         throw new NotImplementedException();
     }
+
+    public override bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        throw new NotImplementedException();
+    }
 }

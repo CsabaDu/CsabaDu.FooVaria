@@ -2,12 +2,13 @@
 
 public interface IMeasureUnitType
 {
-    Type GetMeasureUnitType(); // TODO
-    Type GetMeasureUnitType(MeasureUnitTypeCode measureUnitTypeCode); // TODO
-    MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum measureUnit); // TODO
+    Type GetMeasureUnitType();
+    Type GetMeasureUnitType(MeasureUnitTypeCode measureUnitTypeCode);
+    MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum measureUnit);
     IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes();
-    bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode);  // TODO
-    bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, Enum measureUnit); // TODO
+    bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode);
+    bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, Enum measureUnit);
+    bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measurementUnitTypeCode);
 
     void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode);
 }

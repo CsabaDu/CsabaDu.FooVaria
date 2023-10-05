@@ -195,6 +195,11 @@ internal sealed class Measurement : Measurable, IMeasurement
         return GetNotUsedCustomMeasureUnits(measureUnitTypeCode as MeasureUnitTypeCode?);
     }
 
+    public IMeasurement? GetRateComponent(IRate rate, RateComponentCode rateComponentCode)
+    {
+        return NullChecked(rate, nameof(rate)).GetRateComponent(rateComponentCode)?.Measurement;
+    }
+
     public IEnumerable<object> GetValidMeasureUnits(MeasureUnitTypeCode measureUnitTypeCode)
     {
         return ExchangeRates.GetValidMeasureUnits().Where(x => x.GetType().Equals(measureUnitTypeCode.GetMeasureUnitType()));
@@ -590,11 +595,6 @@ internal sealed class Measurement : Measurable, IMeasurement
         if (ExchangeRates.RemoveExchangeRate(measureUnit)) return false;
 
         throw new InvalidOperationException(null);
-    }
-
-    public IMeasurement? GetRateComponent(IRate rate, RateComponentCode rateComponentCode)
-    {
-        return NullChecked(rate, nameof(rate)).GetRateComponent(rateComponentCode)?.Measurement;
     }
     #endregion
     #endregion

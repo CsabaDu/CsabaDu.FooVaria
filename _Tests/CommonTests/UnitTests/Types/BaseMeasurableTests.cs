@@ -630,6 +630,5 @@ public class BaseMeasurableTests
     {
         return DynamicDataSources.GetInvalidEnumMeasureUnitMeasureUnitTypeCodeArgsArrayList();
     }
-
     #endregion
 }
