@@ -71,11 +71,10 @@ public class MeasurableTests
     public void Measurable_validArgs_IMeasurableFactory_MeasureunitTypeCode_createsInstance()
     {
         // Arrange
-        IMeasurableFactory factory = new MeasurableFactoryImplementation();
         MeasureUnitTypeCode expected_MeasureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
 
         // Act
-        var actual = new MeasurableChild(factory, expected_MeasureUnitTypeCode);
+        var actual = new MeasurableChild(Factory, expected_MeasureUnitTypeCode);
 
         // Assert
         Assert.IsInstanceOfType(actual, typeof(IMeasurable));

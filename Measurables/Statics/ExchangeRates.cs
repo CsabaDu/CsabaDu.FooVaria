@@ -83,7 +83,7 @@ internal static class ExchangeRates
 
     internal static void RestoreConstantExchangeRates()
     {
-        ExchangeRateCollection = new SortedList<object, decimal>(ConstantExchangeRateCollection);
+        ExchangeRateCollection = new Dictionary<object, decimal>(ConstantExchangeRateCollection);
     }
 
     internal static void SetExchangeRate(Enum measureUnit, decimal exchangeRate)

@@ -47,6 +47,8 @@ public sealed class MeasurementFactory : IMeasurementFactory
 
     public IMeasurement Create(Enum measureUnit)
     {
+        _ = NullChecked(measureUnit, nameof(measureUnit));
+
         if (ExchangeRates.IsValidMeasureUnit(measureUnit)) return GetStoredMeasurement(measureUnit);
 
         throw InvalidMeasureUnitEnumArgumentException(measureUnit);
