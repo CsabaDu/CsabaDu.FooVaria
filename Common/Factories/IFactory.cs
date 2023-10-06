@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Common.Types
+﻿using CsabaDu.FooVaria.Common.Types;
+
+namespace CsabaDu.FooVaria.Common.Factories
 {
     public interface IFactory
     {
