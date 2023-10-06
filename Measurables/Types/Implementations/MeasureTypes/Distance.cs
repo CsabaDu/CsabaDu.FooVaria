@@ -58,5 +58,10 @@ internal sealed class Distance : Measure, IDistance
     {
         return GetMeasure(this, quantity);
     }
+
+    public override void Validate(ICommonBase? other)
+    {
+        Validate(this, other);
+    }
     #endregion
 }

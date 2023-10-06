@@ -14,4 +14,9 @@ internal sealed class CommonBaseChild : CommonBase
     {
         throw new NotImplementedException();
     }
+
+    public override void Validate(ICommonBase other)
+    {
+        throw new NotImplementedException();
+    }
 }

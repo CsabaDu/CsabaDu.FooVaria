@@ -53,6 +53,25 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
         return HashCode.Combine(typeof(IMeasurable), MeasureUnitTypeCode);
     }
 
+    public override void Validate(ICommonBase? other)
+    {
+        Validate(this, other);
+    }
+
+    protected static void Validate<T>(T measurable, ICommonBase? other) where T : class, IMeasurable
+    {
+        if (NullChecked(other, nameof(other)) is not T sameTypeMeasurable)
+        {
+            throw new ArgumentOutOfRangeException(nameof(other), other!.GetType().Name, null);
+        }
+
+        MeasureUnitTypeCode measureUnitTypeCode = sameTypeMeasurable.MeasureUnitTypeCode;
+
+        if (measureUnitTypeCode == measurable.MeasureUnitTypeCode) return;
+
+        throw new ArgumentOutOfRangeException(nameof(other), measureUnitTypeCode, null);
+    }
+
     #region Sealed methods
     public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
     {

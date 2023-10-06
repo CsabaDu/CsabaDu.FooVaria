@@ -212,6 +212,22 @@ internal class DynamicDataSources
         }
     }
 
+    #region MeasureUnitTypeCode, ICommonBase
+    protected class MeasureUnitTypeCode_ICommonBase_arg : MeasureUnitTypeCode_arg
+    {
+        internal ICommonBase CommonBase { get; init; }
+
+        public override object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                MeasureUnitTypeCode,
+                CommonBase,
+            };
+        }
+    }
+    #endregion
+
     #region MeasureUnitTypeCode, IMeasurable
     protected class MeasureUnitTypeCode_IMeasurable_args : MeasureUnitTypeCode_arg
     {
@@ -442,6 +458,33 @@ internal class DynamicDataSources
                 IsTrue = expected,
                 Object = other,
                 MeasureUnitTypeCode = measureUnitTypeCode,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> GetMeasurableValidateArgArrayList()
+    {
+        IMeasurableFactory factory = new MeasurableFactoryImplementation();
+
+        MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        ICommonBase other = new CommonBaseChild(factory);
+        yield return toObjectArray();
+
+        other = new BaseMeasurableChild(factory, measureUnitTypeCode);
+        yield return toObjectArray();
+
+        other = new MeasurableChild(factory, RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            return new MeasureUnitTypeCode_ICommonBase_arg
+            {
+                MeasureUnitTypeCode = measureUnitTypeCode,
+                CommonBase = other,
             }
             .ToObjectArray();
         }

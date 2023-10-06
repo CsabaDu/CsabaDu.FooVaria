@@ -133,6 +133,11 @@ internal abstract class Measure : BaseMeasure, IMeasure
         return GetSum(this, other, SummingMode.Subtract);
     }
 
+    public override void Validate(ICommonBase? other)
+    {
+        Validate(this, other);
+    }
+
     #region Override methods
     #region Sealed methods
     public override sealed IMeasure GetDefault()

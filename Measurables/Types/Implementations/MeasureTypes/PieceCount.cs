@@ -58,5 +58,10 @@ internal sealed class PieceCount : Measure, IPieceCount
     {
         return GetMeasure(this, quantity, customName, exchangeRate);
     }
+
+    public override void Validate(ICommonBase? other)
+    {
+        Validate(this, other);
+    }
     #endregion
 }

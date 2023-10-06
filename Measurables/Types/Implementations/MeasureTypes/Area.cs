@@ -53,5 +53,10 @@ internal sealed class Area : Measure, IArea
     {
         return this;
     }
+
+    public override void Validate(ICommonBase? other)
+    {
+        Validate(this, other);
+    }
     #endregion
 }

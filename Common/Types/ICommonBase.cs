@@ -5,5 +5,7 @@ public interface ICommonBase
     IFactory Factory { get; init; }
 
     IFactory GetFactory();
+
+    void Validate(ICommonBase? other);
 }
 

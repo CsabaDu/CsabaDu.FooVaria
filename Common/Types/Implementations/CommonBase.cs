@@ -21,6 +21,7 @@ public abstract class CommonBase : ICommonBase
     #region Public methods
     #region Abstract methods
     public abstract IFactory GetFactory();
+    public abstract void Validate(ICommonBase? other);
     #endregion
     #endregion
 }

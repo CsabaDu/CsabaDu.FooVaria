@@ -87,6 +87,13 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
     {
         return HashCode.Combine(typeof(IBaseMeasurable), MeasureUnitTypeCode);
     }
+
+    public override void Validate(ICommonBase? other)
+    {
+        if (NullChecked(other, nameof(other)) is IBaseMeasurable) return;
+
+        throw new ArgumentOutOfRangeException(nameof(other), other!.GetType().Name, null);
+    }
     #endregion
 
     #region Virtual methods

@@ -121,6 +121,11 @@ internal sealed class FlatRate : Rate, IFlatRate
     {
         return (IFlatRate)GetFactory().Create(other);
     }
+
+    public override void Validate(ICommonBase? other)
+    {
+        Validate(this, other);
+    }
     #endregion
     #endregion
 

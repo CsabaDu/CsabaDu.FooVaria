@@ -58,5 +58,10 @@ internal sealed class Weight : Measure, IWeight
     {
         return GetMeasure(this, quantity);
     }
+
+    public override void Validate(ICommonBase? other)
+    {
+        Validate(this, other);
+    }
     #endregion
 }

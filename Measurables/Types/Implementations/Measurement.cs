@@ -465,6 +465,11 @@ internal sealed class Measurement : Measurable, IMeasurement
     {
         return (Enum)MeasureUnit;
     }
+
+    public override void Validate(ICommonBase? other)
+    {
+        Validate(this, other);
+    }
     #endregion
     #endregion
 

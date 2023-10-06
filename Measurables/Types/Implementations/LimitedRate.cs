@@ -128,6 +128,11 @@ internal sealed class LimitedRate : Rate, ILimitedRate
     {
         return GetLimitedRate(numerator, denominator, limit ?? GetFactory().CreateLimit(denominator));
     }
+
+    public override void Validate(ICommonBase? other)
+    {
+        Validate(this, other);
+    }
     #endregion
     #endregion
 }

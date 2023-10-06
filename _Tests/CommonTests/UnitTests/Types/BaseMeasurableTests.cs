@@ -433,6 +433,61 @@ public class BaseMeasurableTests
     #endregion
     #endregion
 
+    #region Validate
+    #region Validate(ICommonBase?)
+    [TestMethod, TestCategory("UnitTest")]
+    public void Validate_nullArg_ICommonBase_throws_ArgumentNullException()
+    {
+        // Arrange
+        ICommonBase other = null;
+
+        // Act
+        void attempt() => BaseMeasurable.Validate(other);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
+        Assert.AreEqual(ParamNames.other, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void Validate_invalidArg_ICommonBase_throws_ArgumentOutOfRangeException()
+    {
+        // Arrange
+        ICommonBase other = new CommonBaseChild(Factory);
+
+        // Act
+        void attempt() => BaseMeasurable.Validate(other);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
+        Assert.AreEqual(ParamNames.other, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void Validate_validArg_ICommonBase_returns()
+    {
+        // Arrange
+        MeasureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        IBaseMeasurable other = new BaseMeasurableChild(Factory, MeasureUnitTypeCode);
+        bool returned;
+
+        // Act
+        try
+        {
+            BaseMeasurable.Validate(other);
+            returned = true;
+        }
+        catch
+        {
+            returned = false;
+        }
+
+        // Assert
+        Assert.IsTrue(returned);
+    }
+    #endregion
+    #endregion
+
     #region ValidateMeasureUnit
     #region ValidateMeasureUnit(Enum)
     [TestMethod, TestCategory("UnitTest")]
