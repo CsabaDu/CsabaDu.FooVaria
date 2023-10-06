@@ -1,3 +1,6 @@
+using CsabaDu.FooVaria.Measurables.Types;
+using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Measurables.Types;
+
 namespace CsabaDu.FooVaria.Tests.CommonTests.UnitTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
@@ -383,23 +386,6 @@ public class BaseMeasurableTests
 
         // Assert
         Assert.AreEqual(expected, actual);
-    }
-    #endregion
-    #endregion
-
-    #region GetMeasureUnitTypeCodes
-    #region GetMeasureUnitTypeCodes()
-    [TestMethod, TestCategory("UnitTest")]
-    public void GetMeasureUnitTypeCodes_returnsExpected()
-    {
-        // Arrange
-        IEnumerable<MeasureUnitTypeCode> expected = BaseMeasurableVariant.GetMeasureUnitTypeCodes();
-
-        // Act
-        var actual = BaseMeasurable.GetMeasureUnitTypeCodes();
-
-        // Assert
-        Assert.IsTrue(expected.SequenceEqual(actual));
     }
     #endregion
     #endregion

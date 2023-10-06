@@ -90,14 +90,9 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
     #endregion
 
     #region Virtual methods
-    public virtual IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
-    {
-        return MeasureUnitTypes.GetMeasureUnitTypeCodes();
-    }
-
     public virtual void ValidateMeasureUnit(Enum measureUnit)
     {
-        ValidateMeasureUnit(measureUnit, MeasureUnitTypeCode);
+        MeasureUnitTypes.ValidateMeasureUnit(measureUnit);
     }
 
     public virtual void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
@@ -108,6 +103,7 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
 
     #region Abstract methods
     public abstract Enum GetMeasureUnit();
+    public abstract IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes();
     public abstract bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode);
     #endregion
     #endregion

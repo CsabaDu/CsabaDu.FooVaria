@@ -1,5 +1,7 @@
 using CsabaDu.FooVaria.Common.Types;
+using CsabaDu.FooVaria.Common.Types.Implementations;
 using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Types;
+using CsabaDu.FooVaria.Tests.TestSupport.Variants;
 
 namespace CsabaDu.FooVaria.Tests.MeasurablesTests.UnitTests.Types;
 
@@ -283,7 +285,7 @@ public class MeasurableTests
     public void GetMeasureUnitTypeCodes_returnsExpected()
     {
         // Arrange
-        IEnumerable<MeasureUnitTypeCode> expected = new BaseMeasurableChild(Factory, MeasureUnitTypeCode).GetMeasureUnitTypeCodes();
+        IEnumerable<MeasureUnitTypeCode> expected = Enum.GetValues<MeasureUnitTypeCode>();
 
         // Act
         var actual = Measurable.GetMeasureUnitTypeCodes();
@@ -327,10 +329,12 @@ public class MeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetInvalidEnumMeasureUnitArgArrayList), DynamicDataSourceType.Method)]
-    public void ValidateMeasureUnit_invalidArg_Enum_throws_InvalidEnumArgumentException(Enum measureUnit)
+    [DynamicData(nameof(GetMeasurableValidateMeasureUnitInvalidArgsArrayList), DynamicDataSourceType.Method)]
+    public void ValidateMeasureUnit_invalidArg_Enum_throws_InvalidEnumArgumentException(Enum measureUnit, MeasureUnitTypeCode measureUnitTypeCode)
     {
         // Arrange
+        Measurable = new MeasurableChild(Factory, measureUnitTypeCode);
+
         // Act
         void attempt() => Measurable.ValidateMeasureUnit(measureUnit);
 
@@ -420,6 +424,11 @@ public class MeasurableTests
     private static IEnumerable<object[]> GetBoolMeasureUnitTypeCodeArgsArrayList()
     {
         return DynamicDataSources.GetBoolMeasureUnitTypeCodeArgsArrayList();
+    }
+
+    private static IEnumerable<object[]> GetMeasurableValidateMeasureUnitInvalidArgsArrayList()
+    {
+        return DynamicDataSources.GetMeasurableValidateMeasureUnitInvalidArgsArrayList();
     }
 
     private static IEnumerable<object[]> GetMeasurableValidateMeasureUnitTypeCodeArgsArrayList()

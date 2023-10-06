@@ -56,8 +56,9 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
     #region Sealed methods
     public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
     {
-        return base.GetMeasureUnitTypeCodes();
+        return MeasureUnitTypes.GetMeasureUnitTypeCodes();
     }
+
     public override sealed bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
     {
         return Enum.IsDefined(measureUnitTypeCode);
@@ -65,7 +66,7 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
 
     public override sealed void ValidateMeasureUnit(Enum measureUnit)
     {
-        base.ValidateMeasureUnit(measureUnit);
+        ValidateMeasureUnit(measureUnit, MeasureUnitTypeCode);
     }
 
     public override sealed void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
