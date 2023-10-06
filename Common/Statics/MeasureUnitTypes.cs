@@ -24,16 +24,6 @@ public static class MeasureUnitTypes
     };
 
     private static IDictionary<MeasureUnitTypeCode, Type> MeasureUnitTypeCollection { get; }
-    //{
-    //    { MeasureUnitTypeCode.AreaUnit, typeof(AreaUnit) },
-    //    { MeasureUnitTypeCode.Currency, typeof(Currency) },
-    //    { MeasureUnitTypeCode.DistanceUnit, typeof(DistanceUnit) },
-    //    { MeasureUnitTypeCode.ExtentUnit, typeof(ExtentUnit) },
-    //    { MeasureUnitTypeCode.TimePeriodUnit, typeof(TimePeriodUnit) },
-    //    { MeasureUnitTypeCode.Pieces, typeof(Pieces) },
-    //    { MeasureUnitTypeCode.VolumeUnit, typeof(VolumeUnit) },
-    //    { MeasureUnitTypeCode.WeightUnit, typeof(WeightUnit) },
-    //};
     #endregion
 
     #region Public methods

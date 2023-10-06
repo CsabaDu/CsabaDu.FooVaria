@@ -1,6 +1,3 @@
-using CsabaDu.FooVaria.Measurables.Types;
-using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Measurables.Types;
-
 namespace CsabaDu.FooVaria.Tests.CommonTests.UnitTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
@@ -17,7 +14,7 @@ public class BaseMeasurableTests
     public void InitializeBaseMeasurableTests()
     {
         RandomParams = new();
-        BaseMeasurableVariant = new(RandomParams);
+        BaseMeasurableVariant = new();
         MeasureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
         Factory = new FactoryImplementation();
         BaseMeasurable = new BaseMeasurableChild(Factory, MeasureUnitTypeCode);

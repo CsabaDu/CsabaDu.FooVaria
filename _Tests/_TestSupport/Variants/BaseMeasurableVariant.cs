@@ -1,20 +1,7 @@
-﻿using CsabaDu.FooVaria.Tests.TestSupport.Params;
-
-namespace CsabaDu.FooVaria.Tests.TestSupport.Variants;
+﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Variants;
 
 public class BaseMeasurableVariant
 {
-    #region Constructros
-    internal BaseMeasurableVariant(RandomParams randomParams)
-    {
-        RandomParams = randomParams;
-    }
-    #endregion
-
-    #region Properties
-    private RandomParams RandomParams { get; init; }
-    #endregion
-
     #region Public methods
     internal Enum GetDefaultMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode)
     {
@@ -58,19 +45,18 @@ public class BaseMeasurableVariant
         return measureUnit.GetType();
     }
 
-    internal MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum measureUnit)
-    {
-        Type measureUnitType = measureUnit.GetType();
+    //internal MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum measureUnit)
+    //{
+    //    Type measureUnitType = measureUnit.GetType();
 
-        string measureUnitTypeName = measureUnitType.Name;
+    //    string measureUnitTypeName = measureUnitType.Name;
 
-        return (MeasureUnitTypeCode)Enum.Parse(typeof(MeasureUnitTypeCode), measureUnitTypeName);
-    }
+    //    return (MeasureUnitTypeCode)Enum.Parse(typeof(MeasureUnitTypeCode), measureUnitTypeName);
+    //}
 
-    internal IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
-    {
-        return Enum.GetValues<MeasureUnitTypeCode>();
-    }
+    //internal IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
+    //{
+    //    return Enum.GetValues<MeasureUnitTypeCode>();
+    //}
     #endregion
 }
-

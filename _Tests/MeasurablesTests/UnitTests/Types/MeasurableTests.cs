@@ -1,8 +1,3 @@
-using CsabaDu.FooVaria.Common.Types;
-using CsabaDu.FooVaria.Common.Types.Implementations;
-using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Types;
-using CsabaDu.FooVaria.Tests.TestSupport.Variants;
-
 namespace CsabaDu.FooVaria.Tests.MeasurablesTests.UnitTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
