@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Behaviors;
 
-public interface ICustomMeasureUnit : ICustomMeasureUnitType
+public interface ICustomMeasureUnit
 {
     IEnumerable<Enum> GetNotUsedCustomMeasureUnits(MeasureUnitTypeCode measureUnitTypeCode);
     IEnumerable<Enum> GetNotUsedCustomMeasureUnits();

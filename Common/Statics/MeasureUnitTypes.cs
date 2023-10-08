@@ -41,7 +41,7 @@ public static class MeasureUnitTypes
 
     public static IEnumerable<Enum> GetAllMeasureUnits(MeasureUnitTypeCode measureUnitTypeCode)
     {
-        return Defined(measureUnitTypeCode, nameof(measureUnitTypeCode)).GetAllMeasureUnits();
+        return measureUnitTypeCode.GetAllMeasureUnits();
     }
 
     public static IEnumerable<Enum> GetAllMeasureUnits()

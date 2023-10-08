@@ -3,7 +3,7 @@
 public interface IExchangeRateCollection
 {
     IDictionary<object, decimal> GetExchangeRateCollection(MeasureUnitTypeCode measureUnitTypeCode);
-    IDictionary<object, decimal> GetExchangeRateCollection();
+    //IDictionary<object, decimal> GetExchangeRateCollection();
     IDictionary<object, decimal> GetConstantExchangeRateCollection();
     decimal GetExchangeRate(Enum measureUnit);
     decimal GetExchangeRate(string name);

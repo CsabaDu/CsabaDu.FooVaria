@@ -3,12 +3,12 @@ using CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
 
-public sealed class MeasurementFactory : IMeasurementFactory
+public sealed class MeasurementFactory : BaseMeasurementFactory, IMeasurementFactory
 {
     #region Properties
     #region Static properties
     private static IDictionary<object, IMeasurement> MeasurementCollection
-        => ExchangeRates.GetExchangeRateCollection().Keys.ToDictionary
+        => BaseMeasurement.GetExchangeRateCollection().Keys.ToDictionary
         (
             x => x,
             x => new Measurement(new MeasurementFactory(), (Enum)x) as IMeasurement
@@ -30,7 +30,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
     {
         IMeasurement measurement = GetFirstMeasurement();
 
-        if (!ExchangeRates.IsValidMeasureUnit(measureUnit))
+        if (!BaseMeasurement.IsValidMeasureUnit(measureUnit))
         {
             measurement.SetCustomMeasureUnit(measureUnit, exchangeRate, customName);
 
@@ -49,7 +49,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
     {
         _ = NullChecked(measureUnit, nameof(measureUnit));
 
-        if (ExchangeRates.IsValidMeasureUnit(measureUnit)) return GetStoredMeasurement(measureUnit);
+        if (BaseMeasurement.IsValidMeasureUnit(measureUnit)) return GetStoredMeasurement(measureUnit);
 
         throw InvalidMeasureUnitEnumArgumentException(measureUnit);
         throw InvalidMeasureUnitEnumArgumentException(measureUnit);
@@ -73,7 +73,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
         throw NameArgumentOutOfRangeException(name);
     }
 
-    public IMeasurable Create(IMeasurable other)
+    public override IMeasurement Create(IMeasurable other)
     {
         Enum measureUnit = NullChecked(other, nameof(other)).GetMeasureUnit();
 

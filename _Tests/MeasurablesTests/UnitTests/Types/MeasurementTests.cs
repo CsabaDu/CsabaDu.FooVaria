@@ -11,7 +11,6 @@ public class MeasurementTests
     [ClassInitialize]
     public static void InitializeMeasurableTestsClass(TestContext context)
     {
-        ExchangeRates.RestoreConstantExchangeRates();
         DynamicDataSources = new();
     }
 
@@ -85,7 +84,7 @@ public class MeasurementTests
     {
         // Arrange
         Enum esxpected_MeasureUnit = RandomParams.GetRandomValidMeasureUnit();
-        decimal esxpected_ExchnageRate = ExchangeRates.GetExchangeRateCollection().FirstOrDefault(x => x.Key.Equals(esxpected_MeasureUnit)).Value;
+        decimal esxpected_ExchnageRate = BaseMeasurement.GetExchangeRateCollection().FirstOrDefault(x => x.Key.Equals(esxpected_MeasureUnit)).Value;
         // Act
         var actual = new Measurement(Factory, esxpected_MeasureUnit);
 

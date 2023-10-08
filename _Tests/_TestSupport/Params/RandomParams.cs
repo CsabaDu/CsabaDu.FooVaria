@@ -11,8 +11,13 @@ public class RandomParams
 {
     #region Private fields
     private static readonly Random Random = Random.Shared;
+    private IMeasurement Measurement { get; set; }
     #endregion
 
+    //private IMeasurement GetMeasurement()
+    //{
+    //    Meas
+    //}
     #region Public methods
     public MeasureUnitTypeCode GetRandomMeasureUnitTypeCode(MeasureUnitTypeCode? excludedMeasureUnitTypeCode = null)
     {
@@ -97,7 +102,7 @@ public class RandomParams
 
     public Enum GetRandomValidMeasureUnit(Enum excludedMeasureUnit = null)
     {
-        IEnumerable<object> validMeasureUnits = ExchangeRates.GetValidMeasureUnits();
+        IEnumerable<object> validMeasureUnits = BaseMeasurement.GetValidMeasureUnits();
         Enum validMeasureUnit = getRandomValidMeasureUnit();
 
         if (excludedMeasureUnit == null) return validMeasureUnit;

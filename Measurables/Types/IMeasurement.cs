@@ -1,6 +1,8 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types;
+﻿using CsabaDu.FooVaria.Measurables.Behaviors;
 
-public interface IMeasurement : IMeasurable, ICustomMeasurement, IMeasureUnitCollection, IExchangeRateCollection, ICustomNameCollection, IRateComponentType, IRateComponentType<IMeasurement>, IProportional<IMeasurement, Enum>
+namespace CsabaDu.FooVaria.Measurables.Types;
+
+public interface IMeasurement : IBaseMeasurement, ICustomMeasurement, IRateComponentType<IMeasurement>, IProportional<IMeasurement, Enum>
 {
     object MeasureUnit { get; init; }
     decimal ExchangeRate { get; init; }
@@ -9,5 +11,4 @@ public interface IMeasurement : IMeasurable, ICustomMeasurement, IMeasureUnitCol
     IMeasurement GetMeasurement(IMeasurement other);
     IMeasurement GetMeasurement(IBaseMeasure baseMeasure);
     IMeasurement GetMeasurement(string name);
-    string GetName();
 }
