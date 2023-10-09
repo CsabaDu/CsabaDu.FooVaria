@@ -58,18 +58,9 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
         Validate(this, other);
     }
 
-    protected static void Validate<T>(T measurable, ICommonBase? other) where T : class, IMeasurable
+    public override void Validate(IFactory factory)
     {
-        if (NullChecked(other, nameof(other)) is not T sameTypeMeasurable)
-        {
-            throw new ArgumentOutOfRangeException(nameof(other), other!.GetType().Name, null);
-        }
-
-        MeasureUnitTypeCode measureUnitTypeCode = sameTypeMeasurable.MeasureUnitTypeCode;
-
-        if (measureUnitTypeCode == measurable.MeasureUnitTypeCode) return;
-
-        throw new ArgumentOutOfRangeException(nameof(other), measureUnitTypeCode, null);
+        Validate(this, factory);
     }
 
     #region Sealed methods
@@ -139,6 +130,20 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
         }
         #endregion
     }
+
+    protected static void Validate<T>(T measurable, ICommonBase? other) where T : class, IMeasurable
+    {
+        string name = nameof(other);
+
+        Validate(measurable, other, name, out T sameTypeMeasurable);
+
+        MeasureUnitTypeCode measureUnitTypeCode = sameTypeMeasurable.MeasureUnitTypeCode;
+
+        if (measureUnitTypeCode == measurable.MeasureUnitTypeCode) return;
+
+        throw new ArgumentOutOfRangeException(name, measureUnitTypeCode, null);
+    }
+
     #endregion
     #endregion
 }

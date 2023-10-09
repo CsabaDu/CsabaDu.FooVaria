@@ -15,9 +15,9 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
         MeasureUnitTypeCode = GetMeasureUnitTypeCode(measureUnit);
     }
 
-    protected BaseMeasurable(IFactory factory, IBaseMeasurable baseMeasurable) : base(factory)
+    protected BaseMeasurable(IFactory factory, IBaseMeasurable baseMeasurable) : base(factory, baseMeasurable)
     {
-        MeasureUnitTypeCode = NullChecked(baseMeasurable, nameof(baseMeasurable)).MeasureUnitTypeCode;
+        MeasureUnitTypeCode = baseMeasurable.MeasureUnitTypeCode;
     }
 
     protected BaseMeasurable(IBaseMeasurable other) : base(other)

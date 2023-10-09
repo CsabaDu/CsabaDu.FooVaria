@@ -360,6 +360,10 @@ public class MeasurableTests
         Assert.IsTrue(returned);
     }
     #endregion
+
+    #region Validate(IFactory?)
+
+    #endregion
     #endregion
 
     #region ValidateMeasureUnit

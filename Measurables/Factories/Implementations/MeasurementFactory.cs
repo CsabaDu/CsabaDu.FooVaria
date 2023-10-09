@@ -1,5 +1,4 @@
-﻿using CsabaDu.FooVaria.Measurables.Statics;
-using CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿using CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
 

@@ -3,6 +3,11 @@
 [TestClass, TestCategory("UnitTest")]
 public class CommonBaseTests
 {
+    #region Private fields
+    private IFactory factory;
+    private ICommonBase commonBase;
+    #endregion
+
     #region Test methods
     #region Constructors
     #region CommonBase(IFactory)
@@ -10,7 +15,7 @@ public class CommonBaseTests
     public void CommonBase_nullArg_IFactory_throws_ArgumentNullException()
     {
         // Arrange
-        IFactory factory = null;
+        factory = null;
 
         // Act
         void attempt() => _ = new CommonBaseChild(factory);
@@ -24,7 +29,7 @@ public class CommonBaseTests
     public void CommonBase_validArg_IFactory_createsInstance()
     {
         // Arrange
-        IFactory factory = new FactoryImplementation();
+        factory = new FactoryImplementation();
 
         // Act
         var actual = new CommonBaseChild(factory);
@@ -40,10 +45,10 @@ public class CommonBaseTests
     public void CommonBase_nullArg_ICommonBase_throws_ArgumentNullException()
     {
         // Arrange
-        ICommonBase other = null;
+        commonBase = null;
 
         // Act
-        void attempt() => _ = new CommonBaseChild(other);
+        void attempt() => _ = new CommonBaseChild(commonBase);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(() => attempt());
@@ -54,11 +59,11 @@ public class CommonBaseTests
     public void CommonBase_validArg_ICommonBase_createsInstance()
     {
         // Arrange
-        IFactory factory = new FactoryImplementation();
-        ICommonBase other = new CommonBaseChild(factory);
+        factory = new FactoryImplementation();
+        commonBase = new CommonBaseChild(factory);
 
         // Act
-        var actual = new CommonBaseChild(other);
+        var actual = new CommonBaseChild(commonBase);
 
         // Assert
         Assert.IsInstanceOfType(actual, typeof(ICommonBase));

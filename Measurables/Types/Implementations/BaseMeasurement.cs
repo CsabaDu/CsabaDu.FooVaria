@@ -101,12 +101,18 @@ internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
 
     public IDictionary<string, object> GetMeasureUnitCollection(MeasureUnitTypeCode measureUnitTypeCode)
     {
-        return GetMeasureUnitCollection(measureUnitTypeCode as MeasureUnitTypeCode?);
+        IEnumerable<object> validMeasureUnits = GetValidMeasureUnits(measureUnitTypeCode);
+        IDictionary<object, string> customNameCollection = GetMeasureUnitBasedCollection(CustomNameCollection, measureUnitTypeCode);
+
+        return GetMeasureUnitCollection(validMeasureUnits, customNameCollection);
     }
 
     public IDictionary<string, object> GetMeasureUnitCollection()
     {
-        return GetMeasureUnitCollection(null);
+        IEnumerable<object> validMeasureUnits = GetValidMeasureUnits();
+        IDictionary<object, string> customNameCollection = CustomNameCollection;
+
+        return GetMeasureUnitCollection(validMeasureUnits, customNameCollection);
     }
 
     public string GetName()
@@ -233,12 +239,21 @@ internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
     #endregion
 
     #region Private methods
-    private static IDictionary<object, T> GetMeasureUnitBasedCollection<T>(IDictionary<object, T> measureUnitBasedCollection, MeasureUnitTypeCode measureUnitTypeCode) where T : notnull
+    #region Static methods
+    private static IDictionary<string, object> GetMeasureUnitCollection(IEnumerable<object> validMeasureUnits, IDictionary<object, string> customNameCollection)
     {
-        return measureUnitBasedCollection
-            .Where(x => x.Key.GetType().Equals(measureUnitTypeCode.GetMeasureUnitType()))
-            .OrderBy(x => x.Key)
-            .ToDictionary(x => x.Key, x => x.Value);
+        IDictionary<string, object> measureUnitCollection = validMeasureUnits.ToDictionary
+            (
+                x => MeasureUnitTypes.GetDefaultName((Enum)x),
+                x => x
+            );
+
+        foreach (KeyValuePair<object, string> item in customNameCollection)
+        {
+            measureUnitCollection.Add(item.Value, item.Key);
+        }
+
+        return measureUnitCollection;
     }
 
     private static decimal? GetExchangeRateOrNull(Enum? measureUnit)
@@ -252,30 +267,12 @@ internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
         return exchangeRate;
     }
 
-    private IDictionary<string, object> GetMeasureUnitCollection(MeasureUnitTypeCode? measureUnitTypeCode)
+    private static IDictionary<object, T> GetMeasureUnitBasedCollection<T>(IDictionary<object, T> measureUnitBasedCollection, MeasureUnitTypeCode measureUnitTypeCode) where T : notnull
     {
-        IEnumerable<object> validMeasureUnits;
-        IDictionary<object, string> customNameCollection;
-
-        if (measureUnitTypeCode.HasValue)
-        {
-            validMeasureUnits = GetValidMeasureUnits(measureUnitTypeCode.Value);
-            customNameCollection = GetMeasureUnitBasedCollection(CustomNameCollection, measureUnitTypeCode.Value);
-        }
-        else
-        {
-            validMeasureUnits = GetValidMeasureUnits();
-            customNameCollection = CustomNameCollection;
-        }
-
-        IDictionary<string, object> measureUnitCollection = validMeasureUnits.ToDictionary(x => MeasureUnitTypes.GetDefaultName((Enum)x), x => x);
-
-        foreach (KeyValuePair<object, string> item in customNameCollection)
-        {
-            measureUnitCollection.Add(item.Value, item.Key);
-        }
-
-        return measureUnitCollection;
+        return measureUnitBasedCollection
+            .Where(x => x.Key.GetType().Equals(measureUnitTypeCode.GetMeasureUnitType()))
+            .OrderBy(x => x.Key)
+            .ToDictionary(x => x.Key, x => x.Value);
     }
 
     private static IDictionary<object, decimal> InitConstantExchangeRateCollection()
@@ -342,7 +339,6 @@ internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
         }
         #endregion
     }
-
     #endregion
-
+    #endregion
 }
