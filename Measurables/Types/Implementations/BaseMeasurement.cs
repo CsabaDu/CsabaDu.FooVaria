@@ -132,6 +132,7 @@ internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
 
     public void RestoreConstantExchangeRates()
     {
+        CustomNameCollection.Clear();
         ExchangeRateCollection = new Dictionary<object, decimal>(ConstantExchangeRateCollection);
     }
 

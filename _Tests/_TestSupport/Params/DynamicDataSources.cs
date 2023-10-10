@@ -1,4 +1,5 @@
-﻿using CsabaDu.FooVaria.Common.Enums;
+﻿using CsabaDu.FooVaria.Common.Behaviors;
+using CsabaDu.FooVaria.Common.Enums;
 using CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
@@ -269,6 +270,31 @@ internal class DynamicDataSources
         yield return toObjectArray();
 
         measureUnit = RandomParams.GetRandomNotDefinedMeasureUnit();
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            return new Enum_arg
+            {
+                MeasureUnit = measureUnit,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> GetInvalidGetCustomNameArgArrayList()
+    {
+        Enum measureUnit = null;
+        yield return toObjectArray();
+
+        foreach (object[] item in GetInvalidEnumMeasureUnitArgArrayList())
+        {
+            yield return item;
+        }
+
+        measureUnit = RandomParams.GetRandomMeasureUnit();
         yield return toObjectArray();
 
         #region toObjectArray method

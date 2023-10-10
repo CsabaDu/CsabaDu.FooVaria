@@ -19,6 +19,7 @@ public class BaseMeasurementTests
         measureUnit = RandomParams.GetRandomValidMeasureUnit();
         factory = new MeasurementFactory();
         baseMeasurement = new BaseMeasurementChild(factory, measureUnit);
+        baseMeasurement.RestoreConstantExchangeRates();
     }
     #endregion
 
@@ -26,6 +27,7 @@ public class BaseMeasurementTests
     private IBaseMeasurement baseMeasurement;
     private IMeasurementFactory factory;
     private Enum measureUnit;
+    string name;
 
     #region Readonly fields
     private readonly RandomParams RandomParams = new();
@@ -101,7 +103,7 @@ public class BaseMeasurementTests
     #region GetConstantExchangeRateCollection
     #region GetConstantExchangeRateCollection()
     [TestMethod, TestCategory("UnitTest")]
-    public void GetConstantExchangeRateCollection_returnsExpected()
+    public void GetConstantExchangeRateCollection_returns_expected()
     {
         // Arrange
         baseMeasurement.RestoreConstantExchangeRates();
@@ -116,6 +118,36 @@ public class BaseMeasurementTests
     #endregion
     #endregion
 
+    #region GetCustomName
+    #region GetCustomName(Enum)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetInvalidGetCustomNameArgArrayList), DynamicDataSourceType.Method)]
+    public void GetCustomName_nullArg_Enum_returns_null(Enum measureUnit)
+    {
+        // Arrange
+        // Act
+        var actual = baseMeasurement.GetCustomName(measureUnit);
+
+        // Assert
+        Assert.IsNull(actual);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetCustomName_validArg_Enum_returns_expected()
+    {
+        // Arrange
+        measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        name = Guid.NewGuid().ToString();
+        baseMeasurement.SetCustomName(measureUnit, name);
+
+        // Act
+        var actual = baseMeasurement.GetCustomName(measureUnit);
+
+        // Assert
+        Assert.AreEqual(name, actual);
+    }
+    #endregion
+    #endregion
 
     #endregion
 
@@ -123,6 +155,11 @@ public class BaseMeasurementTests
     private static IEnumerable<object[]> GetInvalidEnumMeasureUnitArgArrayList()
     {
         return DynamicDataSources.GetInvalidEnumMeasureUnitArgArrayList();
+    }
+
+    private static IEnumerable<object[]> GetInvalidGetCustomNameArgArrayList()
+    {
+        return DynamicDataSources.GetInvalidGetCustomNameArgArrayList();
     }
     #endregion
 

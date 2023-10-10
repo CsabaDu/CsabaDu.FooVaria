@@ -233,7 +233,7 @@ public class BaseMeasurableTests
     #region Equals(object?)
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetBaseMeasurableEqualsArgsArrayList), DynamicDataSourceType.Method)]
-    public void Equals_arg_object_returnsExpected(bool expected, object other, MeasureUnitTypeCode measureUnitTypeCode)
+    public void Equals_arg_object_returns_expected(bool expected, object other, MeasureUnitTypeCode measureUnitTypeCode)
     {
         // Arrange
         baseMeasurable = new BaseMeasurableChild(factory, measureUnitTypeCode);
@@ -250,7 +250,7 @@ public class BaseMeasurableTests
     #region GetDefaultMeasureUnit
     #region GetDefaultMeasureUnit()
     [TestMethod, TestCategory("UnitTest")]
-    public void GetDefaultMeasureUnit_returnsExpected()
+    public void GetDefaultMeasureUnit_returns_expected()
     {
         // Arrange
         measureUnit = BaseMeasurableVariant.GetDefaultMeasureUnit(measureUnitTypeCode);
@@ -267,7 +267,7 @@ public class BaseMeasurableTests
     #region GetDefaultNames
     #region GetDefaultNames()
     [TestMethod, TestCategory("UnitTest")]
-    public void GetDefaultNames_returnsExpected()
+    public void GetDefaultNames_returns_expected()
     {
         // Arrange
         IEnumerable<string> expected = BaseMeasurableVariant.GetDefaultNames(measureUnitTypeCode);
@@ -284,7 +284,7 @@ public class BaseMeasurableTests
     #region GetHashCode
     #region GetHashCode()
     [TestMethod, TestCategory("UnitTest")]
-    public void GetHashCode_returnsExpected()
+    public void GetHashCode_returns_expected()
     {
         // Arrange
         int expected = HashCode.Combine(typeof(IBaseMeasurable), measureUnitTypeCode);
@@ -301,7 +301,7 @@ public class BaseMeasurableTests
     #region GetMeasureUnitType
     #region GetMeasureUnitType()
     [TestMethod, TestCategory("UnitTest")]
-    public void GetMeasureUnitType_returnsExpected()
+    public void GetMeasureUnitType_returns_expected()
     {
         // Arrange
         Type expected = BaseMeasurableVariant.GetMeasureUnitType(measureUnitTypeCode);
@@ -330,7 +330,7 @@ public class BaseMeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void GetMeasureUnitType_validArg_MeasureUnitTypeCode_returnsExpected()
+    public void GetMeasureUnitType_validArg_MeasureUnitTypeCode_returns_expected()
     {
         // Arrange
         measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
@@ -375,7 +375,7 @@ public class BaseMeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void GetMeasureUnitTypeCode_validArg_Enum_returnsExpected()
+    public void GetMeasureUnitTypeCode_validArg_Enum_returns_expected()
     {
         // Arrange
         MeasureUnitTypeCode expected = RandomParams.GetRandomMeasureUnitTypeCode();
@@ -394,7 +394,7 @@ public class BaseMeasurableTests
     #region HasMeasureUnitTypeCode(MeasureUnitTypeCode)
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetBaseMeasurableHasMeasureUnitTypeCodeArgArrayList), DynamicDataSourceType.Method)]
-    public void HasMeasureUnitTypeCode_arg_MeasureUnitTypeCode_returnsExpected(bool expected, MeasureUnitTypeCode measureUnitTypeCode, IBaseMeasurable baseMeasurable)
+    public void HasMeasureUnitTypeCode_arg_MeasureUnitTypeCode_returns_expected(bool expected, MeasureUnitTypeCode measureUnitTypeCode, IBaseMeasurable baseMeasurable)
     {
         // Arrange
         // Act
@@ -408,7 +408,7 @@ public class BaseMeasurableTests
     #region HasMeasureUnitTypeCode(MeasureUnitTypeCode, Enum)
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetBaseMeasurableHasMeasureUnitTypeCodeArgsArrayList), DynamicDataSourceType.Method)]
-    public void HasMeasureUnitTypeCode_args_MeasureUnitTypeCode_Enum_returnsExpected(bool expected, MeasureUnitTypeCode measureUnitTypeCode, Enum measureUnit)
+    public void HasMeasureUnitTypeCode_args_MeasureUnitTypeCode_Enum_returns_expected(bool expected, MeasureUnitTypeCode measureUnitTypeCode, Enum measureUnit)
     {
         // Arrange
         // Act
@@ -424,7 +424,7 @@ public class BaseMeasurableTests
     #region IsDefinedMeasureUnit(Enum)
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetBoolEnumMeasureUnitArgArrayList), DynamicDataSourceType.Method)]
-    public void IsDefinedMeasureUnit_arg_Enum_returnsExpected(bool expected, Enum measureUnit)
+    public void IsDefinedMeasureUnit_arg_Enum_returns_expected(bool expected, Enum measureUnit)
     {
         // Arrange
         // Act
@@ -468,7 +468,7 @@ public class BaseMeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void Validate_validArg_ICommonBase_returns()
+    public void Validate_validArg_ICommonBase_returns_()
     {
         // Arrange
         IBaseMeasurable other = new BaseMeasurableChild(factory, measureUnitTypeCode);
@@ -521,7 +521,7 @@ public class BaseMeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void ValidateMeasureUnit_validArg_Enum_returns()
+    public void ValidateMeasureUnit_validArg_Enum_returns_()
     {
         // Arrange
         measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
@@ -575,7 +575,7 @@ public class BaseMeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void ValidateMeasureUnit_validArgs_Enum_MeasureUnitTypeCode_returns()
+    public void ValidateMeasureUnit_validArgs_Enum_MeasureUnitTypeCode_returns_()
     {
         // Arrange
         measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
@@ -616,7 +616,7 @@ public class BaseMeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void ValidateMeasureUnitTypeCode_validArg_MeasureUnitTypeCode_returns()
+    public void ValidateMeasureUnitTypeCode_validArg_MeasureUnitTypeCode_returns_()
     {
         // Arrange
         measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
