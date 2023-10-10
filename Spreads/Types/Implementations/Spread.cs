@@ -1,5 +1,8 @@
-﻿using CsabaDu.FooVaria.Common.Types.Implementations;
+﻿using CsabaDu.FooVaria.Common.Statics;
+using CsabaDu.FooVaria.Common.Types.Implementations;
 using CsabaDu.FooVaria.Spreads.Factories;
+using CsabaDu.FooVaria.Spreads.Statics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CsabaDu.FooVaria.Spreads.Types.Implementations
 {
@@ -16,15 +19,15 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         #endregion
 
         #region Public methods
+        public void ValidateShapeExtents(params IExtent[] shapeExtents)
+        {
+            SpreadMeasures.ValidateShapeExtents(MeasureUnitTypeCode, shapeExtents);
+        }
+
         #region Override methods
         public override ISpreadFactory GetFactory()
         {
             return (ISpreadFactory)Factory;
-        }
-
-        public override Enum GetMeasureUnit()
-        {
-            throw new NotImplementedException();
         }
 
         public override bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
@@ -54,8 +57,7 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         #region Sealed methods
         public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
         {
-            yield return MeasureUnitTypeCode.AreaUnit;
-            yield return MeasureUnitTypeCode.VolumeUnit;
+            return SpreadMeasures.SpreadMeasureUnitTypeCodes;
         }
 
         public override sealed void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
@@ -70,6 +72,7 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         #region Abstract methods
         public abstract ISpread GetSpread(ISpreadMeasure spreadMeasure);
         public abstract ISpread GetSpread(ISpread other);
+        public abstract ISpread GetSpread(params IExtent[] shapeExtents);
         public abstract ISpreadMeasure GetSpreadMeasure();
         #endregion
         #endregion
@@ -106,6 +109,13 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
             return SpreadMeasure.Equals(other);
         }
 
+        public T? ExchangeTo(U measureUnit)
+        {
+            IBaseMeasure excchanged = SpreadMeasure.ExchangeTo(measureUnit) ?? throw InvalidMeasureUnitEnumArgumentException(measureUnit);
+
+            return (T)SpreadMeasure.GetMeasure(excchanged);
+        }
+
         public bool? FitsIn(T? other, LimitMode? limitMode)
         {
             return SpreadMeasure.FitsIn(other, limitMode);
@@ -121,21 +131,21 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
             return (double)SpreadMeasure.Quantity;
         }
 
-        public T GetSpreadMeasure(U measureUnit)
+        public decimal ProportionalTo(T spreadMeaasure)
         {
-            IBaseMeasure exchanged = SpreadMeasure.ExchangeTo(Defined(measureUnit, nameof(measureUnit)))!;
-
-            return (T)SpreadMeasure.GetMeasure(exchanged);
+            return SpreadMeasure.ProportionalTo(spreadMeaasure);
         }
 
-        public bool IsExchangeableTo(Enum? context)
+        public bool IsExchangeableTo(U context)
         {
             return SpreadMeasure.IsExchangeableTo(context);
         }
 
-        public decimal ProportionalTo(T spreadMeaasure)
+        public bool TryExchangeTo(U measureUnit, [NotNullWhen(true)] out T? exchanged)
         {
-            return SpreadMeasure.ProportionalTo(spreadMeaasure);
+            exchanged = ExchangeTo(measureUnit);
+
+            return exchanged != null;
         }
 
         public void ValidateQuantity(double quantity)
@@ -172,6 +182,11 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
 
         #region Override methods
         #region Sealed methods
+        public override sealed Enum GetMeasureUnit()
+        {
+            return SpreadMeasure.GetMeasureUnit();
+        }
+
         public override sealed T GetSpreadMeasure()
         {
             return SpreadMeasure;

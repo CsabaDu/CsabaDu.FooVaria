@@ -136,7 +136,6 @@ public class BaseMeasurementTests
     public void GetCustomName_validArg_Enum_returns_expected()
     {
         // Arrange
-        measureUnit = RandomParams.GetRandomValidMeasureUnit();
         name = Guid.NewGuid().ToString();
         baseMeasurement.SetCustomName(measureUnit, name);
 

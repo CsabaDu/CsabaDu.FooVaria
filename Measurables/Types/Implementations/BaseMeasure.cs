@@ -183,6 +183,13 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return exchanged != null;
     }
 
+    public bool TryExchangeTo(Enum measureUnit, [NotNullWhen(true)] out IBaseMeasure? exchanged)
+    {
+        exchanged = ExchangeTo(measureUnit);
+
+        return exchanged != null;
+    }
+
     public bool TryGetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName, [NotNullWhen(true)] out IBaseMeasure? baseMeasure)
     {
         baseMeasure = null;
@@ -210,13 +217,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
             : quantity.ToQuantity(QuantityTypeCode);
 
         return thisTypeQuantity != null;
-    }
-
-    public bool TryExchangeTo(Enum measureUnit, [NotNullWhen(true)] out IBaseMeasure? exchanged)
-    {
-        exchanged = ExchangeTo(measureUnit);
-
-        return exchanged != null;
     }
 
     public void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode)

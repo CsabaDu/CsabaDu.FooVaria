@@ -1,7 +1,15 @@
-﻿namespace CsabaDu.FooVaria.Spreads.Factories;
+﻿using CsabaDu.FooVaria.Measurables.Factories;
 
-public interface ISpreadFactory : IFactory<ISpread>
+namespace CsabaDu.FooVaria.Spreads.Factories
 {
-    ISpread Create(ISpreadMeasure spreadMeasure);
-    ISpread Create(params IExtent[] shapeExtents);
+    public interface ISpreadFactory : IFactory
+    {
+        public IMeasureFactory MeasureFactory { get; init; }
+    }
+
+    public interface ISpreadFactory<T, U> : ISpreadFactory, IFactory<T> where T : class, ISpread where U : class, IMeasure, ISpreadMeasure
+    {
+        T Create(U spreadMeasure);
+        T Create(params IExtent[] shapeExtents);
+    }
 }

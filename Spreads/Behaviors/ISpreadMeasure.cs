@@ -1,8 +1,13 @@
-﻿namespace CsabaDu.FooVaria.Spreads.Behaviors;
-
-public interface ISpreadMeasure<out T, in U> : IQuantifyable<double>, ISpreadMeasure where T : class, IMeasure, ISpreadMeasure where U : struct, Enum
+﻿namespace CsabaDu.FooVaria.Spreads.Behaviors
 {
-    T GetSpreadMeasure(U measureUnit);
+    public interface ISpreadMeasure<out T, in U> : IQuantifyable<double>, ISpreadMeasure where T : class, IMeasure, ISpreadMeasure where U : struct, Enum
+    {
+        void ValidateSpreadMeasure(IMeasure measure);
+    }
 
-    void ValidateSpreadMeasure(IMeasure measure);
+    public interface IShapeExtents
+    {
+        void ValidateShapeExtents(params IExtent[] shapeExtents);
+    }
 }
+

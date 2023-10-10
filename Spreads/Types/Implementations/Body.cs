@@ -12,6 +12,16 @@ internal sealed class Body : Spread<IVolume, VolumeUnit>, IBody
     {
     }
 
+    public IBody GetBody(IExtent radius, IExtent height)
+    {
+        return GetSpread(radius, height);
+    }
+
+    public IBody GetBody(IExtent length, IExtent width, IExtent height)
+    {
+        return GetSpread(length, width, height);
+    }
+
     public override IBodyFactory GetFactory()
     {
         return (IBodyFactory)Factory;
@@ -19,22 +29,31 @@ internal sealed class Body : Spread<IVolume, VolumeUnit>, IBody
 
     public override IBody GetSpread(IVolume volume)
     {
-        throw new NotImplementedException();
+        return GetFactory().Create(volume);
     }
 
-    public override IBody GetSpread(VolumeUnit volumeUnit)
+    public override IBody GetSpread(VolumeUnit measureUnit)
     {
-        throw new NotImplementedException();
+        return (IBody?)ExchangeTo(measureUnit) ?? throw InvalidMeasureUnitEnumArgumentException(measureUnit);
     }
 
     public override IBody GetSpread(ISpreadMeasure spreadMeasure)
     {
-        throw new NotImplementedException();
+        if (NullChecked(spreadMeasure, nameof(spreadMeasure)) is IVolume volume) return GetFactory().Create(volume);
+
+        throw new ArgumentOutOfRangeException(nameof(spreadMeasure), spreadMeasure.GetType().Name, null);
     }
 
     public override IBody GetSpread(ISpread other)
     {
-        throw new NotImplementedException();
+        if (NullChecked(other, nameof(other)) is IBody body) return GetSpread(body);
+
+        throw new ArgumentOutOfRangeException(nameof(other), other.GetType().Name, null);
+    }
+
+    public override IBody GetSpread(params IExtent[] shapeExtents)
+    {
+        return GetFactory().Create(shapeExtents);
     }
 
     public override void Validate(IFactory? factory)
