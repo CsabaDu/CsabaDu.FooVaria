@@ -4,5 +4,5 @@ public interface ISpreadMeasure<out T, in U> : IQuantifyable<double>, ISpreadMea
 {
     T GetSpreadMeasure(U measureUnit);
 
-    void ValidateSpreadMeasure(IMeasure spreadMeasure);
+    void ValidateSpreadMeasure(IMeasure measure);
 }

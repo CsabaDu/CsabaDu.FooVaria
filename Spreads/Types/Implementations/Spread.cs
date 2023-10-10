@@ -1,7 +1,7 @@
 ﻿using CsabaDu.FooVaria.Common.Types.Implementations;
 using CsabaDu.FooVaria.Spreads.Factories;
 
-namespace CsabaDu.FooVaria.Spreads.Types
+namespace CsabaDu.FooVaria.Spreads.Types.Implementations
 {
     internal abstract class Spread : BaseMeasurable, ISpread
     {
@@ -83,11 +83,11 @@ namespace CsabaDu.FooVaria.Spreads.Types
             SpreadMeasure = other.SpreadMeasure;
         }
 
-        protected Spread(ISpreadFactory factory, T spreadMeasure) : base(factory, spreadMeasure)
+        protected Spread(ISpreadFactory factory, T measure) : base(factory, measure)
         {
-            ValidateSpreadMeasure(spreadMeasure);
+            ValidateSpreadMeasure(measure);
 
-            SpreadMeasure = spreadMeasure;
+            SpreadMeasure = measure;
         }
         #endregion
 
@@ -145,11 +145,29 @@ namespace CsabaDu.FooVaria.Spreads.Types
             throw QuantityArgumentOutOfRangeException(quantity);
         }
 
-        public void ValidateSpreadMeasure(IMeasure spreadMeasure)
+        public void ValidateSpreadMeasure(IMeasure measure)
         {
-            if (NullChecked(spreadMeasure, nameof(spreadMeasure)) is T) return;
+            string name = nameof(measure);
 
-            throw new ArgumentOutOfRangeException(nameof(spreadMeasure), spreadMeasure.GetType().Name, null);
+            if (NullChecked(measure, name) is not T spreadMeasure)
+            {
+                throw new ArgumentOutOfRangeException(name, measure.GetType().Name, null);
+            }
+
+            double quantity = (double)spreadMeasure.Quantity;
+
+            try
+            {
+                ValidateQuantity((double)spreadMeasure.Quantity);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                throw new ArgumentOutOfRangeException(name, quantity, null);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(ex.Message, ex.InnerException);
+            }
         }
 
         #region Override methods
@@ -183,87 +201,5 @@ namespace CsabaDu.FooVaria.Spreads.Types
         public abstract ISpread<T, U> GetSpread(U measureUnit);
         #endregion
         #endregion
-    }
-
-    internal sealed class Surface : Spread<IArea, AreaUnit>, ISurface
-    {
-        public Surface(ISurface other) : base(other)
-        {
-        }
-
-        public Surface(ISurfaceFactory factory, IArea area) : base(factory, area)
-        {
-        }
-
-        public override ISurfaceFactory GetFactory()
-        {
-            return (ISurfaceFactory)Factory;
-        }
-
-        public override ISurface GetSpread(IArea area)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override ISurface GetSpread(AreaUnit areaUnit)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override ISurface GetSpread(ISpreadMeasure spreadMeasure)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override ISurface GetSpread(ISpread other)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Validate(IFactory? factory)
-        {
-            Validate(this, factory);
-        }
-    }
-
-    internal sealed class Body : Spread<IVolume, VolumeUnit>, IBody
-    {
-        public Body(IBody other) : base(other)
-        {
-        }
-
-        public Body(IBodyFactory factory, IVolume volume) : base(factory, volume)
-        {
-        }
-
-        public override IBodyFactory GetFactory()
-        {
-            return (IBodyFactory)Factory;
-        }
-
-        public override IBody GetSpread(IVolume volume)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override IBody GetSpread(VolumeUnit volumeUnit)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override IBody GetSpread(ISpreadMeasure spreadMeasure)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override IBody GetSpread(ISpread other)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Validate(IFactory? factory)
-        {
-            Validate(this, factory);
-        }
     }
 }
