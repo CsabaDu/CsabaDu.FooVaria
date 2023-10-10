@@ -1,5 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Statics;
-using CsabaDu.FooVaria.Common.Types.Implementations;
+﻿using CsabaDu.FooVaria.Common.Types.Implementations;
 using CsabaDu.FooVaria.Spreads.Factories;
 using CsabaDu.FooVaria.Spreads.Statics;
 using System.Diagnostics.CodeAnalysis;
