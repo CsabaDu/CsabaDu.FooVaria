@@ -213,7 +213,7 @@ internal class DynamicDataSources
     }
 
     #region MeasureUnitTypeCode, ICommonBase
-    protected class MeasureUnitTypeCode_ICommonBase_arg : MeasureUnitTypeCode_arg
+    protected class MeasureUnitTypeCode_ICommonBase_args : MeasureUnitTypeCode_arg
     {
         internal ICommonBase CommonBase { get; init; }
 
@@ -223,6 +223,22 @@ internal class DynamicDataSources
             {
                 MeasureUnitTypeCode,
                 CommonBase,
+            };
+        }
+    }
+    #endregion
+
+    #region MeasureUnitTypeCode, IBaseMeasurable
+    protected class MeasureUnitTypeCode_IBaseMeasurable_args : MeasureUnitTypeCode_arg
+    {
+        internal IBaseMeasurable BaseMeasurable { get; init; }
+
+        public override object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                MeasureUnitTypeCode,
+                BaseMeasurable,
             };
         }
     }
@@ -481,7 +497,7 @@ internal class DynamicDataSources
         #region toObjectArray method
         object[] toObjectArray()
         {
-            return new MeasureUnitTypeCode_ICommonBase_arg
+            return new MeasureUnitTypeCode_ICommonBase_args
             {
                 MeasureUnitTypeCode = measureUnitTypeCode,
                 CommonBase = other,
@@ -561,5 +577,30 @@ internal class DynamicDataSources
         }
         #endregion
     }
+
+    internal IEnumerable<object[]> GetBaseMeasurableValidateArgArrayList()
+    {
+        IFactory factory = new FactoryImplementation();
+
+        MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        ICommonBase other = new CommonBaseChild(factory);
+        yield return toObjectArray();
+
+        other = new BaseMeasurableChild(factory, RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            return new MeasureUnitTypeCode_ICommonBase_args
+            {
+                MeasureUnitTypeCode = measureUnitTypeCode,
+                CommonBase = other,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+    }
+
     #endregion
 }

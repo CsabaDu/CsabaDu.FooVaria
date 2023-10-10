@@ -1,9 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Enums;
-using CsabaDu.FooVaria.Measurables.Behaviors;
-using CsabaDu.FooVaria.Measurables.Factories;
-using CsabaDu.FooVaria.Measurables.Factories.Implementations;
-using CsabaDu.FooVaria.Measurables.Markers;
-using CsabaDu.FooVaria.Measurables.Statics;
+﻿using CsabaDu.FooVaria.Measurables.Factories.Implementations;
 
 namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
 

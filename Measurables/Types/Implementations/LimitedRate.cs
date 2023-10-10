@@ -133,6 +133,11 @@ internal sealed class LimitedRate : Rate, ILimitedRate
     {
         Validate(this, other);
     }
+
+    public override void Validate(IFactory? factory)
+    {
+        Validate(this, factory);
+    }
     #endregion
     #endregion
 }

@@ -16,18 +16,20 @@ public class BaseMeasurementTests
     [TestInitialize]
     public void InitializeMeasurableTests()
     {
-        RandomParams = new();
-        MeasureUnit = RandomParams.GetRandomValidMeasureUnit();
-        Factory = new MeasurementFactory();
-        BaseMeasurement = new BaseMeasurementChild(Factory, MeasureUnit);
+        measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        factory = new MeasurementFactory();
+        baseMeasurement = new BaseMeasurementChild(factory, measureUnit);
     }
     #endregion
 
     #region Private fields
-    private IBaseMeasurement BaseMeasurement;
-    private IMeasurementFactory Factory;
-    private Enum MeasureUnit;
-    private RandomParams RandomParams;
+    private IBaseMeasurement baseMeasurement;
+    private IMeasurementFactory factory;
+    private Enum measureUnit;
+
+    #region Readonly fields
+    private readonly RandomParams RandomParams = new();
+    #endregion
 
     #region Static fields
     private static DynamicDataSources DynamicDataSources;
@@ -41,11 +43,11 @@ public class BaseMeasurementTests
     public void BaseMeasurement_nullArg_IBaseMeasurementFactory_arg_Enum_throws_ArgumentNullException()
     {
         // Arrange
-        Factory = null;
-        MeasureUnit = null;
+        factory = null;
+        measureUnit = null;
 
         // Act
-        void attempt() => _ = new BaseMeasurementChild(Factory, MeasureUnit);
+        void attempt() => _ = new BaseMeasurementChild(factory, measureUnit);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
@@ -53,13 +55,13 @@ public class BaseMeasurementTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void Measurement_validArg_IMeasurementFactory_nullArg_Enum_throws_ArgumentNullException()
+    public void BaseMeasurement_validArg_IMeasurementFactory_nullArg_Enum_throws_ArgumentNullException()
     {
         // Arrange
-        MeasureUnit = null;
+        measureUnit = null;
 
         // Act
-        void attempt() => _ = new BaseMeasurementChild(Factory, MeasureUnit);
+        void attempt() => _ = new BaseMeasurementChild(factory, measureUnit);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
@@ -68,11 +70,11 @@ public class BaseMeasurementTests
 
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetInvalidEnumMeasureUnitArgArrayList), DynamicDataSourceType.Method)]
-    public void Measurement_validArg_IMeasurementFactory_invalidArg_Enum_throws_InvalidEnumArgumentException(Enum measureUnit)
+    public void BaseMeasurement_validArg_IMeasurementFactory_invalidArg_Enum_throws_InvalidEnumArgumentException(Enum measureUnit)
     {
         // Arrange
         // Act
-        void attempt() => _ = new BaseMeasurementChild(Factory, measureUnit);
+        void attempt() => _ = new BaseMeasurementChild(factory, measureUnit);
 
         // Assert
         var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
@@ -84,10 +86,10 @@ public class BaseMeasurementTests
     {
         // Arrange
         MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
-        MeasureUnit = RandomParams.GetRandomMeasureUnit(measureUnitTypeCode);
+        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitTypeCode);
 
         // Act
-        var actual = new BaseMeasurementChild(Factory, MeasureUnit);
+        var actual = new BaseMeasurementChild(factory, measureUnit);
 
         // Assert
         Assert.IsInstanceOfType(actual, typeof(IBaseMeasurement));
@@ -102,11 +104,11 @@ public class BaseMeasurementTests
     public void GetConstantExchangeRateCollection_returnsExpected()
     {
         // Arrange
-        BaseMeasurement.RestoreConstantExchangeRates();
+        baseMeasurement.RestoreConstantExchangeRates();
         IDictionary<object, decimal> expected = GetExchangeRateCollection();
 
         // Act
-        var actual = BaseMeasurement.GetConstantExchangeRateCollection();
+        var actual = baseMeasurement.GetConstantExchangeRateCollection();
 
         // Assert
         Assert.IsTrue(expected.SequenceEqual(actual));

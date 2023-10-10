@@ -213,6 +213,11 @@ internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
     {
         Validate(this, other);
     }
+
+    public override void Validate(IFactory? factory)
+    {
+        Validate(this, factory);
+    }
     #endregion
 
     #region Static methods
@@ -240,22 +245,6 @@ internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
 
     #region Private methods
     #region Static methods
-    private static IDictionary<string, object> GetMeasureUnitCollection(IEnumerable<object> validMeasureUnits, IDictionary<object, string> customNameCollection)
-    {
-        IDictionary<string, object> measureUnitCollection = validMeasureUnits.ToDictionary
-            (
-                x => MeasureUnitTypes.GetDefaultName((Enum)x),
-                x => x
-            );
-
-        foreach (KeyValuePair<object, string> item in customNameCollection)
-        {
-            measureUnitCollection.Add(item.Value, item.Key);
-        }
-
-        return measureUnitCollection;
-    }
-
     private static decimal? GetExchangeRateOrNull(Enum? measureUnit)
     {
         if (measureUnit == null) return null;
@@ -273,6 +262,22 @@ internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
             .Where(x => x.Key.GetType().Equals(measureUnitTypeCode.GetMeasureUnitType()))
             .OrderBy(x => x.Key)
             .ToDictionary(x => x.Key, x => x.Value);
+    }
+
+    private static IDictionary<string, object> GetMeasureUnitCollection(IEnumerable<object> validMeasureUnits, IDictionary<object, string> customNameCollection)
+    {
+        IDictionary<string, object> measureUnitCollection = validMeasureUnits.ToDictionary
+            (
+                x => MeasureUnitTypes.GetDefaultName((Enum)x),
+                x => x
+            );
+
+        foreach (KeyValuePair<object, string> item in customNameCollection)
+        {
+            measureUnitCollection.Add(item.Value, item.Key);
+        }
+
+        return measureUnitCollection;
     }
 
     private static IDictionary<object, decimal> InitConstantExchangeRateCollection()

@@ -126,6 +126,11 @@ internal sealed class FlatRate : Rate, IFlatRate
     {
         Validate(this, other);
     }
+
+    public override void Validate(IFactory? factory)
+    {
+        Validate(this, factory);
+    }
     #endregion
     #endregion
 

@@ -133,12 +133,12 @@ internal abstract class Measure : BaseMeasure, IMeasure
         return GetSum(this, other, SummingMode.Subtract);
     }
 
+    #region Override methods
     public override void Validate(ICommonBase? other)
     {
         Validate(this, other);
     }
 
-    #region Override methods
     #region Sealed methods
     public override sealed IMeasure GetDefault()
     {
@@ -172,6 +172,11 @@ internal abstract class Measure : BaseMeasure, IMeasure
     public override sealed TypeCode GetQuantityTypeCode()
     {
         return base.GetQuantityTypeCode();
+    }
+
+    public override sealed void Validate(IFactory? factory)
+    {
+        Validate(this, factory);
     }
 
     public override sealed void ValidateQuantity(ValueType? quantity)

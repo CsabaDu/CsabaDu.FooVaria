@@ -16,48 +16,8 @@ namespace CsabaDu.FooVaria.Spreads.Types
         #endregion
 
         #region Public methods
-        public void ValidateShapeExtents(IEnumerable<IExtent> shapeExtents)
-        {
-            int count = NullChecked(shapeExtents, nameof(shapeExtents)).Count();
-
-            switch (MeasureUnitTypeCode)
-            {
-                case MeasureUnitTypeCode.AreaUnit:
-                    validateShapeExtents(1, 2);
-                    break;
-                case MeasureUnitTypeCode.VolumeUnit:
-                    validateShapeExtents(2, 3);
-                    break;
-
-                default:
-                    throw new InvalidOperationException(null);
-            }
-
-            #region Local methods
-            void validateQuantity(int minValue, int maxValue)
-            {
-                if (count >= minValue && count <= maxValue) return;
-
-                throw new ArgumentOutOfRangeException(nameof(shapeExtents), count, null);
-            }
-
-            void validateShapeExtents(int minValue, int maxValue)
-            {
-                validateQuantity(minValue, maxValue);
-
-                foreach (IExtent item in shapeExtents)
-                {
-                    decimal quantity = item.DefaultQuantity;
-
-                    if (quantity <= 0) throw new ArgumentOutOfRangeException(nameof(shapeExtents), quantity, null);
-                }
-
-            }
-            #endregion
-        }
-
         #region Override methods
-        public override IFactory GetFactory()
+        public override ISpreadFactory GetFactory()
         {
             return (ISpreadFactory)Factory;
         }
@@ -70,6 +30,16 @@ namespace CsabaDu.FooVaria.Spreads.Types
         public override bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
         {
             return GetMeasureUnitTypeCodes().Contains(measureUnitTypeCode);
+        }
+
+        public override void Validate(ICommonBase? other)
+        {
+            Validate(this, other);
+        }
+
+        public override void Validate(IFactory? factory)
+        {
+            Validate(this, factory);
         }
 
         public override void ValidateMeasureUnit(Enum measureUnit)
@@ -100,7 +70,7 @@ namespace CsabaDu.FooVaria.Spreads.Types
         #region Abstract methods
         public abstract ISpread GetSpread(ISpreadMeasure spreadMeasure);
         public abstract ISpread GetSpread(ISpread other);
-        public abstract IMeasure GetSpreadMeasure();
+        public abstract ISpreadMeasure GetSpreadMeasure();
         #endregion
         #endregion
     }
@@ -151,73 +121,11 @@ namespace CsabaDu.FooVaria.Spreads.Types
             return (double)SpreadMeasure.Quantity;
         }
 
-        public T GetSpreadMeasure(params IExtent[] shapeExtents)
-        {
-            ValidateShapeExtents(shapeExtents);
-
-            int count = shapeExtents.Length;
-
-            return MeasureUnitTypeCode switch
-            {
-                MeasureUnitTypeCode.AreaUnit => (T)getArea(count),
-                MeasureUnitTypeCode.VolumeUnit => (T)getVolume(),
-
-                _ => throw new InvalidOperationException(null),
-            };
-
-            #region Local methods
-            IMeasure getVolume()
-            {
-                IMeasure area = getArea(count - 1);
-
-                decimal quantity = area.DefaultQuantity;
-                quantity *= shapeExtents.Last().DefaultQuantity;
-
-                return getSpreadMeasure<VolumeUnit>(quantity);
-            }
-
-            IMeasure getArea(int count)
-            {
-                return count switch
-                {
-                    1 => getCircleArea(),
-                    2 => getRectangleArea(),
-
-                    _ => throw new InvalidOperationException(null),
-                };
-            }
-
-            IMeasure getCircleArea()
-            {
-                decimal quantity = shapeExtents.First().DefaultQuantity;
-                quantity *= quantity;
-                quantity *= Convert.ToDecimal(Math.PI);
-
-                return getSpreadMeasure<AreaUnit>(quantity);
-            }
-
-            IMeasure getRectangleArea()
-            {
-                decimal quantity = shapeExtents.First().DefaultQuantity;
-                quantity *= shapeExtents.ElementAt(1).DefaultQuantity;
-
-                return getSpreadMeasure<AreaUnit>(quantity);
-            }
-
-            IMeasure getSpreadMeasure<TEnum>(decimal quantity) where TEnum : struct, Enum
-            {
-                return SpreadMeasure.GetMeasure(quantity, default(TEnum));
-            }
-            #endregion
-        }
-
         public T GetSpreadMeasure(U measureUnit)
         {
-            IBaseMeasure? exchanged = SpreadMeasure.ExchangeTo(Defined(measureUnit, nameof(measureUnit)));
+            IBaseMeasure exchanged = SpreadMeasure.ExchangeTo(Defined(measureUnit, nameof(measureUnit)))!;
 
-            return exchanged == null ?
-                throw new InvalidOperationException(null)
-                : (T)SpreadMeasure.GetMeasure(exchanged);
+            return (T)SpreadMeasure.GetMeasure(exchanged);
         }
 
         public bool IsExchangeableTo(Enum? context)
@@ -262,14 +170,100 @@ namespace CsabaDu.FooVaria.Spreads.Types
 
             throw InvalidMeasureUnitEnumArgumentException(measureUnit);
         }
+
+        public sealed override void Validate(ICommonBase? other)
+        {
+            Validate(this, other);
+        }
         #endregion
         #endregion
 
         #region Abstract methods
         public abstract ISpread<T, U> GetSpread(T spreadMeasure);
         public abstract ISpread<T, U> GetSpread(U measureUnit);
-        public abstract ISpread<T, U> GetSpread(params IExtent[] shapeExtents);
         #endregion
         #endregion
+    }
+
+    internal sealed class Surface : Spread<IArea, AreaUnit>, ISurface
+    {
+        public Surface(ISurface other) : base(other)
+        {
+        }
+
+        public Surface(ISurfaceFactory factory, IArea area) : base(factory, area)
+        {
+        }
+
+        public override ISurfaceFactory GetFactory()
+        {
+            return (ISurfaceFactory)Factory;
+        }
+
+        public override ISurface GetSpread(IArea area)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override ISurface GetSpread(AreaUnit areaUnit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override ISurface GetSpread(ISpreadMeasure spreadMeasure)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override ISurface GetSpread(ISpread other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Validate(IFactory? factory)
+        {
+            Validate(this, factory);
+        }
+    }
+
+    internal sealed class Body : Spread<IVolume, VolumeUnit>, IBody
+    {
+        public Body(IBody other) : base(other)
+        {
+        }
+
+        public Body(IBodyFactory factory, IVolume volume) : base(factory, volume)
+        {
+        }
+
+        public override IBodyFactory GetFactory()
+        {
+            return (IBodyFactory)Factory;
+        }
+
+        public override IBody GetSpread(IVolume volume)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IBody GetSpread(VolumeUnit volumeUnit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IBody GetSpread(ISpreadMeasure spreadMeasure)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IBody GetSpread(ISpread other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Validate(IFactory? factory)
+        {
+            Validate(this, factory);
+        }
     }
 }

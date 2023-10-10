@@ -146,6 +146,11 @@ internal sealed class Limit : BaseMeasure, ILimit
         Validate(this, other);
     }
 
+    public override void Validate(IFactory? factory)
+    {
+        Validate(this, factory);
+    }
+
     public override void ValidateQuantity(ValueType? quantity)
     {
         _ = GetValidQuantity(quantity);

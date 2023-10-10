@@ -37,4 +37,9 @@ internal sealed class BaseMeasurableChild : BaseMeasurable
     {
         throw new NotImplementedException();
     }
+
+    public override void Validate(IFactory factory)
+    {
+        throw new NotImplementedException();
+    }
 }

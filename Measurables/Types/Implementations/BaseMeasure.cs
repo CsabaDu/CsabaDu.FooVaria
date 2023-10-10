@@ -219,13 +219,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return exchanged != null;
     }
 
-    public virtual void ValidateQuantity(ValueType? quantity)
-    {
-        if (NullChecked(quantity, nameof(quantity)).IsValidTypeQuantity()) return;
-
-        throw QuantityArgumentOutOfRangeException(quantity);
-    }
-
     public void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode)
     {
         TypeCode? typeCode = GetQuantityTypeCode(NullChecked(quantity, nameof(quantity)));
@@ -250,6 +243,15 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return (IBaseMeasureFactory)Factory;
     }
 
+    public override void Validate(ICommonBase? other)
+    {
+        Validate(this, other);
+    }
+
+    public override void Validate(IFactory? factory)
+    {
+        Validate(this, factory);
+    }
     #region Sealed methods
     public override sealed bool Equals(object? obj)
     {
@@ -274,6 +276,13 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return MeasureUnitTypeCode == other?.MeasureUnitTypeCode
             && DefaultQuantity == other?.DefaultQuantity;
     }
+
+    public virtual void ValidateQuantity(ValueType? quantity)
+    {
+        if (NullChecked(quantity, nameof(quantity)).IsValidTypeQuantity()) return;
+
+        throw QuantityArgumentOutOfRangeException(quantity);
+    }
     #endregion
 
     #region Abstract methods
@@ -287,9 +296,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     {
         return (T)GetFactory().DefaultRateComponentQuantity;
     }
-    #endregion
 
-    #region Private methods
     protected object GetValidQuantity(ValueType? quantity)
     {
         quantity = NullChecked(quantity, nameof(quantity)).ToQuantity(QuantityTypeCode);

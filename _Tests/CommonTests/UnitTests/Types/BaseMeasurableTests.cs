@@ -1,3 +1,5 @@
+using CsabaDu.FooVaria.Common.Types;
+
 namespace CsabaDu.FooVaria.Tests.CommonTests.UnitTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
@@ -13,9 +15,7 @@ public class BaseMeasurableTests
     [TestInitialize]
     public void InitializeBaseMeasurableTests()
     {
-        randomParams = new();
-        baseMeasurableVariant = new();
-        measureUnitTypeCode = randomParams.GetRandomMeasureUnitTypeCode();
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
         factory = new FactoryImplementation();
         baseMeasurable = new BaseMeasurableChild(factory, measureUnitTypeCode);
     }
@@ -23,11 +23,14 @@ public class BaseMeasurableTests
 
     #region Private fields
     private IBaseMeasurable baseMeasurable;
-    private BaseMeasurableVariant baseMeasurableVariant;
     private IFactory factory;
-    private MeasureUnitTypeCode measureUnitTypeCode;
     private Enum measureUnit;
-    private RandomParams randomParams;
+    private MeasureUnitTypeCode measureUnitTypeCode;
+
+    #region Readonly fields
+    private readonly BaseMeasurableVariant BaseMeasurableVariant = new();
+    private readonly RandomParams RandomParams = new();
+    #endregion
 
     #region Static fields
     private static DynamicDataSources DynamicDataSources;
@@ -72,7 +75,7 @@ public class BaseMeasurableTests
     {
         // Arrange
         factory = new FactoryImplementation();
-        measureUnitTypeCode = randomParams.GetRandomMeasureUnitTypeCode();
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
 
         // Act
         var actual = new BaseMeasurableChild(factory, measureUnitTypeCode);
@@ -134,8 +137,8 @@ public class BaseMeasurableTests
     {
         // Arrange
         factory = new FactoryImplementation();
-        measureUnitTypeCode = randomParams.GetRandomMeasureUnitTypeCode();
-        measureUnit = randomParams.GetRandomMeasureUnit(measureUnitTypeCode);
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitTypeCode);
 
         // Act
         var actual = new BaseMeasurableChild(factory, measureUnit);
@@ -174,7 +177,7 @@ public class BaseMeasurableTests
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-        Assert.AreEqual(ParamNames.baseMeasurable, ex.ParamName);
+        Assert.AreEqual(ParamNames.commonBase, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
@@ -182,7 +185,7 @@ public class BaseMeasurableTests
     {
         // Arrange
         factory = new FactoryImplementation();
-        measureUnitTypeCode = randomParams.GetRandomMeasureUnitTypeCode();
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
         baseMeasurable = new BaseMeasurableChild(factory, measureUnitTypeCode);
 
         // Act
@@ -213,8 +216,7 @@ public class BaseMeasurableTests
     public void BaseMeasurable_validArg_IBaseMeasurable_createsInstance()
     {
         // Arrange
-        factory = new FactoryImplementation();
-        measureUnitTypeCode = randomParams.GetRandomMeasureUnitTypeCode();
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
         baseMeasurable = new BaseMeasurableChild(factory, measureUnitTypeCode);
 
         // Act
@@ -251,7 +253,7 @@ public class BaseMeasurableTests
     public void GetDefaultMeasureUnit_returnsExpected()
     {
         // Arrange
-        measureUnit = baseMeasurableVariant.GetDefaultMeasureUnit(measureUnitTypeCode);
+        measureUnit = BaseMeasurableVariant.GetDefaultMeasureUnit(measureUnitTypeCode);
 
         // Act
         var actual = baseMeasurable.GetDefaultMeasureUnit();
@@ -268,7 +270,7 @@ public class BaseMeasurableTests
     public void GetDefaultNames_returnsExpected()
     {
         // Arrange
-        IEnumerable<string> expected = baseMeasurableVariant.GetDefaultNames(measureUnitTypeCode);
+        IEnumerable<string> expected = BaseMeasurableVariant.GetDefaultNames(measureUnitTypeCode);
 
         // Act
         var actual = baseMeasurable.GetDefaultNames();
@@ -302,7 +304,7 @@ public class BaseMeasurableTests
     public void GetMeasureUnitType_returnsExpected()
     {
         // Arrange
-        Type expected = baseMeasurableVariant.GetMeasureUnitType(measureUnitTypeCode);
+        Type expected = BaseMeasurableVariant.GetMeasureUnitType(measureUnitTypeCode);
 
         // Act
         var actual = baseMeasurable.GetMeasureUnitType();
@@ -317,7 +319,7 @@ public class BaseMeasurableTests
     public void GetMeasureUnitType_invalidArg_MeasureUnitTypeCode_throws_InvalidEnumArgumentException()
     {
         // Arrange
-        MeasureUnitTypeCode measureUnitTypeCode = SampleParams.NotDefinedMeasureUnitTypeCode;
+        measureUnitTypeCode = SampleParams.NotDefinedMeasureUnitTypeCode;
 
         // Act
         void attempt() => _ = baseMeasurable.GetMeasureUnitType(measureUnitTypeCode);
@@ -331,8 +333,8 @@ public class BaseMeasurableTests
     public void GetMeasureUnitType_validArg_MeasureUnitTypeCode_returnsExpected()
     {
         // Arrange
-        MeasureUnitTypeCode measureUnitTypeCode = randomParams.GetRandomMeasureUnitTypeCode();
-        Type expected = baseMeasurableVariant.GetMeasureUnitType(measureUnitTypeCode);
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        Type expected = BaseMeasurableVariant.GetMeasureUnitType(measureUnitTypeCode);
 
         // Act
         var actual = baseMeasurable.GetMeasureUnitType(measureUnitTypeCode);
@@ -349,7 +351,7 @@ public class BaseMeasurableTests
     public void GetMeasureUnitTypeCode_nullArg_Enum_throws_ArgumentNullException()
     {
         // Arrange
-        Enum measureUnit = null;
+        measureUnit = null;
 
         // Act
         void attempt() => _ = baseMeasurable.GetMeasureUnitTypeCode(measureUnit);
@@ -376,8 +378,8 @@ public class BaseMeasurableTests
     public void GetMeasureUnitTypeCode_validArg_Enum_returnsExpected()
     {
         // Arrange
-        MeasureUnitTypeCode expected = randomParams.GetRandomMeasureUnitTypeCode();
-        Enum measureUnit = randomParams.GetRandomMeasureUnit(expected);
+        MeasureUnitTypeCode expected = RandomParams.GetRandomMeasureUnitTypeCode();
+        measureUnit = RandomParams.GetRandomMeasureUnit(expected);
 
         // Act
         var actual = baseMeasurable.GetMeasureUnitTypeCode(measureUnit);
@@ -451,10 +453,11 @@ public class BaseMeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void Validate_invalidArg_ICommonBase_throws_ArgumentOutOfRangeException()
+    [DynamicData(nameof(GetBaseMeasurableValidateArgArrayList), DynamicDataSourceType.Method)]
+    public void Validate_invalidArg_ICommonBase_throws_ArgumentOutOfRangeException(MeasureUnitTypeCode measureUnitTypeCode, ICommonBase other) // TODO MeasureUnitTypeCode
     {
         // Arrange
-        ICommonBase other = new CommonBaseChild(factory);
+        baseMeasurable = new BaseMeasurableChild(factory, measureUnitTypeCode);
 
         // Act
         void attempt() => baseMeasurable.Validate(other);
@@ -468,7 +471,6 @@ public class BaseMeasurableTests
     public void Validate_validArg_ICommonBase_returns()
     {
         // Arrange
-        measureUnitTypeCode = randomParams.GetRandomMeasureUnitTypeCode();
         IBaseMeasurable other = new BaseMeasurableChild(factory, measureUnitTypeCode);
         bool returned;
 
@@ -495,7 +497,7 @@ public class BaseMeasurableTests
     public void ValidateMeasureUnit_nullArg_Enum_throws_ArgumentNullException()
     {
         // Arrange
-        Enum measureUnit = null;
+        measureUnit = null;
 
         // Act
         void attempt() => baseMeasurable.ValidateMeasureUnit(measureUnit);
@@ -522,8 +524,8 @@ public class BaseMeasurableTests
     public void ValidateMeasureUnit_validArg_Enum_returns()
     {
         // Arrange
-        measureUnitTypeCode = randomParams.GetRandomMeasureUnitTypeCode();
-        Enum measureUnit = randomParams.GetRandomMeasureUnit(measureUnitTypeCode);
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitTypeCode);
         baseMeasurable = new BaseMeasurableChild(factory, measureUnitTypeCode);
         bool returned;
 
@@ -548,8 +550,8 @@ public class BaseMeasurableTests
     public void ValidateMeasureUnit_nullArg_Enum_arg_MeasureUnitTypeCode_throws_ArgumentNullException()
     {
         // Arrange
-        Enum measureUnit = null;
-        MeasureUnitTypeCode measureUnitTypeCode = SampleParams.NotDefinedMeasureUnitTypeCode;
+        measureUnit = null;
+        measureUnitTypeCode = SampleParams.NotDefinedMeasureUnitTypeCode;
 
         // Act
         void attempt() => baseMeasurable.ValidateMeasureUnit(measureUnit, measureUnitTypeCode);
@@ -576,8 +578,8 @@ public class BaseMeasurableTests
     public void ValidateMeasureUnit_validArgs_Enum_MeasureUnitTypeCode_returns()
     {
         // Arrange
-        MeasureUnitTypeCode measureUnitTypeCode = randomParams.GetRandomMeasureUnitTypeCode();
-        Enum measureUnit = randomParams.GetRandomMeasureUnit(measureUnitTypeCode);
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitTypeCode);
         bool returned;
 
         // Act
@@ -603,7 +605,7 @@ public class BaseMeasurableTests
     public void ValidateMeasureUnitTypeCode_invalidArg_MeasureUnitTypeCode_throws_InvalidEnumArgumentException()
     {
         // Arrange
-        MeasureUnitTypeCode measureUnitTypeCode = SampleParams.NotDefinedMeasureUnitTypeCode;
+        measureUnitTypeCode = SampleParams.NotDefinedMeasureUnitTypeCode;
 
         // Act
         void attempt() => baseMeasurable.ValidateMeasureUnitTypeCode(measureUnitTypeCode);
@@ -617,7 +619,7 @@ public class BaseMeasurableTests
     public void ValidateMeasureUnitTypeCode_validArg_MeasureUnitTypeCode_returns()
     {
         // Arrange
-        MeasureUnitTypeCode measureUnitTypeCode = randomParams.GetRandomMeasureUnitTypeCode();
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
         bool returned;
 
         // Act
@@ -665,6 +667,11 @@ public class BaseMeasurableTests
         return DynamicDataSources.GetBoolEnumMeasureUnitArgArrayList();
     }
 
+    private static IEnumerable<object[]> GetBaseMeasurableValidateArgArrayList()
+    {
+        return DynamicDataSources.GetBaseMeasurableValidateArgArrayList();
+
+    }
     private static IEnumerable<object[]> GetInvalidEnumMeasureUnitMeasureUnitTypeCodeArgsArrayList()
     {
         return DynamicDataSources.GetInvalidEnumMeasureUnitMeasureUnitTypeCodeArgsArrayList();

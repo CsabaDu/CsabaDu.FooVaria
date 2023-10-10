@@ -3,6 +3,7 @@
 public static class ParamNames
 {
     public const string baseMeasurable = "baseMeasurable";
+    public const string commonBase = "commonBase";
     public const string factory = "factory";
     public const string measurable = "measurable";
     public const string measureUnit = "measureUnit";

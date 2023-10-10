@@ -130,6 +130,11 @@ internal sealed class Denominator : BaseMeasure, IDenominator
         Validate(this, other);
     }
 
+    public override void Validate(IFactory? factory)
+    {
+        Validate(this, factory);
+    }
+
     public override void ValidateQuantity(ValueType? quantity)
     {
         _ = GetValidQuantity(quantity);

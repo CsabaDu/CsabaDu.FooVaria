@@ -306,6 +306,11 @@ internal sealed class Measurement : BaseMeasurement, IMeasurement
     {
         Validate(this, other);
     }
+
+    public override void Validate(IFactory? factory)
+    {
+        Validate(this, factory);
+    }
     #endregion
     #endregion
 

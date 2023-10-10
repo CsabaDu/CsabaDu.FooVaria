@@ -7,6 +7,6 @@ public interface ICommonBase
     IFactory GetFactory();
 
     void Validate(ICommonBase? other);
-    void Validate(IFactory factory);
+    void Validate(IFactory? factory);
 }
 

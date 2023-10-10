@@ -111,6 +111,11 @@ internal abstract class Rate : Measurable, IRate
         Validate(this, other);
     }
 
+    public override void Validate(IFactory? factory)
+    {
+        Validate(this, factory);
+    }
+
     #region Sealed methods
     public override sealed bool Equals(object? obj)
     {

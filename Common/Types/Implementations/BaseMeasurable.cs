@@ -90,9 +90,7 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
 
     public override void Validate(ICommonBase? other)
     {
-        if (NullChecked(other, nameof(other)) is IBaseMeasurable) return;
-
-        throw new ArgumentOutOfRangeException(nameof(other), other!.GetType().Name, null);
+        Validate(this, other);
     }
     #endregion
 
@@ -112,6 +110,26 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
     public abstract Enum GetMeasureUnit();
     public abstract IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes();
     public abstract bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode);
+    #endregion
+    #endregion
+
+    #region Protected methods
+    #region Static methods
+    protected static void Validate<T>(T baseMeasurable, ICommonBase? other) where T : class, IBaseMeasurable
+    {
+        string name = nameof(other);
+
+        if (NullChecked(other, name) is not T sameTypeBaseMeasurable)
+        {
+            throw new ArgumentOutOfRangeException(name, other!.GetType().Name, null);
+        }
+
+        MeasureUnitTypeCode measureUnitTypeCode = sameTypeBaseMeasurable.MeasureUnitTypeCode;
+
+        if (measureUnitTypeCode == baseMeasurable.MeasureUnitTypeCode) return;
+
+        throw new ArgumentOutOfRangeException(name, measureUnitTypeCode, null);
+    }
     #endregion
     #endregion
 }

@@ -58,7 +58,7 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
         Validate(this, other);
     }
 
-    public override void Validate(IFactory factory)
+    public override void Validate(IFactory? factory)
     {
         Validate(this, factory);
     }
@@ -129,19 +129,6 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
             };
         }
         #endregion
-    }
-
-    protected static void Validate<T>(T measurable, ICommonBase? other) where T : class, IMeasurable
-    {
-        string name = nameof(other);
-
-        Validate(measurable, other, name, out T sameTypeMeasurable);
-
-        MeasureUnitTypeCode measureUnitTypeCode = sameTypeMeasurable.MeasureUnitTypeCode;
-
-        if (measureUnitTypeCode == measurable.MeasureUnitTypeCode) return;
-
-        throw new ArgumentOutOfRangeException(name, measureUnitTypeCode, null);
     }
 
     #endregion

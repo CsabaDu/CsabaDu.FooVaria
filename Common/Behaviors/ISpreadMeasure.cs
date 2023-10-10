@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Markers;
+﻿namespace CsabaDu.FooVaria.Common.Behaviors;
 
 public interface ISpreadMeasure
 {
