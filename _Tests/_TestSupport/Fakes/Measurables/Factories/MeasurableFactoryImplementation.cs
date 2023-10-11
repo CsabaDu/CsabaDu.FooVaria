@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.TestSupport.Fakes.Measurables.Factories;
+﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Fakes.Measurables.Factories;
 
 internal class MeasurableFactoryImplementation : IMeasurableFactory
 {

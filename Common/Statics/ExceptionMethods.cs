@@ -53,6 +53,10 @@ public static class ExceptionMethods
     #endregion
 
     #region ArgumentOutOfRangeException
+    public static ArgumentOutOfRangeException TypeArgumentOutOfRangeException(string name, object arg)
+    {
+        return new ArgumentOutOfRangeException(name, arg.GetType().Name, null);
+    }
     public static ArgumentOutOfRangeException ExchangeRateArgumentOutOfRangeException(decimal? exchangeRate)
     {
         return new ArgumentOutOfRangeException(nameof(exchangeRate), exchangeRate, null);

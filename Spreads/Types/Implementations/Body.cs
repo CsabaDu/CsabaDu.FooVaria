@@ -56,8 +56,8 @@ internal sealed class Body : Spread<IVolume, VolumeUnit>, IBody
         return GetFactory().Create(shapeExtents);
     }
 
-    public override void Validate(IFactory? factory)
-    {
-        Validate(this, factory);
-    }
+    //public override void Validate(IFactory? factory)
+    //{
+    //    Validate(this, factory);
+    //}
 }

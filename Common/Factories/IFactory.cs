@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.Common.Factories
 {
-    public interface IFactory
+    public interface IFactory : IFooVariaObject
     {
     }
 

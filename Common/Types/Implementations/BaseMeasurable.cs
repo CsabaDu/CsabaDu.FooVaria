@@ -1,4 +1,5 @@
 ﻿using CsabaDu.FooVaria.Common.Statics;
+using System.Xml.Linq;
 
 namespace CsabaDu.FooVaria.Common.Types.Implementations;
 
@@ -88,9 +89,14 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
         return HashCode.Combine(typeof(IBaseMeasurable), MeasureUnitTypeCode);
     }
 
-    public override void Validate(ICommonBase? other)
+    //public override void Validate(ICommonBase? other)
+    //{
+    //    Validate(this, other);
+    //}
+
+    public override sealed void Validate(IFooVariaObject? fooVariaObject)
     {
-        Validate(this, other);
+        Validate(this, fooVariaObject);
     }
     #endregion
 
@@ -129,6 +135,30 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
         if (measureUnitTypeCode == baseMeasurable.MeasureUnitTypeCode) return;
 
         throw new ArgumentOutOfRangeException(name, measureUnitTypeCode, null);
+    }
+
+    private new void Validate<T>(T baseMeasurable, IFooVariaObject? fooVariaObject) where T : class, IBaseMeasurable
+    {
+        _ = NullChecked(fooVariaObject, nameof(fooVariaObject));
+
+        if (fooVariaObject is IFactory factory)
+        {
+            base.Validate(baseMeasurable, factory);
+        }
+        else if (fooVariaObject is ICommonBase other)
+        {
+            Validate(baseMeasurable, other, out T validbaseMeasurable);
+
+            MeasureUnitTypeCode measureUnitTypeCode = validbaseMeasurable.MeasureUnitTypeCode;
+
+            if (measureUnitTypeCode == baseMeasurable.MeasureUnitTypeCode) return;
+
+            throw new ArgumentOutOfRangeException(nameof(other), measureUnitTypeCode, null);
+        }
+        else
+        {
+            throw new InvalidOperationException(null!);
+        }
     }
     #endregion
     #endregion

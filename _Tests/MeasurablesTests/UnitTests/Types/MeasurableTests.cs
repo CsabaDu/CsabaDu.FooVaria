@@ -324,7 +324,7 @@ public class MeasurableTests
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-        Assert.AreEqual(ParamNames.other, ex.ParamName);
+        Assert.AreEqual(ParamNames.fooVariaObject, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
@@ -377,7 +377,7 @@ public class MeasurableTests
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-        Assert.AreEqual(ParamNames.factory, ex.ParamName);
+        Assert.AreEqual(ParamNames.fooVariaObject, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]

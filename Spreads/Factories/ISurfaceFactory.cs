@@ -1,5 +1,5 @@
 ﻿namespace CsabaDu.FooVaria.Spreads.Factories;
 
-public interface ISurfaceFactory : ISpreadFactory<ISurface, IArea>
+public interface ISurfaceFactory : ISpreadFactory<ISurface, IArea>, ISpreadFactory
 {
 }

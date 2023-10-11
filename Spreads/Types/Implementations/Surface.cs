@@ -55,9 +55,4 @@ internal sealed class Surface : Spread<IArea, AreaUnit>, ISurface
     {
         return GetSpread(length, width);
     }
-
-    public override void Validate(IFactory? factory)
-    {
-        Validate(this, factory);
-    }
 }

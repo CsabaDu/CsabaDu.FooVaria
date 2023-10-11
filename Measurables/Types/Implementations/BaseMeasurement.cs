@@ -210,15 +210,15 @@ internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
         return (IBaseMeasurementFactory)Factory;
     }
 
-    public override void Validate(ICommonBase? other)
-    {
-        Validate(this, other);
-    }
+    //public override void Validate(ICommonBase? other)
+    //{
+    //    Validate(this, other);
+    //}
 
-    public override void Validate(IFactory? factory)
-    {
-        Validate(this, factory);
-    }
+    //public override void Validate(IFactory? factory)
+    //{
+    //    Validate(this, factory);
+    //}
     #endregion
 
     #region Static methods

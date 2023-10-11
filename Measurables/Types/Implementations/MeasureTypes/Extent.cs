@@ -59,9 +59,9 @@ internal sealed class Extent : Measure, IExtent
         return GetMeasure(this, quantity);
     }
 
-    public override void Validate(ICommonBase? other)
-    {
-        Validate(this, other);
-    }
+    //public override void Validate(ICommonBase? other)
+    //{
+    //    Validate(this, other);
+    //}
     #endregion
 }

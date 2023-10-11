@@ -34,15 +34,15 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
             return GetMeasureUnitTypeCodes().Contains(measureUnitTypeCode);
         }
 
-        public override void Validate(ICommonBase? other)
-        {
-            Validate(this, other);
-        }
+        //public override void Validate(ICommonBase? other)
+        //{
+        //    Validate(this, other);
+        //}
 
-        public override void Validate(IFactory? factory)
-        {
-            Validate(this, factory);
-        }
+        //public override void Validate(IFactory? factory)
+        //{
+        //    Validate(this, factory);
+        //}
 
         public override void ValidateMeasureUnit(Enum measureUnit)
         {
@@ -203,10 +203,10 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
             throw InvalidMeasureUnitEnumArgumentException(measureUnit);
         }
 
-        public sealed override void Validate(ICommonBase? other)
-        {
-            Validate(this, other);
-        }
+        //public sealed override void Validate(ICommonBase? other)
+        //{
+        //    Validate(this, other);
+        //}
         #endregion
         #endregion
 

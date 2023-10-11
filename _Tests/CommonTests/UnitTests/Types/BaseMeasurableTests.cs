@@ -1,4 +1,5 @@
 using CsabaDu.FooVaria.Common.Types;
+using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Factories;
 
 namespace CsabaDu.FooVaria.Tests.CommonTests.UnitTests.Types;
 
@@ -449,7 +450,7 @@ public class BaseMeasurableTests
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-        Assert.AreEqual(ParamNames.other, ex.ParamName);
+        Assert.AreEqual(ParamNames.fooVariaObject, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
