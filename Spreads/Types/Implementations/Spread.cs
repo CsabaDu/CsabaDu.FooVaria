@@ -1,11 +1,10 @@
 ﻿using CsabaDu.FooVaria.Common.Types.Implementations;
-using CsabaDu.FooVaria.Spreads.Factories;
 using CsabaDu.FooVaria.Spreads.Statics;
 using System.Diagnostics.CodeAnalysis;
 
 namespace CsabaDu.FooVaria.Spreads.Types.Implementations
 {
-    internal abstract class Spread : BaseMeasurable, ISpread
+    internal abstract class Spread : BaseSpread, ISpread
     {
         #region Constructors
         protected Spread(ISpread other) : base(other)
@@ -24,9 +23,9 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         }
 
         #region Override methods
-        public override ISpreadFactory GetFactory()
+        public override IBaseSpreadFactory GetFactory()
         {
-            return (ISpreadFactory)Factory;
+            return (IBaseSpreadFactory)Factory;
         }
 
         public override bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
@@ -70,9 +69,7 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
 
         #region Abstract methods
         public abstract ISpread GetSpread(ISpreadMeasure spreadMeasure);
-        public abstract ISpread GetSpread(ISpread other);
         public abstract ISpread GetSpread(params IExtent[] shapeExtents);
-        public abstract ISpreadMeasure GetSpreadMeasure();
         #endregion
         #endregion
     }

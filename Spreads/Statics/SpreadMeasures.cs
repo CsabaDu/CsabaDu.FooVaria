@@ -1,5 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Statics;
-using CsabaDu.FooVaria.Measurables.Factories;
+﻿using CsabaDu.FooVaria.Measurables.Factories;
 
 namespace CsabaDu.FooVaria.Spreads.Statics;
 
@@ -35,12 +34,12 @@ public static class SpreadMeasures
 
     public static IVolume GetVolume(IMeasureFactory factory, params IExtent[] shapeExtents)
     {
-        ValidateShapeExtents(MeasureUnitTypeCode.AreaUnit, shapeExtents);
+        ValidateShapeExtents(MeasureUnitTypeCode.VolumeUnit, shapeExtents);
 
         return shapeExtents.Length switch
         {
             2 => GetCylinderVolume(factory, shapeExtents[0], shapeExtents[1]),
-            3 => GetCubicVolume(factory, shapeExtents[0], shapeExtents[1], shapeExtents[2]),
+            3 => GetCuboidVolume(factory, shapeExtents[0], shapeExtents[1], shapeExtents[2]),
 
             _ => throw new InvalidOperationException(null),
         };
@@ -72,10 +71,18 @@ public static class SpreadMeasures
                 break;
 
             default:
-                throw new InvalidOperationException(null);
+                throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode);
         }
 
-        if (shapeExtents!.Any(x => x.DefaultQuantity <= 0)) throw new ArgumentOutOfRangeException(name);
+        foreach (IExtent item in shapeExtents!)
+        {
+            decimal quantity = item.GetDecimalQuantity();
+
+            if (item.DefaultQuantity <= 0)
+            {
+                throw new ArgumentOutOfRangeException(name, quantity, null);
+            }
+        }
 
         #region Local methods
         void validateShapeExtentsCount(int minValue, int maxValue)
@@ -106,7 +113,7 @@ public static class SpreadMeasures
         return GetVolume(factory, quantity, height);
     }
 
-    public static IVolume GetCubicVolume(IMeasureFactory factory, IExtent length, IExtent width, IExtent height)
+    public static IVolume GetCuboidVolume(IMeasureFactory factory, IExtent length, IExtent width, IExtent height)
     {
         _ = NullChecked(factory, nameof(factory));
 
