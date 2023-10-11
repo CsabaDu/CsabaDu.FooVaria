@@ -6,10 +6,14 @@ namespace CsabaDu.FooVaria.Spreads.Factories.Implementations;
 
 public sealed class BulkSurfaceFactory : SpreadFactory<IBulkSurface, IArea>, IBulkSurfaceFactory
 {
+    #region Constructors
     public BulkSurfaceFactory(IMeasureFactory measureFactory) : base(measureFactory)
     {
     }
+    #endregion
 
+    #region Public methods
+    #region Override methods
     public override IBulkSurface Create(IArea area)
     {
         return new BulkSurface(this, area);
@@ -26,5 +30,7 @@ public sealed class BulkSurfaceFactory : SpreadFactory<IBulkSurface, IArea>, IBu
 
         return Create(area);
     }
+    #endregion
+    #endregion
 }
 

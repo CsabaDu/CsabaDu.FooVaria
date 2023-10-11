@@ -2,12 +2,22 @@
 
 internal sealed class BulkBody : Spread<IVolume, VolumeUnit>, IBulkBody
 {
+    #region Constructors
     public BulkBody(IBulkBody other) : base(other)
     {
     }
 
     public BulkBody(IBulkBodyFactory factory, IVolume volume) : base(factory, volume)
     {
+    }
+    #endregion
+
+    #region Public methods
+    public IBody GetBaseSpread(IBaseSpread other)
+    {
+        if (NullChecked(other, nameof(other)) is IBody body) return GetSpread(body.GetSpreadMeasure());
+
+        throw ArgumentTypeOutOfRangeException(nameof(other), other);
     }
 
     public IBulkBody GetBulkBody(IExtent radius, IExtent height)
@@ -20,6 +30,7 @@ internal sealed class BulkBody : Spread<IVolume, VolumeUnit>, IBulkBody
         return GetSpread(length, width, height);
     }
 
+    #region Override methods
     public override IBulkBodyFactory GetFactory()
     {
         return (IBulkBodyFactory)Factory;
@@ -42,15 +53,10 @@ internal sealed class BulkBody : Spread<IVolume, VolumeUnit>, IBulkBody
         throw ArgumentTypeOutOfRangeException(nameof(spreadMeasure), spreadMeasure);
     }
 
-    public IBody GetBaseSpread(IBaseSpread other)
-    {
-        if (NullChecked(other, nameof(other)) is IBody body) return GetSpread(body.GetSpreadMeasure());
-
-        throw ArgumentTypeOutOfRangeException(nameof(other), other);
-    }
-
     public override IBulkBody GetSpread(params IExtent[] shapeExtents)
     {
         return GetFactory().Create(shapeExtents);
     }
+    #endregion
+    #endregion
 }

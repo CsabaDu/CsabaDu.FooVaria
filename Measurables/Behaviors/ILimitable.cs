@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Markers;
+﻿namespace CsabaDu.FooVaria.Measurables.Behaviors;
 
 public interface ILimitable : IFit<IBaseMeasure>
 {
