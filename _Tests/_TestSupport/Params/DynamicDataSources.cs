@@ -1,4 +1,5 @@
-﻿using CsabaDu.FooVaria.Common.Behaviors;
+﻿using CsabaDu.FooVaria.Common;
+using CsabaDu.FooVaria.Common.Behaviors;
 using CsabaDu.FooVaria.Common.Enums;
 using CsabaDu.FooVaria.Measurables.Types.Implementations;
 
@@ -16,6 +17,37 @@ internal class DynamicDataSources
     {
         public abstract object[] ToObjectArray();
     }
+    #endregion
+
+    #region IFooVariaObject
+    protected class IFooVariaObject_arg : ObjectArray
+    {
+        internal IFooVariaObject FooVariaObject { get; init; }
+
+        public override object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                FooVariaObject,
+            };
+        }
+    }
+
+    #region IFooVariaObject, string
+    protected class IFooVariaObject_string_args : IFooVariaObject_arg
+    {
+        internal string Name { get; init; }
+
+        public override object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                FooVariaObject,
+                Name,
+            };
+        }
+    }
+    #endregion
     #endregion
 
     #region bool

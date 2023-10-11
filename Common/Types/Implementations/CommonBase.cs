@@ -30,10 +30,30 @@ public abstract class CommonBase : ICommonBase
     #region Public methods
     #region Abstract methods
     public abstract IFactory GetFactory();
+    #endregion
 
+    #region Virtual methods
     public virtual void Validate(IFooVariaObject? fooVariaObject)
     {
-        Validate(this, fooVariaObject);
+        validate(this, fooVariaObject);
+
+        #region Local methods
+        static void validate<T>(T commonBase, IFooVariaObject? fooVariaObject) where T : class, ICommonBase
+        {
+            if (fooVariaObject is IFactory factory)
+            {
+                Validate(commonBase, factory);
+            }
+            else if (fooVariaObject is ICommonBase other)
+            {
+                Validate(commonBase, other, out T validArg);
+            }
+            else
+            {
+                throw new InvalidOperationException(null!);
+            }
+        }
+        #endregion
     }
     #endregion
     #endregion
@@ -60,26 +80,6 @@ public abstract class CommonBase : ICommonBase
 
         throw ArgumentTypeOutOfRangeException(nameof(factory), factory!);
 
-    }
-    #endregion
-    #endregion
-
-    #region Private methods
-    #region Static methods
-    private static void Validate<T>(T commonBase, IFooVariaObject? fooVariaObject) where T : class, ICommonBase
-    {
-        if (fooVariaObject is IFactory factory)
-        {
-            Validate(commonBase, factory);
-        }
-        else if (fooVariaObject is ICommonBase other)
-        {
-            Validate(commonBase, other, out T validArg);
-        }
-        else
-        {
-            throw new InvalidOperationException(null!);
-        }
     }
     #endregion
     #endregion

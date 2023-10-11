@@ -5,7 +5,6 @@ namespace CsabaDu.FooVaria.Spreads.Types
     public interface ISpread : IBaseSpread, IShapeExtents, ISpreadMeasure
     {
         ISpread GetSpread(ISpreadMeasure spreadMeasure);
-        //ISpread GetSpread(ISpread other);
         ISpread GetSpread(params IExtent[] shapeExtents);
     }
 

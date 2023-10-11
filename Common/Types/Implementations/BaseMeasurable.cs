@@ -90,7 +90,38 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
 
     public override void Validate(IFooVariaObject? fooVariaObject)
     {
-        Validate(this, fooVariaObject);
+        validate(this, fooVariaObject);
+
+        #region Local methods
+        static void validate<T>(T baseMeasurable, IFooVariaObject? fooVariaObject) where T : class, IBaseMeasurable
+        {
+            _ = NullChecked(fooVariaObject, nameof(fooVariaObject));
+
+            if (fooVariaObject is IFactory factory)
+            {
+                CommonBase.Validate(baseMeasurable, factory);
+            }
+            else if (fooVariaObject is ICommonBase other)
+            {
+                validateCommonBase(baseMeasurable, other);
+            }
+            else
+            {
+                throw new InvalidOperationException(null);
+            }
+        }
+
+        static void validateCommonBase<T>(T baseMeasurable, ICommonBase other) where T : class, IBaseMeasurable
+        {
+            CommonBase.Validate(baseMeasurable, other, out T otherBaseMeasurable);
+
+            MeasureUnitTypeCode measureUnitTypeCode = otherBaseMeasurable.MeasureUnitTypeCode;
+
+            if (measureUnitTypeCode == baseMeasurable.MeasureUnitTypeCode) return;
+
+            throw new ArgumentOutOfRangeException(nameof(other), measureUnitTypeCode, null);
+        }
+        #endregion
     }
     #endregion
 
@@ -110,41 +141,6 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
     public abstract Enum GetMeasureUnit();
     public abstract IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes();
     public abstract bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode);
-    #endregion
-    #endregion
-
-    #region Private methods
-    #region Static methods
-    private static void Validate<T>(T baseMeasurable, IFooVariaObject? fooVariaObject) where T : class, IBaseMeasurable
-    {
-        _ = NullChecked(fooVariaObject, nameof(fooVariaObject));
-
-        if (fooVariaObject is IFactory factory)
-        {
-            CommonBase.Validate(baseMeasurable, factory);
-        }
-        else if (fooVariaObject is ICommonBase other)
-        {
-            validate(other);
-        }
-        else
-        {
-            throw new InvalidOperationException(null);
-        }
-
-        #region Local methods
-        void validate(ICommonBase other)
-        {
-            Validate(baseMeasurable, other, out T otherBaseMeasurable);
-
-            MeasureUnitTypeCode measureUnitTypeCode = otherBaseMeasurable.MeasureUnitTypeCode;
-
-            if (measureUnitTypeCode == baseMeasurable.MeasureUnitTypeCode) return;
-
-            throw new ArgumentOutOfRangeException(nameof(other), measureUnitTypeCode, null);
-        }
-        #endregion
-    }
     #endregion
     #endregion
 }

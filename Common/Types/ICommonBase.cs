@@ -7,8 +7,5 @@ public interface ICommonBase : IFooVariaObject
     IFactory GetFactory();
 
     void Validate(IFooVariaObject? fooVariaObject);
-
-    //void Validate(ICommonBase? other);
-    //void Validate(IFactory? factory);
 }
 

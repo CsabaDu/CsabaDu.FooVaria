@@ -1,4 +1,5 @@
-﻿using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Factories;
+﻿using CsabaDu.FooVaria.Common;
+using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Factories;
 
 namespace CsabaDu.FooVaria.Tests.CommonTests.UnitTests.Types;
 
@@ -6,8 +7,9 @@ namespace CsabaDu.FooVaria.Tests.CommonTests.UnitTests.Types;
 public class CommonBaseTests
 {
     #region Private fields
-    private IFactory factory;
     private ICommonBase commonBase;
+    private IFactory factory;
+    private IFooVariaObject fooVariaObject;
     #endregion
 
     #region Test methods
@@ -35,6 +37,53 @@ public class CommonBaseTests
 
         // Act
         var actual = new CommonBaseChild(factory);
+
+        // Assert
+        Assert.IsInstanceOfType(actual, typeof(ICommonBase));
+        Assert.IsNotNull(actual.Factory);
+    }
+    #endregion
+
+    #region CommonBase(IFactory, ICommonBase)
+    [TestMethod, TestCategory("UnitTest")]
+    public void CommonBase_nullArg_IFactory_arg_ICommonBase_throws_ArgumentNullException()
+    {
+        // Arrange
+        factory = null;
+        commonBase = null;
+
+        // Act
+        void attempt() => _ = new CommonBaseChild(factory, commonBase);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(() => attempt());
+        Assert.AreEqual(ParamNames.factory, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void CommonBase_validArg_IFactory_nullArg_ICommonBase_throws_ArgumentNullException()
+    {
+        // Arrange
+        factory = new FactoryImplementation();
+        commonBase = null;
+
+        // Act
+        void attempt() => _ = new CommonBaseChild(factory, commonBase);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(() => attempt());
+        Assert.AreEqual(ParamNames.commonBase, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void CommonBase_validArgs_IFactory_ICommonBase_createsInstance()
+    {
+        // Arrange
+        factory = new FactoryImplementation();
+        commonBase = new CommonBaseChild(factory);
+
+        // Act
+        var actual = new CommonBaseChild(factory, commonBase);
 
         // Assert
         Assert.IsInstanceOfType(actual, typeof(ICommonBase));
@@ -71,6 +120,12 @@ public class CommonBaseTests
         Assert.IsInstanceOfType(actual, typeof(ICommonBase));
         Assert.IsNotNull(actual.Factory);
     }
+    #endregion
+    #endregion
+
+    #region Validate
+    #region Validate(IFooVariaObject?)
+
     #endregion
     #endregion
     #endregion
