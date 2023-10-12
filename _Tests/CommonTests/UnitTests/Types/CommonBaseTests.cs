@@ -1,4 +1,4 @@
-﻿using CsabaDu.FooVaria.Common;
+﻿using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common;
 using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Factories;
 
 namespace CsabaDu.FooVaria.Tests.CommonTests.UnitTests.Types;
@@ -6,6 +6,15 @@ namespace CsabaDu.FooVaria.Tests.CommonTests.UnitTests.Types;
 [TestClass, TestCategory("UnitTest")]
 public class CommonBaseTests
 {
+    #region Initialize
+    [TestInitialize]
+    public void InitializeBaseMeasurableTests()
+    {
+        factory = new FactoryImplementation();
+        commonBase = new CommonBaseChild(factory);
+    }
+    #endregion
+
     #region Private fields
     private ICommonBase commonBase;
     private IFactory factory;
@@ -125,7 +134,32 @@ public class CommonBaseTests
 
     #region Validate
     #region Validate(IFooVariaObject?)
+    [TestMethod, TestCategory("UnitTest")]
+    public void Validate_nullArg_IFooVariaObject_throws_ArgumentNullException()
+    {
+        // Arrange
+        fooVariaObject = null;
 
+        // Act
+        void attempt() => commonBase.Validate(fooVariaObject);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
+        Assert.AreEqual(ParamNames.fooVariaObject, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void Validate_invalidArg_IFooVariaObject_throws_InvalidOperationException()
+    {
+        // Arrange
+        fooVariaObject = new FooVariaObjectImplementation();
+
+        // Act
+        void attempt() => commonBase.Validate(fooVariaObject);
+
+        // Assert
+        _ = Assert.ThrowsException<InvalidOperationException>(attempt);
+    }
     #endregion
     #endregion
     #endregion

@@ -1,9 +1,4 @@
-﻿using CsabaDu.FooVaria.Common;
-using CsabaDu.FooVaria.Common.Behaviors;
-using CsabaDu.FooVaria.Common.Enums;
-using CsabaDu.FooVaria.Measurables.Types.Implementations;
-
-namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
+﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
 
 internal class DynamicDataSources
 {

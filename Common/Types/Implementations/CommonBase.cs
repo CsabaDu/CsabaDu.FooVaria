@@ -40,6 +40,8 @@ public abstract class CommonBase : ICommonBase
         #region Local methods
         static void validate<T>(T commonBase, IFooVariaObject? fooVariaObject) where T : class, ICommonBase
         {
+            _ = NullChecked(fooVariaObject, nameof(fooVariaObject));
+
             if (fooVariaObject is IFactory factory)
             {
                 Validate(commonBase, factory);

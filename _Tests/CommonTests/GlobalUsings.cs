@@ -1,3 +1,4 @@
+global using CsabaDu.FooVaria.Common;
 global using CsabaDu.FooVaria.Common.Enums;
 global using CsabaDu.FooVaria.Common.Factories;
 global using CsabaDu.FooVaria.Common.Types;
