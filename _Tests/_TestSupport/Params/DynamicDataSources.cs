@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
+﻿using CsabaDu.FooVaria.Common;
+using CsabaDu.FooVaria.Common.Enums;
+
+namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
 
 internal class DynamicDataSources
 {
@@ -653,6 +656,27 @@ internal class DynamicDataSources
             .ToObjectArray();
         }
         #endregion
+    }
+
+    internal IEnumerable<object[]> GetCommonBaseValidateArgArrayList()
+    {
+        IFooVariaObject fooVariaObject = new FactoryImplementation();
+        yield return toObjectArray();
+
+        fooVariaObject = new CommonBaseChild((IFactory)fooVariaObject);
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            return new IFooVariaObject_arg
+            {
+                FooVariaObject = fooVariaObject,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+
     }
 
     #endregion

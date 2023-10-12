@@ -7,6 +7,12 @@ namespace CsabaDu.FooVaria.Tests.CommonTests.UnitTests.Types;
 public class CommonBaseTests
 {
     #region Initialize
+    [ClassInitialize]
+    public static void InitializeBaseMeasurableTestsClass(TestContext context)
+    {
+        DynamicDataSources = new();
+    }
+
     [TestInitialize]
     public void InitializeBaseMeasurableTests()
     {
@@ -19,6 +25,10 @@ public class CommonBaseTests
     private ICommonBase commonBase;
     private IFactory factory;
     private IFooVariaObject fooVariaObject;
+
+    #region Static fields
+    private static DynamicDataSources DynamicDataSources;
+    #endregion
     #endregion
 
     #region Test methods
@@ -132,6 +142,21 @@ public class CommonBaseTests
     #endregion
     #endregion
 
+    #region GetFactory
+    #region GetFactory()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetFactory_returns_expected()
+    {
+        // Arrange
+        // Act
+        var actual = commonBase.GetFactory();
+
+        // Assert
+        Assert.AreEqual(factory, actual);
+    }
+    #endregion
+    #endregion
+
     #region Validate
     #region Validate(IFooVariaObject?)
     [TestMethod, TestCategory("UnitTest")]
@@ -160,7 +185,36 @@ public class CommonBaseTests
         // Assert
         _ = Assert.ThrowsException<InvalidOperationException>(attempt);
     }
+
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetCommonBaseValidateArgArrayList), DynamicDataSourceType.Method)]
+    public void Validate_validArg_IFooVariaObject_returns(IFooVariaObject fooVariaObject)
+    {
+        // Arrange
+        bool returned;
+
+        // Act
+        try
+        {
+            commonBase.Validate(fooVariaObject);
+            returned = true;
+        }
+        catch
+        {
+            returned = false;
+        }
+
+        // Assert
+        Assert.IsTrue(returned);
+    }
     #endregion
     #endregion
+    #endregion
+
+    #region ArrayList methods
+    private static IEnumerable<object[]> GetCommonBaseValidateArgArrayList()
+    {
+        return DynamicDataSources.GetCommonBaseValidateArgArrayList();
+    }
     #endregion
 }

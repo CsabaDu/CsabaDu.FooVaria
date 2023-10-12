@@ -13,9 +13,4 @@ internal sealed class CommonBaseChild : CommonBase
     public CommonBaseChild(IFactory factory, ICommonBase commonBase) : base(factory, commonBase)
     {
     }
-
-    public override IFactory GetFactory()
-    {
-        throw new NotImplementedException();
-    }
 }

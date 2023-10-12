@@ -63,9 +63,9 @@ internal sealed class TimePeriod : Measure, ITimePeriod
         return GetMeasure(this, quantity);
     }
 
-    //public override void Validate(ICommonBase? other)
+    //public override void ValidateCommonBase(ICommonBase? other)
     //{
-    //    Validate(this, other);
+    //    ValidateCommonBase(this, other);
     //}
     #endregion
 }

@@ -301,16 +301,6 @@ internal sealed class Measurement : BaseMeasurement, IMeasurement
     {
         return (Enum)MeasureUnit;
     }
-
-    //public override void Validate(ICommonBase? other)
-    //{
-    //    Validate(this, other);
-    //}
-
-    //public override void Validate(IFactory? factory)
-    //{
-    //    Validate(this, factory);
-    //}
     #endregion
     #endregion
 

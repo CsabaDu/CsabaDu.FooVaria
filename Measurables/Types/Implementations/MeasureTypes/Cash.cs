@@ -59,9 +59,9 @@ internal sealed class Cash : Measure, ICash
         return GetMeasure(this, quantity, customName, exchangeRate);
     }
 
-    //public override void Validate(ICommonBase? other)
+    //public override void ValidateCommonBase(ICommonBase? other)
     //{
-    //    Validate(this, other);
+    //    ValidateCommonBase(this, other);
     //}
     #endregion
 }

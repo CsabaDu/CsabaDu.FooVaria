@@ -99,27 +99,16 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
 
             if (fooVariaObject is IFactory factory)
             {
-                CommonBase.Validate(baseMeasurable, factory);
+                CommonBase.ValidateFactory(baseMeasurable, factory);
             }
             else if (fooVariaObject is ICommonBase other)
             {
-                validateCommonBase(baseMeasurable, other);
+                BaseMeasurable.ValidateCommonBase(baseMeasurable, other);
             }
             else
             {
                 throw new InvalidOperationException(null);
             }
-        }
-
-        static void validateCommonBase<T>(T baseMeasurable, ICommonBase other) where T : class, IBaseMeasurable
-        {
-            CommonBase.Validate(baseMeasurable, other, out T otherBaseMeasurable);
-
-            MeasureUnitTypeCode measureUnitTypeCode = otherBaseMeasurable.MeasureUnitTypeCode;
-
-            if (measureUnitTypeCode == baseMeasurable.MeasureUnitTypeCode) return;
-
-            throw new ArgumentOutOfRangeException(nameof(other), measureUnitTypeCode, null);
         }
         #endregion
     }
@@ -143,4 +132,13 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
     public abstract bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode);
     #endregion
     #endregion
+
+    protected static void ValidateCommonBase<T>(T baseMeasurable, ICommonBase other) where T : class, IBaseMeasurable
+    {
+        MeasureUnitTypeCode measureUnitTypeCode = GetValidCommonBase(baseMeasurable, other).MeasureUnitTypeCode;
+
+        if (measureUnitTypeCode == baseMeasurable.MeasureUnitTypeCode) return;
+
+        throw new ArgumentOutOfRangeException(nameof(other), measureUnitTypeCode, null);
+    }
 }

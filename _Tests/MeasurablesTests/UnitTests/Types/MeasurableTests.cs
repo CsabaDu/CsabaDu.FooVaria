@@ -343,7 +343,7 @@ public class MeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void Validate_validArg_ICommonBase_returns_()
+    public void Validate_validArg_ICommonBase_returns()
     {
         // Arrange
         IMeasurable other = new MeasurableChild(factory, measureUnitTypeCode);
@@ -381,7 +381,7 @@ public class MeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void Validate_validArg_IFactory_returns_()
+    public void Validate_validArg_IFactory_returns()
     {
         // Arrange
         bool returned;
@@ -435,7 +435,7 @@ public class MeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void ValidateMeasureUnit_validArg_Enum_returns_()
+    public void ValidateMeasureUnit_validArg_Enum_returns()
     {
         // Arrange
         measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
@@ -476,7 +476,7 @@ public class MeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void ValidateMeasureUnitTypeCode_validArg_MeasureUnitTypeCode_returns_()
+    public void ValidateMeasureUnitTypeCode_validArg_MeasureUnitTypeCode_returns()
     {
         // Arrange
         measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();

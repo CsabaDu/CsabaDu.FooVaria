@@ -141,16 +141,6 @@ internal sealed class Limit : BaseMeasure, ILimit
         return (ILimit)GetFactory().Create(other);
     }
 
-    //public override void Validate(ICommonBase? other)
-    //{
-    //    Validate(this, other);
-    //}
-
-    //public override void Validate(IFactory? factory)
-    //{
-    //    Validate(this, factory);
-    //}
-
     public override void ValidateQuantity(ValueType? quantity)
     {
         _ = GetValidQuantity(quantity);

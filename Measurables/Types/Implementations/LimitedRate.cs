@@ -128,16 +128,6 @@ internal sealed class LimitedRate : Rate, ILimitedRate
     {
         return GetLimitedRate(numerator, denominator, limit ?? GetFactory().CreateLimit(denominator));
     }
-
-    //public override void Validate(ICommonBase? other)
-    //{
-    //    Validate(this, other);
-    //}
-
-    //public override void Validate(IFactory? factory)
-    //{
-    //    Validate(this, factory);
-    //}
     #endregion
     #endregion
 }

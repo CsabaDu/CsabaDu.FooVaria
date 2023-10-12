@@ -59,9 +59,9 @@ internal sealed class Distance : Measure, IDistance
         return GetMeasure(this, quantity);
     }
 
-    //public override void Validate(ICommonBase? other)
+    //public override void ValidateCommonBase(ICommonBase? other)
     //{
-    //    Validate(this, other);
+    //    ValidateCommonBase(this, other);
     //}
     #endregion
 }

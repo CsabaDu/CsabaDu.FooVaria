@@ -1,4 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using CsabaDu.FooVaria.Common.Factories;
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 
 namespace CsabaDu.FooVaria.Common.Types.Implementations;
 
@@ -28,11 +30,12 @@ public abstract class CommonBase : ICommonBase
     #endregion
 
     #region Public methods
-    #region Abstract methods
-    public abstract IFactory GetFactory();
-    #endregion
-
     #region Virtual methods
+    public virtual IFactory GetFactory()
+    {
+        return Factory;
+    }
+
     public virtual void Validate(IFooVariaObject? fooVariaObject)
     {
         validate(this, fooVariaObject);
@@ -44,11 +47,11 @@ public abstract class CommonBase : ICommonBase
 
             if (fooVariaObject is IFactory factory)
             {
-                Validate(commonBase, factory);
+                ValidateFactory(commonBase, factory);
             }
             else if (fooVariaObject is ICommonBase other)
             {
-                Validate(commonBase, other, out T validArg);
+                _ = GetValidCommonBase(commonBase, other);
             }
             else
             {
@@ -62,26 +65,22 @@ public abstract class CommonBase : ICommonBase
 
     #region Protected methods
     #region Static methods
-    protected static void Validate<T>(T commonBase, ICommonBase? other, [NotNull] out T validArg) where T : class, ICommonBase
+    protected static T GetValidCommonBase<T>(T commonBase, ICommonBase? other) where T : class, ICommonBase
     {
-        if (NullChecked(other, nameof(other)).GetType() == commonBase.GetType())
-        {
-            validArg = (T)other!;
+        string name = nameof(other);
 
-            return;
-        }
+        if (NullChecked(other, name).GetType() == commonBase.GetType()) return (T)other!;
 
-        throw ArgumentTypeOutOfRangeException(nameof(other), other!);
+        throw ArgumentTypeOutOfRangeException(name, other!);
     }
 
-    protected static void Validate<T>(T commonBase, IFactory? factory) where T : class, ICommonBase // TEST!!!
+    protected static void ValidateFactory<T>(T commonBase, IFactory? factory) where T : class, ICommonBase // TEST!!!
     {
         string name = nameof(factory);
 
         if (NullChecked(factory, name).GetType() == commonBase.GetFactory().GetType()) return;
 
-        throw ArgumentTypeOutOfRangeException(nameof(factory), factory!);
-
+        throw ArgumentTypeOutOfRangeException(name, factory!);
     }
     #endregion
     #endregion
