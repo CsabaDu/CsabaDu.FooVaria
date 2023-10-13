@@ -93,17 +93,17 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
         validate(this, fooVariaObject);
 
         #region Local methods
-        static void validate<T>(T baseMeasurable, IFooVariaObject? fooVariaObject) where T : class, IBaseMeasurable
+        void validate<T>(T baseMeasurable, IFooVariaObject? fooVariaObject) where T : class, IBaseMeasurable
         {
             _ = NullChecked(fooVariaObject, nameof(fooVariaObject));
 
             if (fooVariaObject is IFactory factory)
             {
-                CommonBase.ValidateFactory(baseMeasurable, factory);
+                base.Validate(factory);
             }
             else if (fooVariaObject is ICommonBase other)
             {
-                BaseMeasurable.ValidateCommonBase(baseMeasurable, other);
+                _ = GetValidBaseMeasurable(baseMeasurable, other);
             }
             else
             {
@@ -133,12 +133,18 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
     #endregion
     #endregion
 
-    protected static void ValidateCommonBase<T>(T baseMeasurable, ICommonBase other) where T : class, IBaseMeasurable
+    #region Protected methods
+    #region Static methods
+    protected static T GetValidBaseMeasurable<T>(T commonBase, ICommonBase other) where T : class, IBaseMeasurable
     {
-        MeasureUnitTypeCode measureUnitTypeCode = GetValidCommonBase(baseMeasurable, other).MeasureUnitTypeCode;
+        T baseMeasurable = GetValidCommonBase(commonBase, other);
 
-        if (measureUnitTypeCode == baseMeasurable.MeasureUnitTypeCode) return;
+        MeasureUnitTypeCode measureUnitTypeCode = baseMeasurable.MeasureUnitTypeCode;
+
+        if (commonBase.HasMeasureUnitTypeCode(measureUnitTypeCode)) return baseMeasurable;
 
         throw new ArgumentOutOfRangeException(nameof(other), measureUnitTypeCode, null);
     }
+    #endregion
+    #endregion
 }

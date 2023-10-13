@@ -64,9 +64,13 @@ internal sealed class Volume : Measure, IVolume
         return this;
     }
 
-    //public override void ValidateCommonBase(ICommonBase? other)
+    //public override void GetValidBaseMeasurable(ICommonBase? other)
     //{
-    //    ValidateCommonBase(this, other);
+    //    GetValidBaseMeasurable(this, other);
     //}
     #endregion
 }
+
+
+
+

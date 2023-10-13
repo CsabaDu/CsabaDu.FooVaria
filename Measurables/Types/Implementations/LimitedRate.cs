@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿using CsabaDu.FooVaria.Common;
+
+namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal sealed class LimitedRate : Rate, ILimitedRate
 {
@@ -127,6 +129,46 @@ internal sealed class LimitedRate : Rate, ILimitedRate
     public override IRate GetRate(IMeasure numerator, IDenominator denominator, ILimit? limit)
     {
         return GetLimitedRate(numerator, denominator, limit ?? GetFactory().CreateLimit(denominator));
+    }
+
+    public override void Validate(IFooVariaObject? fooVariaObject)
+    {
+        validate(this, fooVariaObject);
+
+        #region Local methods
+        void validate<T>(T rate, IFooVariaObject? fooVariaObject) where T : class, ILimitedRate
+        {
+            _ = NullChecked(fooVariaObject, nameof(fooVariaObject));
+
+            if (fooVariaObject is IFactory factory)
+            {
+                base.Validate(factory);
+            }
+            else if (fooVariaObject is ICommonBase other)
+            {
+                _ = GetValidLimitedRate(rate, other);
+            }
+            else
+            {
+                throw new InvalidOperationException(null);
+            }
+        }
+        #endregion
+    }
+    #endregion
+    #endregion
+
+    #region Protected methods
+    #region Static methods
+    private static T GetValidLimitedRate<T>(T commonBase, ICommonBase other) where T : class, ILimitedRate
+    {
+        T limitedRate = GetValidRate(commonBase, other);
+
+        MeasureUnitTypeCode measureUnitTypeCode = limitedRate.Limit.MeasureUnitTypeCode;
+
+        if (commonBase.Limit.HasMeasureUnitTypeCode(measureUnitTypeCode)) return limitedRate;
+
+        throw new ArgumentOutOfRangeException(nameof(other), measureUnitTypeCode, null);
     }
     #endregion
     #endregion

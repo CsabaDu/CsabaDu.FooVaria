@@ -41,7 +41,7 @@ public abstract class CommonBase : ICommonBase
         validate(this, fooVariaObject);
 
         #region Local methods
-        static void validate<T>(T commonBase, IFooVariaObject? fooVariaObject) where T : class, ICommonBase
+        void validate<T>(T commonBase, IFooVariaObject? fooVariaObject) where T : class, ICommonBase
         {
             _ = NullChecked(fooVariaObject, nameof(fooVariaObject));
 
@@ -74,11 +74,11 @@ public abstract class CommonBase : ICommonBase
         throw ArgumentTypeOutOfRangeException(name, other!);
     }
 
-    protected static void ValidateFactory<T>(T commonBase, IFactory? factory) where T : class, ICommonBase // TEST!!!
+    private static void ValidateFactory<T>(T commonBase, IFactory? factory) where T : class, ICommonBase
     {
         string name = nameof(factory);
 
-        if (NullChecked(factory, name).GetType() == commonBase.GetFactory().GetType()) return;
+        if (NullChecked(factory, name).GetType() == commonBase.Factory.GetType()) return;
 
         throw ArgumentTypeOutOfRangeException(name, factory!);
     }

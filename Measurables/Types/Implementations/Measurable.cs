@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿using CsabaDu.FooVaria.Common;
+
+namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal abstract class Measurable : BaseMeasurable, IMeasurable
 {

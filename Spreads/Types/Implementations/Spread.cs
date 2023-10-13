@@ -33,14 +33,14 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
             return GetMeasureUnitTypeCodes().Contains(measureUnitTypeCode);
         }
 
-        //public override void ValidateCommonBase(ICommonBase? other)
+        //public override void GetValidBaseMeasurable(ICommonBase? other)
         //{
-        //    ValidateCommonBase(this, other);
+        //    GetValidBaseMeasurable(this, other);
         //}
 
-        //public override void ValidateCommonBase(IFactory? factory)
+        //public override void GetValidBaseMeasurable(IFactory? factory)
         //{
-        //    ValidateCommonBase(this, factory);
+        //    GetValidBaseMeasurable(this, factory);
         //}
 
         public override void ValidateMeasureUnit(Enum measureUnit)
