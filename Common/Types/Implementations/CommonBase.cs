@@ -1,9 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Factories;
-using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
-using System.Security.AccessControl;
-
-namespace CsabaDu.FooVaria.Common.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Common.Types.Implementations;
 
 public abstract class CommonBase : ICommonBase
 {
@@ -43,7 +38,7 @@ public abstract class CommonBase : ICommonBase
 
     public virtual void Validate(IFooVariaObject? fooVariaObject)
     {
-        ValidateCommonBase = () => _ = GetValidCommonBase(this, (ICommonBase)fooVariaObject!);
+        ValidateCommonBase = () => _ = GetValidCommonBase(this, fooVariaObject!);
 
         Validate(this, fooVariaObject);
     }
@@ -57,7 +52,7 @@ public abstract class CommonBase : ICommonBase
 
         if (fooVariaObject is IFactory factory)
         {
-            ValidateFactory(commonBase, factory);
+            validateFactory(commonBase, factory);
         }
         else if (fooVariaObject is ICommonBase)
         {
@@ -67,6 +62,23 @@ public abstract class CommonBase : ICommonBase
         {
             throw new InvalidOperationException(null!);
         }
+
+        #region Local methods
+        static void validateFactory<T>(T commonBase, IFactory? factory) where T : class, ICommonBase
+        {
+            string name = nameof(factory);
+            Type commonBaseFactoryType = commonBase.Factory.GetType();
+            Type factoryType = NullChecked(factory, name).GetType();
+
+            foreach (Type item in factoryType.GetInterfaces())
+            {
+                if (!commonBaseFactoryType.GetInterfaces().Contains(item))
+                {
+                    throw ArgumentTypeOutOfRangeException(name, factory!);
+                }
+            }
+        }
+        #endregion
     }
 
     #region Static methods
@@ -85,21 +97,6 @@ public abstract class CommonBase : ICommonBase
         }
 
         return (T)other!;
-    }
-
-    private static void ValidateFactory<T>(T commonBase, IFactory? factory) where T : class, ICommonBase
-    {
-        string name = nameof(factory);
-        Type commonBaseFactoryType = commonBase.Factory.GetType();
-        Type factoryType = NullChecked(factory, name).GetType();
-
-        foreach (Type item in factoryType.GetInterfaces())
-        {
-            if (!commonBaseFactoryType.GetInterfaces().Contains(item))
-            {
-                throw ArgumentTypeOutOfRangeException(name, factory!);
-            }
-        }
     }
     #endregion
     #endregion
