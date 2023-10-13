@@ -262,28 +262,12 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     public override sealed void Validate(IFooVariaObject? fooVariaObject)
     {
-        validate(this, fooVariaObject);
+        ValidateCommonBase = () => validateBaseMeasure(this, fooVariaObject!);
+
+        Validate(this, fooVariaObject);
 
         #region Local methods
-        void validate<T>(T commonBase, IFooVariaObject? fooVariaObject) where T : class, IBaseMeasure
-        {
-            _ = NullChecked(fooVariaObject, nameof(fooVariaObject));
-
-            if (fooVariaObject is IFactory factory)
-            {
-                base.Validate(factory);
-            }
-            else if (fooVariaObject is ICommonBase other)
-            {
-                validateBaseMeasure(commonBase, other);
-            }
-            else
-            {
-                throw new InvalidOperationException(null);
-            }
-        }
-
-        static void validateBaseMeasure<T>(T commonBase, ICommonBase other) where T : class, IBaseMeasure
+        static void validateBaseMeasure<T>(T commonBase, IFooVariaObject other) where T : class, IBaseMeasure
         {
             T baseMeasure = GetValidBaseMeasurable(commonBase, other);
             RateComponentCode rateComponentCode = commonBase.GetRateComponentCode();

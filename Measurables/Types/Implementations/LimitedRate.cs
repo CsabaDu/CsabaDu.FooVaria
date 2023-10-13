@@ -133,28 +133,12 @@ internal sealed class LimitedRate : Rate, ILimitedRate
 
     public override void Validate(IFooVariaObject? fooVariaObject)
     {
-        validate(this, fooVariaObject);
+        ValidateCommonBase = () => validateLimitedRate(this, fooVariaObject!);
+
+        Validate(this, fooVariaObject);
 
         #region Local methods
-        void validate<T>(T commonBase, IFooVariaObject? fooVariaObject) where T : class, ILimitedRate
-        {
-            _ = NullChecked(fooVariaObject, nameof(fooVariaObject));
-
-            if (fooVariaObject is IFactory factory)
-            {
-                base.Validate(factory);
-            }
-            else if (fooVariaObject is ICommonBase other)
-            {
-                validateLimitedRate(commonBase, other);
-            }
-            else
-            {
-                throw new InvalidOperationException(null);
-            }
-        }
-
-        static void validateLimitedRate<T>(T commonBase, ICommonBase other) where T : class, ILimitedRate
+        static void validateLimitedRate<T>(T commonBase, IFooVariaObject other) where T : class, ILimitedRate
         {
             T limitedRate = GetValidRate(commonBase, other);
             MeasureUnitTypeCode measureUnitTypeCode = commonBase.Limit.MeasureUnitTypeCode;

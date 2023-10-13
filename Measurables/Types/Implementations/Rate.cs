@@ -111,27 +111,9 @@ internal abstract class Rate : Measurable, IRate
 
     public override void Validate(IFooVariaObject? fooVariaObject)
     {
-        validate(this, fooVariaObject);
+        ValidateCommonBase = () => _ = GetValidRate(this, fooVariaObject!);
 
-        #region Local methods
-        void validate<T>(T commonBase, IFooVariaObject? fooVariaObject) where T : class, IRate
-        {
-            _ = NullChecked(fooVariaObject, nameof(fooVariaObject));
-
-            if (fooVariaObject is IFactory factory)
-            {
-                base.Validate(factory);
-            }
-            else if (fooVariaObject is ICommonBase other)
-            {
-                _ = GetValidRate(commonBase, other);
-            }
-            else
-            {
-                throw new InvalidOperationException(null);
-            }
-        }
-        #endregion
+        Validate(this, fooVariaObject);
     }
 
     #region Sealed methods
@@ -174,7 +156,7 @@ internal abstract class Rate : Measurable, IRate
 
     #region Protected methods
     #region Static methods
-    protected static T GetValidRate<T>(T commonBase, ICommonBase other) where T : class, IRate
+    protected static T GetValidRate<T>(T commonBase, IFooVariaObject other) where T : class, IRate
     {
         T rate = GetValidBaseMeasurable(commonBase, other);
         MeasureUnitTypeCode measureUnitTypeCode = commonBase.Numerator.MeasureUnitTypeCode;

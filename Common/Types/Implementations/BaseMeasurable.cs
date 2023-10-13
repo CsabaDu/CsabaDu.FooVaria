@@ -91,27 +91,9 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
 
     public override void Validate(IFooVariaObject? fooVariaObject)
     {
-        validate(this, fooVariaObject);
+        ValidateCommonBase = () => _ = GetValidBaseMeasurable(this, fooVariaObject!);
 
-        #region Local methods
-        void validate<T>(T baseMeasurable, IFooVariaObject? fooVariaObject) where T : class, IBaseMeasurable
-        {
-            _ = NullChecked(fooVariaObject, nameof(fooVariaObject));
-
-            if (fooVariaObject is IFactory factory)
-            {
-                base.Validate(factory);
-            }
-            else if (fooVariaObject is ICommonBase other)
-            {
-                _ = GetValidBaseMeasurable(baseMeasurable, other);
-            }
-            else
-            {
-                throw new InvalidOperationException(null);
-            }
-        }
-        #endregion
+        Validate(this, fooVariaObject);
     }
     #endregion
 
@@ -136,7 +118,7 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
 
     #region Protected methods
     #region Static methods
-    protected static T GetValidBaseMeasurable<T>(T commonBase, ICommonBase other) where T : class, IBaseMeasurable
+    protected static T GetValidBaseMeasurable<T>(T commonBase, IFooVariaObject other) where T : class, IBaseMeasurable
     {
         T baseMeasurable = GetValidCommonBase(commonBase, other);
         MeasureUnitTypeCode measureUnitTypeCode = commonBase.MeasureUnitTypeCode;

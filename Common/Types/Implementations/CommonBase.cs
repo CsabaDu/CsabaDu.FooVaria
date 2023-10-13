@@ -1,6 +1,7 @@
 ﻿using CsabaDu.FooVaria.Common.Factories;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using System.Security.AccessControl;
 
 namespace CsabaDu.FooVaria.Common.Types.Implementations;
 
@@ -36,35 +37,19 @@ public abstract class CommonBase : ICommonBase
         return Factory;
     }
 
+    protected Action ValidateCommonBase { private get; set; }
+
     public virtual void Validate(IFooVariaObject? fooVariaObject)
     {
-        validate(this, fooVariaObject);
+        ValidateCommonBase = () => _ = GetValidCommonBase(this, (ICommonBase)fooVariaObject!);
 
-        #region Local methods
-        void validate<T>(T commonBase, IFooVariaObject? fooVariaObject) where T : class, ICommonBase
-        {
-            _ = NullChecked(fooVariaObject, nameof(fooVariaObject));
-
-            if (fooVariaObject is IFactory factory)
-            {
-                ValidateFactory(commonBase, factory);
-            }
-            else if (fooVariaObject is ICommonBase other)
-            {
-                _ = GetValidCommonBase(commonBase, other);
-            }
-            else
-            {
-                throw new InvalidOperationException(null!);
-            }
-        }
-        #endregion
+        Validate(this, fooVariaObject);
     }
     #endregion
     #endregion
 
     #region Protected methods
-    protected virtual void Validate<T>(T commonBase, IFooVariaObject? fooVariaObject) where T : class, ICommonBase
+    protected void Validate<T>(T commonBase, IFooVariaObject? fooVariaObject) where T : class, ICommonBase
     {
         _ = NullChecked(fooVariaObject, nameof(fooVariaObject));
 
@@ -72,9 +57,9 @@ public abstract class CommonBase : ICommonBase
         {
             ValidateFactory(commonBase, factory);
         }
-        else if (fooVariaObject is ICommonBase other)
+        else if (fooVariaObject is ICommonBase)
         {
-            _ = GetValidCommonBase(commonBase, other);
+            ValidateCommonBase.Invoke();
         }
         else
         {
@@ -83,11 +68,11 @@ public abstract class CommonBase : ICommonBase
     }
 
     #region Static methods
-    protected static T GetValidCommonBase<T>(T commonBase, ICommonBase? other) where T : class, ICommonBase
+    protected static T GetValidCommonBase<T>(T commonBase, IFooVariaObject other) where T : class, ICommonBase
     {
         string name = nameof(other);
         Type commonBaseType = commonBase.GetType();
-        Type otherType = NullChecked(other, name).GetType();
+        Type otherType = other.GetType();
 
         foreach (Type item in commonBaseType.GetInterfaces())
         {
