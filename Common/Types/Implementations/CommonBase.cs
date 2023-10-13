@@ -28,6 +28,10 @@ public abstract class CommonBase : ICommonBase
 
     #region Properties
     public IFactory Factory { get; init; }
+
+    #region Protected properties
+    protected Action ValidateCommonBase { private get; set; }
+    #endregion
     #endregion
 
     #region Public methods
@@ -36,8 +40,6 @@ public abstract class CommonBase : ICommonBase
     {
         return Factory;
     }
-
-    protected Action ValidateCommonBase { private get; set; }
 
     public virtual void Validate(IFooVariaObject? fooVariaObject)
     {
