@@ -53,10 +53,5 @@ internal sealed class Area : Measure, IArea
     {
         return this;
     }
-
-    //public override void GetValidBaseMeasurable(ICommonBase? other)
-    //{
-    //    GetValidBaseMeasurable(this, other);
-    //}
     #endregion
 }

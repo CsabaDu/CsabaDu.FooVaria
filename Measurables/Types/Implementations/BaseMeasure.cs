@@ -1,4 +1,5 @@
-﻿using static CsabaDu.FooVaria.Measurables.Statics.QuantityTypes;
+﻿using CsabaDu.FooVaria.Common;
+using static CsabaDu.FooVaria.Measurables.Statics.QuantityTypes;
 
 namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
@@ -258,6 +259,43 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     {
         return Measurement.GetMeasureUnit();
     }
+
+    public override sealed void Validate(IFooVariaObject? fooVariaObject)
+    {
+        validate(this, fooVariaObject);
+
+        #region Local methods
+        void validate<T>(T rate, IFooVariaObject? fooVariaObject) where T : class, IBaseMeasure
+        {
+            _ = NullChecked(fooVariaObject, nameof(fooVariaObject));
+
+            if (fooVariaObject is IFactory factory)
+            {
+                base.Validate(factory);
+            }
+            else if (fooVariaObject is ICommonBase other)
+            {
+                validateBaseMeasure(rate, other);
+            }
+            else
+            {
+                throw new InvalidOperationException(null);
+            }
+        }
+
+        static void validateBaseMeasure<T>(T commonBase, ICommonBase other) where T : class, IBaseMeasure
+        {
+            T baseMeasure = GetValidBaseMeasurable(commonBase, other);
+
+            RateComponentCode rateComponentCode = baseMeasure.GetRateComponentCode();
+
+            if (commonBase.GetRateComponentCode() == rateComponentCode) return;
+
+            throw new ArgumentOutOfRangeException(nameof(other), rateComponentCode, null);
+        }
+        #endregion
+    }
+
     #endregion
     #endregion
 

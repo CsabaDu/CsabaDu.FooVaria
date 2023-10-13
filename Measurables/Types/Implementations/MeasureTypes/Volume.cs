@@ -63,11 +63,6 @@ internal sealed class Volume : Measure, IVolume
     {
         return this;
     }
-
-    //public override void GetValidBaseMeasurable(ICommonBase? other)
-    //{
-    //    GetValidBaseMeasurable(this, other);
-    //}
     #endregion
 }
 

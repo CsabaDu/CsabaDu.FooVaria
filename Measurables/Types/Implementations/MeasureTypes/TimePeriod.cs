@@ -62,10 +62,5 @@ internal sealed class TimePeriod : Measure, ITimePeriod
     {
         return GetMeasure(this, quantity);
     }
-
-    //public override void GetValidBaseMeasurable(ICommonBase? other)
-    //{
-    //    GetValidBaseMeasurable(this, other);
-    //}
     #endregion
 }

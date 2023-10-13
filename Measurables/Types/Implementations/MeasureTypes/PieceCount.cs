@@ -58,10 +58,5 @@ internal sealed class PieceCount : Measure, IPieceCount
     {
         return GetMeasure(this, quantity, customName, exchangeRate);
     }
-
-    //public override void GetValidBaseMeasurable(ICommonBase? other)
-    //{
-    //    GetValidBaseMeasurable(this, other);
-    //}
     #endregion
 }

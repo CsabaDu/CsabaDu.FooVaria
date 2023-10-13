@@ -146,29 +146,25 @@ internal sealed class LimitedRate : Rate, ILimitedRate
             }
             else if (fooVariaObject is ICommonBase other)
             {
-                _ = GetValidLimitedRate(rate, other);
+                validateLimitedRate(rate, other);
             }
             else
             {
                 throw new InvalidOperationException(null);
             }
         }
+
+        static void validateLimitedRate<T>(T commonBase, ICommonBase other) where T : class, ILimitedRate
+        {
+            T limitedRate = GetValidRate(commonBase, other);
+
+            MeasureUnitTypeCode measureUnitTypeCode = limitedRate.Limit.MeasureUnitTypeCode;
+
+            if (commonBase.Limit.HasMeasureUnitTypeCode(measureUnitTypeCode)) return;
+
+            throw new ArgumentOutOfRangeException(nameof(other), measureUnitTypeCode, null);
+        }
         #endregion
-    }
-    #endregion
-    #endregion
-
-    #region Protected methods
-    #region Static methods
-    private static T GetValidLimitedRate<T>(T commonBase, ICommonBase other) where T : class, ILimitedRate
-    {
-        T limitedRate = GetValidRate(commonBase, other);
-
-        MeasureUnitTypeCode measureUnitTypeCode = limitedRate.Limit.MeasureUnitTypeCode;
-
-        if (commonBase.Limit.HasMeasureUnitTypeCode(measureUnitTypeCode)) return limitedRate;
-
-        throw new ArgumentOutOfRangeException(nameof(other), measureUnitTypeCode, null);
     }
     #endregion
     #endregion

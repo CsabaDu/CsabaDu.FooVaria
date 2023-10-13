@@ -58,10 +58,5 @@ internal sealed class Extent : Measure, IExtent
     {
         return GetMeasure(this, quantity);
     }
-
-    //public override void GetValidBaseMeasurable(ICommonBase? other)
-    //{
-    //    GetValidBaseMeasurable(this, other);
-    //}
     #endregion
 }
