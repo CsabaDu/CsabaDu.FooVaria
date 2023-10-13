@@ -136,7 +136,7 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         validate(this, fooVariaObject);
 
         #region Local methods
-        void validate<T>(T rate, IFooVariaObject? fooVariaObject) where T : class, ILimitedRate
+        void validate<T>(T commonBase, IFooVariaObject? fooVariaObject) where T : class, ILimitedRate
         {
             _ = NullChecked(fooVariaObject, nameof(fooVariaObject));
 
@@ -146,7 +146,7 @@ internal sealed class LimitedRate : Rate, ILimitedRate
             }
             else if (fooVariaObject is ICommonBase other)
             {
-                validateLimitedRate(rate, other);
+                validateLimitedRate(commonBase, other);
             }
             else
             {
@@ -157,12 +157,10 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         static void validateLimitedRate<T>(T commonBase, ICommonBase other) where T : class, ILimitedRate
         {
             T limitedRate = GetValidRate(commonBase, other);
+            MeasureUnitTypeCode measureUnitTypeCode = commonBase.Limit.MeasureUnitTypeCode;
+            MeasureUnitTypeCode otherMeasureUnitTypeCode = limitedRate.Limit.MeasureUnitTypeCode;
 
-            MeasureUnitTypeCode measureUnitTypeCode = limitedRate.Limit.MeasureUnitTypeCode;
-
-            if (commonBase.Limit.HasMeasureUnitTypeCode(measureUnitTypeCode)) return;
-
-            throw new ArgumentOutOfRangeException(nameof(other), measureUnitTypeCode, null);
+            _ = GetValidBaseMeasurable(limitedRate, measureUnitTypeCode, otherMeasureUnitTypeCode);
         }
         #endregion
     }

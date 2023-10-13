@@ -1,4 +1,5 @@
 ﻿using CsabaDu.FooVaria.Common;
+using CsabaDu.FooVaria.Common.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
@@ -113,7 +114,7 @@ internal abstract class Rate : Measurable, IRate
         validate(this, fooVariaObject);
 
         #region Local methods
-        void validate<T>(T rate, IFooVariaObject? fooVariaObject) where T : class, IRate
+        void validate<T>(T commonBase, IFooVariaObject? fooVariaObject) where T : class, IRate
         {
             _ = NullChecked(fooVariaObject, nameof(fooVariaObject));
 
@@ -123,7 +124,7 @@ internal abstract class Rate : Measurable, IRate
             }
             else if (fooVariaObject is ICommonBase other)
             {
-                _ = GetValidRate(rate, other);
+                _ = GetValidRate(commonBase, other);
             }
             else
             {
@@ -176,12 +177,10 @@ internal abstract class Rate : Measurable, IRate
     protected static T GetValidRate<T>(T commonBase, ICommonBase other) where T : class, IRate
     {
         T rate = GetValidBaseMeasurable(commonBase, other);
+        MeasureUnitTypeCode measureUnitTypeCode = commonBase.Numerator.MeasureUnitTypeCode;
+        MeasureUnitTypeCode otherMeasureUnitTypeCode = rate.Numerator.MeasureUnitTypeCode;
 
-        MeasureUnitTypeCode measureUnitTypeCode = rate.Numerator.MeasureUnitTypeCode;
-
-        if (commonBase.Numerator.HasMeasureUnitTypeCode(measureUnitTypeCode)) return rate;
-
-        throw new ArgumentOutOfRangeException(nameof(other), measureUnitTypeCode, null);
+        return GetValidBaseMeasurable(rate, measureUnitTypeCode, otherMeasureUnitTypeCode);
     }
     #endregion
     #endregion

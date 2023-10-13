@@ -68,8 +68,13 @@ public abstract class CommonBase : ICommonBase
     protected static T GetValidCommonBase<T>(T commonBase, ICommonBase? other) where T : class, ICommonBase
     {
         string name = nameof(other);
+        Type type = typeof(T);
+        Type commonBaseType = commonBase.GetType();
+        Type otherType = NullChecked(other, name).GetType();
 
-        if (NullChecked(other, name).GetType() == commonBase.GetType()) return (T)other!;
+        var x = otherType.IsSubclassOf(type);
+        if (x) return (T)other!;
+        //if (NullChecked(other, name).GetType() == commonBase.GetType()) return (T)other!;
 
         throw ArgumentTypeOutOfRangeException(name, other!);
     }

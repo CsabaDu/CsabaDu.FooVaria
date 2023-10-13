@@ -1,4 +1,5 @@
-﻿using CsabaDu.FooVaria.Common.Statics;
+﻿using CsabaDu.FooVaria.Common.Enums;
+using CsabaDu.FooVaria.Common.Statics;
 
 namespace CsabaDu.FooVaria.Common.Types.Implementations;
 
@@ -138,12 +139,18 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
     protected static T GetValidBaseMeasurable<T>(T commonBase, ICommonBase other) where T : class, IBaseMeasurable
     {
         T baseMeasurable = GetValidCommonBase(commonBase, other);
+        MeasureUnitTypeCode measureUnitTypeCode = commonBase.MeasureUnitTypeCode;
+        MeasureUnitTypeCode otherMeasureUnitTypeCode = baseMeasurable.MeasureUnitTypeCode;
 
-        MeasureUnitTypeCode measureUnitTypeCode = baseMeasurable.MeasureUnitTypeCode;
+        return GetValidBaseMeasurable(baseMeasurable, measureUnitTypeCode, otherMeasureUnitTypeCode);
+    }
 
-        if (commonBase.HasMeasureUnitTypeCode(measureUnitTypeCode)) return baseMeasurable;
+    protected static T GetValidBaseMeasurable<T, U>(T other, U commonBaseProperty, U otherProperty) where T : class, IBaseMeasurable where U : struct, Enum
+    {
+        if (commonBaseProperty.Equals(otherProperty)) return other;
 
-        throw new ArgumentOutOfRangeException(nameof(other), measureUnitTypeCode, null);
+        throw new ArgumentOutOfRangeException(nameof(other), otherProperty, null);
+
     }
     #endregion
     #endregion

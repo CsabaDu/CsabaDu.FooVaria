@@ -265,7 +265,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         validate(this, fooVariaObject);
 
         #region Local methods
-        void validate<T>(T rate, IFooVariaObject? fooVariaObject) where T : class, IBaseMeasure
+        void validate<T>(T commonBase, IFooVariaObject? fooVariaObject) where T : class, IBaseMeasure
         {
             _ = NullChecked(fooVariaObject, nameof(fooVariaObject));
 
@@ -275,7 +275,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
             }
             else if (fooVariaObject is ICommonBase other)
             {
-                validateBaseMeasure(rate, other);
+                validateBaseMeasure(commonBase, other);
             }
             else
             {
@@ -286,16 +286,13 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         static void validateBaseMeasure<T>(T commonBase, ICommonBase other) where T : class, IBaseMeasure
         {
             T baseMeasure = GetValidBaseMeasurable(commonBase, other);
+            RateComponentCode rateComponentCode = commonBase.GetRateComponentCode();
+            RateComponentCode otherRateComponentCode = baseMeasure.GetRateComponentCode();
 
-            RateComponentCode rateComponentCode = baseMeasure.GetRateComponentCode();
-
-            if (commonBase.GetRateComponentCode() == rateComponentCode) return;
-
-            throw new ArgumentOutOfRangeException(nameof(other), rateComponentCode, null);
+            _ = GetValidBaseMeasurable(baseMeasure, rateComponentCode, otherRateComponentCode);
         }
         #endregion
     }
-
     #endregion
     #endregion
 

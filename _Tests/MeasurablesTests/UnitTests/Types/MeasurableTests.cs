@@ -1,3 +1,7 @@
+using CsabaDu.FooVaria.Common.Statics;
+using CsabaDu.FooVaria.Measurables.Factories.Implementations;
+using CsabaDu.FooVaria.Measurables.Types.Implementations;
+
 namespace CsabaDu.FooVaria.Tests.MeasurablesTests.UnitTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
@@ -346,7 +350,8 @@ public class MeasurableTests
     public void Validate_validArg_ICommonBase_returns()
     {
         // Arrange
-        IMeasurable other = new MeasurableChild(factory, measureUnitTypeCode);
+        measureUnit = measureUnitTypeCode.GetDefaultMeasureUnit();
+        IMeasurable other = new Measurement(new MeasurementFactory(), measureUnit);
         bool returned;
 
         // Act
