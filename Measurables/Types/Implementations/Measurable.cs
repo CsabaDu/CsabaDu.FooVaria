@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Common;
-
-namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal abstract class Measurable : BaseMeasurable, IMeasurable
 {
@@ -55,30 +53,6 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
         return HashCode.Combine(typeof(IMeasurable), MeasureUnitTypeCode);
     }
 
-    public override void Validate(IFooVariaObject? fooVariaObject)
-    {
-        validate(this, fooVariaObject);
-
-        #region Local methods
-        void validate<T>(T commonBase, IFooVariaObject? fooVariaObject) where T : class, IMeasurable
-        {
-            _ = NullChecked(fooVariaObject, nameof(fooVariaObject));
-
-            if (fooVariaObject is IFactory factory)
-            {
-                base.Validate(factory);
-            }
-            else if (fooVariaObject is ICommonBase other)
-            {
-                _ = GetValidBaseMeasurable(commonBase, other);
-            }
-            else
-            {
-                throw new InvalidOperationException(null);
-            }
-        }
-        #endregion
-    }
     #region Sealed methods
     public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
     {
