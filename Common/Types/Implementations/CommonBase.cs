@@ -25,7 +25,7 @@ public abstract class CommonBase : ICommonBase
     public IFactory Factory { get; init; }
 
     #region Protected properties
-    protected Action ValidateCommonBase { private get; set; }
+    protected Action? ValidateCommonBase { private get; set; }
     #endregion
     #endregion
 
@@ -56,7 +56,7 @@ public abstract class CommonBase : ICommonBase
         }
         else if (fooVariaObject is ICommonBase)
         {
-            ValidateCommonBase.Invoke();
+            ValidateCommonBase!.Invoke();
         }
         else
         {
@@ -64,7 +64,7 @@ public abstract class CommonBase : ICommonBase
         }
 
         #region Local methods
-        static void validateFactory<T>(T commonBase, IFactory? factory) where T : class, ICommonBase
+        static void validateFactory(T commonBase, IFactory? factory)
         {
             string name = nameof(factory);
             Type commonBaseFactoryType = commonBase.Factory.GetType();

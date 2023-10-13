@@ -132,7 +132,6 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
         if (commonBaseProperty.Equals(otherProperty)) return other;
 
         throw new ArgumentOutOfRangeException(nameof(other), otherProperty, null);
-
     }
     #endregion
     #endregion
