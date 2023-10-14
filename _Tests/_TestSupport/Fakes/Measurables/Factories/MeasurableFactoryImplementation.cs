@@ -26,5 +26,13 @@ namespace CsabaDu.FooVaria.Tests.TestSupport.Fakes.Measurables.Factories
             throw new NotImplementedException();
         }
     }
+
+    internal sealed class BaseMeasurementFactoryImplementation : BaseMeasurementFactory
+    {
+        public override IMeasurable Create(IMeasurable other)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
 

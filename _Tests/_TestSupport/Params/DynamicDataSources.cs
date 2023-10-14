@@ -57,6 +57,23 @@ internal class DynamicDataSources
             };
         }
     }
+
+    #region IFooVariaObject, string, MeasureUnitTypeCode
+    protected class IFooVariaObject_string_MeasureUnitTypeCode_args : IFooVariaObject_string_args
+    {
+        internal MeasureUnitTypeCode MeasureUnitTypeCode { get; init; }
+
+        public override object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                FooVariaObject,
+                Name,
+                MeasureUnitTypeCode,
+            };
+        }
+    }
+    #endregion
     #endregion
     #endregion
 
@@ -566,25 +583,26 @@ internal class DynamicDataSources
 
     internal IEnumerable<object[]> GetMeasurableValidateInvalidArgArrayList()
     {
-        factory = new MeasurableFactoryImplementation();
-
         measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
-        commonBase = new CommonBaseChild(factory);
+        fooVariaObject = new FactoryImplementation();
+        name = ParamNames.factory;
         yield return toObjectArray();
 
-        commonBase = new BaseMeasurableChild(factory, measureUnitTypeCode);
+        fooVariaObject = new BaseMeasurableChild((IFactory)fooVariaObject, measureUnitTypeCode);
+        name = ParamNames.other;
         yield return toObjectArray();
 
-        commonBase = new MeasurableChild((IMeasurableFactory)factory, RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
+        fooVariaObject = new MeasurableChild(new MeasurableFactoryImplementation(), RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
         yield return toObjectArray();
 
         #region toObjectArray method
         object[] toObjectArray()
         {
-            return new MeasureUnitTypeCode_ICommonBase_args
+            return new IFooVariaObject_string_MeasureUnitTypeCode_args
             {
+                FooVariaObject = fooVariaObject,
+                Name = name,
                 MeasureUnitTypeCode = measureUnitTypeCode,
-                CommonBase = commonBase,
             }
             .ToObjectArray();
         }
@@ -593,22 +611,27 @@ internal class DynamicDataSources
 
     internal IEnumerable<object[]> GetMeasurableValidateValidArgArrayList()
     {
-        factory = new MeasurableFactoryImplementation();
         measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
-        commonBase = new MeasurableChild((IMeasurableFactory)factory, measureUnitTypeCode);
+        fooVariaObject = new MeasurableFactoryImplementation();
         yield return toObjectArray();
 
-        factory = new MeasurementFactory();
-        commonBase = ((IMeasurementFactory)factory).CreateDefault(measureUnitTypeCode);
+        fooVariaObject = new MeasurableChild((IMeasurableFactory)fooVariaObject, measureUnitTypeCode);
+        yield return toObjectArray();
+
+        fooVariaObject = new BaseMeasurementFactoryImplementation();
+        yield return toObjectArray();
+
+        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitTypeCode);
+        fooVariaObject = new BaseMeasurementChild((IBaseMeasurementFactory)fooVariaObject, measureUnit);
         yield return toObjectArray();
 
         #region toObjectArray method
         object[] toObjectArray()
         {
-            return new MeasureUnitTypeCode_ICommonBase_args
+            return new MeasureUnitTypeCode_IFooVariaObject_args
             {
                 MeasureUnitTypeCode = measureUnitTypeCode,
-                CommonBase = commonBase,
+                FooVariaObject = fooVariaObject,
             }
             .ToObjectArray();
         }

@@ -1,7 +1,3 @@
-using CsabaDu.FooVaria.Common.Statics;
-using CsabaDu.FooVaria.Measurables.Factories.Implementations;
-using CsabaDu.FooVaria.Measurables.Types.Implementations;
-
 namespace CsabaDu.FooVaria.Tests.MeasurablesTests.UnitTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
@@ -29,6 +25,7 @@ public class MeasurableTests
     private IMeasurable measurable;
     private Enum measureUnit;
     private MeasureUnitTypeCode measureUnitTypeCode;
+    private IFooVariaObject fooVariaObject;
 
     #region Readonly fields
     private readonly RandomParams RandomParams = new();
@@ -316,15 +313,15 @@ public class MeasurableTests
     #endregion
 
     #region Validate
-    #region Validate(ICommonBase?)
+    #region Validate(IFooVariaObject?)
     [TestMethod, TestCategory("UnitTest")]
-    public void Validate_nullArg_ICommonBase_throws_ArgumentNullException()
+    public void Validate_nullArg_IFooVariaObject_throws_ArgumentNullException()
     {
         // Arrange
-        ICommonBase other = null;
+        fooVariaObject = null;
 
         // Act
-        void attempt() => measurable.Validate(other);
+        void attempt() => measurable.Validate(fooVariaObject);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
@@ -333,22 +330,22 @@ public class MeasurableTests
 
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetMeasurableValidateInvalidArgArrayList), DynamicDataSourceType.Method)]
-    public void Validate_invalidArg_ICommonBase_throws_ArgumentOutOfRangeException(MeasureUnitTypeCode measureUnitTypeCode, ICommonBase other)
+    public void Validate_invalidArg_IFooVariaObject_throws_ArgumentOutOfRangeException(IFooVariaObject fooVariaObject, string name, MeasureUnitTypeCode measureUnitTypeCode)
     {
         // Arrange
         measurable = new MeasurableChild(factory, measureUnitTypeCode);
 
         // Act
-        void attempt() => measurable.Validate(other);
+        void attempt() => measurable.Validate(fooVariaObject);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
-        Assert.AreEqual(ParamNames.other, ex.ParamName);
+        Assert.AreEqual(name, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetMeasurableValidateValidArgArrayList), DynamicDataSourceType.Method)]
-    public void Validate_validArg_ICommonBase_returns(MeasureUnitTypeCode measureUnitTypeCode, ICommonBase other)
+    public void Validate_validArg_IFooVariaObject_returns(MeasureUnitTypeCode measureUnitTypeCode, IFooVariaObject fooVariaObject)
     {
         // Arrange
         measurable = new MeasurableChild(factory, measureUnitTypeCode);
@@ -357,45 +354,7 @@ public class MeasurableTests
         // Act
         try
         {
-            measurable.Validate(other);
-            returned = true;
-        }
-        catch
-        {
-            returned = false;
-        }
-
-        // Assert
-        Assert.IsTrue(returned);
-    }
-    #endregion
-
-    #region Validate(IFactory?)
-    [TestMethod, TestCategory("UnitTest")]
-    public void Validate_nullArg_IFactory_throws_ArgumentNullException()
-    {
-        // Arrange
-        factory = null;
-
-        // Act
-        void attempt() => measurable.Validate(factory);
-
-        // Assert
-        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-        Assert.AreEqual(ParamNames.fooVariaObject, ex.ParamName);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void Validate_validArg_IFactory_returns()
-    {
-        // Arrange
-        factory = new MeasurementFactory();
-        bool returned;
-
-        // Act
-        try
-        {
-            measurable.Validate(factory);
+            measurable.Validate(fooVariaObject);
             returned = true;
         }
         catch
@@ -532,6 +491,7 @@ public class MeasurableTests
     {
         return DynamicDataSources.GetMeasurableValidateValidArgArrayList();
     }
+
     private static IEnumerable<object[]> GetMeasurableValidateMeasureUnitInvalidArgsArrayList()
     {
         return DynamicDataSources.GetMeasurableValidateMeasureUnitInvalidArgsArrayList();
