@@ -255,6 +255,22 @@ internal class DynamicDataSources
         }
     }
 
+    #region MeasureUnitTypeCode, IFooVariaObject
+    protected class MeasureUnitTypeCode_IFooVariaObject_args : MeasureUnitTypeCode_arg
+    {
+        internal IFooVariaObject FooVariaObject { get; init; }
+
+        public override object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                MeasureUnitTypeCode,
+                FooVariaObject,
+            };
+        }
+    }
+    #endregion
+
     #region MeasureUnitTypeCode, ICommonBase
     protected class MeasureUnitTypeCode_ICommonBase_args : MeasureUnitTypeCode_arg
     {
@@ -670,7 +686,7 @@ internal class DynamicDataSources
         #endregion
     }
 
-    internal IEnumerable<object[]> GetBaseMeasurableValidateArgArrayList()
+    internal IEnumerable<object[]> GetBaseMeasurableValidateInvalidArgArrayList()
     {
         factory = new FactoryImplementation();
 
@@ -714,6 +730,35 @@ internal class DynamicDataSources
         {
             return new IFooVariaObject_arg
             {
+                FooVariaObject = fooVariaObject,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> GetBaseMeasurableValidateValidArgArrayList()
+    {
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        fooVariaObject = new FactoryImplementation();
+        yield return toObjectArray();
+
+        fooVariaObject = new BaseMeasurableChild((IFactory)fooVariaObject, measureUnitTypeCode);
+        yield return toObjectArray();
+
+        baseMeasurable = (IBaseMeasurable)fooVariaObject;
+        fooVariaObject = new BaseSpreadFactoryImplementation();
+        yield return toObjectArray();
+
+        fooVariaObject = new BaseSpreadChild((IBaseSpreadFactory)fooVariaObject, baseMeasurable);
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            return new MeasureUnitTypeCode_IFooVariaObject_args
+            {
+                MeasureUnitTypeCode = measureUnitTypeCode,
                 FooVariaObject = fooVariaObject,
             }
             .ToObjectArray();

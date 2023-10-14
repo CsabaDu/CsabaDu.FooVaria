@@ -1,6 +1,4 @@
-﻿
-
-using CsabaDu.FooVaria.Measurables.Factories.Implementations;
+﻿using CsabaDu.FooVaria.Measurables.Factories.Implementations;
 using CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Tests.MeasurablesTests.UnitTests.Types

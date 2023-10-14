@@ -1,4 +1,3 @@
-using CsabaDu.FooVaria.Common.Types;
 using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Factories;
 
 namespace CsabaDu.FooVaria.Tests.CommonTests.UnitTests.Types;
@@ -438,9 +437,9 @@ public class BaseMeasurableTests
     #endregion
 
     #region Validate
-    #region Validate(ICommonBase?)
+    #region Validate(IFooVariaObject?)
     [TestMethod, TestCategory("UnitTest")]
-    public void Validate_nullArg_ICommonBase_throws_ArgumentNullException()
+    public void Validate_nullArg_IFooVariaObject_throws_ArgumentNullException()
     {
         // Arrange
         ICommonBase other = null;
@@ -454,8 +453,8 @@ public class BaseMeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetBaseMeasurableValidateArgArrayList), DynamicDataSourceType.Method)]
-    public void Validate_invalidArg_ICommonBase_throws_ArgumentOutOfRangeException(MeasureUnitTypeCode measureUnitTypeCode, ICommonBase other) // TODO MeasureUnitTypeCode
+    [DynamicData(nameof(GetBaseMeasurableValidateInvalidArgArrayList), DynamicDataSourceType.Method)]
+    public void Validate_invalidArg_IFooVariaObject_throws_ArgumentOutOfRangeException(MeasureUnitTypeCode measureUnitTypeCode, ICommonBase other) // TODO MeasureUnitTypeCode
     {
         // Arrange
         baseMeasurable = new BaseMeasurableChild(factory, measureUnitTypeCode);
@@ -469,16 +468,17 @@ public class BaseMeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void Validate_validArg_ICommonBase_returns()
+    [DynamicData(nameof(GetBaseMeasurableValidateValidArgArrayList), DynamicDataSourceType.Method)]
+    public void Validate_validArg_IFooVariaObject_returns(MeasureUnitTypeCode measureUnitTypeCode, IFooVariaObject fooVariaObject)
     {
         // Arrange
-        IBaseMeasurable other = new BaseMeasurableChild(factory, measureUnitTypeCode);
+        baseMeasurable = new BaseMeasurableChild(factory, measureUnitTypeCode);
         bool returned;
 
         // Act
         try
         {
-            baseMeasurable.Validate(other);
+            baseMeasurable.Validate(fooVariaObject);
             returned = true;
         }
         catch
@@ -668,11 +668,17 @@ public class BaseMeasurableTests
         return DynamicDataSources.GetBoolEnumMeasureUnitArgArrayList();
     }
 
-    private static IEnumerable<object[]> GetBaseMeasurableValidateArgArrayList()
+    private static IEnumerable<object[]> GetBaseMeasurableValidateInvalidArgArrayList()
     {
-        return DynamicDataSources.GetBaseMeasurableValidateArgArrayList();
+        return DynamicDataSources.GetBaseMeasurableValidateInvalidArgArrayList();
 
     }
+
+    private static IEnumerable<object[]> GetBaseMeasurableValidateValidArgArrayList()
+    {
+        return DynamicDataSources.GetBaseMeasurableValidateValidArgArrayList();
+    }
+
     private static IEnumerable<object[]> GetInvalidEnumMeasureUnitMeasureUnitTypeCodeArgsArrayList()
     {
         return DynamicDataSources.GetInvalidEnumMeasureUnitMeasureUnitTypeCodeArgsArrayList();
