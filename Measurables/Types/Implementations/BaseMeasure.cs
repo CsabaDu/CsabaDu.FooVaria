@@ -260,9 +260,9 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return Measurement.GetMeasureUnit();
     }
 
-    public override sealed void Validate(IFooVariaObject? fooVariaObject)
+    public override void Validate(IFooVariaObject? fooVariaObject)
     {
-        ValidateCommonBase = () => validateBaseMeasure(this, fooVariaObject!);
+        ValidateCommonBaseAction = () => validateBaseMeasure(this, fooVariaObject!);
 
         Validate(this, fooVariaObject);
 
@@ -270,10 +270,8 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         static void validateBaseMeasure<T>(T commonBase, IFooVariaObject other) where T : class, IBaseMeasure
         {
             T baseMeasure = GetValidBaseMeasurable(commonBase, other);
-            RateComponentCode rateComponentCode = commonBase.GetRateComponentCode();
-            RateComponentCode otherRateComponentCode = baseMeasure.GetRateComponentCode();
 
-            _ = GetValidBaseMeasurable(baseMeasure, rateComponentCode, otherRateComponentCode);
+            _ = GetValidQuantity(commonBase, baseMeasure.GetQuantity());
         }
         #endregion
     }
@@ -309,9 +307,30 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     protected object GetValidQuantity(ValueType? quantity)
     {
-        quantity = NullChecked(quantity, nameof(quantity)).ToQuantity(QuantityTypeCode);
+        _ = NullChecked(quantity, nameof(quantity));
 
-        if (quantity != null) return GetRateComponentCode() switch
+        return GetValidQuantity(this, quantity) ?? throw QuantityArgumentOutOfRangeException(quantity);
+    }
+
+    #region Static methods
+    protected static void ValidateBaseMeasure<T>(T commonBase, IFooVariaObject other) where T : class, IBaseMeasure
+    {
+        T baseMeasure = GetValidBaseMeasurable(commonBase, other);
+        RateComponentCode rateComponentCode = commonBase.GetRateComponentCode();
+        RateComponentCode otherRateComponentCode = baseMeasure.GetRateComponentCode();
+
+        _ = GetValidBaseMeasurable(baseMeasure, rateComponentCode, otherRateComponentCode);
+    }
+    #endregion
+    #endregion
+
+    #region Private methods
+    #region Static methods
+    private static object? GetValidQuantity(IBaseMeasure baseMeasure, ValueType? quantity)
+    {
+        quantity = quantity?.ToQuantity(baseMeasure.QuantityTypeCode);
+
+        return baseMeasure.GetRateComponentCode() switch
         {
             RateComponentCode.Denominator => getValidDenominatorQuantity(),
             RateComponentCode.Numerator or
@@ -320,21 +339,15 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
             _ => throw new InvalidOperationException(null),
         };
 
-        throw exception();
-
         #region Local methods
-        ValueType getValidDenominatorQuantity()
+        object? getValidDenominatorQuantity()
         {
-            if ((decimal)quantity! > 0) return quantity;
+            if (quantity == null || (decimal)quantity <= 0) return null;
 
-            throw exception();
-        }
-
-        ArgumentOutOfRangeException exception()
-        {
-            return QuantityArgumentOutOfRangeException(quantity);
+            return quantity;
         }
         #endregion
     }
+    #endregion
     #endregion
 }

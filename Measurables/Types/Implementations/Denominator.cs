@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿using CsabaDu.FooVaria.Common;
+
+namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal sealed class Denominator : BaseMeasure, IDenominator
 {
@@ -123,6 +125,13 @@ internal sealed class Denominator : BaseMeasure, IDenominator
     public override IDenominator GetDefault()
     {
         return GetDefaultRateComponent();
+    }
+
+    public override void Validate(IFooVariaObject? fooVariaObject)
+    {
+        ValidateCommonBaseAction = () => ValidateBaseMeasure(this, fooVariaObject!);
+
+        Validate(this, fooVariaObject);
     }
 
     public override void ValidateQuantity(ValueType? quantity)

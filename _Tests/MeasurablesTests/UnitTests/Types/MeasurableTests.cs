@@ -332,7 +332,7 @@ public class MeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetMeasurableValidateArgArrayList), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetMeasurableValidateInvalidArgArrayList), DynamicDataSourceType.Method)]
     public void Validate_invalidArg_ICommonBase_throws_ArgumentOutOfRangeException(MeasureUnitTypeCode measureUnitTypeCode, ICommonBase other)
     {
         // Arrange
@@ -347,11 +347,11 @@ public class MeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void Validate_validArg_ICommonBase_returns() // TODO Dynamic
+    [DynamicData(nameof(GetMeasurableValidateValidArgArrayList), DynamicDataSourceType.Method)]
+    public void Validate_validArg_ICommonBase_returns(MeasureUnitTypeCode measureUnitTypeCode, ICommonBase other)
     {
         // Arrange
-        measureUnit = measureUnitTypeCode.GetDefaultMeasureUnit();
-        IMeasurable other = new Measurement(new MeasurementFactory(), measureUnit);
+        measurable = new MeasurableChild(factory, measureUnitTypeCode);
         bool returned;
 
         // Act
@@ -389,6 +389,7 @@ public class MeasurableTests
     public void Validate_validArg_IFactory_returns()
     {
         // Arrange
+        factory = new MeasurementFactory();
         bool returned;
 
         // Act
@@ -522,9 +523,14 @@ public class MeasurableTests
         return DynamicDataSources.GetBoolMeasureUnitTypeCodeArgsArrayList();
     }
 
-    private static IEnumerable<object[]> GetMeasurableValidateArgArrayList()
+    private static IEnumerable<object[]> GetMeasurableValidateInvalidArgArrayList()
     {
-        return DynamicDataSources.GetMeasurableValidateArgArrayList();
+        return DynamicDataSources.GetMeasurableValidateInvalidArgArrayList();
+    }
+
+    private static IEnumerable<object[]> GetMeasurableValidateValidArgArrayList()
+    {
+        return DynamicDataSources.GetMeasurableValidateValidArgArrayList();
     }
     private static IEnumerable<object[]> GetMeasurableValidateMeasureUnitInvalidArgsArrayList()
     {

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using CsabaDu.FooVaria.Common;
+using System.ComponentModel;
 
 namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
@@ -167,6 +168,13 @@ internal abstract class Measure : BaseMeasure, IMeasure
     public override sealed TypeCode GetQuantityTypeCode()
     {
         return base.GetQuantityTypeCode();
+    }
+
+    public override sealed void Validate(IFooVariaObject? fooVariaObject)
+    {
+        ValidateCommonBaseAction = () => ValidateBaseMeasure(this, fooVariaObject!);
+
+        Validate(this, fooVariaObject);
     }
 
     public override sealed void ValidateQuantity(ValueType? quantity)

@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿using CsabaDu.FooVaria.Common;
+
+namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal sealed class Limit : BaseMeasure, ILimit
 {
@@ -139,6 +141,13 @@ internal sealed class Limit : BaseMeasure, ILimit
     public override ILimit GetMeasurable(IMeasurable other)
     {
         return (ILimit)GetFactory().Create(other);
+    }
+
+    public override void Validate(IFooVariaObject? fooVariaObject)
+    {
+        ValidateCommonBaseAction = () => ValidateBaseMeasure(this, fooVariaObject!);
+
+        Validate(this, fooVariaObject);
     }
 
     public override void ValidateQuantity(ValueType? quantity)

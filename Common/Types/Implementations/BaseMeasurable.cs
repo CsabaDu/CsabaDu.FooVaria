@@ -91,7 +91,7 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
 
     public override void Validate(IFooVariaObject? fooVariaObject)
     {
-        ValidateCommonBase = () => _ = GetValidBaseMeasurable(this, fooVariaObject!);
+        ValidateCommonBaseAction = () => _ = GetValidBaseMeasurable(this, fooVariaObject!);
 
         Validate(this, fooVariaObject);
     }

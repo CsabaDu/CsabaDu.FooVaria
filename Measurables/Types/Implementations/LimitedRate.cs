@@ -133,7 +133,7 @@ internal sealed class LimitedRate : Rate, ILimitedRate
 
     public override void Validate(IFooVariaObject? fooVariaObject)
     {
-        ValidateCommonBase = () => validateLimitedRate(this, fooVariaObject!);
+        ValidateCommonBaseAction = () => validateLimitedRate(this, fooVariaObject!);
 
         Validate(this, fooVariaObject);
 

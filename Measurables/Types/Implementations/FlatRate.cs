@@ -73,11 +73,6 @@ internal sealed class FlatRate : Rate, IFlatRate
         return GetFactory().Create(other);
     }
 
-    public override ILimit? GetLimit()
-    {
-        return null;
-    }
-
     public override IRate GetRate(IMeasure numerator, IDenominator denominator, ILimit? limit)
     {
         return GetFlatRate(numerator, denominator);

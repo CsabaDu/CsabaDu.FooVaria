@@ -73,7 +73,10 @@ internal abstract class Rate : Measurable, IRate
         return Numerator.DefaultQuantity / Denominator.DefaultQuantity;
     }
 
-    public abstract ILimit? GetLimit();
+    public virtual ILimit? GetLimit()
+    {
+        return null;
+    }
 
     public IBaseMeasure? GetRateComponent(RateComponentCode rateComponentCode)
     {
@@ -111,7 +114,7 @@ internal abstract class Rate : Measurable, IRate
 
     public override void Validate(IFooVariaObject? fooVariaObject)
     {
-        ValidateCommonBase = () => _ = GetValidRate(this, fooVariaObject!);
+        ValidateCommonBaseAction = () => _ = GetValidRate(this, fooVariaObject!);
 
         Validate(this, fooVariaObject);
     }

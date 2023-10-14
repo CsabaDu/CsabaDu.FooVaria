@@ -25,7 +25,7 @@ public abstract class CommonBase : ICommonBase
     public IFactory Factory { get; init; }
 
     #region Protected properties
-    protected Action? ValidateCommonBase { private get; set; }
+    protected Action? ValidateCommonBaseAction { private get; set; }
     #endregion
     #endregion
 
@@ -38,7 +38,7 @@ public abstract class CommonBase : ICommonBase
 
     public virtual void Validate(IFooVariaObject? fooVariaObject)
     {
-        ValidateCommonBase = () => _ = GetValidCommonBase(this, fooVariaObject!);
+        ValidateCommonBaseAction = () => _ = GetValidCommonBase(this, fooVariaObject!);
 
         Validate(this, fooVariaObject);
     }
@@ -56,7 +56,7 @@ public abstract class CommonBase : ICommonBase
         }
         else if (fooVariaObject is ICommonBase)
         {
-            ValidateCommonBase!.Invoke();
+            ValidateCommonBaseAction!.Invoke();
         }
         else
         {
@@ -64,19 +64,11 @@ public abstract class CommonBase : ICommonBase
         }
 
         #region Local methods
-        static void validateFactory(T commonBase, IFactory? factory)
+        static void validateFactory(T commonBase, IFactory factory)
         {
-            string name = nameof(factory);
             Type commonBaseFactoryType = commonBase.Factory.GetType();
-            Type factoryType = NullChecked(factory, name).GetType();
 
-            foreach (Type item in factoryType.GetInterfaces())
-            {
-                if (!commonBaseFactoryType.GetInterfaces().Contains(item))
-                {
-                    throw ArgumentTypeOutOfRangeException(name, factory!);
-                }
-            }
+            ValidateInterfaces(commonBaseFactoryType.GetInterfaces(), factory, nameof(factory));
         }
         #endregion
     }
@@ -84,19 +76,28 @@ public abstract class CommonBase : ICommonBase
     #region Static methods
     protected static T GetValidCommonBase<T>(T commonBase, IFooVariaObject other) where T : class, ICommonBase
     {
-        string name = nameof(other);
         Type commonBaseType = commonBase.GetType();
-        Type otherType = other.GetType();
 
-        foreach (Type item in commonBaseType.GetInterfaces())
-        {
-            if (!otherType.GetInterfaces().Contains(item))
-            {
-                throw ArgumentTypeOutOfRangeException(name, other!);
-            }
-        }
+        ValidateInterfaces(commonBaseType.GetInterfaces(), other, nameof(other));
 
         return (T)other!;
+    }
+    #endregion
+    #endregion
+
+    #region Private methods
+    #region Static methods
+    private static void ValidateInterfaces(IEnumerable<Type> interfaces, IFooVariaObject fooVariaObject, string name)
+    {
+        Type type = fooVariaObject.GetType();
+
+        foreach (Type item in interfaces)
+        {
+            if (!type.GetInterfaces().Contains(item))
+            {
+                throw ArgumentTypeOutOfRangeException(name, fooVariaObject);
+            }
+        }
     }
     #endregion
     #endregion

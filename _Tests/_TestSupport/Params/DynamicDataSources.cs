@@ -1,12 +1,24 @@
-﻿using CsabaDu.FooVaria.Common;
-using CsabaDu.FooVaria.Common.Enums;
+﻿using CsabaDu.FooVaria.Measurables.Factories.Implementations;
 
 namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
 
 internal class DynamicDataSources
 {
     #region Private fields
+    private bool isTrue;
+    private IFooVariaObject fooVariaObject;
+    private MeasureUnitTypeCode measureUnitTypeCode;
+    private Enum measureUnit;
+    private object obj;
+    private string name;
+    private IFactory factory;
+    private IBaseMeasurable baseMeasurable;
+    private ICommonBase commonBase;
+    private IMeasurable measurable;
+
+    #region Readonly fileds
     private readonly RandomParams RandomParams = new();
+    #endregion
     #endregion
 
     #region Protected types
@@ -296,7 +308,7 @@ internal class DynamicDataSources
     #region Internal ArrayList methods
     internal IEnumerable<object[]> GetInvalidEnumMeasureUnitArgArrayList()
     {
-        Enum measureUnit = SampleParams.DefaultLimitMode;
+        measureUnit = SampleParams.DefaultLimitMode;
         yield return toObjectArray();
 
         measureUnit = RandomParams.GetRandomNotDefinedMeasureUnit();
@@ -316,7 +328,7 @@ internal class DynamicDataSources
 
     internal IEnumerable<object[]> GetInvalidGetCustomNameArgArrayList()
     {
-        Enum measureUnit = null;
+        measureUnit = null;
         yield return toObjectArray();
 
         foreach (object[] item in GetInvalidEnumMeasureUnitArgArrayList())
@@ -341,21 +353,21 @@ internal class DynamicDataSources
 
     internal IEnumerable<object[]> GetBaseMeasurableEqualsArgsArrayList()
     {
-        bool expected = false;
-        object other = null;
-        MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        isTrue = false;
+        obj = null;
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
         yield return toObjectArray();
 
-        other = new();
+        obj = new();
         yield return toObjectArray();
 
-        expected = true;
-        IFactory factory = new FactoryImplementation();
-        other = new BaseMeasurableChild(factory, measureUnitTypeCode);
+        isTrue = true;
+        factory = new FactoryImplementation();
+        obj = new BaseMeasurableChild(factory, measureUnitTypeCode);
         yield return toObjectArray();
 
-        expected = false;
-        other = new BaseMeasurableChild(factory, RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
+        isTrue = false;
+        obj = new BaseMeasurableChild(factory, RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
         yield return toObjectArray();
 
         #region toObjectArray method
@@ -363,8 +375,8 @@ internal class DynamicDataSources
         {
             return new Bool_Object_MeasureUnitTypeCode_args
             {
-                IsTrue = expected,
-                Object = other,
+                IsTrue = isTrue,
+                Object = obj,
                 MeasureUnitTypeCode = measureUnitTypeCode,
             }
             .ToObjectArray();
@@ -374,12 +386,12 @@ internal class DynamicDataSources
 
     internal IEnumerable<object[]> GetBaseMeasurableHasMeasureUnitTypeCodeArgArrayList()
     {
-        bool expected = true;
-        MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
-        IBaseMeasurable baseMeasurable = new BaseMeasurableChild(new FactoryImplementation(), measureUnitTypeCode);
+        isTrue = true;
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        baseMeasurable = new BaseMeasurableChild(new FactoryImplementation(), measureUnitTypeCode);
         yield return toObjectArray();
 
-        expected = false;
+        isTrue = false;
         measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode);
         yield return toObjectArray();
 
@@ -391,7 +403,7 @@ internal class DynamicDataSources
         {
             return new Bool_MeasureUnitTypeCode_IBaseMeasurable_args
             {
-                IsTrue = expected,
+                IsTrue = isTrue,
                 MeasureUnitTypeCode = measureUnitTypeCode,
                 BaseMeasurable = baseMeasurable,
             }
@@ -402,15 +414,15 @@ internal class DynamicDataSources
 
     internal IEnumerable<object[]> GetBaseMeasurableHasMeasureUnitTypeCodeArgsArrayList()
     {
-        bool expected = true;
-        MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
-        Enum measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitTypeCode);
+        isTrue = true;
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitTypeCode);
         yield return toObjectArray();
 
         measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitTypeCode, measureUnit);
         yield return toObjectArray();
 
-        expected = false;
+        isTrue = false;
         measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode);
         yield return toObjectArray();
 
@@ -429,7 +441,7 @@ internal class DynamicDataSources
         {
             return new Bool_MeasureUnitTypeCode_Enum_args
             {
-                IsTrue = expected,
+                IsTrue = isTrue,
                 MeasureUnitTypeCode = measureUnitTypeCode,
                 MeasureUnit = measureUnit,
             }
@@ -440,8 +452,8 @@ internal class DynamicDataSources
 
     internal IEnumerable<object[]> GetBoolEnumMeasureUnitArgArrayList()
     {
-        bool expected = false;
-        Enum measureUnit = null;
+        isTrue = false;
+        measureUnit = null;
         yield return toObjectArray();
 
         measureUnit = SampleParams.DefaultLimitMode;
@@ -450,7 +462,7 @@ internal class DynamicDataSources
         measureUnit = RandomParams.GetRandomNotDefinedMeasureUnit();
         yield return toObjectArray();
 
-        expected = true;
+        isTrue = true;
         measureUnit = RandomParams.GetRandomMeasureUnit();
         yield return toObjectArray();
 
@@ -459,7 +471,7 @@ internal class DynamicDataSources
         {
             return new Bool_Enum_args
             {
-                IsTrue = expected,
+                IsTrue = isTrue,
                 MeasureUnit = measureUnit,
             }
             .ToObjectArray();
@@ -469,9 +481,9 @@ internal class DynamicDataSources
 
     internal IEnumerable<object[]> GetInvalidEnumMeasureUnitMeasureUnitTypeCodeArgsArrayList()
     {
-        Enum measureUnit = SampleParams.DefaultLimitMode;
-        MeasureUnitTypeCode measureUnitTypeCode = SampleParams.NotDefinedMeasureUnitTypeCode;
-        string name = ParamNames.measureUnit;
+        measureUnit = SampleParams.DefaultLimitMode;
+        measureUnitTypeCode = SampleParams.NotDefinedMeasureUnitTypeCode;
+        name = ParamNames.measureUnit;
         yield return toObjectArray();
 
         measureUnit = RandomParams.GetRandomNotDefinedMeasureUnit();
@@ -502,24 +514,24 @@ internal class DynamicDataSources
 
     internal IEnumerable<object[]> GetMeasurableEqualsArgsArrayList()
     {
-        bool expected = false;
-        object other = null;
-        MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        isTrue = false;
+        obj = null;
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
         yield return toObjectArray();
 
-        other = new();
+        obj = new();
         yield return toObjectArray();
 
         IMeasurableFactory factory = new MeasurableFactoryImplementation();
-        other = new BaseMeasurableChild(factory, measureUnitTypeCode);
+        obj = new BaseMeasurableChild(factory, measureUnitTypeCode);
         yield return toObjectArray();
 
-        expected = true;
-        other = new MeasurableChild(factory, measureUnitTypeCode);
+        isTrue = true;
+        obj = new MeasurableChild(factory, measureUnitTypeCode);
         yield return toObjectArray();
 
-        expected = false;
-        other = new MeasurableChild(factory, RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
+        isTrue = false;
+        obj = new MeasurableChild(factory, RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
         yield return toObjectArray();
 
         #region toObjectArray method
@@ -527,8 +539,8 @@ internal class DynamicDataSources
         {
             return new Bool_Object_MeasureUnitTypeCode_args
             {
-                IsTrue = expected,
-                Object = other,
+                IsTrue = isTrue,
+                Object = obj,
                 MeasureUnitTypeCode = measureUnitTypeCode,
             }
             .ToObjectArray();
@@ -536,18 +548,18 @@ internal class DynamicDataSources
         #endregion
     }
 
-    internal IEnumerable<object[]> GetMeasurableValidateArgArrayList()
+    internal IEnumerable<object[]> GetMeasurableValidateInvalidArgArrayList()
     {
-        IMeasurableFactory factory = new MeasurableFactoryImplementation();
+        factory = new MeasurableFactoryImplementation();
 
-        MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
-        ICommonBase other = new CommonBaseChild(factory);
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        commonBase = new CommonBaseChild(factory);
         yield return toObjectArray();
 
-        other = new BaseMeasurableChild(factory, measureUnitTypeCode);
+        commonBase = new BaseMeasurableChild(factory, measureUnitTypeCode);
         yield return toObjectArray();
 
-        other = new MeasurableChild(factory, RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
+        commonBase = new MeasurableChild((IMeasurableFactory)factory, RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
         yield return toObjectArray();
 
         #region toObjectArray method
@@ -556,7 +568,31 @@ internal class DynamicDataSources
             return new MeasureUnitTypeCode_ICommonBase_args
             {
                 MeasureUnitTypeCode = measureUnitTypeCode,
-                CommonBase = other,
+                CommonBase = commonBase,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> GetMeasurableValidateValidArgArrayList()
+    {
+        factory = new MeasurableFactoryImplementation();
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        commonBase = new MeasurableChild((IMeasurableFactory)factory, measureUnitTypeCode);
+        yield return toObjectArray();
+
+        factory = new MeasurementFactory();
+        commonBase = ((IMeasurementFactory)factory).CreateDefault(measureUnitTypeCode);
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            return new MeasureUnitTypeCode_ICommonBase_args
+            {
+                MeasureUnitTypeCode = measureUnitTypeCode,
+                CommonBase = commonBase,
             }
             .ToObjectArray();
         }
@@ -565,8 +601,8 @@ internal class DynamicDataSources
 
     internal IEnumerable<object[]> GetMeasurableValidateMeasureUnitTypeCodeArgsArrayList()
     {
-        MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
-        IMeasurable measurable = new MeasurableChild(new MeasurableFactoryImplementation(), RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        measurable = new MeasurableChild(new MeasurableFactoryImplementation(), RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
         yield return toObjectArray();
 
         measureUnitTypeCode = SampleParams.NotDefinedMeasureUnitTypeCode;
@@ -587,12 +623,12 @@ internal class DynamicDataSources
 
     internal IEnumerable<object[]> GetBoolMeasureUnitTypeCodeArgsArrayList()
     {
-        MeasureUnitTypeCode measureUnitTypeCode = SampleParams.NotDefinedMeasureUnitTypeCode;
-        bool expected = false;
+        measureUnitTypeCode = SampleParams.NotDefinedMeasureUnitTypeCode;
+        isTrue = false;
         yield return toObjectArray();
 
         measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
-        expected = true;
+        isTrue = true;
         yield return toObjectArray();
 
         #region toObjectArray method
@@ -600,7 +636,7 @@ internal class DynamicDataSources
         {
             return new Bool_MeasureUnitTypeCode_args
             {
-                IsTrue = expected,
+                IsTrue = isTrue,
                 MeasureUnitTypeCode = measureUnitTypeCode,
             }
             .ToObjectArray();
@@ -610,8 +646,8 @@ internal class DynamicDataSources
 
     internal IEnumerable<object[]> GetMeasurableValidateMeasureUnitInvalidArgsArrayList()
     {
-        Enum measureUnit = SampleParams.DefaultLimitMode;
-        MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        measureUnit = SampleParams.DefaultLimitMode;
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
         yield return toObjectArray();
 
         measureUnit = RandomParams.GetRandomNotDefinedMeasureUnit();
@@ -636,13 +672,13 @@ internal class DynamicDataSources
 
     internal IEnumerable<object[]> GetBaseMeasurableValidateArgArrayList()
     {
-        IFactory factory = new FactoryImplementation();
+        factory = new FactoryImplementation();
 
-        MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
-        ICommonBase other = new CommonBaseChild(factory);
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        commonBase = new CommonBaseChild(factory);
         yield return toObjectArray();
 
-        other = new BaseMeasurableChild(factory, RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
+        commonBase = new BaseMeasurableChild(factory, RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
         yield return toObjectArray();
 
         #region toObjectArray method
@@ -651,7 +687,7 @@ internal class DynamicDataSources
             return new MeasureUnitTypeCode_ICommonBase_args
             {
                 MeasureUnitTypeCode = measureUnitTypeCode,
-                CommonBase = other,
+                CommonBase = commonBase,
             }
             .ToObjectArray();
         }
@@ -660,10 +696,17 @@ internal class DynamicDataSources
 
     internal IEnumerable<object[]> GetCommonBaseValidateArgArrayList()
     {
-        IFooVariaObject fooVariaObject = new FactoryImplementation();
+        fooVariaObject = new FactoryImplementation();
         yield return toObjectArray();
 
         fooVariaObject = new CommonBaseChild((IFactory)fooVariaObject);
+        yield return toObjectArray();
+
+        fooVariaObject = new BaseSpreadFactoryImplementation();
+        yield return toObjectArray();
+
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        fooVariaObject = new BaseMeasurableChild((IFactory)fooVariaObject, measureUnitTypeCode);
         yield return toObjectArray();
 
         #region toObjectArray method
@@ -676,7 +719,6 @@ internal class DynamicDataSources
             .ToObjectArray();
         }
         #endregion
-
     }
 
     #endregion
