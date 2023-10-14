@@ -72,7 +72,7 @@ public class BaseMeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void BaseMeasurable_validArgs_IFactory_MeasureunitTypeCode_createsInstance()
+    public void BaseMeasurable_validArgs_IFactory_MeasureunitTypeCode_creates()
     {
         // Arrange
         factory = new FactoryImplementation();
@@ -134,7 +134,7 @@ public class BaseMeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void BaseMeasurable_validArgs_IFactory_Enum_createsInstance()
+    public void BaseMeasurable_validArgs_IFactory_Enum_creates()
     {
         // Arrange
         factory = new FactoryImplementation();
@@ -182,7 +182,7 @@ public class BaseMeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void BaseMeasurable_validArgs_IFactory_IBaseMeasurable_createsInstance()
+    public void BaseMeasurable_validArgs_IFactory_IBaseMeasurable_creates()
     {
         // Arrange
         factory = new FactoryImplementation();
@@ -214,7 +214,7 @@ public class BaseMeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void BaseMeasurable_validArg_IBaseMeasurable_createsInstance()
+    public void BaseMeasurable_validArg_IBaseMeasurable_creates()
     {
         // Arrange
         measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();

@@ -49,7 +49,7 @@ public class CommonBaseTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void CommonBase_validArg_IFactory_createsInstance()
+    public void CommonBase_validArg_IFactory_creates()
     {
         // Arrange
         factory = new FactoryImplementation();
@@ -95,7 +95,7 @@ public class CommonBaseTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void CommonBase_validArgs_IFactory_ICommonBase_createsInstance()
+    public void CommonBase_validArgs_IFactory_ICommonBase_creates()
     {
         // Arrange
         factory = new FactoryImplementation();
@@ -126,7 +126,7 @@ public class CommonBaseTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void CommonBase_validArg_ICommonBase_createsInstance()
+    public void CommonBase_validArg_ICommonBase_creates()
     {
         // Arrange
         factory = new FactoryImplementation();
@@ -148,6 +148,9 @@ public class CommonBaseTests
     public void GetFactory_returns_expected()
     {
         // Arrange
+        factory = new BaseSpreadFactoryImplementation();
+        commonBase = new CommonBaseChild(factory);
+
         // Act
         var actual = commonBase.GetFactory();
 

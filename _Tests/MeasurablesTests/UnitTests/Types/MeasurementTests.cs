@@ -1,5 +1,6 @@
-﻿using CsabaDu.FooVaria.Measurables.Factories.Implementations;
-using CsabaDu.FooVaria.Measurables.Statics;
+﻿
+
+using CsabaDu.FooVaria.Measurables.Factories.Implementations;
 using CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Tests.MeasurablesTests.UnitTests.Types
@@ -80,7 +81,7 @@ namespace CsabaDu.FooVaria.Tests.MeasurablesTests.UnitTests.Types
         }
 
         [TestMethod, TestCategory("UnitTest")]
-        public void Measurement_validArgs_IMeasurementFactory_Enum_createsInstance()
+        public void Measurement_validArgs_IMeasurementFactory_Enum_creates()
         {
             // Arrange
             MeasureUnit = RandomParams.GetRandomValidMeasureUnit();

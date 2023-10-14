@@ -84,7 +84,7 @@ public class BaseMeasurementTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void BaseMeasurement_validArgs_IMeasurementFactory_Enum_createsInstance()
+    public void BaseMeasurement_validArgs_IMeasurementFactory_Enum_creates()
     {
         // Arrange
         MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
