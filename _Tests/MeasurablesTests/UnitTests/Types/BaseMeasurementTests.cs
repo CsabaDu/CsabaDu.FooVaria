@@ -1,4 +1,4 @@
-﻿using CsabaDu.FooVaria.Measurables.Factories.Implementations;
+﻿using CsabaDu.FooVaria.Common.Statics;
 using static CsabaDu.FooVaria.Measurables.Types.Implementations.BaseMeasurement;
 
 namespace CsabaDu.FooVaria.Tests.MeasurablesTests.UnitTests.Types;
@@ -17,7 +17,8 @@ public class BaseMeasurementTests
     public void InitializeMeasurableTests()
     {
         measureUnit = RandomParams.GetRandomValidMeasureUnit();
-        factory = new MeasurementFactory();
+        measureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(measureUnit);
+        factory = new BaseMeasurementFactoryChild();
         baseMeasurement = new BaseMeasurementChild(factory, measureUnit);
         baseMeasurement.RestoreConstantExchangeRates();
     }
@@ -25,9 +26,10 @@ public class BaseMeasurementTests
 
     #region Private fields
     private IBaseMeasurement baseMeasurement;
-    private IMeasurementFactory factory;
+    private IBaseMeasurementFactory factory;
     private Enum measureUnit;
     string name;
+    MeasureUnitTypeCode measureUnitTypeCode;
 
     #region Readonly fields
     private readonly RandomParams RandomParams = new();
@@ -57,7 +59,7 @@ public class BaseMeasurementTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void BaseMeasurement_validArg_IMeasurementFactory_nullArg_Enum_throws_ArgumentNullException()
+    public void BaseMeasurement_validArg_IBaseMeasurementFactory_nullArg_Enum_throws_ArgumentNullException()
     {
         // Arrange
         measureUnit = null;
@@ -71,8 +73,8 @@ public class BaseMeasurementTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetInvalidEnumMeasureUnitArgArrayList), DynamicDataSourceType.Method)]
-    public void BaseMeasurement_validArg_IMeasurementFactory_invalidArg_Enum_throws_InvalidEnumArgumentException(Enum measureUnit)
+    [DynamicData(nameof(GetInvalidBaseMeasurementEnumMeasureUnitArgArrayList), DynamicDataSourceType.Method)]
+    public void BaseMeasurement_validArg_IBaseMeasurementFactory_invalidArg_Enum_throws_InvalidEnumArgumentException(Enum measureUnit)
     {
         // Arrange
         // Act
@@ -84,11 +86,11 @@ public class BaseMeasurementTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void BaseMeasurement_validArgs_IMeasurementFactory_Enum_creates()
+    public void BaseMeasurement_validArgs_IBaseMeasurementFactory_Enum_creates()
     {
         // Arrange
-        MeasureUnitTypeCode measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
-        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitTypeCode);
+        measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        measureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(measureUnit);
 
         // Act
         var actual = new BaseMeasurementChild(factory, measureUnit);
@@ -122,7 +124,7 @@ public class BaseMeasurementTests
     #region GetCustomName(Enum)
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetInvalidGetCustomNameArgArrayList), DynamicDataSourceType.Method)]
-    public void GetCustomName_nullArg_Enum_returns_null(Enum measureUnit)
+    public void GetCustomName_nullOrInvalidArg_Enum_returns_null(Enum measureUnit)
     {
         // Arrange
         // Act
@@ -136,6 +138,8 @@ public class BaseMeasurementTests
     public void GetCustomName_validArg_Enum_returns_expected()
     {
         // Arrange
+        measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        baseMeasurement = new BaseMeasurementChild(factory, measureUnit);
         name = Guid.NewGuid().ToString();
         baseMeasurement.SetCustomName(measureUnit, name);
 
@@ -151,9 +155,9 @@ public class BaseMeasurementTests
     #endregion
 
     #region ArrayList methods
-    private static IEnumerable<object[]> GetInvalidEnumMeasureUnitArgArrayList()
+    private static IEnumerable<object[]> GetInvalidBaseMeasurementEnumMeasureUnitArgArrayList()
     {
-        return DynamicDataSources.GetInvalidEnumMeasureUnitArgArrayList();
+        return DynamicDataSources.GetInvalidBaseMeasurementEnumMeasureUnitArgArrayList();
     }
 
     private static IEnumerable<object[]> GetInvalidGetCustomNameArgArrayList()

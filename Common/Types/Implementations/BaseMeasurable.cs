@@ -1,5 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Enums;
-using CsabaDu.FooVaria.Common.Statics;
+﻿using CsabaDu.FooVaria.Common.Statics;
 
 namespace CsabaDu.FooVaria.Common.Types.Implementations;
 

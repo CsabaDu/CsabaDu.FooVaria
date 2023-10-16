@@ -54,9 +54,10 @@ public abstract class CommonBase : ICommonBase
         {
             validateFactory(commonBase, factory);
         }
-        else if (fooVariaObject is ICommonBase)
+        else if (fooVariaObject is ICommonBase && ValidateCommonBaseAction != null)
         {
-            ValidateCommonBaseAction!.Invoke();
+            ValidateCommonBaseAction.Invoke();
+            ValidateCommonBaseAction = null;
         }
         else
         {
@@ -66,9 +67,7 @@ public abstract class CommonBase : ICommonBase
         #region Local methods
         static void validateFactory(T commonBase, IFactory factory)
         {
-            Type commonBaseFactoryType = commonBase.Factory.GetType();
-
-            ValidateInterfaces(commonBaseFactoryType.GetInterfaces(), factory, nameof(factory));
+            ValidateInterfaces(commonBase.Factory, factory, nameof(factory));
         }
         #endregion
     }
@@ -76,9 +75,7 @@ public abstract class CommonBase : ICommonBase
     #region Static methods
     protected static T GetValidCommonBase<T>(T commonBase, IFooVariaObject other) where T : class, ICommonBase
     {
-        Type commonBaseType = commonBase.GetType();
-
-        ValidateInterfaces(commonBaseType.GetInterfaces(), other, nameof(other));
+        ValidateInterfaces(commonBase, other, nameof(other));
 
         return (T)other!;
     }
@@ -87,15 +84,17 @@ public abstract class CommonBase : ICommonBase
 
     #region Private methods
     #region Static methods
-    private static void ValidateInterfaces(IEnumerable<Type> interfaces, IFooVariaObject fooVariaObject, string name)
+    private static void ValidateInterfaces(IFooVariaObject fooVariaObject, IFooVariaObject other, string name)
     {
         Type type = fooVariaObject.GetType();
+        IEnumerable<Type> interfaces = type.GetInterfaces();
+        Type otherType = other.GetType();
 
         foreach (Type item in interfaces)
         {
-            if (!type.GetInterfaces().Contains(item))
+            if (!otherType.GetInterfaces().Contains(item))
             {
-                throw ArgumentTypeOutOfRangeException(name, fooVariaObject);
+                throw ArgumentTypeOutOfRangeException(name, other);
             }
         }
     }

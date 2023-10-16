@@ -18,11 +18,6 @@ internal sealed class BaseMeasurableChild : BaseMeasurable
     {
     }
 
-    public override IFactory GetFactory()
-    {
-        throw new NotImplementedException();
-    }
-
     public override Enum GetMeasureUnit()
     {
         throw new NotImplementedException();

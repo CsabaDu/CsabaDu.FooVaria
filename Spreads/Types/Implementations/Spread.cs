@@ -55,7 +55,7 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         #region Sealed methods
         public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
         {
-            return SpreadMeasures.SpreadMeasureUnitTypeCodes;
+            return base.GetMeasureUnitTypeCodes();
         }
 
         public override sealed void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)

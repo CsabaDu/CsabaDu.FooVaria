@@ -4,19 +4,12 @@ namespace CsabaDu.FooVaria.Spreads.Statics;
 
 public static class SpreadMeasures
 {
+    #region Private constants
     private const int CircleShapeExtentCount = 1;
     private const int RectangleShapeExtentCount = 2;
     private const int CylinderShapeExtentCount = 2;
     private const int CuboidShapeExtentCount = 3;
-
-    public static IEnumerable<MeasureUnitTypeCode> SpreadMeasureUnitTypeCodes
-    {
-        get
-        {
-            yield return MeasureUnitTypeCode.AreaUnit;
-            yield return MeasureUnitTypeCode.VolumeUnit;
-        }
-    }
+    #endregion
 
     #region Public methods
     public static IArea GetArea(IMeasureFactory factory, params IExtent[] shapeExtents)
@@ -32,17 +25,40 @@ public static class SpreadMeasures
         };
     }
 
-    public static IVolume GetVolume(IMeasureFactory factory, params IExtent[] shapeExtents)
+    public static IArea GetCircleArea(IMeasureFactory factory, IExtent radius)
     {
-        ValidateShapeExtents(MeasureUnitTypeCode.VolumeUnit, shapeExtents);
+        _ = NullChecked(factory, nameof(factory));
 
-        return shapeExtents.Length switch
-        {
-            2 => GetCylinderVolume(factory, shapeExtents[0], shapeExtents[1]),
-            3 => GetCuboidVolume(factory, shapeExtents[0], shapeExtents[1], shapeExtents[2]),
+        decimal quantity = GetCircleAreaDefaultQuantity(radius);
 
-            _ => throw new InvalidOperationException(null),
-        };
+        return GetArea(factory, quantity);
+    }
+
+    public static IVolume GetCuboidVolume(IMeasureFactory factory, IExtent length, IExtent width, IExtent height)
+    {
+        _ = NullChecked(factory, nameof(factory));
+
+        decimal quantity = GetRectangleAreaDefaultQuantity(length, width);
+
+        return GetVolume(factory, quantity, height);
+    }
+
+    public static IVolume GetCylinderVolume(IMeasureFactory factory, IExtent radius, IExtent height)
+    {
+        _ = NullChecked(factory, nameof(factory));
+
+        decimal quantity = GetCircleAreaDefaultQuantity(radius);
+
+        return GetVolume(factory, quantity, height);
+    }
+
+    public static IArea GetRectangleArea(IMeasureFactory factory, IExtent length, IExtent width)
+    {
+        _ = NullChecked(factory, nameof(factory));
+
+        decimal quantity = GetRectangleAreaDefaultQuantity(length, width);
+
+        return GetArea(factory, quantity);
     }
 
     public static IMeasure GetSpreadMeasure(IMeasureFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IExtent[] shapeExtents)
@@ -53,6 +69,19 @@ public static class SpreadMeasures
             MeasureUnitTypeCode.VolumeUnit => GetVolume(factory, shapeExtents),
 
             _ => throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode),
+        };
+    }
+
+    public static IVolume GetVolume(IMeasureFactory factory, params IExtent[] shapeExtents)
+    {
+        ValidateShapeExtents(MeasureUnitTypeCode.VolumeUnit, shapeExtents);
+
+        return shapeExtents.Length switch
+        {
+            2 => GetCylinderVolume(factory, shapeExtents[0], shapeExtents[1]),
+            3 => GetCuboidVolume(factory, shapeExtents[0], shapeExtents[1], shapeExtents[2]),
+
+            _ => throw new InvalidOperationException(null),
         };
     }
 
@@ -93,42 +122,6 @@ public static class SpreadMeasures
             }
         }
         #endregion
-    }
-
-    public static IArea GetCircleArea(IMeasureFactory factory, IExtent radius)
-    {
-        _ = NullChecked(factory, nameof(factory));
-
-        decimal quantity = GetCircleAreaDefaultQuantity(radius);
-
-        return GetArea(factory, quantity);
-    }
-
-    public static IVolume GetCylinderVolume(IMeasureFactory factory, IExtent radius, IExtent height)
-    {
-        _ = NullChecked(factory, nameof(factory));
-
-        decimal quantity = GetCircleAreaDefaultQuantity(radius);
-
-        return GetVolume(factory, quantity, height);
-    }
-
-    public static IVolume GetCuboidVolume(IMeasureFactory factory, IExtent length, IExtent width, IExtent height)
-    {
-        _ = NullChecked(factory, nameof(factory));
-
-        decimal quantity = GetRectangleAreaDefaultQuantity(length, width);
-
-        return GetVolume(factory, quantity, height);
-    }
-
-    public static IArea GetRectangleArea(IMeasureFactory factory, IExtent length, IExtent width)
-    {
-        _ = NullChecked(factory, nameof(factory));
-
-        decimal quantity = GetRectangleAreaDefaultQuantity(length, width);
-
-        return GetArea(factory, quantity);
     }
     #endregion
 

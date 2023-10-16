@@ -17,11 +17,6 @@ internal sealed class BaseSpreadChild : BaseSpread
         throw new NotImplementedException();
     }
 
-    public override IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
-    {
-        throw new NotImplementedException();
-    }
-
     public override ISpreadMeasure GetSpreadMeasure()
     {
         throw new NotImplementedException();

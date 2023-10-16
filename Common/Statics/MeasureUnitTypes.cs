@@ -120,9 +120,9 @@ public static class MeasureUnitTypes
 
     public static MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum measureUnit)
     {
-        string measureUnitTypeName = NullChecked(measureUnit, nameof(measureUnit)).GetType().Name;
+        string name = NullChecked(measureUnit, nameof(measureUnit)).GetType().Name;
 
-        return GetMeasureUnitTypeCodes().First(x => Enum.GetName(x) == measureUnitTypeName);
+        return GetMeasureUnitTypeCodes().First(x => Enum.GetName(x) == name);
     }
 
     public static bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, Enum measureUnit)

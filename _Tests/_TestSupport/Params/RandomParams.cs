@@ -9,10 +9,6 @@ public class RandomParams
     private IMeasurement Measurement { get; set; }
     #endregion
 
-    //private IMeasurement GetMeasurement()
-    //{
-    //    Meas
-    //}
     #region Public methods
     public MeasureUnitTypeCode GetRandomMeasureUnitTypeCode(MeasureUnitTypeCode? excludedMeasureUnitTypeCode = null)
     {
@@ -119,6 +115,7 @@ public class RandomParams
         }
         #endregion
     }
+
     public Enum GetRandomDefaultMeasureUnit()
     {
         MeasureUnitTypeCode measurementUnitTypeCode = GetRandomMeasureUnitTypeCode();
@@ -147,6 +144,36 @@ public class RandomParams
 
             _ => throw new InvalidOperationException(null),
         };
+    }
+
+    public Enum GetRandomNotUsedCustomMeasureUnit(MeasureUnitTypeCode? measureUnitTypeCode = null)
+    {
+        int randomIndex;
+
+        if (!measureUnitTypeCode.HasValue)
+        {
+            randomIndex = Random.Next(2);
+            measureUnitTypeCode = randomIndex switch
+            {
+                0 => MeasureUnitTypeCode.Currency,
+                1 => MeasureUnitTypeCode.Pieces,
+
+                _ => throw new InvalidOperationException(null),
+            };
+        }
+
+        object measureUnit;
+
+        do
+        {
+            Type measureUnitType = MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode.Value);
+            randomIndex = Random.Next(1, 1000);
+
+            measureUnit = Enum.ToObject(measureUnitType, randomIndex);
+        }
+        while (BaseMeasurement.GetValidMeasureUnits().Contains(measureUnit));
+
+        return(Enum)measureUnit;
     }
 
     public IBaseMeasureFactory GetRandomBaseMeasureFactory(IMeasurementFactory measurementFactory)

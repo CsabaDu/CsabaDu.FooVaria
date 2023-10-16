@@ -14,6 +14,10 @@ internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
 
     private protected BaseMeasurement(IBaseMeasurementFactory factory, Enum measureUnit) : base(factory, measureUnit)
     {
+        if (!ExchangeRateCollection.ContainsKey(measureUnit))
+        {
+            throw InvalidMeasureUnitEnumArgumentException(measureUnit);
+        }
     }
     #endregion
 
@@ -212,6 +216,15 @@ internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
     #endregion
 
     #region Static methods
+    public static IEnumerable<object> GetConstantMeasureUnits()
+    {
+        foreach (object item in ConstantExchangeRateCollection.Keys)
+        {
+            yield return item;
+        }
+
+    }
+
     public static IDictionary<object, decimal> GetExchangeRateCollection()
     {
         return ExchangeRateCollection;
