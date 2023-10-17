@@ -64,7 +64,7 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
         return Enum.IsDefined(measureUnitTypeCode);
     }
 
-    public override sealed void ValidateMeasureUnit(Enum measureUnit)
+    public override void ValidateMeasureUnit(Enum measureUnit)
     {
         ValidateMeasureUnit(measureUnit, MeasureUnitTypeCode);
     }

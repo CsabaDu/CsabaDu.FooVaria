@@ -143,9 +143,7 @@ public static class MeasureUnitTypes
 
     public static void ValidateMeasureUnit(Enum measureUnit)
     {
-        if (IsDefinedMeasureUnit(NullChecked(measureUnit, nameof(measureUnit)))) return;
-
-        throw InvalidMeasureUnitEnumArgumentException(measureUnit);
+        _ = DefinedMeasureUnit(NullChecked(measureUnit, nameof(measureUnit)));
     }
 
     public static void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode measureUnitTypeCode)

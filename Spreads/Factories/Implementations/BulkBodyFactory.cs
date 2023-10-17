@@ -1,4 +1,5 @@
 ﻿using CsabaDu.FooVaria.Measurables.Factories;
+using CsabaDu.FooVaria.Spreads.Behaviors;
 using CsabaDu.FooVaria.Spreads.Statics;
 using CsabaDu.FooVaria.Spreads.Types.Implementations;
 
@@ -27,6 +28,13 @@ public sealed class BulkBodyFactory : SpreadFactory<IBulkBody, IVolume>, IBulkBo
     public override IBulkBody Create(params IExtent[] shapeExtents)
     {
         IVolume volume = SpreadMeasures.GetVolume(MeasureFactory, shapeExtents);
+
+        return Create(volume);
+    }
+
+    public IBulkBody Create(IBody body)
+    {
+        IVolume volume = (IVolume)NullChecked(body, nameof(body)).GetSpreadMeasure();
 
         return Create(volume);
     }

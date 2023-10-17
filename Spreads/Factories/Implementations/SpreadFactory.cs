@@ -6,11 +6,11 @@ namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
     {
         #region Public methods
         #region Abstract methods
+        public abstract IBaseSpread Create(ISpreadMeasure spreadMeasure);
         public abstract IFactory GetMeasureFactory();
         #endregion
         #endregion
     }
-
 
     public abstract class SpreadFactory<T, U> : SpreadFactory, ISpreadFactory<T, U> where T : class, ISpread where U : class, IMeasure, ISpreadMeasure
     {
@@ -27,10 +27,19 @@ namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
 
         #region Public methods
         #region Override methods
+        #region Sealed methods
         public override sealed IMeasureFactory GetMeasureFactory()
         {
             return MeasureFactory;
         }
+
+        public override sealed T Create(ISpreadMeasure spreadMeasure)
+        {
+            if (NullChecked(spreadMeasure, nameof(spreadMeasure)) is U validSpreadMeasure) return Create(validSpreadMeasure);
+
+            throw new ArgumentOutOfRangeException(nameof(spreadMeasure), spreadMeasure.GetType(), null);
+        }
+        #endregion
         #endregion
 
         #region Abstract methods

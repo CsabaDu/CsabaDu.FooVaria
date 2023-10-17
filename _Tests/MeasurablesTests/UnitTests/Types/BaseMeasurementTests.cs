@@ -123,6 +123,35 @@ public class BaseMeasurementTests
         Assert.IsTrue(expected.SequenceEqual(actual));
     }
     #endregion
+
+    #region GetConstantExchangeRateCollection(MeasureUnitTypeCode)
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetConstantExchangeRateCollection_invalidParam_MeasureUnitTypeCode_throws_InvalidEnumArgumentException()
+    {
+        // Arrange
+        measureUnitTypeCode = SampleParams.NotDefinedMeasureUnitTypeCode;
+
+        // Act
+        void attempt() => _ = baseMeasurement.GetConstantExchangeRateCollection(measureUnitTypeCode);
+
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(ParamNames.measureUnitTypeCode, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetConstantExchangeRateCollection_validParam_MeasureUnitTypeCode_returns_expected()
+    {
+        measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
+        IDictionary<object, decimal> expected = BaseMeasurementVariant.GetConstantExchangeRateCollection(measureUnitTypeCode);
+
+        // Act
+        var actual = baseMeasurement.GetConstantExchangeRateCollection(measureUnitTypeCode);
+
+        // Assert
+        Assert.IsTrue(expected.SequenceEqual(actual));
+    }
+    #endregion
     #endregion
 
     #region GetCustomName
@@ -156,17 +185,17 @@ public class BaseMeasurementTests
     }
     #endregion
 
-    #region GetCustomName()
-    [TestMethod, TestCategory("UnitTest")]
-    public void GetCustomName_returns_null()
-    {
-        // Arrange
-        // Act
-        var actual = baseMeasurement.GetCustomName(measureUnit);
+    //#region GetCustomName()
+    //[TestMethod, TestCategory("UnitTest")]
+    //public void GetCustomName_returns_null()
+    //{
+    //    // Arrange
+    //    // Act
+    //    var actual = baseMeasurement.GetCustomName(measureUnit);
 
-        // Assert
-        Assert.AreEqual(name, actual);
-    }
+    //    // Assert
+    //    Assert.AreEqual(name, actual);
+    //}
 
     // TODO Measurement
     //[TestMethod, TestCategory("UnitTest")]
@@ -184,7 +213,7 @@ public class BaseMeasurementTests
     //    // Assert
     //    Assert.AreEqual(name, actual);
     //}
-    #endregion
+    //#endregion
 
     #region GetCustomNameCollection
     #region GetCustomNameCollection()

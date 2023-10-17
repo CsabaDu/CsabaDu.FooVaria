@@ -149,6 +149,11 @@ internal abstract class Rate : Measurable, IRate
     {
         return Numerator.GetQuantityTypeCode();
     }
+
+    public override sealed void ValidateMeasureUnit(Enum measureUnit)
+    {
+        Denominator.ValidateMeasureUnit(measureUnit);
+    }
     #endregion
     #endregion
 

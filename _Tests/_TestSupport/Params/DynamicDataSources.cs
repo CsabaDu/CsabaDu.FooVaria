@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Measurables.Factories.Implementations;
-
-namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
+﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
 
 internal class DynamicDataSources
 {
@@ -16,7 +14,7 @@ internal class DynamicDataSources
     private ICommonBase commonBase;
     private IMeasurable measurable;
     private IDictionary<object, string> nameCollection;
-    private IBaseMeasurement baseMeasurement;
+    //private IBaseMeasurement baseMeasurement;
 
     #region Readonly fileds
     private readonly RandomParams RandomParams = new();

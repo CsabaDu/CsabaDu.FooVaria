@@ -1,4 +1,6 @@
-﻿using CsabaDu.FooVaria.Measurables.Factories;
+﻿using CsabaDu.FooVaria.Common.Types;
+using CsabaDu.FooVaria.Measurables.Factories;
+using CsabaDu.FooVaria.Spreads.Behaviors;
 using CsabaDu.FooVaria.Spreads.Statics;
 using CsabaDu.FooVaria.Spreads.Types.Implementations;
 
@@ -27,6 +29,13 @@ public sealed class BulkSurfaceFactory : SpreadFactory<IBulkSurface, IArea>, IBu
     public override IBulkSurface Create(params IExtent[] shapeExtents)
     {
         IArea area = SpreadMeasures.GetArea(MeasureFactory, shapeExtents);
+
+        return Create(area);
+    }
+
+    public IBulkSurface Create(ISurface surface)
+    {
+        IArea area = (IArea)NullChecked(surface, nameof(surface)).GetSpreadMeasure();
 
         return Create(area);
     }

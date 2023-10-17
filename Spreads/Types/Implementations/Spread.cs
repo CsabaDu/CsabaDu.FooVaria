@@ -11,9 +11,10 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         {
         }
 
-        protected Spread(ISpreadFactory factory, IMeasure spreadMeasure) : base(factory, spreadMeasure)
+        protected Spread(ISpreadFactory factory, ISpreadMeasure spreadMeasure) : base(factory, (IMeasure)spreadMeasure)
         {
         }
+
         #endregion
 
         #region Public methods
@@ -82,11 +83,11 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
             SpreadMeasure = other.SpreadMeasure;
         }
 
-        protected Spread(ISpreadFactory factory, T measure) : base(factory, measure)
+        protected Spread(ISpreadFactory factory, T spreadMeasure) : base(factory, spreadMeasure)
         {
-            ValidateSpreadMeasure(measure);
+            ValidateSpreadMeasure(spreadMeasure);
 
-            SpreadMeasure = measure;
+            SpreadMeasure = spreadMeasure;
         }
         #endregion
 

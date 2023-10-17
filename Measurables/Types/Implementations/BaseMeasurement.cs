@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Enums;
-
-namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
 {
@@ -16,21 +14,15 @@ internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
 
     private protected BaseMeasurement(IBaseMeasurementFactory factory, Enum measureUnit) : base(factory, measureUnit)
     {
-        if (!ExchangeRateCollection.ContainsKey(measureUnit))
-        {
-            throw InvalidMeasureUnitEnumArgumentException(measureUnit);
-        }
+        ValidateMeasureUnit(measureUnit);
     }
     #endregion
 
+    #region Properties
     #region Static properties
-    #region Protected properties
+    public static IDictionary<object, decimal> ConstantExchangeRateCollection { get; }
     public static IDictionary<object, string> CustomNameCollection { get; protected set; }
     public static IDictionary<object, decimal> ExchangeRateCollection { get; protected set; }
-    #endregion
-
-    #region Private properties
-    public static IDictionary<object, decimal> ConstantExchangeRateCollection { get; }
     #endregion
     #endregion
 
@@ -44,7 +36,6 @@ internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
     {
         return GetMeasureUnitBasedCollection(ConstantExchangeRateCollection, measureUnitTypeCode);
     }
-
 
     public string? GetCustomName(Enum measureUnit)
     {
@@ -224,6 +215,16 @@ internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
     {
         return (IBaseMeasurementFactory)Factory;
     }
+
+    #region Sealed methods
+    public override sealed void ValidateMeasureUnit(Enum measureUnit)
+    {
+        if (!ExchangeRateCollection.ContainsKey(measureUnit))
+        {
+            throw InvalidMeasureUnitEnumArgumentException(measureUnit);
+        }
+    }
+    #endregion
     #endregion
 
     #region Static methods

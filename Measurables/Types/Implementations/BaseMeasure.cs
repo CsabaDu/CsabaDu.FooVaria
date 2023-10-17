@@ -6,18 +6,6 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 internal abstract class BaseMeasure : Measurable, IBaseMeasure
 {
     #region Constructors
-    //private protected BaseMeasure(IBaseMeasure other) : base(other)
-    //{
-    //    Quantity = GetValidQuantity(other.GetQuantity());
-    //    Measurement = other.Measurement;
-    //}
-
-    //private protected BaseMeasure(IBaseMeasure other, ValueType quantity) : base(other)
-    //{
-    //    Quantity = GetValidQuantity(quantity);
-    //    Measurement = other.Measurement;
-    //}
-
     private protected BaseMeasure(IBaseMeasureFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
     {
         Quantity = factory.DefaultRateComponentQuantity;
@@ -244,6 +232,22 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return (IBaseMeasureFactory)Factory;
     }
 
+    public override void Validate(IFooVariaObject? fooVariaObject)
+    {
+        ValidateCommonBaseAction = () => validateBaseMeasure(this, fooVariaObject!);
+
+        Validate(this, fooVariaObject);
+
+        #region Local methods
+        static void validateBaseMeasure<T>(T commonBase, IFooVariaObject other) where T : class, IBaseMeasure
+        {
+            T baseMeasure = GetValidBaseMeasurable(commonBase, other);
+
+            _ = GetValidQuantity(commonBase, baseMeasure.GetQuantity());
+        }
+        #endregion
+    }
+
     #region Sealed methods
     public override sealed bool Equals(object? obj)
     {
@@ -260,20 +264,9 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return Measurement.GetMeasureUnit();
     }
 
-    public override void Validate(IFooVariaObject? fooVariaObject)
+    public override sealed void ValidateMeasureUnit(Enum measureUnit)
     {
-        ValidateCommonBaseAction = () => validateBaseMeasure(this, fooVariaObject!);
-
-        Validate(this, fooVariaObject);
-
-        #region Local methods
-        static void validateBaseMeasure<T>(T commonBase, IFooVariaObject other) where T : class, IBaseMeasure
-        {
-            T baseMeasure = GetValidBaseMeasurable(commonBase, other);
-
-            _ = GetValidQuantity(commonBase, baseMeasure.GetQuantity());
-        }
-        #endregion
+        Measurement.ValidateMeasureUnit(measureUnit);
     }
     #endregion
     #endregion

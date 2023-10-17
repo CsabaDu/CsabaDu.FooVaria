@@ -7,21 +7,14 @@ public abstract class BaseSpread : BaseMeasurable, IBaseSpread
     {
     }
 
+    protected BaseSpread(IBaseSpreadFactory factory, IBaseSpread baseSpread) : base(factory, baseSpread)
+    {
+    }
+
     protected BaseSpread(IBaseSpreadFactory factory, IBaseMeasurable baseMeasurable) : base(factory, baseMeasurable)
     {
     }
     #endregion
-
-    //#region Properties
-    //public IEnumerable<MeasureUnitTypeCode> SpreadMeasureUnitTypeCodes
-    //{
-    //    get
-    //    {
-    //        yield return MeasureUnitTypeCode.AreaUnit;
-    //        yield return MeasureUnitTypeCode.VolumeUnit;
-    //    }
-    //}
-    //#endregion
 
     #region Public methods
     #region Override methods
@@ -32,7 +25,6 @@ public abstract class BaseSpread : BaseMeasurable, IBaseSpread
 
     public override IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
     {
-        //return SpreadMeasureUnitTypeCodes;
         yield return MeasureUnitTypeCode.AreaUnit;
         yield return MeasureUnitTypeCode.VolumeUnit;
 
