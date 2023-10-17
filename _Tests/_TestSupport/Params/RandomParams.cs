@@ -108,19 +108,35 @@ public class RandomParams
         #region Local methods
         Enum getRandomValidMeasureUnit()
         {
-            int count = validMeasureUnits.Count();
-            int randomIndex = Random.Next(count);
+            int randomIndex = Random.Next(validMeasureUnits.Count());
 
             return (Enum)validMeasureUnits.ElementAt(randomIndex);
         }
         #endregion
     }
 
-    public Enum GetRandomDefaultMeasureUnit()
+    public Enum GetRandomDefaultMeasureUnit(MeasureUnitTypeCode? measurementUnitTypeCode = null)
     {
-        MeasureUnitTypeCode measurementUnitTypeCode = GetRandomMeasureUnitTypeCode();
+        measurementUnitTypeCode = GetRandomMeasureUnitTypeCode(measurementUnitTypeCode);
 
-        return MeasureUnitTypes.GetDefaultMeasureUnit(measurementUnitTypeCode);
+        return MeasureUnitTypes.GetDefaultMeasureUnit(measurementUnitTypeCode.Value);
+    }
+
+    public Enum GetRandomNotDefaultConstantMeasureUnit(MeasureUnitTypeCode? measureUnitTypeCode = null, Enum excludedMeasureUnit = null)
+    {
+        if (!measureUnitTypeCode.HasValue)
+        {
+            measureUnitTypeCode = GetRandomMeasureUnitTypeCode();
+        }
+
+        IEnumerable<object> constantMeasureUnits = BaseMeasurement.GetConstantMeasureUnits()
+            .Where(x => x.GetType().Equals(measureUnitTypeCode.Value.GetMeasureUnitType()))
+            .Where(x => (int)x > 0)
+            .Where(x => !x.Equals(excludedMeasureUnit));
+
+        int randomindex = Random.Next(constantMeasureUnits.Count());
+
+        return (Enum)constantMeasureUnits.ElementAt(randomindex);
     }
 
     public Type GetRandomMeasureUnitType(out MeasureUnitTypeCode measureUnitTypeCode)

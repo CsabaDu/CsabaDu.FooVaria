@@ -1,4 +1,6 @@
 ﻿using CsabaDu.FooVaria.Common.Statics;
+using CsabaDu.FooVaria.Tests.TestSupport.Common.Variants;
+using CsabaDu.FooVaria.TestSupport.Variants.Measurables;
 using static CsabaDu.FooVaria.Measurables.Types.Implementations.BaseMeasurement;
 
 namespace CsabaDu.FooVaria.Tests.MeasurablesTests.UnitTests.Types;
@@ -32,6 +34,7 @@ public class BaseMeasurementTests
     MeasureUnitTypeCode measureUnitTypeCode;
 
     #region Readonly fields
+    private readonly BaseMeasurementVariant BaseMeasurementVariant = new();
     private readonly RandomParams RandomParams = new();
     #endregion
 
@@ -108,8 +111,10 @@ public class BaseMeasurementTests
     public void GetConstantExchangeRateCollection_returns_expected()
     {
         // Arrange
-        baseMeasurement.RestoreConstantExchangeRates();
-        IDictionary<object, decimal> expected = GetExchangeRateCollection();
+        measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        measureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(measureUnit);
+        baseMeasurement = new BaseMeasurementChild(factory, measureUnit);
+        IDictionary<object, decimal> expected = BaseMeasurementVariant.GetConstantExchangeRateCollection(measureUnitTypeCode);
 
         // Act
         var actual = baseMeasurement.GetConstantExchangeRateCollection();
@@ -150,6 +155,62 @@ public class BaseMeasurementTests
         Assert.AreEqual(name, actual);
     }
     #endregion
+
+    #region GetCustomName()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetCustomName_returns_null()
+    {
+        // Arrange
+        // Act
+        var actual = baseMeasurement.GetCustomName(measureUnit);
+
+        // Assert
+        Assert.AreEqual(name, actual);
+    }
+
+    // TODO Measurement
+    //[TestMethod, TestCategory("UnitTest")]
+    //public void GetCustomName_returns_expected()
+    //{
+    //    // Arrange
+    //    measureUnit = RandomParams.GetRandomValidMeasureUnit();
+    //    baseMeasurement = new BaseMeasurementChild(factory, measureUnit);
+    //    name = Guid.NewGuid().ToString();
+    //    baseMeasurement.SetCustomName(measureUnit, name);
+
+    //    // Act
+    //    var actual = baseMeasurement.GetCustomName();
+
+    //    // Assert
+    //    Assert.AreEqual(name, actual);
+    //}
+    #endregion
+
+    #region GetCustomNameCollection
+    #region GetCustomNameCollection()
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetCustomNameCollectionArgArrayList), DynamicDataSourceType.Method)]
+    public void GetCustomNameCollection_returns_expected(IDictionary<object, string> expected)
+    {
+        // Arrange
+        foreach (KeyValuePair<object, string> item in expected)
+        {
+            baseMeasurement.SetCustomName((Enum)item.Key, item.Value);
+        }
+
+        // Act
+        var actual = baseMeasurement.GetCustomNameCollection();
+
+        // Assert
+        Assert.IsTrue(expected.SequenceEqual(actual));
+    }
+    #endregion
+
+    #region GetCustomNameCollection(MeasureUnitTypeCode)
+
+    #endregion
+    #endregion
+
     #endregion
 
     #endregion
@@ -163,6 +224,11 @@ public class BaseMeasurementTests
     private static IEnumerable<object[]> GetInvalidGetCustomNameArgArrayList()
     {
         return DynamicDataSources.GetInvalidGetCustomNameArgArrayList();
+    }
+
+    private static IEnumerable<object[]> GetCustomNameCollectionArgArrayList()
+    {
+        return DynamicDataSources.GetCustomNameCollectionArgArrayList();
     }
     #endregion
 

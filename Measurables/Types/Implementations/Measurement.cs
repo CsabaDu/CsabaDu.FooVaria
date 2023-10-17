@@ -98,7 +98,7 @@ internal sealed class Measurement : BaseMeasurement, IMeasurement
 
         foreach (Enum item in customMeasureUnits)
         {
-            if (!GetExchangeRateCollection().ContainsKey(item))
+            if (!ExchangeRateCollection.ContainsKey(item))
             {
                 yield return item;
             }

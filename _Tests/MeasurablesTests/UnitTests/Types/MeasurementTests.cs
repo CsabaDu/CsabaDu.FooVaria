@@ -83,7 +83,7 @@ namespace CsabaDu.FooVaria.Tests.MeasurablesTests.UnitTests.Types
         {
             // Arrange
             MeasureUnit = RandomParams.GetRandomValidMeasureUnit();
-            decimal exchangeRate = BaseMeasurement.GetExchangeRateCollection().FirstOrDefault(x => x.Key.Equals(MeasureUnit)).Value;
+            decimal exchangeRate = BaseMeasurement.ExchangeRateCollection.FirstOrDefault(x => x.Key.Equals(MeasureUnit)).Value;
 
             // Act
             var actual = new Measurement(Factory, MeasureUnit);

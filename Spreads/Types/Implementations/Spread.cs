@@ -164,7 +164,7 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
 
             try
             {
-                ValidateQuantity((double)spreadMeasure.Quantity);
+                ValidateQuantity(quantity);
             }
             catch (ArgumentOutOfRangeException)
             {

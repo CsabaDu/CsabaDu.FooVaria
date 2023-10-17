@@ -1,5 +1,3 @@
-using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Factories;
-
 namespace CsabaDu.FooVaria.Tests.CommonTests.UnitTests.Types;
 
 [TestClass, TestCategory("UnitTest")]

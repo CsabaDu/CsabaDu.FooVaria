@@ -15,6 +15,8 @@ internal class DynamicDataSources
     private IBaseMeasurable baseMeasurable;
     private ICommonBase commonBase;
     private IMeasurable measurable;
+    private IDictionary<object, string> nameCollection;
+    private IBaseMeasurement baseMeasurement;
 
     #region Readonly fileds
     private readonly RandomParams RandomParams = new();
@@ -335,6 +337,37 @@ internal class DynamicDataSources
         }
     }
     #endregion
+
+    #region MeasureUnitTypeCode, IDictionary<object, string>
+    protected class MeasureUnitTypeCode_DictionaryObjectString_args : MeasureUnitTypeCode_arg
+    {
+        internal IDictionary<object, string> NameCollection { get; init; }
+
+        public override object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                MeasureUnitTypeCode,
+                NameCollection,
+            };
+        }
+    }
+    #endregion
+    #endregion
+
+    #region IDictionary<object, string>
+    protected class DictionaryObjectString_arg : ObjectArray
+    {
+        internal IDictionary<object, string> NameCollection { get; init; }
+
+        public override object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                NameCollection,
+            };
+        }
+    }
     #endregion
     #endregion
 
@@ -811,6 +844,64 @@ internal class DynamicDataSources
         }
         #endregion
     }
+
+    internal IEnumerable<object[]> GetCustomNameCollectionArgArrayList()
+    {
+        nameCollection = new Dictionary<object, string>();
+        yield return toObjectArray();
+
+        measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        name = Guid.NewGuid().ToString();
+        nameCollection.Add(measureUnit, name);
+        yield return toObjectArray();
+
+        measureUnit = RandomParams.GetRandomValidMeasureUnit(measureUnit);
+        name = Guid.NewGuid().ToString();
+        nameCollection.Add(measureUnit, name);
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            return new DictionaryObjectString_arg
+            {
+                NameCollection = nameCollection,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> GetMeasureUnitTypeCodeCustomNameCollectionArgsArrayList()
+    {
+        measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        measureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(measureUnit);
+        nameCollection = new Dictionary<object, string>();
+        yield return toObjectArray();
+
+        name = Guid.NewGuid().ToString();
+        nameCollection.Add(measureUnit, name);
+        yield return toObjectArray();
+
+        measureUnit = RandomParams.GetRandomDefaultMeasureUnit(RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
+        name = Guid.NewGuid().ToString();
+        nameCollection.Add(measureUnit, name);
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            return new MeasureUnitTypeCode_DictionaryObjectString_args
+            {
+                MeasureUnitTypeCode = measureUnitTypeCode,
+                NameCollection = nameCollection,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+    }
+
+
 
     #endregion
 }

@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Variants;
+﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Common.Variants;
 
 public class BaseMeasurableVariant
 {
