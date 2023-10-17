@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Measurables", "Measurables\Measurables.csproj", "{1D382C47-2CD3-486B-A4D4-94A9BAAA1194}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spreads", "Spreads\Spreads.csproj", "{90449B9B-F322-4063-89D5-A5E8E98A33A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spreads", "Spreads\Spreads.csproj", "{90449B9B-F322-4063-89D5-A5E8E98A33A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shapes", "Shapes\Shapes.csproj", "{D523461C-D1BD-47C6-8B6F-7D29B46EC0F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{90449B9B-F322-4063-89D5-A5E8E98A33A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90449B9B-F322-4063-89D5-A5E8E98A33A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90449B9B-F322-4063-89D5-A5E8E98A33A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D523461C-D1BD-47C6-8B6F-7D29B46EC0F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D523461C-D1BD-47C6-8B6F-7D29B46EC0F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D523461C-D1BD-47C6-8B6F-7D29B46EC0F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D523461C-D1BD-47C6-8B6F-7D29B46EC0F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
+﻿using CsabaDu.FooVaria.Measurables.Factories.Implementations;
+
+namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
 
 internal class DynamicDataSources
 {
@@ -74,6 +76,37 @@ internal class DynamicDataSources
         }
     }
     #endregion
+    #endregion
+    #endregion
+
+    #region string
+    protected class String_arg : ObjectArray
+    {
+        internal string Name { get; init; }
+
+        public override object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                Name,
+            };
+        }
+    }
+
+    #region string, IMeasurementFactory
+    protected class String_IMeasurementFactory_args : String_arg
+    {
+        internal IMeasurementFactory Factory { get; init; }
+
+        public override object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                Name,
+                Factory,
+            };
+        }
+    }
     #endregion
     #endregion
 
@@ -255,6 +288,22 @@ internal class DynamicDataSources
         }
     }
     #endregion
+    #endregion
+
+    #region Enum, string
+    protected class Enum_string_args : Enum_arg
+    {
+        internal string Name { get; init; }
+
+        public override object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                MeasureUnit,
+                Name,
+            };
+        }
+    }
     #endregion
     #endregion
 
@@ -939,6 +988,29 @@ internal class DynamicDataSources
         }
         #endregion
     }
-    
+
+    internal IEnumerable<object[]> GetMeasurementFactoryNameArgsArrayList()
+    {
+        factory = null;
+        name = ParamNames.factory;
+        yield return toObjectArray();
+
+        factory = new MeasurementFactory();
+        name = ParamNames.measureUnit;
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            return new String_IMeasurementFactory_args
+            {
+                Name = name,
+                Factory = (IMeasurementFactory)factory,
+            }
+            .ToObjectArray();
+        }
+
+        #endregion
+    }
     #endregion
 }

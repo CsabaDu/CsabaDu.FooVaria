@@ -143,7 +143,7 @@ public static class MeasureUnitTypes
 
     public static void ValidateMeasureUnit(Enum measureUnit)
     {
-        _ = DefinedMeasureUnit(NullChecked(measureUnit, nameof(measureUnit)));
+        _ = DefinedMeasureUnit(measureUnit);
     }
 
     public static void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode measureUnitTypeCode)

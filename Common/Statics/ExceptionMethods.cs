@@ -15,7 +15,7 @@ public static class ExceptionMethods
     #region InvalidEnumArgumentException
     public static T Defined<T>(T param, string? paramName, Type enumType) where T : Enum
     {
-        if (Enum.IsDefined(enumType, param)) return param;
+        if (Enum.IsDefined(enumType, NullChecked(param, paramName))) return param;
 
         throw new InvalidEnumArgumentException(paramName, (int)(object)param, enumType);
     }
@@ -29,12 +29,11 @@ public static class ExceptionMethods
 
     public static T DefinedMeasureUnit<T>(T measureUnit) where T : Enum
     {
-        Type measureUnitType = measureUnit.GetType();
+        string name = nameof(measureUnit);
 
-        if (MeasureUnitTypes.GetMeasureUnitTypes().Contains(measureUnit.GetType())
-            && Enum.IsDefined(measureUnitType, measureUnit)) return measureUnit;
+        if (MeasureUnitTypes.IsDefinedMeasureUnit(NullChecked(measureUnit, name))) return measureUnit;
 
-        throw new InvalidEnumArgumentException(nameof(measureUnit), (int)(object)measureUnit, typeof(T));
+        throw new InvalidEnumArgumentException(name, (int)(object)measureUnit, typeof(T));
     }
 
     public static InvalidEnumArgumentException InvalidMeasureUnitEnumArgumentException(Enum measureUnit)
