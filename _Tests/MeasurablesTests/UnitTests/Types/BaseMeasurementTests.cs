@@ -1,7 +1,5 @@
 ﻿using CsabaDu.FooVaria.Common.Statics;
-using CsabaDu.FooVaria.Tests.TestSupport.Common.Variants;
 using CsabaDu.FooVaria.TestSupport.Variants.Measurables;
-using static CsabaDu.FooVaria.Measurables.Types.Implementations.BaseMeasurement;
 
 namespace CsabaDu.FooVaria.Tests.MeasurablesTests.UnitTests.Types;
 
@@ -126,7 +124,7 @@ public class BaseMeasurementTests
 
     #region GetConstantExchangeRateCollection(MeasureUnitTypeCode)
     [TestMethod, TestCategory("UnitTest")]
-    public void GetConstantExchangeRateCollection_invalidParam_MeasureUnitTypeCode_throws_InvalidEnumArgumentException()
+    public void GetConstantExchangeRateCollection_invalidArg_MeasureUnitTypeCode_throws_InvalidEnumArgumentException()
     {
         // Arrange
         measureUnitTypeCode = SampleParams.NotDefinedMeasureUnitTypeCode;
@@ -140,7 +138,7 @@ public class BaseMeasurementTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void GetConstantExchangeRateCollection_validParam_MeasureUnitTypeCode_returns_expected()
+    public void GetConstantExchangeRateCollection_validArg_MeasureUnitTypeCode_returns_expected()
     {
         measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
         IDictionary<object, decimal> expected = BaseMeasurementVariant.GetConstantExchangeRateCollection(measureUnitTypeCode);
@@ -214,6 +212,7 @@ public class BaseMeasurementTests
     //    Assert.AreEqual(name, actual);
     //}
     //#endregion
+    #endregion
 
     #region GetCustomNameCollection
     #region GetCustomNameCollection()
@@ -236,11 +235,43 @@ public class BaseMeasurementTests
     #endregion
 
     #region GetCustomNameCollection(MeasureUnitTypeCode)
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetCustomNameCollection_invalidArg_MeasureUnitTypeCode_throws_InvalidEnumArgumentException()
+    {
+        // Arrange
+        measureUnitTypeCode = SampleParams.NotDefinedMeasureUnitTypeCode;
 
+        // Act
+        void attempt() => _ = baseMeasurement.GetCustomNameCollection(measureUnitTypeCode);
+
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(ParamNames.measureUnitTypeCode, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetCustomNameCollectionMeasureUnitTypeCodeArgArrayList), DynamicDataSourceType.Method)]
+    public void GetCustomNameCollection_validArg_MeasureUnitTypeCode_returns_expected(IDictionary<object, string> expected, MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        // Arrange
+        measureUnit = MeasureUnitTypes.GetDefaultMeasureUnit(RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
+        name = Guid.NewGuid().ToString();
+        baseMeasurement.SetCustomName(measureUnit, name);
+
+        foreach (KeyValuePair<object, string> item in expected)
+        {
+            baseMeasurement.SetCustomName((Enum)item.Key, item.Value);
+        }
+
+        // Act
+        var actual = baseMeasurement.GetCustomNameCollection(measureUnitTypeCode);
+
+        // Assert
+        Assert.IsTrue(expected.SequenceEqual(actual));
+    }
     #endregion
     #endregion
 
-    #endregion
 
     #endregion
 
@@ -259,7 +290,11 @@ public class BaseMeasurementTests
     {
         return DynamicDataSources.GetCustomNameCollectionArgArrayList();
     }
-    #endregion
 
+    private static IEnumerable<object[]> GetCustomNameCollectionMeasureUnitTypeCodeArgArrayList()
+    {
+        return DynamicDataSources.GetCustomNameCollectionMeasureUnitTypeCodeArgArrayList();
+    }
+    #endregion
 }
 

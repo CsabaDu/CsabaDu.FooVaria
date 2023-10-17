@@ -366,6 +366,23 @@ internal class DynamicDataSources
             };
         }
     }
+
+    #region IDictionary<object, string>, MeasureUnitTypeCode
+    protected class DictionaryObjectString_MeasureUnitTypeCode_args : DictionaryObjectString_arg
+    {
+        internal MeasureUnitTypeCode MeasureUnitTypeCode { get; init; }
+
+        public override object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                NameCollection,
+                MeasureUnitTypeCode,
+            };
+        }
+    }
+
+    #endregion
     #endregion
     #endregion
 
@@ -899,7 +916,29 @@ internal class DynamicDataSources
         #endregion
     }
 
+    internal IEnumerable<object[]> GetCustomNameCollectionMeasureUnitTypeCodeArgArrayList()
+    {
+        measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        measureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(measureUnit);
+        nameCollection = new Dictionary<object, string>();
+        yield return toObjectArray();
 
+        name = Guid.NewGuid().ToString();
+        nameCollection.Add(measureUnit, name);
+        yield return toObjectArray();
 
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            return new DictionaryObjectString_MeasureUnitTypeCode_args
+            {
+                NameCollection = nameCollection,
+                MeasureUnitTypeCode = measureUnitTypeCode,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+    }
+    
     #endregion
 }
