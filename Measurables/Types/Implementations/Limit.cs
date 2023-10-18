@@ -113,6 +113,11 @@ internal sealed class Limit : BaseMeasure, ILimit
             && base.Equals(other);
     }
 
+    public override ILimit? ExchangeTo(Enum measureUnit)
+    {
+        return ExchangeTo(this, measureUnit);
+    }
+
     public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit)
     {
         return GetLimit(measureUnit, quantity, default);

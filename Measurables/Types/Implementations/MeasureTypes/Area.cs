@@ -9,6 +9,11 @@ internal sealed class Area : Measure, IArea
     #endregion
 
     #region Public methods
+    public override IArea? ExchangeTo(Enum measureUnit)
+    {
+        return ExchangeTo(this, measureUnit);
+    }
+
     public override IArea GetMeasure(IBaseMeasure baseMeasure)
     {
         return GetMeasure(this, baseMeasure);

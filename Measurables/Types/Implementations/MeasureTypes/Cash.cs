@@ -9,6 +9,11 @@ internal sealed class Cash : Measure, ICash
     #endregion
 
     #region Public methods
+    public override ICash? ExchangeTo(Enum measureUnit)
+    {
+        return ExchangeTo(this, measureUnit);
+    }
+
     public ICash GetCustomMeasure(decimal quantity, Currency measureUnit, decimal exchangeRate, string customName)
     {
         return GetMeasure(this, quantity, measureUnit, exchangeRate, customName);

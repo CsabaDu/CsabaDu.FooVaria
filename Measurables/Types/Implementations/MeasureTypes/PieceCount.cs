@@ -9,6 +9,11 @@ internal sealed class PieceCount : Measure, IPieceCount
     #endregion
 
     #region Public methods
+    public override IPieceCount? ExchangeTo(Enum measureUnit)
+    {
+        return ExchangeTo(this, measureUnit);
+    }
+
     public IPieceCount GetCustomMeasure(long quantity, Pieces measureUnit, decimal exchangeRate, string customName)
     {
         return GetMeasure(this, quantity, measureUnit, exchangeRate, customName);

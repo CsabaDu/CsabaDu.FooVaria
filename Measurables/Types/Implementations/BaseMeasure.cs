@@ -51,17 +51,30 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return exchanged.ToQuantity(QuantityTypeCode);
     }
 
-    public IBaseMeasure? ExchangeTo(Enum measureUnit)
+    public abstract IBaseMeasure? ExchangeTo(Enum measureUnit);
+    //{
+    //    if (!IsExchangeableTo(measureUnit)) return null;
+
+    //    decimal exchangeRate = Measurement.GetExchangeRate(measureUnit);
+
+    //    ValueType? quantity = ExchangeTo(exchangeRate);
+
+    //    if (quantity == null) return null;
+
+    //    return GetBaseMeasure(quantity, measureUnit);
+    //}
+
+    protected static T? ExchangeTo<T>(T baseMeasure, Enum measureUnit) where T : class, IBaseMeasure
     {
-        if (!IsExchangeableTo(measureUnit)) return null;
+        if (!baseMeasure.IsExchangeableTo(measureUnit)) return null;
 
-        decimal exchangeRate = Measurement.GetExchangeRate(measureUnit);
+        decimal exchangeRate = baseMeasure.Measurement.GetExchangeRate(measureUnit);
 
-        ValueType? quantity = ExchangeTo(exchangeRate);
+        ValueType? quantity = baseMeasure.ExchangeTo(exchangeRate);
 
         if (quantity == null) return null;
 
-        return GetBaseMeasure(quantity, measureUnit);
+        return (T)baseMeasure.GetBaseMeasure(quantity, measureUnit);
     }
 
     public IBaseMeasure GetBaseMeasure(IMeasurable other)

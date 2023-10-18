@@ -19,6 +19,11 @@ internal sealed class Volume : Measure, IVolume
         return ConvertMeasure<IWeight, WeightUnit>(this, ConvertMode.Divide);
     }
 
+    public override IVolume? ExchangeTo(Enum measureUnit)
+    {
+        return ExchangeTo(this, measureUnit);
+    }
+
     public IVolume GetDefaultRateComponent()
     {
         return GetDefault(this);

@@ -19,6 +19,11 @@ internal sealed class Extent : Measure, IExtent
         return ConvertMeasure<IDistance, DistanceUnit>(this, ConvertMode.Divide);
     }
 
+    public override IExtent? ExchangeTo(Enum measureUnit)
+    {
+        return ExchangeTo(this, measureUnit);
+    }
+
     public IExtent GetDefaultRateComponent()
     {
         return GetDefault(this);

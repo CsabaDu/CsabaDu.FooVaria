@@ -97,6 +97,11 @@ internal sealed class Denominator : BaseMeasure, IDenominator
             && base.Equals(other);
     }
 
+    public override IDenominator? ExchangeTo(Enum measureUnit)
+    {
+        return ExchangeTo(this, measureUnit);
+    }
+
     public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit)
     {
         return GetDenominator(measureUnit, quantity);
