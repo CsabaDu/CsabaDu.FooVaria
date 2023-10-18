@@ -51,32 +51,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return exchanged.ToQuantity(QuantityTypeCode);
     }
 
-    public abstract IBaseMeasure? ExchangeTo(Enum measureUnit);
-    //{
-    //    if (!IsExchangeableTo(measureUnit)) return null;
-
-    //    decimal exchangeRate = Measurement.GetExchangeRate(measureUnit);
-
-    //    ValueType? quantity = ExchangeTo(exchangeRate);
-
-    //    if (quantity == null) return null;
-
-    //    return GetBaseMeasure(quantity, measureUnit);
-    //}
-
-    protected static T? ExchangeTo<T>(T baseMeasure, Enum measureUnit) where T : class, IBaseMeasure
-    {
-        if (!baseMeasure.IsExchangeableTo(measureUnit)) return null;
-
-        decimal exchangeRate = baseMeasure.Measurement.GetExchangeRate(measureUnit);
-
-        ValueType? quantity = baseMeasure.ExchangeTo(exchangeRate);
-
-        if (quantity == null) return null;
-
-        return (T)baseMeasure.GetBaseMeasure(quantity, measureUnit);
-    }
-
     public IBaseMeasure GetBaseMeasure(IMeasurable other)
     {
         return (IBaseMeasure) GetFactory().Create(other);
@@ -300,6 +274,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     #endregion
 
     #region Abstract methods
+    public abstract IBaseMeasure? ExchangeTo(Enum measureUnit);
     public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit);
     public abstract LimitMode? GetLimitMode();
     #endregion
@@ -319,6 +294,18 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     }
 
     #region Static methods
+    protected static T? ExchangeTo<T>(T baseMeasure, Enum measureUnit) where T : class, IBaseMeasure
+    {
+        if (!baseMeasure.IsExchangeableTo(measureUnit)) return null;
+
+        decimal exchangeRate = baseMeasure.Measurement.GetExchangeRate(measureUnit);
+        ValueType? quantity = baseMeasure.ExchangeTo(exchangeRate);
+
+        if (quantity == null) return null;
+
+        return (T)baseMeasure.GetBaseMeasure(quantity, measureUnit);
+    }
+
     protected static void ValidateBaseMeasure<T>(T commonBase, IFooVariaObject other) where T : class, IBaseMeasure
     {
         T baseMeasure = GetValidBaseMeasurable(commonBase, other);
