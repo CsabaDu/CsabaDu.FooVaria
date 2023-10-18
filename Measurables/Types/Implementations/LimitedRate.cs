@@ -39,11 +39,6 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         return HashCode.Combine(limitedRate as IRate, limitedRate.Limit);
     }
 
-    public override ILimit? GetLimit()
-    {
-        return Limit;
-    }
-
     public ILimitedRate GetLimitedRate(IMeasure numerator, string name, decimal quantity, ILimit limit)
     {
         return GetFactory().Create(numerator, name, quantity, limit);
@@ -121,9 +116,19 @@ internal sealed class LimitedRate : Rate, ILimitedRate
             && base.Equals(other);
     }
 
+    public override ILimitedRate? ExchangeTo(IDenominator denominator)
+    {
+        return ExchangeTo(this, denominator);
+    }
+
     public override ILimitedRateFactory GetFactory()
     {
         return (ILimitedRateFactory)Factory;
+    }
+
+    public override ILimit? GetLimit()
+    {
+        return Limit;
     }
 
     public override IRate GetRate(IMeasure numerator, IDenominator denominator, ILimit? limit)

@@ -86,21 +86,25 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         #endregion
 
         #region Public methods
-        public int CompareTo(T? other)
+        public int CompareTo(T? spreadMeasure)
         {
-            return SpreadMeasure.CompareTo(other);
+            return SpreadMeasure.CompareTo(spreadMeasure);
         }
 
-        public bool Equals(T? other)
+        public bool Equals(T? spreadMeasure)
         {
-            return SpreadMeasure.Equals(other);
+            return SpreadMeasure.Equals(spreadMeasure);
         }
 
-        public bool? FitsIn(T? other, LimitMode? limitMode)
+        public bool? FitsIn(T? spreadMeasure, LimitMode? limitMode)
         {
-            return SpreadMeasure.FitsIn(other, limitMode);
+            return SpreadMeasure.FitsIn(spreadMeasure, limitMode);
         }
 
+        public U GetMeasureUnit()
+        {
+            return (U)SpreadMeasure.Measurement.MeasureUnit;
+        }
         public double GetQuantity()
         {
             return (double)SpreadMeasure.Quantity;

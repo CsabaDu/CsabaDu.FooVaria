@@ -107,6 +107,11 @@ internal sealed class FlatRate : Rate, IFlatRate
             && base.Equals(other);
     }
 
+    public override IFlatRate? ExchangeTo(IDenominator denominator)
+    {
+        return ExchangeTo(this, denominator);
+    }
+
     public override IFlatRateFactory GetFactory()
     {
         return (IFlatRateFactory)Factory;

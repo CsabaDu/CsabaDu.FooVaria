@@ -58,13 +58,22 @@ internal abstract class Rate : Measurable, IRate
             && Numerator.Equals(other?.Numerator);
     }
 
-    public IRate? ExchangeTo(IDenominator denominator)
-    {
-        if (denominator?.IsExchangeableTo(MeasureUnitTypeCode) != true) return null;
+    public abstract IRate? ExchangeTo(IDenominator denominator);
+    //{
+    //    if (denominator?.IsExchangeableTo(MeasureUnitTypeCode) != true) return null;
         
-        IMeasure numerator = Numerator.Divide(Denominator.ProportionalTo(denominator!));
+    //    IMeasure numerator = Numerator.Divide(Denominator.ProportionalTo(denominator!));
 
-        return GetRate(numerator, denominator, GetLimit());
+    //    return GetRate(numerator, denominator, GetLimit());
+    //}
+
+    protected static T? ExchangeTo<T>(T rate, IDenominator denominator) where T : class, IRate
+    {
+        if (denominator?.IsExchangeableTo(rate.MeasureUnitTypeCode) != true) return null;
+
+        IMeasure numerator = rate.Numerator.Divide(rate.Denominator.ProportionalTo(denominator!));
+
+        return (T)rate.GetRate(numerator, denominator, rate.GetLimit());
     }
 
     public decimal GetDefaultQuantity()
