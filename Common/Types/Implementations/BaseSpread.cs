@@ -48,5 +48,3 @@ public abstract class BaseSpread : BaseMeasurable, IBaseSpread, IQuantifiable
     #endregion
     #endregion
 }
-
-
