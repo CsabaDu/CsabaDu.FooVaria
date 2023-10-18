@@ -21,15 +21,15 @@
         {
         }
 
-        public BaseRateChild(IFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
+        public BaseRateChild(IBaseRateFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
         {
         }
 
-        public BaseRateChild(IFactory factory, Enum measureUnit) : base(factory, measureUnit)
+        public BaseRateChild(IBaseRateFactory factory, Enum measureUnit) : base(factory, measureUnit)
         {
         }
 
-        public BaseRateChild(IFactory factory, IBaseMeasurable baseMeasurable) : base(factory, baseMeasurable)
+        public BaseRateChild(IBaseRateFactory factory, IBaseMeasurable baseMeasurable) : base(factory, baseMeasurable)
         {
         }
 
@@ -56,6 +56,22 @@
         public override bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
         {
             throw new NotImplementedException();
+        }
+
+
+        public override void Validate(IFooVariaObject fooVariaObject)
+        {
+            base.Validate(fooVariaObject);
+        }
+
+        public override void ValidateMeasureUnit(Enum measureUnit)
+        {
+            base.ValidateMeasureUnit(measureUnit);
+        }
+
+        public override void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
+        {
+            base.ValidateMeasureUnitTypeCode(measureUnitTypeCode);
         }
     }
 }

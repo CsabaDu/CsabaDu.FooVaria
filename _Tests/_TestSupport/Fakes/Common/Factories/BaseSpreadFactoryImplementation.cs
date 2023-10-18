@@ -9,7 +9,7 @@ internal sealed class BaseSpreadFactoryImplementation : IBaseSpreadFactory
         throw new NotImplementedException();
     }
 
-    public IFactory GetMeasureFactory()
+    public IBaseMeasurableFactory GetMeasureFactory()
     {
         throw new NotImplementedException();
     }

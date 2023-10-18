@@ -4,10 +4,17 @@ namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
 {
     public abstract class SpreadFactory : ISpreadFactory
     {
+        #region Constructors
+        public SpreadFactory(IMeasureFactory measureFactory)
+        {
+            _ = NullChecked(measureFactory, nameof(measureFactory));
+        }
+        #endregion
+
         #region Public methods
         #region Abstract methods
         public abstract IBaseSpread Create(ISpreadMeasure spreadMeasure);
-        public abstract IFactory GetMeasureFactory();
+        public abstract IBaseMeasurableFactory GetMeasureFactory();
         #endregion
         #endregion
     }
@@ -15,9 +22,9 @@ namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
     public abstract class SpreadFactory<T, U> : SpreadFactory, ISpreadFactory<T, U> where T : class, ISpread where U : class, IMeasure, ISpreadMeasure
     {
         #region Constructors
-        public SpreadFactory(IMeasureFactory measureFactory)
+        public SpreadFactory(IMeasureFactory measureFactory) : base(measureFactory)
         {
-            MeasureFactory = NullChecked(measureFactory, nameof(measureFactory));
+            MeasureFactory = measureFactory;
         }
         #endregion
 

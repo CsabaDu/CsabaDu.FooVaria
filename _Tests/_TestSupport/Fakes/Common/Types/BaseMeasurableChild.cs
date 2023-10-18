@@ -2,15 +2,15 @@
 
 internal sealed class BaseMeasurableChild : BaseMeasurable
 {
-    public BaseMeasurableChild(IFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
+    public BaseMeasurableChild(IBaseMeasurableFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
     {
     }
 
-    public BaseMeasurableChild(IFactory factory, Enum measureUnit) : base(factory, measureUnit)
+    public BaseMeasurableChild(IBaseMeasurableFactory factory, Enum measureUnit) : base(factory, measureUnit)
     {
     }
 
-    public BaseMeasurableChild(IFactory factory, IBaseMeasurable baseMeasurable) : base(factory, baseMeasurable)
+    public BaseMeasurableChild(IBaseMeasurableFactory factory, IBaseMeasurable baseMeasurable) : base(factory, baseMeasurable)
     {
     }
 

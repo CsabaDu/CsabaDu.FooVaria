@@ -5,17 +5,17 @@ namespace CsabaDu.FooVaria.Common.Types.Implementations;
 public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
 {
     #region Constructors
-    protected BaseMeasurable(IFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory)
+    protected BaseMeasurable(IBaseMeasurableFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory)
     {
         MeasureUnitTypeCode = Defined(measureUnitTypeCode, nameof(measureUnitTypeCode));
     }
 
-    protected BaseMeasurable(IFactory factory, Enum measureUnit) : base(factory)
+    protected BaseMeasurable(IBaseMeasurableFactory factory, Enum measureUnit) : base(factory)
     {
         MeasureUnitTypeCode = GetMeasureUnitTypeCode(measureUnit);
     }
 
-    protected BaseMeasurable(IFactory factory, IBaseMeasurable baseMeasurable) : base(factory, baseMeasurable)
+    protected BaseMeasurable(IBaseMeasurableFactory factory, IBaseMeasurable baseMeasurable) : base(factory, baseMeasurable)
     {
         MeasureUnitTypeCode = baseMeasurable.MeasureUnitTypeCode;
     }
@@ -83,6 +83,10 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
             && other.MeasureUnitTypeCode == MeasureUnitTypeCode;
     }
 
+    public override IBaseMeasurableFactory GetFactory()
+    {
+        return (IBaseMeasurableFactory)Factory;
+    }
     public override int GetHashCode()
     {
         return HashCode.Combine(typeof(IBaseMeasurable), MeasureUnitTypeCode);

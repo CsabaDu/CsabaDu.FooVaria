@@ -14,14 +14,14 @@ public class BaseMeasurableTests
     public void InitializeBaseMeasurableTests()
     {
         measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
-        factory = new FactoryImplementation();
+        factory = new BaseMeasurableFactoryImplementation();
         baseMeasurable = new BaseMeasurableChild(factory, measureUnitTypeCode);
     }
     #endregion
 
     #region Private fields
     private IBaseMeasurable baseMeasurable;
-    private IFactory factory;
+    private IBaseMeasurableFactory factory;
     private Enum measureUnit;
     private MeasureUnitTypeCode measureUnitTypeCode;
 
@@ -57,7 +57,7 @@ public class BaseMeasurableTests
     public void BaseMeasurable_validArg_IFactory_invalidArg_MeasureunitTypeCode_throws_InvalidEnumArgumentException()
     {
         // Arrange
-        factory = new FactoryImplementation();
+        factory = new BaseMeasurableFactoryImplementation();
         measureUnitTypeCode = SampleParams.NotDefinedMeasureUnitTypeCode;
 
         // Act
@@ -72,7 +72,7 @@ public class BaseMeasurableTests
     public void BaseMeasurable_validArgs_IFactory_MeasureunitTypeCode_creates()
     {
         // Arrange
-        factory = new FactoryImplementation();
+        factory = new BaseMeasurableFactoryImplementation();
         measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
 
         // Act
@@ -104,7 +104,7 @@ public class BaseMeasurableTests
     public void BaseMeasurable_validArg_IFactory_nullArg_Enum_throws_ArgumentNullException()
     {
         // Arrange
-        factory = new FactoryImplementation();
+        factory = new BaseMeasurableFactoryImplementation();
         measureUnit = null;
 
         // Act
@@ -120,7 +120,7 @@ public class BaseMeasurableTests
     public void BaseMeasurable_validArg_IFactory_invalidArg_Enum_throws_InvalidEnumArgumentException(Enum measureUnit)
     {
         // Arrange
-        factory = new FactoryImplementation();
+        factory = new BaseMeasurableFactoryImplementation();
 
         // Act
         void attempt() => _ = new BaseMeasurableChild(factory, measureUnit);
@@ -134,7 +134,7 @@ public class BaseMeasurableTests
     public void BaseMeasurable_validArgs_IFactory_Enum_creates()
     {
         // Arrange
-        factory = new FactoryImplementation();
+        factory = new BaseMeasurableFactoryImplementation();
         measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
         measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitTypeCode);
 
@@ -167,7 +167,7 @@ public class BaseMeasurableTests
     public void BaseMeasurable_validArg_IFactory_nullArg_IBaseMeasurable_throws_ArgumentNullException()
     {
         // Arrange
-        factory = new FactoryImplementation();
+        factory = new BaseMeasurableFactoryImplementation();
         baseMeasurable = null;
 
         // Act
@@ -182,7 +182,7 @@ public class BaseMeasurableTests
     public void BaseMeasurable_validArgs_IFactory_IBaseMeasurable_creates()
     {
         // Arrange
-        factory = new FactoryImplementation();
+        factory = new BaseMeasurableFactoryImplementation();
         measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
         baseMeasurable = new BaseMeasurableChild(factory, measureUnitTypeCode);
 
@@ -275,6 +275,20 @@ public class BaseMeasurableTests
 
         // Assert
         Assert.IsTrue(expected.SequenceEqual(actual));
+    }
+    #endregion
+    #endregion
+
+    #region GetFactory
+    #region GetFactory()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetFactory_returns_expected()
+    {
+        var actual = baseMeasurable.GetFactory();
+
+        // Assert
+        Assert.IsNotNull(actual);
+        Assert.IsInstanceOfType(baseMeasurable.GetFactory(), typeof(IBaseMeasurableFactory));
     }
     #endregion
     #endregion
