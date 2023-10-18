@@ -17,9 +17,9 @@ internal sealed class BulkSurface : Spread<IArea, AreaUnit>, IBulkSurface
     {
         IArea? exchanged = (IArea?)SpreadMeasure.ExchangeTo(measureUnit);
 
-        if (exchanged != null) return null;
+        if (exchanged == null) return null;
 
-        return GetFactory().Create(exchanged!);
+        return GetFactory().Create(exchanged);
     }
 
     public IBulkSurface GetBulkSurface(IExtent radius)

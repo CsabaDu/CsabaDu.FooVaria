@@ -28,9 +28,9 @@ internal sealed class BulkBody : Spread<IVolume, VolumeUnit>, IBulkBody
     {
         IVolume? exchanged = (IVolume?)SpreadMeasure.ExchangeTo(measureUnit);
 
-        if (exchanged != null) return null;
+        if (exchanged == null) return null;
 
-        return GetFactory().Create(exchanged!);
+        return GetFactory().Create(exchanged);
     }
 
     public override IBulkBodyFactory GetFactory()
