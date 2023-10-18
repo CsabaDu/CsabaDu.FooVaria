@@ -1,7 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Common.Types
+﻿namespace CsabaDu.FooVaria.Common.Types;
+
+public interface ISurface : IBaseSpread
 {
-    public interface ISurface : IBaseSpread<ISurface>
-    {
-    }
 }
 

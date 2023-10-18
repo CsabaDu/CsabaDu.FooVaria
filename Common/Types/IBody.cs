@@ -1,7 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Common.Types
+﻿namespace CsabaDu.FooVaria.Common.Types;
+
+public interface IBody : IBaseSpread
 {
-    public interface IBody : IBaseSpread<IBody>
-    {
-    }
 }
 

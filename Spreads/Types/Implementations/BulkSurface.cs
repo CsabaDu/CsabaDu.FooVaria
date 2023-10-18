@@ -13,13 +13,6 @@ internal sealed class BulkSurface : Spread<IArea, AreaUnit>, IBulkSurface
     #endregion
 
     #region Public methods
-    public ISurface GetBaseSpread(IBaseSpread other)
-    {
-        if (NullChecked(other, nameof(other)) is ISurface surface) return GetSpread(surface.GetSpreadMeasure());
-
-        throw ArgumentTypeOutOfRangeException(nameof(other), other);
-    }
-
     public IBulkSurface GetBulkSurface(IExtent radius)
     {
         return GetSpread(radius);
@@ -56,6 +49,13 @@ internal sealed class BulkSurface : Spread<IArea, AreaUnit>, IBulkSurface
     public override IBulkSurface GetSpread(params IExtent[] shapeExtents)
     {
         return GetFactory().Create(shapeExtents);
+    }
+
+    public override IBulkSurface GetSpread(IBaseSpread baseSppread)
+    {
+        if (NullChecked(baseSppread, nameof(baseSppread)) is ISurface surface) return GetSpread(surface.GetSpreadMeasure());
+
+        throw ArgumentTypeOutOfRangeException(nameof(baseSppread), baseSppread);
     }
     #endregion
     #endregion

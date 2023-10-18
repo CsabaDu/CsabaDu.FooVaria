@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Behaviors;
 
-public interface ILimiter<in T, in U> : IEqualityComparer<T> where T : class, IQuantifiable where U : class, ILimitable
+public interface ILimiter<in T, in U> : IEqualityComparer<T> where T : class, IQuantity where U : class, ILimitable
 {
     LimitMode GetLimitMode(T limiter);
 

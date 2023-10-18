@@ -6,6 +6,7 @@ namespace CsabaDu.FooVaria.Spreads.Types
     {
         ISpread GetSpread(ISpreadMeasure spreadMeasure);
         ISpread GetSpread(params IExtent[] shapeExtents);
+        ISpread GetSpread(IBaseSpread baseSppread);
     }
 
     public interface ISpread<T, U> : ISpread, ISpreadMeasure<T, U>, IFit<T>, IProportional<T, U>, IExchange<T, U> where T : class, IMeasure, ISpreadMeasure where U : struct, Enum

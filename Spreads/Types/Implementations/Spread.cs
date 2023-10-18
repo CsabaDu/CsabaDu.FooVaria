@@ -71,6 +71,7 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         #region Abstract methods
         public abstract ISpread GetSpread(ISpreadMeasure spreadMeasure);
         public abstract ISpread GetSpread(params IExtent[] shapeExtents);
+        public abstract ISpread GetSpread(IBaseSpread baseSppread);
         #endregion
         #endregion
     }

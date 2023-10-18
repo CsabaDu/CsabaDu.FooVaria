@@ -1,5 +1,4 @@
 ﻿using CsabaDu.FooVaria.Common;
-using CsabaDu.FooVaria.Common.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
@@ -50,7 +49,7 @@ internal abstract class Rate : Measurable, IRate
 
         if (!IsExchangeableTo(other)) throw new ArgumentOutOfRangeException(nameof(other));
 
-        return GetRateDefaultQuantity().CompareTo(other.GetRateDefaultQuantity());
+        return GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
     }
 
     public virtual bool Equals(IRate? other)
@@ -68,7 +67,7 @@ internal abstract class Rate : Measurable, IRate
         return GetRate(numerator, denominator, GetLimit());
     }
 
-    public decimal GetRateDefaultQuantity()
+    public decimal GetDefaultQuantity()
     {
         return Numerator.DefaultQuantity / Denominator.DefaultQuantity;
     }
@@ -76,6 +75,11 @@ internal abstract class Rate : Measurable, IRate
     public virtual ILimit? GetLimit()
     {
         return null;
+    }
+
+    public MeasureUnitTypeCode GetNumeratorMeasureUnitTypeCode()
+    {
+        return Numerator.MeasureUnitTypeCode;
     }
 
     public IBaseMeasure? GetRateComponent(RateComponentCode rateComponentCode)
@@ -96,7 +100,7 @@ internal abstract class Rate : Measurable, IRate
 
     public decimal ProportionalTo(IRate rate)
     {
-        return GetRateDefaultQuantity() / NullChecked(rate, nameof(rate)).GetRateDefaultQuantity();
+        return GetDefaultQuantity() / NullChecked(rate, nameof(rate)).GetDefaultQuantity();
     }
 
     public bool TryExchangeTo(IDenominator denominator, [NotNullWhen(true)] out IRate? exchanged)

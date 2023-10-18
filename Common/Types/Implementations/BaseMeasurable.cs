@@ -43,7 +43,7 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
 
     public Type GetMeasureUnitType()
     {
-        return MeasureUnitTypes.GetMeasureUnitType(MeasureUnitTypeCode);
+        return GetMeasureUnitType(MeasureUnitTypeCode);
     }
 
     public Type GetMeasureUnitType(MeasureUnitTypeCode measureUnitTypeCode)
@@ -113,6 +113,44 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
     public abstract IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes();
     public abstract bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode);
     #endregion
+
+    //public static Type GetMeasureUnitType(MeasureUnitTypeCode measureUnitTypeCode)
+    //{
+    //    ValidateMeasureUnitTypeCode(measureUnitTypeCode);
+
+    //    return MeasureUnitTypeCollection[measureUnitTypeCode];
+    //}
+
+    //public static MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum measureUnit)
+    //{
+    //    return MeasureUnitTypes.GetValidMeasureUnitTypeCode(measureUnit);
+    //}
+
+    //public static bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, Enum measureUnit)
+    //{
+    //    return MeasureUnitTypes.HasMeasureUnitTypeCode(measureUnitTypeCode, measureUnit!);
+    //}
+
+    //public static bool IsDefinedMeasureUnit(Enum measureUnit)
+    //{
+    //    return MeasureUnitTypes.IsDefinedMeasureUnit(measureUnit);
+    //}
+
+    //public static void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode measureUnitTypeCode)
+    //{
+    //    MeasureUnitTypes.ValidateMeasureUnit(measureUnit, measureUnitTypeCode);
+    //}
+
+    //public static void ValidateMeasureUnit(Enum measureUnit)
+    //{
+    //    MeasureUnitTypes.ValidateMeasureUnit(measureUnit);
+    //}
+
+    //public static void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
+    //{
+    //    MeasureUnitTypes.ValidateMeasureUnitTypeCode(measureUnitTypeCode);
+    //}
+
     #endregion
 
     #region Protected methods
