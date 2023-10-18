@@ -515,12 +515,12 @@ internal class DynamicDataSources
         yield return toObjectArray();
 
         isTrue = true;
-        factory = new FactoryImplementation();
-        obj = new BaseMeasurableChild(factory, measureUnitTypeCode);
+        factory = new BaseMeasurableFactoryImplementation();
+        obj = new BaseMeasurableChild((IBaseMeasurableFactory)factory, measureUnitTypeCode);
         yield return toObjectArray();
 
         isTrue = false;
-        obj = new BaseMeasurableChild(factory, RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
+        obj = new BaseMeasurableChild((IBaseMeasurableFactory)factory, RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
         yield return toObjectArray();
 
         #region toObjectArray method
@@ -541,7 +541,7 @@ internal class DynamicDataSources
     {
         isTrue = true;
         measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
-        baseMeasurable = new BaseMeasurableChild(new FactoryImplementation(), measureUnitTypeCode);
+        baseMeasurable = new BaseMeasurableChild(new BaseMeasurableFactoryImplementation(), measureUnitTypeCode);
         yield return toObjectArray();
 
         isTrue = false;
@@ -704,11 +704,11 @@ internal class DynamicDataSources
     internal IEnumerable<object[]> GetMeasurableValidateInvalidArgArrayList()
     {
         measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
-        fooVariaObject = new FactoryImplementation();
+        fooVariaObject = new BaseMeasurableFactoryImplementation();
         name = ParamNames.factory;
         yield return toObjectArray();
 
-        fooVariaObject = new BaseMeasurableChild((IFactory)fooVariaObject, measureUnitTypeCode);
+        fooVariaObject = new BaseMeasurableChild((IBaseMeasurableFactory)fooVariaObject, measureUnitTypeCode);
         name = ParamNames.other;
         yield return toObjectArray();
 
@@ -831,13 +831,13 @@ internal class DynamicDataSources
 
     internal IEnumerable<object[]> GetBaseMeasurableValidateInvalidArgArrayList()
     {
-        factory = new FactoryImplementation();
+        factory = new BaseMeasurableFactoryImplementation();
 
         measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
         commonBase = new CommonBaseChild(factory);
         yield return toObjectArray();
 
-        commonBase = new BaseMeasurableChild(factory, RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
+        commonBase = new BaseMeasurableChild((IBaseMeasurableFactory)factory, RandomParams.GetRandomMeasureUnitTypeCode(measureUnitTypeCode));
         yield return toObjectArray();
 
         #region toObjectArray method
@@ -855,17 +855,17 @@ internal class DynamicDataSources
 
     internal IEnumerable<object[]> GetCommonBaseValidateArgArrayList()
     {
-        fooVariaObject = new FactoryImplementation();
+        fooVariaObject = new BaseMeasurableFactoryImplementation();
         yield return toObjectArray();
 
-        fooVariaObject = new CommonBaseChild((IFactory)fooVariaObject);
+        fooVariaObject = new CommonBaseChild((IBaseMeasurableFactory)fooVariaObject);
         yield return toObjectArray();
 
         fooVariaObject = new BaseSpreadFactoryImplementation();
         yield return toObjectArray();
 
         measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
-        fooVariaObject = new BaseMeasurableChild((IFactory)fooVariaObject, measureUnitTypeCode);
+        fooVariaObject = new BaseMeasurableChild((IBaseMeasurableFactory)fooVariaObject, measureUnitTypeCode);
         yield return toObjectArray();
 
         #region toObjectArray method
@@ -883,10 +883,10 @@ internal class DynamicDataSources
     internal IEnumerable<object[]> GetBaseMeasurableValidateValidArgArrayList()
     {
         measureUnitTypeCode = RandomParams.GetRandomMeasureUnitTypeCode();
-        fooVariaObject = new FactoryImplementation();
+        fooVariaObject = new BaseMeasurableFactoryImplementation();
         yield return toObjectArray();
 
-        fooVariaObject = new BaseMeasurableChild((IFactory)fooVariaObject, measureUnitTypeCode);
+        fooVariaObject = new BaseMeasurableChild((IBaseMeasurableFactory)fooVariaObject, measureUnitTypeCode);
         yield return toObjectArray();
 
         baseMeasurable = (IBaseMeasurable)fooVariaObject;
