@@ -144,10 +144,10 @@ internal abstract class Rate : Measurable, IRate
         return HashCode.Combine(Numerator, Denominator);
     }
 
-    public override sealed Enum GetMeasureUnit()
-    {
-        return Denominator.GetMeasureUnit();
-    }
+    //public override sealed Enum GetMeasureUnit()
+    //{
+    //    return Denominator.GetMeasureUnit();
+    //}
 
     public override sealed TypeCode GetQuantityTypeCode()
     {

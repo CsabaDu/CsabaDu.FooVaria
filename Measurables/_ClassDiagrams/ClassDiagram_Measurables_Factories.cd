@@ -27,7 +27,7 @@
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Factories.IDefaultRateComponentFactory&lt;T&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="7.375" Y="8" />
+        <Point X="7.375" Y="7.75" />
         <Point X="7.375" Y="7.07" />
       </Path>
     </InheritanceLine>
@@ -76,11 +76,10 @@
         <Point X="1.75" Y="6.25" />
       </Path>
     </InheritanceLine>
-    <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Factories.IDefaultRateComponentFactory&lt;T&gt;" FixedFromPoint="true">
+    <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Factories.IDefaultRateComponentFactory&lt;T&gt;" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="7.375" Y="8" />
-        <Point X="7.375" Y="7.445" />
-        <Point X="1.75" Y="7.445" />
+        <Point X="6" Y="8.125" />
+        <Point X="1.75" Y="8.125" />
         <Point X="1.75" Y="7.07" />
       </Path>
     </InheritanceLine>
@@ -106,8 +105,8 @@
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Factories.IDefaultRateComponentFactory&lt;T&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="7.375" Y="8" />
-        <Point X="7.375" Y="7.445" />
+        <Point X="7.125" Y="7.75" />
+        <Point X="7.125" Y="7.445" />
         <Point X="4.5" Y="7.445" />
         <Point X="4.5" Y="7.07" />
       </Path>
@@ -121,8 +120,8 @@
     <Position X="9" Y="6.25" Width="2.75" />
     <InheritanceLine Type="CsabaDu.FooVaria.Measurables.Factories.IDefaultRateComponentFactory&lt;T&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="7.875" Y="8" />
-        <Point X="7.875" Y="7.445" />
+        <Point X="7.625" Y="7.75" />
+        <Point X="7.625" Y="7.445" />
         <Point X="10.375" Y="7.445" />
         <Point X="10.375" Y="7.07" />
       </Path>
@@ -149,14 +148,14 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Factories.IDefaultRateComponentFactory&lt;T&gt;" Collapsed="true">
-    <Position X="6.25" Y="8" Width="2.75" />
+    <Position X="6" Y="7.75" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\IDefaultRateComponentFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurables.Factories.IDefaultRateComponentFactory" Collapsed="true">
-    <Position X="6.25" Y="9.25" Width="2.75" />
+    <Position X="6" Y="9" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\IDefaultRateComponentFactory.cs</FileName>

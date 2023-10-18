@@ -262,6 +262,11 @@ internal abstract class Measure : BaseMeasure, IMeasure
 
         return (T)measure.GetMeasure(quantity, default(V));
     }
+
+    protected static V GetMeasureUnit<V>(IMeasure measure)
+    {
+        return (V)measure.Measurement.MeasureUnit;
+    }
     #endregion
     #endregion
 

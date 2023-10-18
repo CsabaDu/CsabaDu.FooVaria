@@ -70,7 +70,7 @@ public sealed class MeasureFactory : BaseMeasureFactory, IMeasureFactory
 
     public IMeasure Create(IBaseMeasure baseMeasure)
     {
-        Enum measureUnit = NullChecked(baseMeasure, nameof(baseMeasure)).GetMeasureUnit();
+        Enum measureUnit = NullChecked(baseMeasure, nameof(baseMeasure)).Measurement.GetMeasureUnit();
         ValueType quantity = baseMeasure.GetQuantity();
 
         return Create(quantity, measureUnit);

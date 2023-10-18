@@ -27,9 +27,4 @@ internal sealed class MeasurableChild : Measurable
     {
         throw new NotImplementedException();
     }
-
-    public override Enum GetMeasureUnit()
-    {
-        throw new NotImplementedException();
-    }
 }

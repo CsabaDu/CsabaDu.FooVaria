@@ -18,11 +18,6 @@ internal sealed class BaseMeasurableChild : BaseMeasurable
     {
     }
 
-    public override Enum GetMeasureUnit()
-    {
-        throw new NotImplementedException();
-    }
-
     public override IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
     {
         throw new NotImplementedException();

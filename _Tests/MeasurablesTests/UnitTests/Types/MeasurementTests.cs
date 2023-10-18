@@ -4,7 +4,7 @@ using CsabaDu.FooVaria.Measurables.Types.Implementations;
 namespace CsabaDu.FooVaria.Tests.MeasurablesTests.UnitTests.Types
 {
     [TestClass, TestCategory("UnitTest")]
-    public class MeasurementTests
+    public sealed class MeasurementTests
     {
         #region Initialize
         [ClassInitialize]

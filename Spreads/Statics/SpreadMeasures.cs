@@ -1,4 +1,5 @@
 ﻿using CsabaDu.FooVaria.Measurables.Factories;
+using System.Xml.Linq;
 
 namespace CsabaDu.FooVaria.Spreads.Statics;
 
@@ -70,6 +71,22 @@ public static class SpreadMeasures
 
             _ => throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode),
         };
+    }
+
+    public static IMeasure GetValidSpreadMeasure(ISpreadMeasure? spreadMeasure)
+    {
+        string name = nameof(spreadMeasure);
+
+        if (NullChecked(spreadMeasure, nameof(spreadMeasure)) is not IMeasure measure)
+        {
+            throw ArgumentTypeOutOfRangeException(name, spreadMeasure!);
+        }
+
+        decimal quantity = measure.DefaultQuantity;
+
+        if (quantity > 0) return measure;
+
+        throw new ArgumentOutOfRangeException(name, quantity, null);
     }
 
     public static IVolume GetVolume(IMeasureFactory factory, params IExtent[] shapeExtents)

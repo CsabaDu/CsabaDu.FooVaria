@@ -3,7 +3,7 @@
 namespace CsabaDu.FooVaria.Tests.CommonTests.UnitTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
-public class CommonBaseTests
+public sealed class CommonBaseTests
 {
     #region Initialize
     [ClassInitialize]

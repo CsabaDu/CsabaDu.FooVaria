@@ -9,7 +9,7 @@ namespace CsabaDu.FooVaria.Spreads.Types
         ISpread GetSpread(IBaseSpread baseSppread);
     }
 
-    public interface ISpread<T, U> : ISpread, ISpreadMeasure<T, U>, IFit<T>, IProportional<T, U>, IExchange<T, U> where T : class, IMeasure, ISpreadMeasure where U : struct, Enum
+    public interface ISpread<T, U> : ISpread, ISpreadMeasure<T, U>, IFit<T>, IProportional<T, U> where T : class, IMeasure, ISpreadMeasure where U : struct, Enum
     {
         T SpreadMeasure { get; init; }
 

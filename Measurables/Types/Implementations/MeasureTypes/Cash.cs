@@ -54,6 +54,11 @@ internal sealed class Cash : Measure, ICash
         return GetMeasure(this, quantity);
     }
 
+    public Currency GetMeasureUnit()
+    {
+        return GetMeasureUnit<Currency>(this);
+    }
+
     public ICash GetNextCustomMeasure(decimal quantity, string customName, decimal exchangeRate)
     {
         return GetMeasure(this, quantity, customName, exchangeRate);

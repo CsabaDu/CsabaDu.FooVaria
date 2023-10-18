@@ -62,5 +62,10 @@ internal sealed class TimePeriod : Measure, ITimePeriod
     {
         return GetMeasure(this, quantity);
     }
+
+    public TimePeriodUnit GetMeasureUnit()
+    {
+        return GetMeasureUnit<TimePeriodUnit>(this);
+    }
     #endregion
 }

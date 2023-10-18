@@ -129,7 +129,7 @@ internal sealed class FlatRate : Rate, IFlatRate
             throw new ArgumentOutOfRangeException(nameof(other), other.MeasureUnitTypeCode, null);
         }
 
-        if (other.Numerator.TryExchangeTo(Numerator.GetMeasureUnit(), out IBaseMeasure? exchanged))
+        if (other.Numerator.TryExchangeTo(Numerator.Measurement.GetMeasureUnit(), out IBaseMeasure? exchanged))
         {
             IMeasure numerator = GetSum(Numerator, (IMeasure)exchanged, summingMode);
 

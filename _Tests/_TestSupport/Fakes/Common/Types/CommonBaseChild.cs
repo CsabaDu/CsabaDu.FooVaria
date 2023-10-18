@@ -38,11 +38,6 @@
             throw new NotImplementedException();
         }
 
-        public override Enum GetMeasureUnit()
-        {
-            throw new NotImplementedException();
-        }
-
         public override IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
         {
             throw new NotImplementedException();

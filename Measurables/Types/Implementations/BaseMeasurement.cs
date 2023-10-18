@@ -227,6 +227,8 @@ internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
     #endregion
     #endregion
 
+    public abstract Enum GetMeasureUnit();
+
     #region Static methods
     public static IEnumerable<object> GetConstantMeasureUnits()
     {

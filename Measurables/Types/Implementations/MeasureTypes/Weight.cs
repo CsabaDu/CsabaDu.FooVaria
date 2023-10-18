@@ -58,5 +58,10 @@ internal sealed class Weight : Measure, IWeight
     {
         return GetMeasure(this, quantity);
     }
+
+    public WeightUnit GetMeasureUnit()
+    {
+        return GetMeasureUnit<WeightUnit>(this);
+    }
     #endregion
 }

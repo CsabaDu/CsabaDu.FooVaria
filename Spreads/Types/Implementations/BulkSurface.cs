@@ -13,6 +13,15 @@ internal sealed class BulkSurface : Spread<IArea, AreaUnit>, IBulkSurface
     #endregion
 
     #region Public methods
+    public override sealed IBulkSurface? ExchangeTo(Enum measureUnit)
+    {
+        IArea? exchanged = (IArea?)SpreadMeasure.ExchangeTo(measureUnit);
+
+        if (exchanged != null) return null;
+
+        return GetFactory().Create(exchanged!);
+    }
+
     public IBulkSurface GetBulkSurface(IExtent radius)
     {
         return GetSpread(radius);

@@ -51,8 +51,6 @@ public sealed class MeasurementFactory : BaseMeasurementFactory, IMeasurementFac
         if (BaseMeasurement.IsValidMeasureUnit(measureUnit)) return GetStoredMeasurement(measureUnit);
 
         throw InvalidMeasureUnitEnumArgumentException(measureUnit);
-        throw InvalidMeasureUnitEnumArgumentException(measureUnit);
-        throw InvalidMeasureUnitEnumArgumentException(measureUnit);
     }
 
     public IMeasurement Create(IMeasurement measurement)
@@ -74,9 +72,23 @@ public sealed class MeasurementFactory : BaseMeasurementFactory, IMeasurementFac
 
     public override IMeasurement Create(IMeasurable other)
     {
-        Enum measureUnit = NullChecked(other, nameof(other)).GetMeasureUnit();
+        Enum measureUnit = NullChecked(other, nameof(other)) switch
+        {
+            Measurement measurement => measurement.GetMeasureUnit(),
+            BaseMeasure baseMmeasure => getMeasureUnit(baseMmeasure.Measurement),
+            Rate rate => getMeasureUnit(rate.Denominator.Measurement),
+
+            _ => throw new InvalidOperationException(null),
+        };
 
         return GetStoredMeasurement(measureUnit);
+
+        #region Local methods
+        Enum getMeasureUnit(IMeasurement measurement)
+        {
+            return measurement.GetMeasureUnit();
+        }
+        #endregion
     }
 
     public IMeasurement CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)

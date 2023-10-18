@@ -12,7 +12,12 @@ internal sealed class BaseSpreadChild : BaseSpread
     {
     }
 
-    public override Enum GetMeasureUnit()
+    public override IBaseSpread ExchangeTo(Enum context)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override decimal GetDefaultQuantity()
     {
         throw new NotImplementedException();
     }

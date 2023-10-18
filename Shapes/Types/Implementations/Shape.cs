@@ -12,11 +12,6 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
         {
         }
 
-        public override Enum GetMeasureUnit()
-        {
-            throw new NotImplementedException();
-        }
-
         public override ISpreadMeasure GetSpreadMeasure()
         {
             throw new NotImplementedException();

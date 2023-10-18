@@ -12,7 +12,7 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
 
     protected BaseMeasurable(IBaseMeasurableFactory factory, Enum measureUnit) : base(factory)
     {
-        MeasureUnitTypeCode = GetMeasureUnitTypeCode(measureUnit);
+        MeasureUnitTypeCode = MeasureUnitTypes.GetValidMeasureUnitTypeCode(measureUnit);
     }
 
     protected BaseMeasurable(IBaseMeasurableFactory factory, IBaseMeasurable baseMeasurable) : base(factory, baseMeasurable)
@@ -43,37 +43,12 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
 
     public Type GetMeasureUnitType()
     {
-        return GetMeasureUnitType(MeasureUnitTypeCode);
-    }
-
-    public Type GetMeasureUnitType(MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        return MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode);
-    }
-
-    public MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum measureUnit)
-    {
-        return MeasureUnitTypes.GetValidMeasureUnitTypeCode(measureUnit);
+        return MeasureUnitTypes.GetMeasureUnitType(MeasureUnitTypeCode);
     }
 
     public bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
     {
         return measureUnitTypeCode == MeasureUnitTypeCode;
-    }
-
-    public bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, Enum measureUnit)
-    {
-        return MeasureUnitTypes.HasMeasureUnitTypeCode(measureUnitTypeCode, measureUnit!);
-    }
-
-    public bool IsDefinedMeasureUnit(Enum measureUnit)
-    {
-        return MeasureUnitTypes.IsDefinedMeasureUnit(measureUnit);
-    }
-
-    public void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        MeasureUnitTypes.ValidateMeasureUnit(measureUnit, measureUnitTypeCode);
     }
 
     #region Override methods
@@ -113,48 +88,10 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
     #endregion
 
     #region Abstract methods
-    public abstract Enum GetMeasureUnit();
+    //public abstract Enum GetMeasureUnit();
     public abstract IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes();
     public abstract bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode);
     #endregion
-
-    //public static Type GetMeasureUnitType(MeasureUnitTypeCode measureUnitTypeCode)
-    //{
-    //    ValidateMeasureUnitTypeCode(measureUnitTypeCode);
-
-    //    return MeasureUnitTypeCollection[measureUnitTypeCode];
-    //}
-
-    //public static MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum measureUnit)
-    //{
-    //    return MeasureUnitTypes.GetValidMeasureUnitTypeCode(measureUnit);
-    //}
-
-    //public static bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, Enum measureUnit)
-    //{
-    //    return MeasureUnitTypes.HasMeasureUnitTypeCode(measureUnitTypeCode, measureUnit!);
-    //}
-
-    //public static bool IsDefinedMeasureUnit(Enum measureUnit)
-    //{
-    //    return MeasureUnitTypes.IsDefinedMeasureUnit(measureUnit);
-    //}
-
-    //public static void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode measureUnitTypeCode)
-    //{
-    //    MeasureUnitTypes.ValidateMeasureUnit(measureUnit, measureUnitTypeCode);
-    //}
-
-    //public static void ValidateMeasureUnit(Enum measureUnit)
-    //{
-    //    MeasureUnitTypes.ValidateMeasureUnit(measureUnit);
-    //}
-
-    //public static void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
-    //{
-    //    MeasureUnitTypes.ValidateMeasureUnitTypeCode(measureUnitTypeCode);
-    //}
-
     #endregion
 
     #region Protected methods

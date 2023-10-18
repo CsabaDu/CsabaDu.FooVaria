@@ -8,4 +8,5 @@ public interface IMeasure<T, U, V> : IDefaultRateComponent<T, U> where T : class
     T GetMeasure(U quantity);
     T GetMeasure(U quantity, IMeasurement measurement);
     T GetMeasure(T other);
+    V GetMeasureUnit();
 }

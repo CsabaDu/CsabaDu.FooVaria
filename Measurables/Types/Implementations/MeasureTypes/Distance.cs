@@ -58,5 +58,10 @@ internal sealed class Distance : Measure, IDistance
     {
         return GetMeasure(this, quantity);
     }
+
+    public DistanceUnit GetMeasureUnit()
+    {
+        return GetMeasureUnit<DistanceUnit>(this);
+    }
     #endregion
 }

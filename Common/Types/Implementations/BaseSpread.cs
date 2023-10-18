@@ -1,6 +1,8 @@
-﻿namespace CsabaDu.FooVaria.Common.Types.Implementations;
+﻿using System.Diagnostics.CodeAnalysis;
 
-public abstract class BaseSpread : BaseMeasurable, IBaseSpread
+namespace CsabaDu.FooVaria.Common.Types.Implementations;
+
+public abstract class BaseSpread : BaseMeasurable, IBaseSpread, IQuantifiable
 {
     #region Constructors
     protected BaseSpread(IBaseSpread other) : base(other)
@@ -14,9 +16,17 @@ public abstract class BaseSpread : BaseMeasurable, IBaseSpread
     protected BaseSpread(IBaseSpreadFactory factory, IBaseMeasurable baseMeasurable) : base(factory, baseMeasurable)
     {
     }
+
     #endregion
 
     #region Public methods
+    public bool TryExchangeTo(Enum measureUnit, [NotNullWhen(true)] out IBaseSpread? exchanged)
+    {
+        exchanged = ExchangeTo(measureUnit);
+
+        return exchanged != null;
+    }
+
     #region Override methods
     public override IBaseSpreadFactory GetFactory()
     {
@@ -32,6 +42,8 @@ public abstract class BaseSpread : BaseMeasurable, IBaseSpread
     #endregion
 
     #region Abstract methods
+    public abstract IBaseSpread? ExchangeTo(Enum context);
+    public abstract decimal GetDefaultQuantity();
     public abstract ISpreadMeasure GetSpreadMeasure();
     #endregion
     #endregion

@@ -54,6 +54,11 @@ internal sealed class PieceCount : Measure, IPieceCount
         return GetMeasure(this, quantity);
     }
 
+    public Pieces GetMeasureUnit()
+    {
+        return GetMeasureUnit<Pieces>(this);
+    }
+
     public IPieceCount GetNextCustomMeasure(long quantity, string customName, decimal exchangeRate)
     {
         return GetMeasure(this, quantity, customName, exchangeRate);

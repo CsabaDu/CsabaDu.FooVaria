@@ -1,4 +1,5 @@
-﻿using CsabaDu.FooVaria.Common.Types.Implementations;
+﻿using CsabaDu.FooVaria.Common.Statics;
+using CsabaDu.FooVaria.Common.Types.Implementations;
 using CsabaDu.FooVaria.Spreads.Statics;
 using System.Diagnostics.CodeAnalysis;
 
@@ -11,7 +12,7 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         {
         }
 
-        protected Spread(ISpreadFactory factory, ISpreadMeasure spreadMeasure) : base(factory, (IMeasure)spreadMeasure)
+        protected Spread(ISpreadFactory factory, IBaseMeasurable baseMeasurable) : base(factory, baseMeasurable)
         {
         }
 
@@ -36,7 +37,7 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
 
         public override void ValidateMeasureUnit(Enum measureUnit)
         {
-            MeasureUnitTypeCode measureUnitTypeCode = GetMeasureUnitTypeCode(measureUnit);
+            MeasureUnitTypeCode measureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(measureUnit);
 
             if (IsValidMeasureUnitTypeCode(measureUnitTypeCode)) return;
 
@@ -76,9 +77,7 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
 
         protected Spread(ISpreadFactory factory, T spreadMeasure) : base(factory, spreadMeasure)
         {
-            ValidateSpreadMeasure(spreadMeasure);
-
-            SpreadMeasure = spreadMeasure;
+            SpreadMeasure = (T)SpreadMeasures.GetValidSpreadMeasure(spreadMeasure);
         }
         #endregion
 
@@ -97,21 +96,9 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
             return SpreadMeasure.Equals(other);
         }
 
-        public T? ExchangeTo(U measureUnit)
-        {
-            IBaseMeasure excchanged = SpreadMeasure.ExchangeTo(measureUnit) ?? throw InvalidMeasureUnitEnumArgumentException(measureUnit);
-
-            return (T)SpreadMeasure.GetMeasure(excchanged);
-        }
-
         public bool? FitsIn(T? other, LimitMode? limitMode)
         {
             return SpreadMeasure.FitsIn(other, limitMode);
-        }
-
-        public decimal GetDefaultQuantity()
-        {
-            return SpreadMeasure.DefaultQuantity;
         }
 
         public double GetQuantity()
@@ -129,13 +116,6 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
             return SpreadMeasure.IsExchangeableTo(context);
         }
 
-        public bool TryExchangeTo(U measureUnit, [NotNullWhen(true)] out T? exchanged)
-        {
-            exchanged = ExchangeTo(measureUnit);
-
-            return exchanged != null;
-        }
-
         public void ValidateQuantity(double quantity)
         {
             if (quantity > 0) return;
@@ -143,36 +123,18 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
             throw QuantityArgumentOutOfRangeException(quantity);
         }
 
-        public void ValidateSpreadMeasure(IMeasure measure)
+        public void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure)
         {
-            string name = nameof(measure);
+            if (SpreadMeasures.GetValidSpreadMeasure(spreadMeasure) is T) return;
 
-            if (NullChecked(measure, name) is not T spreadMeasure)
-            {
-                throw new ArgumentOutOfRangeException(name, measure.GetType().Name, null);
-            }
-
-            double quantity = (double)spreadMeasure.Quantity;
-
-            try
-            {
-                ValidateQuantity(quantity);
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                throw new ArgumentOutOfRangeException(name, quantity, null);
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException(ex.Message, ex.InnerException);
-            }
+            throw ArgumentTypeOutOfRangeException(nameof(spreadMeasure), spreadMeasure!);
         }
 
         #region Override methods
         #region Sealed methods
-        public override sealed Enum GetMeasureUnit()
+        public override sealed decimal GetDefaultQuantity()
         {
-            return SpreadMeasure.GetMeasureUnit();
+            return SpreadMeasure.DefaultQuantity;
         }
 
         public override sealed T GetSpreadMeasure()

@@ -59,13 +59,14 @@ internal sealed class Volume : Measure, IVolume
         return GetMeasure(this, quantity);
     }
 
+    public VolumeUnit GetMeasureUnit()
+    {
+        return GetMeasureUnit<VolumeUnit>(this);
+    }
+
     public ISpreadMeasure GetSpreadMeasure()
     {
         return this;
     }
     #endregion
 }
-
-
-
-

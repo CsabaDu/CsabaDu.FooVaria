@@ -66,7 +66,7 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
 
     public override void ValidateMeasureUnit(Enum measureUnit)
     {
-        ValidateMeasureUnit(measureUnit, MeasureUnitTypeCode);
+        MeasureUnitTypes.ValidateMeasureUnit(measureUnit, MeasureUnitTypeCode);
     }
 
     public override sealed void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)

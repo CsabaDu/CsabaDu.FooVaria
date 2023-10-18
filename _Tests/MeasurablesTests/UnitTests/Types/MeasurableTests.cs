@@ -1,7 +1,7 @@
 namespace CsabaDu.FooVaria.Tests.MeasurablesTests.UnitTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
-public class MeasurableTests
+public sealed class MeasurableTests
 {
     #region Initialize
     [ClassInitialize]

@@ -58,5 +58,10 @@ internal sealed class Extent : Measure, IExtent
     {
         return GetMeasure(this, quantity);
     }
+
+    public ExtentUnit GetMeasureUnit()
+    {
+        return GetMeasureUnit<ExtentUnit>(this);
+    }
     #endregion
 }

@@ -160,7 +160,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     public IBaseMeasure Round(RoundingMode roundingMode)
     {
         ValueType quantity = GetQuantity(roundingMode);
-        Enum measureUnit = GetMeasureUnit();
+        Enum measureUnit = Measurement.GetMeasureUnit();
 
         return GetBaseMeasure(quantity, measureUnit);
     }
@@ -259,10 +259,10 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return HashCode.Combine(DefaultQuantity, MeasureUnitTypeCode);
     }
 
-    public override sealed Enum GetMeasureUnit()
-    {
-        return Measurement.GetMeasureUnit();
-    }
+    //public override sealed Enum GetMeasureUnit()
+    //{
+    //    return Measurement.GetMeasureUnit();
+    //}
 
     public override sealed void ValidateMeasureUnit(Enum measureUnit)
     {

@@ -24,6 +24,15 @@ internal sealed class BulkBody : Spread<IVolume, VolumeUnit>, IBulkBody
     }
 
     #region Override methods
+    public override sealed IBulkBody? ExchangeTo(Enum measureUnit)
+    {
+        IVolume? exchanged = (IVolume?)SpreadMeasure.ExchangeTo(measureUnit);
+
+        if (exchanged != null) return null;
+
+        return GetFactory().Create(exchanged!);
+    }
+
     public override IBulkBodyFactory GetFactory()
     {
         return (IBulkBodyFactory)Factory;

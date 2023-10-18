@@ -93,7 +93,7 @@ internal sealed class Measurement : BaseMeasurement, IMeasurement
     {
         ValidateCustomMeasureUnitTypeCode(measureUnitTypeCode);
 
-        Type customMeasureUnitType = GetMeasureUnitType(measureUnitTypeCode);
+        Type customMeasureUnitType = MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode);
         Array customMeasureUnits = Enum.GetValues(customMeasureUnitType);
 
         foreach (Enum item in customMeasureUnits)
@@ -150,9 +150,9 @@ internal sealed class Measurement : BaseMeasurement, IMeasurement
 
     public bool IsCustomMeasureUnit(Enum measureUnit)
     {
-        if (measureUnit == null || !IsDefinedMeasureUnit(measureUnit)) return false;
+        if (measureUnit == null || !MeasureUnitTypes.IsDefinedMeasureUnit(measureUnit)) return false;
 
-        MeasureUnitTypeCode measureUnitTypeCode = GetMeasureUnitTypeCode(measureUnit);
+        MeasureUnitTypeCode measureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(measureUnit);
 
         return IsCustomMeasureUnitTypeCode(measureUnitTypeCode);
     }
@@ -168,7 +168,7 @@ internal sealed class Measurement : BaseMeasurement, IMeasurement
     {
         if (context is MeasureUnitTypeCode measureUnitTypeCode) return HasMeasureUnitTypeCode(measureUnitTypeCode);
 
-        return IsValidMeasureUnit(context) && HasMeasureUnitTypeCode(MeasureUnitTypeCode, context!);
+        return IsValidMeasureUnit(context) && MeasureUnitTypes.HasMeasureUnitTypeCode(MeasureUnitTypeCode, context!);
     }
 
     public decimal ProportionalTo(IMeasurement measurement)
