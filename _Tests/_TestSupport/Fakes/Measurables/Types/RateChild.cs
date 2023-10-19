@@ -18,11 +18,6 @@ internal sealed class RateChild : Rate
     {
     }
 
-    public override IRate ExchangeTo(IDenominator denominator)
-    {
-        throw new NotImplementedException();
-    }
-
     public override IMeasurable GetMeasurable(IMeasurable other)
     {
         throw new NotImplementedException();

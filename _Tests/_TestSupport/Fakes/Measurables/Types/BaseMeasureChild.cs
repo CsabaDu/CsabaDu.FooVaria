@@ -14,11 +14,6 @@ internal sealed class BaseMeasureChild : BaseMeasure
     {
     }
 
-    public override IBaseMeasure ExchangeTo(Enum measureUnit)
-    {
-        throw new NotImplementedException();
-    }
-
     public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit)
     {
         throw new NotImplementedException();
