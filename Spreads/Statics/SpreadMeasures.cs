@@ -1,5 +1,4 @@
 ﻿using CsabaDu.FooVaria.Measurables.Factories;
-using System.Xml.Linq;
 
 namespace CsabaDu.FooVaria.Spreads.Statics;
 
@@ -77,7 +76,7 @@ public static class SpreadMeasures
     {
         string name = nameof(spreadMeasure);
 
-        if (NullChecked(spreadMeasure, nameof(spreadMeasure)) is not IMeasure measure)
+        if (NullChecked(spreadMeasure, nameof(spreadMeasure)).GetSpreadMeasure() is not IMeasure measure)
         {
             throw ArgumentTypeOutOfRangeException(name, spreadMeasure!);
         }

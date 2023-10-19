@@ -14,7 +14,7 @@ namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
         #region Public methods
         #region Abstract methods
         public abstract IBaseSpread Create(ISpreadMeasure spreadMeasure);
-        public abstract IBaseMeasurableFactory GetMeasureFactory();
+        public abstract IMeasureFactory GetMeasureFactory();
         #endregion
         #endregion
     }

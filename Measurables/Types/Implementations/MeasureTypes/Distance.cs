@@ -19,11 +19,6 @@ internal sealed class Distance : Measure, IDistance
         return ConvertMeasure<IExtent, ExtentUnit>(this, ConvertMode.Multiply);
     }
 
-    public override IDistance? ExchangeTo(Enum measureUnit)
-    {
-        return ExchangeTo(this, measureUnit);
-    }
-
     public IDistance GetDefaultRateComponent()
     {
         return GetDefault(this);

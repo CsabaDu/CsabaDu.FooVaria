@@ -116,11 +116,6 @@ internal sealed class LimitedRate : Rate, ILimitedRate
             && base.Equals(other);
     }
 
-    public override ILimitedRate? ExchangeTo(IDenominator denominator)
-    {
-        return ExchangeTo(this, denominator);
-    }
-
     public override ILimitedRateFactory GetFactory()
     {
         return (ILimitedRateFactory)Factory;

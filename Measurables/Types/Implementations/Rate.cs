@@ -58,22 +58,13 @@ internal abstract class Rate : Measurable, IRate
             && Numerator.Equals(other?.Numerator);
     }
 
-    public abstract IRate? ExchangeTo(IDenominator denominator);
-    //{
-    //    if (denominator?.IsExchangeableTo(MeasureUnitTypeCode) != true) return null;
-        
-    //    IMeasure numerator = Numerator.Divide(Denominator.ProportionalTo(denominator!));
-
-    //    return GetRate(numerator, denominator, GetLimit());
-    //}
-
-    protected static T? ExchangeTo<T>(T rate, IDenominator denominator) where T : class, IRate
+    public IRate? ExchangeTo(IDenominator denominator)
     {
-        if (denominator?.IsExchangeableTo(rate.MeasureUnitTypeCode) != true) return null;
+        if (denominator?.IsExchangeableTo(MeasureUnitTypeCode) != true) return null;
 
-        IMeasure numerator = rate.Numerator.Divide(rate.Denominator.ProportionalTo(denominator!));
+        IMeasure numerator = Numerator.Divide(Denominator.ProportionalTo(denominator!));
 
-        return (T)rate.GetRate(numerator, denominator, rate.GetLimit());
+        return GetRate(numerator, denominator, GetLimit());
     }
 
     public decimal GetDefaultQuantity()
@@ -177,6 +168,15 @@ internal abstract class Rate : Measurable, IRate
 
     #region Protected methods
     #region Static methods
+    protected static T? ExchangeTo<T>(T rate, IDenominator denominator) where T : class, IRate
+    {
+        if (denominator?.IsExchangeableTo(rate.MeasureUnitTypeCode) != true) return null;
+
+        IMeasure numerator = rate.Numerator.Divide(rate.Denominator.ProportionalTo(denominator!));
+
+        return (T)rate.GetRate(numerator, denominator, rate.GetLimit());
+    }
+
     protected static T GetValidRate<T>(T commonBase, IFooVariaObject other) where T : class, IRate
     {
         T rate = GetValidBaseMeasurable(commonBase, other);

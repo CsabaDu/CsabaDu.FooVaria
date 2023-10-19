@@ -42,6 +42,18 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return DefaultQuantity.CompareTo(other.DefaultQuantity);
     }
 
+    public IBaseMeasure? ExchangeTo(Enum measureUnit)
+    {
+        if (!IsExchangeableTo(measureUnit)) return null;
+
+        decimal exchangeRate = Measurement.GetExchangeRate(measureUnit);
+        ValueType? quantity = ExchangeTo(exchangeRate);
+
+        if (quantity == null) return null;
+
+        return GetBaseMeasure(quantity, measureUnit);
+    }
+
     public ValueType? ExchangeTo(decimal exchangeRate)
     {
         if (exchangeRate <= 0) return null;
@@ -274,7 +286,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     #endregion
 
     #region Abstract methods
-    public abstract IBaseMeasure? ExchangeTo(Enum measureUnit);
     public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit);
     public abstract LimitMode? GetLimitMode();
     #endregion

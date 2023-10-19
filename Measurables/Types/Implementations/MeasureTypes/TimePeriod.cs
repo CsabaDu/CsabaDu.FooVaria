@@ -23,11 +23,6 @@ internal sealed class TimePeriod : Measure, ITimePeriod
         return new TimeSpan(ticks);
     }
 
-    public override ITimePeriod? ExchangeTo(Enum measureUnit)
-    {
-        return ExchangeTo(this, measureUnit);
-    }
-
     public ITimePeriod GetDefaultRateComponent()
     {
         return GetDefault(this);

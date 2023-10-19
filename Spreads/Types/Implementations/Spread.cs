@@ -1,4 +1,5 @@
-﻿using CsabaDu.FooVaria.Common.Statics;
+﻿using CsabaDu.FooVaria.Common.Behaviors;
+using CsabaDu.FooVaria.Common.Statics;
 using CsabaDu.FooVaria.Common.Types.Implementations;
 using CsabaDu.FooVaria.Spreads.Statics;
 using System.Diagnostics.CodeAnalysis;
@@ -25,9 +26,18 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         }
 
         #region Override methods
-        public override IBaseSpreadFactory GetFactory()
+        public override ISpread? ExchangeTo(Enum measureUnit)
         {
-            return (IBaseSpreadFactory)Factory;
+            IBaseMeasure? exchanged = ((IBaseMeasure)GetSpreadMeasure()).ExchangeTo(measureUnit);
+
+            if (exchanged == null) return null;
+
+            return (ISpread)GetFactory().Create((ISpreadMeasure)exchanged);
+        }
+
+        public override ISpreadFactory GetFactory()
+        {
+            return (ISpreadFactory)Factory;
         }
 
         public override bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)

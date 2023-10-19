@@ -19,11 +19,6 @@ internal sealed class Weight : Measure, IWeight
         return ConvertMeasure<IVolume, VolumeUnit>(this, ConvertMode.Multiply);
     }
 
-    public override IWeight? ExchangeTo(Enum measureUnit)
-    {
-        return ExchangeTo(this, measureUnit);
-    }
-
     public IWeight GetDefaultRateComponent()
     {
         return GetDefault(this);

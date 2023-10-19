@@ -75,8 +75,8 @@ public sealed class MeasurementFactory : BaseMeasurementFactory, IMeasurementFac
         Enum measureUnit = NullChecked(other, nameof(other)) switch
         {
             Measurement measurement => measurement.GetMeasureUnit(),
-            BaseMeasure baseMmeasure => getMeasureUnit(baseMmeasure.Measurement),
-            Rate rate => getMeasureUnit(rate.Denominator.Measurement),
+            BaseMeasure baseMmeasure => getMeasureUnit(baseMmeasure),
+            Rate rate => getMeasureUnit(rate.Denominator),
 
             _ => throw new InvalidOperationException(null),
         };
@@ -84,9 +84,9 @@ public sealed class MeasurementFactory : BaseMeasurementFactory, IMeasurementFac
         return GetStoredMeasurement(measureUnit);
 
         #region Local methods
-        Enum getMeasureUnit(IMeasurement measurement)
+        static Enum getMeasureUnit(IBaseMeasure baseMmeasure)
         {
-            return measurement.GetMeasureUnit();
+            return baseMmeasure.Measurement.GetMeasureUnit();
         }
         #endregion
     }
