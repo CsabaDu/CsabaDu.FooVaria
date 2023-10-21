@@ -2,7 +2,9 @@
 {
     public interface IQuantifiable
     {
-        decimal GetDefaultQuantity();
+        decimal DefaultQuantity { get; }
+
+        //void ValidateDefaultQuantity(decimal defaultQuantity);
     }
 
     public interface IQuantifiable<T> : IQuantifiable where T : struct

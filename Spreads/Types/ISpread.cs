@@ -2,18 +2,18 @@
 
 namespace CsabaDu.FooVaria.Spreads.Types
 {
-    public interface ISpread : IBaseSpread, IShapeExtents, ISpreadMeasure
+    public interface ISpread : IBaseSpread, IShapeExtents/*, ISpreadMeasure*//*, IFit<ISpread>*/
     {
         ISpread GetSpread(ISpreadMeasure spreadMeasure);
         ISpread GetSpread(params IExtent[] shapeExtents);
-        ISpread GetSpread(IBaseSpread baseSppread);
+        ISpread GetSpread(IBaseSpread baseSpread);
     }
 
-    public interface ISpread<T, U> : ISpread, ISpreadMeasure<T, U>, IFit<T>, IProportional<T, U> where T : class, IMeasure, ISpreadMeasure where U : struct, Enum
+    public interface ISpread<T, U, V> : ISpread, ISpreadMeasure<U, V>/*, IFit<T>*//*, IProportional<T>*/ where T : class, ISpread where U : class, IMeasure, ISpreadMeasure where V : struct, Enum
     {
-        T SpreadMeasure { get; init; }
+        U SpreadMeasure { get; init; }
 
-        ISpread<T, U> GetSpread(T spreadMeasure);
-        ISpread<T, U> GetSpread(U measureUnit);
+        T GetSpread(U spreadMeasure);
+        T GetSpread(V measureUnit);
     }
 }

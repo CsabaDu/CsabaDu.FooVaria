@@ -76,6 +76,16 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
     #endregion
 
     #region Virtual methods
+    public virtual IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
+    {
+        return MeasureUnitTypes.GetMeasureUnitTypeCodes();
+    }
+
+    public virtual bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        return Enum.IsDefined(measureUnitTypeCode);
+    }
+
     public virtual void ValidateMeasureUnit(Enum measureUnit)
     {
         MeasureUnitTypes.ValidateMeasureUnit(measureUnit);
@@ -85,12 +95,6 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
     {
         MeasureUnitTypes.ValidateMeasureUnitTypeCode(measureUnitTypeCode);
     }
-    #endregion
-
-    #region Abstract methods
-    //public abstract Enum GetMeasureUnit();
-    public abstract IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes();
-    public abstract bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode);
     #endregion
     #endregion
 
@@ -110,6 +114,11 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
         if (commonBaseProperty.Equals(otherProperty)) return other;
 
         throw new ArgumentOutOfRangeException(nameof(other), otherProperty, null);
+    }
+
+    public bool IsExchangeableTo(MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        return measureUnitTypeCode == MeasureUnitTypeCode;
     }
     #endregion
     #endregion

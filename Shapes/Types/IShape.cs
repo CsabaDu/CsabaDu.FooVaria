@@ -2,5 +2,6 @@
 {
     public interface IShape : IBaseShape
     {
+        ISpread Spread { get; }
     }
 }

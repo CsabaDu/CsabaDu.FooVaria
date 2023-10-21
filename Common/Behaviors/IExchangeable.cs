@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Common.Behaviors;
 
-public interface IExchangeable<T, in U> where T : class where U : notnull
+public interface IExchangeable<in T> where T : notnull
 {
-    bool IsExchangeableTo(U? context);
+    bool IsExchangeableTo(T? context);
 }

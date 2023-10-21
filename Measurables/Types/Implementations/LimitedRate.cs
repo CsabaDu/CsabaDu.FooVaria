@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Common;
-
-namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal sealed class LimitedRate : Rate, ILimitedRate
 {
@@ -110,10 +108,11 @@ internal sealed class LimitedRate : Rate, ILimitedRate
     }
 
     #region Override methods
-    public override bool Equals(IRate? other)
+    public override bool Equals(IBaseRate? other)
     {
-        return other is ILimitedRate
-            && base.Equals(other);
+        return other is ILimitedRate limitedRate
+            && base.Equals(other)
+            && Limit.Equals(limitedRate.Limit);
     }
 
     public override ILimitedRateFactory GetFactory()

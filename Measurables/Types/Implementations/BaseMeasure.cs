@@ -39,7 +39,12 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
         other.ValidateMeasureUnitTypeCode(MeasureUnitTypeCode);
 
-        return DefaultQuantity.CompareTo(other.DefaultQuantity);
+        if (other is IQuantifiable quantifiable)
+        {
+            return DefaultQuantity.CompareTo(quantifiable.DefaultQuantity);
+        }
+
+        throw ArgumentTypeOutOfRangeException(nameof(other), other);
     }
 
     public IBaseMeasure? ExchangeTo(Enum measureUnit)
@@ -47,25 +52,10 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         if (!IsExchangeableTo(measureUnit)) return null;
 
         decimal exchangeRate = Measurement.GetExchangeRate(measureUnit);
-        ValueType? quantity = ExchangeTo(exchangeRate);
 
-        if (quantity == null) return null;
+        decimal quantity = DefaultQuantity / exchangeRate;
 
         return GetBaseMeasure(quantity, measureUnit);
-    }
-
-    public ValueType? ExchangeTo(decimal exchangeRate)
-    {
-        if (exchangeRate <= 0) return null;
-
-        decimal exchanged = DefaultQuantity / exchangeRate;
-
-        return exchanged.ToQuantity(QuantityTypeCode);
-    }
-
-    public IBaseMeasure GetBaseMeasure(IMeasurable other)
-    {
-        return (IBaseMeasure) GetFactory().Create(other);
     }
 
     public decimal GetDecimalQuantity()
@@ -164,13 +154,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return GetBaseMeasure(quantity, measureUnit);
     }
 
-    public bool TryExchangeTo(decimal exchangeRate, [NotNullWhen(true)] out ValueType? exchanged)
-    {
-        exchanged = ExchangeTo(exchangeRate);
-
-        return exchanged != null;
-    }
-
     public bool TryExchangeTo(Enum measureUnit, [NotNullWhen(true)] out IBaseMeasure? exchanged)
     {
         exchanged = ExchangeTo(measureUnit);
@@ -196,6 +179,11 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         {
             return false;
         }
+    }
+
+    public void ValidateExchangeRate(decimal exchangeRate)
+    {
+        Measurement.ValidateExchangeRate(exchangeRate);
     }
 
     public bool TryGetQuantity(ValueType? quantity, [NotNullWhen(true)] out ValueType? thisTypeQuantity)
@@ -305,18 +293,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     }
 
     #region Static methods
-    protected static T? ExchangeTo<T>(T baseMeasure, Enum measureUnit) where T : class, IBaseMeasure
-    {
-        if (!baseMeasure.IsExchangeableTo(measureUnit)) return null;
-
-        decimal exchangeRate = baseMeasure.Measurement.GetExchangeRate(measureUnit);
-        ValueType? quantity = baseMeasure.ExchangeTo(exchangeRate);
-
-        if (quantity == null) return null;
-
-        return (T)baseMeasure.GetBaseMeasure(quantity, measureUnit);
-    }
-
     protected static void ValidateBaseMeasure<T>(T commonBase, IFooVariaObject other) where T : class, IBaseMeasure
     {
         T baseMeasure = GetValidBaseMeasurable(commonBase, other);

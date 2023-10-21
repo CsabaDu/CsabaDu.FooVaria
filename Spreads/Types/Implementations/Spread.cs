@@ -20,15 +20,6 @@
         }
 
         #region Override methods
-        public override ISpread? ExchangeTo(Enum measureUnit)
-        {
-            IBaseMeasure? exchanged = ((IBaseMeasure)GetSpreadMeasure()).ExchangeTo(measureUnit);
-
-            if (exchanged == null) return null;
-
-            return (ISpread)GetFactory().Create((ISpreadMeasure)exchanged);
-        }
-
         public override ISpreadFactory GetFactory()
         {
             return (ISpreadFactory)Factory;
@@ -49,6 +40,15 @@
         }
 
         #region Sealed methods
+        public override sealed ISpread? ExchangeTo(Enum measureUnit)
+        {
+            IBaseMeasure? exchanged = ((IBaseMeasure)GetSpreadMeasure()).ExchangeTo(measureUnit);
+
+            if (exchanged == null) return null;
+
+            return (ISpread)GetFactory().Create((ISpreadMeasure)exchanged);
+        }
+
         public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
         {
             return base.GetMeasureUnitTypeCodes();
@@ -66,62 +66,37 @@
         #region Abstract methods
         public abstract ISpread GetSpread(ISpreadMeasure spreadMeasure);
         public abstract ISpread GetSpread(params IExtent[] shapeExtents);
-        public abstract ISpread GetSpread(IBaseSpread baseSppread);
+        public abstract ISpread GetSpread(IBaseSpread baseSpread);
         #endregion
         #endregion
     }
 
-    internal abstract class Spread<T, U> : Spread, ISpread<T, U> where T : class, IMeasure, ISpreadMeasure where U : struct, Enum
+    internal abstract class Spread<T, U, V> : Spread, ISpread<T, U, V> where T : class, ISpread where U : class, IMeasure, ISpreadMeasure where V : struct, Enum
     {
         #region Constructors
-        protected Spread(ISpread<T, U> other) : base(other)
+        protected Spread(T other) : base(other)
         {
-            SpreadMeasure = other.SpreadMeasure;
+            SpreadMeasure = (U)other.GetSpreadMeasure();
         }
 
-        protected Spread(ISpreadFactory factory, T spreadMeasure) : base(factory, spreadMeasure)
+        protected Spread(ISpreadFactory<T, U> factory, U spreadMeasure) : base(factory, spreadMeasure)
         {
-            SpreadMeasure = (T)SpreadMeasures.GetValidSpreadMeasure(spreadMeasure);
+            SpreadMeasure = (U)SpreadMeasures.GetValidSpreadMeasure(spreadMeasure);
         }
         #endregion
 
         #region Properties
-        public T SpreadMeasure { get; init; }
+        public U SpreadMeasure { get; init; }
         #endregion
 
         #region Public methods
-        public int CompareTo(T? spreadMeasure)
+        public V GetMeasureUnit()
         {
-            return SpreadMeasure.CompareTo(spreadMeasure);
-        }
-
-        public bool Equals(T? spreadMeasure)
-        {
-            return SpreadMeasure.Equals(spreadMeasure);
-        }
-
-        public bool? FitsIn(T? spreadMeasure, LimitMode? limitMode)
-        {
-            return SpreadMeasure.FitsIn(spreadMeasure, limitMode);
-        }
-
-        public U GetMeasureUnit()
-        {
-            return (U)SpreadMeasure.Measurement.MeasureUnit;
+            return (V)SpreadMeasure.Measurement.MeasureUnit;
         }
         public double GetQuantity()
         {
             return (double)SpreadMeasure.Quantity;
-        }
-
-        public decimal ProportionalTo(T spreadMeaasure)
-        {
-            return SpreadMeasure.ProportionalTo(spreadMeaasure);
-        }
-
-        public bool IsExchangeableTo(U context)
-        {
-            return SpreadMeasure.IsExchangeableTo(context);
         }
 
         public void ValidateQuantity(double quantity)
@@ -131,21 +106,35 @@
             throw QuantityArgumentOutOfRangeException(quantity);
         }
 
-        public void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure)
+        #region Override methods
+        public override ISpreadFactory<T, U> GetFactory()
         {
-            if (SpreadMeasures.GetValidSpreadMeasure(spreadMeasure) is T) return;
+            return (ISpreadFactory<T, U>)Factory;
+        }
+
+        #region Sealed methods
+        public override sealed bool? FitsIn(IBaseSpread? other, LimitMode? limitMode)
+        {
+            if (other == null) return null;
+
+            U spreadMeasure = (U)SpreadMeasures.GetValidSpreadMeasure(other);
+
+            return SpreadMeasure.FitsIn(spreadMeasure, limitMode);
+        }
+
+        public override sealed T GetSpread(params IExtent[] shapeExtents)
+        {
+            return GetFactory().Create(shapeExtents);
+        }
+
+        public override sealed T GetSpread(ISpreadMeasure spreadMeasure)
+        {
+            if (spreadMeasure.GetSpreadMeasure() is U validSpreadMeasure) return GetFactory().Create(validSpreadMeasure);
 
             throw ArgumentTypeOutOfRangeException(nameof(spreadMeasure), spreadMeasure!);
         }
 
-        #region Override methods
-        #region Sealed methods
-        public override sealed decimal GetDefaultQuantity()
-        {
-            return SpreadMeasure.DefaultQuantity;
-        }
-
-        public override sealed T GetSpreadMeasure()
+        public override sealed U GetSpreadMeasure()
         {
             return SpreadMeasure;
         }
@@ -165,8 +154,8 @@
         #endregion
 
         #region Abstract methods
-        public abstract ISpread<T, U> GetSpread(T spreadMeasure);
-        public abstract ISpread<T, U> GetSpread(U measureUnit);
+        public abstract T GetSpread(U spreadMeasure);
+        public abstract T GetSpread(V measureUnit);
         #endregion
         #endregion
     }

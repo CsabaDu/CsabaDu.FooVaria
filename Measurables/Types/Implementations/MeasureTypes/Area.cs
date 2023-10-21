@@ -54,6 +54,11 @@ internal sealed class Area : Measure, IArea
         return GetMeasureUnit<AreaUnit>(this);
     }
 
+    public MeasureUnitTypeCode GetMeasureUnitTypeCode()
+    {
+        return MeasureUnitTypeCode;
+    }
+
     public ISpreadMeasure GetSpreadMeasure()
     {
         return this;

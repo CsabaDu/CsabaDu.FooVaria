@@ -42,7 +42,7 @@ namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
 
         public override sealed T Create(ISpreadMeasure spreadMeasure)
         {
-            if (NullChecked(spreadMeasure, nameof(spreadMeasure)) is U validSpreadMeasure) return Create(validSpreadMeasure);
+            if (SpreadMeasures.GetValidSpreadMeasure(spreadMeasure) is U measure) return Create(measure);
 
             throw new ArgumentOutOfRangeException(nameof(spreadMeasure), spreadMeasure.GetType(), null);
         }

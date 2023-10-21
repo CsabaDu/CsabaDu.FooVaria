@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Spreads.Types.Implementations;
 
-internal sealed class BulkSurface : Spread<IArea, AreaUnit>, IBulkSurface
+internal sealed class BulkSurface : Spread<IBulkSurface, IArea, AreaUnit>, IBulkSurface
 {
     #region Constructors
     public BulkSurface(IBulkSurface other) : base(other)
@@ -13,15 +13,6 @@ internal sealed class BulkSurface : Spread<IArea, AreaUnit>, IBulkSurface
     #endregion
 
     #region Public methods
-    public override sealed IBulkSurface? ExchangeTo(Enum measureUnit)
-    {
-        IArea? exchanged = (IArea?)SpreadMeasure.ExchangeTo(measureUnit);
-
-        if (exchanged == null) return null;
-
-        return GetFactory().Create(exchanged);
-    }
-
     public IBulkSurface GetBulkSurface(IExtent radius)
     {
         return GetSpread(radius);
@@ -46,18 +37,6 @@ internal sealed class BulkSurface : Spread<IArea, AreaUnit>, IBulkSurface
     public override IBulkSurface GetSpread(AreaUnit measureUnit)
     {
         return (IBulkSurface?)ExchangeTo(measureUnit) ?? throw InvalidMeasureUnitEnumArgumentException(measureUnit);
-    }
-
-    public override IBulkSurface GetSpread(ISpreadMeasure spreadMeasure)
-    {
-        if (NullChecked(spreadMeasure, nameof(spreadMeasure)) is IArea area) return GetSpread(area);
-
-        throw ArgumentTypeOutOfRangeException(nameof(spreadMeasure), spreadMeasure);
-    }
-
-    public override IBulkSurface GetSpread(params IExtent[] shapeExtents)
-    {
-        return GetFactory().Create(shapeExtents);
     }
 
     public override IBulkSurface GetSpread(IBaseSpread baseSppread)

@@ -166,7 +166,7 @@ internal sealed class Measurement : BaseMeasurement, IMeasurement
 
     public bool IsExchangeableTo(Enum? context)
     {
-        if (context is MeasureUnitTypeCode measureUnitTypeCode) return HasMeasureUnitTypeCode(measureUnitTypeCode);
+        if (context is MeasureUnitTypeCode measureUnitTypeCode) return base.IsExchangeableTo(measureUnitTypeCode);
 
         return IsValidMeasureUnit(context) && MeasureUnitTypes.HasMeasureUnitTypeCode(MeasureUnitTypeCode, context!);
     }

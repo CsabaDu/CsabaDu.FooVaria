@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Types;
 
-public interface IQuantity<T> : IRound<T>, IExchange<ValueType, decimal> where T : class, IMeasurable, IRateComponent, IExchangeable<T, Enum>
+public interface IQuantity<T> : IRound<T>/*, IExchange<ValueType, decimal>*/ where T : class, IMeasurable, IRateComponent/*, IExchangeable<T, Enum>*/
 {
     TypeCode QuantityTypeCode { get; }
     object Quantity { get; init; }

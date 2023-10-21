@@ -101,7 +101,7 @@ internal sealed class FlatRate : Rate, IFlatRate
     }
 
     #region Override methods
-    public override bool Equals(IRate? other)
+    public override bool Equals(IBaseRate? other)
     {
         return other is IFlatRate
             && base.Equals(other);

@@ -20,26 +20,4 @@
             yield return MeasureUnitTypeCode.ExtentUnit;
         }
     }
-
-    public abstract class BaseRate : BaseMeasurable, IBaseRate
-    {
-        protected BaseRate(IBaseRate other) : base(other)
-        {
-        }
-
-        protected BaseRate(IBaseRateFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
-        {
-        }
-
-        protected BaseRate(IBaseRateFactory factory, Enum measureUnit) : base(factory, measureUnit)
-        {
-        }
-
-        protected BaseRate(IBaseRateFactory factory, IBaseMeasurable baseMeasurable) : base(factory, baseMeasurable)
-        {
-        }
-
-        public abstract decimal GetDefaultQuantity();
-        public abstract MeasureUnitTypeCode GetNumeratorMeasureUnitTypeCode();
-    }
 }

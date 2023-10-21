@@ -1,6 +1,4 @@
 ﻿using CsabaDu.FooVaria.Measurables.Factories;
-using CsabaDu.FooVaria.Spreads.Behaviors;
-using CsabaDu.FooVaria.Spreads.Statics;
 using CsabaDu.FooVaria.Spreads.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Spreads.Factories.Implementations;

@@ -45,7 +45,8 @@ internal abstract class Measure : BaseMeasure, IMeasure
 
         if (baseMeasure?.IsExchangeableTo(MeasureUnitTypeCode) != true) return null;
 
-        limitMode ??= default;
+        if (limitMode == null) return CompareTo(baseMeasure) <= 0;
+
         IBaseMeasure ceilingBaseMeasure = baseMeasure.Round(RoundingMode.Ceiling);
         baseMeasure = getRoundedBaseMeasure();
 

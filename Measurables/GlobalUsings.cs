@@ -1,4 +1,5 @@
-﻿global using CsabaDu.FooVaria.Common.Behaviors;
+﻿global using CsabaDu.FooVaria.Common;
+global using CsabaDu.FooVaria.Common.Behaviors;
 global using CsabaDu.FooVaria.Common.Enums;
 global using CsabaDu.FooVaria.Common.Enums.MeasureUnits;
 global using CsabaDu.FooVaria.Common.Factories;

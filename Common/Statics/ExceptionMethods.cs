@@ -84,7 +84,13 @@ public static class ExceptionMethods
 
     public static ArgumentOutOfRangeException QuantityArgumentOutOfRangeException(ValueType? quantity)
     {
-        return new ArgumentOutOfRangeException(nameof(quantity), Type.GetTypeCode(quantity?.GetType()), null);
+        return QuantityArgumentOutOfRangeException(nameof(quantity), quantity);
+    }
+
+    public static ArgumentOutOfRangeException QuantityArgumentOutOfRangeException(string? name, ValueType? quantity)
+    {
+        return new ArgumentOutOfRangeException(name, Type.GetTypeCode(quantity?.GetType()), null);
+
     }
 
     public static ArgumentOutOfRangeException MeasureUnitTypeArgumentOutOfRangeException(Type measureUnitType)

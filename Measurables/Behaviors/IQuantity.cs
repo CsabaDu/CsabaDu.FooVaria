@@ -1,5 +1,5 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Behaviors;
+﻿//namespace CsabaDu.FooVaria.Measurables.Behaviors;
 
-public interface IQuantity
-{
-}
+//public interface IQuantity
+//{
+//}
