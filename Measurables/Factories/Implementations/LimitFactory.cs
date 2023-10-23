@@ -66,27 +66,36 @@ public sealed class LimitFactory : BaseMeasureFactory, ILimitFactory
 
     public ILimit Create(IBaseMeasure baseMeasure, LimitMode limitMode)
     {
-        IMeasurement measurement = NullChecked(baseMeasure, nameof(baseMeasure)).Measurement;
-        ValueType quantity = baseMeasure.GetQuantity();
+        var (quantity, measurement) = GetBaseMeasureParams(baseMeasure);
 
         return Create(measurement, quantity, limitMode);
     }
 
     public override ILimit Create(IMeasurable other)
     {
-        _ = NullChecked(other, nameof(other));
+        return NullChecked(other, nameof(other)) switch
+        {
+            Measurement measurement => Create(measurement),
+            BaseMeasure baseMeasure => Create(baseMeasure),
+            FlatRate flatRate => Create(flatRate.Denominator, default),
+            LimitedRate limitedRate => Create(limitedRate.Limit),
 
-        if (other is ILimit limit) return Create(limit);
+            _ => throw new InvalidOperationException(null),
+        };
 
-        if (other is IBaseMeasure baseMeasure) return Create(baseMeasure, default);
+        //_ = NullChecked(other, nameof(other));
 
-        if (other is IMeasurement measurement) return CreateDefault(measurement.MeasureUnitTypeCode);
+        //if (other is ILimit limit) return Create(limit);
 
-        if (other is IFlatRate flatRate) return Create(flatRate.Denominator, default);
+        //if (other is IBaseMeasure baseMeasure) return Create(baseMeasure, default);
 
-        if (other is ILimitedRate limitedRate) return Create(limitedRate.Limit);
+        //if (other is IMeasurement measurement) return CreateDefault(measurement.MeasureUnitTypeCode);
 
-        throw new InvalidOperationException(null);
+        //if (other is IFlatRate flatRate) return Create(flatRate.Denominator, default);
+
+        //if (other is ILimitedRate limitedRate) return Create(limitedRate.Limit);
+
+        //throw new InvalidOperationException(null);
     }
 
     public ILimit Create(ILimit limit, ValueType quantity)

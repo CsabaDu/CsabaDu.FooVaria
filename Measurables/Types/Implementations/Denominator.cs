@@ -90,6 +90,11 @@ internal sealed class Denominator : BaseMeasure, IDenominator
         return GetFactory().Create(baseMeasure.Measurement, quantity);
     }
 
+    public decimal GetQuantity()
+    {
+        return (decimal)Quantity;
+    }
+
     #region Override methods
     public override bool Equals(IBaseMeasure? other)
     {

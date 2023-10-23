@@ -183,11 +183,11 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
 
         //#region Protected methods
         //#region Static methods
-        //protected static T GetMeasure<T, U>(T measure, U quantity, string name) where T : class, IMeasure where U : struct
+        //protected static U GetMeasure<U, X>(U measure, X quantity, string name) where U : class, IMeasure where X : struct
         //{
         //    validateName();
 
-        //    return (T)measure.GetMeasure(quantity, name);
+        //    return (U)measure.GetMeasure(quantity, name);
 
         //    #region Local methods
         //    void validateName()
@@ -201,33 +201,33 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
         //    #endregion
         //}
 
-        //protected static T GetMeasure<T, U>(T measure, U quantity, IMeasurement measurement) where T : class, IMeasure where U : struct
+        //protected static U GetMeasure<U, X>(U measure, X quantity, IMeasurement measurement) where U : class, IMeasure where X : struct
         //{
         //    ValidateMeasurabe(measurement, nameof(measurement));
 
-        //    return (T)measure.GetMeasure(quantity, measurement);
+        //    return (U)measure.GetMeasure(quantity, measurement);
         //}
 
-        //protected static T GetMeasure<T>(T measure, IBaseMeasure baseMeasure) where T : class, IMeasure
+        //protected static U GetMeasure<U>(U measure, IBaseMeasure baseMeasure) where U : class, IMeasure
         //{
         //    ValidateMeasurabe(baseMeasure, nameof(baseMeasure));
 
-        //    return (T)measure.GetMeasure(baseMeasure);
+        //    return (U)measure.GetMeasure(baseMeasure);
         //}
 
-        //protected static T GetMeasure<T>(T measure, T other) where T : class, IMeasure
+        //protected static U GetMeasure<U>(U measure, U other) where U : class, IMeasure
         //{
-        //    return (T)measure.GetMeasure(other);
+        //    return (U)measure.GetMeasure(other);
         //}
 
-        //protected static T GetMeasure<T, U, W>(T measure, U quantity, W measureUnit) where T : class, IMeasure where U : struct where W : struct, Enum
+        //protected static U GetMeasure<U, X, W>(U measure, X quantity, W measureUnit) where U : class, IMeasure where X : struct where W : struct, Enum
         //{
-        //    return (T)measure.GetMeasure(quantity, measureUnit);
+        //    return (U)measure.GetMeasure(quantity, measureUnit);
         //}
 
-        //protected static T GetMeasure<T, U>(T measure, U quantity) where T : class, IMeasure where U : struct
+        //protected static U GetMeasure<U, X>(U measure, X quantity) where U : class, IMeasure where X : struct
         //{
-        //    return (T)measure.GetMeasure(quantity);
+        //    return (U)measure.GetMeasure(quantity);
         //}
 
         //protected static W GetMeasureUnit<W>(IMeasure measure)
@@ -239,7 +239,7 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
 
         //#region Private methods
         //#region Static methods
-        //private static void ValidateMeasurabe<T>(T measurable, string measurableName) where T : class, IMeasurable, IRateComponentType
+        //private static void ValidateMeasurabe<U>(U measurable, string measurableName) where U : class, IMeasurable, IRateComponentType
         //{
         //    MeasureUnitTypeCode measureUnitTypeCode = NullChecked(measurable, measurableName).MeasureUnitTypeCode;
 
@@ -356,12 +356,16 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
                     throw new InvalidOperationException(ex.Message, ex.InnerException);
                 }
 
-                return (U)baseMeasure.Quantity;
+                object? quantity = ((ValueType)baseMeasure.Quantity).ToQuantity(typeof(U));
+
+                if (quantity != null) return (U)quantity;
+                
+                throw QuantityArgumentOutOfRangeException(nameof(baseMeasure), baseMeasure.GetDecimalQuantity());
             }
             #endregion
         }
 
-        public override sealed ValueType GetQuantity()
+        public U GetQuantity()
         {
             return (U)Quantity;
         }
@@ -370,10 +374,9 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
         #endregion
 
         #region Protected methods
-        #region Static methods
-        protected static X ConvertMeasure<X, Y>(T measure, ConvertMode convertMode) where X : class, IMeasure, IConvertMeasure where Y : struct, Enum // TODO Check!!!
+        protected X ConvertMeasure<X, Y>(ConvertMode convertMode) where X : class, IMeasure, IConvertMeasure where Y : struct, Enum // TODO Check!!!
         {
-            decimal quantity = measure.DefaultQuantity;
+            decimal quantity = DefaultQuantity;
             decimal ratio = 1000; // Mindig?
             quantity = convertMode switch
             {
@@ -383,19 +386,18 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
                 _ => throw new InvalidOperationException(null),
             };
 
-            return (X)measure.GetMeasure(quantity, default(Y));
+            return (X)GetMeasure(quantity, default(Y));
         }
 
-        protected static T GetMeasure(T measure, U quantity, W measureUnit, decimal exchangeRate, string customName)
+        protected T GetMeasure(U quantity, W measureUnit, decimal exchangeRate, string customName)
         {
-            return (T)measure.GetMeasure(quantity, measureUnit, exchangeRate, customName);
+            return (T)base.GetMeasure(quantity, measureUnit, exchangeRate, customName);
         }
 
-        protected static T GetMeasure(T measure, U quantity, string customName, decimal exchangeRate)
+        protected T GetMeasure(U quantity, string customName, decimal exchangeRate)
         {
-            return (T)measure.GetMeasure(quantity, customName, exchangeRate);
+            return (T)base.GetMeasure(quantity, customName, exchangeRate);
         }
-        #endregion
         #endregion
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CsabaDu.FooVaria.Measurables.Types.Implementations;
+using System.Diagnostics.Metrics;
 
 namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
 
@@ -87,8 +88,7 @@ public sealed class DenominatorFactory : BaseMeasureFactory, IDenominatorFactory
     {
         if (baseMeasure is IDenominator denominator) return Create(denominator);
 
-        IMeasurement measurement = NullChecked(baseMeasure, nameof(baseMeasure)).Measurement;
-        ValueType quantity = baseMeasure.GetQuantity();
+        var (quantity, measurement) = GetBaseMeasureParams(baseMeasure);
 
         return Create(measurement, quantity);
     }
@@ -100,17 +100,26 @@ public sealed class DenominatorFactory : BaseMeasureFactory, IDenominatorFactory
 
     public override IDenominator Create(IMeasurable other)
     {
-        _ = NullChecked(other, nameof(other));
+        return NullChecked(other, nameof(other)) switch
+        {
+            Measurement measurement => Create(measurement),
+            BaseMeasure baseMeasure => Create(baseMeasure),
+            Rate rate => Create(rate.Denominator),
 
-        if (other is IDenominator denominator) return Create(denominator);
+            _ => throw new InvalidOperationException(null),
+        };
 
-        if (other is IBaseMeasure baseMeasure) return Create(baseMeasure);
+        //_ = NullChecked(other, nameof(other));
 
-        if (other is IMeasurement measurement) return Create(measurement);
+        //if (other is IDenominator denominator) return Create(denominator);
 
-        if (other is IRate rate) return Create(rate.Denominator);
+        //if (other is IBaseMeasure baseMeasure) return Create(baseMeasure);
 
-        throw new InvalidOperationException(null);
+        //if (other is IMeasurement measurement) return Create(measurement);
+
+        //if (other is IRate rate) return Create(rate.Denominator);
+
+        //throw new InvalidOperationException(null);
     }
     #endregion
 

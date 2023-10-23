@@ -5,14 +5,14 @@ namespace CsabaDu.FooVaria.Common.Statics;
 public static class Extensions
 {
     #region System.ValueType
-    public static ValueType? ToQuantity(this ValueType quantity, Type conversionType)
+    public static object? ToQuantity(this ValueType quantity, Type conversionType)
     {
         TypeCode conversionTypeCode = Type.GetTypeCode(conversionType);
 
         return quantity.ToQuantity(conversionTypeCode);
     }
 
-    public static ValueType? ToQuantity(this ValueType quantity, TypeCode conversionTypeCode)
+    public static object? ToQuantity(this ValueType quantity, TypeCode conversionTypeCode)
     {
         Type quantityType = quantity.GetType();
 
@@ -48,7 +48,7 @@ public static class Extensions
         }
 
         #region Local methods
-        ValueType? getIntQuantity()
+        object? getIntQuantity()
         {
             return conversionTypeCode switch
             {
@@ -59,7 +59,7 @@ public static class Extensions
             };
         }
 
-        ValueType? getUIntQuantityOrNull()
+        object? getUIntQuantityOrNull()
         {
             if (Convert.ToDouble(quantity) < 0) return null;
 
@@ -72,7 +72,7 @@ public static class Extensions
             };
         }
 
-        ValueType getRoundedQuantity()
+        object getRoundedQuantity()
         {
             return conversionTypeCode switch
             {

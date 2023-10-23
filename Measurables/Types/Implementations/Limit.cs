@@ -143,6 +143,11 @@ internal sealed class Limit : BaseMeasure, ILimit
         return (ILimit)GetFactory().Create(other);
     }
 
+    public ulong GetQuantity()
+    {
+        return (ulong)Quantity;
+    }
+
     public override void Validate(IFooVariaObject? fooVariaObject)
     {
         ValidateCommonBaseAction = () => ValidateBaseMeasure(this, fooVariaObject!);

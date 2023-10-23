@@ -1,16 +1,15 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Types;
 
-public interface IQuantity<T> : IRound<T>/*, IExchange<ValueType, decimal>*/ where T : class, IMeasurable, IRateComponent/*, IExchangeable<T, Enum>*/
+public interface IQuantity<T> : IRound<T> where T : class, IMeasurable, IRateComponent
 {
     TypeCode QuantityTypeCode { get; }
     object Quantity { get; init; }
 
-    ValueType GetQuantity();
-    ValueType GetQuantity(RoundingMode roundingMode);
-    ValueType GetQuantity(TypeCode quantityTypeCode);
-    TypeCode? GetQuantityTypeCode(ValueType quantity);
-    decimal GetDecimalQuantity(/*T? other = null*/);
-    bool TryGetQuantity(ValueType? quantity, [NotNullWhen(true)] out ValueType? thisTypeQuantity);
+    object GetQuantity(RoundingMode roundingMode);
+    object GetQuantity(TypeCode quantityTypeCode);
+    TypeCode? GetQuantityTypeCode(object quantity);
+    decimal GetDecimalQuantity();
+    bool TryGetQuantity(ValueType quantity, [NotNullWhen(true)] out ValueType? thisTypeQuantity);
 
     void ValidateQuantity(ValueType? quantity);
     void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode);

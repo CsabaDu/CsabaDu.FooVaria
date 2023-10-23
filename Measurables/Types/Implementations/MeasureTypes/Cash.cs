@@ -11,12 +11,12 @@ internal sealed class Cash : Measure<ICash, decimal, Currency>, ICash
     #region Public methods
     public ICash GetCustomMeasure(decimal quantity, Currency measureUnit, decimal exchangeRate, string customName)
     {
-        return GetMeasure(this, quantity, measureUnit, exchangeRate, customName);
+        return GetMeasure(quantity, measureUnit, exchangeRate, customName);
     }
 
     public ICash GetNextCustomMeasure(decimal quantity, string customName, decimal exchangeRate)
     {
-        return GetMeasure(this, quantity, customName, exchangeRate);
+        return GetMeasure(quantity, customName, exchangeRate);
     }
     #endregion
 }

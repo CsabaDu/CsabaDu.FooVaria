@@ -20,4 +20,12 @@ public abstract class BaseMeasureFactory : IBaseMeasureFactory
     public abstract IMeasurable Create(IMeasurable other);
     #endregion
     #endregion
+
+    protected static (ValueType Quantity, IMeasurement Measurement) GetBaseMeasureParams(IBaseMeasure baseMeasure)
+    {
+        IMeasurement measurement = NullChecked(baseMeasure, nameof(baseMeasure)).Measurement;
+        ValueType quantity = (ValueType)baseMeasure.Quantity;
+
+        return (quantity, measurement);
+    }
 }

@@ -16,7 +16,7 @@ internal sealed class Weight : Measure<IWeight, double, WeightUnit>, IWeight
 
     public IVolume ConvertMeasure()
     {
-        return ConvertMeasure<IVolume, VolumeUnit>(this, ConvertMode.Multiply);
+        return ConvertMeasure<IVolume, VolumeUnit>(ConvertMode.Multiply);
     }
     #endregion
 }

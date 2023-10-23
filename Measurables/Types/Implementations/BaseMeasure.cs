@@ -1,5 +1,4 @@
-﻿using CsabaDu.FooVaria.Common;
-using static CsabaDu.FooVaria.Measurables.Statics.QuantityTypes;
+﻿using static CsabaDu.FooVaria.Measurables.Statics.QuantityTypes;
 
 namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
@@ -39,12 +38,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
         other.ValidateMeasureUnitTypeCode(MeasureUnitTypeCode);
 
-        if (other is IQuantifiable quantifiable)
-        {
-            return DefaultQuantity.CompareTo(quantifiable.DefaultQuantity);
-        }
-
-        throw ArgumentTypeOutOfRangeException(nameof(other), other);
+        return DefaultQuantity.CompareTo(other.DefaultQuantity);
     }
 
     public IBaseMeasure? ExchangeTo(Enum measureUnit)
@@ -52,7 +46,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         if (!IsExchangeableTo(measureUnit)) return null;
 
         decimal exchangeRate = Measurement.GetExchangeRate(measureUnit);
-
         decimal quantity = DefaultQuantity / exchangeRate;
 
         return GetBaseMeasure(quantity, measureUnit);
@@ -68,16 +61,11 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return Measurement.ExchangeRate;
     }
 
-    public virtual ValueType GetQuantity()
-    {
-        return (ValueType)Quantity;
-    }
-
-    public ValueType GetQuantity(RoundingMode roundingMode)
+    public object GetQuantity(RoundingMode roundingMode)
     {
         decimal quantity = roundDecimalQuantity();
 
-        return quantity.ToQuantity(QuantityTypeCode) ?? throw new InvalidOperationException(null);
+        return (ValueType?)quantity.ToQuantity(QuantityTypeCode) ?? throw new InvalidOperationException(null);
 
         #region Local methods
         decimal roundDecimalQuantity()
@@ -110,12 +98,12 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         #endregion
     }
 
-    public ValueType GetQuantity(TypeCode quantityTypeCode)
+    public object GetQuantity(TypeCode quantityTypeCode)
     {
-        return GetQuantity().ToQuantity(quantityTypeCode) ?? throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
+        return ((ValueType)Quantity).ToQuantity(quantityTypeCode) ?? throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
     }
 
-    public TypeCode? GetQuantityTypeCode(ValueType quantity)
+    public TypeCode? GetQuantityTypeCode(object quantity)
     {
         TypeCode quantityTypeCode = Type.GetTypeCode(quantity?.GetType());
 
@@ -148,7 +136,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     public IBaseMeasure Round(RoundingMode roundingMode)
     {
-        ValueType quantity = GetQuantity(roundingMode);
+        ValueType quantity = (ValueType)GetQuantity(roundingMode);
         Enum measureUnit = Measurement.GetMeasureUnit();
 
         return GetBaseMeasure(quantity, measureUnit);
@@ -186,11 +174,9 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         Measurement.ValidateExchangeRate(exchangeRate);
     }
 
-    public bool TryGetQuantity(ValueType? quantity, [NotNullWhen(true)] out ValueType? thisTypeQuantity)
+    public bool TryGetQuantity(ValueType quantity, [NotNullWhen(true)] out ValueType? thisTypeQuantity)
     {
-        thisTypeQuantity = quantity == null ?
-            GetQuantity()
-            : quantity.ToQuantity(QuantityTypeCode);
+        thisTypeQuantity = (ValueType?)quantity.ToQuantity(QuantityTypeCode);
 
         return thisTypeQuantity != null;
     }
@@ -230,7 +216,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         {
             T baseMeasure = GetValidBaseMeasurable(commonBase, other);
 
-            _ = GetValidQuantity(commonBase, baseMeasure.GetQuantity());
+            _ = GetValidQuantity(commonBase, baseMeasure.Quantity);
         }
         #endregion
     }
@@ -280,9 +266,9 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     #endregion
 
     #region Protected methods
-    protected T GetDefaultRateComponentQuantity<T>() where T : struct
+    protected U GetDefaultRateComponentQuantity<U>() where U : struct
     {
-        return (T)GetFactory().DefaultRateComponentQuantity;
+        return (U)GetFactory().DefaultRateComponentQuantity;
     }
 
     protected object GetValidQuantity(ValueType? quantity)
@@ -306,9 +292,9 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     #region Private methods
     #region Static methods
-    private static object? GetValidQuantity(IBaseMeasure baseMeasure, ValueType? quantity)
+    private static object? GetValidQuantity(IBaseMeasure baseMeasure, object? quantity)
     {
-        quantity = quantity?.ToQuantity(baseMeasure.QuantityTypeCode);
+        quantity = ((ValueType?)quantity)?.ToQuantity(baseMeasure.QuantityTypeCode);
 
         return baseMeasure.GetRateComponentCode() switch
         {
