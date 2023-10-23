@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes;
 
-internal sealed class Volume : Measure, IVolume
+internal sealed class Volume : Measure<IVolume, double, VolumeUnit>, IVolume
 {
     #region Constructors
     internal Volume(IMeasureFactory factory, ValueType quantity, VolumeUnit volumeUnit) : base(factory, quantity, volumeUnit)
@@ -19,51 +19,6 @@ internal sealed class Volume : Measure, IVolume
         return ConvertMeasure<IWeight, WeightUnit>(this, ConvertMode.Divide);
     }
 
-    public IVolume GetDefaultRateComponent()
-    {
-        return GetDefault(this);
-    }
-
-    public double GetDefaultRateComponentQuantity()
-    {
-        return GetDefaultRateComponentQuantity<double>();
-    }
-
-    public override IVolume GetMeasure(IBaseMeasure baseMeasure)
-    {
-        return GetMeasure(this, baseMeasure);
-    }
-
-    public IVolume GetMeasure(double quantity, VolumeUnit measureUnit)
-    {
-        return GetMeasure(this, quantity, measureUnit);
-    }
-
-    public IVolume GetMeasure(double quantity, string name)
-    {
-        return GetMeasure(this, quantity, name);
-    }
-
-    public IVolume GetMeasure(double quantity, IMeasurement measurement)
-    {
-        return GetMeasure(this, quantity, measurement);
-    }
-
-    public IVolume GetMeasure(IVolume other)
-    {
-        return GetMeasure(this as IVolume, other);
-    }
-
-    public IVolume GetMeasure(double quantity)
-    {
-        return GetMeasure(this, quantity);
-    }
-
-    public VolumeUnit GetMeasureUnit()
-    {
-        return GetMeasureUnit<VolumeUnit>(this);
-    }
-
     public MeasureUnitTypeCode GetMeasureUnitTypeCode()
     {
         return MeasureUnitTypeCode;
@@ -75,3 +30,49 @@ internal sealed class Volume : Measure, IVolume
     }
     #endregion
 }
+
+
+    //public IVolume GetDefaultRateComponent()
+    //{
+    //    return GetDefault(this);
+    //}
+
+    //public double GetDefaultRateComponentQuantity()
+    //{
+    //    return GetDefaultRateComponentQuantity<double>();
+    //}
+
+    //public override IVolume GetMeasure(IBaseMeasure baseMeasure)
+    //{
+    //    return GetMeasure(this, baseMeasure);
+    //}
+
+    //public IVolume GetMeasure(double quantity, VolumeUnit measureUnit)
+    //{
+    //    return GetMeasure(this, quantity, measureUnit);
+    //}
+
+    //public IVolume GetMeasure(double quantity, string name)
+    //{
+    //    return GetMeasure(this, quantity, name);
+    //}
+
+    //public IVolume GetMeasure(double quantity, IMeasurement measurement)
+    //{
+    //    return GetMeasure(this, quantity, measurement);
+    //}
+
+    //public IVolume GetMeasure(IVolume other)
+    //{
+    //    return GetMeasure(this as IVolume, other);
+    //}
+
+    //public IVolume GetMeasure(double quantity)
+    //{
+    //    return GetMeasure(this, quantity);
+    //}
+
+    //public VolumeUnit GetMeasureUnit()
+    //{
+    //    return GetMeasureUnit<VolumeUnit>(this);
+    //}

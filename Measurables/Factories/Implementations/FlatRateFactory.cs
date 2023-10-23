@@ -44,6 +44,8 @@ public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
 
     public IFlatRate Create(IMeasure numerator, Enum measureUnit)
     {
+        if (measureUnit is MeasureUnitTypeCode measureUnitTypeCode) return Create(numerator, measureUnitTypeCode);
+
         IDenominator denominator = DenominatorFactory.Create(measureUnit);
 
         return Create(numerator, denominator);
@@ -51,9 +53,7 @@ public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
 
     public IFlatRate Create(IMeasure numerator, IMeasurement measurement)
     {
-        IDenominator denominator = DenominatorFactory.Create(measurement);
-
-        return Create(numerator, denominator);
+        return new FlatRate(this, numerator, measurement);
     }
 
     public IFlatRate Create(IMeasure numerator, IMeasurement measurement, ValueType quantity)
@@ -80,6 +80,15 @@ public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
         if (other is IRate rate) return Create(rate);
 
         throw new ArgumentOutOfRangeException(nameof(other), other.GetType(), null);
+    }
+
+    public override IFlatRate Create(IQuantifiable numerator, MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        string name = nameof(numerator);
+
+        if (NullChecked(numerator, name) is not IMeasure measure) throw ArgumentTypeOutOfRangeException(name, numerator);
+
+        return new FlatRate(this, measure, measureUnitTypeCode);
     }
     #endregion
 }

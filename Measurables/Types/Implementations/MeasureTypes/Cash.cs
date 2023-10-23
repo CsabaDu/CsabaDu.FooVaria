@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes;
 
-internal sealed class Cash : Measure, ICash
+internal sealed class Cash : Measure<ICash, decimal, Currency>, ICash
 {
     #region Constructors
     internal Cash(IMeasureFactory factory, ValueType quantity, Currency currency) : base(factory, quantity, currency)
@@ -14,54 +14,54 @@ internal sealed class Cash : Measure, ICash
         return GetMeasure(this, quantity, measureUnit, exchangeRate, customName);
     }
 
-    public ICash GetDefaultRateComponent()
-    {
-        return GetDefault(this);
-    }
-
-    public decimal GetDefaultRateComponentQuantity()
-    {
-        return GetDefaultRateComponentQuantity<decimal>();
-    }
-
-    public override ICash GetMeasure(IBaseMeasure baseMeasure)
-    {
-        return GetMeasure(this, baseMeasure);
-    }
-
-    public ICash GetMeasure(decimal quantity, Currency measureUnit)
-    {
-        return GetMeasure(this, quantity, measureUnit);
-    }
-
-    public ICash GetMeasure(decimal quantity, string name)
-    {
-        return GetMeasure(this, quantity, name);
-    }
-
-    public ICash GetMeasure(decimal quantity, IMeasurement measurement)
-    {
-        return GetMeasure(this, quantity, measurement);
-    }
-
-    public ICash GetMeasure(ICash other)
-    {
-        return GetMeasure(other);
-    }
-
-    public ICash GetMeasure(decimal quantity)
-    {
-        return GetMeasure(this, quantity);
-    }
-
-    public Currency GetMeasureUnit()
-    {
-        return GetMeasureUnit<Currency>(this);
-    }
-
     public ICash GetNextCustomMeasure(decimal quantity, string customName, decimal exchangeRate)
     {
         return GetMeasure(this, quantity, customName, exchangeRate);
     }
     #endregion
 }
+
+    //public ICash GetDefaultRateComponent()
+    //{
+    //    return GetDefault(this);
+    //}
+
+    //public decimal GetDefaultRateComponentQuantity()
+    //{
+    //    return GetDefaultRateComponentQuantity<decimal>();
+    //}
+
+    //public override ICash GetMeasure(IBaseMeasure baseMeasure)
+    //{
+    //    return GetMeasure(this, baseMeasure);
+    //}
+
+    //public ICash GetMeasure(decimal quantity, Currency measureUnit)
+    //{
+    //    return GetMeasure(this, quantity, measureUnit);
+    //}
+
+    //public ICash GetMeasure(decimal quantity, string name)
+    //{
+    //    return GetMeasure(this, quantity, name);
+    //}
+
+    //public ICash GetMeasure(decimal quantity, IMeasurement measurement)
+    //{
+    //    return GetMeasure(this, quantity, measurement);
+    //}
+
+    //public ICash GetMeasure(ICash other)
+    //{
+    //    return GetMeasure(other);
+    //}
+
+    //public ICash GetMeasure(decimal quantity)
+    //{
+    //    return GetMeasure(this, quantity);
+    //}
+
+    //public Currency GetMeasureUnit()
+    //{
+    //    return GetMeasureUnit<Currency>(this);
+    //}

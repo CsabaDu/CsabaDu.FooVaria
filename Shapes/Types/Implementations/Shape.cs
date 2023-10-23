@@ -14,13 +14,6 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 
         public ISpread Spread { get; }
 
-        public override decimal DefaultQuantity => Spread.DefaultQuantity;
-
-        public override int CompareTo(IBaseSpread? other)
-        {
-            throw new NotImplementedException();
-        }
-
         public override IBaseSpread? ExchangeTo(Enum measureUnit)
         {
             return Spread.ExchangeTo(measureUnit);
@@ -34,11 +27,6 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
         public override bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
         {
             return Spread.IsValidMeasureUnitTypeCode(measureUnitTypeCode);
-        }
-
-        public override decimal ProportionalTo(IBaseSpread other)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -12,6 +12,16 @@ internal sealed class LimitedRate : Rate, ILimitedRate
     {
         Limit = NullChecked(limit, nameof(limit));
     }
+
+    internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, MeasureUnitTypeCode measureUnitTypeCode, ILimit limit) : base(factory, numerator, measureUnitTypeCode)
+    {
+        Limit = NullChecked(limit, nameof(limit));
+    }
+
+    internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, IMeasurement measurement, ILimit limit) : base(factory, numerator, measurement)
+    {
+        Limit = NullChecked(limit, nameof(limit));
+    }
     #endregion
 
     #region Properties
@@ -128,24 +138,6 @@ internal sealed class LimitedRate : Rate, ILimitedRate
     public override IRate GetRate(IMeasure numerator, IDenominator denominator, ILimit? limit)
     {
         return GetLimitedRate(numerator, denominator, limit ?? GetFactory().CreateLimit(denominator));
-    }
-
-    public override void Validate(IFooVariaObject? fooVariaObject)
-    {
-        ValidateCommonBaseAction = () => validateLimitedRate(this, fooVariaObject!);
-
-        Validate(this, fooVariaObject);
-
-        #region Local methods
-        static void validateLimitedRate<T>(T commonBase, IFooVariaObject other) where T : class, ILimitedRate
-        {
-            T limitedRate = GetValidRate(commonBase, other);
-            MeasureUnitTypeCode measureUnitTypeCode = commonBase.Limit.MeasureUnitTypeCode;
-            MeasureUnitTypeCode otherMeasureUnitTypeCode = limitedRate.Limit.MeasureUnitTypeCode;
-
-            _ = GetValidBaseMeasurable(limitedRate, measureUnitTypeCode, otherMeasureUnitTypeCode);
-        }
-        #endregion
     }
     #endregion
     #endregion

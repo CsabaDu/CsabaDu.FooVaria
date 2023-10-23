@@ -1,4 +1,5 @@
-﻿using CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿using CsabaDu.FooVaria.Measurables.Types;
+using CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
 
@@ -51,9 +52,7 @@ public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
 
     public ILimitedRate Create(IMeasure numerator, IMeasurement measurement, ILimit limit)
     {
-        IDenominator denominator = DenominatorFactory.Create(measurement);
-
-        return Create(numerator, denominator, limit);
+        return new LimitedRate(this, numerator, measurement, limit);
     }
 
     public ILimitedRate Create(IMeasure numerator, IMeasurement measurement, ValueType quantity, ILimit limit)
@@ -90,6 +89,17 @@ public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
     public ILimit CreateLimit(IDenominator denominator)
     {
         return (ILimit)LimitFactory.Create(denominator);
+    }
+
+    public override ILimitedRate Create(IQuantifiable numerator, MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        string name = nameof(numerator);
+
+        if (NullChecked(numerator, name) is not IMeasure measure) throw ArgumentTypeOutOfRangeException(name, numerator);
+
+        ILimit limit = LimitFactory.CreateDefault(measureUnitTypeCode);
+
+        return new LimitedRate(this, measure, measureUnitTypeCode, limit);
     }
     #endregion
 }

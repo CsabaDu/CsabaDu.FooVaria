@@ -68,7 +68,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return Measurement.ExchangeRate;
     }
 
-    public ValueType GetQuantity()
+    public virtual ValueType GetQuantity()
     {
         return (ValueType)Quantity;
     }

@@ -1,9 +1,10 @@
 ﻿namespace CsabaDu.FooVaria.Common.Types
 {
-    public interface IBaseRate : IBaseMeasurable, IMeasureUnitType, IExchange<IBaseRate, IBaseMeasurable>
+    public interface IBaseRate : IBaseMeasurable, IMeasureUnitType/*, IExchange<IBaseRate, IBaseMeasurable>*/, IQuantifiable, IProportional<IBaseRate>
     {
-        MeasureUnitTypeCode NumeratorMeasureUnitTypeCode { get; }
+        MeasureUnitTypeCode GetNumeratorMeasureUnitTypeCode();
 
-        IBaseRate GetBaseRate(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode measureUnitTypeCode);
+        IBaseRate GetBaseRate(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
+        IBaseRate GetBaseRate(IQuantifiable numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
     }
 }

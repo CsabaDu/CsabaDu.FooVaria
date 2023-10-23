@@ -1,53 +1,72 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace CsabaDu.FooVaria.Common.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Common.Types.Implementations;
 
 public abstract class BaseRate : BaseMeasurable, IBaseRate
 {
     #region Constructors
     public virtual decimal DefaultQuantity { get; }
 
-    protected BaseRate(IBaseRate other) : base(other)
+    internal BaseRate(IBaseRate other) : base(other)
     {
-        NumeratorMeasureUnitTypeCode  = other.NumeratorMeasureUnitTypeCode;
+        //NumeratorMeasureUnitTypeCode  = other.NumeratorMeasureUnitTypeCode;
         DefaultQuantity = other.DefaultQuantity;
     }
 
-    protected BaseRate(IBaseRateFactory factory, MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
+    internal BaseRate(IBaseRateFactory factory, MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
     {
-        NumeratorMeasureUnitTypeCode = getValidNumeratorMeasureUnitTypeCode();
+        //NumeratorMeasureUnitTypeCode = getValidNumeratorMeasureUnitTypeCode();
         DefaultQuantity = defaultQuantity;
+
+        //#region Local methods
+        //MeasureUnitTypeCode getValidNumeratorMeasureUnitTypeCode()
+        //{
+        //    try
+        //    {
+        //        ValidateMeasureUnitTypeCode(numeratorMeasureUnitTypeCode);
+        //    }
+        //    catch (ArgumentOutOfRangeException)
+        //    {
+        //        throw new ArgumentOutOfRangeException(nameof(numeratorMeasureUnitTypeCode), numeratorMeasureUnitTypeCode, null);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new InvalidOperationException(ex.Message, ex.InnerException);
+        //    }
+
+        //    return numeratorMeasureUnitTypeCode;
+        //}
+        //#endregion
+    }
+
+    internal BaseRate(IBaseRateFactory factory, IBaseRate baseRate) : base(factory, baseRate)
+    {
+        //NumeratorMeasureUnitTypeCode = baseRate.NumeratorMeasureUnitTypeCode;
+        DefaultQuantity = baseRate.DefaultQuantity;
+    }
+
+    internal BaseRate(IBaseRateFactory factory, IQuantifiable numerator, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
+    {
+        //NumeratorMeasureUnitTypeCode = getValidNumeratorMeasureUnitTypeCode();
+        DefaultQuantity = numerator.DefaultQuantity;
 
         #region Local methods
         MeasureUnitTypeCode getValidNumeratorMeasureUnitTypeCode()
         {
-            try
+            string name = nameof(numerator);
+
+            if (NullChecked(numerator, name) is not IBaseMeasurable baseMeasurable
+                || numerator is IBaseRate)
             {
-                ValidateMeasureUnitTypeCode(numeratorMeasureUnitTypeCode);
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                throw new ArgumentOutOfRangeException(nameof(numeratorMeasureUnitTypeCode), numeratorMeasureUnitTypeCode, null);
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException(ex.Message, ex.InnerException);
+                throw ArgumentTypeOutOfRangeException(name, numerator);
             }
 
-            return numeratorMeasureUnitTypeCode;
+            return baseMeasurable.MeasureUnitTypeCode;
         }
         #endregion
-    }
-
-    protected BaseRate(IBaseRateFactory factory, IBaseRate baseRate) : base(factory, baseRate)
-    {
-        NumeratorMeasureUnitTypeCode = baseRate.NumeratorMeasureUnitTypeCode;
-        DefaultQuantity = baseRate.DefaultQuantity;
     }
     #endregion
 
     #region Properties
-    public MeasureUnitTypeCode NumeratorMeasureUnitTypeCode { get; }
+    //public MeasureUnitTypeCode NumeratorMeasureUnitTypeCode { get; }
     #endregion
 
     #region Public methods
@@ -58,16 +77,9 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
 
         if (quantity == 0) throw QuantityArgumentOutOfRangeException(name, quantity);
 
-        if (IsExchangeableTo(other)) return Math.Abs(DefaultQuantity / quantity);
+        if (AreExchangeables(this, other)) return Math.Abs(DefaultQuantity / quantity);
 
         throw BaseRateArgumentMeasureUnitTypeCodesOutOfRangeException(other, name);
-    }
-
-    public bool TryExchangeTo(IBaseMeasurable context, [NotNullWhen(true)] out IBaseRate? exchanged)
-    {
-        exchanged = ExchangeTo(context);
-
-        return exchanged != null;
     }
 
     #region Override methods
@@ -76,19 +88,22 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
         return obj is IBaseRate baseRate && Equals(baseRate);
     }
 
-    public override IBaseMeasurableFactory GetFactory()
+    public override IBaseRateFactory GetFactory()
     {
         return (IBaseRateFactory)Factory;
     }
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(DefaultQuantity, MeasureUnitTypeCode, NumeratorMeasureUnitTypeCode);
+        return HashCode.Combine(DefaultQuantity, MeasureUnitTypeCode/*, NumeratorMeasureUnitTypeCode*/);
     }
+
 
     public override void Validate(IFooVariaObject? fooVariaObject)
     {
-        base.Validate(fooVariaObject);
+        ValidateCommonBaseAction = () => _ = GetValidBaseRate(this, fooVariaObject!);
+
+        Validate(this, fooVariaObject);
     }
 
     public override void ValidateMeasureUnit(Enum measureUnit)
@@ -107,7 +122,7 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
     {
         if (other == null) return 1;
 
-        if (IsExchangeableTo(other)) return DefaultQuantity.CompareTo(other.DefaultQuantity);
+        if (AreExchangeables(this, other)) return DefaultQuantity.CompareTo(other.DefaultQuantity);
 
         throw BaseRateArgumentMeasureUnitTypeCodesOutOfRangeException(other, nameof(other));
     }
@@ -115,19 +130,17 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
     public virtual bool Equals(IBaseRate? other)
     {
         return other?.DefaultQuantity == DefaultQuantity
-            && other.MeasureUnitTypeCode == MeasureUnitTypeCode
-            && other.NumeratorMeasureUnitTypeCode == NumeratorMeasureUnitTypeCode;
-    }
-
-    public virtual bool IsExchangeableTo(IBaseMeasurable? baseMeasurable)
-    {
-        return AreExchangeables(this, baseMeasurable);
+            && AreExchangeables(this, other);
     }
     #endregion
 
     #region Abstract methods
-    public abstract IBaseRate GetBaseRate(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode measureUnitTypeCode);
-    public abstract IBaseRate? ExchangeTo(IBaseMeasurable context);
+    public abstract IBaseRate GetBaseRate(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
+    //{
+    //    return new BaseRate(GetFactory(), numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode);
+    //}
+
+    public abstract MeasureUnitTypeCode GetNumeratorMeasureUnitTypeCode();
     #endregion
 
     #region Static methods
@@ -135,10 +148,14 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
     {
         if (baseMeasurable is not IBaseRate other) return baseMeasurable?.IsExchangeableTo(baseRate.MeasureUnitTypeCode) == true;
 
-        return baseRate.MeasureUnitTypeCode == other.MeasureUnitTypeCode
-            && baseRate.NumeratorMeasureUnitTypeCode == other.NumeratorMeasureUnitTypeCode;
+        return AreExchangeables(baseRate, other);
     }
 
+    public static bool AreExchangeables(IBaseRate baseRate, IBaseRate other)
+    {
+        return baseRate.MeasureUnitTypeCode == other.MeasureUnitTypeCode
+            && baseRate.GetNumeratorMeasureUnitTypeCode() == other.GetNumeratorMeasureUnitTypeCode();
+    }
     public static int Compare(IBaseRate baseRate, IBaseRate? other)
     {
         return NullChecked(baseRate, nameof(baseRate)).CompareTo(other);
@@ -149,7 +166,7 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
         return baseRate?.Equals(other) == true;
     }
 
-    public static decimal Proportion(IBaseRate baseRate, IBaseRate other)
+    public static decimal Proportionals(IBaseRate baseRate, IBaseRate other)
     {
         return NullChecked(baseRate, nameof(baseRate)).ProportionalTo(other);
     }
@@ -166,7 +183,7 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
             throw exception(name, measureUnitTypeCode);
         }
 
-        throw exception(name, baseRate.NumeratorMeasureUnitTypeCode);
+        throw exception(name, baseRate.GetNumeratorMeasureUnitTypeCode());
 
         #region Local methods
         static ArgumentOutOfRangeException exception(string name, MeasureUnitTypeCode measureUnitTypeCode)
@@ -175,5 +192,24 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
         }
         #endregion
     }
+
+    public IBaseRate GetBaseRate(IQuantifiable numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
+    {
+        return GetFactory().Create(numerator, denominatorMeasureUnitTypeCode);
+    }
     #endregion
+
+    protected static T GetValidBaseRate<T>(T commonBase, IFooVariaObject other) where T : class, IBaseRate // TODO 
+    {
+        T baseMeasurable = GetValidCommonBase(commonBase, other);
+        MeasureUnitTypeCode measureUnitTypeCode = commonBase.MeasureUnitTypeCode;
+        MeasureUnitTypeCode otherMeasureUnitTypeCode = baseMeasurable.MeasureUnitTypeCode;
+
+        _ = GetValidBaseMeasurable(baseMeasurable, measureUnitTypeCode, otherMeasureUnitTypeCode);
+
+        measureUnitTypeCode = commonBase.GetNumeratorMeasureUnitTypeCode();
+        otherMeasureUnitTypeCode = baseMeasurable.GetNumeratorMeasureUnitTypeCode();
+
+        return GetValidBaseMeasurable(baseMeasurable, measureUnitTypeCode, otherMeasureUnitTypeCode);
+    }
 }

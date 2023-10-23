@@ -71,7 +71,7 @@
         #endregion
     }
 
-    internal abstract class Spread<T, U, V> : Spread, ISpread<T, U, V> where T : class, ISpread where U : class, IMeasure, ISpreadMeasure where V : struct, Enum
+    internal abstract class Spread<T, U, W> : Spread, ISpread<T, U, W> where T : class, ISpread where U : class, IMeasure, ISpreadMeasure where W : struct, Enum
     {
         #region Constructors
         protected Spread(T other) : base(other)
@@ -90,9 +90,9 @@
         #endregion
 
         #region Public methods
-        public V GetMeasureUnit()
+        public W GetMeasureUnit()
         {
-            return (V)SpreadMeasure.Measurement.MeasureUnit;
+            return (W)SpreadMeasure.Measurement.MeasureUnit;
         }
         public double GetQuantity()
         {
@@ -155,7 +155,7 @@
 
         #region Abstract methods
         public abstract T GetSpread(U spreadMeasure);
-        public abstract T GetSpread(V measureUnit);
+        public abstract T GetSpread(W measureUnit);
         #endregion
         #endregion
     }

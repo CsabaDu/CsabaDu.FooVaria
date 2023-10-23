@@ -3,6 +3,4 @@
 public interface IRateFactory : IMeasurableFactory, IBaseRateFactory
 {
     IDenominatorFactory DenominatorFactory { get; init; }
-
-    //IRate Create(IRateFactory rateFactory, IRate rate);
 }

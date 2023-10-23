@@ -10,6 +10,14 @@ internal sealed class FlatRate : Rate, IFlatRate
     internal FlatRate(IFlatRateFactory factory, IMeasure numerator, IDenominator denominator) : base(factory, numerator, denominator)
     {
     }
+
+    internal FlatRate(IFlatRateFactory factory, IMeasure numerator, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, numerator, measureUnitTypeCode)
+    {
+    }
+
+    internal FlatRate(IFlatRateFactory factory, IMeasure numerator, IMeasurement measurement) : base(factory, numerator, measurement)
+    {
+    }
     #endregion
 
     #region Public methods

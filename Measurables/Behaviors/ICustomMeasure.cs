@@ -4,9 +4,9 @@
     {
     }
 
-    public interface ICustomMeasure<T, U, V> : ICustomMeasure where T : class, IMeasure where U : struct where V : struct, Enum
+    public interface ICustomMeasure<T, U, W> : ICustomMeasure where T : class, IMeasure where U : struct where W : struct, Enum
     {
         T GetNextCustomMeasure(U quantity, string customName, decimal exchangeRate);
-        T GetCustomMeasure(U quantity, V measureUnit, decimal exchangeRate, string customName);
+        T GetCustomMeasure(U quantity, W measureUnit, decimal exchangeRate, string customName);
     }
 }
