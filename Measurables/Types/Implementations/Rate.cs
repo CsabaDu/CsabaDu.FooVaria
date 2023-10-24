@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Common;
-
-namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal abstract class Rate : Measurable, IRate
 {
@@ -219,6 +217,26 @@ internal abstract class Rate : Measurable, IRate
     public IBaseRate GetBaseRate(IQuantifiable numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
     {
         return GetFactory().Create(numerator, denominatorMeasureUnitTypeCode);
+    }
+
+    public IBaseRate GetBaseRate(IQuantifiable numerator, IBaseMeasurable denominator)
+    {
+        string name = nameof(numerator);
+
+        if (NullChecked(numerator, name) is IMeasure measure)
+        {
+            return GetBaseRate(measure, NullChecked(denominator, nameof(denominator)).MeasureUnitTypeCode);
+        }
+
+        throw ArgumentTypeOutOfRangeException(name, numerator);
+    }
+    public decimal GetQuantity()
+    {
+        return Numerator.GetDecimalQuantity() / Denominator.GetDecimalQuantity();
+    }
+    public void ValidateQuantity(decimal quantity)
+    {
+        return;
     }
     #endregion
     #endregion

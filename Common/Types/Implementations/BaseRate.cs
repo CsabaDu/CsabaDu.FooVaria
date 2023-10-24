@@ -3,71 +3,44 @@
 public abstract class BaseRate : BaseMeasurable, IBaseRate
 {
     #region Constructors
-    public virtual decimal DefaultQuantity { get; }
+    public decimal DefaultQuantity { get; }
 
-    internal BaseRate(IBaseRate other) : base(other)
+    public BaseRate(IBaseRate other) : base(other)
     {
-        //NumeratorMeasureUnitTypeCode  = other.NumeratorMeasureUnitTypeCode;
         DefaultQuantity = other.DefaultQuantity;
     }
 
-    internal BaseRate(IBaseRateFactory factory, MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
+    public BaseRate(IBaseRateFactory factory, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, denominatorMeasureUnitTypeCode)
     {
-        //NumeratorMeasureUnitTypeCode = getValidNumeratorMeasureUnitTypeCode();
         DefaultQuantity = defaultQuantity;
-
-        //#region Local methods
-        //MeasureUnitTypeCode getValidNumeratorMeasureUnitTypeCode()
-        //{
-        //    try
-        //    {
-        //        ValidateMeasureUnitTypeCode(numeratorMeasureUnitTypeCode);
-        //    }
-        //    catch (ArgumentOutOfRangeException)
-        //    {
-        //        throw new ArgumentOutOfRangeException(nameof(numeratorMeasureUnitTypeCode), numeratorMeasureUnitTypeCode, null);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new InvalidOperationException(ex.Message, ex.InnerException);
-        //    }
-
-        //    return numeratorMeasureUnitTypeCode;
-        //}
-        //#endregion
     }
 
-    internal BaseRate(IBaseRateFactory factory, IBaseRate baseRate) : base(factory, baseRate)
+    public BaseRate(IBaseRateFactory factory, IBaseRate baseRate) : base(factory, baseRate)
     {
-        //NumeratorMeasureUnitTypeCode = baseRate.NumeratorMeasureUnitTypeCode;
         DefaultQuantity = baseRate.DefaultQuantity;
     }
 
-    internal BaseRate(IBaseRateFactory factory, IQuantifiable numerator, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
+    public BaseRate(IBaseRateFactory factory, IQuantifiable numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, denominatorMeasureUnitTypeCode)
     {
-        //NumeratorMeasureUnitTypeCode = getValidNumeratorMeasureUnitTypeCode();
-        DefaultQuantity = numerator.DefaultQuantity;
-
-        #region Local methods
-        MeasureUnitTypeCode getValidNumeratorMeasureUnitTypeCode()
-        {
-            string name = nameof(numerator);
-
-            if (NullChecked(numerator, name) is not IBaseMeasurable baseMeasurable
-                || numerator is IBaseRate)
-            {
-                throw ArgumentTypeOutOfRangeException(name, numerator);
-            }
-
-            return baseMeasurable.MeasureUnitTypeCode;
-        }
-        #endregion
+        DefaultQuantity = NullChecked(numerator, nameof(numerator)).DefaultQuantity;
     }
+
+    public BaseRate(IBaseRateFactory factory, IQuantifiable numerator, IBaseMeasurable denominator) : base(factory, denominator)
+    {
+        DefaultQuantity = NullChecked(numerator, nameof(numerator)).DefaultQuantity;
+    }
+
+    public BaseRate(IBaseRateFactory factory, IQuantifiable numerator, Enum denominatorMeasureUnit) : base(factory, denominatorMeasureUnit)
+    {
+        DefaultQuantity = NullChecked(numerator, nameof(numerator)).DefaultQuantity;
+    }
+
+
     #endregion
 
-    #region Properties
+    //#region Properties
     //public MeasureUnitTypeCode NumeratorMeasureUnitTypeCode { get; }
-    #endregion
+    //#endregion
 
     #region Public methods
     public decimal ProportionalTo(IBaseRate other)
@@ -136,9 +109,6 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
 
     #region Abstract methods
     public abstract IBaseRate GetBaseRate(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
-    //{
-    //    return new BaseRate(GetFactory(), numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode);
-    //}
 
     public abstract MeasureUnitTypeCode GetNumeratorMeasureUnitTypeCode();
     #endregion
@@ -151,14 +121,20 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
         return AreExchangeables(baseRate, other);
     }
 
-    public static bool AreExchangeables(IBaseRate baseRate, IBaseRate other)
+    public static bool AreExchangeables(IBaseRate? baseRate, IBaseRate? other)
     {
+        if (baseRate == null || other == null) return false;
+
         return baseRate.MeasureUnitTypeCode == other.MeasureUnitTypeCode
             && baseRate.GetNumeratorMeasureUnitTypeCode() == other.GetNumeratorMeasureUnitTypeCode();
     }
-    public static int Compare(IBaseRate baseRate, IBaseRate? other)
+    public static int Compare(IBaseRate? baseRate, IBaseRate? other)
     {
-        return NullChecked(baseRate, nameof(baseRate)).CompareTo(other);
+        if (baseRate == null && other == null) return 0;
+
+        if (baseRate == null) return -1;
+
+        return baseRate.CompareTo(other);
     }
 
     public static bool Equals(IBaseRate baseRate, IBaseRate? other)
@@ -180,13 +156,17 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
 
         if (!IsExchangeableTo(measureUnitTypeCode))
         {
-            throw exception(name, measureUnitTypeCode);
+            throw exception();
+        }
+        else
+        {
+            measureUnitTypeCode = baseRate.GetNumeratorMeasureUnitTypeCode();
+
+            throw exception();
         }
 
-        throw exception(name, baseRate.GetNumeratorMeasureUnitTypeCode());
-
         #region Local methods
-        static ArgumentOutOfRangeException exception(string name, MeasureUnitTypeCode measureUnitTypeCode)
+        ArgumentOutOfRangeException exception()
         {
             return new ArgumentOutOfRangeException(name, measureUnitTypeCode, null);
         }
@@ -212,4 +192,11 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
 
         return GetValidBaseMeasurable(baseMeasurable, measureUnitTypeCode, otherMeasureUnitTypeCode);
     }
+
+    public decimal GetQuantity()
+    {
+        return DefaultQuantity;
+    }
+    public abstract void ValidateQuantity(decimal quantity);
+    public abstract IBaseRate GetBaseRate(IQuantifiable numerator, IBaseMeasurable denominator);
 }

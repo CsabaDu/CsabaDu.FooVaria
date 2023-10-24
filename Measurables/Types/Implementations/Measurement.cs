@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿using static CsabaDu.FooVaria.Measurables.Statics.MeasureUnits;
+
+namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal sealed class Measurement : BaseMeasurement, IMeasurement
 {

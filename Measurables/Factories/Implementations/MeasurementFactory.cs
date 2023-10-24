@@ -18,7 +18,7 @@ public sealed class MeasurementFactory : BaseMeasurementFactory, IMeasurementFac
     #region Public methods
     public IMeasurement Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
     {
-        IMeasurement measurement = GetFirstMeasurement();
+        IMeasurement measurement = GetFirstStoredMeasurement();
         measurement.SetCustomMeasureUnit(customName, measureUnitTypeCode, exchangeRate);
         Enum measureUnit = measurement.GetMeasureUnit(customName)!;
 
@@ -27,7 +27,7 @@ public sealed class MeasurementFactory : BaseMeasurementFactory, IMeasurementFac
 
     public IMeasurement Create(Enum measureUnit, decimal exchangeRate, string customName)
     {
-        IMeasurement measurement = GetFirstMeasurement();
+        IMeasurement measurement = GetFirstStoredMeasurement();
 
         if (!BaseMeasurement.IsValidMeasureUnit(measureUnit))
         {
@@ -62,7 +62,7 @@ public sealed class MeasurementFactory : BaseMeasurementFactory, IMeasurementFac
 
     public IMeasurement Create(string name)
     {
-        IMeasurement measurement = GetFirstMeasurement();
+        IMeasurement measurement = GetFirstStoredMeasurement();
         Enum? measureUnit = measurement.GetMeasureUnit(name);
 
         if (measureUnit != null) return GetStoredMeasurement(measureUnit);
@@ -101,7 +101,7 @@ public sealed class MeasurementFactory : BaseMeasurementFactory, IMeasurementFac
 
     #region Private methods
     #region Static methods
-    private static IMeasurement GetFirstMeasurement()
+    private static IMeasurement GetFirstStoredMeasurement()
     {
         return MeasurementCollection.First().Value;
     }

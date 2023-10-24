@@ -2,13 +2,20 @@
 {
     public interface IProportion : IBaseRate
     {
+        MeasureUnitTypeCode NumeratorMeasureUnitTypeCode { get; init; }
+
         IProportion GetProportion(IBaseRate baseRate);
-        IProportion GetProportion(Enum numeratorContext, ValueType quantity, Enum denominatorContext);
-        IProportion GetProportion(IMeasurement numeratorMeasurement, ValueType quantity, IMeasurement denominatorMeasurement);
+        IProportion GetProportion(IBaseMeasure numerator, IMeasurement denominatorMeasurement);
     }
 
-    public interface IDensity : IProportion
+    public interface IProportion<out T, in U, in W> : IProportion where T : class, IProportion where U : struct, Enum where W : struct, Enum
     {
-        
+        T GetProportion(U numeratorMeasureUnit, decimal quantity, W denominatorMeasureUnit);
+        T GetProportion(IMeasure numerator, W denominatorMeasureUnit);
+        decimal GetQuantity(U numeratorMeasureUnit, W denominatorMeasureUnit);
+    }
+
+    public interface IDensity : IProportion<IDensity, WeightUnit, VolumeUnit>
+    {
     }
 }

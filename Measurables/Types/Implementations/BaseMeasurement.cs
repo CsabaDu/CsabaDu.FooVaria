@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿using CsabaDu.FooVaria.Measurables.Statics;
+using static CsabaDu.FooVaria.Measurables.Statics.MeasureUnits;
+
+namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
 {
@@ -69,23 +72,14 @@ internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
 
     public decimal GetExchangeRate(Enum measureUnit)
     {
-        decimal? exchangeRate = GetExchangeRateOrNull(NullChecked(measureUnit, nameof(measureUnit)));
-
-        if (exchangeRate != null) return exchangeRate.Value;
-
-        throw InvalidMeasureUnitEnumArgumentException(measureUnit);
+        return MeasureUnits.GetExchangeRate(measureUnit);
     }
 
     public decimal GetExchangeRate(string name)
     {
         Enum? measureUnit = GetMeasureUnit(NullChecked(name, nameof(name)));
 
-        if (measureUnit != null)
-        {
-            decimal? exchangeRate = GetExchangeRateOrNull(measureUnit);
-
-            if (exchangeRate != null) return exchangeRate.Value;
-        }
+        if (measureUnit != null) return GetExchangeRate(measureUnit);
 
         throw NameArgumentOutOfRangeException(name);
     }
@@ -115,7 +109,7 @@ internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
 
     public IDictionary<string, object> GetMeasureUnitCollection()
     {
-        IEnumerable<object> validMeasureUnits = GetValidMeasureUnits();
+        IEnumerable<object> validMeasureUnits = Statics.MeasureUnits.GetValidMeasureUnits();
         IDictionary<object, string> customNameCollection = CustomNameCollection;
 
         return GetMeasureUnitCollection(validMeasureUnits, customNameCollection);
@@ -128,7 +122,7 @@ internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
 
     public IEnumerable<object> GetValidMeasureUnits(MeasureUnitTypeCode measureUnitTypeCode)
     {
-        return GetValidMeasureUnits().Where(x => x.GetType().Equals(measureUnitTypeCode.GetMeasureUnitType()));
+        return Statics.MeasureUnits.GetValidMeasureUnits().Where(x => x.GetType().Equals(measureUnitTypeCode.GetMeasureUnitType()));
     }
 
     public bool IsValidExchangeRate(decimal exchangeRate, Enum measureUnit)
@@ -228,47 +222,10 @@ internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
     #endregion
 
     public abstract Enum GetMeasureUnit();
-
-    #region Static methods
-    public static IEnumerable<object> GetConstantMeasureUnits()
-    {
-        foreach (object item in ConstantExchangeRateCollection.Keys)
-        {
-            yield return item;
-        }
-
-    }
-
-    public static IEnumerable<object> GetValidMeasureUnits()
-    {
-        foreach (object item in ExchangeRateCollection.Keys)
-        {
-            yield return item;
-        }
-    }
-
-    public static bool IsValidMeasureUnit(Enum? measureUnit)
-    {
-        if (measureUnit == null) return false;
-
-        return GetValidMeasureUnits().Contains(measureUnit);
-    }
-    #endregion
     #endregion
 
     #region Private methods
     #region Static methods
-    private static decimal? GetExchangeRateOrNull(Enum? measureUnit)
-    {
-        if (measureUnit == null) return null;
-
-        decimal exchangeRate = ExchangeRateCollection.FirstOrDefault(x => x.Key.Equals(measureUnit)).Value;
-
-        if (exchangeRate == default) return null;
-
-        return exchangeRate;
-    }
-
     private static IDictionary<object, T> GetMeasureUnitBasedCollection<T>(IDictionary<object, T> measureUnitBasedCollection, MeasureUnitTypeCode measureUnitTypeCode) where T : notnull
     {
         _ = Defined(measureUnitTypeCode, nameof(measureUnitTypeCode));
