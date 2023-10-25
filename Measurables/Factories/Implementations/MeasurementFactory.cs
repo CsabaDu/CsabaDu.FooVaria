@@ -1,4 +1,5 @@
-﻿using CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿using static CsabaDu.FooVaria.Measurables.Statics.MeasureUnits;
+using CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
 
@@ -29,7 +30,7 @@ public sealed class MeasurementFactory : BaseMeasurementFactory, IMeasurementFac
     {
         IMeasurement measurement = GetFirstStoredMeasurement();
 
-        if (!BaseMeasurement.IsValidMeasureUnit(measureUnit))
+        if (!IsValidMeasureUnit(measureUnit))
         {
             measurement.SetCustomMeasureUnit(measureUnit, exchangeRate, customName);
 
@@ -48,7 +49,7 @@ public sealed class MeasurementFactory : BaseMeasurementFactory, IMeasurementFac
     {
         _ = NullChecked(measureUnit, nameof(measureUnit));
 
-        if (BaseMeasurement.IsValidMeasureUnit(measureUnit)) return GetStoredMeasurement(measureUnit);
+        if (IsValidMeasureUnit(measureUnit)) return GetStoredMeasurement(measureUnit);
 
         throw InvalidMeasureUnitEnumArgumentException(measureUnit);
     }

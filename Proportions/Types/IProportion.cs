@@ -14,8 +14,4 @@
         T GetProportion(IMeasure numerator, W denominatorMeasureUnit);
         decimal GetQuantity(U numeratorMeasureUnit, W denominatorMeasureUnit);
     }
-
-    public interface IDensity : IProportion<IDensity, WeightUnit, VolumeUnit>
-    {
-    }
 }

@@ -1,4 +1,5 @@
 ﻿using CsabaDu.FooVaria.Measurables.Factories.Implementations;
+using static CsabaDu.FooVaria.Measurables.Statics.MeasureUnits;
 
 namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
 
@@ -93,7 +94,7 @@ public class RandomParams
 
     public Enum GetRandomValidMeasureUnit(Enum excludedMeasureUnit = null)
     {
-        IEnumerable<object> validMeasureUnits = BaseMeasurement.GetValidMeasureUnits();
+        IEnumerable<object> validMeasureUnits = GetValidMeasureUnits();
         Enum validMeasureUnit = getRandomValidMeasureUnit();
 
         if (excludedMeasureUnit == null) return validMeasureUnit;
@@ -129,7 +130,7 @@ public class RandomParams
             measureUnitTypeCode = GetRandomMeasureUnitTypeCode();
         }
 
-        IEnumerable<object> constantMeasureUnits = BaseMeasurement.GetConstantMeasureUnits()
+        IEnumerable<object> constantMeasureUnits = GetConstantMeasureUnits()
             .Where(x => x.GetType().Equals(measureUnitTypeCode.Value.GetMeasureUnitType()))
             .Where(x => (int)x > 0)
             .Where(x => !x.Equals(excludedMeasureUnit));
@@ -187,7 +188,7 @@ public class RandomParams
 
             measureUnit = Enum.ToObject(measureUnitType, randomIndex);
         }
-        while (BaseMeasurement.GetValidMeasureUnits().Contains(measureUnit));
+        while (GetValidMeasureUnits().Contains(measureUnit));
 
         return(Enum)measureUnit;
     }

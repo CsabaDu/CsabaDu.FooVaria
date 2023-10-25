@@ -38,10 +38,6 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
 
     #endregion
 
-    //#region Properties
-    //public MeasureUnitTypeCode NumeratorMeasureUnitTypeCode { get; }
-    //#endregion
-
     #region Public methods
     public decimal ProportionalTo(IBaseRate other)
     {
@@ -182,6 +178,9 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
     protected static T GetValidBaseRate<T>(T commonBase, IFooVariaObject other) where T : class, IBaseRate // TODO 
     {
         T baseMeasurable = GetValidCommonBase(commonBase, other);
+
+        commonBase.ValidateQuantity(baseMeasurable.DefaultQuantity);
+
         MeasureUnitTypeCode measureUnitTypeCode = commonBase.MeasureUnitTypeCode;
         MeasureUnitTypeCode otherMeasureUnitTypeCode = baseMeasurable.MeasureUnitTypeCode;
 

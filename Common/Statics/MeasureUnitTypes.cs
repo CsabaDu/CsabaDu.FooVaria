@@ -122,6 +122,18 @@ public static class MeasureUnitTypes
     {
         string name = NullChecked(measureUnit, nameof(measureUnit)).GetType().Name;
 
+        return GetMeasureUnitTypeCode(name);
+    }
+
+    public static MeasureUnitTypeCode GetMeasureUnitTypeCode(Type measureUnitType)
+    {
+        string name = NullChecked(measureUnitType, nameof(measureUnitType)).Name;
+
+        return GetMeasureUnitTypeCode(name);
+    }
+
+    public static MeasureUnitTypeCode GetMeasureUnitTypeCode(string name)
+    {
         return GetMeasureUnitTypeCodes().First(x => Enum.GetName(x) == name);
     }
 
@@ -171,9 +183,18 @@ public static class MeasureUnitTypes
         ValidateMeasureUnitType(measureUnitType);
         ValidateMeasureUnitTypeCode(measureUnitTypeCode);
 
-        if (measureUnitType == GetMeasureUnitType(measureUnitTypeCode)) return;
+        if (measureUnitTypeCode == GetMeasureUnitTypeCode(measureUnitType)) return;
 
         throw MeasureUnitTypeArgumentOutOfRangeException(measureUnitType);
+    }
+
+    public static void ValidateMeasureUnit(Enum measureUnit, Type measureUnitType)
+    {
+        MeasureUnitTypeCode measureUnitTypeCode = GetMeasureUnitTypeCode(measureUnit);
+
+        if (NullChecked(measureUnitType, nameof(measureUnitType)) == GetMeasureUnitType(measureUnitTypeCode)) return;
+
+        throw InvalidMeasureUnitEnumArgumentException(measureUnit);
     }
 
     public static void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)

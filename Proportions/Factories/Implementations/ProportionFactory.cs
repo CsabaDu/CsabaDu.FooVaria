@@ -1,53 +1,83 @@
 ﻿using CsabaDu.FooVaria.Proportions.Types;
-using CsabaDu.FooVaria.Proportions.Types.Implementations;
+using static CsabaDu.FooVaria.Common.Statics.MeasureUnitTypes;
+using static CsabaDu.FooVaria.Measurables.Statics.MeasureUnits;
 
 namespace CsabaDu.FooVaria.Proportions.Factories.Implementations
 {
     public abstract class ProportionFactory : IBaseRateFactory, IProportionFactory
     {
+        #region Public methods
+        #region Abstract methods
         public abstract IProportion Create(IBaseRate baseRate);
         public abstract IProportion Create(IBaseMeasure numerator, IMeasurement denominatorMeasurement);
-        public abstract IProportion Create(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode measureUnitTypeCode);
+        public abstract IProportion Create(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
         public abstract IBaseRate Create(IQuantifiable numerator, MeasureUnitTypeCode measureUnitTypeCode);
+        #endregion
+        #endregion
     }
 
-    public sealed class DensityFactory : ProportionFactory, IDensityFactory
+    public abstract class ProportionFactory<T, U, W> : ProportionFactory, IProportionFactory<T, U, W> where T : class, IProportion where U : struct, Enum where W : struct, Enum
     {
-        public IDensity Create(WeightUnit numeratorMeasureUnit, decimal quantity, VolumeUnit denominatorMeasureUnit)
+        #region Public methods
+        public T Create(U numeratorMeasureUnit, decimal quantity, W denominatorMeasureUnit)
         {
-            throw new NotImplementedException();
+            MeasureUnitTypeCode numeratorMeasureUnitTypeCode = GetMeasureUnitTypeCode(Defined(numeratorMeasureUnit, nameof(numeratorMeasureUnit)));
+            MeasureUnitTypeCode denominatorMeasureUnitTypeCode = GetMeasureUnitTypeCode(Defined(denominatorMeasureUnit, nameof(denominatorMeasureUnit)));
+            quantity = quantity * GetExchangeRate(numeratorMeasureUnit) / GetExchangeRate(denominatorMeasureUnit);
+
+            return (T)Create(numeratorMeasureUnitTypeCode, quantity, denominatorMeasureUnitTypeCode);
         }
 
-        public IDensity Create(IMeasure numerator, VolumeUnit denominatorMeasureUnit)
+        public T Create(IMeasure numerator, W denominatorMeasureUnit)
         {
-            throw new NotImplementedException();
+            return CreateProportion(numerator, denominatorMeasureUnit);
         }
 
-        public override IDensity Create(IBaseRate baseRate)
+        #region Override methods
+        #region Sealed methods
+        public override sealed T Create(IBaseMeasure numerator, IMeasurement denominatorMeasurement)
         {
-            throw new NotImplementedException();
+            string name = nameof(denominatorMeasurement);
+
+            if (NullChecked(denominatorMeasurement, name).GetMeasureUnit() is W denominatorMeasureUnit)
+            {
+                return CreateProportion(numerator, denominatorMeasureUnit);
+            }
+
+            throw new ArgumentOutOfRangeException(name, denominatorMeasurement.MeasureUnitTypeCode, null);
         }
 
-        public override IDensity Create(IBaseMeasure numerator, IMeasurement denominatorMeasurement)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override IDensity Create(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode measureUnitTypeCode)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override IDensity Create(IQuantifiable numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
+        public override sealed T Create(IQuantifiable numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
         {
             string name = nameof(numerator);
 
-            if (NullChecked(numerator, name) is not IBaseMeasurable baseMeasurable)
+            if (NullChecked(numerator, name) is not IBaseMeasure baseMeasure)
             {
                 throw ArgumentTypeOutOfRangeException(name, numerator);
             }
 
-            return new Density(this, baseMeasurable.MeasureUnitTypeCode, numerator.DefaultQuantity, denominatorMeasureUnitTypeCode);
+            W denominatorMeasureUnit = (W)Defined(denominatorMeasureUnitTypeCode, name).GetDefaultMeasureUnit();
+
+            return CreateProportion(baseMeasure, denominatorMeasureUnit);
         }
+        #endregion
+        #endregion
+
+        #region Abstract methods
+        public abstract T Create(T other);
+        #endregion
+        #endregion
+
+        #region Private methods
+        private T CreateProportion(IBaseMeasure numerator, W denominatorMeasureUnit)
+        {
+            decimal quantity = NullChecked(numerator, nameof(numerator)).GetDecimalQuantity();
+            Enum numeratorMeasureUnit = numerator.Measurement.GetMeasureUnit();
+
+            ValidateMeasureUnit(numeratorMeasureUnit, typeof(U));
+
+            return Create((U)numeratorMeasureUnit, quantity, denominatorMeasureUnit);
+        }
+        #endregion
     }
 }

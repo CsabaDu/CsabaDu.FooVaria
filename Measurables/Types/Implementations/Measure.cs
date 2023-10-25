@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using CsabaDu.FooVaria.Measurables.Statics;
+using System.ComponentModel;
 
 namespace CsabaDu.FooVaria.Measurables.Types.Implementations
 {
@@ -180,84 +181,6 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
         public abstract IMeasure GetMeasure(IBaseMeasure baseMeasure);
         #endregion
         #endregion
-
-        //#region Protected methods
-        //#region Static methods
-        //protected static U GetMeasure<U, X>(U measure, X quantity, string name) where U : class, IMeasure where X : struct
-        //{
-        //    validateName();
-
-        //    return (U)measure.GetMeasure(quantity, name);
-
-        //    #region Local methods
-        //    void validateName()
-        //    {
-        //        if (MeasureUnitTypes.GetDefaultNames(measure.MeasureUnitTypeCode).Contains(NullChecked(name, nameof(name)))) return;
-
-        //        if (measure.Measurement.GetCustomNameCollection(measure.MeasureUnitTypeCode).Values.Contains(name)) return;
-
-        //        throw new ArgumentOutOfRangeException(nameof(name), name, null);
-        //    }
-        //    #endregion
-        //}
-
-        //protected static U GetMeasure<U, X>(U measure, X quantity, IMeasurement measurement) where U : class, IMeasure where X : struct
-        //{
-        //    ValidateMeasurabe(measurement, nameof(measurement));
-
-        //    return (U)measure.GetMeasure(quantity, measurement);
-        //}
-
-        //protected static U GetMeasure<U>(U measure, IBaseMeasure baseMeasure) where U : class, IMeasure
-        //{
-        //    ValidateMeasurabe(baseMeasure, nameof(baseMeasure));
-
-        //    return (U)measure.GetMeasure(baseMeasure);
-        //}
-
-        //protected static U GetMeasure<U>(U measure, U other) where U : class, IMeasure
-        //{
-        //    return (U)measure.GetMeasure(other);
-        //}
-
-        //protected static U GetMeasure<U, X, W>(U measure, X quantity, W measureUnit) where U : class, IMeasure where X : struct where W : struct, Enum
-        //{
-        //    return (U)measure.GetMeasure(quantity, measureUnit);
-        //}
-
-        //protected static U GetMeasure<U, X>(U measure, X quantity) where U : class, IMeasure where X : struct
-        //{
-        //    return (U)measure.GetMeasure(quantity);
-        //}
-
-        //protected static W GetMeasureUnit<W>(IMeasure measure)
-        //{
-        //    return (W)measure.Measurement.MeasureUnit;
-        //}
-        //#endregion
-        //#endregion
-
-        //#region Private methods
-        //#region Static methods
-        //private static void ValidateMeasurabe<U>(U measurable, string measurableName) where U : class, IMeasurable, IRateComponentType
-        //{
-        //    MeasureUnitTypeCode measureUnitTypeCode = NullChecked(measurable, measurableName).MeasureUnitTypeCode;
-
-        //    try
-        //    {
-        //        measurable.ValidateMeasureUnitTypeCode(measureUnitTypeCode);
-        //    }
-        //    catch (InvalidEnumArgumentException)
-        //    {
-        //        throw new ArgumentOutOfRangeException(measurableName, measureUnitTypeCode, null);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new InvalidOperationException(ex.Message, ex.InnerException);
-        //    }
-        //}
-        //#endregion
-        //#endregion
     }
 
     internal abstract class Measure<T, U, W> : Measure, IMeasure<T, U, W> where T : class, IMeasure, IDefaultRateComponent where U : struct where W : struct, Enum
