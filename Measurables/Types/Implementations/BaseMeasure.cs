@@ -268,7 +268,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     #region Protected methods
     protected U GetDefaultRateComponentQuantity<U>() where U : struct
     {
-        return (U)GetFactory().DefaultRateComponentQuantity;
+        return (U)GetFactory().DefaultRateComponentQuantity.ToQuantity(typeof(U))!;
     }
 
     protected object GetValidQuantity(ValueType? quantity)

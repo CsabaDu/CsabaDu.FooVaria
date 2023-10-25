@@ -13,7 +13,6 @@ public sealed class MeasureFactory : BaseMeasureFactory, IMeasureFactory
 
     #region Properties
     public override RateComponentCode RateComponentCode => RateComponentCode.Numerator;
-    public override object DefaultRateComponentQuantity => default(int);
     #endregion
 
     #region Public methods

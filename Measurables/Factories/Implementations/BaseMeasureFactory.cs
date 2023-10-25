@@ -12,7 +12,7 @@ public abstract class BaseMeasureFactory : IBaseMeasureFactory
     #region Properties
     public IMeasurementFactory MeasurementFactory { get; init; }
     public abstract RateComponentCode RateComponentCode { get; }
-    public abstract object DefaultRateComponentQuantity { get; }
+    public virtual int DefaultRateComponentQuantity => default;
     #endregion
 
     #region Public methods

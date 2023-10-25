@@ -253,6 +253,11 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
             return (W)Measurement.MeasureUnit;
         }
 
+        public U GetQuantity()
+        {
+            return (U)Quantity;
+        }
+
         #region Override methods
         #region Sealed methods
         public override sealed T GetMeasure(IBaseMeasure baseMeasure)
@@ -286,11 +291,6 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
                 throw QuantityArgumentOutOfRangeException(nameof(baseMeasure), baseMeasure.GetDecimalQuantity());
             }
             #endregion
-        }
-
-        public U GetQuantity()
-        {
-            return (U)Quantity;
         }
         #endregion
         #endregion

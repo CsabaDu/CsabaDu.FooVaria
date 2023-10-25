@@ -12,8 +12,12 @@ public sealed class LimitFactory : BaseMeasureFactory, ILimitFactory
 
     #region Properties
     public override RateComponentCode RateComponentCode => RateComponentCode.Limit;
-    public override object DefaultRateComponentQuantity => default(ulong);
-    private static SortedSet<ILimit> LimitSet { get; set; } = new();
+
+    #region Private properties
+    #region Static properties
+    private static HashSet<ILimit> LimitSet { get; set; } = new();
+    #endregion
+    #endregion
     #endregion
 
     #region Public methods

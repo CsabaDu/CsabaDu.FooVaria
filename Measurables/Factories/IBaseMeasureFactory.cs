@@ -4,5 +4,5 @@ public interface IBaseMeasureFactory : IMeasurableFactory
 {
     IMeasurementFactory MeasurementFactory { get; init; }
     RateComponentCode RateComponentCode { get; }
-    object DefaultRateComponentQuantity { get; }
+    int DefaultRateComponentQuantity { get; }
 }

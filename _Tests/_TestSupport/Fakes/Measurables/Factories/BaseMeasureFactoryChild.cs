@@ -11,8 +11,6 @@ internal sealed class BaseMeasureFactoryChild : BaseMeasureFactory
 
     public override RateComponentCode RateComponentCode => throw new NotImplementedException();
 
-    public override object DefaultRateComponentQuantity => throw new NotImplementedException();
-
     public override IMeasurable Create(IMeasurable other)
     {
         throw new NotImplementedException();
