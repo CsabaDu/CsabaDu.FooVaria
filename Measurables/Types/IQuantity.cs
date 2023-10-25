@@ -11,7 +11,7 @@ public interface IQuantity<T> : IRound<T> where T : class, IMeasurable, IRateCom
     decimal GetDecimalQuantity();
     bool TryGetQuantity(ValueType quantity, [NotNullWhen(true)] out ValueType? thisTypeQuantity);
 
-    void ValidateQuantity(ValueType? quantity);
+    //void ValidateQuantity(ValueType? quantity);
     void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode);
     void ValidateQuantityTypeCode(TypeCode quantityTypeCode);
 }

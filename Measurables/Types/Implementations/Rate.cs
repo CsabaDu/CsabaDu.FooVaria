@@ -94,6 +94,11 @@ internal abstract class Rate : Measurable, IRate
         return exchanged != null;
     }
 
+    public void ValidateQuantity(ValueType? quantity)
+    {
+        Numerator.ValidateQuantity(quantity);
+    }
+
     #region Virtual methods
     public virtual bool Equals(IBaseRate? other)
     {
@@ -233,10 +238,6 @@ internal abstract class Rate : Measurable, IRate
     public decimal GetQuantity()
     {
         return Numerator.GetDecimalQuantity() / Denominator.GetDecimalQuantity();
-    }
-    public void ValidateQuantity(decimal quantity)
-    {
-        return;
     }
     #endregion
     #endregion

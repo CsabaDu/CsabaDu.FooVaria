@@ -4,13 +4,11 @@
     {
         decimal DefaultQuantity { get; }
 
-        //void ValidateDefaultQuantity(decimal defaultQuantity);
+        void ValidateQuantity(ValueType? quantity);
     }
 
     public interface IQuantifiable<T> : IQuantifiable where T : struct
     {
         T GetQuantity();
-
-        void ValidateQuantity(T quantity);
     }
 }

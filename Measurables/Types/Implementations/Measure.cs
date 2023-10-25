@@ -169,11 +169,6 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
 
             Validate(this, fooVariaObject);
         }
-
-        public override sealed void ValidateQuantity(ValueType? quantity)
-        {
-            base.ValidateQuantity(quantity);
-        }
         #endregion
         #endregion
 
@@ -284,7 +279,7 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
                     throw new InvalidOperationException(ex.Message, ex.InnerException);
                 }
 
-                object? quantity = ((ValueType)baseMeasure.Quantity).ToQuantity(typeof(U));
+                object? quantity = GetValidQuantity(this, baseMeasure.Quantity);
 
                 if (quantity != null) return (U)quantity;
                 

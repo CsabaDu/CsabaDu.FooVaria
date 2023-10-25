@@ -98,6 +98,8 @@ public abstract class BaseSpread : BaseMeasurable, IBaseSpread
             && MeasureUnitTypes.GetMeasureUnitTypeCode(context) == MeasureUnitTypeCode;
     }
 
+    public abstract void ValidateQuantity(ValueType? quantity);
+
     public void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure)
     {
         string name = nameof(spreadMeasure);

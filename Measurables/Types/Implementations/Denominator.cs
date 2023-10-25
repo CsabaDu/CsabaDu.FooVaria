@@ -138,11 +138,6 @@ internal sealed class Denominator : BaseMeasure, IDenominator
 
         Validate(this, fooVariaObject);
     }
-
-    public override void ValidateQuantity(ValueType? quantity)
-    {
-        _ = GetValidQuantity(quantity);
-    }
     #endregion
     #endregion
 }

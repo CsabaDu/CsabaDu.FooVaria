@@ -25,9 +25,11 @@ internal sealed class Density : Proportion<IDensity, WeightUnit, VolumeUnit>, ID
         return (IDensityFactory)Factory;
     }
 
-    public override void ValidateQuantity(decimal quantity)
+    public override void ValidateQuantity(ValueType? quantity)
     {
-        if (quantity > 0) return;
+        base.ValidateQuantity(quantity);
+
+        if ((decimal)quantity! > 0) return;
 
         throw QuantityArgumentOutOfRangeException(quantity);
     }

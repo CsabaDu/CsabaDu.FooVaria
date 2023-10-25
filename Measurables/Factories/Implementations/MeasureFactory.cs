@@ -20,7 +20,7 @@ public sealed class MeasureFactory : BaseMeasureFactory, IMeasureFactory
     {
         Enum measureUnit = measureUnitTypeCode.GetDefaultMeasureUnit();
 
-        return Create((ValueType)DefaultRateComponentQuantity, measureUnit);
+        return Create(DefaultRateComponentQuantity, measureUnit);
     }
 
     public IMeasure Create(ValueType quantity, Enum measureUnit)

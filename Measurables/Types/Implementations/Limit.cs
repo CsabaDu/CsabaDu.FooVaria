@@ -154,11 +154,6 @@ internal sealed class Limit : BaseMeasure, ILimit
 
         Validate(this, fooVariaObject);
     }
-
-    public override void ValidateQuantity(ValueType? quantity)
-    {
-        _ = GetValidQuantity(quantity);
-    }
     #endregion
     #endregion
 }

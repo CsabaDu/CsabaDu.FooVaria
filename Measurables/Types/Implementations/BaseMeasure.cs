@@ -192,6 +192,11 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         throw QuantityArgumentOutOfRangeException(quantity);
     }
 
+    public void ValidateQuantity(ValueType? quantity)
+    {
+        _ = GetValidQuantity(quantity);
+    }
+
     public void ValidateQuantityTypeCode(TypeCode quantityTypeCode)
     {
         if (GetQuantityTypeCodes().Contains(quantityTypeCode)) return;
@@ -250,13 +255,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return MeasureUnitTypeCode == other?.MeasureUnitTypeCode
             && DefaultQuantity == other?.DefaultQuantity;
     }
-
-    public virtual void ValidateQuantity(ValueType? quantity)
-    {
-        if (NullChecked(quantity, nameof(quantity)).IsValidTypeQuantity()) return;
-
-        throw QuantityArgumentOutOfRangeException(quantity);
-    }
     #endregion
 
     #region Abstract methods
@@ -279,20 +277,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     }
 
     #region Static methods
-    protected static void ValidateBaseMeasure<T>(T commonBase, IFooVariaObject other) where T : class, IBaseMeasure
-    {
-        T baseMeasure = GetValidBaseMeasurable(commonBase, other);
-        RateComponentCode rateComponentCode = commonBase.GetRateComponentCode();
-        RateComponentCode otherRateComponentCode = baseMeasure.GetRateComponentCode();
-
-        _ = GetValidBaseMeasurable(baseMeasure, rateComponentCode, otherRateComponentCode);
-    }
-    #endregion
-    #endregion
-
-    #region Private methods
-    #region Static methods
-    private static object? GetValidQuantity(IBaseMeasure baseMeasure, object? quantity)
+    protected static object? GetValidQuantity(IBaseMeasure baseMeasure, object? quantity)
     {
         quantity = ((ValueType?)quantity)?.ToQuantity(baseMeasure.QuantityTypeCode);
 
@@ -313,6 +298,15 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
             return quantity;
         }
         #endregion
+    }
+
+    protected static void ValidateBaseMeasure<T>(T commonBase, IFooVariaObject other) where T : class, IBaseMeasure
+    {
+        T baseMeasure = GetValidBaseMeasurable(commonBase, other);
+        RateComponentCode rateComponentCode = commonBase.GetRateComponentCode();
+        RateComponentCode otherRateComponentCode = baseMeasure.GetRateComponentCode();
+
+        _ = GetValidBaseMeasurable(baseMeasure, rateComponentCode, otherRateComponentCode);
     }
     #endregion
     #endregion

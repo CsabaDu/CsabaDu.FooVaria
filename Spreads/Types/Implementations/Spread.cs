@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Spreads.Types.Implementations
+﻿using CsabaDu.FooVaria.Measurables.Statics;
+
+namespace CsabaDu.FooVaria.Spreads.Types.Implementations
 {
     internal abstract class Spread : BaseSpread, ISpread
     {
@@ -60,6 +62,17 @@
 
             throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode);
         }
+
+        public override sealed void ValidateQuantity(ValueType? quantity)
+        {
+            _ = NullChecked(quantity, nameof(quantity));
+
+            if (quantity!.ToQuantity(TypeCode.Double) is double doubleQuantity
+                && doubleQuantity > 0) return;
+
+            throw QuantityArgumentOutOfRangeException(quantity);
+        }
+
         #endregion
         #endregion
 
@@ -97,13 +110,6 @@
         public double GetQuantity()
         {
             return (double)SpreadMeasure.Quantity;
-        }
-
-        public void ValidateQuantity(double quantity)
-        {
-            if (quantity > 0) return;
-
-            throw QuantityArgumentOutOfRangeException(quantity);
         }
 
         #region Override methods

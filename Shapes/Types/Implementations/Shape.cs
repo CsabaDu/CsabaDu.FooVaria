@@ -28,5 +28,10 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
         {
             return Spread.IsValidMeasureUnitTypeCode(measureUnitTypeCode);
         }
+
+        public override void ValidateQuantity(ValueType? quantity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
