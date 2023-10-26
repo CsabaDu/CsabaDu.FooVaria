@@ -107,14 +107,14 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
     #endregion
 
     #region Virtual methods
-    public virtual void ValidateQuantity(ValueType? quantity)
-    {
-        string name = nameof(quantity);
+    public abstract void ValidateQuantity(ValueType? quantity);
+    //{
+    //    string name = nameof(quantity);
 
-        if (NullChecked(quantity, name) is decimal) return;
+    //    if (NullChecked(quantity, name) is decimal) return;
 
-        throw ArgumentTypeOutOfRangeException(name, quantity!);
-    }
+    //    throw ArgumentTypeOutOfRangeException(name, quantity!);
+    //}
     #endregion
 
     #region Abstract methods

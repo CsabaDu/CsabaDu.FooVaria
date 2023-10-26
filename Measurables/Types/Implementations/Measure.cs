@@ -1,5 +1,4 @@
-﻿using CsabaDu.FooVaria.Measurables.Statics;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace CsabaDu.FooVaria.Measurables.Types.Implementations
 {
@@ -33,16 +32,18 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
 
         public bool? FitsIn(IBaseMeasure? baseMeasure, LimitMode? limitMode)
         {
-            if (baseMeasure == null && limitMode == null) return true;
+            bool isLimitModeNull = limitMode == null;
+
+            if (isBaseMeasureNull() && isLimitModeNull) return true;
 
             if (baseMeasure?.IsExchangeableTo(MeasureUnitTypeCode) != true) return null;
 
-            if (limitMode == null) return CompareTo(baseMeasure) <= 0;
+            if (isLimitModeNull) return CompareTo(baseMeasure) <= 0;
 
             IBaseMeasure ceilingBaseMeasure = baseMeasure.Round(RoundingMode.Ceiling);
             baseMeasure = getRoundedBaseMeasure();
 
-            if (baseMeasure == null) return null;
+            if (isBaseMeasureNull()) return null;
 
             int comparison = CompareTo(baseMeasure);
 
@@ -54,6 +55,11 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
             };
 
             #region Local methods
+            bool isBaseMeasureNull()
+            {
+                return baseMeasure == null;
+            }
+
             IBaseMeasure? getRoundedBaseMeasure()
             {
                 return limitMode switch

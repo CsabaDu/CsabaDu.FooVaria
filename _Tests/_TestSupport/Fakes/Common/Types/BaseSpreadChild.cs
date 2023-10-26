@@ -21,4 +21,9 @@ internal sealed class BaseSpreadChild : BaseSpread
     {
         throw new NotImplementedException();
     }
+
+    public override void ValidateQuantity(ValueType quantity)
+    {
+        throw new NotImplementedException();
+    }
 }

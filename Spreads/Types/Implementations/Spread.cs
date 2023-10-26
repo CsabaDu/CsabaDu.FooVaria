@@ -51,11 +51,6 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
             return (ISpread)GetFactory().Create((ISpreadMeasure)exchanged);
         }
 
-        public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
-        {
-            return base.GetMeasureUnitTypeCodes();
-        }
-
         public override sealed void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
         {
             if (IsValidMeasureUnitTypeCode(measureUnitTypeCode)) return;

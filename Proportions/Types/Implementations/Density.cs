@@ -1,4 +1,5 @@
-﻿using CsabaDu.FooVaria.Proportions.Factories;
+﻿using CsabaDu.FooVaria.Measurables.Statics;
+using CsabaDu.FooVaria.Proportions.Factories;
 
 namespace CsabaDu.FooVaria.Proportions.Types.Implementations;
 
@@ -29,7 +30,7 @@ internal sealed class Density : Proportion<IDensity, WeightUnit, VolumeUnit>, ID
     {
         base.ValidateQuantity(quantity);
 
-        if ((decimal)quantity! > 0) return;
+        if ((decimal?)quantity!.ToQuantity(TypeCode.Decimal) > 0) return;
 
         throw QuantityArgumentOutOfRangeException(quantity);
     }
