@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Types;
 
-public interface IMeasurable : IBaseMeasurable, IQuantityType
+public interface IMeasurable : IBaseMeasurable, IQuantityTypeCode
 {
     IMeasurable GetDefault();
 

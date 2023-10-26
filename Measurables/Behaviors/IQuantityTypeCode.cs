@@ -1,6 +1,7 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Behaviors;
 
-public interface IQuantityType
+public interface IQuantityTypeCode
 {
     TypeCode GetQuantityTypeCode();
 }
+
