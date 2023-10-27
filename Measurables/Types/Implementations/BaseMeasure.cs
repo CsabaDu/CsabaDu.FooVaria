@@ -46,6 +46,9 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         if (!IsExchangeableTo(measureUnit)) return null;
 
         decimal exchangeRate = Measurement.GetExchangeRate(measureUnit);
+
+        if (GetRateComponentCode() == RateComponentCode.Limit && DefaultQuantity % exchangeRate > 0) return null;
+
         decimal quantity = DefaultQuantity / exchangeRate;
 
         return GetBaseMeasure(quantity, measureUnit);
