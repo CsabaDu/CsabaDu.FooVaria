@@ -1,7 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Behaviors;
-using CsabaDu.FooVaria.Measurables.Behaviors;
-
-namespace CsabaDu.FooVaria.Measurables.Types;
+﻿namespace CsabaDu.FooVaria.Measurables.Types;
 
 public interface IMeasurement : IBaseMeasurement, ICustomMeasurement, IRateComponentType<IMeasurement>, IProportional<IMeasurement>, IExchangeable<Enum>
 {

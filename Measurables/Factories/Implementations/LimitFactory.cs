@@ -115,12 +115,11 @@ public sealed class LimitFactory : BaseMeasureFactory, ILimitFactory
     #region Static methods
     private static ILimit GetStoredLimit([DisallowNull] ILimit limit)
     {
-        if (LimitSet.Contains(limit) || LimitSet.Add(limit))
+        if ((LimitSet.Contains(limit) || LimitSet.Add(limit))
+            && LimitSet.TryGetValue(limit, out ILimit? storedLimit)
+            && storedLimit != null)
         {
-            if (LimitSet.TryGetValue(limit, out ILimit? storedLimit) && storedLimit != null)
-            {
-                return storedLimit;
-            }
+            return storedLimit;
         }
 
         throw new InvalidOperationException(null);

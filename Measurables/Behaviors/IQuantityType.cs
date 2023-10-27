@@ -1,9 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types
+﻿namespace CsabaDu.FooVaria.Measurables.Behaviors
 {
     public interface IQuantityType
     {
-        TypeCode QuantityTypeCode { get; }
-
         TypeCode? GetQuantityTypeCode(object quantity);
 
         void ValidateQuantityTypeCode(TypeCode quantityTypeCode);

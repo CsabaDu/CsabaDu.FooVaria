@@ -102,11 +102,6 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         return NullChecked(limitedRate, nameof(limitedRate)).Limit.LimitMode;
     }
 
-    public override ILimitedRate GetMeasurable(IMeasurable other)
-    {
-        return (ILimitedRate)GetFactory().Create(other);
-    }
-
     public bool? Includes(IMeasure measure)
     {
         return Limit.Includes(measure);
@@ -135,7 +130,12 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         return Limit;
     }
 
-    public override IRate GetRate(IMeasure numerator, IDenominator denominator, ILimit? limit)
+    public override ILimitedRate GetMeasurable(IMeasurable other)
+    {
+        return (ILimitedRate)GetFactory().Create(other);
+    }
+
+    public override ILimitedRate GetRate(IMeasure numerator, IDenominator denominator, ILimit? limit)
     {
         return GetLimitedRate(numerator, denominator, limit ?? GetFactory().CreateLimit(denominator));
     }

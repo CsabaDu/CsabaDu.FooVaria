@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Common;
-
-namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal sealed class Denominator : BaseMeasure, IDenominator
 {

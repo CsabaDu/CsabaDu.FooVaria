@@ -1,5 +1,4 @@
 ﻿using CsabaDu.FooVaria.Measurables.Types.Implementations;
-using System.Diagnostics.Metrics;
 
 namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
 
@@ -127,12 +126,11 @@ public sealed class DenominatorFactory : BaseMeasureFactory, IDenominatorFactory
     #region Static methods
     private static IDenominator GetStoredDenominator([DisallowNull] IDenominator denominator)
     {
-        if (DenominatorSet.Contains(denominator) || DenominatorSet.Add(denominator))
+        if ((DenominatorSet.Contains(denominator) || DenominatorSet.Add(denominator))
+            && DenominatorSet.TryGetValue(denominator, out IDenominator? storedDenominator)
+            && storedDenominator != null)
         {
-            if (DenominatorSet.TryGetValue(denominator, out IDenominator? storedDenominator) && storedDenominator != null)
-            {
-                return storedDenominator;
-            }
+            return storedDenominator;
         }
 
         throw new InvalidOperationException(null);

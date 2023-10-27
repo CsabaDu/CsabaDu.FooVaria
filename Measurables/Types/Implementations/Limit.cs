@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Common;
-
-namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 internal sealed class Limit : BaseMeasure, ILimit
 {
@@ -94,6 +92,11 @@ internal sealed class Limit : BaseMeasure, ILimit
         return NullChecked(limit, nameof(limit)).LimitMode;
     }
 
+    public ulong GetQuantity()
+    {
+        return (ulong)Quantity;
+    }
+
     public bool? Includes(IMeasure measure)
     {
         return NullChecked(measure, nameof(measure)).FitsIn(this);
@@ -141,11 +144,6 @@ internal sealed class Limit : BaseMeasure, ILimit
     public override ILimit GetMeasurable(IMeasurable other)
     {
         return (ILimit)GetFactory().Create(other);
-    }
-
-    public ulong GetQuantity()
-    {
-        return (ulong)Quantity;
     }
 
     public override void Validate(IFooVariaObject? fooVariaObject)

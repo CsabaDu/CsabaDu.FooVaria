@@ -4,4 +4,3 @@ public interface IQuantityTypeCode
 {
     TypeCode GetQuantityTypeCode();
 }
-

@@ -107,9 +107,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     {
         TypeCode quantityTypeCode = Type.GetTypeCode(quantity?.GetType());
 
-        if (GetQuantityTypeCodes().Contains(quantityTypeCode)) return quantityTypeCode;
-
-        return null;
+        return GetValidQuantityTypeCode(quantityTypeCode);
     }
 
     public IBaseMeasure? GetRateComponent(IRate rate, RateComponentCode rateComponentCode)
@@ -199,7 +197,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     public void ValidateQuantityTypeCode(TypeCode quantityTypeCode)
     {
-        if (GetQuantityTypeCodes().Contains(quantityTypeCode)) return;
+        if (GetValidQuantityTypeCode(quantityTypeCode) != null) return;
 
         throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
     }
@@ -307,6 +305,17 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         RateComponentCode otherRateComponentCode = baseMeasure.GetRateComponentCode();
 
         _ = GetValidBaseMeasurable(baseMeasure, rateComponentCode, otherRateComponentCode);
+    }
+    #endregion
+    #endregion
+
+    #region Private methods
+    #region Static methods
+    private static TypeCode? GetValidQuantityTypeCode(TypeCode quantityTypeCode)
+    {
+        if (GetQuantityTypeCodes().Contains(quantityTypeCode)) return quantityTypeCode;
+
+        return null;
     }
     #endregion
     #endregion

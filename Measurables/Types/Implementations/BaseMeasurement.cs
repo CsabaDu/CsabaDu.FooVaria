@@ -1,5 +1,4 @@
-﻿using CsabaDu.FooVaria.Measurables.Statics;
-using static CsabaDu.FooVaria.Measurables.Statics.MeasureUnits;
+﻿using static CsabaDu.FooVaria.Measurables.Statics.MeasureUnits;
 
 namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
@@ -221,7 +220,9 @@ internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
     #endregion
     #endregion
 
+    #region Abstract methods
     public abstract Enum GetMeasureUnit();
+    #endregion
     #endregion
 
     #region Private methods

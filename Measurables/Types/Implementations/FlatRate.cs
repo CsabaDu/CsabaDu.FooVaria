@@ -81,11 +81,6 @@ internal sealed class FlatRate : Rate, IFlatRate
         return GetFactory().Create(other);
     }
 
-    public override IRate GetRate(IMeasure numerator, IDenominator denominator, ILimit? limit)
-    {
-        return GetFlatRate(numerator, denominator);
-    }
-
     public IFlatRate Multiply(decimal multiplier)
     {
         return GetFlatRate(Numerator.Multiply(multiplier));
@@ -118,6 +113,11 @@ internal sealed class FlatRate : Rate, IFlatRate
     public override IFlatRateFactory GetFactory()
     {
         return (IFlatRateFactory)Factory;
+    }
+
+    public override IFlatRate GetRate(IMeasure numerator, IDenominator denominator, ILimit? limit)
+    {
+        return GetFlatRate(numerator, denominator);
     }
 
     public override IFlatRate GetMeasurable(IMeasurable other)
