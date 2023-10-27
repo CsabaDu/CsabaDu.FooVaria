@@ -68,7 +68,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     {
         decimal quantity = roundDecimalQuantity();
 
-        return (ValueType?)quantity.ToQuantity(QuantityTypeCode) ?? throw new InvalidOperationException(null);
+        return quantity.ToQuantity(QuantityTypeCode) ?? throw new InvalidOperationException(null);
 
         #region Local methods
         decimal roundDecimalQuantity()
@@ -80,13 +80,13 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
                 RoundingMode.General => decimal.Round(quantity),
                 RoundingMode.Ceiling => decimal.Ceiling(quantity),
                 RoundingMode.Floor => decimal.Floor(quantity),
-                RoundingMode.Half => decimalHalfQuantity(),
+                RoundingMode.Half => getHalfQuantity(),
 
                 _ => throw InvalidRoundingModeEnumArgumentException(roundingMode),
             };
         }
 
-        decimal decimalHalfQuantity()
+        decimal getHalfQuantity()
         {
             decimal halfQuantity = decimal.Floor(quantity);
 
