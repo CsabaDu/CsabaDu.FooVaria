@@ -44,13 +44,17 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
             return (IProportionFactory)Factory;
         }
 
-        public override void ValidateQuantity(ValueType? quantity)
+        public override sealed void ValidateQuantity(ValueType? quantity)
         {
             string name = nameof(quantity);
 
+            object converted = NullChecked(quantity, nameof(quantity)).ToQuantity(TypeCode.Decimal) ?? throw ArgumentTypeOutOfRangeException(name, quantity!);
+
+            if ((decimal)converted > 0) return;
+
             if (QuantityTypes.GetQuantityTypes().Contains(NullChecked(quantity, nameof(quantity)).GetType())) return;
 
-            throw ArgumentTypeOutOfRangeException(name, quantity!);
+            throw QuantityArgumentOutOfRangeException(quantity);
         }
 
         #region Sealed methods

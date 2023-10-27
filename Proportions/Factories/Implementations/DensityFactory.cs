@@ -1,5 +1,4 @@
-﻿using CsabaDu.FooVaria.Proportions.Types;
-using CsabaDu.FooVaria.Proportions.Types.Implementations;
+﻿using CsabaDu.FooVaria.Proportions.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Proportions.Factories.Implementations;
 
