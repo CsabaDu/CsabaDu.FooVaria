@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.Common.Behaviors;
 
-public interface IExchange<T, in U> : IProportional<T>, IExchangeable<U>, IQuantifiable where T : class where U : notnull
+public interface IExchange<T, in U> : IProportional<T>, IExchangeable<U>, IQuantifiable where T : class, IBaseMeasurable, IQuantifiable where U : notnull
 {
     T? ExchangeTo(U context);
 
