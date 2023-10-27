@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types;
+﻿namespace CsabaDu.FooVaria.Measurables.Behaviors;
 
 public interface ICustomMeasurement : ICustomMeasureUnitType, ICustomMeasureUnit
 {
