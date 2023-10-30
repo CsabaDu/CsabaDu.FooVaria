@@ -27,10 +27,10 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
             return (ISpreadFactory)Factory;
         }
 
-        public override bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
-        {
-            return GetMeasureUnitTypeCodes().Contains(measureUnitTypeCode);
-        }
+        //public override bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
+        //{
+        //    return GetMeasureUnitTypeCodes().Contains(measureUnitTypeCode);
+        //}
 
         public override void ValidateMeasureUnit(Enum measureUnit)
         {
@@ -147,10 +147,10 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
             return SpreadMeasure;
         }
 
-        public override sealed bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
-        {
-            return measureUnitTypeCode == MeasureUnitTypeCode;
-        }
+        //public override sealed bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
+        //{
+        //    return measureUnitTypeCode == MeasureUnitTypeCode;
+        //}
 
         public override sealed void ValidateMeasureUnit(Enum measureUnit)
         {

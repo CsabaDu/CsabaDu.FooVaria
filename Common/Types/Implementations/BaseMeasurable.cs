@@ -81,9 +81,9 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
         return MeasureUnitTypes.GetMeasureUnitTypeCodes();
     }
 
-    public virtual bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
+    public bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
     {
-        return Enum.IsDefined(measureUnitTypeCode);
+        return GetMeasureUnitTypeCodes().Contains(measureUnitTypeCode);
     }
 
     public virtual void ValidateMeasureUnit(Enum measureUnit)

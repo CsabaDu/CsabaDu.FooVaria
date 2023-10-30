@@ -62,10 +62,10 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
         public abstract IShape GetShape(ExtentUnit extentUnit);
         public abstract IShape GetShape(params IExtent[] shapeExtents);
         public abstract IShape GetShape(IShape other);
-        public override bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
-        {
-            return GetMeasureUnitTypeCodes().Contains(measureUnitTypeCode);
-        }
+        //public override bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
+        //{
+        //    return GetMeasureUnitTypeCodes().Contains(measureUnitTypeCode);
+        //}
 
         public override sealed void ValidateQuantity(ValueType? quantity)
         {
