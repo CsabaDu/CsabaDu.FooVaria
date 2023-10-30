@@ -2,5 +2,5 @@
 
 public interface IBaseShapeFactory : IBaseSpreadFactory
 {
-    IFactory GetSpreadFactory();
+    IBaseSpreadFactory GetSpreadFactory();
 }

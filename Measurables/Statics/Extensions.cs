@@ -1,4 +1,4 @@
-﻿using static CsabaDu.FooVaria.Measurables.Types.Implementations.BaseMeasurement;
+﻿using System.ComponentModel;
 using static CsabaDu.FooVaria.Measurables.Statics.QuantityTypes;
 
 namespace CsabaDu.FooVaria.Measurables.Statics
@@ -95,52 +95,11 @@ namespace CsabaDu.FooVaria.Measurables.Statics
         #endregion
     }
 
-    public static class MeasureUnits
+    public static class ExceptionMethods
     {
-        #region Public methods
-        public static IEnumerable<object> GetConstantMeasureUnits()
+        public static InvalidEnumArgumentException InvalidRateComponentCodeArgumentException(RateComponentCode rateComponentCode)
         {
-            foreach (object item in ConstantExchangeRateCollection.Keys)
-            {
-                yield return item;
-            }
-
+            return new InvalidEnumArgumentException(nameof(rateComponentCode), (int)rateComponentCode, rateComponentCode.GetType());
         }
-
-        public static decimal GetExchangeRate(Enum measureUnit)
-        {
-            decimal? exchangeRate = getExchangeRate(NullChecked(measureUnit, nameof(measureUnit)));
-
-            if (exchangeRate != null) return exchangeRate.Value;
-
-            throw InvalidMeasureUnitEnumArgumentException(measureUnit);
-
-            #region Local methods
-            static decimal? getExchangeRate(Enum measureUnit)
-            {
-                decimal exchangeRate = ExchangeRateCollection.FirstOrDefault(x => x.Key.Equals(measureUnit)).Value;
-
-                if (exchangeRate == default) return null;
-
-                return exchangeRate;
-            }
-            #endregion
-        }
-
-        public static IEnumerable<object> GetValidMeasureUnits()
-        {
-            foreach (object item in ExchangeRateCollection.Keys)
-            {
-                yield return item;
-            }
-        }
-
-        public static bool IsValidMeasureUnit(Enum? measureUnit)
-        {
-            if (measureUnit == null) return false;
-
-            return GetValidMeasureUnits().Contains(measureUnit);
-        }
-        #endregion
     }
 }

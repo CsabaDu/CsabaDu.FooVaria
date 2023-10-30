@@ -155,7 +155,7 @@ public static class MeasureUnitTypes
 
     public static void ValidateMeasureUnit(Enum measureUnit)
     {
-        _ = DefinedMeasureUnit(measureUnit);
+        _ = DefinedMeasureUnit(measureUnit, nameof(measureUnit));
     }
 
     public static void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode measureUnitTypeCode)

@@ -10,6 +10,14 @@
         {
         }
 
+        protected BaseShape(IBaseSpreadFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IBaseMeasurable[] baseMeasurables) : base(factory, measureUnitTypeCode, baseMeasurables)
+        {
+        }
+
+        public abstract int CompareTo(IBaseShape? other);
+        public abstract bool Equals(IBaseShape? other);
+        public abstract bool? FitsIn(IBaseShape? comparable, LimitMode? limitMode);
+
         public override IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
         {
             foreach (MeasureUnitTypeCode item in base.GetMeasureUnitTypeCodes())
@@ -19,5 +27,12 @@
 
             yield return MeasureUnitTypeCode.ExtentUnit;
         }
+
+        public override IBaseShapeFactory GetFactory()
+        {
+            return (IBaseShapeFactory)Factory;
+        }
+
+        public abstract void ValidateShapeExtent(IQuantifiable shapeExtent, string name);
     }
 }

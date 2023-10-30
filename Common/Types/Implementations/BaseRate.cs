@@ -106,21 +106,11 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
     }
     #endregion
 
-    #region Virtual methods
-    public abstract void ValidateQuantity(ValueType? quantity);
-    //{
-    //    string name = nameof(quantity);
-
-    //    if (NullChecked(quantity, name) is decimal) return;
-
-    //    throw ArgumentTypeOutOfRangeException(name, quantity!);
-    //}
-    #endregion
-
     #region Abstract methods
     public abstract IBaseRate GetBaseRate(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
     public abstract IBaseRate GetBaseRate(IQuantifiable numerator, IBaseMeasurable denominator);
     public abstract MeasureUnitTypeCode GetNumeratorMeasureUnitTypeCode();
+    public abstract void ValidateQuantity(ValueType? quantity);
     #endregion
 
     #region Static methods

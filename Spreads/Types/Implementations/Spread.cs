@@ -108,6 +108,13 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         }
 
         #region Override methods
+        public override sealed T GetBaseSpread(ISpreadMeasure spreadMeasure)
+        {
+            ValidateSpreadMeasure(spreadMeasure);
+
+            return GetFactory().Create((U)spreadMeasure);
+        }
+
         public override ISpreadFactory<T, U> GetFactory()
         {
             return (ISpreadFactory<T, U>)Factory;

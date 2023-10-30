@@ -136,6 +136,7 @@ public static class SpreadMeasures
             {
                 throw new ArgumentOutOfRangeException(name, count, null);
             }
+
         }
         #endregion
     }

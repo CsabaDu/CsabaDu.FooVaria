@@ -1,17 +1,10 @@
-﻿using CsabaDu.FooVaria.Measurables.Statics;
-using CsabaDu.FooVaria.Proportions.Factories;
-using static CsabaDu.FooVaria.Measurables.Statics.MeasureUnits;
+﻿using static CsabaDu.FooVaria.Measurables.Statics.MeasureUnits;
 
 namespace CsabaDu.FooVaria.Proportions.Types.Implementations
 {
     internal abstract class Proportion : BaseRate, IProportion
     {
         #region Constructors
-        protected Proportion(IProportion other) : base(other)
-        {
-            NumeratorMeasureUnitTypeCode = other.NumeratorMeasureUnitTypeCode;
-        }
-
         public Proportion(IProportionFactory factory, MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, defaultQuantity, denominatorMeasureUnitTypeCode)
         {
             NumeratorMeasureUnitTypeCode = Defined(numeratorMeasureUnitTypeCode, nameof(numeratorMeasureUnitTypeCode));
@@ -39,24 +32,6 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
         }
 
         #region Override methods
-        public override IProportionFactory GetFactory()
-        {
-            return (IProportionFactory)Factory;
-        }
-
-        public override sealed void ValidateQuantity(ValueType? quantity)
-        {
-            string name = nameof(quantity);
-
-            object converted = NullChecked(quantity, nameof(quantity)).ToQuantity(TypeCode.Decimal) ?? throw ArgumentTypeOutOfRangeException(name, quantity!);
-
-            if ((decimal)converted > 0) return;
-
-            if (QuantityTypes.GetQuantityTypes().Contains(NullChecked(quantity, nameof(quantity)).GetType())) return;
-
-            throw QuantityArgumentOutOfRangeException(quantity);
-        }
-
         #region Sealed methods
         public override sealed IProportion GetBaseRate(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
         {
@@ -80,9 +55,27 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
             return GetFactory().Create(baseMeasurable.MeasureUnitTypeCode, numerator.DefaultQuantity, denominator.MeasureUnitTypeCode);
         }
 
+        public override sealed IProportionFactory GetFactory()
+        {
+            return (IProportionFactory)Factory;
+        }
+
         public override sealed MeasureUnitTypeCode GetNumeratorMeasureUnitTypeCode()
         {
             return NumeratorMeasureUnitTypeCode;
+        }
+
+        public override sealed void ValidateQuantity(ValueType? quantity)
+        {
+            string name = nameof(quantity);
+
+            object converted = NullChecked(quantity, nameof(quantity)).ToQuantity(TypeCode.Decimal) ?? throw ArgumentTypeOutOfRangeException(name, quantity!);
+
+            if ((decimal)converted > 0) return;
+
+            if (QuantityTypes.GetQuantityTypes().Contains(NullChecked(quantity, nameof(quantity)).GetType())) return;
+
+            throw QuantityArgumentOutOfRangeException(quantity);
         }
         #endregion
         #endregion
@@ -92,15 +85,11 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
     internal abstract class Proportion<T, U, W> : Proportion, IProportion<T, U, W> where T : class, IProportion where U : struct, Enum where W : struct, Enum
     {
         #region Constructors
-        protected Proportion(T other) : base(other)
+        protected Proportion(IProportionFactory factory, IBaseRate baseRate) : base(factory, baseRate)
         {
         }
 
-        protected Proportion(IProportionFactory<T, U, W> factory, IBaseRate baseRate) : base(factory, baseRate)
-        {
-        }
-
-        protected Proportion(IProportionFactory<T, U, W> factory, MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode)
+        protected Proportion(IProportionFactory factory, MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode)
         {
         }
         #endregion
@@ -112,27 +101,20 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
 
             decimal decimalQuantity = (decimal?)quantity.ToQuantity(TypeCode.Decimal) ?? throw new InvalidOperationException(null);
 
-            return GetFactory().Create(numeratorMeasureUnit, decimalQuantity, denominatorMeasureUnit);
+            return (T)GetFactory().Create(numeratorMeasureUnit, decimalQuantity, denominatorMeasureUnit);
         }
 
         public T GetProportion(IMeasure numerator, W denominatorMeasureUnit)
         {
-            return GetFactory().Create(numerator, denominatorMeasureUnit);
+            return (T)GetFactory().Create(numerator, denominatorMeasureUnit);
         }
 
         public decimal GetQuantity(U numeratorMeasureUnit, W denominatorMeasureUnit)
         {
             return DefaultQuantity
-                / GetExchangeRate(numeratorMeasureUnit)
-                * GetExchangeRate(denominatorMeasureUnit);
+                / GetExchangeRate(Defined(numeratorMeasureUnit, nameof(numeratorMeasureUnit)))
+                * GetExchangeRate(Defined(denominatorMeasureUnit, nameof(denominatorMeasureUnit)));
         }
-
-        #region Override methods
-        public override IProportionFactory<T, U, W> GetFactory()
-        {
-            return (IProportionFactory<T, U, W>)Factory;
-        }
-        #endregion
         #endregion
     }
 }

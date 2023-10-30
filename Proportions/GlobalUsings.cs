@@ -10,3 +10,4 @@ global using CsabaDu.FooVaria.Measurables.Types;
 global using CsabaDu.FooVaria.Proportions.Factories;
 global using CsabaDu.FooVaria.Proportions.Types;
 global using static CsabaDu.FooVaria.Common.Statics.ExceptionMethods;
+global using CsabaDu.FooVaria.Proportions.Types.ProportionTypes;

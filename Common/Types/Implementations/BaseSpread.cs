@@ -18,6 +18,11 @@ public abstract class BaseSpread : BaseMeasurable, IBaseSpread
     {
     }
 
+    protected BaseSpread(IBaseSpreadFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IBaseMeasurable[] baseMeasurables) : base(factory, measureUnitTypeCode)
+    {
+        _ = NullChecked(baseMeasurables, nameof(baseMeasurables));
+    }
+
     #endregion
 
     #region Properties
@@ -41,11 +46,6 @@ public abstract class BaseSpread : BaseMeasurable, IBaseSpread
     public IBaseSpread GetBaseSpread()
     {
         return this;
-    }
-
-    public IBaseSpread GetBaseSpread(ISpreadMeasure spreadMeasure)
-    {
-        return GetFactory().Create(spreadMeasure);
     }
 
     public MeasureUnitTypeCode GetMeasureUnitTypeCode()
@@ -142,6 +142,7 @@ public abstract class BaseSpread : BaseMeasurable, IBaseSpread
 
     #region Abstract methods
     public abstract IBaseSpread? ExchangeTo(Enum measureUnit);
+    public abstract IBaseSpread GetBaseSpread(ISpreadMeasure spreadMeasure);
     public abstract ISpreadMeasure GetSpreadMeasure();
     public abstract void ValidateQuantity(ValueType? quantity);
     #endregion

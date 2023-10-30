@@ -1,7 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Behaviors;
-using System.Linq;
-
-namespace CsabaDu.FooVaria.Common.Statics;
+﻿namespace CsabaDu.FooVaria.Common.Statics;
 
 public static class ExceptionMethods
 {
@@ -27,10 +24,8 @@ public static class ExceptionMethods
         throw new InvalidEnumArgumentException(paramName, (int)(object)param, typeof(T));
     }
 
-    public static T DefinedMeasureUnit<T>(T measureUnit) where T : Enum
+    public static T DefinedMeasureUnit<T>(T measureUnit, string name) where T : Enum
     {
-        string name = nameof(measureUnit);
-
         if (MeasureUnitTypes.IsDefinedMeasureUnit(NullChecked(measureUnit, name))) return measureUnit;
 
         throw new InvalidEnumArgumentException(name, (int)(object)measureUnit, typeof(T));
