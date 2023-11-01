@@ -11,6 +11,10 @@ internal sealed class FlatRate : Rate, IFlatRate
     {
     }
 
+    internal FlatRate(IFlatRateFactory factory, IMeasure numerator, Enum measureUnit) : base(factory, numerator, measureUnit)
+    {
+    }
+
     internal FlatRate(IFlatRateFactory factory, IMeasure numerator, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, numerator, measureUnitTypeCode)
     {
     }

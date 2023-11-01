@@ -1,4 +1,5 @@
-﻿using CsabaDu.FooVaria.Measurables.Statics;
+﻿using CsabaDu.FooVaria.Measurables.Behaviors;
+using CsabaDu.FooVaria.Measurables.Statics;
 
 namespace CsabaDu.FooVaria.Spreads.Types.Implementations
 {
@@ -9,10 +10,14 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         {
         }
 
-        protected Spread(ISpreadFactory factory, IBaseMeasurable baseMeasurable) : base(factory, baseMeasurable)
+        protected Spread(ISpreadFactory factory, IMeasure spreadMeasure) : base(factory, spreadMeasure)
         {
         }
 
+        protected Spread(ISpreadFactory factory, Enum measureUnit, ValueType quantity) : base(factory, measureUnit)
+        {
+            ValidateQuantity(quantity);
+        }
         #endregion
 
         #region Public methods
@@ -79,7 +84,7 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         #endregion
     }
 
-    internal abstract class Spread<T, U, W> : Spread, ISpread<T, U, W> where T : class, ISpread where U : class, IMeasure, ISpreadMeasure where W : struct, Enum
+    internal abstract class Spread<T, U, W> : Spread, ISpread<T, U, W> where T : class, ISpread where U : class, IMeasure, ISpreadMeasure, IDefaultRateComponent where W : struct, Enum
     {
         #region Constructors
         protected Spread(T other) : base(other)
@@ -91,6 +96,11 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         {
             SpreadMeasure = (U)SpreadMeasures.GetValidSpreadMeasure(spreadMeasure);
         }
+
+        protected Spread(ISpreadFactory<T, U> factory, W measureUnit, ValueType quantity) : base(factory, measureUnit, quantity)
+        {
+            SpreadMeasure = (U)factory.MeasureFactory.Create(quantity, measureUnit);
+        }
         #endregion
 
         #region Properties
@@ -98,10 +108,6 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         #endregion
 
         #region Public methods
-        public W GetMeasureUnit()
-        {
-            return (W)SpreadMeasure.Measurement.MeasureUnit;
-        }
         public double GetQuantity()
         {
             return (double)SpreadMeasure.Quantity;
@@ -147,11 +153,6 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
             return SpreadMeasure;
         }
 
-        //public override sealed bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
-        //{
-        //    return measureUnitTypeCode == MeasureUnitTypeCode;
-        //}
-
         public override sealed void ValidateMeasureUnit(Enum measureUnit)
         {
             if (NullChecked(measureUnit, nameof(measureUnit)) is U) return;
@@ -162,6 +163,7 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         #endregion
 
         #region Abstract methods
+        public abstract W GetMeasureUnit();
         public abstract T GetSpread(U spreadMeasure);
         public abstract T GetSpread(W measureUnit);
         #endregion

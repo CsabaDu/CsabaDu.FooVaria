@@ -107,18 +107,6 @@ public sealed class DenominatorFactory : BaseMeasureFactory, IDenominatorFactory
 
             _ => throw new InvalidOperationException(null),
         };
-
-        //_ = NullChecked(other, nameof(other));
-
-        //if (other is IDenominator denominator) return Create(denominator);
-
-        //if (other is IBaseMeasure baseMeasure) return Create(baseMeasure);
-
-        //if (other is IMeasurement measurement) return Create(measurement);
-
-        //if (other is IRate rate) return Create(rate.Denominator);
-
-        //throw new InvalidOperationException(null);
     }
     #endregion
 
@@ -126,7 +114,9 @@ public sealed class DenominatorFactory : BaseMeasureFactory, IDenominatorFactory
     #region Static methods
     private static IDenominator GetStoredDenominator([DisallowNull] IDenominator denominator)
     {
-        if ((DenominatorSet.Contains(denominator) || DenominatorSet.Add(denominator))
+        bool isExistingDenominator = DenominatorSet.Contains(denominator) || DenominatorSet.Add(denominator);
+
+        if (isExistingDenominator
             && DenominatorSet.TryGetValue(denominator, out IDenominator? storedDenominator)
             && storedDenominator != null)
         {

@@ -109,6 +109,7 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
     #region Abstract methods
     public abstract IBaseRate GetBaseRate(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
     public abstract IBaseRate GetBaseRate(IQuantifiable numerator, IBaseMeasurable denominator);
+    public abstract IBaseRate GetBaseRate(IQuantifiable numerator, Enum denominatorMeasureUnit);
     public abstract MeasureUnitTypeCode GetNumeratorMeasureUnitTypeCode();
     public abstract void ValidateQuantity(ValueType? quantity);
     #endregion

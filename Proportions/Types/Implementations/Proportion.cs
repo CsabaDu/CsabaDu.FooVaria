@@ -55,6 +55,11 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
             return GetFactory().Create(baseMeasurable.MeasureUnitTypeCode, numerator.DefaultQuantity, denominator.MeasureUnitTypeCode);
         }
 
+        public override IBaseRate GetBaseRate(IQuantifiable numerator, Enum denominatorMeasureUnit)
+        {
+            return GetFactory().Create(numerator, denominatorMeasureUnit);
+        }
+
         public override sealed IProportionFactory GetFactory()
         {
             return (IProportionFactory)Factory;

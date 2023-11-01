@@ -8,6 +8,13 @@ internal abstract class Rate : Measurable, IRate
         Numerator = other.Numerator;
         Denominator = other.Denominator;
     }
+
+    private protected Rate(IRateFactory factory, IMeasure numerator, Enum measureUnit) : base(factory, measureUnit)
+    {
+        Numerator = NullChecked(numerator, nameof(numerator));
+        Denominator = factory.DenominatorFactory.Create(measureUnit);
+    }
+
     private protected Rate(IRateFactory factory, IMeasure numerator, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
     {
         Numerator = NullChecked(numerator, nameof(numerator));
@@ -65,6 +72,43 @@ internal abstract class Rate : Measurable, IRate
         IDenominator denominator = Denominator.GetDenominator(denominatorMeasureUnitTypeCode.GetDefaultMeasureUnit(), defaultQuantity);
 
         return GetRate(numerator, denominator, null);
+    }
+
+    public IBaseRate GetBaseRate(IQuantifiable numerator, Enum denominatorMeasureUnit)
+    {
+        return GetFactory().Create(numerator, denominatorMeasureUnit);
+    }
+
+    public IBaseRate GetBaseRate(IQuantifiable numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
+    {
+        return GetFactory().Create(numerator, denominatorMeasureUnitTypeCode);
+    }
+
+    public IBaseRate GetBaseRate(IQuantifiable numerator, IBaseMeasurable denominator)
+    {
+        string name = nameof(numerator);
+
+        if (NullChecked(numerator, name) is not IMeasure measure)
+        {
+            throw ArgumentTypeOutOfRangeException(name, numerator);
+        }
+
+        name = nameof(denominator);
+
+        if (NullChecked(denominator, name) is not IMeasurable measurable)
+        {
+            throw ArgumentTypeOutOfRangeException(name, denominator);
+        }
+
+        IDenominatorFactory denominatorFactory = GetFactory().DenominatorFactory;
+        IDenominator createdDenominator = (IDenominator)denominatorFactory.Create(measurable);
+
+        return GetRate(measure, createdDenominator, null);
+    }
+
+    public decimal GetQuantity()
+    {
+        return Numerator.GetDecimalQuantity() / Denominator.GetDecimalQuantity();
     }
 
     public IRate GetRate(IRate other)
@@ -217,27 +261,6 @@ internal abstract class Rate : Measurable, IRate
         IMeasure numerator = rate.Numerator.Divide(proportion);
 
         return rate.GetRate(numerator, denominator, rate.GetLimit());
-    }
-
-    public IBaseRate GetBaseRate(IQuantifiable numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
-    {
-        return GetFactory().Create(numerator, denominatorMeasureUnitTypeCode);
-    }
-
-    public IBaseRate GetBaseRate(IQuantifiable numerator, IBaseMeasurable denominator)
-    {
-        string name = nameof(numerator);
-
-        if (NullChecked(numerator, name) is IMeasure measure)
-        {
-            return GetBaseRate(measure, NullChecked(denominator, nameof(denominator)).MeasureUnitTypeCode);
-        }
-
-        throw ArgumentTypeOutOfRangeException(name, numerator);
-    }
-    public decimal GetQuantity()
-    {
-        return Numerator.GetDecimalQuantity() / Denominator.GetDecimalQuantity();
     }
     #endregion
     #endregion

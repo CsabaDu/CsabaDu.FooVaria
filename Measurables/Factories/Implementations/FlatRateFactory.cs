@@ -1,4 +1,5 @@
-﻿using CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿using CsabaDu.FooVaria.Common.Enums;
+using CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
 
@@ -82,13 +83,23 @@ public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
         throw new ArgumentOutOfRangeException(nameof(other), other.GetType(), null);
     }
 
-    public override IFlatRate Create(IQuantifiable numerator, MeasureUnitTypeCode measureUnitTypeCode)
+    public override IFlatRate Create(IQuantifiable numerator, MeasureUnitTypeCode denominatorMeasureUnitTpeCode)
     {
         string name = nameof(numerator);
 
         if (NullChecked(numerator, name) is not IMeasure measure) throw ArgumentTypeOutOfRangeException(name, numerator);
 
-        return new FlatRate(this, measure, measureUnitTypeCode);
+        return new FlatRate(this, measure, denominatorMeasureUnitTpeCode);
+    }
+
+    public override IBaseRate Create(IQuantifiable numerator, Enum denominatorMeasureUnit)
+    {
+        string name = nameof(numerator);
+
+        if (NullChecked(numerator, name) is not IMeasure measure) throw ArgumentTypeOutOfRangeException(name, numerator);
+        measure.ValidateMeasureUnit(denominatorMeasureUnit);
+
+        return new FlatRate(this, measure, denominatorMeasureUnit);
     }
     #endregion
 }

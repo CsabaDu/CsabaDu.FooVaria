@@ -29,6 +29,11 @@ internal sealed class BulkSurface : Spread<IBulkSurface, IArea, AreaUnit>, IBulk
         return (IBulkSurfaceFactory)Factory;
     }
 
+    public override AreaUnit GetMeasureUnit()
+    {
+        return SpreadMeasure.GetMeasureUnit();
+    }
+
     public override IBulkSurface GetSpread(IArea area)
     {
         return GetFactory().Create(area);

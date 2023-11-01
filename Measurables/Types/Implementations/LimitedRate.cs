@@ -13,6 +13,11 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         Limit = NullChecked(limit, nameof(limit));
     }
 
+    internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, Enum measureUnit, ILimit limit) : base(factory, numerator, measureUnit)
+    {
+        Limit = NullChecked(limit, nameof(limit));
+    }
+
     internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, MeasureUnitTypeCode measureUnitTypeCode, ILimit limit) : base(factory, numerator, measureUnitTypeCode)
     {
         Limit = NullChecked(limit, nameof(limit));

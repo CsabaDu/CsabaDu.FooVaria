@@ -1,4 +1,5 @@
-﻿using CsabaDu.FooVaria.Proportions.Types.Implementations.ProportionTypes;
+﻿using CsabaDu.FooVaria.Measurables.Types;
+using CsabaDu.FooVaria.Proportions.Types.Implementations.ProportionTypes;
 using static CsabaDu.FooVaria.Common.Statics.MeasureUnitTypes;
 using static CsabaDu.FooVaria.Measurables.Statics.MeasureUnits;
 
@@ -75,10 +76,12 @@ public sealed class ProportionFactory : IProportionFactory
 
         MeasureUnitTypeCode numeratorMeasureUnitTypeCode = GetMeasureUnitTypeCode(numeratorMeasureUnit);
         MeasureUnitTypeCode denominatorMeasureUnitTypeCode = GetMeasureUnitTypeCode(denominatorMeasureUnit);
-        quantity = quantity * GetExchangeRate(numeratorMeasureUnit) / GetExchangeRate(denominatorMeasureUnit);
+        quantity *= GetExchangeRate(numeratorMeasureUnit);
+        quantity /= GetExchangeRate(denominatorMeasureUnit);
 
         return Create(numeratorMeasureUnitTypeCode, quantity, denominatorMeasureUnitTypeCode);
 
+        #region Local methods
         void validateNumeratorMeasureUnit()
         {
             _ = DefinedMeasureUnit(denominatorMeasureUnit, nameof(denominatorMeasureUnit));
@@ -87,12 +90,26 @@ public sealed class ProportionFactory : IProportionFactory
 
             ValidateNumeratorMeasureUnitTypeCode(numeratorMeasureUnitTypeCode);
         }
+        #endregion
     }
 
     public IProportion Create(IMeasure numerator, Enum denominatorMeasureUnit)
     {
         decimal quantity = NullChecked(numerator, nameof(numerator)).GetDecimalQuantity();
-        Enum numeratorMeasureUnit = numerator.Measurement.GetMeasureUnit();
+        Enum numeratorMeasureUnit = GetMeasureUnit(numerator);
+
+        return Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit);
+    }
+
+    public IBaseRate Create(IQuantifiable numerator, Enum denominatorMeasureUnit)
+    {
+        if (NullChecked(numerator, nameof(numerator)) is not IMeasure measure)
+        {
+            throw ArgumentTypeOutOfRangeException(nameof(numerator), numerator);
+        }
+
+        decimal quantity = measure.GetDecimalQuantity();
+        Enum numeratorMeasureUnit = GetMeasureUnit(measure);
 
         return Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit);
     }
@@ -100,6 +117,11 @@ public sealed class ProportionFactory : IProportionFactory
 
     #region Private methods
     #region Static methods
+    private static Enum GetMeasureUnit(IMeasure measure)
+    {
+        return measure.Measurement.GetMeasureUnit();
+    }
+
     private static void ValidateQuantity(decimal quantity, string name)
     {
         if (quantity >= 0) return;

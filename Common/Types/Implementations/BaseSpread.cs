@@ -23,6 +23,11 @@ public abstract class BaseSpread : BaseMeasurable, IBaseSpread
         _ = NullChecked(baseMeasurables, nameof(baseMeasurables));
     }
 
+    protected BaseSpread(IBaseSpreadFactory factory, Enum measureUnit, params IBaseMeasurable[] baseMeasurables) : base(factory, measureUnit)
+    {
+        _ = NullChecked(baseMeasurables, nameof(baseMeasurables));
+    }
+
     #endregion
 
     #region Properties

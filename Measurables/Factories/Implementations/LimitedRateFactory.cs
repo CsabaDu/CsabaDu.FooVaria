@@ -1,5 +1,4 @@
-﻿using CsabaDu.FooVaria.Measurables.Types;
-using CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿using CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
 
@@ -100,6 +99,19 @@ public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
         ILimit limit = LimitFactory.CreateDefault(measureUnitTypeCode);
 
         return new LimitedRate(this, measure, measureUnitTypeCode, limit);
+    }
+
+    public override IBaseRate Create(IQuantifiable numerator, Enum denominatorMeasureUnit)
+    {
+        string name = nameof(numerator);
+
+        if (NullChecked(numerator, name) is not IMeasure measure) throw ArgumentTypeOutOfRangeException(name, numerator);
+        measure.ValidateMeasureUnit(denominatorMeasureUnit);
+
+        MeasureUnitTypeCode measureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(denominatorMeasureUnit);
+        ILimit limit = LimitFactory.CreateDefault(measureUnitTypeCode);
+
+        return new LimitedRate(this, measure, denominatorMeasureUnit, limit);
     }
     #endregion
 }

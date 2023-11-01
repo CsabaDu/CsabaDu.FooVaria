@@ -1,4 +1,5 @@
-﻿using static CsabaDu.FooVaria.Measurables.Statics.MeasureUnits;
+﻿using static CsabaDu.FooVaria.Common.Statics.MeasureUnitTypes;
+using static CsabaDu.FooVaria.Measurables.Statics.MeasureUnits;
 
 namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
@@ -152,9 +153,9 @@ internal sealed class Measurement : BaseMeasurement, IMeasurement
 
     public bool IsCustomMeasureUnit(Enum measureUnit)
     {
-        if (measureUnit == null || !MeasureUnitTypes.IsDefinedMeasureUnit(measureUnit)) return false;
+        if (measureUnit == null || !IsDefinedMeasureUnit(measureUnit)) return false;
 
-        MeasureUnitTypeCode measureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(measureUnit);
+        MeasureUnitTypeCode measureUnitTypeCode = GetMeasureUnitTypeCode(measureUnit);
 
         return IsCustomMeasureUnitTypeCode(measureUnitTypeCode);
     }
@@ -209,9 +210,9 @@ internal sealed class Measurement : BaseMeasurement, IMeasurement
 
         if (!IsCustomMeasureUnit(NullChecked(measureUnit, nameof(measureUnit)))) throw InvalidMeasureUnitEnumArgumentException(measureUnit);
 
-        if (!exchangeRate.IsValidExchangeRate()) throw ExchangeRateArgumentOutOfRangeException(exchangeRate);
+        if (!exchangeRate.IsValidExchangeRate()) throw DecimalArgumentOutOfRangeException(exchangeRate);
 
-        if (!IsValidCustomNameParam(customName)) throw CustomNameArgumentOutOfRangeException(customName);
+        if (!IsValidCustomNameParam(customName)) throw NameArgumentOutOfRangeException(customName);
 
         if (CustomNameCollection.Remove(measureUnit, out string? removedCustomName))
         {
@@ -328,7 +329,7 @@ internal sealed class Measurement : BaseMeasurement, IMeasurement
     {
         exchangeRate.ValidateExchangeRate();
 
-        return MeasureUnitTypes.IsDefinedMeasureUnit(measureUnit) && tryAddExchangeRate();
+        return IsDefinedMeasureUnit(measureUnit) && tryAddExchangeRate();
 
         #region Local methods
         static bool isDefinedExchangeRate(decimal exchangeRate, Enum measureUnit)
@@ -348,23 +349,12 @@ internal sealed class Measurement : BaseMeasurement, IMeasurement
         return !string.IsNullOrWhiteSpace(customName)
             && customName != string.Empty
             && doesNotContainCustomName(CustomNameCollection.Values)
-            && doesNotContainCustomName(getAllMeasureUnitDefaultNames());
+            && doesNotContainCustomName(MeasureUnitTypes.GetDefaultNames());
 
         #region Local methods
         bool doesNotContainCustomName(IEnumerable<string> names)
         {
             return !names.Any(x => x.ToLower() == customName.ToLower());
-        }
-
-        static IEnumerable<string> getAllMeasureUnitDefaultNames()
-        {
-            foreach (MeasureUnitTypeCode item in Enum.GetValues<MeasureUnitTypeCode>())
-            {
-                foreach (string name in item.GetMeasureUnitDefaultNames())
-                {
-                    yield return name;
-                }
-            }
         }
         #endregion
     }

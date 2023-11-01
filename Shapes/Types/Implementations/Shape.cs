@@ -1,4 +1,5 @@
 ﻿using CsabaDu.FooVaria.Common;
+using CsabaDu.FooVaria.Spreads.Types;
 using System.Diagnostics.CodeAnalysis;
 
 namespace CsabaDu.FooVaria.Shapes.Types.Implementations
@@ -9,7 +10,7 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
         {
         }
 
-        private protected Shape(IShapeFactory factory, IBaseShape baseShape, params object[] args) : base(factory, baseShape)
+        private protected Shape(IShapeFactory factory, IBaseShape baseShape) : base(factory, baseShape)
         {
         }
 
@@ -37,12 +38,7 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
             throw new NotImplementedException();
         }
 
-        public override IBaseSpread GetBaseSpread(ISpreadMeasure spreadMeasure)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override ISpreadMeasure GetSpreadMeasure()
+        public override ISpread GetBaseSpread(ISpreadMeasure spreadMeasure)
         {
             throw new NotImplementedException();
         }
@@ -149,7 +145,7 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
         {
         }
 
-        private protected PlaneShape(IShapeFactory factory, IBaseShape baseShape, params object[] args) : base(factory, baseShape, args)
+        private protected PlaneShape(IShapeFactory factory, IBaseShape baseShape) : base(factory, baseShape)
         {
         }
 

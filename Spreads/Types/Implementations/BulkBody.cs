@@ -29,6 +29,11 @@ internal sealed class BulkBody : Spread<IBulkBody, IVolume, VolumeUnit>, IBulkBo
         return (IBulkBodyFactory)Factory;
     }
 
+    public override VolumeUnit GetMeasureUnit()
+    {
+        return SpreadMeasure.GetMeasureUnit();
+    }
+
     public override IBulkBody GetSpread(IVolume volume)
     {
         return GetFactory().Create(volume);

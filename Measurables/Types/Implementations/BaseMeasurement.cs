@@ -139,7 +139,7 @@ internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
     {
         if (TrySetCustomName(measureUnit, customName)) return;
 
-        throw CustomNameArgumentOutOfRangeException(customName);
+        throw NameArgumentOutOfRangeException(customName);
     }
 
     public void SetOrReplaceCustomName(string customName)
@@ -188,14 +188,14 @@ internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
     {
         if (IsValidCustomNameParam(customName)) return;
 
-        throw CustomNameArgumentOutOfRangeException(customName);
+        throw NameArgumentOutOfRangeException(customName);
     }
 
     public void ValidateExchangeRate(decimal exchangeRate, Enum measureUnit)
     {
         if (IsValidExchangeRate(exchangeRate, measureUnit)) return;
 
-        throw ExchangeRateArgumentOutOfRangeException(exchangeRate);
+        throw DecimalArgumentOutOfRangeException(exchangeRate);
     }
 
     public void ValidateExchangeRate(decimal exchangeRate)

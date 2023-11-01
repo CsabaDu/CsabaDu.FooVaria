@@ -46,6 +46,7 @@ public static class MeasureUnitTypes
 
     public static IEnumerable<Enum> GetAllMeasureUnits()
     {
+
         IEnumerable<MeasureUnitTypeCode> measureUnitTypeCodes = GetMeasureUnitTypeCodes();
 
         IEnumerable<Enum> allMeasureUnits = measureUnitTypeCodes.First().GetAllMeasureUnits();
