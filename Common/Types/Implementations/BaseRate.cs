@@ -95,14 +95,14 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
         Validate(this, fooVariaObject);
     }
 
-    public override void ValidateMeasureUnit(Enum measureUnit)
+    public override void ValidateMeasureUnit(Enum measureUnit, string paramName)
     {
-        base.ValidateMeasureUnit(measureUnit);
+        base.ValidateMeasureUnit(measureUnit, paramName);
     }
 
-    public override void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
+    public override void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, string paramName)
     {
-        base.ValidateMeasureUnitTypeCode(measureUnitTypeCode);
+        base.ValidateMeasureUnitTypeCode(measureUnitTypeCode, paramName);
     }
     #endregion
 
@@ -111,7 +111,7 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
     public abstract IBaseRate GetBaseRate(IQuantifiable numerator, IBaseMeasurable denominator);
     public abstract IBaseRate GetBaseRate(IQuantifiable numerator, Enum denominatorMeasureUnit);
     public abstract MeasureUnitTypeCode GetNumeratorMeasureUnitTypeCode();
-    public abstract void ValidateQuantity(ValueType? quantity);
+    public abstract void ValidateQuantity(ValueType? quantity, string paramName);
     #endregion
 
     #region Static methods
@@ -185,7 +185,7 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
     {
         T baseMeasurable = GetValidCommonBase(commonBase, other);
 
-        commonBase.ValidateQuantity(baseMeasurable.DefaultQuantity);
+        commonBase.ValidateQuantity(baseMeasurable.DefaultQuantity, nameof(commonBase));
 
         MeasureUnitTypeCode measureUnitTypeCode = commonBase.MeasureUnitTypeCode;
         MeasureUnitTypeCode otherMeasureUnitTypeCode = baseMeasurable.MeasureUnitTypeCode;

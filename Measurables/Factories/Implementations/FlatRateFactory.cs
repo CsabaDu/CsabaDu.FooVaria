@@ -97,7 +97,10 @@ public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
         string name = nameof(numerator);
 
         if (NullChecked(numerator, name) is not IMeasure measure) throw ArgumentTypeOutOfRangeException(name, numerator);
-        measure.ValidateMeasureUnit(denominatorMeasureUnit);
+
+        name = nameof(denominatorMeasureUnit);
+
+        measure.ValidateMeasureUnit(denominatorMeasureUnit, name);
 
         return new FlatRate(this, measure, denominatorMeasureUnit);
     }

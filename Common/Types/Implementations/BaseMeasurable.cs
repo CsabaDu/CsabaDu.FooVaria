@@ -86,14 +86,14 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
         return GetMeasureUnitTypeCodes().Contains(measureUnitTypeCode);
     }
 
-    public virtual void ValidateMeasureUnit(Enum measureUnit)
+    public virtual void ValidateMeasureUnit(Enum measureUnit, string paramName)
     {
-        MeasureUnitTypes.ValidateMeasureUnit(measureUnit);
+        MeasureUnitTypes.ValidateMeasureUnit(measureUnit, paramName);
     }
 
-    public virtual void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
+    public virtual void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, string paramName)
     {
-        MeasureUnitTypes.ValidateMeasureUnitTypeCode(measureUnitTypeCode);
+        MeasureUnitTypes.ValidateMeasureUnitTypeCode(measureUnitTypeCode, paramName);
     }
     #endregion
     #endregion

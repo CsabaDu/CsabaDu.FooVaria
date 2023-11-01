@@ -64,20 +64,20 @@ public static class ExceptionMethods
 
     public static ArgumentOutOfRangeException DecimalArgumentOutOfRangeException(decimal exchangeRate)
     {
-        return DecimalArgumentOutOfRangeException(exchangeRate, nameof(exchangeRate));
+        return DecimalArgumentOutOfRangeException(nameof(exchangeRate), exchangeRate);
     }
 
-    public static ArgumentOutOfRangeException DecimalArgumentOutOfRangeException(decimal exchangeRate, string paramName)
+    public static ArgumentOutOfRangeException DecimalArgumentOutOfRangeException(string? paramName, decimal exchangeRate)
     {
         return new ArgumentOutOfRangeException(paramName, exchangeRate, null);
     }
 
-    public static ArgumentOutOfRangeException NameArgumentOutOfRangeException(string? name)
+    public static ArgumentOutOfRangeException NameArgumentOutOfRangeException(string name)
     {
         return new ArgumentOutOfRangeException(nameof(name), name, null);
     }
 
-    public static ArgumentOutOfRangeException NameArgumentOutOfRangeException(string? name, string paramName)
+    public static ArgumentOutOfRangeException NameArgumentOutOfRangeException(string? paramName, string name)
     {
         return new ArgumentOutOfRangeException(paramName, name ?? string.Empty, null);
     }

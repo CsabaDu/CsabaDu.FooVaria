@@ -27,7 +27,7 @@ internal sealed class Measurement : BaseMeasurement, IMeasurement
     {
         if (other == null) return 1;
 
-        ValidateMeasureUnitTypeCode(other.MeasureUnitTypeCode);
+        other.ValidateMeasureUnitTypeCode(MeasureUnitTypeCode, nameof(other));
 
         return ExchangeRate.CompareTo(other.ExchangeRate);
     }
@@ -70,6 +70,11 @@ internal sealed class Measurement : BaseMeasurement, IMeasurement
                 yield return item;
             }
         }
+    }
+
+    public override decimal GetExchangeRate()
+    {
+        return ExchangeRate;
     }
 
     public IMeasurement GetMeasurement(Enum measureUnit)

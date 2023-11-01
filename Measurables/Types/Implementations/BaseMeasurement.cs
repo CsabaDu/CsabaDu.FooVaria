@@ -16,7 +16,7 @@ internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
 
     private protected BaseMeasurement(IBaseMeasurementFactory factory, Enum measureUnit) : base(factory, measureUnit)
     {
-        ValidateMeasureUnit(measureUnit);
+        ValidateMeasureUnit(measureUnit, nameof(measureUnit));
     }
     #endregion
 
@@ -186,21 +186,21 @@ internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
 
     public void ValidateCustomName(string? customName)
     {
-        if (IsValidCustomNameParam(customName)) return;
+        if (IsValidCustomNameParam(NullChecked(customName, nameof(customName)))) return;
 
-        throw NameArgumentOutOfRangeException(customName);
+        throw NameArgumentOutOfRangeException(customName!);
     }
 
-    public void ValidateExchangeRate(decimal exchangeRate, Enum measureUnit)
+    public void ValidateExchangeRate(decimal exchangeRate, string paramName, Enum measureUnit)
     {
         if (IsValidExchangeRate(exchangeRate, measureUnit)) return;
 
-        throw DecimalArgumentOutOfRangeException(exchangeRate);
+        throw DecimalArgumentOutOfRangeException(paramName, exchangeRate);
     }
 
-    public void ValidateExchangeRate(decimal exchangeRate)
+    public void ValidateExchangeRate(decimal exchangeRate, string paramName)
     {
-        ValidateExchangeRate(exchangeRate, GetMeasureUnit());
+        ValidateExchangeRate(exchangeRate, paramName, GetMeasureUnit());
     }
 
     #region Override methods
@@ -210,17 +210,18 @@ internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
     }
 
     #region Sealed methods
-    public override sealed void ValidateMeasureUnit(Enum measureUnit)
+    public override sealed void ValidateMeasureUnit(Enum measureUnit, string paramName)
     {
         if (!ExchangeRateCollection.ContainsKey(measureUnit))
         {
-            throw InvalidMeasureUnitEnumArgumentException(measureUnit);
+            throw InvalidMeasureUnitEnumArgumentException(measureUnit, paramName);
         }
     }
     #endregion
     #endregion
 
     #region Abstract methods
+    public abstract decimal GetExchangeRate();
     public abstract Enum GetMeasureUnit();
     #endregion
     #endregion

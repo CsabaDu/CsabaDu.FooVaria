@@ -1,10 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Common.Behaviors;
-
-public interface IMeasureUnit
+﻿namespace CsabaDu.FooVaria.Common.Behaviors
 {
-    //Enum GetMeasureUnit();
-    //bool IsDefinedMeasureUnit(Enum measureUnit);
-
-    void ValidateMeasureUnit(Enum measureUnit);
-    //void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode measureUnitTypeCode);
+    public interface IMeasureUnit<out T> where T : Enum
+    {
+        T GetMeasureUnit();
+    }
 }

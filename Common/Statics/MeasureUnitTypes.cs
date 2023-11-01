@@ -74,7 +74,7 @@ public static class MeasureUnitTypes
 
     public static string GetDefaultName(Enum measureUnit)
     {
-        ValidateMeasureUnit(measureUnit);
+        ValidateMeasureUnit(measureUnit, nameof(measureUnit));
 
         Type measureUnitType = measureUnit.GetType();
         string measureUnitName = Enum.GetName(measureUnitType, measureUnit)!;
@@ -95,14 +95,14 @@ public static class MeasureUnitTypes
 
     public static Type GetMeasureUnitType(MeasureUnitTypeCode measureUnitTypeCode)
     {
-        ValidateMeasureUnitTypeCode(measureUnitTypeCode);
+        ValidateMeasureUnitTypeCode(measureUnitTypeCode, nameof(measureUnitTypeCode));
 
         return MeasureUnitTypeCollection[measureUnitTypeCode];
     }
 
     public static MeasureUnitTypeCode GetValidMeasureUnitTypeCode(Enum measureUnit)
     {
-        ValidateMeasureUnit(measureUnit);
+        ValidateMeasureUnit(measureUnit, nameof(measureUnit));
 
         Type measureUnitType = measureUnit.GetType();
 
@@ -154,15 +154,15 @@ public static class MeasureUnitTypes
             && Enum.IsDefined(measureUnitType, measureUnit);
     }
 
-    public static void ValidateMeasureUnit(Enum measureUnit)
+    public static void ValidateMeasureUnit(Enum measureUnit, string paramName)
     {
-        _ = DefinedMeasureUnit(measureUnit, nameof(measureUnit));
+        _ = DefinedMeasureUnit(measureUnit, paramName);
     }
 
-    public static void ValidateMeasureUnit(Enum measureUnit, MeasureUnitTypeCode measureUnitTypeCode)
+    public static void ValidateMeasureUnit(Enum measureUnit, string measureUnitName, MeasureUnitTypeCode measureUnitTypeCode)
     {
-        ValidateMeasureUnit(measureUnit);
-        ValidateMeasureUnitTypeCode(measureUnitTypeCode);
+        ValidateMeasureUnit(measureUnit, measureUnitName);
+        ValidateMeasureUnitTypeCode(measureUnitTypeCode, nameof(measureUnitTypeCode));
 
         string measureUnitTypeCodeName = Enum.GetName(measureUnitTypeCode)!;
         string measureUnitTypeName = measureUnit.GetType().Name;
@@ -182,7 +182,7 @@ public static class MeasureUnitTypes
     public static void ValidateMeasureUnitType(Type measureUnitType, MeasureUnitTypeCode measureUnitTypeCode)
     {
         ValidateMeasureUnitType(measureUnitType);
-        ValidateMeasureUnitTypeCode(measureUnitTypeCode);
+        ValidateMeasureUnitTypeCode(measureUnitTypeCode, nameof(measureUnitTypeCode));
 
         if (measureUnitTypeCode == GetMeasureUnitTypeCode(measureUnitType)) return;
 
@@ -198,11 +198,11 @@ public static class MeasureUnitTypes
         throw InvalidMeasureUnitEnumArgumentException(measureUnit);
     }
 
-    public static void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
+    public static void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, string paramName)
     {
         if (Enum.IsDefined(measureUnitTypeCode)) return;
 
-        throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode);
+        throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode, paramName);
     }
     #endregion
 

@@ -14,13 +14,12 @@
 
     }
 
-    public interface IMeasure<T, U, W> : IMeasure, IDefaultRateComponent<T, U> where T : class, IMeasure, IDefaultRateComponent where U : struct where W : struct, Enum
+    public interface IMeasure<T, U, W> : IMeasure, IDefaultRateComponent<T, U>, IMeasureUnit<W> where T : class, IMeasure, IDefaultRateComponent where U : struct where W : struct, Enum
     {
         T GetMeasure(U quantity, W measureUnit);
         T GetMeasure(U quantity, string name);
         T GetMeasure(U quantity);
         T GetMeasure(U quantity, IMeasurement measurement);
         T GetMeasure(T other);
-        W GetMeasureUnit();
     }
 }

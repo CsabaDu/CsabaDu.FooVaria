@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Types;
 
-public interface IRate : IMeasurable, IBaseRate
+public interface IRate : IMeasurable, IBaseRate, IExchange<IBaseRate, IBaseMeasurable>
 {
     IDenominator Denominator { get; init; }
     IMeasure Numerator { get; init; }

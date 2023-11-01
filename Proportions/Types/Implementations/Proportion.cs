@@ -70,17 +70,15 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
             return NumeratorMeasureUnitTypeCode;
         }
 
-        public override sealed void ValidateQuantity(ValueType? quantity)
+        public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
         {
-            string name = nameof(quantity);
-
-            object converted = NullChecked(quantity, nameof(quantity)).ToQuantity(TypeCode.Decimal) ?? throw ArgumentTypeOutOfRangeException(name, quantity!);
+            object converted = NullChecked(quantity, paramName).ToQuantity(TypeCode.Decimal) ?? throw ArgumentTypeOutOfRangeException(paramName, quantity!);
 
             if ((decimal)converted > 0) return;
 
-            if (QuantityTypes.GetQuantityTypes().Contains(NullChecked(quantity, nameof(quantity)).GetType())) return;
+            if (QuantityTypes.GetQuantityTypes().Contains(NullChecked(quantity, paramName).GetType())) return;
 
-            throw QuantityArgumentOutOfRangeException(quantity);
+            throw QuantityArgumentOutOfRangeException(paramName, quantity);
         }
         #endregion
         #endregion
@@ -102,7 +100,7 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
         #region Public methods
         public T GetProportion(U numeratorMeasureUnit, ValueType quantity, W denominatorMeasureUnit)
         {
-            ValidateQuantity(quantity);
+            ValidateQuantity(quantity, nameof(quantity));
 
             decimal decimalQuantity = (decimal?)quantity.ToQuantity(TypeCode.Decimal) ?? throw new InvalidOperationException(null);
 

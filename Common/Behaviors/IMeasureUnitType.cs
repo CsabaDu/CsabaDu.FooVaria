@@ -5,11 +5,7 @@ public interface IMeasureUnitType
     Type GetMeasureUnitType();
     IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes();
     bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode);
-    bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measurementUnitTypeCode);
+    bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode);
 
-    void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode);
+    void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, string paramName);
 }
-
-    //Type GetMeasureUnitType(MeasureUnitTypeCode measureUnitTypeCode);
-    //MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum measureUnit);
-    //bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, Enum measureUnit);

@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Types;
 
-public interface IBaseMeasure : IMeasurable, IQuantity, IQuantityType, IDecimalQuantity, ILimitMode, IRateComponent, IRateComponentType, IRateComponentType<IBaseMeasure>, IExchangeRate<IBaseMeasure>, IExchange<IBaseMeasure, Enum>, IRound<IBaseMeasure>
+public interface IBaseMeasure : IMeasurable, IQuantity, IQuantityType, IDecimalQuantity, ILimitMode, IRateComponent, IExchangeRate, IRateComponentType, IRateComponentType<IBaseMeasure>, IExchange<IBaseMeasure, Enum>, IRound<IBaseMeasure>
 {
     IMeasurement Measurement { get; }
     object Quantity { get; init; }

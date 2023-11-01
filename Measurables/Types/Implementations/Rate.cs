@@ -55,9 +55,9 @@ internal abstract class Rate : Measurable, IRate
         return BaseRate.Compare(this, other);
     }
 
-    public IBaseRate? ExchangeTo(IBaseMeasurable context)
+    public IBaseRate? ExchangeTo(IBaseMeasurable denominator)
     {
-        return context switch
+        return denominator switch
         {
             Measurement measurement => Exchange(this, measurement),
             BaseMeasure baseMeasure => Exchange(this, baseMeasure),
@@ -131,16 +131,16 @@ internal abstract class Rate : Measurable, IRate
         return BaseRate.Proportionals(this, other);
     }
 
-    public bool TryExchangeTo(IBaseMeasurable context, [NotNullWhen(true)] out IBaseRate? exchanged)
+    public bool TryExchangeTo(IBaseMeasurable denominator, [NotNullWhen(true)] out IBaseRate? exchanged)
     {
-        exchanged = ExchangeTo(context);
+        exchanged = ExchangeTo(denominator);
 
         return exchanged != null;
     }
 
-    public void ValidateQuantity(ValueType? quantity)
+    public void ValidateQuantity(ValueType? quantity, string paramName)
     {
-        Numerator.ValidateQuantity(quantity);
+        Numerator.ValidateQuantity(quantity, paramName);
     }
 
     #region Virtual methods
@@ -201,9 +201,9 @@ internal abstract class Rate : Measurable, IRate
         return Numerator.GetQuantityTypeCode();
     }
 
-    public override sealed void ValidateMeasureUnit(Enum measureUnit)
+    public override sealed void ValidateMeasureUnit(Enum measureUnit, string paramName)
     {
-        Denominator.ValidateMeasureUnit(measureUnit);
+        Denominator.ValidateMeasureUnit(measureUnit, paramName);
     }
     #endregion
     #endregion

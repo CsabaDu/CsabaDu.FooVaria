@@ -53,9 +53,9 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
         return HashCode.Combine(typeof(IMeasurable), MeasureUnitTypeCode);
     }
 
-    public override void ValidateMeasureUnit(Enum measureUnit)
+    public override void ValidateMeasureUnit(Enum measureUnit, string paramName)
     {
-        MeasureUnitTypes.ValidateMeasureUnit(measureUnit, MeasureUnitTypeCode);
+        MeasureUnitTypes.ValidateMeasureUnit(measureUnit, paramName, MeasureUnitTypeCode);
     }
 
     #region Sealed methods
@@ -69,11 +69,11 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
     //    return Enum.IsDefined(measureUnitTypeCode);
     //}
 
-    public override sealed void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
+    public override sealed void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, string paramName)
     {
         if (measureUnitTypeCode == MeasureUnitTypeCode) return;
 
-        throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode);
+        throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode, paramName);
     }
     #endregion
     #endregion

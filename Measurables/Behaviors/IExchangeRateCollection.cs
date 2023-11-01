@@ -12,6 +12,5 @@ public interface IExchangeRateCollection
 
     void RestoreConstantExchangeRates();
 
-    void ValidateExchangeRate(decimal exchangeRate, Enum measureUnit);
-    void ValidateExchangeRate(decimal exchangeRate);
+    void ValidateExchangeRate(decimal exchangeRate, string paramName, Enum measureUnit);
 }

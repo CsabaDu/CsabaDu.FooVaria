@@ -88,6 +88,11 @@ internal sealed class Denominator : BaseMeasure, IDenominator
         return GetFactory().Create(baseMeasure.Measurement, quantity);
     }
 
+    public Enum GetMeasureUnit()
+    {
+        return Measurement.GetMeasureUnit();
+    }
+
     public decimal GetQuantity()
     {
         return (decimal)Quantity;

@@ -36,7 +36,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     {
         if (other == null) return 1;
 
-        other.ValidateMeasureUnitTypeCode(MeasureUnitTypeCode);
+        other.ValidateMeasureUnitTypeCode(MeasureUnitTypeCode, nameof(other));
 
         return DefaultQuantity.CompareTo(other.DefaultQuantity);
     }
@@ -170,9 +170,9 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         }
     }
 
-    public void ValidateExchangeRate(decimal exchangeRate)
+    public void ValidateExchangeRate(decimal exchangeRate, string paramName)
     {
-        Measurement.ValidateExchangeRate(exchangeRate);
+        Measurement.ValidateExchangeRate(exchangeRate, paramName);
     }
 
     public bool TryGetQuantity(ValueType quantity, [NotNullWhen(true)] out ValueType? thisTypeQuantity)
@@ -193,9 +193,24 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         throw QuantityArgumentOutOfRangeException(quantity);
     }
 
-    public void ValidateQuantity(ValueType? quantity)
+    public void ValidateQuantity(ValueType? quantity, string paramName)
     {
-        _ = GetValidQuantity(quantity);
+        try
+        {
+            _ = GetValidQuantity(quantity);
+        }
+        catch (ArgumentNullException)
+        {
+            throw new ArgumentNullException(paramName);
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+            throw QuantityArgumentOutOfRangeException(paramName, quantity);
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException(ex.Message, ex.InnerException);
+        }
     }
 
     public void ValidateQuantityTypeCode(TypeCode quantityTypeCode)
@@ -243,9 +258,9 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     //    return Measurement.GetMeasureUnit();
     //}
 
-    public override sealed void ValidateMeasureUnit(Enum measureUnit)
+    public override sealed void ValidateMeasureUnit(Enum measureUnit, string paramName)
     {
-        Measurement.ValidateMeasureUnit(measureUnit);
+        Measurement.ValidateMeasureUnit(measureUnit, paramName);
     }
     #endregion
     #endregion

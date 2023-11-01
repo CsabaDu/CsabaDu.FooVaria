@@ -1,4 +1,5 @@
 ﻿using CsabaDu.FooVaria.Common;
+using CsabaDu.FooVaria.Measurables.Types;
 using CsabaDu.FooVaria.Spreads.Types;
 using System.Diagnostics.CodeAnalysis;
 
@@ -20,6 +21,7 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 
         public override int CompareTo(IBaseShape? other)
         {
+
             throw new NotImplementedException();
         }
 
@@ -28,9 +30,63 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
             throw new NotImplementedException();
         }
 
-        public override IBaseSpread? ExchangeTo(Enum measureUnit)
+        public override sealed IBaseSpread? ExchangeTo(Enum measureUnit)
         {
-            throw new NotImplementedException();
+            if (measureUnit == null) return null;
+
+            return measureUnit switch
+            {
+                AreaUnit areaUnit => exchangeToAreaUnit(areaUnit),
+                ExtentUnit extentUnit => exchangeToExtentUnit(extentUnit),
+                VolumeUnit volumeUnit => exchangeToVolumeUnit(volumeUnit),
+
+                _ => null,
+            };
+
+            #region Local methods
+            IShape? exchangeToExtentUnit(ExtentUnit extentUnit)
+            {
+                IEnumerable<IExtent> exchangedShapeExtents = getExchangedShapeExtents(extentUnit);
+
+                if (exchangedShapeExtents.Count() != GetShapeExtents().Count()) return null;
+
+                return GetShape(exchangedShapeExtents);
+            }
+
+            IEnumerable<IExtent> getExchangedShapeExtents(ExtentUnit extentUnit)
+            {
+                foreach (IExtent item in GetShapeExtents())
+                {
+                    IBaseMeasure? exchanged = item.ExchangeTo(extentUnit);
+
+                    if (exchanged is IExtent extent)
+                    {
+                        yield return extent;
+                    }
+                }
+            }
+
+            IBulkSurface? exchangeToAreaUnit(AreaUnit areaUnit)
+            {
+                if (getExchangedSpreadMeasure(areaUnit) is not IArea area) return null;
+
+                return (IBulkSurface)GetFactory().SpreadFactory.Create(area);
+            }
+
+            IBulkBody? exchangeToVolumeUnit(VolumeUnit volumeUnit)
+            {
+                if (getExchangedSpreadMeasure(volumeUnit) is not IVolume volume) return null;
+
+                return (IBulkBody)GetFactory().SpreadFactory.Create(volume);
+            }
+
+            IBaseMeasure? getExchangedSpreadMeasure(Enum measureUnit)
+            {
+                IBaseMeasure spreadMeasure = (IBaseMeasure)GetSpreadMeasure();
+
+                return spreadMeasure.ExchangeTo(measureUnit);
+            }
+            #endregion
         }
 
         public override bool? FitsIn(IBaseShape? other, LimitMode? limitMode)
@@ -58,20 +114,14 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
         public abstract IShape GetShape(ExtentUnit extentUnit);
         public abstract IShape GetShape(params IExtent[] shapeExtents);
         public abstract IShape GetShape(IShape other);
-        //public override bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
-        //{
-        //    return GetMeasureUnitTypeCodes().Contains(measureUnitTypeCode);
-        //}
 
-        public override sealed void ValidateQuantity(ValueType? quantity)
+        public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
         {
-            string name = nameof(quantity);
+            object? converted = NullChecked(quantity, paramName).ToQuantity(TypeCode.Decimal);
 
-            object? converted = NullChecked(quantity, name).ToQuantity(TypeCode.Decimal);
+            if (converted == null) throw ArgumentTypeOutOfRangeException(paramName, quantity!);
 
-            if (converted == null) throw ArgumentTypeOutOfRangeException(name, quantity!);
-
-            ValidateDecimalQuantity((decimal)converted, name);
+            ValidateDecimalQuantity((decimal)converted, paramName);
         }
 
         public IEnumerable<IExtent> GetShapeExtents()
@@ -137,6 +187,8 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 
             throw QuantityArgumentOutOfRangeException(name, quantity);
         }
+
+        public abstract IShape GetShape(IEnumerable<IExtent> shapeExtentList);
     }
 
     internal abstract class PlaneShape : Shape, IPlaneShape
@@ -156,14 +208,9 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 
         public IArea Area { get; }
 
-        public override IShape? ExchangeTo(Enum measureUnit)
+        public override IPlaneShape GetShape(ExtentUnit measureUnit)
         {
-            throw new NotImplementedException();
-        }
-
-        public override IShape GetShape(ExtentUnit measureUnit)
-        {
-            return ExchangeTo(measureUnit) ?? throw InvalidMeasureUnitEnumArgumentException(measureUnit);
+            return (IPlaneShape?)ExchangeTo(measureUnit) ?? throw new InvalidOperationException(null);
         }
 
         public override sealed ISpreadMeasure GetSpreadMeasure()

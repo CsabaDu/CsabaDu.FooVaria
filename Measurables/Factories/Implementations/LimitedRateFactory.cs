@@ -106,7 +106,10 @@ public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
         string name = nameof(numerator);
 
         if (NullChecked(numerator, name) is not IMeasure measure) throw ArgumentTypeOutOfRangeException(name, numerator);
-        measure.ValidateMeasureUnit(denominatorMeasureUnit);
+
+        name = nameof(denominatorMeasureUnit);
+
+        measure.ValidateMeasureUnit(denominatorMeasureUnit, name);
 
         MeasureUnitTypeCode measureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(denominatorMeasureUnit);
         ILimit limit = LimitFactory.CreateDefault(measureUnitTypeCode);

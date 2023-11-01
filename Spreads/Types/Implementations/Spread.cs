@@ -16,16 +16,15 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
 
         protected Spread(ISpreadFactory factory, Enum measureUnit, ValueType quantity) : base(factory, measureUnit)
         {
-            ValidateQuantity(quantity);
+            ValidateQuantity(quantity, nameof(quantity));
         }
         #endregion
 
         #region Public methods
-        public void ValidateShapeExtents(params IExtent[] shapeExtents)
+        public void ValidateShapeExtents(string paramName, params IExtent[] shapeExtents)
         {
-            SpreadMeasures.ValidateShapeExtents(MeasureUnitTypeCode, shapeExtents);
+            SpreadMeasures.ValidateShapeExtents(MeasureUnitTypeCode, paramName, shapeExtents);
         }
-
         #region Override methods
         public override ISpreadFactory GetFactory()
         {
@@ -37,7 +36,7 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         //    return GetMeasureUnitTypeCodes().Contains(measureUnitTypeCode);
         //}
 
-        public override void ValidateMeasureUnit(Enum measureUnit)
+        public override void ValidateMeasureUnit(Enum measureUnit, string paramName)
         {
             MeasureUnitTypeCode measureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(measureUnit);
 
@@ -56,21 +55,21 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
             return (ISpread)GetFactory().Create((ISpreadMeasure)exchanged);
         }
 
-        public override sealed void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
+        public override sealed void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, string paramName)
         {
             if (IsValidMeasureUnitTypeCode(measureUnitTypeCode)) return;
 
-            throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode);
+            throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode, paramName);
         }
 
-        public override sealed void ValidateQuantity(ValueType? quantity)
+        public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
         {
-            _ = NullChecked(quantity, nameof(quantity));
+            _ = NullChecked(quantity, paramName);
 
             if (quantity!.ToQuantity(TypeCode.Double) is double doubleQuantity
                 && doubleQuantity > 0) return;
 
-            throw QuantityArgumentOutOfRangeException(quantity);
+            throw QuantityArgumentOutOfRangeException(paramName, quantity);
         }
 
         #endregion
@@ -116,7 +115,7 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         #region Override methods
         public override sealed T GetBaseSpread(ISpreadMeasure spreadMeasure)
         {
-            ValidateSpreadMeasure(spreadMeasure);
+            ValidateSpreadMeasure(spreadMeasure, nameof(spreadMeasure));
 
             return GetFactory().Create((U)spreadMeasure);
         }
@@ -127,14 +126,14 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         }
 
         #region Sealed methods
-        public override sealed bool? FitsIn(IBaseSpread? other, LimitMode? limitMode)
-        {
-            if (other == null) return null;
+        //public override sealed bool? FitsIn(IBaseSpread? other, LimitMode? limitMode)
+        //{
+        //    if (other == null) return null;
 
-            U spreadMeasure = (U)SpreadMeasures.GetValidSpreadMeasure(other);
+        //    U spreadMeasure = (U)SpreadMeasures.GetValidSpreadMeasure(other);
 
-            return SpreadMeasure.FitsIn(spreadMeasure, limitMode);
-        }
+        //    return SpreadMeasure.FitsIn(spreadMeasure, limitMode);
+        //}
 
         public override sealed T GetSpread(params IExtent[] shapeExtents)
         {
@@ -153,11 +152,11 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
             return SpreadMeasure;
         }
 
-        public override sealed void ValidateMeasureUnit(Enum measureUnit)
+        public override sealed void ValidateMeasureUnit(Enum measureUnit, string paramName)
         {
-            if (NullChecked(measureUnit, nameof(measureUnit)) is U) return;
+            if (NullChecked(measureUnit, paramName) is U) return;
 
-            throw InvalidMeasureUnitEnumArgumentException(measureUnit);
+            throw InvalidMeasureUnitEnumArgumentException(measureUnit, paramName);
         }
         #endregion
         #endregion

@@ -38,11 +38,11 @@ public sealed class MeasurementFactory : BaseMeasurementFactory, IMeasurementFac
         }
 
         measurement = GetStoredMeasurement(measureUnit);
-        measurement.ValidateExchangeRate(exchangeRate);
+        measurement.ValidateExchangeRate(exchangeRate, nameof(exchangeRate));
 
         if (customName == measurement.GetCustomName()) return measurement;
 
-        throw CustomNameArgumentOutOfRangeException(customName);
+        throw NameArgumentOutOfRangeException(customName, nameof(customName));
     }
 
     public IMeasurement Create(Enum measureUnit)

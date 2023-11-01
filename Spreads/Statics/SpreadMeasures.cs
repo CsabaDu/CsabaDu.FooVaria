@@ -14,7 +14,7 @@ public static class SpreadMeasures
     #region Public methods
     public static IArea GetArea(IMeasureFactory factory, params IExtent[] shapeExtents)
     {
-        ValidateShapeExtents(MeasureUnitTypeCode.AreaUnit, shapeExtents);
+        ValidateShapeExtents(MeasureUnitTypeCode.AreaUnit, nameof(shapeExtents), shapeExtents);
 
         return shapeExtents.Length switch
         {
@@ -90,7 +90,7 @@ public static class SpreadMeasures
 
     public static IVolume GetVolume(IMeasureFactory factory, params IExtent[] shapeExtents)
     {
-        ValidateShapeExtents(MeasureUnitTypeCode.VolumeUnit, shapeExtents);
+        ValidateShapeExtents(MeasureUnitTypeCode.VolumeUnit, nameof(shapeExtents), shapeExtents);
 
         return shapeExtents.Length switch
         {
@@ -101,9 +101,8 @@ public static class SpreadMeasures
         };
     }
 
-    public static void ValidateShapeExtents(MeasureUnitTypeCode measureUnitTypeCode, params IExtent[] shapeExtents)
+    public static void ValidateShapeExtents(MeasureUnitTypeCode measureUnitTypeCode, string paramName, params IExtent[] shapeExtents)
     {
-        string name = nameof(shapeExtents);
         int count = shapeExtents?.Length ?? 0;
 
         switch (measureUnitTypeCode)
@@ -125,7 +124,7 @@ public static class SpreadMeasures
 
             if (item.DefaultQuantity <= 0)
             {
-                throw new ArgumentOutOfRangeException(name, quantity, null);
+                throw new ArgumentOutOfRangeException(paramName, quantity, null);
             }
         }
 
@@ -134,7 +133,7 @@ public static class SpreadMeasures
         {
             if (count < minValue || count > maxValue)
             {
-                throw new ArgumentOutOfRangeException(name, count, null);
+                throw new ArgumentOutOfRangeException(paramName, count, null);
             }
 
         }
