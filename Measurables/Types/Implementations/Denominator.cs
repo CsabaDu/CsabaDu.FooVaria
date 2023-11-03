@@ -135,11 +135,11 @@ internal sealed class Denominator : BaseMeasure, IDenominator
         return GetDefaultRateComponent();
     }
 
-    public override void Validate(IFooVariaObject? fooVariaObject)
+    public override void Validate(IFooVariaObject? fooVariaObject, string paramName)
     {
-        ValidateCommonBaseAction = () => ValidateBaseMeasure(this, fooVariaObject!);
+        ValidateCommonBaseAction = () => ValidateBaseMeasure(this, fooVariaObject!, paramName);
 
-        Validate(this, fooVariaObject);
+        Validate(this, fooVariaObject, paramName);
     }
     #endregion
     #endregion

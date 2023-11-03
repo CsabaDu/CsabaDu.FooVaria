@@ -2,6 +2,6 @@
 
 public interface IBaseShape : IBaseSpread, IFit<IBaseShape>
 {
-    void ValidateShapeExtent(IQuantifiable shapeExtent, string name);
+    void ValidateShapeExtent(IQuantifiable shapeExtent, string paramName);
 }
 

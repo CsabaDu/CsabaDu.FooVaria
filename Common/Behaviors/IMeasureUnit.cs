@@ -4,4 +4,11 @@
     {
         T GetMeasureUnit();
     }
+
+
+    public interface IDenominate : IMultiply<IBaseMeasurable, IQuantifiable>
+    {
+
+    }
+
 }

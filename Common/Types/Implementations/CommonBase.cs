@@ -38,28 +38,27 @@ public abstract class CommonBase : ICommonBase
         return Factory;
     }
 
-    public virtual void Validate(IFooVariaObject? fooVariaObject)
+    public virtual void Validate(IFooVariaObject? fooVariaObject, string paramName)
     {
-        ValidateCommonBaseAction = () => _ = GetValidCommonBase(this, fooVariaObject!);
+        ValidateCommonBaseAction = () => _ = GetValidCommonBase(this, fooVariaObject!, paramName);
 
-        Validate(this, fooVariaObject);
+        Validate(this, fooVariaObject, paramName);
     }
     #endregion
     #endregion
 
     #region Protected methods
-    protected void Validate<T>(T commonBase, IFooVariaObject? fooVariaObject) where T : class, ICommonBase
+    protected void Validate<T>(T commonBase, IFooVariaObject? fooVariaObject, string paramName) where T : class, ICommonBase
     {
-        _ = NullChecked(fooVariaObject, nameof(fooVariaObject));
+        _ = NullChecked(fooVariaObject, paramName);
 
         if (fooVariaObject is IFactory factory)
         {
-            validateFactory(commonBase, factory);
+            validateFactory();
         }
         else if (fooVariaObject is ICommonBase && ValidateCommonBaseAction != null)
         {
-            ValidateCommonBaseAction.Invoke();
-            ValidateCommonBaseAction = null;
+            validateCommonBase();
         }
         else
         {
@@ -67,17 +66,23 @@ public abstract class CommonBase : ICommonBase
         }
 
         #region Local methods
-        static void validateFactory(T commonBase, IFactory factory)
+        void validateFactory()
         {
-            ValidateInterfaces(commonBase.Factory, factory, nameof(factory));
+            ValidateInterfaces(commonBase.Factory, factory, paramName);
+        }
+
+        void validateCommonBase()
+        {
+            ValidateCommonBaseAction.Invoke();
+            ValidateCommonBaseAction = null;
         }
         #endregion
     }
 
     #region Static methods
-    protected static T GetValidCommonBase<T>(T commonBase, IFooVariaObject other) where T : class, ICommonBase
+    protected static T GetValidCommonBase<T>(T commonBase, IFooVariaObject other, string paramName) where T : class, ICommonBase
     {
-        ValidateInterfaces(commonBase, other, nameof(other));
+        ValidateInterfaces(commonBase, other, paramName);
 
         return (T)other!;
     }
@@ -86,7 +91,7 @@ public abstract class CommonBase : ICommonBase
 
     #region Private methods
     #region Static methods
-    private static void ValidateInterfaces(IFooVariaObject fooVariaObject, IFooVariaObject other, string name)
+    private static void ValidateInterfaces(IFooVariaObject fooVariaObject, IFooVariaObject other, string paramName)
     {
         Type type = fooVariaObject.GetType();
         IEnumerable<Type> interfaces = type.GetInterfaces();
@@ -96,7 +101,7 @@ public abstract class CommonBase : ICommonBase
         {
             if (!otherType.GetInterfaces().Contains(item))
             {
-                throw ArgumentTypeOutOfRangeException(name, other);
+                throw ArgumentTypeOutOfRangeException(paramName, other);
             }
         }
     }

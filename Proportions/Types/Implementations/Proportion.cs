@@ -80,6 +80,23 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
 
             throw QuantityArgumentOutOfRangeException(paramName, quantity);
         }
+
+        public override sealed IMeasure Multiply(IBaseMeasurable multiplier)
+        {
+            MeasureUnitTypeCode measureUnitTypeCode = NullChecked(multiplier, nameof(multiplier)).MeasureUnitTypeCode;
+
+            ValidateMeasureUnitTypeCode(measureUnitTypeCode, nameof(multiplier));
+
+            if (multiplier is not IMeasure measure)
+            {
+                throw ArgumentTypeOutOfRangeException(nameof(multiplier), multiplier);
+            }
+
+            decimal quantity = measure.DefaultQuantity * DefaultQuantity;
+            Enum measureUnit = MeasureUnitTypes.GetDefaultMeasureUnit(NumeratorMeasureUnitTypeCode);
+
+            return measure.GetMeasure(quantity, measureUnit);
+        }
         #endregion
         #endregion
         #endregion

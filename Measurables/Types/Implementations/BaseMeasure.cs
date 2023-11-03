@@ -110,7 +110,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     {
         TypeCode quantityTypeCode = Type.GetTypeCode(quantity?.GetType());
 
-        return GetValidQuantityTypeCode(quantityTypeCode);
+        return GetValidQuantityTypeCodeOrNull(quantityTypeCode);
     }
 
     public IBaseMeasure? GetRateComponent(IRate rate, RateComponentCode rateComponentCode)
@@ -215,7 +215,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     public void ValidateQuantityTypeCode(TypeCode quantityTypeCode)
     {
-        if (GetValidQuantityTypeCode(quantityTypeCode) != null) return;
+        if (GetValidQuantityTypeCodeOrNull(quantityTypeCode) != null) return;
 
         throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
     }
@@ -226,18 +226,21 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return (IBaseMeasureFactory)Factory;
     }
 
-    public override void Validate(IFooVariaObject? fooVariaObject)
+    public override void Validate(IFooVariaObject? fooVariaObject, string paramName)
     {
-        ValidateCommonBaseAction = () => validateBaseMeasure(this, fooVariaObject!);
+        ValidateCommonBaseAction = () => validateBaseMeasure(this, fooVariaObject!, paramName);
 
-        Validate(this, fooVariaObject);
+        Validate(this, fooVariaObject, paramName);
 
         #region Local methods
-        static void validateBaseMeasure<T>(T commonBase, IFooVariaObject other) where T : class, IBaseMeasure
+        static void validateBaseMeasure<T>(T commonBase, IFooVariaObject other, string paramName) where T : class, IBaseMeasure
         {
-            T baseMeasure = GetValidBaseMeasurable(commonBase, other);
+            T baseMeasure = GetValidBaseMeasurable(commonBase, other, paramName);
+            object quantity = baseMeasure.Quantity;
 
-            _ = GetValidQuantity(commonBase, baseMeasure.Quantity);
+            if (GetValidQuantityOrNull(commonBase, baseMeasure.Quantity) != null) return;
+
+            throw QuantityArgumentOutOfRangeException(paramName, (ValueType)quantity);
         }
         #endregion
     }
@@ -252,11 +255,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     {
         return HashCode.Combine(DefaultQuantity, MeasureUnitTypeCode);
     }
-
-    //public override sealed Enum GetMeasureUnit()
-    //{
-    //    return Measurement.GetMeasureUnit();
-    //}
 
     public override sealed void ValidateMeasureUnit(Enum measureUnit, string paramName)
     {
@@ -289,11 +287,11 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     {
         _ = NullChecked(quantity, nameof(quantity));
 
-        return GetValidQuantity(this, quantity) ?? throw QuantityArgumentOutOfRangeException(quantity);
+        return GetValidQuantityOrNull(this, quantity) ?? throw QuantityArgumentOutOfRangeException(quantity);
     }
 
     #region Static methods
-    protected static object? GetValidQuantity(IBaseMeasure baseMeasure, object? quantity)
+    protected static object? GetValidQuantityOrNull(IBaseMeasure baseMeasure, object? quantity)
     {
         quantity = ((ValueType?)quantity)?.ToQuantity(baseMeasure.QuantityTypeCode);
 
@@ -316,20 +314,20 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         #endregion
     }
 
-    protected static void ValidateBaseMeasure<T>(T commonBase, IFooVariaObject other) where T : class, IBaseMeasure
+    protected static void ValidateBaseMeasure<T>(T commonBase, IFooVariaObject other, string paramName) where T : class, IBaseMeasure
     {
-        T baseMeasure = GetValidBaseMeasurable(commonBase, other);
+        T baseMeasure = GetValidBaseMeasurable(commonBase, other, paramName);
         RateComponentCode rateComponentCode = commonBase.GetRateComponentCode();
         RateComponentCode otherRateComponentCode = baseMeasure.GetRateComponentCode();
 
-        _ = GetValidBaseMeasurable(baseMeasure, rateComponentCode, otherRateComponentCode);
+        _ = GetValidBaseMeasurable(baseMeasure, rateComponentCode, otherRateComponentCode, paramName);
     }
     #endregion
     #endregion
 
     #region Private methods
     #region Static methods
-    private static TypeCode? GetValidQuantityTypeCode(TypeCode quantityTypeCode)
+    private static TypeCode? GetValidQuantityTypeCodeOrNull(TypeCode quantityTypeCode)
     {
         if (GetQuantityTypeCodes().Contains(quantityTypeCode)) return quantityTypeCode;
 

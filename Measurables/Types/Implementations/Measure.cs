@@ -9,7 +9,7 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
         {
         }
         #endregion
-    
+
         #region Public methods
         public IMeasure Add(IMeasure? other)
         {
@@ -169,11 +169,11 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
             return base.GetQuantityTypeCode();
         }
 
-        public override sealed void Validate(IFooVariaObject? fooVariaObject)
+        public override sealed void Validate(IFooVariaObject? fooVariaObject, string paramName)
         {
-            ValidateCommonBaseAction = () => ValidateBaseMeasure(this, fooVariaObject!);
+            ValidateCommonBaseAction = () => ValidateBaseMeasure(this, fooVariaObject!, paramName);
 
-            Validate(this, fooVariaObject);
+            Validate(this, fooVariaObject, paramName);
         }
         #endregion
         #endregion
@@ -249,6 +249,11 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
             return (T)base.GetMeasure(other);
         }
 
+        public T GetMeasure(W measureUnit)
+        {
+            return (T)base.GetMeasure(measureUnit);
+        }
+
         public W GetMeasureUnit()
         {
             return (W)Measurement.MeasureUnit;
@@ -268,28 +273,15 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
             #region Local methods
             U getValidQuantity()
             {
-                try
-                {
-                    (this as IBaseMeasurable).Validate(baseMeasure);
-                }
-                catch (ArgumentNullException)
-                {
-                    throw new ArgumentNullException(nameof(baseMeasure));
-                }
-                catch (InvalidEnumArgumentException)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(baseMeasure), baseMeasure.MeasureUnitTypeCode, null);
-                }
-                catch (Exception ex)
-                {
-                    throw new InvalidOperationException(ex.Message, ex.InnerException);
-                }
+                string paramName = nameof(baseMeasure);
 
-                object? quantity = GetValidQuantity(this, baseMeasure.Quantity);
+                (this as IBaseMeasurable).Validate(baseMeasure, paramName);
+
+                object? quantity = GetValidQuantityOrNull(this, baseMeasure.Quantity);
 
                 if (quantity != null) return (U)quantity;
-                
-                throw QuantityArgumentOutOfRangeException(nameof(baseMeasure), baseMeasure.GetDecimalQuantity());
+
+                throw QuantityArgumentOutOfRangeException(paramName, baseMeasure.GetDecimalQuantity());
             }
             #endregion
         }

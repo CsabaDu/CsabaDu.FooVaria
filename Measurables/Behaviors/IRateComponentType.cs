@@ -8,4 +8,9 @@
     {
         T? GetRateComponent(IRate rate, RateComponentCode rateComponentCode);
     }
+
+    //public interface IDenominate : IMultiply<IMeasure, IMeasure>
+    //{
+
+    //}
 }

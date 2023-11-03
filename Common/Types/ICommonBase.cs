@@ -6,6 +6,6 @@ public interface ICommonBase : IFooVariaObject
 
     IFactory GetFactory();
 
-    void Validate(IFooVariaObject? fooVariaObject);
+    void Validate(IFooVariaObject? fooVariaObject, string paramName);
 }
 

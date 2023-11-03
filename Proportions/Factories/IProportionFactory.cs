@@ -6,6 +6,7 @@
         IProportion Create(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
         IProportion Create(IBaseMeasure numerator, IMeasurement denominatorMeasurement);
         IProportion Create(Enum numeratorMeasureUnit, decimal quantity, Enum denominatorMeasureUnit);
+
         //IProportion Create(IMeasure numerator, Enum denominatorMeasureUnit);
     }
 

@@ -137,7 +137,7 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
 
         public override sealed T GetSpread(params IExtent[] shapeExtents)
         {
-            return GetFactory().Create(shapeExtents);
+            return (T)GetFactory().Create(shapeExtents);
         }
 
         public override sealed T GetSpread(ISpreadMeasure spreadMeasure)

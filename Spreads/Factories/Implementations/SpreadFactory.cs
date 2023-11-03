@@ -14,6 +14,7 @@ namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
         #region Public methods
         #region Abstract methods
         public abstract IBaseSpread Create(ISpreadMeasure spreadMeasure);
+        public abstract ISpread Create(params IExtent[] shapeExtents);
         public abstract IBaseMeasurableFactory GetMeasureFactory();
         #endregion
         #endregion
@@ -52,7 +53,6 @@ namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
         #region Abstract methods
         public abstract T Create(U spreadMeasure);
         public abstract T Create(T other);
-        public abstract T Create(params IExtent[] shapeExtents);
         #endregion
         #endregion
     }

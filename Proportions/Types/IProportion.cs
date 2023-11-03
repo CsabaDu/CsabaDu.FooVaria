@@ -1,6 +1,8 @@
-﻿namespace CsabaDu.FooVaria.Proportions.Types
+﻿using CsabaDu.FooVaria.Measurables.Behaviors;
+
+namespace CsabaDu.FooVaria.Proportions.Types
 {
-    public interface IProportion : IBaseRate
+    public interface IProportion : IBaseRate, IDenominate
     {
         MeasureUnitTypeCode NumeratorMeasureUnitTypeCode { get; init; }
 

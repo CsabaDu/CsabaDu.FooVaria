@@ -126,6 +126,19 @@ internal abstract class Rate : Measurable, IRate
         return BaseRate.AreExchangeables(this, baseMeasurable);
     }
 
+    public IQuantifiable Multiply(IBaseMeasurable multiplier)
+    {
+        MeasureUnitTypeCode measureUnitTypeCode = NullChecked(multiplier, nameof(multiplier)).MeasureUnitTypeCode;
+
+        ValidateMeasureUnitTypeCode(measureUnitTypeCode, nameof(multiplier));
+
+        if (multiplier is IMeasure measure) return Numerator.Multiply(measure.DefaultQuantity);
+
+        if (multiplier is IMeasurement measurement) return Numerator.ExchangeTo(measurement.GetMeasureUnit())!;
+
+        throw ArgumentTypeOutOfRangeException(nameof(multiplier), multiplier);
+    }
+
     public decimal ProportionalTo(IBaseRate other)
     {
         return BaseRate.Proportionals(this, other);
@@ -161,20 +174,6 @@ internal abstract class Rate : Measurable, IRate
         return (IRateFactory)Factory;
     }
 
-    public override sealed void Validate(IFooVariaObject? fooVariaObject)
-    {
-        (this as IBaseRate).Validate(fooVariaObject);
-
-        if (fooVariaObject is ILimitedRate limitedRate)
-        {
-            GetLimit()?.Validate(limitedRate.Limit);
-        }
-        else
-        {
-            throw ArgumentTypeOutOfRangeException(nameof(fooVariaObject), fooVariaObject!);
-        }
-    }
-
     #region Sealed methods
     public override sealed bool Equals(object? obj)
     {
@@ -199,6 +198,20 @@ internal abstract class Rate : Measurable, IRate
     public override sealed TypeCode GetQuantityTypeCode()
     {
         return Numerator.GetQuantityTypeCode();
+    }
+
+    public override sealed void Validate(IFooVariaObject? fooVariaObject, string paramName)
+    {
+        (this as IBaseRate).Validate(fooVariaObject, paramName);
+
+        if (fooVariaObject is ILimitedRate limitedRate)
+        {
+            GetLimit()?.Validate(limitedRate.Limit, paramName);
+        }
+        else
+        {
+            throw ArgumentTypeOutOfRangeException(paramName, fooVariaObject!);
+        }
     }
 
     public override sealed void ValidateMeasureUnit(Enum measureUnit, string paramName)
@@ -243,13 +256,13 @@ internal abstract class Rate : Measurable, IRate
 
     #region Protected methods
     #region Static methods
-    protected static T GetValidRate<T>(T commonBase, IFooVariaObject other) where T : class, IRate
+    protected static T GetValidRate<T>(T commonBase, IFooVariaObject other, string paramName) where T : class, IRate
     {
-        T rate = GetValidBaseMeasurable(commonBase, other);
+        T rate = GetValidBaseMeasurable(commonBase, other, paramName);
         MeasureUnitTypeCode measureUnitTypeCode = commonBase.Numerator.MeasureUnitTypeCode;
         MeasureUnitTypeCode otherMeasureUnitTypeCode = rate.Numerator.MeasureUnitTypeCode;
 
-        return GetValidBaseMeasurable(rate, measureUnitTypeCode, otherMeasureUnitTypeCode);
+        return GetValidBaseMeasurable(rate, measureUnitTypeCode, otherMeasureUnitTypeCode, paramName);
     }
     #endregion
     #endregion

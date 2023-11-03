@@ -88,11 +88,11 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
     }
 
 
-    public override void Validate(IFooVariaObject? fooVariaObject)
+    public override void Validate(IFooVariaObject? fooVariaObject, string paramName)
     {
-        ValidateCommonBaseAction = () => _ = GetValidBaseRate(this, fooVariaObject!);
+        ValidateCommonBaseAction = () => _ = GetValidBaseRate(this, fooVariaObject!, paramName);
 
-        Validate(this, fooVariaObject);
+        Validate(this, fooVariaObject, paramName);
     }
 
     public override void ValidateMeasureUnit(Enum measureUnit, string paramName)
@@ -111,6 +111,7 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
     public abstract IBaseRate GetBaseRate(IQuantifiable numerator, IBaseMeasurable denominator);
     public abstract IBaseRate GetBaseRate(IQuantifiable numerator, Enum denominatorMeasureUnit);
     public abstract MeasureUnitTypeCode GetNumeratorMeasureUnitTypeCode();
+    public abstract IQuantifiable Multiply(IBaseMeasurable multiplier);
     public abstract void ValidateQuantity(ValueType? quantity, string paramName);
     #endregion
 
@@ -181,20 +182,20 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
     }
     #endregion
 
-    protected static T GetValidBaseRate<T>(T commonBase, IFooVariaObject other) where T : class, IBaseRate // TODO 
+    protected static T GetValidBaseRate<T>(T commonBase, IFooVariaObject other, string paramName) where T : class, IBaseRate // TODO 
     {
-        T baseMeasurable = GetValidCommonBase(commonBase, other);
+        T baseMeasurable = GetValidCommonBase(commonBase, other, paramName);
 
-        commonBase.ValidateQuantity(baseMeasurable.DefaultQuantity, nameof(commonBase));
+        commonBase.ValidateQuantity(baseMeasurable.DefaultQuantity, paramName);
 
         MeasureUnitTypeCode measureUnitTypeCode = commonBase.MeasureUnitTypeCode;
         MeasureUnitTypeCode otherMeasureUnitTypeCode = baseMeasurable.MeasureUnitTypeCode;
 
-        _ = GetValidBaseMeasurable(baseMeasurable, measureUnitTypeCode, otherMeasureUnitTypeCode);
+        _ = GetValidBaseMeasurable(baseMeasurable, measureUnitTypeCode, otherMeasureUnitTypeCode, paramName);
 
         measureUnitTypeCode = commonBase.GetNumeratorMeasureUnitTypeCode();
         otherMeasureUnitTypeCode = baseMeasurable.GetNumeratorMeasureUnitTypeCode();
 
-        return GetValidBaseMeasurable(baseMeasurable, measureUnitTypeCode, otherMeasureUnitTypeCode);
+        return GetValidBaseMeasurable(baseMeasurable, measureUnitTypeCode, otherMeasureUnitTypeCode, paramName);
     }
 }

@@ -7,7 +7,7 @@
         IMeasure GetMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName);
         IMeasure GetMeasure(ValueType quantity, string customName, decimal exchangeRate);
         IMeasure GetMeasure(ValueType quantity);
-        IMeasure GetMeasure(Enum measureUnit);
+        //IMeasure GetMeasure(Enum measureUnit);
         IMeasure GetMeasure(ValueType quantity, IMeasurement measurement);
         IMeasure GetMeasure(IBaseMeasure baseMeasure);
         IMeasure GetMeasure(IMeasure other);
@@ -21,5 +21,6 @@
         T GetMeasure(U quantity);
         T GetMeasure(U quantity, IMeasurement measurement);
         T GetMeasure(T other);
+        T GetMeasure(W measureUnit);
     }
 }

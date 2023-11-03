@@ -117,7 +117,6 @@ public abstract class BaseSpread : BaseMeasurable, IBaseSpread
     {
         yield return MeasureUnitTypeCode.AreaUnit;
         yield return MeasureUnitTypeCode.VolumeUnit;
-
     }
     #endregion
 

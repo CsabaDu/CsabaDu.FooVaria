@@ -67,11 +67,11 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
         return HashCode.Combine(typeof(IBaseMeasurable), MeasureUnitTypeCode);
     }
 
-    public override void Validate(IFooVariaObject? fooVariaObject)
+    public override void Validate(IFooVariaObject? fooVariaObject, string paramName)
     {
-        ValidateCommonBaseAction = () => _ = GetValidBaseMeasurable(this, fooVariaObject!);
+        ValidateCommonBaseAction = () => _ = GetValidBaseMeasurable(this, fooVariaObject!, paramName);
 
-        Validate(this, fooVariaObject);
+        Validate(this, fooVariaObject, paramName);
     }
     #endregion
 
@@ -100,20 +100,20 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
 
     #region Protected methods
     #region Static methods
-    protected static T GetValidBaseMeasurable<T>(T commonBase, IFooVariaObject other) where T : class, IBaseMeasurable
+    protected static T GetValidBaseMeasurable<T>(T commonBase, IFooVariaObject other, string paramName) where T : class, IBaseMeasurable
     {
-        T baseMeasurable = GetValidCommonBase(commonBase, other);
+        T baseMeasurable = GetValidCommonBase(commonBase, other, paramName);
         MeasureUnitTypeCode measureUnitTypeCode = commonBase.MeasureUnitTypeCode;
         MeasureUnitTypeCode otherMeasureUnitTypeCode = baseMeasurable.MeasureUnitTypeCode;
 
-        return GetValidBaseMeasurable(baseMeasurable, measureUnitTypeCode, otherMeasureUnitTypeCode);
+        return GetValidBaseMeasurable(baseMeasurable, measureUnitTypeCode, otherMeasureUnitTypeCode, paramName);
     }
 
-    protected static T GetValidBaseMeasurable<T, U>(T other, U commonBaseProperty, U otherProperty) where T : class, IBaseMeasurable where U : struct, Enum
+    protected static T GetValidBaseMeasurable<T, U>(T other, U commonBaseProperty, U otherProperty, string paramName) where T : class, IBaseMeasurable where U : struct, Enum
     {
         if (commonBaseProperty.Equals(otherProperty)) return other;
 
-        throw new ArgumentOutOfRangeException(nameof(other), otherProperty, null);
+        throw new ArgumentOutOfRangeException(paramName, otherProperty, null);
     }
 
     public bool IsExchangeableTo(MeasureUnitTypeCode measureUnitTypeCode)

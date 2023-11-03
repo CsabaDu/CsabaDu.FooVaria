@@ -90,17 +90,17 @@ internal sealed class FlatRate : Rate, IFlatRate
         return GetFlatRate(Numerator.Multiply(multiplier));
     }
 
-    public IMeasure Multiply(IMeasure multiplier)
-    {
-        if (NullChecked(multiplier, nameof(multiplier)).IsExchangeableTo(MeasureUnitTypeCode))
-        {
-            decimal quantity = Numerator.GetDecimalQuantity() / Denominator.DefaultQuantity * multiplier.DefaultQuantity;
+    //public IMeasure Multiply(IMeasure multiplier)
+    //{
+    //    if (NullChecked(multiplier, nameof(multiplier)).IsExchangeableTo(MeasureUnitTypeCode))
+    //    {
+    //        decimal quantity = Numerator.GetDecimalQuantity() / Denominator.DefaultQuantity * multiplier.DefaultQuantity;
 
-            return multiplier.GetMeasure(quantity, Numerator.Measurement);
-        }
+    //        return multiplier.GetMeasure(quantity, Numerator.Measurement);
+    //    }
 
-        throw new ArgumentOutOfRangeException(nameof(multiplier), multiplier.MeasureUnitTypeCode, null);
-    }
+    //    throw new ArgumentOutOfRangeException(nameof(multiplier), multiplier.MeasureUnitTypeCode, null);
+    //}
 
     public IFlatRate Subtract(IFlatRate? other)
     {
