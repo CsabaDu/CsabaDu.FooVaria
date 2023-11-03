@@ -2,5 +2,6 @@
 
 public interface IDiagonal
 {
-    IExtent GetDiagonal(ExtentUnit extentUnit = default);
+    IExtent GetDiagonal();
+    IExtent GetDiagonal(ExtentUnit extentUnit);
 }

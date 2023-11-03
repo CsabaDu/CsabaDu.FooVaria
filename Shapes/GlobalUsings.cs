@@ -13,3 +13,4 @@ global using CsabaDu.FooVaria.Spreads.Statics;
 global using static CsabaDu.FooVaria.Common.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.Measurables.Statics.Extensions;
 global using static CsabaDu.FooVaria.Shapes.Statics.ExceptionMethods;
+global using static CsabaDu.FooVaria.Common.Statics.Extensions;

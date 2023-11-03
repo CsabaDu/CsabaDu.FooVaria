@@ -2,6 +2,6 @@
 {
     public interface IPlaneShape : IShape, ISurface
     {
-        IArea Area { get; }
+        IArea Area { get; init; }
     }
 }

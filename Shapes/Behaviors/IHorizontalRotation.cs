@@ -4,7 +4,7 @@ namespace CsabaDu.FooVaria.Shapes.Behaviors
 {
     public interface IHorizontalRotation
     {
-        IExtent GetComparedShapeExtent(ComparisonCode? comparisonCode);
+        IExtent GetComparedShapeExtent(ComparisonCode comparisonCode);
     }
 
     public interface IHorizontalRotation<T> : IHorizontalRotation where T : class, IShape, IRectangularShape

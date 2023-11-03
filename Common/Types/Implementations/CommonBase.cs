@@ -1,6 +1,4 @@
-﻿using System.Security.AccessControl;
-
-namespace CsabaDu.FooVaria.Common.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Common.Types.Implementations;
 
 public abstract class CommonBase : ICommonBase
 {

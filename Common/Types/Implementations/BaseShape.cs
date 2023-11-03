@@ -33,9 +33,6 @@
             return (IBaseShapeFactory)Factory;
         }
 
-        public abstract void ValidateShapeExtent(IQuantifiable shapeExtent, string 
-            
-            
-            paramName);
+        public abstract void ValidateShapeExtent(IQuantifiable shapeExtent, string paramName);
     }
 }

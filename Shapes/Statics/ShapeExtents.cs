@@ -1,11 +1,7 @@
-﻿using CsabaDu.FooVaria.Common.Enums;
-using CsabaDu.FooVaria.Common.Statics;
-using CsabaDu.FooVaria.Measurables.Statics;
-using CsabaDu.FooVaria.Shapes.Behaviors;
+﻿using CsabaDu.FooVaria.Measurables.Statics;
+using CsabaDu.FooVaria.Measurables.Types;
 using CsabaDu.FooVaria.Shapes.Types;
 using CsabaDu.FooVaria.Shapes.Types.Implementations;
-using System.ComponentModel;
-using System.Drawing;
 using Rectangle = CsabaDu.FooVaria.Shapes.Types.Implementations.Rectangle;
 
 namespace CsabaDu.FooVaria.Shapes.Statics
@@ -21,6 +17,7 @@ namespace CsabaDu.FooVaria.Shapes.Statics
             return shape switch
             {
                 Rectangle rectangle => GetRectangleDiagonal(rectangle, extentUnit),
+                Circle circle => GetCircleDiagonal(circle, extentUnit),
 
                 _ => throw new InvalidOperationException(null)
             };
@@ -31,26 +28,40 @@ namespace CsabaDu.FooVaria.Shapes.Statics
         private static IExtent GetRectangleDiagonal(IRectangle rectangle, ExtentUnit extentUnit = default)
         {
             IExtent length = rectangle.Length;
-
-            length.ValidateMeasureUnit(extentUnit, nameof(extentUnit));
-
-            decimal lengthQuantity = length.DefaultQuantity;
-            lengthQuantity *= lengthQuantity;
-            decimal widthQuantity = rectangle.Width.DefaultQuantity;
-            widthQuantity *= widthQuantity;
-            double diagonalQuantity = Math.Sqrt(Convert.ToDouble(lengthQuantity + widthQuantity));
-            diagonalQuantity /= Convert.ToDouble(MeasureUnits.GetExchangeRate(extentUnit)); 
+            decimal quantity = square(length.DefaultQuantity);
+            quantity += square(rectangle.Width.DefaultQuantity);
+            double diagonalQuantity = Math.Sqrt(Convert.ToDouble(quantity));
+            diagonalQuantity = Exchange(diagonalQuantity, extentUnit);
 
             return length.GetMeasure(diagonalQuantity, extentUnit);
-        }
-    }
 
-    public static class ExceptionMethods
-    {
-        public static InvalidEnumArgumentException InvalidShapeExtentTypeCodeEnumArgumentException(ShapeExtentTypeCode shapeExtentTypeCode)
-        {
-            return new InvalidEnumArgumentException(nameof(shapeExtentTypeCode), (int)shapeExtentTypeCode, shapeExtentTypeCode.GetType());
+            #region Local methods
+            static decimal square(decimal quantity)
+            {
+                return quantity * quantity;
+            }
+            #endregion
         }
+
+        private static IExtent GetCircleDiagonal(ICircle circle, ExtentUnit extentUnit = default)
+        {
+            IMeasure radius = circle.Radius;
+            decimal diagonalQuantity = radius.DefaultQuantity * 2;
+            diagonalQuantity = Exchange(diagonalQuantity, extentUnit);
+
+            return (IExtent)radius.GetMeasure(diagonalQuantity, extentUnit);
+        }
+
+        private static decimal Exchange(decimal quantity, Enum measureUnit)
+        {
+            return quantity / MeasureUnits.GetExchangeRate(measureUnit);
+        }
+
+        private static double Exchange(double quantity, Enum measureUnit)
+        {
+            return quantity / Convert.ToDouble(MeasureUnits.GetExchangeRate(measureUnit));
+        }
+
     }
 
 }

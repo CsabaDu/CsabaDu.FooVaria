@@ -202,12 +202,18 @@ internal abstract class Rate : Measurable, IRate
 
     public override sealed void Validate(IFooVariaObject? fooVariaObject, string paramName)
     {
-        (this as IBaseRate).Validate(fooVariaObject, paramName);
+        base.Validate(fooVariaObject, paramName);
 
-        if (fooVariaObject is ILimitedRate limitedRate)
+        if (fooVariaObject is IRate rate)
         {
-            GetLimit()?.Validate(limitedRate.Limit, paramName);
+            Numerator.Validate(rate.Numerator, paramName);
+
+            if (fooVariaObject is ILimitedRate limitedRate)
+            {
+                GetLimit()?.Validate(limitedRate.Limit, paramName);
+            }
         }
+
         else
         {
             throw ArgumentTypeOutOfRangeException(paramName, fooVariaObject!);

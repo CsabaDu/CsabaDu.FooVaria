@@ -2,9 +2,14 @@
 
 namespace CsabaDu.FooVaria.Shapes.Behaviors
 {
-    public interface ITangentShape : IDimensions, IBaseShape
+    public interface ITangentShape : IBaseShape
     {
-        ITangentShape GetOuterTangentShape();
-        ITangentShape GetInnerTangentShape();
+        IShape GetTangentShape(SideCode sideCode);
+    }
+
+    public interface ITangentShape<T> : IShape where T : class, IShape, ITangentShape
+    {
+        T GetOuterTangentShape();
+        T GetInnerTangentShape();
     }
 }

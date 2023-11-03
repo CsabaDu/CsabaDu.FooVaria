@@ -25,6 +25,16 @@ public static class ExceptionMethods
         return new InvalidEnumArgumentException(paramName, (int)measureUnitTypeCode, measureUnitTypeCode.GetType());
     }
 
+    public static InvalidEnumArgumentException InvalidSideCodeEnumArgumentException(SideCode sideCode)
+    {
+        return InvalidSideCodeEnumArgumentException(sideCode, nameof(sideCode));
+    }
+
+    public static InvalidEnumArgumentException InvalidSideCodeEnumArgumentException(SideCode sideCode, string paramName)
+    {
+        return new InvalidEnumArgumentException(paramName, (int)sideCode, sideCode.GetType());
+    }
+
     public static InvalidEnumArgumentException InvalidQuantityTypeCodeEnumArgumentException(TypeCode quantityTypeCode)
     {
         return InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode, nameof(quantityTypeCode));
