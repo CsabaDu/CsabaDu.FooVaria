@@ -8,9 +8,10 @@ namespace CsabaDu.FooVaria.Shapes.Types
         IExtent Height { get; init; }
 
         IDryBody GetDryBody(IPlaneShape baseFace, IExtent height);
+        IPlaneShapeFactory GetBaseFaceFactory();
     }
 
-    public interface IDryBody<T, U> : IDryBody where T : class, IShape, ITangentShape where U : IShape, ITangentShape
+    public interface IDryBody<out T, U> : IDryBody where T : class, IDryBody, ITangentShape where U : IPlaneShape, ITangentShape
     {
         U BaseFace { get; init; }
 

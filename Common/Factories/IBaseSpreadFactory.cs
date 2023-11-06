@@ -3,5 +3,4 @@
 public interface IBaseSpreadFactory : IBaseMeasurableFactory
 {
     IBaseSpread Create(ISpreadMeasure spreadMeasure);
-    IBaseMeasurableFactory GetMeasureFactory();
 }

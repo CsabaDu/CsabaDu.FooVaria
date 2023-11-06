@@ -4,11 +4,11 @@ namespace CsabaDu.FooVaria.Spreads.Statics;
 
 public static class SpreadMeasures
 {
-    #region Private constants
-    private const int CircleShapeExtentCount = 1;
-    private const int RectangleShapeExtentCount = 2;
-    private const int CylinderShapeExtentCount = 2;
-    private const int CuboidShapeExtentCount = 3;
+    #region Public constants
+    public const int CircleShapeExtentCount = 1;
+    public const int RectangleShapeExtentCount = 2;
+    public const int CylinderShapeExtentCount = 2;
+    public const int CuboidShapeExtentCount = 3;
     #endregion
 
     #region Public methods
@@ -74,18 +74,29 @@ public static class SpreadMeasures
 
     public static IMeasure GetValidSpreadMeasure(ISpreadMeasure? spreadMeasure)
     {
-        string name = nameof(spreadMeasure);
+        string paramName = nameof(spreadMeasure);
+        spreadMeasure = NullChecked(spreadMeasure, nameof(spreadMeasure)).GetSpreadMeasure();
 
-        if (NullChecked(spreadMeasure, nameof(spreadMeasure)).GetSpreadMeasure() is not IMeasure measure)
-        {
-            throw ArgumentTypeOutOfRangeException(name, spreadMeasure!);
-        }
+        if (spreadMeasure is not IMeasure measure) throw ArgumentTypeOutOfRangeException(paramName, spreadMeasure!);
 
-        decimal quantity = measure.DefaultQuantity;
-
+        double quantity = (double)measure.Quantity;
+            
         if (quantity > 0) return measure;
 
-        throw new ArgumentOutOfRangeException(name, quantity, null);
+        throw QuantityArgumentOutOfRangeException(paramName, quantity);
+    }
+
+    public static IMeasure GetValidSpreadMeasure(MeasureUnitTypeCode measureUnitTypeCode, ISpreadMeasure? spreadMeasure)
+    {
+        string paramName = nameof(spreadMeasure);
+
+        MeasureUnitTypes.ValidateMeasureUnitTypeCode(measureUnitTypeCode, nameof(measureUnitTypeCode));
+
+        IMeasure measure = GetValidSpreadMeasure(spreadMeasure);
+
+        if (measure.IsExchangeableTo(measureUnitTypeCode)) return measure;
+        
+        throw ArgumentTypeOutOfRangeException(paramName, spreadMeasure!);
     }
 
     public static IVolume GetVolume(IMeasureFactory factory, params IExtent[] shapeExtents)

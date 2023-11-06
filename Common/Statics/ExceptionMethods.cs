@@ -64,6 +64,26 @@ public static class ExceptionMethods
     {
         return new InvalidEnumArgumentException(paramName, (int)limitMode, limitMode.GetType());
     }
+
+    public static InvalidEnumArgumentException InvalidComparisonCodeEnumArgumentException(ComparisonCode comparisonCode)
+    {
+        return InvalidComparisonCodeEnumArgumentException(comparisonCode, nameof(comparisonCode));
+    }
+
+    public static InvalidEnumArgumentException InvalidComparisonCodeEnumArgumentException(ComparisonCode comparisonCode, string paramName)
+    {
+        return new InvalidEnumArgumentException(paramName, (int)comparisonCode, comparisonCode.GetType());
+    }
+
+    public static InvalidEnumArgumentException InvalidSidenCodeEnumArgumentException(SideCode sideCode)
+    {
+        return InvalidSidenCodeEnumArgumentException(sideCode, nameof(sideCode));
+    }
+
+    public static InvalidEnumArgumentException InvalidSidenCodeEnumArgumentException(SideCode sideCode, string paramName)
+    {
+        return new InvalidEnumArgumentException(paramName, (int)sideCode, sideCode.GetType());
+    }
     #endregion
 
     #region ArgumentOutOfRangeException

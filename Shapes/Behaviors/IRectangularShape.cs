@@ -6,7 +6,7 @@ namespace CsabaDu.FooVaria.Shapes.Behaviors
     {
     }
 
-    public interface IRectangularShape<T, U> : IRectangularShape, ITangentShape<U> where T : class, IShape, ITangentShape where U : class, IShape, ITangentShape
+    public interface IRectangularShape<out T, out U> : IRectangularShape, ITangentShape<U> where T : class, IShape, IRectangularShape where U : class, IShape, ICircularShape
     {
         U GetInnerTangentShape(ComparisonCode comparisonCode);
     }

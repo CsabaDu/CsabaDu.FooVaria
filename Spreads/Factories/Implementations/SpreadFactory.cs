@@ -7,15 +7,18 @@ namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
         #region Constructors
         public SpreadFactory(IMeasureFactory measureFactory)
         {
-            _ = NullChecked(measureFactory, nameof(measureFactory));
+            MeasureFactory = NullChecked(measureFactory, nameof(measureFactory));
         }
+        #endregion
+
+        #region Properties
+        public IMeasureFactory MeasureFactory { get; init; }
         #endregion
 
         #region Public methods
         #region Abstract methods
         public abstract IBaseSpread Create(ISpreadMeasure spreadMeasure);
         public abstract ISpread Create(params IExtent[] shapeExtents);
-        public abstract IBaseMeasurableFactory GetMeasureFactory();
         #endregion
         #endregion
     }
@@ -25,27 +28,17 @@ namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
         #region Constructors
         public SpreadFactory(IMeasureFactory measureFactory) : base(measureFactory)
         {
-            MeasureFactory = measureFactory;
         }
-        #endregion
-
-        #region Properties
-        public IMeasureFactory MeasureFactory { get; init; }
         #endregion
 
         #region Public methods
         #region Override methods
         #region Sealed methods
-        public override sealed IMeasureFactory GetMeasureFactory()
-        {
-            return MeasureFactory;
-        }
-
         public override sealed T Create(ISpreadMeasure spreadMeasure)
         {
             if (SpreadMeasures.GetValidSpreadMeasure(spreadMeasure) is U measure) return Create(measure);
 
-            throw new ArgumentOutOfRangeException(nameof(spreadMeasure), spreadMeasure.GetType(), null);
+            throw ArgumentTypeOutOfRangeException(nameof(spreadMeasure), spreadMeasure);
         }
         #endregion
         #endregion

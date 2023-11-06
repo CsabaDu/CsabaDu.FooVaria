@@ -52,29 +52,18 @@ public abstract class CommonBase : ICommonBase
 
         if (fooVariaObject is IFactory factory)
         {
-            validateFactory();
+            ValidateInterfaces(commonBase.Factory, factory, paramName);
         }
         else if (fooVariaObject is ICommonBase && ValidateCommonBaseAction != null)
         {
-            validateCommonBase();
+            ValidateCommonBaseAction();
+
+            ValidateCommonBaseAction = null;
         }
         else
         {
             throw new InvalidOperationException(null!);
         }
-
-        #region Local methods
-        void validateFactory()
-        {
-            ValidateInterfaces(commonBase.Factory, factory, paramName);
-        }
-
-        void validateCommonBase()
-        {
-            ValidateCommonBaseAction.Invoke();
-            ValidateCommonBaseAction = null;
-        }
-        #endregion
     }
 
     #region Static methods

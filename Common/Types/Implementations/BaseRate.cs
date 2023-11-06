@@ -88,19 +88,33 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
     }
 
 
-    public override void Validate(IFooVariaObject? fooVariaObject, string paramName)
+    public override sealed void Validate(IFooVariaObject? fooVariaObject, string paramName)
     {
-        ValidateCommonBaseAction = () => _ = GetValidBaseRate(this, fooVariaObject!, paramName);
+        ValidateCommonBaseAction = () => validateBaseRate(this, fooVariaObject!, paramName);
 
         Validate(this, fooVariaObject, paramName);
+
+        #region Local methods
+        static void validateBaseRate<T>(T commonBase, IFooVariaObject other, string paramName) where T : class, IBaseRate
+        {
+            T baseRate = GetValidBaseMeasurable(commonBase, other, paramName);
+
+            commonBase.ValidateQuantity(baseRate.DefaultQuantity, paramName);
+
+            MeasureUnitTypeCode measureUnitTypeCode = commonBase.GetNumeratorMeasureUnitTypeCode();
+            MeasureUnitTypeCode otherMeasureUnitTypeCode = baseRate.GetNumeratorMeasureUnitTypeCode();
+
+            _ = GetValidBaseMeasurable(baseRate, measureUnitTypeCode, otherMeasureUnitTypeCode, paramName);
+        }
+        #endregion
     }
 
-    public override void ValidateMeasureUnit(Enum measureUnit, string paramName)
+    public override sealed void ValidateMeasureUnit(Enum measureUnit, string paramName)
     {
         base.ValidateMeasureUnit(measureUnit, paramName);
     }
 
-    public override void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, string paramName)
+    public override sealed void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, string paramName)
     {
         base.ValidateMeasureUnitTypeCode(measureUnitTypeCode, paramName);
     }
@@ -181,21 +195,4 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
         return GetFactory().Create(numerator, denominatorMeasureUnitTypeCode);
     }
     #endregion
-
-    protected static T GetValidBaseRate<T>(T commonBase, IFooVariaObject other, string paramName) where T : class, IBaseRate // TODO 
-    {
-        T baseMeasurable = GetValidCommonBase(commonBase, other, paramName);
-
-        commonBase.ValidateQuantity(baseMeasurable.DefaultQuantity, paramName);
-
-        MeasureUnitTypeCode measureUnitTypeCode = commonBase.MeasureUnitTypeCode;
-        MeasureUnitTypeCode otherMeasureUnitTypeCode = baseMeasurable.MeasureUnitTypeCode;
-
-        _ = GetValidBaseMeasurable(baseMeasurable, measureUnitTypeCode, otherMeasureUnitTypeCode, paramName);
-
-        measureUnitTypeCode = commonBase.GetNumeratorMeasureUnitTypeCode();
-        otherMeasureUnitTypeCode = baseMeasurable.GetNumeratorMeasureUnitTypeCode();
-
-        return GetValidBaseMeasurable(baseMeasurable, measureUnitTypeCode, otherMeasureUnitTypeCode, paramName);
-    }
 }

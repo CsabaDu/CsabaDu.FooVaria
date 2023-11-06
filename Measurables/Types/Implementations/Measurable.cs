@@ -59,10 +59,10 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
     }
 
     #region Sealed methods
-    public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
-    {
-        return MeasureUnitTypes.GetMeasureUnitTypeCodes();
-    }
+    //public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
+    //{
+    //    return MeasureUnitTypes.GetMeasureUnitTypeCodes();
+    //}
 
     //public override sealed bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
     //{

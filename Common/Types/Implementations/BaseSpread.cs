@@ -72,10 +72,20 @@ public abstract class BaseSpread : BaseMeasurable, IBaseSpread
     {
         if (context == null) return false;
 
-        if (context is MeasureUnitTypeCode) return base.IsExchangeableTo(MeasureUnitTypeCode)   ;
+        if (context is MeasureUnitTypeCode measureUnitTypeCode) return isExchangeableToMeasureUnitTypeCode();
 
-        return MeasureUnitTypes.IsDefinedMeasureUnit(context)
-            && MeasureUnitTypes.GetMeasureUnitTypeCode(context) == MeasureUnitTypeCode;
+        if (!MeasureUnitTypes.IsDefinedMeasureUnit(context)) return false;
+
+        measureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(context);
+
+        return isExchangeableToMeasureUnitTypeCode();
+
+        #region Local methods
+        bool isExchangeableToMeasureUnitTypeCode()
+        {
+            return base.IsExchangeableTo(measureUnitTypeCode);
+        }
+        #endregion
     }
 
     public decimal ProportionalTo(IBaseSpread other)

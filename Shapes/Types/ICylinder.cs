@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.Shapes.Types
 {
-    public interface ICylinder : IDryBody, ICircularShape, IProjection<ICircle>
+    public interface ICylinder : IDryBody<ICylinder, ICircle>, ICircularShape<ICylinder, ICuboid>/*, IProjection<ICircle>*/
     {
         IRectangle GetVerticalProjection();
     }

@@ -195,6 +195,18 @@ internal abstract class Rate : Measurable, IRate
         return HashCode.Combine(Numerator, Denominator);
     }
 
+    public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
+    {
+        yield return Numerator.MeasureUnitTypeCode;
+        yield return Denominator.MeasureUnitTypeCode;
+
+        ILimit? limit = GetLimit();
+
+        if (limit == null) yield break;
+
+        yield return limit.MeasureUnitTypeCode;
+    }
+
     public override sealed TypeCode GetQuantityTypeCode()
     {
         return Numerator.GetQuantityTypeCode();
@@ -202,22 +214,24 @@ internal abstract class Rate : Measurable, IRate
 
     public override sealed void Validate(IFooVariaObject? fooVariaObject, string paramName)
     {
-        base.Validate(fooVariaObject, paramName);
+        ValidateCommonBaseAction = () => validateRate();
 
-        if (fooVariaObject is IRate rate)
+        Validate(this, fooVariaObject, paramName);
+
+        #region Local methods
+        void validateRate()
         {
+            base.Validate(fooVariaObject, paramName);
+
+            if (fooVariaObject is not IRate rate) throw ArgumentTypeOutOfRangeException(paramName, fooVariaObject!);
+
             Numerator.Validate(rate.Numerator, paramName);
 
-            if (fooVariaObject is ILimitedRate limitedRate)
-            {
-                GetLimit()?.Validate(limitedRate.Limit, paramName);
-            }
-        }
+            if (fooVariaObject is not ILimitedRate limitedRate) return;
 
-        else
-        {
-            throw ArgumentTypeOutOfRangeException(paramName, fooVariaObject!);
+            GetLimit()?.Validate(limitedRate.Limit, paramName);
         }
+        #endregion
     }
 
     public override sealed void ValidateMeasureUnit(Enum measureUnit, string paramName)

@@ -314,6 +314,19 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
         {
             return (T)base.GetMeasure(quantity, customName, exchangeRate);
         }
+
+        protected void ValidateSpreadMeasure(string paramName, ISpreadMeasure? spreadMeasure)
+        {
+            MeasureUnitTypeCode measureUnitTypeCode = NullChecked(spreadMeasure, paramName).GetMeasureUnitTypeCode();
+
+            ValidateMeasureUnitTypeCode(measureUnitTypeCode, paramName);
+
+            decimal quantity = spreadMeasure!.DefaultQuantity;
+
+            if (quantity > 0) return;
+
+            throw QuantityArgumentOutOfRangeException(paramName, quantity);
+        }
         #endregion
     }
 }

@@ -20,12 +20,7 @@
 
         public override IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
         {
-            foreach (MeasureUnitTypeCode item in base.GetMeasureUnitTypeCodes())
-            {
-                yield return item;
-            }
-
-            yield return MeasureUnitTypeCode.ExtentUnit;
+            return base.GetMeasureUnitTypeCodes().Append(MeasureUnitTypeCode.ExtentUnit);
         }
 
         public override IBaseShapeFactory GetFactory()

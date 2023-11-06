@@ -135,6 +135,16 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
                 / GetExchangeRate(Defined(numeratorMeasureUnit, nameof(numeratorMeasureUnit)))
                 * GetExchangeRate(Defined(denominatorMeasureUnit, nameof(denominatorMeasureUnit)));
         }
+
+        #region Override methods
+        #region Sealed methods
+        public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
+        {
+            yield return MeasureUnitTypes.GetMeasureUnitTypeCode(typeof(U));
+            yield return MeasureUnitTypes.GetMeasureUnitTypeCode(typeof(W));
+        }
+        #endregion
+        #endregion
         #endregion
     }
 }

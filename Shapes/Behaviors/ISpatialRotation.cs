@@ -4,12 +4,12 @@ namespace CsabaDu.FooVaria.Shapes.Behaviors
 {
     public interface ISpatialRotation
     {
-        IRectangle GetComparedVerticalFace(ComparisonCode comparisonCode);
+        //IRectangle GetComparedVerticalFace(ComparisonCode comparisonCode);
     }
 
     public interface ISpatialRotation<T> : ISpatialRotation where T : class, IDryBody, IRectangularShape
     {
         T RotateSpatially();
-        T RotateSpatiallyWith(IDryBody other);
+        //T RotateSpatiallyWith(IDryBody other);
     }
 }

@@ -6,9 +6,8 @@ namespace CsabaDu.FooVaria.Shapes.Behaviors
     {
     }
 
-    public interface ICircularShape<T, U> : ICircularShape, ITangentShape<U> where T : class, IShape, ITangentShape where U : class, IShape, ITangentShape
+    public interface ICircularShape<out T, out U> : ICircularShape, ITangentShape<U> where T : class, IShape, ICircularShape where U : class, IShape, IRectangularShape
     {
         U GetInnerTangentShape(IExtent innerTangentRectangleSide);
     }
-
 }

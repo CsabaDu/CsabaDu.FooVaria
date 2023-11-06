@@ -2,5 +2,4 @@
 
 public interface IBaseShapeFactory : IBaseSpreadFactory
 {
-    IBaseSpreadFactory GetSpreadFactory();
 }

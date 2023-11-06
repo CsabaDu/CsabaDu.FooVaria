@@ -4,6 +4,6 @@ public interface IBaseSpread : IBaseMeasurable, ISpreadMeasure, IExchange<IBaseS
 {
     IBaseSpread GetBaseSpread(ISpreadMeasure spreadMeasure);
 
-    void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName);
+    //void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName);
 }
 
