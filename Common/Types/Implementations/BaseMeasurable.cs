@@ -67,11 +67,11 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
         return HashCode.Combine(typeof(IBaseMeasurable), MeasureUnitTypeCode);
     }
 
-    public override void Validate(IFooVariaObject? fooVariaObject, string paramName)
+    public override void Validate(IRootObject? rootObject, string paramName)
     {
-        ValidateCommonBaseAction = () => _ = GetValidBaseMeasurable(this, fooVariaObject!, paramName);
+        ValidateCommonBaseAction = () => _ = GetValidBaseMeasurable(this, rootObject!, paramName);
 
-        Validate(this, fooVariaObject, paramName);
+        Validate(this, rootObject, paramName);
     }
     #endregion
 
@@ -100,7 +100,7 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
 
     #region Protected methods
     #region Static methods
-    protected static T GetValidBaseMeasurable<T>(T commonBase, IFooVariaObject other, string paramName) where T : class, IBaseMeasurable
+    protected static T GetValidBaseMeasurable<T>(T commonBase, IRootObject other, string paramName) where T : class, IBaseMeasurable
     {
         T baseMeasurable = GetValidCommonBase(commonBase, other, paramName);
         MeasureUnitTypeCode measureUnitTypeCode = commonBase.MeasureUnitTypeCode;

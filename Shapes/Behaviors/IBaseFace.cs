@@ -7,6 +7,6 @@ namespace CsabaDu.FooVaria.Shapes.Behaviors
         IPlaneShape GetBaseFace();
         IPlaneShape GetBaseFace(ExtentUnit extentUnit);
 
-        void ValidateBaseFace(IPlaneShape planeShape);
+        void ValidateBaseFace(IPlaneShape planeShape, string paramName);
     }
 }

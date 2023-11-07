@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Shapes.Behaviors;
-
-namespace CsabaDu.FooVaria.Shapes.Types
+﻿namespace CsabaDu.FooVaria.Shapes.Types
 {
     public interface IDryBody : IBaseFace, IHeight, IShape, IBody, IProjection
     {

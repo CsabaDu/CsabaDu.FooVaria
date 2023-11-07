@@ -1,11 +1,11 @@
 ﻿namespace CsabaDu.FooVaria.Common.Types;
 
-public interface ICommonBase : IFooVariaObject
+public interface ICommonBase : IRootObject
 {
     IFactory Factory { get; init; }
 
     IFactory GetFactory();
 
-    void Validate(IFooVariaObject? fooVariaObject, string paramName);
+    void Validate(IRootObject? rootObject, string paramName);
 }
 

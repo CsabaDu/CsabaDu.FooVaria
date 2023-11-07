@@ -212,22 +212,22 @@ internal abstract class Rate : Measurable, IRate
         return Numerator.GetQuantityTypeCode();
     }
 
-    public override sealed void Validate(IFooVariaObject? fooVariaObject, string paramName)
+    public override sealed void Validate(IRootObject? rootObject, string paramName)
     {
         ValidateCommonBaseAction = () => validateRate();
 
-        Validate(this, fooVariaObject, paramName);
+        Validate(this, rootObject, paramName);
 
         #region Local methods
         void validateRate()
         {
-            base.Validate(fooVariaObject, paramName);
+            base.Validate(rootObject, paramName);
 
-            if (fooVariaObject is not IRate rate) throw ArgumentTypeOutOfRangeException(paramName, fooVariaObject!);
+            if (rootObject is not IRate rate) throw ArgumentTypeOutOfRangeException(paramName, rootObject!);
 
             Numerator.Validate(rate.Numerator, paramName);
 
-            if (fooVariaObject is not ILimitedRate limitedRate) return;
+            if (rootObject is not ILimitedRate limitedRate) return;
 
             GetLimit()?.Validate(limitedRate.Limit, paramName);
         }
@@ -276,7 +276,7 @@ internal abstract class Rate : Measurable, IRate
 
     #region Protected methods
     #region Static methods
-    protected static T GetValidRate<T>(T commonBase, IFooVariaObject other, string paramName) where T : class, IRate
+    protected static T GetValidRate<T>(T commonBase, IRootObject other, string paramName) where T : class, IRate
     {
         T rate = GetValidBaseMeasurable(commonBase, other, paramName);
         MeasureUnitTypeCode measureUnitTypeCode = commonBase.Numerator.MeasureUnitTypeCode;

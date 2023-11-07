@@ -88,14 +88,14 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
     }
 
 
-    public override sealed void Validate(IFooVariaObject? fooVariaObject, string paramName)
+    public override sealed void Validate(IRootObject? rootObject, string paramName)
     {
-        ValidateCommonBaseAction = () => validateBaseRate(this, fooVariaObject!, paramName);
+        ValidateCommonBaseAction = () => validateBaseRate(this, rootObject!, paramName);
 
-        Validate(this, fooVariaObject, paramName);
+        Validate(this, rootObject, paramName);
 
         #region Local methods
-        static void validateBaseRate<T>(T commonBase, IFooVariaObject other, string paramName) where T : class, IBaseRate
+        static void validateBaseRate<T>(T commonBase, IRootObject other, string paramName) where T : class, IBaseRate
         {
             T baseRate = GetValidBaseMeasurable(commonBase, other, paramName);
 

@@ -25,12 +25,32 @@ namespace CsabaDu.FooVaria.Shapes.Statics
             throw new NotImplementedException();
         }
 
+        public static IExtent GetInnerTangentRectangleSide(ICircle circle, IExtent innerTangentRectangleSide
+            
+            )
+        {
+            string paramName = nameof(innerTangentRectangleSide);
+            decimal sideQuantity = innerTangentRectangleSide.DefaultQuantity;
+
+            circle.ValidateShapeExtent(innerTangentRectangleSide, paramName);
+
+            if (innerTangentRectangleSide.CompareTo(circle.GetDiagonal()) <= 0) throw QuantityArgumentOutOfRangeException(paramName, sideQuantity);
+
+            decimal diagonalQuantity = circle.GetDiagonal().DefaultQuantity;
+            diagonalQuantity *= diagonalQuantity;
+            sideQuantity *= sideQuantity;
+            sideQuantity = diagonalQuantity - sideQuantity;
+            double otherSideQuantity = Math.Sqrt(decimal.ToDouble(sideQuantity));
+
+            return innerTangentRectangleSide.GetMeasure(otherSideQuantity, default(ExtentUnit));
+        }
+
         private static IExtent GetRectangleDiagonal(IRectangle rectangle, ExtentUnit extentUnit = default)
         {
             IExtent length = rectangle.Length;
             decimal quantity = square(length.DefaultQuantity);
             quantity += square(rectangle.Width.DefaultQuantity);
-            double diagonalQuantity = Math.Sqrt(Convert.ToDouble(quantity));
+            double diagonalQuantity = Math.Sqrt(decimal.ToDouble(quantity));
             diagonalQuantity = Exchange(diagonalQuantity, extentUnit);
 
             return length.GetMeasure(diagonalQuantity, extentUnit);
@@ -59,7 +79,7 @@ namespace CsabaDu.FooVaria.Shapes.Statics
 
         private static double Exchange(double quantity, Enum measureUnit)
         {
-            return quantity / Convert.ToDouble(MeasureUnits.GetExchangeRate(measureUnit));
+            return quantity / decimal.ToDouble(MeasureUnits.GetExchangeRate(measureUnit));
         }
 
     }

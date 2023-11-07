@@ -1,5 +1,5 @@
 ﻿namespace CsabaDu.FooVaria.Common;
 
-public interface IFooVariaObject
+public interface IRootObject
 {
 }

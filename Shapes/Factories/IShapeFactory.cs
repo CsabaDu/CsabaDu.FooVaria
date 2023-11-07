@@ -67,7 +67,8 @@ namespace CsabaDu.FooVaria.Shapes.Factories
     public interface IDryBodyFactory : IShapeFactory, IFactory<IDryBody>
     {
         IPlaneShapeFactory BaseFaceFactory { get; init; }
-        
+
+        IPlaneShape CreateProjection(IDryBody dryBody, ShapeExtentTypeCode perpendicular);
         IDryBody Create(IPlaneShape baseFace, IExtent height);
         IPlaneShapeFactory GetBaseFaceFactory();
     }
@@ -75,23 +76,17 @@ namespace CsabaDu.FooVaria.Shapes.Factories
     public interface IDryBodyFactory<out T, U> : IDryBodyFactory where T : class, IDryBody, ITangentShape where U : IPlaneShape, ITangentShape
     {
         T Create(U baseFace, IExtent height);
-        //U CreateBaseFace(params IExtent[] shapeExtent);
     }
 
     public interface ICuboidFactory : IDryBodyFactory<ICuboid, IRectangle>, IRectangularShapeFactory<ICylinder, ICuboid>
     {
-        //IRectangleFactory RectangleFactory { get; init; }
-
         ICuboid Create(IExtent length, IExtent width, IExtent height);
         IRectangle CreateBaseFace(IExtent length, IExtent width);
-        IRectangle CreateProjection(ICuboid cuboid, ShapeExtentTypeCode perpendicular);
         IRectangle CreateVerticalProjection(ICuboid cuboid, ComparisonCode comparisonCode);
     }
 
     public interface ICylinderFactory : IDryBodyFactory<ICylinder, ICircle>, ICircularShapeFactory<ICuboid, ICylinder>
     {
-        //ICircleFactory CircleFactory { get; init; }
-
         ICylinder Create(IExtent radius, IExtent height);
         ICircle CreateBaseFace(IExtent radius);
         IRectangle CreateVerticalProjection(ICylinder cylinder);

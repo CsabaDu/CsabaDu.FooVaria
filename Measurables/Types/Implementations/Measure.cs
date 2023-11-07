@@ -169,11 +169,11 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
             return base.GetQuantityTypeCode();
         }
 
-        public override sealed void Validate(IFooVariaObject? fooVariaObject, string paramName)
+        public override sealed void Validate(IRootObject? rootObject, string paramName)
         {
-            ValidateCommonBaseAction = () => ValidateBaseMeasure(this, fooVariaObject!, paramName);
+            ValidateCommonBaseAction = () => ValidateBaseMeasure(this, rootObject!, paramName);
 
-            Validate(this, fooVariaObject, paramName);
+            Validate(this, rootObject, paramName);
         }
         #endregion
         #endregion

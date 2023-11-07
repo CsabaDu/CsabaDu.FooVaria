@@ -36,25 +36,25 @@ public abstract class CommonBase : ICommonBase
         return Factory;
     }
 
-    public virtual void Validate(IFooVariaObject? fooVariaObject, string paramName)
+    public virtual void Validate(IRootObject? rootObject, string paramName)
     {
-        ValidateCommonBaseAction = () => _ = GetValidCommonBase(this, fooVariaObject!, paramName);
+        ValidateCommonBaseAction = () => _ = GetValidCommonBase(this, rootObject!, paramName);
 
-        Validate(this, fooVariaObject, paramName);
+        Validate(this, rootObject, paramName);
     }
     #endregion
     #endregion
 
     #region Protected methods
-    protected void Validate<T>(T commonBase, IFooVariaObject? fooVariaObject, string paramName) where T : class, ICommonBase
+    protected void Validate<T>(T commonBase, IRootObject? rootObject, string paramName) where T : class, ICommonBase
     {
-        _ = NullChecked(fooVariaObject, paramName);
+        _ = NullChecked(rootObject, paramName);
 
-        if (fooVariaObject is IFactory factory)
+        if (rootObject is IFactory factory)
         {
             ValidateInterfaces(commonBase.Factory, factory, paramName);
         }
-        else if (fooVariaObject is ICommonBase && ValidateCommonBaseAction != null)
+        else if (rootObject is ICommonBase && ValidateCommonBaseAction != null)
         {
             ValidateCommonBaseAction();
 
@@ -67,7 +67,7 @@ public abstract class CommonBase : ICommonBase
     }
 
     #region Static methods
-    protected static T GetValidCommonBase<T>(T commonBase, IFooVariaObject other, string paramName) where T : class, ICommonBase
+    protected static T GetValidCommonBase<T>(T commonBase, IRootObject other, string paramName) where T : class, ICommonBase
     {
         ValidateInterfaces(commonBase, other, paramName);
 
@@ -78,9 +78,9 @@ public abstract class CommonBase : ICommonBase
 
     #region Private methods
     #region Static methods
-    private static void ValidateInterfaces(IFooVariaObject fooVariaObject, IFooVariaObject other, string paramName)
+    private static void ValidateInterfaces(IRootObject rootObject, IRootObject other, string paramName)
     {
-        Type type = fooVariaObject.GetType();
+        Type type = rootObject.GetType();
         IEnumerable<Type> interfaces = type.GetInterfaces();
         Type otherType = other.GetType();
 

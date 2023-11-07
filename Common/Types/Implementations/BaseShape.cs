@@ -28,6 +28,7 @@
             return (IBaseShapeFactory)Factory;
         }
 
+        public abstract int GetShapeExtentCount();
         public abstract void ValidateShapeExtent(IQuantifiable shapeExtent, string paramName);
     }
 }
