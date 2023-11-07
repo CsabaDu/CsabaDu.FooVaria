@@ -728,15 +728,15 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 
     internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
     {
-        public Cuboid(ICuboid other) : base(other)
+        internal Cuboid(ICuboid other) : base(other)
         {
         }
 
-        public Cuboid(ICuboidFactory factory, IExtent length, IExtent width, IExtent height) : base(factory, length, width, height)
+        internal Cuboid(ICuboidFactory factory, IExtent length, IExtent width, IExtent height) : base(factory, length, width, height)
         {
         }
 
-        public Cuboid(ICuboidFactory factory, IRectangle baseFace, IExtent height) : base(factory, baseFace, height)
+        internal Cuboid(ICuboidFactory factory, IRectangle baseFace, IExtent height) : base(factory, baseFace, height)
         {
         }
 
@@ -854,15 +854,15 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 
     internal sealed class Cylinder : DryBody<ICylinder, ICircle>, ICylinder
     {
-        public Cylinder(ICylinder other) : base(other)
+        internal Cylinder(ICylinder other) : base(other)
         {
         }
 
-        public Cylinder(ICylinderFactory factory, IExtent radius, IExtent height) : base(factory, radius, height)
+        internal Cylinder(ICylinderFactory factory, IExtent radius, IExtent height) : base(factory, radius, height)
         {
         }
 
-        public Cylinder(ICylinderFactory factory, ICircle baseFace, IExtent height) : base(factory, baseFace, height)
+        internal Cylinder(ICylinderFactory factory, ICircle baseFace, IExtent height) : base(factory, baseFace, height)
         {
         }
 
