@@ -274,6 +274,7 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
         }
 
         public abstract IDryBody Create(IPlaneShape baseFace, IExtent height);
+
         public abstract IDryBody Create(IDryBody other);
 
         public IPlaneShape CreateProjection(IDryBody dryBody, ShapeExtentTypeCode perpendicular)
@@ -282,11 +283,6 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
         }
 
         public abstract IPlaneShapeFactory GetBaseFaceFactory();
-
-        //public override IShape Create(IShape other)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         public override sealed IBulkBodyFactory GetSpreadFactory()
         {
