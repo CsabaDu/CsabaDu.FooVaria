@@ -14,6 +14,7 @@ namespace CsabaDu.FooVaria.Shapes.Factories
         ITangentShapeFactory GetTangentShapeFactory();
 
         IExtent CreateShapeExtent(ExtentUnit extentUnit, ValueType quantity);
+        //IShape Create(params IExtent[] shapeExtents);
     }
 
     public interface ITangentShapeFactory : IBaseShapeFactory

@@ -7,6 +7,6 @@ namespace CsabaDu.FooVaria.Shapes.Behaviors
         bool TryGetShapeExtentTypeCode(IExtent shapeExtent, [NotNullWhen(true)] out ShapeExtentTypeCode? shapeExtentTypeCode);
         IEnumerable<ShapeExtentTypeCode> GetShapeExtentTypeCodes();
 
-        void ValidateShapeExtentTypeCode(ShapeExtentTypeCode shapeExtentTypeCode);
+        void ValidateShapeExtentTypeCode(ShapeExtentTypeCode shapeExtentTypeCode, string paramName);
     }
 }

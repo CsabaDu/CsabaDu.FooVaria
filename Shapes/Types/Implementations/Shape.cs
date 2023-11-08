@@ -47,14 +47,26 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
             return (IShape?)ExchangeTo(extentUnit) ?? throw InvalidMeasureUnitEnumArgumentException(extentUnit, nameof(extentUnit));
         }
 
-        //public IShape GetShape(IShape other)
-        //{
-        //    return GetFactory().Create(other);
-        //}
-
-        public IShape GetShape(IEnumerable<IExtent> shapeExtentList)
+        public IShape GetShape(params IExtent[] shapeExtents)
         {
-            return GetShape(shapeExtentList.ToArray());
+            ValidateShapeExtents(shapeExtents, nameof(shapeExtents));
+
+            return getShape(this, shapeExtents);
+
+            #region Local methods
+            static IShape getShape<T>(T shape, IExtent[] shapeExtents) where T : IShape
+            {
+                return shape switch
+                {
+                    Circle circle => circle.GetCircle(shapeExtents[0]),
+                    Cuboid cuboid => cuboid.GetCuboid(shapeExtents[0], shapeExtents[1], shapeExtents[2]),
+                    Cylinder cylinder => cylinder.GetCylinder(shapeExtents[0], shapeExtents[1]),
+                    Rectangle rectangle => rectangle.GetRectangle(shapeExtents[0], shapeExtents[1]),
+
+                    _ => throw new InvalidOperationException(null),
+                };
+            }
+            #endregion
         }
 
         public IExtent GetShapeExtent(ShapeExtentTypeCode shapeExtentTypeCode)
@@ -95,7 +107,7 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
         {
             _ = NullChecked(shapeExtent, nameof(shapeExtent));
 
-            for (int i = 0; i < GetShapeExtents().Count(); i++)
+            for (int i = 0; i < GetShapeExtentCount(); i++)
             {
                 if (GetShapeExtents().ElementAt(i).Equals(shapeExtent))
                 {
@@ -110,18 +122,9 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
             return false;
         }
 
-        public override sealed void ValidateShapeExtent(IQuantifiable shapeExtent, string paramName)
-        {
-            decimal defaultQuantity = NullChecked(shapeExtent, paramName).DefaultQuantity;
-
-            if (shapeExtent is not IExtent) throw ArgumentTypeOutOfRangeException(paramName, shapeExtent);
-
-            ValidateDecimalQuantity(defaultQuantity, paramName);
-        }
-
         public void ValidateShapeExtentCount(int count, string name)
         {
-            if (count == GetShapeExtentTypeCodes().Count()) return;
+            if (count == GetShapeExtentCount()) return;
 
             throw QuantityArgumentOutOfRangeException(name, count);
         }
@@ -138,19 +141,20 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
             }
         }
 
-        public virtual void ValidateShapeExtentTypeCode(ShapeExtentTypeCode shapeExtentTypeCode)
+        public void ValidateShapeExtentTypeCode(ShapeExtentTypeCode shapeExtentTypeCode, string paramName)
         {
-            _ = Defined(shapeExtentTypeCode, nameof(shapeExtentTypeCode));
-        }
+            if (GetShapeExtentTypeCodes().Contains(shapeExtentTypeCode)) return;
 
-        public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
-        {
-            object? converted = NullChecked(quantity, paramName).ToQuantity(TypeCode.Decimal) ?? throw ArgumentTypeOutOfRangeException(paramName, quantity!);
-
-            ValidateDecimalQuantity((decimal)converted, paramName);
+            throw InvalidShapeExtentTypeCodeEnumArgumentException(shapeExtentTypeCode, paramName);
         }
 
         #region Override methods
+        public override IShapeFactory GetFactory()
+        {
+            return (IShapeFactory)Factory;
+        }
+
+        #region Sealed methods
         public override sealed int CompareTo(IBaseShape? other)
         {
             if (other == null) return 1;
@@ -189,7 +193,7 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 
                 if (exchangedShapeExtents.Count() != GetShapeExtents().Count()) return null;
 
-                return GetShape(exchangedShapeExtents);
+                return GetShape(exchangedShapeExtents.ToArray());
             }
 
             IEnumerable<IExtent> getExchangedShapeExtents(ExtentUnit extentUnit)
@@ -228,7 +232,7 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
             #endregion
         }
 
-        public override bool? FitsIn(IBaseShape? other, LimitMode? limitMode)
+        public override sealed bool? FitsIn(IBaseShape? other, LimitMode? limitMode)
         {
             if (other == null) return null;
 
@@ -244,7 +248,7 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
                 SideCode.Outer
                 : SideCode.Inner;
 
-            if (shape.GetShapeExtents().Count() != GetShapeExtents().Count())
+            if (shape.GetShapeExtentCount() != GetShapeExtentCount())
             {
                 shape = tangentShape.GetTangentShape(sideCode);
             }
@@ -252,14 +256,14 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
             return Compare(this, shape)?.FitsIn(limitMode);
         }
 
-        public override IBaseSpread GetBaseSpread(ISpreadMeasure spreadMeasure)
+        public override sealed IBaseSpread GetBaseSpread(ISpreadMeasure spreadMeasure)
         {
             return GetFactory().SpreadFactory.Create(spreadMeasure);
         }
 
-        public override IShapeFactory GetFactory()
+        public override sealed int GetShapeExtentCount()
         {
-            return (IShapeFactory)Factory;
+            return GetShapeExtentTypeCodes().Count();
         }
 
         public override sealed void Validate(IRootObject? rootObject, string paramName)
@@ -281,20 +285,33 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
             }
             #endregion
         }
-        #endregion
 
-        #region Abstract methods
-        public abstract IEnumerable<IExtent> GetDimensions();
-        //public abstract IShape GetShape(params IExtent[] shapeExtents);
-        public virtual ITangentShapeFactory GetTangentShapeFactory()
+        public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
         {
-            return GetFactory().TangentShapeFactory;
+            object? converted = NullChecked(quantity, paramName).ToQuantity(TypeCode.Decimal) ?? throw ArgumentTypeOutOfRangeException(paramName, quantity!);
+
+            ValidateDecimalQuantity((decimal)converted, paramName);
+        }
+
+        public override sealed void ValidateShapeExtent(IQuantifiable shapeExtent, string paramName)
+        {
+            decimal defaultQuantity = NullChecked(shapeExtent, paramName).DefaultQuantity;
+
+            if (shapeExtent is not IExtent) throw ArgumentTypeOutOfRangeException(paramName, shapeExtent);
+
+            ValidateDecimalQuantity(defaultQuantity, paramName);
         }
         #endregion
         #endregion
 
-        //#region Protected methods
-        //#region Static methods
+        #region Abstract methods
+        public abstract IEnumerable<IExtent> GetDimensions();
+        public abstract ITangentShapeFactory GetTangentShapeFactory();
+        #endregion
+        #endregion
+
+        #region Protected methods
+        #region Static methods
         //protected static T GetTangentShape<T>(ITangentShape<T> shape, SideCode sideCode) where T : class, IShape, ITangentShape
         //{
         //    return sideCode switch
@@ -305,10 +322,11 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
         //        _ => throw InvalidSideCodeEnumArgumentException(sideCode),
         //    };
         //}
-        //#endregion
-        //#endregion
+        #endregion
+        #endregion
 
         #region Private methods
+        #region Static methods
         private static int? Compare(IShape shape, IShape? other)
         {
             if (other == null) return null;
@@ -336,7 +354,6 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
             return comparison;
         }
 
-        #region Static methods
         private static void ValidateDecimalQuantity(decimal quantity, string name)
         {
             if (quantity > 0) return;

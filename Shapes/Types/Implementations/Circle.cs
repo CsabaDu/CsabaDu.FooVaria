@@ -1,87 +1,88 @@
-﻿using static CsabaDu.FooVaria.Shapes.Statics.ShapeExtents;
-using static CsabaDu.FooVaria.Spreads.Statics.SpreadMeasures;
+﻿namespace CsabaDu.FooVaria.Shapes.Types.Implementations;
 
-
-namespace CsabaDu.FooVaria.Shapes.Types.Implementations
+internal sealed class Circle : PlaneShape, ICircle
 {
-    internal sealed class Circle : PlaneShape, ICircle
+    internal Circle(ICircle other) : base(other)
     {
-        internal Circle(ICircle other) : base(other)
+        Radius = other.Radius;
+    }
+
+    internal Circle(ICircleFactory factory, IExtent radius) : base(factory, radius)
+    {
+        Radius = radius;
+    }
+
+    public override IExtent? this[ShapeExtentTypeCode shapeExtentTypeCode] => throw new NotImplementedException();
+
+    public IExtent Radius { get; init; }
+
+    public override IEnumerable<IExtent> GetDimensions()
+    {
+        for (int i = 0; i < GetShapeExtentCount(); i++)
         {
-            Radius = other.Radius;
+            yield return GetDiagonal();
         }
+    }
 
-        internal Circle(ICircleFactory factory, IExtent radius) : base(factory, radius)
-        {
-            Radius = radius;
-        }
+    public IRectangle GetInnerTangentShape(IExtent innerTangentRectangleSide)
+    {
+        return GetFactory().CreateInnerTangentShape(this, innerTangentRectangleSide);
 
-        public override IExtent? this[ShapeExtentTypeCode shapeExtentTypeCode] => throw new NotImplementedException();
+        //IExtent otherSide = GetInnerTangentRectangleSide(this, innerTangentRectangleSide);
 
-        public IExtent Radius { get; init; }
+        //return GetTangentShapeFactory().Create(innerTangentRectangleSide, otherSide);
+    }
 
-        public override IEnumerable<IExtent> GetDimensions()
-        {
-            for (int i = 0; i < GetShapeExtentCount(); i++)
-            {
-                yield return GetDiagonal();
-            }
-        }
+    public IRectangle GetInnerTangentShape()
+    {
+        return GetFactory().CreateInnerTangentShape(this);
 
-        public IRectangle GetInnerTangentShape(IExtent innerTangentRectangleSide)
-        {
-            IExtent otherSide = GetInnerTangentRectangleSide(this, innerTangentRectangleSide);
+        //IExtent diagonal = GetDiagonal();
+        //decimal diagonalQuantity = diagonal.DefaultQuantity;
+        //diagonalQuantity *= diagonalQuantity;
+        //diagonalQuantity /= 2;
+        //double legQuantity = Math.Sqrt(decimal.ToDouble(diagonalQuantity));
+        //IExtent leg = diagonal.GetMeasure(legQuantity, default(ExtentUnit)); 
 
-            return GetTangentShapeFactory().Create(innerTangentRectangleSide, otherSide);
-        }
+        //return GetInnerTangentShape(leg);
+    }
 
-        public IRectangle GetInnerTangentShape()
-        {
-            IExtent diagonal = GetDiagonal();
-            decimal diagonalQuantity = diagonal.DefaultQuantity;
-            diagonalQuantity *= diagonalQuantity;
-            diagonalQuantity /= 2;
-            double legQuantity = Math.Sqrt(decimal.ToDouble(diagonalQuantity));
-            IExtent leg = diagonal.GetMeasure(legQuantity, default(ExtentUnit)); 
+    public IRectangle GetOuterTangentShape()
+    {
+        return GetFactory().CreateOuterTangentShape(this);
 
-            return GetInnerTangentShape(leg);
-        }
+        //IExtent diagonal = GetDiagonal();
 
-        public IRectangle GetOuterTangentShape()
-        {
-            IExtent diagonal = GetDiagonal();
+        //return GetTangentShapeFactory().Create(diagonal, diagonal);
+    }
 
-            return GetTangentShapeFactory().Create(diagonal, diagonal);
-        }
+    public override ICircleFactory GetFactory()
+    {
+        return (ICircleFactory)Factory;
+    }
 
-        public override int GetShapeExtentCount()
-        {
-            return CircleShapeExtentCount;
-        }
+    public IExtent GetRadius()
+    {
+        return Radius;
+    }
 
-        public override ICircleFactory GetFactory()
-        {
-            return (ICircleFactory)Factory;
-        }
+    public IExtent GetRadius(ExtentUnit extentUnit)
+    {
+        return Radius.GetMeasure(extentUnit);
+    }
 
-        public IExtent GetRadius()
-        {
-            return Radius;
-        }
+    public IShape GetTangentShape(SideCode sideCode)
+    {
+        return GetFactory().CreateTangentShape(this, sideCode);
+    }
 
-        public IExtent GetRadius(ExtentUnit extentUnit)
-        {
-            return Radius.GetMeasure(extentUnit);
-        }
+    public override IRectangleFactory GetTangentShapeFactory()
+    {
+        return (IRectangleFactory)GetFactory().TangentShapeFactory;
+    }
 
-        public IShape GetTangentShape(SideCode sideCode)
-        {
-            return GetFactory().CreateTangentShape(this, sideCode);
-        }
-
-        public override IRectangleFactory GetTangentShapeFactory()
-        {
-            return (IRectangleFactory)GetFactory().TangentShapeFactory;
-        }
+    public ICircle GetCircle(IExtent radius)
+    {
+        return GetFactory().Create(radius);
     }
 }

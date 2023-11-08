@@ -135,7 +135,7 @@ public static class SpreadMeasures
 
             if (item.DefaultQuantity <= 0)
             {
-                throw new ArgumentOutOfRangeException(paramName, quantity, null);
+                throw QuantityArgumentOutOfRangeException(paramName, quantity);
             }
         }
 

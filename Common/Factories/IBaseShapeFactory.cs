@@ -1,5 +1,5 @@
 ﻿namespace CsabaDu.FooVaria.Common.Factories;
 
-public interface IBaseShapeFactory : IBaseSpreadFactory
+public interface IBaseShapeFactory : IBaseSpreadFactory, IShapeExtentCount
 {
 }

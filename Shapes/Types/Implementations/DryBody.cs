@@ -13,7 +13,6 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 
         private protected DryBody(IDryBodyFactory factory, IPlaneShape baseFace, IExtent height) : base(factory, baseFace)
         {
-
             Height = getDryBodyProperties().Height;
             Volume = getDryBodyProperties().Volume;
 
@@ -80,7 +79,9 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 
         public override sealed IEnumerable<IExtent> GetDimensions()
         {
-            return GetBaseFace().GetDimensions().Append(Height);
+            IPlaneShape baseFace = GetBaseFace();
+
+            return baseFace.GetDimensions().Append(Height);
         }
 
         public override IDryBodyFactory GetFactory()
@@ -95,7 +96,6 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 
         public abstract IPlaneShape GetBaseFace();
         public abstract IPlaneShape GetProjection(ShapeExtentTypeCode perpendicular);
-        public abstract IExtent GetShapeExtent(IPlaneShape projection, IVolume volume);
     }
 
     internal abstract class DryBody<T, U> : DryBody, IDryBody<T, U> where T : class, IDryBody, ITangentShape where U : IPlaneShape, ITangentShape
@@ -107,7 +107,7 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 
         private protected DryBody(IDryBodyFactory factory, params IExtent[] shapeExtents) : base(factory, shapeExtents)
         {
-            BaseFace = (U)GetShape(shapeExtents.SkipLast(1));
+            BaseFace = (U)GetShape(shapeExtents.SkipLast(1).ToArray());
         }
 
         private protected DryBody(IDryBodyFactory factory, U baseFace, IExtent height) : base(factory, baseFace, height)
@@ -117,26 +117,19 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 
         public U BaseFace { get; init; }
 
-        public override sealed IPlaneShape GetBaseFace()
+        public T GetDryBody(U baseFace, IExtent height)
         {
-            return BaseFace;
-        }
-
-        public override sealed IExtent GetShapeExtent(IPlaneShape projection, IVolume volume)
-        {
-            decimal shapeExtentQuantity = volume.DefaultQuantity / projection.DefaultQuantity;
-
-            return Height.GetMeasure(decimal.ToDouble(shapeExtentQuantity), default(ExtentUnit));
-            throw new NotImplementedException();
+            return GetFactory().Create(baseFace, height);
         }
 
         public override IDryBodyFactory<T, U> GetFactory()
         {
             return (IDryBodyFactory<T, U>)Factory;
         }
-        public T GetDryBody(U baseFace, IExtent height)
+
+        public override sealed IPlaneShape GetBaseFace()
         {
-            return GetFactory().Create(baseFace, height);
+            return BaseFace;
         }
     }
 }

@@ -1,126 +1,122 @@
-﻿using static CsabaDu.FooVaria.Spreads.Statics.SpreadMeasures;
+﻿namespace CsabaDu.FooVaria.Shapes.Types.Implementations;
 
-
-namespace CsabaDu.FooVaria.Shapes.Types.Implementations
+internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
 {
-    internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
+    internal Cuboid(ICuboid other) : base(other)
     {
-        internal Cuboid(ICuboid other) : base(other)
-        {
-        }
+    }
 
-        internal Cuboid(ICuboidFactory factory, IExtent length, IExtent width, IExtent height) : base(factory, length, width, height)
-        {
-        }
+    internal Cuboid(ICuboidFactory factory, IExtent length, IExtent width, IExtent height) : base(factory, length, width, height)
+    {
+    }
 
-        internal Cuboid(ICuboidFactory factory, IRectangle baseFace, IExtent height) : base(factory, baseFace, height)
-        {
-        }
+    internal Cuboid(ICuboidFactory factory, IRectangle baseFace, IExtent height) : base(factory, baseFace, height)
+    {
+    }
 
-        public override IExtent? this[ShapeExtentTypeCode shapeExtentTypeCode] => shapeExtentTypeCode switch
-        {
-            ShapeExtentTypeCode.Length => BaseFace.Length,
-            ShapeExtentTypeCode.Width => BaseFace.Width,
-            ShapeExtentTypeCode.Height => Height,
+    public override IExtent? this[ShapeExtentTypeCode shapeExtentTypeCode] => shapeExtentTypeCode switch
+    {
+        ShapeExtentTypeCode.Length => BaseFace.Length,
+        ShapeExtentTypeCode.Width => BaseFace.Width,
+        ShapeExtentTypeCode.Height => Height,
 
-            _ => null,
+        _ => null,
+    };
+
+    public override IRectangleFactory GetBaseFaceFactory()
+    {
+        return (IRectangleFactory)base.GetBaseFaceFactory();
+    }
+
+    public IExtent GetComparedShapeExtent(ComparisonCode? comparisonCode)
+    {
+        IEnumerable<IExtent> shapeExtents = GetSortedDimensions();
+
+        return comparisonCode switch
+        {
+            null => shapeExtents.ElementAt(1),
+            ComparisonCode.Greater => shapeExtents.Last(),
+            ComparisonCode.Less => shapeExtents.First(),
+
+            _ => throw InvalidComparisonCodeEnumArgumentException(comparisonCode!.Value),
         };
+    }
 
-        public override IRectangleFactory GetBaseFaceFactory()
-        {
-            return (IRectangleFactory)base.GetBaseFaceFactory();
-        }
+    public ICylinder GetInnerTangentShape(ComparisonCode comparisonCode)
+    {
+        ICircle baseFace = BaseFace.GetInnerTangentShape(comparisonCode);
 
-        public IExtent GetComparedShapeExtent(ComparisonCode? comparisonCode)
-        {
-            IEnumerable<IExtent> shapeExtents = GetSortedDimensions();
+        return GetTangentShapeFactory().Create(baseFace, Height);
+    }
 
-            return comparisonCode switch
-            {
-                null => shapeExtents.ElementAt(1),
-                ComparisonCode.Greater => shapeExtents.Last(),
-                ComparisonCode.Less => shapeExtents.First(),
+    public ICylinder GetInnerTangentShape()
+    {
+        return GetInnerTangentShape(ComparisonCode.Less);
+    }
 
-                _ => throw InvalidComparisonCodeEnumArgumentException(comparisonCode!.Value),
-            };
-        }
+    public IExtent GetLength()
+    {
+        return BaseFace.Length;
+    }
 
-        public ICylinder GetInnerTangentShape(ComparisonCode comparisonCode)
-        {
-            ICircle baseFace = BaseFace.GetInnerTangentShape(comparisonCode);
+    public IExtent GetLength(ExtentUnit extentUnit)
+    {
+        return GetLength().GetMeasure(extentUnit);
+    }
 
-            return GetTangentShapeFactory().Create(baseFace, Height);
-        }
+    public ICylinder GetOuterTangentShape()
+    {
+        return GetFactory().CreateOuterTangentShape(this);
+    }
 
-        public ICylinder GetInnerTangentShape()
-        {
-            return GetInnerTangentShape(ComparisonCode.Less);
-        }
+    public override IPlaneShape GetProjection(ShapeExtentTypeCode perpendicular)
+    {
+        return GetFactory().CreateProjection(this, perpendicular);
+    }
 
-        public IExtent GetLength()
-        {
-            throw new NotImplementedException();
-        }
+    public IShape GetTangentShape(SideCode sideCode)
+    {
+        return GetFactory().CreateTangentShape(this, sideCode);
+    }
 
-        public IExtent GetLength(ExtentUnit extentUnit)
-        {
-            throw new NotImplementedException();
-        }
+    public override ICylinderFactory GetTangentShapeFactory()
+    {
+        return (ICylinderFactory)GetFactory().TangentShapeFactory;
+    }
+    public IRectangle GetVerticalProjection(ComparisonCode comparisonCode)
+    {
+        return GetFactory().CreateVerticalProjection(this, comparisonCode);
+    }
 
-        public ICylinder GetOuterTangentShape()
-        {
-            return GetFactory().CreateOuterTangentShape(this);
-        }
+    public IExtent GetWidth()
+    {
+        return BaseFace.Width;
+    }
 
-        public override IRectangle GetProjection(ShapeExtentTypeCode perpendicular)
-        {
-            throw new NotImplementedException();
-        }
+    public IExtent GetWidth(ExtentUnit extentUnit)
+    {
+        return GetWidth().GetMeasure(extentUnit);
+    }
 
-        public override int GetShapeExtentCount()
-        {
-            return CuboidShapeExtentCount;
-        }
+    public ICuboid RotateHorizontally()
+    {
+        IRectangle baseFace = BaseFace.RotateHorizontally();
 
-        public IShape GetTangentShape(SideCode sideCode)
-        {
-            return GetFactory().CreateTangentShape(this, sideCode);
-        }
+        return GetDryBody(baseFace, Height);
+    }
 
-        public override ICylinderFactory GetTangentShapeFactory()
-        {
-            return (ICylinderFactory)GetFactory().TangentShapeFactory;
-        }
-        public IRectangle GetVerticalProjection(ComparisonCode comparisonCode)
-        {
-            return GetFactory().CreateVerticalProjection(this, comparisonCode);
-        }
+    public ICuboid RotateSpatially()
+    {
+        return (ICuboid)GetShape(GetSortedDimensions().ToArray());
+    }
 
-        public IExtent GetWidth()
-        {
-            return BaseFace.Width;
-        }
+    public override ICuboidFactory GetFactory()
+    {
+        return (ICuboidFactory)Factory;
+    }
 
-        public IExtent GetWidth(ExtentUnit extentUnit)
-        {
-            return GetWidth().GetMeasure(extentUnit);
-        }
-
-        public ICuboid RotateHorizontally()
-        {
-            IRectangle baseFace = BaseFace.RotateHorizontally();
-
-            return GetDryBody(baseFace, Height);
-        }
-
-        public ICuboid RotateSpatially()
-        {
-            return (ICuboid)GetShape(GetSortedDimensions());
-        }
-
-        public override ICuboidFactory GetFactory()
-        {
-            return (ICuboidFactory)Factory;
-        }
+    public ICuboid GetCuboid(IExtent length, IExtent width, IExtent height)
+    {
+        return GetFactory().Create(length, width, height);
     }
 }

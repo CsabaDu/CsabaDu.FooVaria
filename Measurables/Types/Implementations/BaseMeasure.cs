@@ -89,14 +89,15 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         decimal getHalfQuantity()
         {
             decimal halfQuantity = decimal.Floor(quantity);
+            decimal half = 0.5m;
 
             if (quantity == halfQuantity) return quantity;
 
-            halfQuantity += 0.5m;
+            halfQuantity += half;
 
             if (quantity <= halfQuantity) return halfQuantity;
 
-            return halfQuantity + 0.5m;
+            return halfQuantity + half;
         }
         #endregion
     }

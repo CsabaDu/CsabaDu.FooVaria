@@ -1,9 +1,11 @@
 ﻿using CsabaDu.FooVaria.Measurables.Factories;
 using CsabaDu.FooVaria.Measurables.Types;
+using CsabaDu.FooVaria.Shapes.Behaviors;
 using CsabaDu.FooVaria.Shapes.Types;
 using CsabaDu.FooVaria.Shapes.Types.Implementations;
 using CsabaDu.FooVaria.Spreads.Factories;
 using CsabaDu.FooVaria.Spreads.Types;
+using static CsabaDu.FooVaria.Spreads.Statics.SpreadMeasures;
 
 namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
 {
@@ -19,6 +21,7 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
         public ITangentShapeFactory TangentShapeFactory { get; init; }
 
         public abstract IBaseSpread Create(ISpreadMeasure spreadMeasure);
+        public abstract IShape Create(params IExtent[] shapeExtents);
 
         public IExtent CreateShapeExtent(ExtentUnit extentUnit, ValueType quantity)
         {
@@ -34,18 +37,17 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
             return SpreadFactory.MeasureFactory;
         }
 
-        //public abstract IShape Create(params IExtent[] shapeExtents);
-        //public abstract IShape Create(IShape other);
+        public abstract int GetShapeExtentCount();
 
-        public virtual ISpreadFactory GetSpreadFactory()
-        {
-            return SpreadFactory;
-        }
+        public abstract ISpreadFactory GetSpreadFactory();
+        //{
+        //    return SpreadFactory;
+        //}
 
-        public virtual ITangentShapeFactory GetTangentShapeFactory()
-        {
-            return TangentShapeFactory;
-        }
+        public abstract ITangentShapeFactory GetTangentShapeFactory();
+        //{
+        //    return TangentShapeFactory;
+        //}
     }
 
     public abstract class PlaneShapeFactory : ShapeFactory, IPlaneShapeFactory
@@ -196,6 +198,16 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
 
             return GetTangentShapeFactory().Create(radius);
         }
+
+        public override IRectangle Create(params IExtent[] shapeExtents)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override int GetShapeExtentCount()
+        {
+            return RectangleShapeExtentCount;
+        }
         #endregion
     }
 
@@ -231,6 +243,11 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
             return new Circle(other);
         }
 
+        public override ICircle Create(params IExtent[] shapeExtents)
+        {
+            throw new NotImplementedException();
+        }
+
         public IRectangle CreateInnerTangentShape(ICircle circle, IExtent tangentRectangleSide)
         {
             throw new NotImplementedException();
@@ -249,6 +266,11 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
         public IRectangle CreateTangentShape(ICircle circle, SideCode sideCode)
         {
             return CreateTangentShape(this, circle, sideCode);
+        }
+
+        public override int GetShapeExtentCount()
+        {
+            return CircleShapeExtentCount;
         }
 
         public override IRectangleFactory GetTangentShapeFactory()
@@ -306,7 +328,7 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
         }
 
         public abstract T Create(U baseFace, IExtent height);
-        //public abstract U CreateBaseFace(params IExtent[] shapeExtent);
+        //public abstract U CreateBaseFace(params IExtent[] shapeExtents);
     }
 
     public sealed class CuboidFactory : DryBodyFactory<ICuboid, IRectangle>, ICuboidFactory
@@ -346,11 +368,6 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
             };
         }
 
-        //public override IRectangle CreateBaseFace(params IExtent[] shapeExtent)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         public IRectangle CreateBaseFace(IExtent length, IExtent width)
         {
             return GetBaseFaceFactory().Create(length, width);
@@ -361,12 +378,12 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
             throw new NotImplementedException();
         }
 
-        public ICylinder CreateInnerTangentShape(ICuboid shape)
+        public ICylinder CreateInnerTangentShape(ICuboid cuboid)
         {
             throw new NotImplementedException();
         }
 
-        public ICylinder CreateOuterTangentShape(ICuboid shape)
+        public ICylinder CreateOuterTangentShape(ICuboid cuboid)
         {
             throw new NotImplementedException();
         }
@@ -376,7 +393,7 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
             throw new NotImplementedException();
         }
 
-        public ICylinder CreateTangentShape(ICuboid shape, SideCode sideCode)
+        public ICylinder CreateTangentShape(ICuboid cuboid, SideCode sideCode)
         {
             throw new NotImplementedException();
         }
@@ -389,6 +406,93 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
         public override ICylinderFactory GetTangentShapeFactory()
         {
             return (ICylinderFactory)TangentShapeFactory;
+        }
+
+        public override ICuboid Create(params IExtent[] shapeExtents)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override int GetShapeExtentCount()
+        {
+            return CuboidShapeExtentCount;
+        }
+    }
+
+    public sealed class CylinderFactory : DryBodyFactory<ICylinder, ICircle>, ICylinderFactory
+    {
+        public CylinderFactory(IBulkBodyFactory spreadFactory, ICuboidFactory tangentShapeFactory, ICircleFactory baseFaceFactory) : base(spreadFactory, tangentShapeFactory, baseFaceFactory)
+        {
+        }
+
+        public override ICylinder Create(ICircle baseFace, IExtent height)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override ICylinder Create(IDryBody other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override ICylinder Create(params IExtent[] shapeExtents)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICylinder Create(IExtent radius, IExtent height)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICylinder Create(ICylinder other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICircle CreateBaseFace(IExtent radius)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICuboid CreateInnerTangentShape(ICylinder circularShape, IExtent tangentRectangleSide)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICuboid CreateInnerTangentShape(ICylinder shape)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICuboid CreateOuterTangentShape(ICylinder shape)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICuboid CreateTangentShape(ICylinder shape, SideCode sideCode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IRectangle CreateVerticalProjection(ICylinder cylinder)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override ICircleFactory GetBaseFaceFactory()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override int GetShapeExtentCount()
+        {
+            return CylinderShapeExtentCount;
+        }
+
+        public override ICuboidFactory GetTangentShapeFactory()
+        {
+            throw new NotImplementedException();
         }
     }
 }
