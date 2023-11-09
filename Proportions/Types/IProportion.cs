@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Measurables.Behaviors;
-
-namespace CsabaDu.FooVaria.Proportions.Types
+﻿namespace CsabaDu.FooVaria.Proportions.Types
 {
     public interface IProportion : IBaseRate, IDenominate
     {
@@ -10,10 +8,15 @@ namespace CsabaDu.FooVaria.Proportions.Types
         IProportion GetProportion(IBaseMeasure numerator, IMeasurement denominatorMeasurement);
     }
 
-    public interface IProportion<out T, in U, in W> : IProportion where T : class, IProportion where U : struct, Enum where W : struct, Enum
+    public interface IProportion<out T, in U> : IProportion where T : class, IProportion where U : struct, Enum
     {
-        T GetProportion(U numeratorMeasureUnit, ValueType quantity, W denominatorMeasureUnit);
-        T GetProportion(IMeasure numerator, W denominatorMeasureUnit);
-        decimal GetQuantity(U numeratorMeasureUnit, W denominatorMeasureUnit);
+        T GetProportion(IMeasure numerator, U denominatorMeasureUnit);
+        decimal GetQuantity(U denominatorMeasureUnit);
+    }
+
+    public interface IProportion<out T, in W, in U> : IProportion<T, U> where T : class, IProportion<T, W, U> where U : struct, Enum where W : struct, Enum
+    {
+        T GetProportion(W numeratorMeasureUnit, ValueType quantity, U denominatorMeasureUnit);
+        decimal GetQuantity(W numeratorMeasureUnit, U denominatorMeasureUnit);
     }
 }

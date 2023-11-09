@@ -1,11 +1,11 @@
-﻿using CsabaDu.FooVaria.Measurables.Types;
+﻿using CsabaDu.FooVaria.Proportions.Types.Implementations;
 using CsabaDu.FooVaria.Proportions.Types.Implementations.ProportionTypes;
 using static CsabaDu.FooVaria.Common.Statics.MeasureUnitTypes;
 using static CsabaDu.FooVaria.Measurables.Statics.MeasureUnits;
 
 namespace CsabaDu.FooVaria.Proportions.Factories.Implementations;
 
-public sealed class ProportionFactory : IProportionFactory
+public abstract class ProportionFactory : IProportionFactory
 {
     #region Public methods
     public IProportion Create(IBaseRate baseRate)
@@ -27,32 +27,63 @@ public sealed class ProportionFactory : IProportionFactory
 
     }
 
-    public IProportion Create(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
-    {
-        ValidateNumeratorMeasureUnitTypeCode(numeratorMeasureUnitTypeCode);
-        ValidateQuantity(defaultQuantity, nameof(defaultQuantity));
-        _ = Defined(denominatorMeasureUnitTypeCode, nameof(denominatorMeasureUnitTypeCode));
+    public abstract IProportion Create(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
+    //{
+    //    ValidateMeasureUnitTypeCode(numeratorMeasureUnitTypeCode, nameof(numeratorMeasureUnitTypeCode));
+    //    ValidateQuantity(defaultQuantity, nameof(defaultQuantity));
+    //    ValidateMeasureUnitTypeCode(denominatorMeasureUnitTypeCode, nameof(denominatorMeasureUnitTypeCode));
 
-        if (numeratorMeasureUnitTypeCode == MeasureUnitTypeCode.Currency
-            && denominatorMeasureUnitTypeCode == MeasureUnitTypeCode.WeightUnit)
-        {
-            return new Valuability(this, numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode);
-        }
+    //    return denominatorMeasureUnitTypeCode switch
+    //    {
+    //        MeasureUnitTypeCode.TimePeriodUnit => getTimePeriodBasedProportion(),
+    //        MeasureUnitTypeCode.VolumeUnit => getVolumedBasedProportion(),
+    //        MeasureUnitTypeCode.WeightUnit => getWeightBasedProportion(),
 
-        if (numeratorMeasureUnitTypeCode == MeasureUnitTypeCode.Pieces
-            && denominatorMeasureUnitTypeCode == MeasureUnitTypeCode.TimePeriodUnit)
-        {
-            return new Frequency(this, numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode);
-        }
+    //        _ => throw exception(nameof(denominatorMeasureUnitTypeCode), denominatorMeasureUnitTypeCode),
+    //    };
 
-        if (numeratorMeasureUnitTypeCode == MeasureUnitTypeCode.WeightUnit
-            && denominatorMeasureUnitTypeCode == MeasureUnitTypeCode.VolumeUnit)
-        {
-            return new Density(this, numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode);
-        }
+    //    #region Private methods
+    //    IProportion getTimePeriodBasedProportion()
+    //    {
+    //        return numeratorMeasureUnitTypeCode switch
+    //        {
+    //            MeasureUnitTypeCode.Pieces => new Frequency(this, numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode),
 
-        throw new ArgumentOutOfRangeException(nameof(denominatorMeasureUnitTypeCode), denominatorMeasureUnitTypeCode, null);
-    }
+    //            _ => throw numeratorMeasureUnitTypeCodeException(),
+    //        };
+    //    }
+
+    //    IProportion getVolumedBasedProportion()
+    //    {
+    //        return numeratorMeasureUnitTypeCode switch
+    //        {
+    //            MeasureUnitTypeCode.WeightUnit => new Density(this, numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode),
+
+    //            _ => throw numeratorMeasureUnitTypeCodeException(),
+    //        };
+    //    }
+
+    //    IProportion getWeightBasedProportion()
+    //    {
+    //        return numeratorMeasureUnitTypeCode switch
+    //        {
+    //            MeasureUnitTypeCode.Currency => new Valuability(this, numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode),
+
+    //            _ => throw numeratorMeasureUnitTypeCodeException(),
+    //        };
+    //    }
+
+    //    ArgumentOutOfRangeException numeratorMeasureUnitTypeCodeException()
+    //    {
+    //        return exception(nameof(numeratorMeasureUnitTypeCode), numeratorMeasureUnitTypeCode);
+    //    }
+
+    //    ArgumentOutOfRangeException exception(string paramName, MeasureUnitTypeCode measureUnitTypeCode)
+    //    {
+    //        throw new ArgumentOutOfRangeException(paramName, measureUnitTypeCode, null);
+    //    }
+    //    #endregion
+    //}
 
     public IBaseRate Create(IQuantifiable numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
     {
@@ -63,56 +94,56 @@ public sealed class ProportionFactory : IProportionFactory
             throw ArgumentTypeOutOfRangeException(name, numerator);
         }
 
-       _ = Defined(denominatorMeasureUnitTypeCode, name);
+       //ValidateMeasureUnitTypeCode(denominatorMeasureUnitTypeCode, name);
 
         return Create(baseMeasurable.MeasureUnitTypeCode, numerator.DefaultQuantity, denominatorMeasureUnitTypeCode);
     }
 
-    public IProportion Create(Enum numeratorMeasureUnit, decimal quantity, Enum denominatorMeasureUnit)
-    {
-        validateNumeratorMeasureUnit();
-        ValidateQuantity(quantity, nameof(quantity));
-        _ = DefinedMeasureUnit(denominatorMeasureUnit, nameof(denominatorMeasureUnit));
+    //public IProportion Create(Enum numeratorMeasureUnit, decimal quantity, Enum denominatorMeasureUnit)
+    //{
+    //    validateNumeratorMeasureUnit();
+    //    ValidateQuantity(quantity, nameof(quantity));
+    //    ValidateMeasureUnit(denominatorMeasureUnit, nameof(denominatorMeasureUnit));
 
-        MeasureUnitTypeCode numeratorMeasureUnitTypeCode = GetMeasureUnitTypeCode(numeratorMeasureUnit);
-        MeasureUnitTypeCode denominatorMeasureUnitTypeCode = GetMeasureUnitTypeCode(denominatorMeasureUnit);
-        quantity *= GetExchangeRate(numeratorMeasureUnit);
-        quantity /= GetExchangeRate(denominatorMeasureUnit);
+    //    MeasureUnitTypeCode numeratorMeasureUnitTypeCode = GetMeasureUnitTypeCode(numeratorMeasureUnit);
+    //    MeasureUnitTypeCode denominatorMeasureUnitTypeCode = GetMeasureUnitTypeCode(denominatorMeasureUnit);
+    //    quantity *= GetExchangeRate(numeratorMeasureUnit);
+    //    quantity /= GetExchangeRate(denominatorMeasureUnit);
 
-        return Create(numeratorMeasureUnitTypeCode, quantity, denominatorMeasureUnitTypeCode);
+    //    return Create(numeratorMeasureUnitTypeCode, quantity, denominatorMeasureUnitTypeCode);
 
-        #region Local methods
-        void validateNumeratorMeasureUnit()
-        {
-            _ = DefinedMeasureUnit(denominatorMeasureUnit, nameof(denominatorMeasureUnit));
+    //    #region Local methods
+    //    void validateNumeratorMeasureUnit()
+    //    {
+    //        ValidateMeasureUnit(numeratorMeasureUnit, nameof(numeratorMeasureUnit));
 
-            MeasureUnitTypeCode numeratorMeasureUnitTypeCode = GetMeasureUnitTypeCode(denominatorMeasureUnit);
+    //        MeasureUnitTypeCode numeratorMeasureUnitTypeCode = GetMeasureUnitTypeCode(numeratorMeasureUnit);
 
-            ValidateNumeratorMeasureUnitTypeCode(numeratorMeasureUnitTypeCode);
-        }
-        #endregion
-    }
+    //        ValidateMeasureUnitTypeCode(numeratorMeasureUnitTypeCode, nameof(numeratorMeasureUnit)); // TODO
+    //    }
+    //    #endregion
+    //}
 
-    public IProportion Create(IMeasure numerator, Enum denominatorMeasureUnit)
-    {
-        decimal quantity = NullChecked(numerator, nameof(numerator)).GetDecimalQuantity();
-        Enum numeratorMeasureUnit = GetMeasureUnit(numerator);
+    //public IProportion Create(IMeasure numerator, Enum denominatorMeasureUnit)
+    //{
+    //    decimal quantity = NullChecked(numerator, nameof(numerator)).GetDecimalQuantity();
+    //    Enum numeratorMeasureUnit = GetMeasureUnit(numerator);
 
-        return Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit);
-    }
+    //    return Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit);
+    //}
 
-    public IBaseRate Create(IQuantifiable numerator, Enum denominatorMeasureUnit)
-    {
-        if (NullChecked(numerator, nameof(numerator)) is not IMeasure measure)
-        {
-            throw ArgumentTypeOutOfRangeException(nameof(numerator), numerator);
-        }
+    public abstract IBaseRate Create(IQuantifiable numerator, Enum denominatorMeasureUnit);
+    //{
+    //    if (NullChecked(numerator, nameof(numerator)) is not IMeasure measure)
+    //    {
+    //        throw ArgumentTypeOutOfRangeException(nameof(numerator), numerator);
+    //    }
 
-        decimal quantity = measure.GetDecimalQuantity();
-        Enum numeratorMeasureUnit = GetMeasureUnit(measure);
+    //    decimal quantity = measure.GetDecimalQuantity();
+    //    Enum numeratorMeasureUnit = GetMeasureUnit(measure);
 
-        return Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit);
-    }
+    //    return Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit);
+    //}
     #endregion
 
     #region Private methods

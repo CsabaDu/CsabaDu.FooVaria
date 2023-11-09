@@ -3,11 +3,11 @@
 internal sealed class Density : Proportion<IDensity, WeightUnit, VolumeUnit>, IDensity
 {
     #region Constructors
-    public Density(IProportionFactory factory, IBaseRate baseRate) : base(factory, baseRate)
+    public Density(IProportionFactory<IDensity, WeightUnit, VolumeUnit> factory, IBaseRate baseRate) : base(factory, baseRate)
     {
     }
 
-    public Density(IProportionFactory factory, MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode)
+    public Density(IProportionFactory<IDensity, WeightUnit, VolumeUnit> factory, MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode)
     {
     }
     #endregion

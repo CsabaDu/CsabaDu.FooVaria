@@ -1,4 +1,5 @@
-﻿namespace CsabaDu.FooVaria.Common.Statics;
+﻿
+namespace CsabaDu.FooVaria.Common.Statics;
 
 public static class Extensions
 {

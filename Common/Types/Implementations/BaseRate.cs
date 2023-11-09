@@ -114,10 +114,10 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
         base.ValidateMeasureUnit(measureUnit, paramName);
     }
 
-    public override sealed void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, string paramName)
-    {
-        base.ValidateMeasureUnitTypeCode(measureUnitTypeCode, paramName);
-    }
+    //public override sealed void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, string paramName)
+    //{
+    //    base.ValidateMeasureUnitTypeCode(measureUnitTypeCode, paramName);
+    //}
     #endregion
 
     #region Abstract methods
