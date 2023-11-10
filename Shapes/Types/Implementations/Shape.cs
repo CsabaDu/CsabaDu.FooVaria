@@ -268,9 +268,7 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 
         public override sealed void Validate(IRootObject? rootObject, string paramName)
         {
-            ValidateCommonBaseAction = () => validateShape();
-
-            Validate(this, rootObject, paramName);
+            Validate(this, rootObject, validateShape, paramName);
 
             #region Local methods
             void validateShape()

@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Proportions.Types.Implementations.ProportionTypes;
+﻿using CsabaDu.FooVaria.Measurables.Types.MeasureTypes;
+
+namespace CsabaDu.FooVaria.Proportions.Types.Implementations.ProportionTypes;
 
 internal sealed class Frequency : Proportion<IFrequency, Pieces, TimePeriodUnit>, IFrequency
 {
@@ -9,6 +11,11 @@ internal sealed class Frequency : Proportion<IFrequency, Pieces, TimePeriodUnit>
 
     public Frequency(IProportionFactory<IFrequency, Pieces, TimePeriodUnit> factory, MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode)
     {
+    }
+
+    public IFrequency GetProportion(IPieceCount numerator, ITimePeriod denominator)
+    {
+        throw new NotImplementedException();
     }
     #endregion
 }

@@ -100,6 +100,11 @@
 
             return measure.GetMeasure(quantity, measureUnit);
         }
+
+        public IProportion GetProportion(IBaseMeasure numerator, IBaseMeasure denominator)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
         #endregion
         #endregion

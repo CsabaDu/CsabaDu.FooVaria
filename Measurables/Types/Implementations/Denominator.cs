@@ -137,9 +137,14 @@ internal sealed class Denominator : BaseMeasure, IDenominator
 
     public override void Validate(IRootObject? rootObject, string paramName)
     {
-        ValidateCommonBaseAction = () => ValidateBaseMeasure(this, rootObject!, paramName);
+        Validate(this, rootObject, validateDenominator, paramName);
 
-        Validate(this, rootObject, paramName);
+        #region Local methods
+        void validateDenominator()
+        {
+            ValidateBaseMeasure(this, rootObject!, paramName);
+        }
+        #endregion
     }
     #endregion
     #endregion

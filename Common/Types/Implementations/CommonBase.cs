@@ -23,10 +23,6 @@ public abstract class CommonBase : ICommonBase
 
     #region Properties
     public IFactory Factory { get; init; }
-
-    #region Protected properties
-    protected Action? ValidateCommonBaseAction { private get; set; }
-    #endregion
     #endregion
 
     #region Public methods
@@ -38,32 +34,43 @@ public abstract class CommonBase : ICommonBase
 
     public virtual void Validate(IRootObject? rootObject, string paramName)
     {
-        ValidateCommonBaseAction = () => _ = GetValidCommonBase(this, rootObject!, paramName);
+        Validate(this, rootObject, validateCommonBase, paramName);
 
-        Validate(this, rootObject, paramName);
+        #region Local methods
+        void validateCommonBase()
+        {
+            _ = GetValidCommonBase(this, rootObject!, paramName);
+        }
+        #endregion
     }
     #endregion
     #endregion
 
     #region Protected methods
-    protected void Validate<T>(T commonBase, IRootObject? rootObject, string paramName) where T : class, ICommonBase
+    protected static void Validate<T>(T commonBase, IRootObject? rootObject, Action validateCommonBase, string paramName) where T : class, ICommonBase
     {
         _ = NullChecked(rootObject, paramName);
 
         if (rootObject is IFactory factory)
         {
-            ValidateInterfaces(commonBase.Factory, factory, paramName);
+            validateFactory();
         }
-        else if (rootObject is ICommonBase && ValidateCommonBaseAction != null)
+        else if (rootObject is ICommonBase)
         {
-            ValidateCommonBaseAction();
-
-            ValidateCommonBaseAction = null;
+            validateCommonBase();
         }
         else
         {
             throw new InvalidOperationException(null!);
         }
+
+        #region Local methods
+        void validateFactory()
+        {
+            ValidateInterfaces(commonBase.Factory, factory, paramName);
+        }
+        #endregion
+
     }
 
     #region Static methods

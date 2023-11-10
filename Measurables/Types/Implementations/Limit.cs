@@ -153,9 +153,14 @@ internal sealed class Limit : BaseMeasure, ILimit
 
     public override void Validate(IRootObject? rootObject, string paramName)
     {
-        ValidateCommonBaseAction = () => ValidateBaseMeasure(this, rootObject!, paramName);
+        Validate(this, rootObject, validateLimit, paramName);
 
-        Validate(this, rootObject, paramName);
+        #region Local methods
+        void validateLimit()
+        {
+            ValidateBaseMeasure(this, rootObject!, paramName);
+        }
+        #endregion
     }
     #endregion
     #endregion

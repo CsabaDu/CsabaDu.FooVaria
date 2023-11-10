@@ -171,9 +171,14 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
 
         public override sealed void Validate(IRootObject? rootObject, string paramName)
         {
-            ValidateCommonBaseAction = () => ValidateBaseMeasure(this, rootObject!, paramName);
+            Validate(this, rootObject, validateMeasure, paramName);
 
-            Validate(this, rootObject, paramName);
+            #region Local methods
+            void validateMeasure()
+            {
+                ValidateBaseMeasure(this, rootObject!, paramName);
+            }
+            #endregion
         }
         #endregion
         #endregion

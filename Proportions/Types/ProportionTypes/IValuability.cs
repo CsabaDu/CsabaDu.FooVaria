@@ -1,5 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Proportions.Types.ProportionTypes;
+﻿using CsabaDu.FooVaria.Measurables.Types.MeasureTypes;
 
-public interface IValuability : IProportion<IValuability, Currency, WeightUnit>
+namespace CsabaDu.FooVaria.Proportions.Types.ProportionTypes;
+
+public interface IValuability : IProportion<IValuability, Currency, WeightUnit>, IMeasuresProportion<IValuability, ICash, IWeight>
 {
 }

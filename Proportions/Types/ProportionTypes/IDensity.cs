@@ -1,5 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Proportions.Types.ProportionTypes;
+﻿using CsabaDu.FooVaria.Measurables.Types.MeasureTypes;
 
-public interface IDensity : IProportion<IDensity, WeightUnit, VolumeUnit>
+namespace CsabaDu.FooVaria.Proportions.Types.ProportionTypes;
+
+public interface IDensity : IProportion<IDensity, WeightUnit, VolumeUnit>, IMeasuresProportion<IDensity, IWeight, IVolume>
 {
 }

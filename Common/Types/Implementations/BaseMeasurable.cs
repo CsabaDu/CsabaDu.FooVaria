@@ -69,9 +69,14 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
 
     public override void Validate(IRootObject? rootObject, string paramName)
     {
-        ValidateCommonBaseAction = () => _ = GetValidBaseMeasurable(this, rootObject!, paramName);
+        Validate(this, rootObject, validateBaseMeasurable, paramName);
 
-        Validate(this, rootObject, paramName);
+        #region Local methods
+        void validateBaseMeasurable()
+        {
+            _ = GetValidBaseMeasurable(this, rootObject!, paramName);
+        }
+        #endregion
     }
     #endregion
 

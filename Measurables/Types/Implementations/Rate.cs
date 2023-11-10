@@ -214,9 +214,7 @@ internal abstract class Rate : Measurable, IRate
 
     public override sealed void Validate(IRootObject? rootObject, string paramName)
     {
-        ValidateCommonBaseAction = () => validateRate();
-
-        Validate(this, rootObject, paramName);
+        Validate(this, rootObject, validateRate, paramName);
 
         #region Local methods
         void validateRate()

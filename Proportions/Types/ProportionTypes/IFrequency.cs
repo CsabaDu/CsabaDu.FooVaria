@@ -1,5 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Proportions.Types.ProportionTypes;
+﻿using CsabaDu.FooVaria.Measurables.Types.MeasureTypes;
 
-public interface IFrequency : IProportion<IFrequency, Pieces, TimePeriodUnit>
+namespace CsabaDu.FooVaria.Proportions.Types.ProportionTypes;
+
+public interface IFrequency : IProportion<IFrequency, Pieces, TimePeriodUnit>, IMeasuresProportion<IFrequency, IPieceCount, ITimePeriod>
 {
 }

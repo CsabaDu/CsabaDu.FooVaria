@@ -229,19 +229,12 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     public override void Validate(IRootObject? rootObject, string paramName)
     {
-        ValidateCommonBaseAction = () => validateBaseMeasure(this, rootObject!, paramName);
-
-        Validate(this, rootObject, paramName);
+        Validate(this, rootObject, validateBaseMeasure, paramName);
 
         #region Local methods
-        static void validateBaseMeasure<T>(T commonBase, IRootObject other, string paramName) where T : class, IBaseMeasure
+        void validateBaseMeasure()
         {
-            T baseMeasure = GetValidBaseMeasurable(commonBase, other, paramName);
-            object quantity = baseMeasure.Quantity;
-
-            if (GetValidQuantityOrNull(commonBase, baseMeasure.Quantity) != null) return;
-
-            throw QuantityArgumentOutOfRangeException(paramName, (ValueType)quantity);
+            _ = GetValidBaseMeasure(this, rootObject!, paramName);
         }
         #endregion
     }
@@ -292,6 +285,16 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     }
 
     #region Static methods
+    protected static T GetValidBaseMeasure<T>(T commonBase, IRootObject other, string paramName) where T : class, IBaseMeasure
+    {
+        T baseMeasure = GetValidBaseMeasurable(commonBase, other, paramName);
+        object quantity = baseMeasure.Quantity;
+
+        if (GetValidQuantityOrNull(commonBase, baseMeasure.Quantity) != null) return baseMeasure;
+
+        throw QuantityArgumentOutOfRangeException(paramName, (ValueType)quantity);
+    }
+    
     protected static object? GetValidQuantityOrNull(IBaseMeasure baseMeasure, object? quantity)
     {
         quantity = ((ValueType?)quantity)?.ToQuantity(baseMeasure.QuantityTypeCode);

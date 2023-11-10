@@ -90,21 +90,12 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
 
     public override sealed void Validate(IRootObject? rootObject, string paramName)
     {
-        ValidateCommonBaseAction = () => validateBaseRate(this, rootObject!, paramName);
-
-        Validate(this, rootObject, paramName);
+        Validate(this, rootObject, validateBaseRate, paramName);
 
         #region Local methods
-        static void validateBaseRate<T>(T commonBase, IRootObject other, string paramName) where T : class, IBaseRate
+        void validateBaseRate()
         {
-            T baseRate = GetValidBaseMeasurable(commonBase, other, paramName);
-
-            commonBase.ValidateQuantity(baseRate.DefaultQuantity, paramName);
-
-            MeasureUnitTypeCode measureUnitTypeCode = commonBase.GetNumeratorMeasureUnitTypeCode();
-            MeasureUnitTypeCode otherMeasureUnitTypeCode = baseRate.GetNumeratorMeasureUnitTypeCode();
-
-            _ = GetValidBaseMeasurable(baseRate, measureUnitTypeCode, otherMeasureUnitTypeCode, paramName);
+            _ = GetValidBaseRate(this, rootObject!, paramName);
         }
         #endregion
     }
@@ -162,6 +153,24 @@ public abstract class BaseRate : BaseMeasurable, IBaseRate
     public static decimal Proportionals(IBaseRate baseRate, IBaseRate other)
     {
         return NullChecked(baseRate, nameof(baseRate)).ProportionalTo(other);
+    }
+    #endregion
+    #endregion
+
+    #region Protected methods
+    #region Static methods
+    protected static T GetValidBaseRate<T>(T commonBase, IRootObject other, string paramName) where T : class, IBaseRate
+    {
+        T baseRate = GetValidBaseMeasurable(commonBase, other, paramName);
+
+        commonBase.ValidateQuantity(baseRate.DefaultQuantity, paramName);
+
+        MeasureUnitTypeCode measureUnitTypeCode = commonBase.GetNumeratorMeasureUnitTypeCode();
+        MeasureUnitTypeCode otherMeasureUnitTypeCode = baseRate.GetNumeratorMeasureUnitTypeCode();
+
+        _ = GetValidBaseMeasurable(baseRate, measureUnitTypeCode, otherMeasureUnitTypeCode, paramName);
+
+        return baseRate;
     }
     #endregion
     #endregion
