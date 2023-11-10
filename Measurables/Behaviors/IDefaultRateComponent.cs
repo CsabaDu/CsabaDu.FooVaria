@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Behaviors
 {
-    public interface IDefaultRateComponent
+    public interface IDefaultRateComponent : IBaseMeasurable
     {
     }
 
