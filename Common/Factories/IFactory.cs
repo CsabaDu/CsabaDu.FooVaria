@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Types;
-
-namespace CsabaDu.FooVaria.Common.Factories
+﻿namespace CsabaDu.FooVaria.Common.Factories
 {
     public interface IFactory : IRootObject
     {
@@ -9,6 +7,5 @@ namespace CsabaDu.FooVaria.Common.Factories
     public interface IFactory<T> : IFactory where T : class, ICommonBase
     {
         T Create(T other);
-        //T CreateDefault();
     }
 }

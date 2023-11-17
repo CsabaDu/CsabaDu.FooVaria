@@ -33,7 +33,7 @@ internal sealed class Denominator : BaseMeasure, IDenominator
         return GetFactory().Create(measurement);
     }
 
-    public IDenominator GetDenominator(IBaseMeasure baseMeasure)
+    public IDenominator GetDenominator(IRateComponent baseMeasure)
     {
         return (IDenominator)GetFactory().Create(baseMeasure);
     }
@@ -83,7 +83,7 @@ internal sealed class Denominator : BaseMeasure, IDenominator
         return GetDenominator(name, GetDefaultRateComponentQuantity());
     }
 
-    public IDenominator GetDenominator(IBaseMeasure baseMeasure, ValueType quantity)
+    public IDenominator GetDenominator(IRateComponent baseMeasure, ValueType quantity)
     {
         return GetFactory().Create(baseMeasure.Measurement, quantity);
     }
@@ -99,13 +99,13 @@ internal sealed class Denominator : BaseMeasure, IDenominator
     }
 
     #region Override methods
-    public override bool Equals(IBaseMeasure? other)
+    public override bool Equals(IRateComponent? other)
     {
         return other is IDenominator
             && base.Equals(other);
     }
 
-    public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit)
+    public override IRateComponent GetBaseMeasure(ValueType quantity, Enum measureUnit)
     {
         return GetDenominator(measureUnit, quantity);
     }
@@ -130,11 +130,6 @@ internal sealed class Denominator : BaseMeasure, IDenominator
         return TypeCode.Decimal;
     }
 
-    public override IDenominator GetDefault()
-    {
-        return GetDefaultRateComponent();
-    }
-
     public override void Validate(IRootObject? rootObject, string paramName)
     {
         Validate(this, rootObject, validateDenominator, paramName);
@@ -147,7 +142,12 @@ internal sealed class Denominator : BaseMeasure, IDenominator
         #endregion
     }
 
-    public override IBaseMeasure GetBaseMeasure(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
+    public override IRateComponent GetBaseMeasure(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
+    {
+        throw new NotImplementedException();
+    }
+
+    public IDenominator GetDefault(MeasureUnitTypeCode measureUnitTypeCode)
     {
         throw new NotImplementedException();
     }

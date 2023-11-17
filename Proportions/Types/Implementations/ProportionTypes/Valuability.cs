@@ -13,11 +13,16 @@ internal sealed class Valuability : Proportion<IValuability, Currency, WeightUni
     {
     }
 
-    public Valuability(IValuabilityFactory factory, MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode)
+    public Valuability(IValuabilityFactory factory, decimal defaultQuantity) : base(factory, MeasureUnitTypeCode.Currency, defaultQuantity, MeasureUnitTypeCode.WeightUnit)
     {
     }
 
     public override IBaseRate GetBaseRate(IQuantifiable numerator, IBaseMeasurable denominator)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override IBaseRate GetBaseRate(IQuantifiable numerator, Enum denominatorMeasureUnit)
     {
         throw new NotImplementedException();
     }
@@ -33,6 +38,11 @@ internal sealed class Valuability : Proportion<IValuability, Currency, WeightUni
     }
 
     public IValuability GetProportion(ICash numerator, IDenominator denominator)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override IValuability GetProportion(IRateComponent numerator, WeightUnit denominatorMeasureUnit)
     {
         throw new NotImplementedException();
     }

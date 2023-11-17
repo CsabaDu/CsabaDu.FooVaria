@@ -69,7 +69,7 @@ public sealed class MeasureFactory : BaseMeasureFactory, IMeasureFactory
         return Create(quantity, measureUnit);
     }
 
-    public override IMeasure Create(IBaseMeasure baseMeasure)
+    public override IMeasure Create(IRateComponent baseMeasure)
     {
         var (quantity, measurement) = GetBaseMeasureParams(baseMeasure);
         Enum measureUnit = measurement.GetMeasureUnit();

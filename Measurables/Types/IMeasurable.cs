@@ -2,7 +2,7 @@
 
 public interface IMeasurable : IBaseMeasurable, IQuantityTypeCode
 {
-    IMeasurable GetDefault();
+    //IMeasurable GetDefault();
 
     //IMeasurable GetMeasurable(IMeasurable other);
 }

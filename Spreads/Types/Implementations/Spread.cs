@@ -48,7 +48,7 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         #region Sealed methods
         public override sealed ISpread? ExchangeTo(Enum measureUnit)
         {
-            IBaseMeasure? exchanged = ((IBaseMeasure)GetSpreadMeasure()).ExchangeTo(measureUnit);
+            IRateComponent? exchanged = ((IRateComponent)GetSpreadMeasure()).ExchangeTo(measureUnit);
 
             if (exchanged == null) return null;
 
@@ -83,7 +83,7 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         #endregion
     }
 
-    internal abstract class Spread<T, U, W> : Spread, ISpread<T, U, W> where T : class, ISpread where U : class, IMeasure, ISpreadMeasure, IDefaultBaseMeasure where W : struct, Enum
+    internal abstract class Spread<T, U, W> : Spread, ISpread<T, U, W> where T : class, ISpread where U : class, IMeasure, ISpreadMeasure, IDefaultRateComponent where W : struct, Enum
     {
         #region Constructors
         protected Spread(T other) : base(other)

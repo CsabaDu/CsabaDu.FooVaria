@@ -69,7 +69,7 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
     #endregion
 
     #region Abstract methods
-    public abstract IMeasurable GetDefault();
+    //public abstract IMeasurable GetDefault();
     //public abstract IMeasurable GetMeasurable(IMeasurable other);
     #endregion
     #endregion

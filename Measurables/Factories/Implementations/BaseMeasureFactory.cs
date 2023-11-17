@@ -23,7 +23,7 @@ public abstract class BaseMeasureFactory : IBaseMeasureFactory
     #endregion
     #endregion
 
-    protected static (ValueType Quantity, IMeasurement Measurement) GetBaseMeasureParams(IBaseMeasure baseMeasure)
+    protected static (ValueType Quantity, IMeasurement Measurement) GetBaseMeasureParams(IRateComponent baseMeasure)
     {
         IMeasurement measurement = NullChecked(baseMeasure, nameof(baseMeasure)).Measurement;
         ValueType quantity = (ValueType)baseMeasure.Quantity;
@@ -31,6 +31,6 @@ public abstract class BaseMeasureFactory : IBaseMeasureFactory
         return (quantity, measurement);
     }
 
-    public abstract IBaseMeasure Create(IBaseMeasure other);
+    public abstract IRateComponent Create(IRateComponent other);
     public abstract IBaseMeasurable CreateDefault(MeasureUnitTypeCode measureUnitTypeCode);
 }

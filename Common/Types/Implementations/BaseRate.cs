@@ -103,10 +103,18 @@
             base.ValidateMeasureUnit(measureUnit, paramName);
         }
 
-        //public override sealed void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, string paramName)
-        //{
-        //    base.ValidateMeasureUnitTypeCode(measureUnitTypeCode, paramName);
-        //}
+        public override IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
+        {
+            yield return GetNumeratorMeasureUnitTypeCode();
+            yield return MeasureUnitTypeCode;
+        }
+
+        public override sealed void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, string paramName)
+        {
+            if (GetMeasureUnitTypeCodes().Contains(measureUnitTypeCode)) return;
+
+            throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode, paramName);
+        }
         #endregion
 
         #region Abstract methods
@@ -197,9 +205,19 @@
             #endregion
         }
 
-        public IBaseRate GetBaseRate(IQuantifiable numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
+        public IBaseRate GetBaseRate(IBaseMeasureTemp numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
         {
             return GetFactory().Create(numerator, denominatorMeasureUnitTypeCode);
+        }
+
+        public abstract IBaseRate GetBaseRate(IBaseMeasureTemp numerator, Enum denominatorMeasureUnit);
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        public IBaseRate GetBaseRate(IBaseMeasureTemp numerator, IBaseMeasurable denominator)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

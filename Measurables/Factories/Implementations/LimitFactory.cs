@@ -68,7 +68,7 @@ public sealed class LimitFactory : BaseMeasureFactory, ILimitFactory
         return Create(measurement, quantity, limitMode);
     }
 
-    public ILimit Create(IBaseMeasure baseMeasure, LimitMode limitMode)
+    public ILimit Create(IRateComponent baseMeasure, LimitMode limitMode)
     {
         var (quantity, measurement) = GetBaseMeasureParams(baseMeasure);
 
@@ -125,7 +125,7 @@ public sealed class LimitFactory : BaseMeasureFactory, ILimitFactory
         throw new InvalidOperationException(null);
     }
 
-    public override ILimit Create(IBaseMeasure other)
+    public override ILimit Create(IRateComponent other)
     {
         if (other is ILimit limit) return Create(limit);
 

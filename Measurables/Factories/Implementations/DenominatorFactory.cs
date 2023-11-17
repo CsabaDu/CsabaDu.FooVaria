@@ -84,7 +84,7 @@ public sealed class DenominatorFactory : BaseMeasureFactory, IDenominatorFactory
         return Create(measurement, quantity);
     }
 
-    public override IDenominator Create(IBaseMeasure baseMeasure)
+    public override IDenominator Create(IRateComponent baseMeasure)
     {
         if (baseMeasure is IDenominator denominator) return Create(denominator);
 

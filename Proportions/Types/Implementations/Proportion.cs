@@ -32,7 +32,7 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
             return GetFactory().Create(baseRate);
         }
 
-        public IProportion GetProportion(IBaseMeasure numerator, IBaseMeasure denominator)
+        public IProportion GetProportion(IRateComponent numerator, IRateComponent denominator)
         {
             return GetFactory().Create(numerator, denominator);
         }
@@ -44,7 +44,7 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
             return GetFactory().Create(numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode);
         }
 
-        public override sealed IProportion GetBaseRate(IQuantifiable numerator, Enum denominatorMeasureUnit)
+        public override sealed IProportion GetBaseRate(IBaseMeasureTemp numerator, Enum denominatorMeasureUnit)
         {
             return (IProportion)GetFactory().Create(numerator, denominatorMeasureUnit);
         }
@@ -52,6 +52,10 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
         public override IProportionFactory GetFactory()
         {
             return (IProportionFactory)Factory;
+        }
+        public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
+        {
+            return base.GetMeasureUnitTypeCodes();
         }
 
         public override sealed MeasureUnitTypeCode GetNumeratorMeasureUnitTypeCode()
@@ -121,19 +125,7 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
             return (IProportionFactory<T, U>)Factory;
         }
 
-        public override void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, string paramName)
-        {
-            ValidateMeasureUnitTypeCode(measureUnitTypeCode, typeof(U), paramName);
-        }
-
-        protected static void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, Type validMeasureUnitType, string paramName)
-        {
-            Type measureUnitType = Defined(measureUnitTypeCode, paramName).GetMeasureUnitType();
-
-            if (measureUnitType == validMeasureUnitType) return;
-
-            throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode, paramName);
-        }
+        public abstract T GetProportion(IRateComponent numerator, U denominatorMeasureUnit);
     }
 
     internal abstract class Proportion<T, W, U> : Proportion<T, U>, IProportion<T, W, U> where T : class, IProportion<T, W, U>, IMeasureProportion where U : struct, Enum where W : struct, Enum
@@ -165,12 +157,6 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
         {
             return (IProportionFactory<T, W, U>)Factory;
         }
-
-        public override sealed void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, string paramName)
-        {
-            ValidateMeasureUnitTypeCode(measureUnitTypeCode, typeof(W), paramName);
-        }
-
     }
 
 }

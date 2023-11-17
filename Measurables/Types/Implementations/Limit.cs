@@ -62,7 +62,7 @@ internal sealed class Limit : BaseMeasure, ILimit
         return GetFactory().Create(measurement, quantity, limitMode);
     }
 
-    public ILimit GetLimit(IBaseMeasure baseMeasure, LimitMode limitMode)
+    public ILimit GetLimit(IRateComponent baseMeasure, LimitMode limitMode)
     {
         return GetFactory().Create(baseMeasure, limitMode);
     }
@@ -115,13 +115,13 @@ internal sealed class Limit : BaseMeasure, ILimit
     }
 
     #region Override methods
-    public override bool Equals(IBaseMeasure? other)
+    public override bool Equals(IRateComponent? other)
     {
         return other is ILimit
             && base.Equals(other);
     }
 
-    public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit)
+    public override IRateComponent GetBaseMeasure(ValueType quantity, Enum measureUnit)
     {
         return GetLimit(measureUnit, quantity, default);
     }
@@ -141,7 +141,7 @@ internal sealed class Limit : BaseMeasure, ILimit
         return TypeCode.UInt64;
     }
 
-    public override ILimit GetDefault()
+    public ILimit GetDefault(MeasureUnitTypeCode measureUnitTypeCode)
     {
         return GetDefaultRateComponent();
     }
@@ -163,7 +163,7 @@ internal sealed class Limit : BaseMeasure, ILimit
         #endregion
     }
 
-    public override IBaseMeasure GetBaseMeasure(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
+    public override IRateComponent GetBaseMeasure(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
     {
         throw new NotImplementedException();
     }

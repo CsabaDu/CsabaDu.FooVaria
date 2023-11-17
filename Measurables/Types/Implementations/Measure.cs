@@ -30,7 +30,7 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
             return FitsIn(limit, limit?.LimitMode);
         }
 
-        public bool? FitsIn(IBaseMeasure? baseMeasure, LimitMode? limitMode)
+        public bool? FitsIn(IRateComponent? baseMeasure, LimitMode? limitMode)
         {
             bool isLimitModeNull = limitMode == null;
 
@@ -40,7 +40,7 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
 
             if (isLimitModeNull) return CompareTo(baseMeasure) <= 0;
 
-            IBaseMeasure ceilingBaseMeasure = baseMeasure.Round(RoundingMode.Ceiling);
+            IRateComponent ceilingBaseMeasure = baseMeasure.Round(RoundingMode.Ceiling);
             baseMeasure = getRoundedBaseMeasure();
 
             if (isBaseMeasureNull()) return null;
@@ -60,7 +60,7 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
                 return baseMeasure == null;
             }
 
-            IBaseMeasure? getRoundedBaseMeasure()
+            IRateComponent? getRoundedBaseMeasure()
             {
                 return limitMode switch
                 {
@@ -77,7 +77,7 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
             #endregion
         }
 
-        public override IBaseMeasure GetBaseMeasure(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
+        public override IRateComponent GetBaseMeasure(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
         {
             throw new NotImplementedException();
         }
@@ -121,7 +121,7 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
 
         public IMeasure GetMeasure(Enum measureUnit)
         {
-            IBaseMeasure excchanged = ExchangeTo(measureUnit) ?? throw InvalidMeasureUnitEnumArgumentException(measureUnit);
+            IRateComponent excchanged = ExchangeTo(measureUnit) ?? throw InvalidMeasureUnitEnumArgumentException(measureUnit);
 
             return GetMeasure(excchanged);
         }
@@ -140,11 +140,11 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
 
         #region Override methods
         #region Sealed methods
-        public override sealed IMeasure GetDefault()
-        {
-            return GetDefault(this);
-        }
-        public override sealed bool Equals(IBaseMeasure? other)
+        //public override sealed IMeasure GetDefault()
+        //{
+        //    return GetDefault(this);
+        //}
+        public override sealed bool Equals(IRateComponent? other)
         {
             return other is IMeasure
                 && base.Equals(other);
@@ -189,16 +189,18 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
         #endregion
 
         #region Abstract methods
-        public abstract IMeasure GetMeasure(IBaseMeasure baseMeasure);
+        public abstract IMeasure GetMeasure(IRateComponent baseMeasure);
         #endregion
         #endregion
     }
 
-    internal abstract class Measure<T, U> : Measure, IMeasure<T, U> where T : class, IMeasure, IDefaultBaseMeasure where U : struct
+    internal abstract class Measure<T, U> : Measure, IMeasure<T, U> where T : class, IMeasure, IDefaultRateComponent where U : struct
     {
         private protected Measure(IMeasureFactory factory, ValueType quantity, Enum measureUnit) : base(factory, quantity, measureUnit)
         {
         }
+
+        public abstract T GetDefault(MeasureUnitTypeCode measureUnitTypeCode);
 
         #region Local methods
         public T GetDefaultRateComponent()
@@ -246,7 +248,7 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
         #endregion
     }
 
-    internal abstract class Measure<T, U, W> : Measure<T, U>, IMeasure<T, U, W> where T : class, IMeasure<T, U>, IDefaultBaseMeasure where U : struct where W : struct, Enum
+    internal abstract class Measure<T, U, W> : Measure<T, U>, IMeasure<T, U, W> where T : class, IMeasure<T, U>, IDefaultRateComponent where U : struct where W : struct, Enum
     {
         #region Enums
         protected enum ConvertMode
@@ -285,7 +287,12 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
 
         #region Override methods
         #region Sealed methods
-        public override sealed T GetMeasure(IBaseMeasure baseMeasure)
+        public override sealed T GetDefault(MeasureUnitTypeCode measureUnitTypeCode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override sealed T GetMeasure(IRateComponent baseMeasure)
         {
             return GetMeasure(getValidQuantity(), baseMeasure.Measurement);
 

@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
-internal abstract class BaseMeasure : Measurable, IBaseMeasure
+internal abstract class BaseMeasure : Measurable, IRateComponent
 {
     #region Constructors
     private protected BaseMeasure(IBaseMeasureFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
@@ -32,7 +32,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     #endregion
 
     #region Public methods
-    public int CompareTo(IBaseMeasure? other)
+    public int CompareTo(IRateComponent? other)
     {
         if (other == null) return 1;
 
@@ -41,7 +41,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return DefaultQuantity.CompareTo(other.DefaultQuantity);
     }
 
-    public IBaseMeasure? ExchangeTo(Enum measureUnit)
+    public IRateComponent? ExchangeTo(Enum measureUnit)
     {
         if (!IsExchangeableTo(measureUnit)) return null;
 
@@ -114,7 +114,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return GetValidQuantityTypeCodeOrNull(quantityTypeCode);
     }
 
-    public IBaseMeasure? GetRateComponent(IRate rate, RateComponentCode rateComponentCode)
+    public IRateComponent? GetRateComponent(IRate rate, RateComponentCode rateComponentCode)
     {
         return NullChecked(rate, nameof(rate))[rateComponentCode];
     }
@@ -129,14 +129,14 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return Measurement.IsExchangeableTo(context);
     }
 
-    public decimal ProportionalTo(IBaseMeasure baseMeasure)
+    public decimal ProportionalTo(IRateComponent baseMeasure)
     {
         if (NullChecked(baseMeasure, nameof(baseMeasure)).IsExchangeableTo(MeasureUnitTypeCode)) return DefaultQuantity / baseMeasure.DefaultQuantity;
 
         throw new ArgumentOutOfRangeException(nameof(baseMeasure), baseMeasure.MeasureUnitTypeCode, null);
     }
 
-    public IBaseMeasure Round(RoundingMode roundingMode)
+    public IRateComponent Round(RoundingMode roundingMode)
     {
         ValueType quantity = (ValueType)GetQuantity(roundingMode);
         Enum measureUnit = Measurement.GetMeasureUnit();
@@ -144,14 +144,14 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return GetBaseMeasure(quantity, measureUnit);
     }
 
-    public bool TryExchangeTo(Enum measureUnit, [NotNullWhen(true)] out IBaseMeasure? exchanged)
+    public bool TryExchangeTo(Enum measureUnit, [NotNullWhen(true)] out IRateComponent? exchanged)
     {
         exchanged = ExchangeTo(measureUnit);
 
         return exchanged != null;
     }
 
-    public bool TryGetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName, [NotNullWhen(true)] out IBaseMeasure? baseMeasure)
+    public bool TryGetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName, [NotNullWhen(true)] out IRateComponent? baseMeasure)
     {
         baseMeasure = null;
 
@@ -242,7 +242,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     #region Sealed methods
     public override sealed bool Equals(object? obj)
     {
-        return obj is IBaseMeasure other && Equals(other);
+        return obj is IRateComponent other && Equals(other);
     }
 
     public override sealed int GetHashCode()
@@ -258,7 +258,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     #endregion
 
     #region Virtual methods
-    public virtual bool Equals(IBaseMeasure? other)
+    public virtual bool Equals(IRateComponent? other)
     {
         return MeasureUnitTypeCode == other?.MeasureUnitTypeCode
             && DefaultQuantity == other?.DefaultQuantity;
@@ -266,7 +266,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     #endregion
 
     #region Abstract methods
-    public abstract IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit);
+    public abstract IRateComponent GetBaseMeasure(ValueType quantity, Enum measureUnit);
     public abstract LimitMode? GetLimitMode();
     #endregion
     #endregion
@@ -285,7 +285,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     }
 
     #region Static methods
-    protected static T GetValidBaseMeasure<T>(T commonBase, IRootObject other, string paramName) where T : class, IBaseMeasure
+    protected static T GetValidBaseMeasure<T>(T commonBase, IRootObject other, string paramName) where T : class, IRateComponent
     {
         T baseMeasure = GetValidBaseMeasurable(commonBase, other, paramName);
         object quantity = baseMeasure.Quantity;
@@ -295,7 +295,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         throw QuantityArgumentOutOfRangeException(paramName, (ValueType)quantity);
     }
     
-    protected static object? GetValidQuantityOrNull(IBaseMeasure baseMeasure, object? quantity)
+    protected static object? GetValidQuantityOrNull(IRateComponent baseMeasure, object? quantity)
     {
         quantity = ((ValueType?)quantity)?.ToQuantity(baseMeasure.QuantityTypeCode);
 
@@ -318,7 +318,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         #endregion
     }
 
-    protected static void ValidateBaseMeasure<T>(T commonBase, IRootObject other, string paramName) where T : class, IBaseMeasure
+    protected static void ValidateBaseMeasure<T>(T commonBase, IRootObject other, string paramName) where T : class, IRateComponent
     {
         T baseMeasure = GetValidBaseMeasurable(commonBase, other, paramName);
         RateComponentCode rateComponentCode = commonBase.GetRateComponentCode();
@@ -338,7 +338,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return null;
     }
 
-    public abstract IBaseMeasure GetBaseMeasure(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity);
+    public abstract IRateComponent GetBaseMeasure(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity);
 
     public decimal GetDefaultQuantity()
     {

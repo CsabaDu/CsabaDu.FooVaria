@@ -16,9 +16,19 @@ public abstract class RateFactory : IRateFactory
     #region Public methods
     #region Abstract methods
     public abstract IMeasurable Create(IMeasurable other);
-    public abstract IBaseRate Create(IQuantifiable numerator, MeasureUnitTypeCode measureUnitTypeCode);
-    public abstract IBaseRate Create(IQuantifiable numerator, Enum denominatorMeasureUnit);
+    public abstract IBaseRate Create(IBaseMeasureTemp numerator, MeasureUnitTypeCode measureUnitTypeCode);
+    public abstract IBaseRate Create(IBaseMeasureTemp numerator, Enum denominatorMeasureUnit);
     public abstract IRate Create(IRate other);
+
+    public IBaseRate Create(IBaseMeasureTemp numerator, IBaseMeasurable denominator)
+    {
+        throw new NotImplementedException();
+    }
+
+    //public IBaseRate Create(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
+    //{
+    //    throw new NotImplementedException();
+    //}
     //public abstract IBaseMeasurable CreateDefault(MeasureUnitTypeCode measureUnitTypeCode);
     #endregion
     #endregion

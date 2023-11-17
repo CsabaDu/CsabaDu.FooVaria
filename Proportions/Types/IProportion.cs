@@ -1,18 +1,16 @@
-﻿using CsabaDu.FooVaria.Measurables.Behaviors;
-
-namespace CsabaDu.FooVaria.Proportions.Types
+﻿namespace CsabaDu.FooVaria.Proportions.Types
 {
-    public interface IProportion : IBaseRate, IDenominate
+    public interface IProportion : IBaseRate
     {
         MeasureUnitTypeCode NumeratorMeasureUnitTypeCode { get; init; }
 
         IProportion GetProportion(IBaseRate baseRate);
-        IProportion GetProportion(IBaseMeasure numerator, IBaseMeasure denominator);
+        IProportion GetProportion(IRateComponent numerator, IRateComponent denominator);
     }
 
     public interface IProportion<out T, in U> : IProportion where T : class, IProportion, IMeasureProportion where U : struct, Enum
     {
-        T GetProportion(IMeasure numerator, U denominatorMeasureUnit);
+        T GetProportion(IRateComponent numerator, U denominatorMeasureUnit);
         decimal GetQuantity(U denominatorMeasureUnit);
     }
 

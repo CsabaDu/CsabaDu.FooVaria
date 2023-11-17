@@ -14,11 +14,16 @@ internal sealed class Density : Proportion<IDensity, WeightUnit, VolumeUnit>, ID
     {
     }
 
-    public Density(IDensityFactory factory, MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode)
+    public Density(IDensityFactory factory, decimal defaultQuantity) : base(factory, MeasureUnitTypeCode.WeightUnit, defaultQuantity, MeasureUnitTypeCode.VolumeUnit)
     {
     }
 
     public override IBaseRate GetBaseRate(IQuantifiable numerator, IBaseMeasurable denominator)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override IBaseRate GetBaseRate(IQuantifiable numerator, Enum denominatorMeasureUnit)
     {
         throw new NotImplementedException();
     }
@@ -34,6 +39,11 @@ internal sealed class Density : Proportion<IDensity, WeightUnit, VolumeUnit>, ID
     }
 
     public IDensity GetProportion(IWeight numerator, IDenominator denominator)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override IDensity GetProportion(IRateComponent numerator, VolumeUnit denominatorMeasureUnit)
     {
         throw new NotImplementedException();
     }

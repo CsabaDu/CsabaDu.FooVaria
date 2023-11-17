@@ -200,7 +200,7 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
             {
                 foreach (IExtent item in GetShapeExtents())
                 {
-                    IBaseMeasure? exchanged = item.ExchangeTo(extentUnit);
+                    IRateComponent? exchanged = item.ExchangeTo(extentUnit);
 
                     if (exchanged is IExtent extent)
                     {
@@ -223,9 +223,9 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
                 return (IBulkBody)GetFactory().SpreadFactory.Create(volume);
             }
 
-            IBaseMeasure? getExchangedSpreadMeasure(Enum measureUnit)
+            IRateComponent? getExchangedSpreadMeasure(Enum measureUnit)
             {
-                IBaseMeasure spreadMeasure = (IBaseMeasure)GetSpreadMeasure();
+                IRateComponent spreadMeasure = (IRateComponent)GetSpreadMeasure();
 
                 return spreadMeasure.ExchangeTo(measureUnit);
             }

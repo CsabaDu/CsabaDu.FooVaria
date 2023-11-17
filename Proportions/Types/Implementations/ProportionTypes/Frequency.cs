@@ -13,11 +13,16 @@ internal sealed class Frequency : Proportion<IFrequency, Pieces, TimePeriodUnit>
     {
     }
 
-    public Frequency(IFrequencyFactory factory, MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode)
+    public Frequency(IFrequencyFactory factory, decimal defaultQuantity) : base(factory, MeasureUnitTypeCode.Pieces, defaultQuantity, MeasureUnitTypeCode.TimePeriodUnit)
     {
     }
 
     public override IBaseRate GetBaseRate(IQuantifiable numerator, IBaseMeasurable denominator)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override IBaseRate GetBaseRate(IQuantifiable numerator, Enum denominatorMeasureUnit)
     {
         throw new NotImplementedException();
     }
@@ -33,6 +38,11 @@ internal sealed class Frequency : Proportion<IFrequency, Pieces, TimePeriodUnit>
     }
 
     public IFrequency GetProportion(IPieceCount numerator, IDenominator denominator)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override IFrequency GetProportion(IRateComponent numerator, TimePeriodUnit denominatorMeasureUnit)
     {
         throw new NotImplementedException();
     }
