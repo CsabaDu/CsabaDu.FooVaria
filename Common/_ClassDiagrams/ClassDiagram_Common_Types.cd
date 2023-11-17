@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Interface Name="CsabaDu.FooVaria.Common.Types.IBaseMeasurable" Collapsed="true">
+    <Position X="3.75" Y="3.75" Width="1.75" />
+    <InheritanceLine Type="CsabaDu.FooVaria.Common.Types.ICommonBase" FixedFromPoint="true">
+      <Path>
+        <Point X="4.625" Y="3.191" />
+        <Point X="4.625" Y="3.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\IBaseMeasurable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Common.Types.IBaseRate" Collapsed="true">
+    <Position X="1.5" Y="7.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Types\IBaseRate.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Common.Types.IBaseShape" Collapsed="true">
+    <Position X="5.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>Types\IBaseShape.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Common.Types.IBaseSpread" Collapsed="true">
+    <Position X="5.75" Y="5.75" Width="1.5" />
+    <InheritanceLine Type="CsabaDu.FooVaria.Common.Types.IBaseMeasurable" FixedFromPoint="true">
+      <Path>
+        <Point X="4.875" Y="4.829" />
+        <Point X="4.875" Y="5.375" />
+        <Point X="6.5" Y="5.375" />
+        <Point X="6.5" Y="5.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Types\IBaseSpread.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Common.Types.IBody" Collapsed="true">
+    <Position X="7.75" Y="7.75" Width="1.5" />
+    <InheritanceLine Type="CsabaDu.FooVaria.Common.Types.IBaseSpread" FixedFromPoint="true">
+      <Path>
+        <Point X="6.75" Y="6.959" />
+        <Point X="6.75" Y="7.375" />
+        <Point X="8.5" Y="7.375" />
+        <Point X="8.5" Y="7.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\IBody.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Common.Types.ICommonBase" Collapsed="true">
+    <Position X="3.75" Y="2.5" Width="1.75" />
+    <InheritanceLine Type="CsabaDu.FooVaria.Common.IRootObject" FixedFromPoint="true">
+      <Path>
+        <Point X="4.625" Y="2.062" />
+        <Point X="4.625" Y="2.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAIAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\ICommonBase.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Common.Types.ISurface" Collapsed="true">
+    <Position X="3.75" Y="7.75" Width="1.5" />
+    <InheritanceLine Type="CsabaDu.FooVaria.Common.Types.IBaseSpread" FixedFromPoint="true">
+      <Path>
+        <Point X="6.25" Y="6.959" />
+        <Point X="6.25" Y="7.375" />
+        <Point X="4.5" Y="7.375" />
+        <Point X="4.5" Y="7.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\ISurface.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Common.IRootObject" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IRootObject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Common.Behaviors.ISpreadMeasure" Collapsed="true">
+    <Position X="6.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAGAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Behaviors\ISpreadMeasure.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Common.Types.IBaseMeasureTemp" Collapsed="true">
+    <Position X="1.5" Y="5.75" Width="1.75" />
+    <InheritanceLine Type="CsabaDu.FooVaria.Common.Types.IBaseMeasurable" FixedFromPoint="true">
+      <Path>
+        <Point X="4.375" Y="4.829" />
+        <Point X="4.375" Y="5.375" />
+        <Point X="2.375" Y="5.375" />
+        <Point X="2.375" Y="5.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Types\IBaseMeasureTemp.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

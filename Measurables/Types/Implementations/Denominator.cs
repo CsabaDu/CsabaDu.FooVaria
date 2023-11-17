@@ -35,7 +35,7 @@ internal sealed class Denominator : BaseMeasure, IDenominator
 
     public IDenominator GetDenominator(IBaseMeasure baseMeasure)
     {
-        return GetFactory().Create(baseMeasure);
+        return (IDenominator)GetFactory().Create(baseMeasure);
     }
 
     public IDenominator GetDenominator(IDenominator other)
@@ -120,10 +120,10 @@ internal sealed class Denominator : BaseMeasure, IDenominator
         return null;
     }
 
-    public override IDenominator GetMeasurable(IMeasurable other)
-    {
-        return (IDenominator)GetFactory().Create(other);
-    }
+    //public override IDenominator GetMeasurable(IMeasurable other)
+    //{
+    //    return (IDenominator)GetFactory().Create(other);
+    //}
 
     public override TypeCode GetQuantityTypeCode()
     {
@@ -145,6 +145,11 @@ internal sealed class Denominator : BaseMeasure, IDenominator
             ValidateBaseMeasure(this, rootObject!, paramName);
         }
         #endregion
+    }
+
+    public override IBaseMeasure GetBaseMeasure(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
+    {
+        throw new NotImplementedException();
     }
     #endregion
     #endregion

@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Factories;
 
-public interface IDenominatorFactory : IBaseMeasureFactory, IDefaultRateComponentFactory<IDenominator>
+public interface IDenominatorFactory : IBaseMeasureFactory, IBaseMeasurableFactory<IDenominator>
 {
     IDenominator Create(string name);
     IDenominator Create(string name, ValueType quantity);
@@ -10,7 +10,7 @@ public interface IDenominatorFactory : IBaseMeasureFactory, IDefaultRateComponen
     IDenominator Create(IMeasurement measurement, ValueType quantity);
     IDenominator Create(Enum measureUnit, decimal exchangeRate, string customName, ValueType quantity);
     IDenominator Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity);
-    IDenominator Create(IBaseMeasure baseMeasure);
+    //IDenominator Create(IBaseMeasure baseMeasure);
     IDenominator Create(IDenominator denominator);
 }
 

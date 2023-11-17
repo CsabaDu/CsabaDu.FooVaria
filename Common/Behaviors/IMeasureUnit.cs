@@ -1,6 +1,11 @@
-﻿namespace CsabaDu.FooVaria.Common.Behaviors;
-
-public interface IMeasureUnit<out T> where T : Enum
+﻿namespace CsabaDu.FooVaria.Common.Behaviors
 {
-    T GetMeasureUnit();
+    public interface IMeasureUnit
+    {
+    }
+
+    public interface IMeasureUnit<out T> : IMeasureUnit where T : Enum
+    {
+        T GetMeasureUnit();
+    }
 }

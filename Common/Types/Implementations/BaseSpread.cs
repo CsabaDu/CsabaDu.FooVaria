@@ -14,7 +14,7 @@ public abstract class BaseSpread : BaseMeasurable, IBaseSpread
     {
     }
 
-    protected BaseSpread(IBaseSpreadFactory factory, IBaseMeasurable baseMeasurable) : base(factory, baseMeasurable)
+    protected BaseSpread(IBaseSpreadFactory factory, IBaseMeasureTemp baseMeasurable) : base(factory, baseMeasurable)
     {
     }
 
@@ -23,15 +23,15 @@ public abstract class BaseSpread : BaseMeasurable, IBaseSpread
         _ = NullChecked(baseMeasurables, nameof(baseMeasurables));
     }
 
-    protected BaseSpread(IBaseSpreadFactory factory, Enum measureUnit, params IBaseMeasurable[] baseMeasurables) : base(factory, measureUnit)
+    protected BaseSpread(IBaseSpreadFactory factory, Enum measureUnit, params IBaseMeasureTemp[] baseMeasures) : base(factory, measureUnit)
     {
-        _ = NullChecked(baseMeasurables, nameof(baseMeasurables));
+        _ = NullChecked(baseMeasures, nameof(baseMeasures));
     }
 
     #endregion
 
     #region Properties
-    public decimal DefaultQuantity => GetSpreadMeasure().DefaultQuantity;
+    public decimal DefaultQuantity => GetSpreadMeasure().GetDefaultQuantity();
     #endregion
 
     #region Public methods
@@ -45,7 +45,7 @@ public abstract class BaseSpread : BaseMeasurable, IBaseSpread
     public bool Equals(IBaseSpread? other)
     {
         return other?.MeasureUnitTypeCode == MeasureUnitTypeCode
-            && other.DefaultQuantity == DefaultQuantity;
+            && other.GetDefaultQuantity() == DefaultQuantity;
     }
 
     public bool? FitsIn(IBaseSpread? baseSpread, LimitMode? limitMode)
@@ -92,7 +92,7 @@ public abstract class BaseSpread : BaseMeasurable, IBaseSpread
     {
         ValidateSpreadMeasure(other, nameof(other));
 
-        return DefaultQuantity / other.DefaultQuantity;
+        return DefaultQuantity / other.GetDefaultQuantity();
     }
 
     public bool TryExchangeTo(Enum measureUnit, [NotNullWhen(true)] out IBaseSpread? exchanged)
@@ -110,7 +110,7 @@ public abstract class BaseSpread : BaseMeasurable, IBaseSpread
             throw ArgumentTypeOutOfRangeException(paramName, spreadMeasure!);
         }
 
-        decimal quantity = spreadMeasure!.DefaultQuantity;
+        decimal quantity = spreadMeasure!.GetDefaultQuantity();
 
         if (quantity > 0) return;
 
@@ -134,7 +134,7 @@ public abstract class BaseSpread : BaseMeasurable, IBaseSpread
     public abstract IBaseSpread? ExchangeTo(Enum measureUnit);
     public abstract IBaseSpread GetBaseSpread(ISpreadMeasure spreadMeasure);
     public abstract ISpreadMeasure GetSpreadMeasure();
-    public abstract void ValidateQuantity(ValueType? quantity, string paramName);
+    //public abstract void ValidateQuantity(ValueType? quantity, string paramName);
     #endregion
     #endregion
 
@@ -146,8 +146,20 @@ public abstract class BaseSpread : BaseMeasurable, IBaseSpread
 
         if (other.MeasureUnitTypeCode != baseSpread.MeasureUnitTypeCode) return null;
 
-        return baseSpread.DefaultQuantity.CompareTo(other.DefaultQuantity);
+        return baseSpread.GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
     }
+
+    public void ValidateQuantifiable(IQuantifiable? quantifiable, string paramName)
+    {
+        throw new NotImplementedException();
+    }
+
+    public decimal GetDefaultQuantity()
+    {
+        throw new NotImplementedException();
+    }
+
+    public abstract void ValidateQuantity(ValueType? quantity, string paramName);
     #endregion
     #endregion
 }

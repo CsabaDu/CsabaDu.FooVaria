@@ -77,7 +77,7 @@ internal sealed class FlatRate : Rate, IFlatRate
 
     public IFlatRate GetFlatRate(IRate rate)
     {
-        return GetFactory().Create(rate);
+        return (IFlatRate)GetFactory().Create(rate);
     }
 
     public IFlatRate GetFlatRate(IFlatRate other)
@@ -124,10 +124,10 @@ internal sealed class FlatRate : Rate, IFlatRate
         return GetFlatRate(numerator, denominator);
     }
 
-    public override IFlatRate GetMeasurable(IMeasurable other)
-    {
-        return (IFlatRate)GetFactory().Create(other);
-    }
+    //public override IFlatRate GetMeasurable(IMeasurable other)
+    //{
+    //    return (IFlatRate)GetFactory().Create(other);
+    //}
     #endregion
     #endregion
 
@@ -149,6 +149,11 @@ internal sealed class FlatRate : Rate, IFlatRate
         }
 
         throw new ArgumentOutOfRangeException(nameof(other), other.Numerator.MeasureUnitTypeCode, null);
+    }
+
+    public override void ValidateQuantityTypeCode(TypeCode quantityTypeCode, string paramName)
+    {
+        throw new NotImplementedException();
     }
     #endregion
 }

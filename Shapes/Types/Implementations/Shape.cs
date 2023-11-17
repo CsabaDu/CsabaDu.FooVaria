@@ -293,7 +293,7 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 
         public override sealed void ValidateShapeExtent(IQuantifiable shapeExtent, string paramName)
         {
-            decimal defaultQuantity = NullChecked(shapeExtent, paramName).DefaultQuantity;
+            decimal defaultQuantity = NullChecked(shapeExtent, paramName).GetDefaultQuantity();
 
             if (shapeExtent is not IExtent) throw ArgumentTypeOutOfRangeException(paramName, shapeExtent);
 

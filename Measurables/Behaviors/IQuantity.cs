@@ -6,5 +6,5 @@ public interface IQuantity
     object GetQuantity(TypeCode quantityTypeCode);
     bool TryGetQuantity(ValueType quantity, [NotNullWhen(true)] out ValueType? thisTypeQuantity);
 
-    void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode);
+    void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramNamme);
 }

@@ -1,4 +1,5 @@
 ﻿using CsabaDu.FooVaria.Measurables.Types.Implementations;
+using CsabaDu.FooVaria.Measurements.Factories;
 
 namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
 
@@ -22,7 +23,7 @@ public sealed class DenominatorFactory : BaseMeasureFactory, IDenominatorFactory
     #endregion
 
     #region Public methods
-    public IDenominator CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
+    public override IDenominator CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
     {
         IDenominator denominator = new Denominator(this, measureUnitTypeCode);
 
@@ -83,7 +84,7 @@ public sealed class DenominatorFactory : BaseMeasureFactory, IDenominatorFactory
         return Create(measurement, quantity);
     }
 
-    public IDenominator Create(IBaseMeasure baseMeasure)
+    public override IDenominator Create(IBaseMeasure baseMeasure)
     {
         if (baseMeasure is IDenominator denominator) return Create(denominator);
 
@@ -95,18 +96,6 @@ public sealed class DenominatorFactory : BaseMeasureFactory, IDenominatorFactory
     public IDenominator Create(IMeasurement measurement)
     {
         return Create(measurement, (decimal)DefaultRateComponentQuantity);
-    }
-
-    public override IDenominator Create(IMeasurable other)
-    {
-        return NullChecked(other, nameof(other)) switch
-        {
-            Measurement measurement => Create(measurement),
-            BaseMeasure baseMeasure => Create(baseMeasure),
-            Rate rate => Create(rate.Denominator),
-
-            _ => throw new InvalidOperationException(null),
-        };
     }
     #endregion
 

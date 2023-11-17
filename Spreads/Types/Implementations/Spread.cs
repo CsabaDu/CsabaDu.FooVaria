@@ -83,7 +83,7 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         #endregion
     }
 
-    internal abstract class Spread<T, U, W> : Spread, ISpread<T, U, W> where T : class, ISpread where U : class, IMeasure, ISpreadMeasure, IDefaultRateComponent where W : struct, Enum
+    internal abstract class Spread<T, U, W> : Spread, ISpread<T, U, W> where T : class, ISpread where U : class, IMeasure, ISpreadMeasure, IDefaultBaseMeasure where W : struct, Enum
     {
         #region Constructors
         protected Spread(T other) : base(other)

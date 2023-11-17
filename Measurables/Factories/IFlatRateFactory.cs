@@ -10,7 +10,7 @@ public interface IFlatRateFactory : IRateFactory
     IFlatRate Create(IMeasure numerator, IMeasurement measurement);
     IFlatRate Create(IMeasure numerator, IMeasurement measurement, ValueType quantity);
     IFlatRate Create(IMeasure numerator, IDenominator denominator);
-    IFlatRate Create(IRate rate);
+    //IFlatRate Create(IRate rate);
 }
 
     //IFlatRate Create(IMeasure numerator, Enum measureUnit, decimal exchangeRate, string customName, ValueType quantity);

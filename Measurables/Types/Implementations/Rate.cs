@@ -18,7 +18,7 @@ internal abstract class Rate : Measurable, IRate
     private protected Rate(IRateFactory factory, IMeasure numerator, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
     {
         Numerator = NullChecked(numerator, nameof(numerator));
-        Denominator = factory.DenominatorFactory.CreateDefault(measureUnitTypeCode);
+        Denominator = (IDenominator)factory.DenominatorFactory.CreateDefault(measureUnitTypeCode);
     }
 
     private protected Rate(IRateFactory factory, IMeasure numerator, IMeasurement measurement) : base(factory, measurement)
@@ -50,6 +50,11 @@ internal abstract class Rate : Measurable, IRate
     #endregion
 
     #region Public methods
+    public override TypeCode? GetQuantityTypeCode(object quantity)
+    {
+        throw new NotImplementedException();
+    }
+
     public int CompareTo(IBaseRate? other)
     {
         return BaseRate.Compare(this, other);
@@ -59,7 +64,7 @@ internal abstract class Rate : Measurable, IRate
     {
         return denominator switch
         {
-            Measurement measurement => Exchange(this, measurement),
+            //Measurement measurement => Exchange(this, measurement),
             BaseMeasure baseMeasure => Exchange(this, baseMeasure),
 
             _ => null,
@@ -94,14 +99,24 @@ internal abstract class Rate : Measurable, IRate
         }
 
         name = nameof(denominator);
+        IDenominatorFactory denominatorFactory = GetFactory().DenominatorFactory;
+        IDenominator createdDenominator;
 
-        if (NullChecked(denominator, name) is not IMeasurable measurable)
+        _ = NullChecked(denominator, name);
+
+        if (denominator is IMeasurement measurement)
+        {
+            createdDenominator = denominatorFactory.Create(measurement);
+
+        }
+        else if (denominator is IBaseMeasure baseMeasure)
+        {
+            createdDenominator = (IDenominator)denominatorFactory.Create(baseMeasure);
+        }
+        else
         {
             throw ArgumentTypeOutOfRangeException(name, denominator);
         }
-
-        IDenominatorFactory denominatorFactory = GetFactory().DenominatorFactory;
-        IDenominator createdDenominator = (IDenominator)denominatorFactory.Create(measurable);
 
         return GetRate(measure, createdDenominator, null);
     }
@@ -126,7 +141,7 @@ internal abstract class Rate : Measurable, IRate
         return BaseRate.AreExchangeables(this, baseMeasurable);
     }
 
-    public IQuantifiable Multiply(IBaseMeasurable multiplier)
+    public IQuantifiable Multiply(IBaseMeasureTemp multiplier)
     {
         MeasureUnitTypeCode measureUnitTypeCode = NullChecked(multiplier, nameof(multiplier)).MeasureUnitTypeCode;
 
@@ -292,6 +307,16 @@ internal abstract class Rate : Measurable, IRate
         IMeasure numerator = rate.Numerator.Divide(proportion);
 
         return rate.GetRate(numerator, denominator, rate.GetLimit());
+    }
+
+    public decimal GetDefaultQuantity()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void ValidateQuantifiable(IQuantifiable? quantifiable, string paramName)
+    {
+        throw new NotImplementedException();
     }
     #endregion
     #endregion

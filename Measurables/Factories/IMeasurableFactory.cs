@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Factories;
 
-public interface IMeasurableFactory : IBaseMeasurableFactory, IFactory<IMeasurable>
+public interface IMeasurableFactory : IBaseMeasurableFactory/*, IFactory<IMeasurable>*/
 {
 }
 

@@ -3,5 +3,5 @@
 public interface IDefaultMeasureUnit : IValidMeasureUnit
 {
     Enum GetDefaultMeasureUnit();
-    IEnumerable<string> GetDefaultNames();
+    IEnumerable<string> GetDefaultMeasureUnitNames();
 }

@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Proportions.Types.Implementations
+﻿using CsabaDu.FooVaria.Common.Types.Implementations;
+using CsabaDu.FooVaria.Measurables.Types.Implementations;
+
+namespace CsabaDu.FooVaria.Proportions.Types.Implementations
 {
     internal abstract class Proportion : BaseRate, IProportion
     {
@@ -29,9 +32,9 @@
             return GetFactory().Create(baseRate);
         }
 
-        public IProportion GetProportion(IBaseMeasure numerator, IMeasurement denominatorMeasurement)
+        public IProportion GetProportion(IBaseMeasure numerator, IBaseMeasure denominator)
         {
-            return GetFactory().Create(numerator, denominatorMeasurement);
+            return GetFactory().Create(numerator, denominator);
         }
 
         #region Override methods
@@ -41,26 +44,9 @@
             return GetFactory().Create(numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode);
         }
 
-        public override sealed IProportion GetBaseRate(IQuantifiable numerator, IBaseMeasurable denominator)
+        public override sealed IProportion GetBaseRate(IQuantifiable numerator, Enum denominatorMeasureUnit)
         {
-            string name = nameof(numerator);
-
-            if (NullChecked(numerator, name) is not IBaseMeasurable baseMeasurable)
-            {
-                throw ArgumentTypeOutOfRangeException(name, numerator);
-            }
-
-            if (NullChecked(denominator, nameof(denominator)) is IMeasurement measurement && numerator is IBaseMeasure baseMeasure)
-            {
-                return GetProportion(baseMeasure, measurement);
-            }
-
-            return GetFactory().Create(baseMeasurable.MeasureUnitTypeCode, numerator.DefaultQuantity, denominator.MeasureUnitTypeCode);
-        }
-
-        public override IBaseRate GetBaseRate(IQuantifiable numerator, Enum denominatorMeasureUnit)
-        {
-            return GetFactory().Create(numerator, denominatorMeasureUnit);
+            return (IProportion)GetFactory().Create(numerator, denominatorMeasureUnit);
         }
 
         public override IProportionFactory GetFactory()
@@ -84,7 +70,7 @@
             throw QuantityArgumentOutOfRangeException(paramName, quantity);
         }
 
-        public override sealed IMeasure Multiply(IBaseMeasurable multiplier)
+        public override sealed IMeasure Multiply(IBaseMeasureTemp multiplier)
         {
             MeasureUnitTypeCode measureUnitTypeCode = NullChecked(multiplier, nameof(multiplier)).MeasureUnitTypeCode;
 
@@ -100,19 +86,14 @@
 
             return measure.GetMeasure(quantity, measureUnit);
         }
-
-        public IProportion GetProportion(IBaseMeasure numerator, IBaseMeasure denominator)
-        {
-            throw new NotImplementedException();
-        }
         #endregion
         #endregion
         #endregion
     }
 
-    internal abstract class Proportion<T, U> : Proportion, IProportion<T, U> where T : class, IProportion where U : struct, Enum
+    internal abstract class Proportion<T, U> : Proportion, IProportion<T, U> where T : class, IProportion, IMeasureProportion where U : struct, Enum
     {
-        private protected Proportion(IProportion<T, U> other) : base(other)
+        private protected Proportion(T other) : base(other)
         {
         }
 
@@ -155,9 +136,9 @@
         }
     }
 
-    internal abstract class Proportion<T, W, U> : Proportion<T, U>, IProportion<T, W, U> where T : class, IProportion<T, W, U> where U : struct, Enum where W : struct, Enum
+    internal abstract class Proportion<T, W, U> : Proportion<T, U>, IProportion<T, W, U> where T : class, IProportion<T, W, U>, IMeasureProportion where U : struct, Enum where W : struct, Enum
     {
-        private protected Proportion(IProportion<T, W, U> other) : base(other)
+        private protected Proportion(T other) : base(other)
         {
         }
 

@@ -77,6 +77,11 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
             #endregion
         }
 
+        public override IBaseMeasure GetBaseMeasure(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
+        {
+            throw new NotImplementedException();
+        }
+
         public IMeasure GetMeasure(ValueType quantity, Enum measureUnit)
         {
             return GetFactory().Create(quantity, measureUnit);
@@ -104,7 +109,7 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
 
         public IMeasure GetMeasure(IMeasure other)
         {
-            return GetFactory().Create(other);
+            return (IMeasure)GetFactory().Create(other);
         }
 
         public IMeasure GetMeasure(ValueType quantity)
@@ -160,10 +165,10 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
             return null;
         }
 
-        public override sealed IMeasure GetMeasurable(IMeasurable other)
-        {
-            return (IMeasure)GetFactory().Create(other);
-        }
+        //public override sealed IMeasure GetMeasurable(IMeasurable other)
+        //{
+        //    return (IMeasure)GetFactory().Create(other);
+        //}
         public override sealed TypeCode GetQuantityTypeCode()
         {
             return base.GetQuantityTypeCode();
@@ -189,23 +194,13 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
         #endregion
     }
 
-    internal abstract class Measure<T, U, W> : Measure, IMeasure<T, U, W> where T : class, IMeasure, IDefaultRateComponent where U : struct where W : struct, Enum
+    internal abstract class Measure<T, U> : Measure, IMeasure<T, U> where T : class, IMeasure, IDefaultBaseMeasure where U : struct
     {
-        #region Enums
-        protected enum ConvertMode
-        {
-            Multiply,
-            Divide,
-        }
-        #endregion
-
-        #region Constructors
         private protected Measure(IMeasureFactory factory, ValueType quantity, Enum measureUnit) : base(factory, quantity, measureUnit)
         {
         }
-        #endregion
 
-        #region Public methods
+        #region Local methods
         public T GetDefaultRateComponent()
         {
             return GetDefault((this as T)!);
@@ -214,11 +209,6 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
         public U GetDefaultRateComponentQuantity()
         {
             return GetDefaultRateComponentQuantity<U>();
-        }
-
-        public T GetMeasure(U quantity, W measureUnit)
-        {
-            return (T)base.GetMeasure(quantity, measureUnit);
         }
 
         public T GetMeasure(U quantity, string name)
@@ -249,6 +239,35 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
             return (T)base.GetMeasure(quantity, measurement);
         }
 
+        public U GetQuantity()
+        {
+            return (U)Quantity;
+        }
+        #endregion
+    }
+
+    internal abstract class Measure<T, U, W> : Measure<T, U>, IMeasure<T, U, W> where T : class, IMeasure<T, U>, IDefaultBaseMeasure where U : struct where W : struct, Enum
+    {
+        #region Enums
+        protected enum ConvertMode
+        {
+            Multiply,
+            Divide,
+        }
+        #endregion
+
+        #region Constructors
+        private protected Measure(IMeasureFactory factory, ValueType quantity, W measureUnit) : base(factory, quantity, measureUnit)
+        {
+        }
+        #endregion
+
+        #region Public methods
+        public T GetMeasure(U quantity, W measureUnit)
+        {
+            return (T)base.GetMeasure(quantity, measureUnit);
+        }
+
         public T GetMeasure(T other)
         {
             return (T)base.GetMeasure(other);
@@ -262,11 +281,6 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
         public W GetMeasureUnit()
         {
             return (W)Measurement.MeasureUnit;
-        }
-
-        public U GetQuantity()
-        {
-            return (U)Quantity;
         }
 
         #region Override methods
@@ -326,7 +340,7 @@ namespace CsabaDu.FooVaria.Measurables.Types.Implementations
 
             ValidateMeasureUnitTypeCode(measureUnitTypeCode, paramName);
 
-            decimal quantity = spreadMeasure!.DefaultQuantity;
+            decimal quantity = spreadMeasure!.GetDefaultQuantity();
 
             if (quantity > 0) return;
 

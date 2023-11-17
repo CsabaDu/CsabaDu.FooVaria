@@ -1,5 +1,6 @@
 ﻿using CsabaDu.FooVaria.Measurables.Types.Implementations;
 using CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes;
+using CsabaDu.FooVaria.Measurements.Factories;
 
 namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
 
@@ -16,7 +17,7 @@ public sealed class MeasureFactory : BaseMeasureFactory, IMeasureFactory
     #endregion
 
     #region Public methods
-    public IMeasure CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
+    public override IMeasure CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
     {
         Enum measureUnit = measureUnitTypeCode.GetDefaultMeasureUnit();
 
@@ -68,7 +69,7 @@ public sealed class MeasureFactory : BaseMeasureFactory, IMeasureFactory
         return Create(quantity, measureUnit);
     }
 
-    public IMeasure Create(IBaseMeasure baseMeasure)
+    public override IMeasure Create(IBaseMeasure baseMeasure)
     {
         var (quantity, measurement) = GetBaseMeasureParams(baseMeasure);
         Enum measureUnit = measurement.GetMeasureUnit();
@@ -76,17 +77,17 @@ public sealed class MeasureFactory : BaseMeasureFactory, IMeasureFactory
         return Create(quantity, measureUnit);
     }
 
-    public override IMeasure Create(IMeasurable other)
-    {
-        return NullChecked(other, nameof(other)) switch
-        {
-            Measurement measurement => Create(measurement),
-            BaseMeasure baseMeasure => Create(baseMeasure),
-            Rate rate => Create(rate.Numerator),
+    //public override IMeasure Create(IMeasurable other)
+    //{
+    //    return NullChecked(other, nameof(other)) switch
+    //    {
+    //        Measurement measurement => Create(measurement),
+    //        BaseMeasure baseMeasure => Create(baseMeasure),
+    //        Rate rate => Create(rate.Numerator),
 
-            _ => throw new InvalidOperationException(null),
-        };
-    }
+    //        _ => throw new InvalidOperationException(null),
+    //    };
+    //}
     #endregion
 }
 

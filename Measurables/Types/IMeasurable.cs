@@ -4,5 +4,5 @@ public interface IMeasurable : IBaseMeasurable, IQuantityTypeCode
 {
     IMeasurable GetDefault();
 
-    IMeasurable GetMeasurable(IMeasurable other);
+    //IMeasurable GetMeasurable(IMeasurable other);
 }

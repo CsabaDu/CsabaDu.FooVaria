@@ -21,7 +21,7 @@ public sealed class LimitFactory : BaseMeasureFactory, ILimitFactory
     #endregion
 
     #region Public methods
-    public ILimit CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
+    public override ILimit CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
     {
         ILimit limit = new Limit(this, measureUnitTypeCode);
 
@@ -75,32 +75,32 @@ public sealed class LimitFactory : BaseMeasureFactory, ILimitFactory
         return Create(measurement, quantity, limitMode);
     }
 
-    public override ILimit Create(IMeasurable other)
-    {
-        return NullChecked(other, nameof(other)) switch
-        {
-            Measurement measurement => Create(measurement),
-            BaseMeasure baseMeasure => Create(baseMeasure),
-            FlatRate flatRate => Create(flatRate.Denominator, default),
-            LimitedRate limitedRate => Create(limitedRate.Limit),
+    //public override ILimit Create(IMeasurable other)
+    //{
+    //    return NullChecked(other, nameof(other)) switch
+    //    {
+    //        Measurement measurement => Create(measurement),
+    //        BaseMeasure baseMeasure => Create(baseMeasure),
+    //        FlatRate flatRate => Create(flatRate.Denominator, default),
+    //        LimitedRate limitedRate => Create(limitedRate.Limit),
 
-            _ => throw new InvalidOperationException(null),
-        };
+    //        _ => throw new InvalidOperationException(null),
+    //    };
 
-        //_ = NullChecked(other, nameof(other));
+    //    //_ = NullChecked(other, nameof(other));
 
-        //if (other is ILimit limit) return Create(limit);
+    //    //if (other is ILimit limit) return Create(limit);
 
-        //if (other is IBaseMeasure baseMeasure) return Create(baseMeasure, default);
+    //    //if (other is IBaseMeasure baseMeasure) return Create(baseMeasure, default);
 
-        //if (other is IMeasurement measurement) return CreateDefault(measurement.MeasureUnitTypeCode);
+    //    //if (other is IMeasurement measurement) return CreateDefault(measurement.MeasureUnitTypeCode);
 
-        //if (other is IFlatRate flatRate) return Create(flatRate.Denominator, default);
+    //    //if (other is IFlatRate flatRate) return Create(flatRate.Denominator, default);
 
-        //if (other is ILimitedRate limitedRate) return Create(limitedRate.Limit);
+    //    //if (other is ILimitedRate limitedRate) return Create(limitedRate.Limit);
 
-        //throw new InvalidOperationException(null);
-    }
+    //    //throw new InvalidOperationException(null);
+    //}
 
     public ILimit Create(ILimit limit, ValueType quantity)
     {
@@ -123,6 +123,13 @@ public sealed class LimitFactory : BaseMeasureFactory, ILimitFactory
         }
 
         throw new InvalidOperationException(null);
+    }
+
+    public override ILimit Create(IBaseMeasure other)
+    {
+        if (other is ILimit limit) return Create(limit);
+
+        return Create(other, default);
     }
     #endregion
     #endregion

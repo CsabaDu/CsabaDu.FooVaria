@@ -1,6 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types;
+﻿//namespace CsabaDu.FooVaria.Measurables.Types;
 
-public interface IBaseMeasurement : IMeasurable, IMeasureUnitCollection, IExchangeRateCollection, ICustomNameCollection, IRateComponentType, IMeasureUnit<Enum>, IExchangeRate
-{
-    string GetName();
-}
+//public interface IBaseMeasurement : IMeasurable, IMeasureUnitCollection, IExchangeRateCollection, ICustomNameCollection, IRateComponent, IMeasureUnit<Enum>, IExchangeRate
+//{
+//    string GetName();
+//}

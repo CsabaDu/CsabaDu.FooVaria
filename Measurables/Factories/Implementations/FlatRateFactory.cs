@@ -64,7 +64,7 @@ public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
         return Create(numerator, denominator);
     }
 
-    public IFlatRate Create(IRate rate)
+    public override IFlatRate Create(IRate rate)
     {
         IMeasure numerator = NullChecked(rate, nameof(rate)).Numerator;
         IDenominator denominator = rate.Denominator;

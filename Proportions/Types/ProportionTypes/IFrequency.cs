@@ -2,6 +2,6 @@
 
 namespace CsabaDu.FooVaria.Proportions.Types.ProportionTypes;
 
-public interface IFrequency : IProportion<IFrequency, Pieces, TimePeriodUnit>, IMeasuresProportion<IFrequency, IPieceCount, ITimePeriod>
+public interface IFrequency : IProportion<IFrequency, Pieces, TimePeriodUnit>, IMeasureProportion<IFrequency, IPieceCount, ITimePeriod>
 {
 }

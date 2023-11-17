@@ -12,5 +12,7 @@ global using CsabaDu.FooVaria.Measurables.Factories;
 global using CsabaDu.FooVaria.Measurables.Statics;
 global using CsabaDu.FooVaria.Measurables.Types;
 global using CsabaDu.FooVaria.Measurables.Types.MeasureTypes;
+global using CsabaDu.FooVaria.Measurements.Factories;
+global using CsabaDu.FooVaria.Measurements.Types;
 global using System.Diagnostics.CodeAnalysis;
 global using static CsabaDu.FooVaria.Common.Statics.ExceptionMethods;

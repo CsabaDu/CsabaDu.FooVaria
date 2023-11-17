@@ -2,7 +2,7 @@
 
 public interface IQuantityType
 {
-    TypeCode? GetQuantityTypeCode(object quantity);
+    //TypeCode? GetQuantityTypeCode(object quantity);
 
-    void ValidateQuantityTypeCode(TypeCode quantityTypeCode);
+    //void ValidateQuantityTypeCode(TypeCode quantityTypeCode);
 }

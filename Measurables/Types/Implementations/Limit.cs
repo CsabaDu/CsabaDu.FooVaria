@@ -69,7 +69,7 @@ internal sealed class Limit : BaseMeasure, ILimit
 
     public ILimit GetLimit(ILimit other)
     {
-        return (ILimit)GetMeasurable(other);
+        return GetFactory().Create(other);
     }
 
     public ILimit GetLimit(ValueType quantity)
@@ -146,10 +146,10 @@ internal sealed class Limit : BaseMeasure, ILimit
         return GetDefaultRateComponent();
     }
 
-    public override ILimit GetMeasurable(IMeasurable other)
-    {
-        return (ILimit)GetFactory().Create(other);
-    }
+    //public override ILimit GetMeasurable(IMeasurable other)
+    //{
+    //    return (ILimit)GetFactory().Create(other);
+    //}
 
     public override void Validate(IRootObject? rootObject, string paramName)
     {
@@ -161,6 +161,11 @@ internal sealed class Limit : BaseMeasure, ILimit
             ValidateBaseMeasure(this, rootObject!, paramName);
         }
         #endregion
+    }
+
+    public override IBaseMeasure GetBaseMeasure(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
+    {
+        throw new NotImplementedException();
     }
     #endregion
     #endregion

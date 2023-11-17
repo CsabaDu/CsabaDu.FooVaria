@@ -135,14 +135,19 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         return Limit;
     }
 
-    public override ILimitedRate GetMeasurable(IMeasurable other)
-    {
-        return (ILimitedRate)GetFactory().Create(other);
-    }
+    //public override ILimitedRate GetMeasurable(IMeasurable other)
+    //{
+    //    return (ILimitedRate)GetFactory().Create(other);
+    //}
 
     public override ILimitedRate GetRate(IMeasure numerator, IDenominator denominator, ILimit? limit)
     {
         return GetLimitedRate(numerator, denominator, limit ?? GetFactory().CreateLimit(denominator));
+    }
+
+    public override void ValidateQuantityTypeCode(TypeCode quantityTypeCode, string paramName)
+    {
+        throw new NotImplementedException();
     }
     #endregion
     #endregion

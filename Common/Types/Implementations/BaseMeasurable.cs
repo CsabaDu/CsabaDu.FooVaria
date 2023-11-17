@@ -36,7 +36,7 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
         return MeasureUnitTypes.GetDefaultMeasureUnit(MeasureUnitTypeCode);
     }
 
-    public IEnumerable<string> GetDefaultNames()
+    public IEnumerable<string> GetDefaultMeasureUnitNames()
     {
         return MeasureUnitTypes.GetDefaultNames(MeasureUnitTypeCode);
     }

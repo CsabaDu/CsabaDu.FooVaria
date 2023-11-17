@@ -8,7 +8,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     private protected BaseMeasure(IBaseMeasureFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
     {
         Quantity = factory.DefaultRateComponentQuantity;
-        Measurement = factory.MeasurementFactory.CreateDefault(measureUnitTypeCode);
+        Measurement = (IMeasurement)factory.MeasurementFactory.CreateDefault(measureUnitTypeCode);
     }
 
     private protected BaseMeasure(IBaseMeasureFactory factory, ValueType quantity, Enum measureUnit) : base(factory, measureUnit)
@@ -107,7 +107,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return ((ValueType)Quantity).ToQuantity(quantityTypeCode) ?? throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
     }
 
-    public TypeCode? GetQuantityTypeCode(object quantity)
+    public override TypeCode? GetQuantityTypeCode(object quantity)
     {
         TypeCode quantityTypeCode = Type.GetTypeCode(quantity?.GetType());
 
@@ -183,11 +183,11 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return thisTypeQuantity != null;
     }
 
-    public void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode)
+    public void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramName)
     {
         TypeCode? typeCode = GetQuantityTypeCode(NullChecked(quantity, nameof(quantity)));
 
-        ValidateQuantityTypeCode(quantityTypeCode);
+        ValidateQuantityTypeCode(quantityTypeCode, paramName);
 
         if (typeCode == quantityTypeCode) return;
 
@@ -214,11 +214,11 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         }
     }
 
-    public void ValidateQuantityTypeCode(TypeCode quantityTypeCode)
+    public override void ValidateQuantityTypeCode(TypeCode quantityTypeCode, string paramName)
     {
         if (GetValidQuantityTypeCodeOrNull(quantityTypeCode) != null) return;
 
-        throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
+        throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode, paramName);
     }
 
     #region Override methods
@@ -336,6 +336,23 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         if (GetQuantityTypeCodes().Contains(quantityTypeCode)) return quantityTypeCode;
 
         return null;
+    }
+
+    public abstract IBaseMeasure GetBaseMeasure(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity);
+
+    public decimal GetDefaultQuantity()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void ValidateQuantifiable(IQuantifiable? quantifiable, string paramName)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool TryGetMeasureUnit(decimal exchangeRate, [NotNullWhen(true)] out Enum? measureUnit)
+    {
+        throw new NotImplementedException();
     }
     #endregion
     #endregion

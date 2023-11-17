@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
+﻿using CsabaDu.FooVaria.Measurements.Factories;
+
+namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
 
 public abstract class BaseMeasureFactory : IBaseMeasureFactory
 {
@@ -17,7 +19,7 @@ public abstract class BaseMeasureFactory : IBaseMeasureFactory
 
     #region Public methods
     #region Abstract methods
-    public abstract IMeasurable Create(IMeasurable other);
+    //public abstract IMeasurable Create(IMeasurable other);
     #endregion
     #endregion
 
@@ -28,4 +30,7 @@ public abstract class BaseMeasureFactory : IBaseMeasureFactory
 
         return (quantity, measurement);
     }
+
+    public abstract IBaseMeasure Create(IBaseMeasure other);
+    public abstract IBaseMeasurable CreateDefault(MeasureUnitTypeCode measureUnitTypeCode);
 }

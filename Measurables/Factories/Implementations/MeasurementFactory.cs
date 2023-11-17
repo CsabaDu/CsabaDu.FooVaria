@@ -1,116 +1,116 @@
-﻿using static CsabaDu.FooVaria.Measurables.Statics.MeasureUnits;
-using CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿//using static CsabaDu.FooVaria.Measurements.Statics.MeasureUnits;
+//using CsabaDu.FooVaria.Measurements.Types.Implementations;
 
-namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
+//namespace CsabaDu.FooVaria.Measurements.Factories.Implementations;
 
-public sealed class MeasurementFactory : BaseMeasurementFactory, IMeasurementFactory
-{
-    #region Properties
-    #region Static properties
-    private static IDictionary<object, IMeasurement> MeasurementCollection
-        => BaseMeasurement.ExchangeRateCollection.Keys.ToDictionary
-        (
-            x => x,
-            x => new Measurement(new MeasurementFactory(), (Enum)x) as IMeasurement
-        );
-    #endregion
-    #endregion
+//public sealed class MeasurementFactory : BaseMeasurementFactory, IMeasurementFactory
+//{
+//    #region Properties
+//    #region Static properties
+//    private static IDictionary<object, IMeasurement> MeasurementCollection
+//        => BaseMeasurement.ExchangeRateCollection.Keys.ToDictionary
+//        (
+//            x => x,
+//            x => new Measurement(new MeasurementFactory(), (Enum)x) as IMeasurement
+//        );
+//    #endregion
+//    #endregion
 
-    #region Public methods
-    public IMeasurement Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
-    {
-        IMeasurement measurement = GetFirstStoredMeasurement();
-        measurement.SetCustomMeasureUnit(customName, measureUnitTypeCode, exchangeRate);
-        Enum measureUnit = measurement.GetMeasureUnit(customName)!;
+//    #region Public methods
+//    public IMeasurement Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
+//    {
+//        IMeasurement measurement = GetFirstStoredMeasurement();
+//        measurement.SetCustomMeasureUnit(customName, measureUnitTypeCode, exchangeRate);
+//        Enum measureUnit = measurement.GetMeasureUnit(customName)!;
 
-        return GetStoredMeasurement(measureUnit);
-    }
+//        return GetStoredMeasurement(measureUnit);
+//    }
 
-    public IMeasurement Create(Enum measureUnit, decimal exchangeRate, string customName)
-    {
-        IMeasurement measurement = GetFirstStoredMeasurement();
+//    public IMeasurement Create(Enum measureUnit, decimal exchangeRate, string customName)
+//    {
+//        IMeasurement measurement = GetFirstStoredMeasurement();
 
-        if (!IsValidMeasureUnit(measureUnit))
-        {
-            measurement.SetCustomMeasureUnit(measureUnit, exchangeRate, customName);
+//        if (!IsValidMeasureUnit(measureUnit))
+//        {
+//            measurement.SetCustomMeasureUnit(measureUnit, exchangeRate, customName);
 
-            return GetStoredMeasurement(measureUnit);
-        }
+//            return GetStoredMeasurement(measureUnit);
+//        }
 
-        measurement = GetStoredMeasurement(measureUnit);
-        measurement.ValidateExchangeRate(exchangeRate, nameof(exchangeRate));
+//        measurement = GetStoredMeasurement(measureUnit);
+//        measurement.ValidateExchangeRate(exchangeRate, nameof(exchangeRate));
 
-        if (customName == measurement.GetCustomName()) return measurement;
+//        if (customName == measurement.GetCustomName()) return measurement;
 
-        throw NameArgumentOutOfRangeException(customName, nameof(customName));
-    }
+//        throw NameArgumentOutOfRangeException(customName, nameof(customName));
+//    }
 
-    public IMeasurement Create(Enum measureUnit)
-    {
-        _ = NullChecked(measureUnit, nameof(measureUnit));
+//    public IMeasurement Create(Enum measureUnit)
+//    {
+//        _ = NullChecked(measureUnit, nameof(measureUnit));
 
-        if (IsValidMeasureUnit(measureUnit)) return GetStoredMeasurement(measureUnit);
+//        if (IsValidMeasureUnit(measureUnit)) return GetStoredMeasurement(measureUnit);
 
-        throw InvalidMeasureUnitEnumArgumentException(measureUnit);
-    }
+//        throw InvalidMeasureUnitEnumArgumentException(measureUnit);
+//    }
 
-    public IMeasurement Create(IMeasurement measurement)
-    {
-        Enum measureUnit = NullChecked(measurement, nameof(measurement)).GetMeasureUnit();
+//    public IMeasurement Create(IMeasurement measurement)
+//    {
+//        Enum measureUnit = NullChecked(measurement, nameof(measurement)).GetMeasureUnit();
 
-        return GetStoredMeasurement(measureUnit);
-    }
+//        return GetStoredMeasurement(measureUnit);
+//    }
 
-    public IMeasurement Create(string name)
-    {
-        IMeasurement measurement = GetFirstStoredMeasurement();
-        Enum? measureUnit = measurement.GetMeasureUnit(name);
+//    public IMeasurement Create(string name)
+//    {
+//        IMeasurement measurement = GetFirstStoredMeasurement();
+//        Enum? measureUnit = measurement.GetMeasureUnit(name);
 
-        if (measureUnit != null) return GetStoredMeasurement(measureUnit);
+//        if (measureUnit != null) return GetStoredMeasurement(measureUnit);
 
-        throw NameArgumentOutOfRangeException(name);
-    }
+//        throw NameArgumentOutOfRangeException(name);
+//    }
 
-    public override IMeasurement Create(IMeasurable other)
-    {
-        Enum measureUnit = NullChecked(other, nameof(other)) switch
-        {
-            Measurement measurement => measurement.GetMeasureUnit(),
-            BaseMeasure baseMmeasure => getMeasureUnit(baseMmeasure),
-            Rate rate => getMeasureUnit(rate.Denominator),
+//    public override IMeasurement Create(IMeasurable other)
+//    {
+//        Enum measureUnit = NullChecked(other, nameof(other)) switch
+//        {
+//            Measurement measurement => measurement.GetMeasureUnit(),
+//            BaseMeasureTemp baseMmeasure => getMeasureUnit(baseMmeasure),
+//            BaseRate rate => getMeasureUnit(rate.Denominator),
 
-            _ => throw new InvalidOperationException(null),
-        };
+//            _ => throw new InvalidOperationException(null),
+//        };
 
-        return GetStoredMeasurement(measureUnit);
+//        return GetStoredMeasurement(measureUnit);
 
-        #region Local methods
-        static Enum getMeasureUnit(IBaseMeasure baseMmeasure)
-        {
-            return baseMmeasure.Measurement.GetMeasureUnit();
-        }
-        #endregion
-    }
+//        #region Local methods
+//        static Enum getMeasureUnit(IBaseMeasure baseMmeasure)
+//        {
+//            return baseMmeasure.Measurement.GetMeasureUnit();
+//        }
+//        #endregion
+//    }
 
-    public IMeasurement CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        Enum measureUnit = measureUnitTypeCode.GetDefaultMeasureUnit();
+//    public IMeasurement CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
+//    {
+//        Enum measureUnit = measureUnitTypeCode.GetDefaultMeasureUnit();
 
-        return GetStoredMeasurement(measureUnit);
-    }
-    #endregion
+//        return GetStoredMeasurement(measureUnit);
+//    }
+//    #endregion
 
-    #region Private methods
-    #region Static methods
-    private static IMeasurement GetFirstStoredMeasurement()
-    {
-        return MeasurementCollection.First().Value;
-    }
+//    #region Private methods
+//    #region Static methods
+//    private static IMeasurement GetFirstStoredMeasurement()
+//    {
+//        return MeasurementCollection.First().Value;
+//    }
 
-    private static IMeasurement GetStoredMeasurement(Enum measureUnit)
-    {
-        return MeasurementCollection[measureUnit];
-    }
-    #endregion
-    #endregion
-}
+//    private static IMeasurement GetStoredMeasurement(Enum measureUnit)
+//    {
+//        return MeasurementCollection[measureUnit];
+//    }
+//    #endregion
+//    #endregion
+//}

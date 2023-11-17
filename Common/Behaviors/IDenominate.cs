@@ -1,5 +1,5 @@
 ﻿namespace CsabaDu.FooVaria.Common.Behaviors;
 
-public interface IDenominate : IMultiply<IBaseMeasurable, IQuantifiable>
+public interface IDenominate : IMultiply<IBaseMeasureTemp, IQuantifiable>
 {
 }

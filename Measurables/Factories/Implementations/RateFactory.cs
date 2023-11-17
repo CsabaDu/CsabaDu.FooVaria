@@ -18,6 +18,8 @@ public abstract class RateFactory : IRateFactory
     public abstract IMeasurable Create(IMeasurable other);
     public abstract IBaseRate Create(IQuantifiable numerator, MeasureUnitTypeCode measureUnitTypeCode);
     public abstract IBaseRate Create(IQuantifiable numerator, Enum denominatorMeasureUnit);
+    public abstract IRate Create(IRate other);
+    //public abstract IBaseMeasurable CreateDefault(MeasureUnitTypeCode measureUnitTypeCode);
     #endregion
     #endregion
 }

@@ -59,16 +59,6 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
     }
 
     #region Sealed methods
-    //public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
-    //{
-    //    return MeasureUnitTypes.GetMeasureUnitTypeCodes();
-    //}
-
-    //public override sealed bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
-    //{
-    //    return Enum.IsDefined(measureUnitTypeCode);
-    //}
-
     public override sealed void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, string paramName)
     {
         if (measureUnitTypeCode == MeasureUnitTypeCode) return;
@@ -80,15 +70,15 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
 
     #region Abstract methods
     public abstract IMeasurable GetDefault();
-    public abstract IMeasurable GetMeasurable(IMeasurable other);
+    //public abstract IMeasurable GetMeasurable(IMeasurable other);
     #endregion
     #endregion
 
     #region Protected methods
     #region Static methods
-    protected static T GetDefault<T>(T measurable) where T : class, IMeasurable, IRateComponentType
+    protected static T GetDefault<T>(T measurable) where T : class, IMeasurable, IRateComponent
     {
-        return (measurable.GetFactory() as IDefaultRateComponentFactory<T>)!.CreateDefault(measurable.MeasureUnitTypeCode);
+        return (measurable.GetFactory() as IBaseMeasurableFactory<T>)!.CreateDefault(measurable.MeasureUnitTypeCode);
     }
 
     protected static IMeasure GetSum(IMeasure measure, IMeasure? other, SummingMode summingMode)
@@ -120,6 +110,13 @@ internal abstract class Measurable : BaseMeasurable, IMeasurable
         }
         #endregion
     }
+
+    public abstract TypeCode? GetQuantityTypeCode(object quantity);
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    public abstract void ValidateQuantityTypeCode(TypeCode quantityTypeCode, string paramName);
 
     #endregion
     #endregion

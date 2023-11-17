@@ -43,7 +43,7 @@ namespace CsabaDu.FooVaria.Shapes.Statics
             sideQuantity *= sideQuantity;
             sideQuantity = diagonalQuantity - sideQuantity;
             double otherSideQuantity = Math.Sqrt(decimal.ToDouble(sideQuantity));
-            otherSideQuantity = Exchange(otherSideQuantity, extentUnit);
+            otherSideQuantity = Exchange(circle, otherSideQuantity, extentUnit);
 
             return innerTangentRectangleSide.GetMeasure(otherSideQuantity, extentUnit);
         }
@@ -52,7 +52,7 @@ namespace CsabaDu.FooVaria.Shapes.Statics
         {
             decimal quantity = NullChecked(volume, nameof(volume)).DefaultQuantity;
             quantity /= NullChecked(planeShape, nameof(planeShape)).Area.DefaultQuantity;
-            quantity = Exchange(quantity, extentUnit);
+            quantity = Exchange(planeShape, quantity, extentUnit);
 
             return (IExtent)volume.GetMeasure(quantity, extentUnit);
         }
@@ -63,7 +63,7 @@ namespace CsabaDu.FooVaria.Shapes.Statics
             decimal quantity = square(length.DefaultQuantity);
             quantity += square(rectangle.Width.DefaultQuantity);
             double diagonalQuantity = Math.Sqrt(decimal.ToDouble(quantity));
-            diagonalQuantity = Exchange(diagonalQuantity, extentUnit);
+            diagonalQuantity = Exchange(rectangle, diagonalQuantity, extentUnit);
 
             return length.GetMeasure(diagonalQuantity, extentUnit);
 
@@ -79,29 +79,36 @@ namespace CsabaDu.FooVaria.Shapes.Statics
         {
             IMeasure radius = circle.Radius;
             decimal diagonalQuantity = radius.DefaultQuantity * 2;
-            diagonalQuantity = Exchange(diagonalQuantity, extentUnit);
+            diagonalQuantity = Exchange(circle, diagonalQuantity, extentUnit);
 
             return (IExtent)radius.GetMeasure(diagonalQuantity, extentUnit);
         }
 
-        private static decimal Exchange(decimal quantity, Enum measureUnit)
+        private static decimal Exchange(IShape shape, decimal quantity, Enum measureUnit)
         {
             if (!IsDefaultMeasureUnit(measureUnit))
             {
-                quantity /= MeasureUnits.GetExchangeRate(measureUnit);
+                quantity /= GetExchangeRate(shape, measureUnit);
             }
 
             return quantity;
         }
 
-        private static double Exchange(double quantity, Enum measureUnit)
+        private static double Exchange(IShape shape, double quantity, Enum measureUnit)
         {
             if (!IsDefaultMeasureUnit(measureUnit))
             {
-                quantity /= decimal.ToDouble(MeasureUnits.GetExchangeRate(measureUnit));
+                quantity /= decimal.ToDouble(GetExchangeRate(shape, measureUnit));
             }
 
             return quantity;
+        }
+
+        private static decimal GetExchangeRate(IShape shape, Enum measureUnit)
+        {
+            IMeasure spreadMeasure = (IMeasure)shape.GetSpreadMeasure();
+
+            return spreadMeasure.Measurement.GetExchangeRate(measureUnit);
         }
 
         private static bool IsDefaultMeasureUnit(Enum measureUnit)

@@ -116,5 +116,10 @@ public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
 
         return new LimitedRate(this, measure, denominatorMeasureUnit, limit);
     }
+
+    public override IRate Create(IRate other)
+    {
+        throw new NotImplementedException();
+    }
     #endregion
 }
