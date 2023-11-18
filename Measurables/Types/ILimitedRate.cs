@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types;
+﻿namespace CsabaDu.FooVaria.RateComponents.Types;
 
 public interface ILimitedRate : IRate, ILimiter<ILimitedRate, IMeasure>
 {

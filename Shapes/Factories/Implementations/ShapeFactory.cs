@@ -1,5 +1,5 @@
-﻿using CsabaDu.FooVaria.Measurables.Factories;
-using CsabaDu.FooVaria.Measurables.Types;
+﻿using CsabaDu.FooVaria.RateComponents.Factories;
+using CsabaDu.FooVaria.RateComponents.Types;
 using CsabaDu.FooVaria.Shapes.Behaviors;
 using CsabaDu.FooVaria.Shapes.Types;
 using CsabaDu.FooVaria.Shapes.Types.Implementations;

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace CsabaDu.FooVaria.Measurables.Statics;
+namespace CsabaDu.FooVaria.RateComponents.Statics;
 
 public static class ExceptionMethods
 {

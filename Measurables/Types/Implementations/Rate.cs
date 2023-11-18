@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
 
 internal abstract class Rate : Measurable, IRate
 {
@@ -65,7 +65,7 @@ internal abstract class Rate : Measurable, IRate
         return denominator switch
         {
             //Measurement measurement => Exchange(this, measurement),
-            BaseMeasure baseMeasure => Exchange(this, baseMeasure),
+            RateComponent baseMeasure => Exchange(this, baseMeasure),
 
             _ => null,
         };

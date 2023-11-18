@@ -1,6 +1,6 @@
-﻿using CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿using CsabaDu.FooVaria.RateComponents.Types.Implementations;
 
-namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
+namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
 
 public sealed class LimitFactory : BaseMeasureFactory, ILimitFactory
 {

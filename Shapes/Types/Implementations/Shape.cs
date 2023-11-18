@@ -1,5 +1,5 @@
 ﻿using CsabaDu.FooVaria.Common;
-using CsabaDu.FooVaria.Measurables.Types;
+using CsabaDu.FooVaria.RateComponents.Types;
 using CsabaDu.FooVaria.Shapes.Statics;
 using CsabaDu.FooVaria.Spreads.Factories;
 using CsabaDu.FooVaria.Spreads.Types;

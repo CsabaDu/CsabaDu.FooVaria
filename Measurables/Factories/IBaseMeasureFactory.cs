@@ -1,6 +1,6 @@
 ﻿using CsabaDu.FooVaria.Measurements.Factories;
 
-namespace CsabaDu.FooVaria.Measurables.Factories;
+namespace CsabaDu.FooVaria.RateComponents.Factories;
 
 public interface IBaseMeasureFactory : IMeasurableFactory, IFactory<IRateComponent>
 {

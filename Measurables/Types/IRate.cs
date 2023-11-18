@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types;
+﻿namespace CsabaDu.FooVaria.RateComponents.Types;
 
 public interface IRate : IMeasurable, IBaseRate, IExchange<IBaseRate, IBaseMeasurable>
 {

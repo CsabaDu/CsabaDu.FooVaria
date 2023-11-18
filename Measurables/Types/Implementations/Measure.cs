@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 
-namespace CsabaDu.FooVaria.Measurables.Types.Implementations
+namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
 {
-    internal abstract class Measure : BaseMeasure, IMeasure
+    internal abstract class Measure : RateComponent, IMeasure
     {
         #region Constructors
         private protected Measure(IMeasureFactory factory, ValueType quantity, Enum measureUnit) : base(factory, quantity, measureUnit)

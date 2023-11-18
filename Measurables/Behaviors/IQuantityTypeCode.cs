@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Behaviors;
+﻿namespace CsabaDu.FooVaria.RateComponents.Behaviors;
 
 public interface IQuantityTypeCode
 {

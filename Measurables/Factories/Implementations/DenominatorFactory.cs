@@ -1,7 +1,7 @@
-﻿using CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿using CsabaDu.FooVaria.RateComponents.Types.Implementations;
 using CsabaDu.FooVaria.Measurements.Factories;
 
-namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
+namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
 
 public sealed class DenominatorFactory : BaseMeasureFactory, IDenominatorFactory
 {

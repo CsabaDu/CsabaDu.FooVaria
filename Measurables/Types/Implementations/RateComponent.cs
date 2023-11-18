@@ -1,23 +1,23 @@
-﻿using static CsabaDu.FooVaria.Measurables.Statics.QuantityTypes;
+﻿using static CsabaDu.FooVaria.RateComponents.Statics.QuantityTypes;
 
-namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
 
-internal abstract class BaseMeasure : Measurable, IRateComponent
+internal abstract class RateComponent : BaseMeasureTemp, IRateComponent
 {
     #region Constructors
-    private protected BaseMeasure(IBaseMeasureFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
+    private protected RateComponent(IBaseMeasureFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
     {
         Quantity = factory.DefaultRateComponentQuantity;
         Measurement = (IMeasurement)factory.MeasurementFactory.CreateDefault(measureUnitTypeCode);
     }
 
-    private protected BaseMeasure(IBaseMeasureFactory factory, ValueType quantity, Enum measureUnit) : base(factory, measureUnit)
+    private protected RateComponent(IBaseMeasureFactory factory, ValueType quantity, Enum measureUnit) : base(factory, measureUnit)
     {
         Quantity = GetValidQuantity(quantity);
         Measurement = factory.MeasurementFactory.Create(measureUnit);
     }
 
-    private protected BaseMeasure(IBaseMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, measurement)
+    private protected RateComponent(IBaseMeasureFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, measurement)
     {
         Quantity = GetValidQuantity(quantity);
         Measurement = measurement;
@@ -354,6 +354,8 @@ internal abstract class BaseMeasure : Measurable, IRateComponent
     {
         throw new NotImplementedException();
     }
+
+    public abstract TypeCode GetQuantityTypeCode();
     #endregion
     #endregion
 }

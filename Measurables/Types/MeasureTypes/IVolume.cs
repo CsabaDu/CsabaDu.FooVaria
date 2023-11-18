@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types.MeasureTypes;
+﻿namespace CsabaDu.FooVaria.RateComponents.Types.MeasureTypes;
 
 public interface IVolume : IMeasure<IVolume, double, VolumeUnit>, ISpreadMeasure, IConvertMeasure<IVolume, IWeight>
 {

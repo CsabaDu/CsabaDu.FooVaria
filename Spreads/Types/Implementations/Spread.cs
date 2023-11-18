@@ -1,5 +1,5 @@
-﻿using CsabaDu.FooVaria.Measurables.Behaviors;
-using CsabaDu.FooVaria.Measurables.Statics;
+﻿using CsabaDu.FooVaria.RateComponents.Behaviors;
+using CsabaDu.FooVaria.RateComponents.Statics;
 
 namespace CsabaDu.FooVaria.Spreads.Types.Implementations
 {

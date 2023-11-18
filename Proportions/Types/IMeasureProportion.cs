@@ -1,4 +1,4 @@
-﻿using CsabaDu.FooVaria.Measurables.Behaviors;
+﻿using CsabaDu.FooVaria.RateComponents.Behaviors;
 
 namespace CsabaDu.FooVaria.Proportions.Types
 {

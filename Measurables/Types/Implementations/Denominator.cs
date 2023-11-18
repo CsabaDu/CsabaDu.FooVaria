@@ -1,6 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
 
-internal sealed class Denominator : BaseMeasure, IDenominator
+internal sealed class Denominator : RateComponent, IDenominator
 {
     #region Constructors
     internal Denominator(IDenominatorFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)

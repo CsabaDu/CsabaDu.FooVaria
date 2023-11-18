@@ -1,6 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
 
-internal sealed class Limit : BaseMeasure, ILimit
+internal sealed class Limit : RateComponent, ILimit
 {
     #region Constructors
     internal Limit(ILimitFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)

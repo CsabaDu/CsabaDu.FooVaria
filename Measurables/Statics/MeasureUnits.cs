@@ -1,6 +1,6 @@
 ﻿//using static CsabaDu.FooVaria.Measurements.Types.Implementations.BaseMeasurement;
 
-//namespace CsabaDu.FooVaria.Measurables.Statics
+//namespace CsabaDu.FooVaria.RateComponents.Statics
 //{
 //    public static class MeasureUnits
 //    {

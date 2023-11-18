@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Behaviors;
+﻿namespace CsabaDu.FooVaria.RateComponents.Behaviors;
 
 public interface ILimiter<in T, in U> : IEqualityComparer<T> where T : class, IQuantifiable where U : class, ILimitable
 {

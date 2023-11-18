@@ -1,6 +1,6 @@
-﻿using static CsabaDu.FooVaria.Measurables.Statics.QuantityTypes;
+﻿using static CsabaDu.FooVaria.RateComponents.Statics.QuantityTypes;
 
-namespace CsabaDu.FooVaria.Measurables.Statics;
+namespace CsabaDu.FooVaria.RateComponents.Statics;
 
 public static class Extensions
 {

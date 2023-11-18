@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types;
+﻿namespace CsabaDu.FooVaria.RateComponents.Types;
 
 public interface ILimit : IRateComponent, IMeasureUnit<Enum>, IDefaultBaseMeasure<ILimit, ulong>, ILimiter<ILimit, IMeasure>
 {

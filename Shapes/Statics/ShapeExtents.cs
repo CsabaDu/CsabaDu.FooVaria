@@ -1,6 +1,6 @@
-﻿using CsabaDu.FooVaria.Measurables.Behaviors;
-using CsabaDu.FooVaria.Measurables.Statics;
-using CsabaDu.FooVaria.Measurables.Types;
+﻿using CsabaDu.FooVaria.RateComponents.Behaviors;
+using CsabaDu.FooVaria.RateComponents.Statics;
+using CsabaDu.FooVaria.RateComponents.Types;
 using CsabaDu.FooVaria.Shapes.Types;
 using CsabaDu.FooVaria.Shapes.Types.Implementations;
 using Rectangle = CsabaDu.FooVaria.Shapes.Types.Implementations.Rectangle;

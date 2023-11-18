@@ -1,8 +1,8 @@
-﻿using CsabaDu.FooVaria.Measurables.Types.Implementations;
-using CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes;
+﻿using CsabaDu.FooVaria.RateComponents.Types.Implementations;
+using CsabaDu.FooVaria.RateComponents.Types.Implementations.MeasureTypes;
 using CsabaDu.FooVaria.Measurements.Factories;
 
-namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
+namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
 
 public sealed class MeasureFactory : BaseMeasureFactory, IMeasureFactory
 {

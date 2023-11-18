@@ -1,4 +1,4 @@
-﻿using CsabaDu.FooVaria.Measurables.Factories;
+﻿using CsabaDu.FooVaria.RateComponents.Factories;
 using CsabaDu.FooVaria.Shapes.Types;
 using CsabaDu.FooVaria.Spreads.Factories;
 

@@ -1,5 +1,5 @@
 ﻿using CsabaDu.FooVaria.Common.Types.Implementations;
-using CsabaDu.FooVaria.Measurables.Types.Implementations;
+using CsabaDu.FooVaria.RateComponents.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Proportions.Types.Implementations
 {

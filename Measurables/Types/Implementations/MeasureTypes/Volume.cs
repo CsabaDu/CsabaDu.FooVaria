@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations.MeasureTypes;
+﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations.MeasureTypes;
 
 internal sealed class Volume : Measure<IVolume, double, VolumeUnit>, IVolume
 {

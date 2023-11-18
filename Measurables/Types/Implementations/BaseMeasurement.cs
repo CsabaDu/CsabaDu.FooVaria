@@ -1,6 +1,6 @@
-﻿//using static CsabaDu.FooVaria.Measurables.Statics.MeasureUnits;
+﻿//using static CsabaDu.FooVaria.RateComponents.Statics.MeasureUnits;
 
-//namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+//namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
 
 //internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
 //{

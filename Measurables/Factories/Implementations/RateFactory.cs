@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Factories.Implementations;
+﻿namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
 
 public abstract class RateFactory : IRateFactory
 {
