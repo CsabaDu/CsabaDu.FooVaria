@@ -121,7 +121,7 @@ internal sealed class Limit : RateComponent, ILimit
             && base.Equals(other);
     }
 
-    public override IRateComponent GetBaseMeasure(ValueType quantity, Enum measureUnit)
+    public override IRateComponent GetRateComponent(ValueType quantity, Enum measureUnit)
     {
         return GetLimit(measureUnit, quantity, default);
     }
@@ -163,7 +163,7 @@ internal sealed class Limit : RateComponent, ILimit
         #endregion
     }
 
-    public override IRateComponent GetBaseMeasure(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
+    public override IRateComponent GetRateComponent(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
     {
         throw new NotImplementedException();
     }

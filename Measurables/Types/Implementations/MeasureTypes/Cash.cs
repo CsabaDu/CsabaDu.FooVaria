@@ -31,7 +31,7 @@ internal sealed class Cash : Measure<ICash, decimal, Currency>, ICash
     //    return GetDefaultRateComponentQuantity<decimal>();
     //}
 
-    //public override ICash GetMeasure(IBaseMeasure baseMeasure)
+    //public override ICash GetMeasure(IRateComponent baseMeasure)
     //{
     //    return GetMeasure(this, baseMeasure);
     //}

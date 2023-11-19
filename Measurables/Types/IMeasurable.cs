@@ -1,8 +1,8 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Types;
+﻿//namespace CsabaDu.FooVaria.RateComponents.Types;
 
-public interface IMeasurable : IBaseMeasurable, IQuantityTypeCode
-{
-    //IMeasurable GetDefault();
+//public interface IMeasurable : IBaseMeasurable, IQuantityTypeCode
+//{
+//    //IMeasurable GetDefault();
 
-    //IMeasurable GetMeasurable(IMeasurable other);
-}
+//    //IMeasurable GetMeasurable(IMeasurable other);
+//}

@@ -16,11 +16,11 @@ public abstract class RateFactory : IRateFactory
     #region Public methods
     #region Abstract methods
     public abstract IMeasurable Create(IMeasurable other);
-    public abstract IBaseRate Create(IBaseMeasureTemp numerator, MeasureUnitTypeCode measureUnitTypeCode);
-    public abstract IBaseRate Create(IBaseMeasureTemp numerator, Enum denominatorMeasureUnit);
+    public abstract IBaseRate Create(IBaseMeasure numerator, MeasureUnitTypeCode measureUnitTypeCode);
+    public abstract IBaseRate Create(IBaseMeasure numerator, Enum denominatorMeasureUnit);
     public abstract IRate Create(IRate other);
 
-    public IBaseRate Create(IBaseMeasureTemp numerator, IBaseMeasurable denominator)
+    public IBaseRate Create(IBaseMeasure numerator, IMeasurable denominator)
     {
         throw new NotImplementedException();
     }

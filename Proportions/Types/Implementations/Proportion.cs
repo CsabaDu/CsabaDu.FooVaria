@@ -44,7 +44,7 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
             return GetFactory().Create(numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode);
         }
 
-        public override sealed IProportion GetBaseRate(IBaseMeasureTemp numerator, Enum denominatorMeasureUnit)
+        public override sealed IProportion GetBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit)
         {
             return (IProportion)GetFactory().Create(numerator, denominatorMeasureUnit);
         }
@@ -74,7 +74,7 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
             throw QuantityArgumentOutOfRangeException(paramName, quantity);
         }
 
-        public override sealed IMeasure Multiply(IBaseMeasureTemp multiplier)
+        public override sealed IMeasure Multiply(IBaseMeasure multiplier)
         {
             MeasureUnitTypeCode measureUnitTypeCode = NullChecked(multiplier, nameof(multiplier)).MeasureUnitTypeCode;
 

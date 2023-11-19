@@ -83,7 +83,7 @@ public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
         throw new ArgumentOutOfRangeException(nameof(other), other.GetType(), null);
     }
 
-    public override IFlatRate Create(IBaseMeasureTemp numerator, MeasureUnitTypeCode denominatorMeasureUnitTpeCode)
+    public override IFlatRate Create(IBaseMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTpeCode)
     {
         string name = nameof(numerator);
 
@@ -92,7 +92,7 @@ public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
         return new FlatRate(this, measure, denominatorMeasureUnitTpeCode);
     }
 
-    public override IBaseRate Create(IBaseMeasureTemp numerator, Enum denominatorMeasureUnit)
+    public override IBaseRate Create(IBaseMeasure numerator, Enum denominatorMeasureUnit)
     {
         string name = nameof(numerator);
 

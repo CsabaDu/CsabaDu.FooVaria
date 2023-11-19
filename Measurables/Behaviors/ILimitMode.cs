@@ -1,7 +1,7 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Behaviors;
+﻿//namespace CsabaDu.FooVaria.RateComponents.Behaviors;
 
-public interface ILimitMode
-{
-    LimitMode? GetLimitMode();
-}
+//public interface ILimitMode
+//{
+//    LimitMode? GetLimitMode();
+//}
 

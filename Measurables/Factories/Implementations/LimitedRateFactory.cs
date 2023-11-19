@@ -90,7 +90,7 @@ public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
         return (ILimit)LimitFactory.Create(denominator);
     }
 
-    public override ILimitedRate Create(IBaseMeasureTemp numerator, MeasureUnitTypeCode measureUnitTypeCode)
+    public override ILimitedRate Create(IBaseMeasure numerator, MeasureUnitTypeCode measureUnitTypeCode)
     {
         string name = nameof(numerator);
 
@@ -101,7 +101,7 @@ public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
         return new LimitedRate(this, measure, measureUnitTypeCode, limit);
     }
 
-    public override IBaseRate Create(IBaseMeasureTemp numerator, Enum denominatorMeasureUnit)
+    public override IBaseRate Create(IBaseMeasure numerator, Enum denominatorMeasureUnit)
     {
         string name = nameof(numerator);
 

@@ -31,7 +31,7 @@ internal sealed class Extent : Measure<IExtent, double,ExtentUnit>, IExtent
     //    return GetDefaultRateComponentQuantity<double>();
     //}
 
-    //public override IExtent GetMeasure(IBaseMeasure baseMeasure)
+    //public override IExtent GetMeasure(IRateComponent baseMeasure)
     //{
     //    return GetMeasure(this, baseMeasure);
     //}

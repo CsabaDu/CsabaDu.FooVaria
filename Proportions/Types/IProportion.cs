@@ -8,7 +8,7 @@
         IProportion GetProportion(IRateComponent numerator, IRateComponent denominator);
     }
 
-    public interface IProportion<out T, in U> : IProportion where T : class, IProportion, IMeasureProportion where U : struct, Enum
+    public interface IProportion<out T, in U> : IProportion, IDenominate<U, IMeasure> where T : class, IProportion, IMeasureProportion where U : struct, Enum
     {
         T GetProportion(IRateComponent numerator, U denominatorMeasureUnit);
         decimal GetQuantity(U denominatorMeasureUnit);

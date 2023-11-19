@@ -32,7 +32,7 @@ internal sealed class PieceCount : Measure<IPieceCount, long, Pieces>, IPieceCou
     //    return GetDefaultRateComponentQuantity<long>();
     //}
 
-    //public override IPieceCount GetMeasure(IBaseMeasure baseMeasure)
+    //public override IPieceCount GetMeasure(IRateComponent baseMeasure)
     //{
     //    return GetMeasure(this, baseMeasure);
     //}

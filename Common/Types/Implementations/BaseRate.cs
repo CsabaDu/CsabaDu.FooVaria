@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Common.Types.Implementations
 {
-    public abstract class BaseRate : BaseMeasureTemp, IBaseRate
+    public abstract class BaseRate : BaseMeasure, IBaseRate
     {
         #region Constructors
         //public decimal DefaultQuantity { get; }
@@ -25,7 +25,7 @@
             //DefaultQuantity = NullChecked(numerator, nameof(numerator)).GetDefaultQuantity();
         }
 
-        public BaseRate(IBaseRateFactory factory, IQuantifiable numerator, IBaseMeasureTemp denominator) : base(factory, denominator)
+        public BaseRate(IBaseRateFactory factory, IQuantifiable numerator, IBaseMeasure denominator) : base(factory, denominator)
         {
             //DefaultQuantity = NullChecked(numerator, nameof(numerator)).GetDefaultQuantity();
         }
@@ -119,15 +119,15 @@
 
         #region Abstract methods
         public abstract IBaseRate GetBaseRate(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
-        public abstract IBaseRate GetBaseRate(IQuantifiable numerator, IBaseMeasurable denominator);
+        public abstract IBaseRate GetBaseRate(IQuantifiable numerator, IMeasurable denominator);
         public abstract IBaseRate GetBaseRate(IQuantifiable numerator, Enum denominatorMeasureUnit);
         public abstract MeasureUnitTypeCode GetNumeratorMeasureUnitTypeCode();
-        public abstract IQuantifiable Multiply(IBaseMeasureTemp multiplier);
+        public abstract IQuantifiable Multiply(IBaseMeasure multiplier);
         //public abstract void ValidateQuantity(ValueType? quantity, string paramName);
         #endregion
 
         #region Static methods
-        public static bool AreExchangeables(IBaseRate baseRate, IBaseMeasurable? baseMeasurable)
+        public static bool AreExchangeables(IBaseRate baseRate, IMeasurable? baseMeasurable)
         {
             if (baseMeasurable is not IBaseRate other) return baseMeasurable?.IsExchangeableTo(baseRate.MeasureUnitTypeCode) == true;
 
@@ -205,48 +205,56 @@
             #endregion
         }
 
-        public IBaseRate GetBaseRate(IBaseMeasureTemp numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
+        public IBaseRate GetBaseRate(IBaseMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
         {
             return GetFactory().Create(numerator, denominatorMeasureUnitTypeCode);
         }
 
-        public abstract IBaseRate GetBaseRate(IBaseMeasureTemp numerator, Enum denominatorMeasureUnit);
+        public abstract IBaseRate GetBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit);
         //{
         //    throw new NotImplementedException();
         //}
 
-        public IBaseRate GetBaseRate(IBaseMeasureTemp numerator, IBaseMeasurable denominator)
+        public IBaseRate GetBaseRate(IBaseMeasure numerator, IMeasurable denominator)
         {
             throw new NotImplementedException();
         }
         #endregion
     }
 
-    public abstract class BaseMeasureTemp : BaseMeasurable, IBaseMeasureTemp
+    public abstract class BaseMeasure : Measurable, IBaseMeasure
     {
-        protected BaseMeasureTemp(IBaseMeasureTemp other) : base(other)
+        #region Enums
+        protected enum SummingMode
+        {
+            Add,
+            Subtract,
+        }
+        #endregion
+
+        protected BaseMeasure(IBaseMeasure other) : base(other)
         {
             DefaultQuantity = other.DefaultQuantity;
         }
 
-        protected BaseMeasureTemp(IBaseMeasurableFactory factory, decimal defaultQuantity, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
+        protected BaseMeasure(IMeasurableFactory factory, decimal defaultQuantity, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
         {
             ValidateQuantity(defaultQuantity, nameof(defaultQuantity));
 
             DefaultQuantity = defaultQuantity;
         }
 
-        protected BaseMeasureTemp(IBaseMeasurableFactory factory, IQuantifiable quantifiable, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
+        protected BaseMeasure(IMeasurableFactory factory, IQuantifiable quantifiable, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
         {
             DefaultQuantity = GetValidDefaultQuantity(quantifiable, nameof(quantifiable));
         }
 
-        protected BaseMeasureTemp(IBaseMeasurableFactory factory, IQuantifiable quantifiable, Enum measureUnit) : base(factory, measureUnit)
+        protected BaseMeasure(IMeasurableFactory factory, IQuantifiable quantifiable, Enum measureUnit) : base(factory, measureUnit)
         {
             DefaultQuantity = GetValidDefaultQuantity(quantifiable, nameof(quantifiable));
         }
 
-        protected BaseMeasureTemp(IBaseMeasurableFactory factory, IBaseMeasureTemp baseMeasure) : base(factory, baseMeasure)
+        protected BaseMeasure(IMeasurableFactory factory, IBaseMeasure baseMeasure) : base(factory, baseMeasure)
         {
             DefaultQuantity = GetValidDefaultQuantity(baseMeasure, nameof(baseMeasure));
         }

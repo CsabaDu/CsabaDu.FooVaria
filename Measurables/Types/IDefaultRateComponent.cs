@@ -1,12 +1,13 @@
 ﻿namespace CsabaDu.FooVaria.RateComponents.Types
 {
-    public interface IDefaultRateComponent : IBaseMeasurable
+    public interface IDefaultRateComponent : IBaseMeasure
     {
     }
 
-    public interface IDefaultBaseMeasure<out T, U> : IDefaultRateComponent, IDefaultBaseMeasurable<T>, IQuantifiable<U> where T : class, IRateComponent where U : struct
+    public interface IDefaultRateComponent<T, U> : IDefaultRateComponent, IMeasurable<T>, IQuantifiable<U>, ICommonBase<T> where T : class, IRateComponent, IDefaultRateComponent where U : struct
     {
         U GetDefaultRateComponentQuantity();
         T GetDefaultRateComponent();
+        T GetRateComponent(IRateComponent other);
     }
 }

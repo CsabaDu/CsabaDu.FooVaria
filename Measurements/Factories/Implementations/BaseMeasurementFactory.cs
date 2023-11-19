@@ -3,6 +3,6 @@
 public abstract class BaseMeasurementFactory : IBaseMeasurementFactory
 {
     //public abstract IMeasurable Create(IMeasurable other);
-    public abstract IBaseMeasurable CreateDefault(MeasureUnitTypeCode measureUnitTypeCode);
+    public abstract IMeasurable CreateDefault(MeasureUnitTypeCode measureUnitTypeCode);
 }
 

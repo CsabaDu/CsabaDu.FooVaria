@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.RateComponents.Factories;
 
-public interface IBaseMeasureFactory : IMeasurableFactory, IFactory<IRateComponent>
+public interface IRateComponentFactory : IMeasurableFactory, IFactory<IRateComponent>
 {
     IMeasurementFactory MeasurementFactory { get; init; }
     RateComponentCode RateComponentCode { get; }

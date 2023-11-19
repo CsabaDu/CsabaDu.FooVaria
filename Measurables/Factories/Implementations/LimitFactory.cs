@@ -91,7 +91,7 @@ public sealed class LimitFactory : BaseMeasureFactory, ILimitFactory
 
     //    //if (other is ILimit limit) return Create(limit);
 
-    //    //if (other is IBaseMeasure baseMeasure) return Create(baseMeasure, default);
+    //    //if (other is IRateComponent baseMeasure) return Create(baseMeasure, default);
 
     //    //if (other is IMeasurement measurement) return CreateDefault(measurement.MeasureUnitTypeCode);
 

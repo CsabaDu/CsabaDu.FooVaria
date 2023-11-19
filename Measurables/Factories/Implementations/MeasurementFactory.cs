@@ -76,7 +76,7 @@
 //        Enum measureUnit = NullChecked(other, nameof(other)) switch
 //        {
 //            Measurement measurement => measurement.GetMeasureUnit(),
-//            BaseMeasureTemp baseMmeasure => getMeasureUnit(baseMmeasure),
+//            BaseMeasure baseMmeasure => getMeasureUnit(baseMmeasure),
 //            BaseRate rate => getMeasureUnit(rate.Denominator),
 
 //            _ => throw new InvalidOperationException(null),
@@ -85,7 +85,7 @@
 //        return GetStoredMeasurement(measureUnit);
 
 //        #region Local methods
-//        static Enum getMeasureUnit(IBaseMeasure baseMmeasure)
+//        static Enum getMeasureUnit(IRateComponent baseMmeasure)
 //        {
 //            return baseMmeasure.Measurement.GetMeasureUnit();
 //        }

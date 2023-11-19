@@ -17,7 +17,7 @@ internal sealed class Frequency : Proportion<IFrequency, Pieces, TimePeriodUnit>
     {
     }
 
-    public override IBaseRate GetBaseRate(IQuantifiable numerator, IBaseMeasurable denominator)
+    public override IBaseRate GetBaseRate(IQuantifiable numerator, IMeasurable denominator)
     {
         throw new NotImplementedException();
     }

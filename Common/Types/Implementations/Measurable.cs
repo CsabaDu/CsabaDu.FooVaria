@@ -2,25 +2,31 @@
 
 namespace CsabaDu.FooVaria.Common.Types.Implementations;
 
-public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
+public abstract class Measurable : CommonBase, IMeasurable
 {
+    protected enum SummingMode
+    {
+        Add,
+        Subtract,
+    }
+
     #region Constructors
-    protected BaseMeasurable(IBaseMeasurableFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory)
+    protected Measurable(IMeasurableFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory)
     {
         MeasureUnitTypeCode = Defined(measureUnitTypeCode, nameof(measureUnitTypeCode));
     }
 
-    protected BaseMeasurable(IBaseMeasurableFactory factory, Enum measureUnit) : base(factory)
+    protected Measurable(IMeasurableFactory factory, Enum measureUnit) : base(factory)
     {
         MeasureUnitTypeCode = MeasureUnitTypes.GetValidMeasureUnitTypeCode(measureUnit);
     }
 
-    protected BaseMeasurable(IBaseMeasurableFactory factory, IBaseMeasurable baseMeasurable) : base(factory, baseMeasurable)
+    protected Measurable(IMeasurableFactory factory, IMeasurable baseMeasurable) : base(factory, baseMeasurable)
     {
         MeasureUnitTypeCode = baseMeasurable.MeasureUnitTypeCode;
     }
 
-    protected BaseMeasurable(IBaseMeasurable other) : base(other)
+    protected Measurable(IMeasurable other) : base(other)
     {
         MeasureUnitTypeCode = other.MeasureUnitTypeCode;
     }
@@ -54,17 +60,17 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
     #region Override methods
     public override bool Equals(object? obj)
     {
-        return obj is IBaseMeasurable other
+        return obj is IMeasurable other
             && other.MeasureUnitTypeCode == MeasureUnitTypeCode;
     }
 
-    public override IBaseMeasurableFactory GetFactory()
+    public override IMeasurableFactory GetFactory()
     {
-        return (IBaseMeasurableFactory)Factory;
+        return (IMeasurableFactory)Factory;
     }
     public override int GetHashCode()
     {
-        return HashCode.Combine(typeof(IBaseMeasurable), MeasureUnitTypeCode);
+        return HashCode.Combine(typeof(IMeasurable), MeasureUnitTypeCode);
     }
 
     public override void Validate(IRootObject? rootObject, string paramName)
@@ -105,7 +111,7 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
 
     #region Protected methods
     #region Static methods
-    protected static T GetValidBaseMeasurable<T>(T commonBase, IRootObject other, string paramName) where T : class, IBaseMeasurable
+    protected static T GetValidBaseMeasurable<T>(T commonBase, IRootObject other, string paramName) where T : class, IMeasurable
     {
         T baseMeasurable = GetValidCommonBase(commonBase, other, paramName);
         MeasureUnitTypeCode measureUnitTypeCode = commonBase.MeasureUnitTypeCode;
@@ -114,7 +120,7 @@ public abstract class BaseMeasurable : CommonBase, IBaseMeasurable
         return GetValidBaseMeasurable(baseMeasurable, measureUnitTypeCode, otherMeasureUnitTypeCode, paramName);
     }
 
-    protected static T GetValidBaseMeasurable<T, U>(T other, U commonBaseProperty, U otherProperty, string paramName) where T : class, IBaseMeasurable where U : struct, Enum
+    protected static T GetValidBaseMeasurable<T, U>(T other, U commonBaseProperty, U otherProperty, string paramName) where T : class, IMeasurable where U : struct, Enum
     {
         if (commonBaseProperty.Equals(otherProperty)) return other;
 

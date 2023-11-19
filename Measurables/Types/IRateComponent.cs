@@ -1,24 +1,23 @@
 ﻿namespace CsabaDu.FooVaria.RateComponents.Types
 {
-    public interface IRateComponent : IBaseMeasureTemp, IQuantity, IQuantityType, IQuantityTypeCode, IDecimalQuantity, ILimitMode, IRateComponentCode, IExchangeRate, IExchange<IRateComponent, Enum>, IRound<IRateComponent>
+    public interface IRateComponent : IBaseMeasure, IQuantity, IQuantityType, IQuantityTypeCode, IDecimalQuantity, ILimitMode, IRateComponentCode, IExchangeRate, IExchange<IRateComponent, Enum>, IRound<IRateComponent>
     {
         IMeasurement Measurement { get; }
         object Quantity { get; init; }
         TypeCode QuantityTypeCode { get; }
 
-        bool TryGetBaseMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName, [NotNullWhen(true)] out IRateComponent? baseMeasure);
-        IRateComponent GetBaseMeasure(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity);
+        bool TryGetRateComponent(Enum measureUnit, ValueType quantity, decimal exchangeRate, string customName, [NotNullWhen(true)] out IRateComponent? baseMeasure);
+        IRateComponent GetRateComponent(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity);
     }
 
-    public interface IBaseMeasure<T> : IRateComponent where T : class, IRateComponent
+    public interface IRateComponent<out T> : IRateComponent where T : class, IRateComponent
     {
-        T GetBaseMeasure(ValueType quantity);
-        T GetBaseMeasure(string name, ValueType quantity);
-        T GetBaseMeasure(Enum measureUnit, decimal exchangeRate, string customName, ValueType quantity);
-        T GetBaseMeasure(Enum measureUnit, ValueType quantity);
-        T GetBaseMeasure(IMeasurement measurement, ValueType quantity);
-        T GetBaseMeasure(IRateComponent baseMeasure);
-        T GetBaseMeasure(T other);
+        T GetRateComponent(ValueType quantity);
+        T GetRateComponent(string name, ValueType quantity);
+        T GetRateComponent(Enum measureUnit, decimal exchangeRate, string customName, ValueType quantity);
+        T GetRateComponent(Enum measureUnit, ValueType quantity);
+        T GetRateComponent(IMeasurement measurement, ValueType quantity);
+        T GetRateComponent(IRateComponent rateComponent);
     }
 }
 

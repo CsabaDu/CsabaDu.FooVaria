@@ -87,7 +87,7 @@ internal sealed class Measurement : BaseMeasurement, IMeasurement
         return GetFactory().Create(other);
     }
 
-    public IMeasurement GetMeasurement(IBaseMeasurable baseMeasurable)
+    public IMeasurement GetMeasurement(IMeasurable baseMeasurable)
     {
         if (baseMeasurable is IMeasurement other) return GetMeasurement(other);
 

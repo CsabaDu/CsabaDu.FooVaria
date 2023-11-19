@@ -2,5 +2,5 @@
 
 public interface ISurface : IBaseSpread
 {
+    ISurface GetSurface();
 }
-

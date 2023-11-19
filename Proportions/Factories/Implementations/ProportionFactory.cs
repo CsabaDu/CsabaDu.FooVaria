@@ -6,9 +6,9 @@
         public abstract IProportion Create(IBaseRate baseRate);
         public abstract IBaseRate Create(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
         public abstract IProportion Create(IRateComponent numerator, IRateComponent denominator);
-        public abstract IBaseRate Create(IBaseMeasureTemp numerator, IBaseMeasurable denominator);
-        public abstract IBaseRate Create(IBaseMeasureTemp numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
-        public abstract IBaseRate Create(IBaseMeasureTemp numerator, Enum denominatorMeasureUnit);
+        public abstract IBaseRate Create(IBaseMeasure numerator, IMeasurable denominator);
+        public abstract IBaseRate Create(IBaseMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
+        public abstract IBaseRate Create(IBaseMeasure numerator, Enum denominatorMeasureUnit);
 
         IProportion IProportionFactory.Create(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
         {

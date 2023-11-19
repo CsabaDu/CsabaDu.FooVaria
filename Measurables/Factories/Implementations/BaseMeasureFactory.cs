@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
 
-public abstract class BaseMeasureFactory : IBaseMeasureFactory
+public abstract class BaseMeasureFactory : IRateComponentFactory
 {
     #region Constructors
     private protected BaseMeasureFactory(IMeasurementFactory measurementFactory)
@@ -32,5 +32,5 @@ public abstract class BaseMeasureFactory : IBaseMeasureFactory
     }
 
     public abstract IRateComponent Create(IRateComponent other);
-    public abstract IBaseMeasurable CreateDefault(MeasureUnitTypeCode measureUnitTypeCode);
+    public abstract IMeasurable CreateDefault(MeasureUnitTypeCode measureUnitTypeCode);
 }

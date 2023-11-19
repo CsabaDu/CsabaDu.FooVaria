@@ -2,9 +2,9 @@
 
 namespace CsabaDu.FooVaria.Common.Factories;
 
-public interface IBaseRateFactory : IBaseMeasurableFactory
+public interface IBaseRateFactory : IMeasurableFactory
 {
-    IBaseRate Create(IBaseMeasureTemp numerator, IBaseMeasurable denominator);
-    IBaseRate Create(IBaseMeasureTemp numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
-    IBaseRate Create(IBaseMeasureTemp numerator, Enum denominatorMeasureUnit);
+    IBaseRate Create(IBaseMeasure numerator, IMeasurable denominator);
+    IBaseRate Create(IBaseMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
+    IBaseRate Create(IBaseMeasure numerator, Enum denominatorMeasureUnit);
 }

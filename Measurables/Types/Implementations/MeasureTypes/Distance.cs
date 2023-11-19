@@ -32,7 +32,7 @@ internal sealed class Distance : Measure<IDistance, double, DistanceUnit>, IDist
     //    return GetDefaultRateComponentQuantity<double>();
     //}
 
-    //public override IDistance GetMeasure(IBaseMeasure baseMeasure)
+    //public override IDistance GetMeasure(IRateComponent baseMeasure)
     //{
     //    return GetMeasure(this, baseMeasure);
     //}

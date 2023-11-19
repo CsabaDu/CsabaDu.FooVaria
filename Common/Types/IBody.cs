@@ -2,5 +2,6 @@
 
 public interface IBody : IBaseSpread
 {
+    IBody GetBody();
 }
 

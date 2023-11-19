@@ -60,7 +60,7 @@ internal abstract class Rate : Measurable, IRate
         return BaseRate.Compare(this, other);
     }
 
-    public IBaseRate? ExchangeTo(IBaseMeasurable denominator)
+    public IBaseRate? ExchangeTo(IMeasurable denominator)
     {
         return denominator switch
         {
@@ -79,17 +79,17 @@ internal abstract class Rate : Measurable, IRate
         return GetRate(numerator, denominator, null);
     }
 
-    public IBaseRate GetBaseRate(IBaseMeasureTemp numerator, Enum denominatorMeasureUnit)
+    public IBaseRate GetBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit)
     {
         return GetFactory().Create(numerator, denominatorMeasureUnit);
     }
 
-    public IBaseRate GetBaseRate(IBaseMeasureTemp numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
+    public IBaseRate GetBaseRate(IBaseMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
     {
         return GetFactory().Create(numerator, denominatorMeasureUnitTypeCode);
     }
 
-    public IBaseRate GetBaseRate(IQuantifiable numerator, IBaseMeasurable denominator)
+    public IBaseRate GetBaseRate(IQuantifiable numerator, IMeasurable denominator)
     {
         string name = nameof(numerator);
 
@@ -136,12 +136,12 @@ internal abstract class Rate : Measurable, IRate
         return this[Defined(rateComponentCode, nameof(rateComponentCode))];
     }
 
-    public bool IsExchangeableTo(IBaseMeasurable? baseMeasurable)
+    public bool IsExchangeableTo(IMeasurable? baseMeasurable)
     {
         return BaseRate.AreExchangeables(this, baseMeasurable);
     }
 
-    public IQuantifiable Multiply(IBaseMeasureTemp multiplier)
+    public IQuantifiable Multiply(IBaseMeasure multiplier)
     {
         MeasureUnitTypeCode measureUnitTypeCode = NullChecked(multiplier, nameof(multiplier)).MeasureUnitTypeCode;
 
@@ -159,7 +159,7 @@ internal abstract class Rate : Measurable, IRate
         return BaseRate.Proportionals(this, other);
     }
 
-    public bool TryExchangeTo(IBaseMeasurable denominator, [NotNullWhen(true)] out IBaseRate? exchanged)
+    public bool TryExchangeTo(IMeasurable denominator, [NotNullWhen(true)] out IBaseRate? exchanged)
     {
         exchanged = ExchangeTo(denominator);
 
@@ -310,7 +310,7 @@ internal abstract class Rate : Measurable, IRate
         throw new NotImplementedException();
     }
 
-    public IBaseRate GetBaseRate(IBaseMeasureTemp numerator, IBaseMeasurable denominator)
+    public IBaseRate GetBaseRate(IBaseMeasure numerator, IMeasurable denominator)
     {
         throw new NotImplementedException();
     }

@@ -136,19 +136,32 @@ internal sealed class FlatRate : Rate, IFlatRate
     {
         if (other == null) return GetFlatRate(this);
 
-        if (!other.Denominator.IsExchangeableTo(MeasureUnitTypeCode))
+        if (!other.Denominator.IsExchangeableTo(MeasureUnitTypeCode)) throw exception(other.MeasureUnitTypeCode);
+
+        if (other.Numerator.TryExchangeTo(Numerator.Measurement.GetMeasureUnit(), out IRateComponent? exchanged) && exchanged is IMeasure numerator)
         {
-            throw new ArgumentOutOfRangeException(nameof(other), other.MeasureUnitTypeCode, null);
+            return GetFlatRate(getNumeratorSum());
         }
 
-        if (other.Numerator.TryExchangeTo(Numerator.Measurement.GetMeasureUnit(), out IRateComponent? exchanged))
-        {
-            IMeasure numerator = GetSum(Numerator, (IMeasure)exchanged, summingMode);
+        throw exception(other.GetNumeratorMeasureUnitTypeCode());
 
-            return GetFlatRate(numerator);
+        #region Local methods
+        IMeasure getNumeratorSum()
+        {
+            return summingMode switch
+            {
+                SummingMode.Add => Numerator.Add(numerator),
+                SummingMode.Subtract => Numerator.Subtract(numerator),
+
+                _ => throw new InvalidOperationException(null),
+            };
         }
 
-        throw new ArgumentOutOfRangeException(nameof(other), other.Numerator.MeasureUnitTypeCode, null);
+        static ArgumentOutOfRangeException exception(MeasureUnitTypeCode measureUnitTypeCode)
+        {
+            return new ArgumentOutOfRangeException(nameof(other), measureUnitTypeCode, null);
+        }
+        #endregion
     }
 
     public override void ValidateQuantityTypeCode(TypeCode quantityTypeCode, string paramName)

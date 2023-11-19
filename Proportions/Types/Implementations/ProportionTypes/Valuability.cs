@@ -17,7 +17,7 @@ internal sealed class Valuability : Proportion<IValuability, Currency, WeightUni
     {
     }
 
-    public override IBaseRate GetBaseRate(IQuantifiable numerator, IBaseMeasurable denominator)
+    public override IBaseRate GetBaseRate(IQuantifiable numerator, IMeasurable denominator)
     {
         throw new NotImplementedException();
     }

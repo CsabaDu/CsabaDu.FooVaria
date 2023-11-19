@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.Measurements.Types.Implementations;
 
-internal abstract class BaseMeasurement : BaseMeasurable, IBaseMeasurement
+internal abstract class BaseMeasurement : Measurable, IBaseMeasurement
 {
     #region Constructors
     #region Static constructor

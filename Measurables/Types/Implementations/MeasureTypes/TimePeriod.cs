@@ -36,7 +36,7 @@ internal sealed class TimePeriod : Measure<ITimePeriod, double, TimePeriodUnit>,
     //    return GetDefaultRateComponentQuantity<double>();
     //}
 
-    //public override ITimePeriod GetMeasure(IBaseMeasure baseMeasure)
+    //public override ITimePeriod GetMeasure(IRateComponent baseMeasure)
     //{
     //    return GetMeasure(this, baseMeasure);
     //}

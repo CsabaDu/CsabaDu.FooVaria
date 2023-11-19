@@ -18,7 +18,7 @@ internal sealed class Density : Proportion<IDensity, WeightUnit, VolumeUnit>, ID
     {
     }
 
-    public override IBaseRate GetBaseRate(IQuantifiable numerator, IBaseMeasurable denominator)
+    public override IBaseRate GetBaseRate(IQuantifiable numerator, IMeasurable denominator)
     {
         throw new NotImplementedException();
     }

@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace CsabaDu.FooVaria.Common.Types.Implementations;
 
-public abstract class BaseSpread : BaseMeasurable, IBaseSpread
+public abstract class BaseSpread : Measurable, IBaseSpread
 {
     #region Constructors
     protected BaseSpread(IBaseSpread other) : base(other)
@@ -14,18 +14,18 @@ public abstract class BaseSpread : BaseMeasurable, IBaseSpread
     {
     }
 
-    protected BaseSpread(IBaseSpreadFactory factory, IBaseMeasureTemp baseMeasurable) : base(factory, baseMeasurable)
-    {
-    }
+    //protected BaseSpread(IBaseSpreadFactory factory, IBaseMeasure baseMeasurable) : base(factory, baseMeasurable)
+    //{
+    //}
 
-    protected BaseSpread(IBaseSpreadFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IBaseMeasurable[] baseMeasurables) : base(factory, measureUnitTypeCode)
+    protected BaseSpread(IBaseSpreadFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IMeasurable[] baseMeasurables) : base(factory, measureUnitTypeCode)
     {
         _ = NullChecked(baseMeasurables, nameof(baseMeasurables));
     }
 
-    protected BaseSpread(IBaseSpreadFactory factory, Enum measureUnit, params IBaseMeasureTemp[] baseMeasures) : base(factory, measureUnit)
+    protected BaseSpread(IBaseSpreadFactory factory, Enum measureUnit, params IMeasurable[] measurables) : base(factory, measureUnit)
     {
-        _ = NullChecked(baseMeasures, nameof(baseMeasures));
+        _ = NullChecked(measurables, nameof(measurables));
     }
 
     #endregion
@@ -63,9 +63,19 @@ public abstract class BaseSpread : BaseMeasurable, IBaseSpread
         return comparison.Value.FitsIn(limitMode);
     }
 
+    public decimal GetDefaultQuantity()
+    {
+        return DefaultQuantity;
+    }
+
     public MeasureUnitTypeCode GetMeasureUnitTypeCode()
     {
         return MeasureUnitTypeCode;
+    }
+
+    public double GetQuantity()
+    {
+        return GetSpreadMeasure().GetQuantity();
     }
 
     public bool IsExchangeableTo(Enum? context)
@@ -102,9 +112,14 @@ public abstract class BaseSpread : BaseMeasurable, IBaseSpread
         return exchanged != null;
     }
 
+    public void ValidateQuantifiable(IQuantifiable? quantifiable, string paramName)
+    {
+        throw new NotImplementedException();
+    }
+
     public void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)
     {
-        if (NullChecked(spreadMeasure, paramName).GetSpreadMeasure() is not IBaseMeasurable baseMeasurable
+        if (NullChecked(spreadMeasure, paramName).GetSpreadMeasure() is not IMeasurable baseMeasurable
             || baseMeasurable.MeasureUnitTypeCode != MeasureUnitTypeCode)
         {
             throw ArgumentTypeOutOfRangeException(paramName, spreadMeasure!);
@@ -134,7 +149,7 @@ public abstract class BaseSpread : BaseMeasurable, IBaseSpread
     public abstract IBaseSpread? ExchangeTo(Enum measureUnit);
     public abstract IBaseSpread GetBaseSpread(ISpreadMeasure spreadMeasure);
     public abstract ISpreadMeasure GetSpreadMeasure();
-    //public abstract void ValidateQuantity(ValueType? quantity, string paramName);
+    public abstract void ValidateQuantity(ValueType? quantity, string paramName);
     #endregion
     #endregion
 
@@ -148,18 +163,6 @@ public abstract class BaseSpread : BaseMeasurable, IBaseSpread
 
         return baseSpread.GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
     }
-
-    public void ValidateQuantifiable(IQuantifiable? quantifiable, string paramName)
-    {
-        throw new NotImplementedException();
-    }
-
-    public decimal GetDefaultQuantity()
-    {
-        throw new NotImplementedException();
-    }
-
-    public abstract void ValidateQuantity(ValueType? quantity, string paramName);
     #endregion
     #endregion
 }

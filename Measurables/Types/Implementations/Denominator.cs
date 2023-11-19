@@ -105,7 +105,7 @@ internal sealed class Denominator : RateComponent, IDenominator
             && base.Equals(other);
     }
 
-    public override IRateComponent GetBaseMeasure(ValueType quantity, Enum measureUnit)
+    public override IRateComponent GetRateComponent(ValueType quantity, Enum measureUnit)
     {
         return GetDenominator(measureUnit, quantity);
     }
@@ -142,7 +142,7 @@ internal sealed class Denominator : RateComponent, IDenominator
         #endregion
     }
 
-    public override IRateComponent GetBaseMeasure(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
+    public override IRateComponent GetRateComponent(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
     {
         throw new NotImplementedException();
     }

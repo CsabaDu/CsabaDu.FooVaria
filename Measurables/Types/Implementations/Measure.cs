@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
+﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
 {
     internal abstract class Measure : RateComponent, IMeasure
     {
@@ -15,6 +13,36 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
         {
             return GetSum(this, other, SummingMode.Add);
         }
+        private static IMeasure GetSum(IMeasure measure, IMeasure? other, SummingMode summingMode)
+        {
+            if (other == null) return measure.GetMeasure(measure);
+
+            if (other.IsExchangeableTo(measure.MeasureUnitTypeCode))
+            {
+                decimal quantity = getDefaultQuantitySum() / measure.GetExchangeRate();
+
+                return measure.GetMeasure(quantity);
+            }
+
+            throw new ArgumentOutOfRangeException(nameof(other), other.MeasureUnitTypeCode, null);
+
+            #region Local methods
+            decimal getDefaultQuantitySum()
+            {
+                decimal thisQuantity = measure.DefaultQuantity;
+                decimal otherQuantity = other!.DefaultQuantity;
+
+                return summingMode switch
+                {
+                    SummingMode.Add => decimal.Add(thisQuantity, otherQuantity),
+                    SummingMode.Subtract => decimal.Subtract(thisQuantity, otherQuantity),
+
+                    _ => throw new InvalidOperationException(null),
+                };
+            }
+            #endregion
+        }
+
 
         public IMeasure Divide(decimal divisor)
         {
@@ -77,7 +105,7 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
             #endregion
         }
 
-        public override IRateComponent GetBaseMeasure(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
+        public override IRateComponent GetRateComponent(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
         {
             throw new NotImplementedException();
         }
@@ -150,7 +178,7 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
                 && base.Equals(other);
         }
 
-        public override sealed IMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit)
+        public override sealed IMeasure GetRateComponent(ValueType quantity, Enum measureUnit)
         {
             return GetMeasure(quantity, measureUnit);
         }
@@ -301,7 +329,7 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
             {
                 string paramName = nameof(baseMeasure);
 
-                (this as IBaseMeasurable).Validate(baseMeasure, paramName);
+                (this as IMeasurable).Validate(baseMeasure, paramName);
 
                 object? quantity = GetValidQuantityOrNull(this, baseMeasure.Quantity);
 
