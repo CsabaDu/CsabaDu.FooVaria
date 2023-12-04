@@ -1,7 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Types.Implementations;
-using CsabaDu.FooVaria.RateComponents.Types.Implementations;
-
-namespace CsabaDu.FooVaria.Proportions.Types.Implementations
+﻿namespace CsabaDu.FooVaria.Proportions.Types.Implementations
 {
     internal abstract class Proportion : BaseRate, IProportion
     {
@@ -9,21 +6,25 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
         private protected Proportion(IProportionFactory factory, MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, defaultQuantity, denominatorMeasureUnitTypeCode)
         {
             NumeratorMeasureUnitTypeCode = Defined(numeratorMeasureUnitTypeCode, nameof(numeratorMeasureUnitTypeCode));
+            DefaultQuantity = defaultQuantity;
         }
 
         private protected Proportion(IProportionFactory factory, IBaseRate baseRate) : base(factory, baseRate)
         {
             NumeratorMeasureUnitTypeCode = baseRate.GetNumeratorMeasureUnitTypeCode();
+            DefaultQuantity = baseRate.GetDefaultQuantity();
         }
 
         private protected Proportion(IProportion other) : base(other)
         {
             NumeratorMeasureUnitTypeCode = other.NumeratorMeasureUnitTypeCode;
+            DefaultQuantity = other.DefaultQuantity;
         }
         #endregion
 
         #region Properties
         public MeasureUnitTypeCode NumeratorMeasureUnitTypeCode { get; init; }
+        public override decimal DefaultQuantity { get; init; }
         #endregion
 
         #region Public methods
@@ -88,7 +89,7 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
             decimal quantity = measure.DefaultQuantity * DefaultQuantity;
             Enum measureUnit = MeasureUnitTypes.GetDefaultMeasureUnit(NumeratorMeasureUnitTypeCode);
 
-            return measure.GetMeasure(quantity, measureUnit);
+            return measure.GetRateComponent(measureUnit, quantity);
         }
         #endregion
         #endregion

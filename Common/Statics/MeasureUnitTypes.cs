@@ -10,6 +10,8 @@ public static class MeasureUnitTypes
     }
     #endregion
 
+    public const string DefaultCustomMeasureUnitDefaultName = "Default";
+
     #region Properties
 
     private static readonly HashSet<Type> MeasureUnitTypeSet = new()
@@ -92,6 +94,14 @@ public static class MeasureUnitTypes
     public static IEnumerable<string> GetDefaultNames()
     {
         return GetAllMeasureUnits().Select(x => GetDefaultName(x));
+
+        //foreach (MeasureUnitTypeCode item in GetMeasureUnitTypeCodes())
+        //{
+        //    foreach (string name in item.GetMeasureUnitDefaultNames())
+        //    {
+        //        yield return name;
+        //    }
+        //}
     }
 
     public static Type GetMeasureUnitType(MeasureUnitTypeCode measureUnitTypeCode)

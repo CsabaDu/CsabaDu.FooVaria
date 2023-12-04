@@ -1,4 +1,4 @@
-﻿using static CsabaDu.FooVaria.Measurements.Types.Implementations.BaseMeasurement;
+﻿using static CsabaDu.FooVaria.Measurements.Types.Implementations.MeasurementBase;
 
 namespace CsabaDu.FooVaria.Measurements.Statics
 {
@@ -16,22 +16,11 @@ namespace CsabaDu.FooVaria.Measurements.Statics
 
         public static decimal GetExchangeRate(Enum measureUnit)
         {
-            decimal? exchangeRate = getExchangeRate(NullChecked(measureUnit, nameof(measureUnit)));
+            decimal exchangeRate = ExchangeRateCollection.FirstOrDefault(x => x.Key.Equals(measureUnit)).Value;
 
-            if (exchangeRate != null) return exchangeRate.Value;
+            if (exchangeRate != default) return exchangeRate;
 
             throw InvalidMeasureUnitEnumArgumentException(measureUnit);
-
-            #region Local methods
-            static decimal? getExchangeRate(Enum measureUnit)
-            {
-                decimal exchangeRate = ExchangeRateCollection.FirstOrDefault(x => x.Key.Equals(measureUnit)).Value;
-
-                if (exchangeRate == default) return null;
-
-                return exchangeRate;
-            }
-            #endregion
         }
 
         public static IEnumerable<object> GetValidMeasureUnits()
@@ -40,6 +29,15 @@ namespace CsabaDu.FooVaria.Measurements.Statics
             {
                 yield return item;
             }
+        }
+
+        public static bool IsCustomMeasureUnit(Enum measureUnit)
+        {
+            if (!IsDefinedMeasureUnit(measureUnit)) return false;
+
+            MeasureUnitTypeCode measureUnitTypeCode = GetMeasureUnitTypeCode(measureUnit);
+
+            return measureUnitTypeCode.IsCustomMeasureUnitTypeCode();
         }
 
         public static bool IsValidMeasureUnit(Enum? measureUnit)

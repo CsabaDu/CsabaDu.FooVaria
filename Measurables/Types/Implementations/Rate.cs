@@ -73,7 +73,7 @@ internal abstract class Rate : Measurable, IRate
 
     public IBaseRate GetBaseRate(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
     {
-        IMeasure numerator = Numerator.GetMeasure(numeratorMeasureUnitTypeCode.GetDefaultMeasureUnit());
+        IMeasure numerator = Numerator.GetRateComponent(numeratorMeasureUnitTypeCode.GetDefaultMeasureUnit());
         IDenominator denominator = Denominator.GetDenominator(denominatorMeasureUnitTypeCode.GetDefaultMeasureUnit(), defaultQuantity);
 
         return GetRate(numerator, denominator, null);
@@ -159,12 +159,12 @@ internal abstract class Rate : Measurable, IRate
         return BaseRate.Proportionals(this, other);
     }
 
-    public bool TryExchangeTo(IMeasurable denominator, [NotNullWhen(true)] out IBaseRate? exchanged)
-    {
-        exchanged = ExchangeTo(denominator);
+    //public bool TryExchangeTo(IMeasurable denominator, [NotNullWhen(true)] out IBaseRate? exchanged)
+    //{
+    //    exchanged = ExchangeTo(denominator);
 
-        return exchanged != null;
-    }
+    //    return exchanged != null;
+    //}
 
     public void ValidateQuantity(ValueType? quantity, string paramName)
     {
@@ -282,7 +282,7 @@ internal abstract class Rate : Measurable, IRate
     #region Static methods
     protected static T GetValidRate<T>(T commonBase, IRootObject other, string paramName) where T : class, IRate
     {
-        T rate = GetValidBaseMeasurable(commonBase, other, paramName);
+        T rate = GetValidMeasurable(commonBase, other, paramName);
         MeasureUnitTypeCode measureUnitTypeCode = commonBase.Numerator.MeasureUnitTypeCode;
         MeasureUnitTypeCode otherMeasureUnitTypeCode = rate.Numerator.MeasureUnitTypeCode;
 

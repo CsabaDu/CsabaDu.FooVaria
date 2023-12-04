@@ -1,15 +1,13 @@
 ﻿namespace CsabaDu.FooVaria.Common.Behaviors
 {
-    public interface IQuantifiable/* : ICommonBase*/
+    public interface IQuantifiable
     {
-        //decimal DefaultQuantity { get; }
-
         decimal GetDefaultQuantity();
 
-        void ValidateQuantity(ValueType? quantity, string paramName);
+        void ValidateQuantity(ValueType? quantity, string paramName); // TypeCode
     }
 
-    public interface IQuantifiable<T> : IQuantifiable where T : struct
+    public interface IQuantifiable<out T> : IQuantifiable where T : struct
     {
         T GetQuantity();
     }

@@ -75,7 +75,7 @@ public sealed class LimitFactory : BaseMeasureFactory, ILimitFactory
         return Create(measurement, quantity, limitMode);
     }
 
-    //public override ILimit Create(IMeasurable other)
+    //public override ILimit Create(IDefaultMeasurable other)
     //{
     //    return NullChecked(other, nameof(other)) switch
     //    {

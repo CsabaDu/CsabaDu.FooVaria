@@ -135,7 +135,7 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         return Limit;
     }
 
-    //public override ILimitedRate GetMeasurable(IMeasurable other)
+    //public override ILimitedRate GetMeasurable(IDefaultMeasurable other)
     //{
     //    return (ILimitedRate)GetFactory().Create(other);
     //}

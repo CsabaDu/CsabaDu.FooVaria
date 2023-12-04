@@ -50,6 +50,11 @@ internal sealed class BulkSurface : Spread<IBulkSurface, IArea, AreaUnit>, IBulk
 
         throw ArgumentTypeOutOfRangeException(nameof(baseSppread), baseSppread);
     }
+
+    public ISurface GetSurface()
+    {
+        return this;
+    }
     #endregion
     #endregion
 }

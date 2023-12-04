@@ -29,6 +29,16 @@ internal sealed class Volume : Measure<IVolume, double, VolumeUnit>, IVolume
         return this;
     }
 
+    public override bool TryGetRateComponent(Enum measureUnit, ValueType quantity, decimal exchangeRate, string customName, [NotNullWhen(true)] out IRateComponent? baseMeasure)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void ValidateQuantity(ValueType? quantity, string paramName)
+    {
+        throw new NotImplementedException();
+    }
+
     public void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)
     {
         ValidateSpreadMeasure(paramName, spreadMeasure);

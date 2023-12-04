@@ -10,3 +10,6 @@ global using CsabaDu.FooVaria.Measurements.Factories;
 global using CsabaDu.FooVaria.Measurements.Types;
 global using System.Diagnostics.CodeAnalysis;
 global using static CsabaDu.FooVaria.Common.Statics.ExceptionMethods;
+global using static CsabaDu.FooVaria.Common.Statics.Extensions;
+global using static CsabaDu.FooVaria.Common.Statics.MeasureUnitTypes;
+global using static CsabaDu.FooVaria.Measurements.Statics.MeasureUnits;

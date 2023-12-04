@@ -124,7 +124,7 @@ internal sealed class FlatRate : Rate, IFlatRate
         return GetFlatRate(numerator, denominator);
     }
 
-    //public override IFlatRate GetMeasurable(IMeasurable other)
+    //public override IFlatRate GetMeasurable(IDefaultMeasurable other)
     //{
     //    return (IFlatRate)GetFactory().Create(other);
     //}
@@ -164,7 +164,7 @@ internal sealed class FlatRate : Rate, IFlatRate
         #endregion
     }
 
-    public override void ValidateQuantityTypeCode(TypeCode quantityTypeCode, string paramName)
+    public void ValidateQuantityTypeCode(TypeCode quantityTypeCode, string paramName)
     {
         throw new NotImplementedException();
     }

@@ -1,17 +1,16 @@
-﻿using static CsabaDu.FooVaria.Measurements.Statics.MeasureUnits;
-using CsabaDu.FooVaria.Measurements.Types.Implementations;
+﻿using CsabaDu.FooVaria.Measurements.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Measurements.Factories.Implementations;
 
-public sealed class MeasurementFactory : BaseMeasurementFactory, IMeasurementFactory
+public sealed class MeasurementFactory : IMeasurementFactory
 {
     #region Properties
     #region Static properties
     private static IDictionary<object, IMeasurement> MeasurementCollection
-        => BaseMeasurement.ExchangeRateCollection.Keys.ToDictionary
+        => MeasurementBase.ExchangeRateCollection.Keys.ToDictionary
         (
             x => x,
-            x => new Measurement(new MeasurementFactory(), (Enum)x) as IMeasurement
+            x => CreateMeasurement((Enum)x)
         );
     #endregion
     #endregion
@@ -19,30 +18,45 @@ public sealed class MeasurementFactory : BaseMeasurementFactory, IMeasurementFac
     #region Public methods
     public IMeasurement Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
     {
-        IMeasurement measurement = GetFirstStoredMeasurement();
-        measurement.SetCustomMeasureUnit(customName, measureUnitTypeCode, exchangeRate);
-        Enum measureUnit = measurement.GetMeasureUnit(customName)!;
+        IMeasurement measurement = CreateDefault(measureUnitTypeCode);
 
-        return GetStoredMeasurement(measureUnit);
-    }
-
-    public IMeasurement Create(Enum measureUnit, decimal exchangeRate, string customName)
-    {
-        IMeasurement measurement = GetFirstStoredMeasurement();
-
-        if (!IsValidMeasureUnit(measureUnit))
+        if (measurement.TryGetMeasureUnit(measureUnitTypeCode, exchangeRate, out Enum? measureUnit)
+            && measurement.GetCustomName(measureUnit) == customName)
         {
-            measurement.SetCustomMeasureUnit(measureUnit, exchangeRate, customName);
+            return GetStoredMeasurement(measureUnit);
+        }
+
+        if (measurement is ICustomMeasurement customMeasurement
+            && customMeasurement.TrySetCustomMeasureUnit(customName, measureUnitTypeCode, exchangeRate))
+        {
+            measureUnit = measurement.GetMeasureUnit(customName)!;
 
             return GetStoredMeasurement(measureUnit);
         }
 
-        measurement = GetStoredMeasurement(measureUnit);
-        measurement.ValidateExchangeRate(exchangeRate, nameof(exchangeRate));
+        throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode);
+    }
 
-        if (customName == measurement.GetCustomName()) return measurement;
+    public IMeasurement Create(Enum measureUnit, decimal exchangeRate, string customName)
+    {
+        if (MeasurementBase.ExchangeRateCollection.TryGetValue(measureUnit, out decimal storedExchangeRate)
+            && storedExchangeRate == exchangeRate
+            && Measurement.CustomNameCollection.TryGetValue(measureUnit, out string? storedCustomName)
+            && storedCustomName == customName)
+        {
+            return GetStoredMeasurement(measureUnit);
+        }
 
-        throw NameArgumentOutOfRangeException(customName, nameof(customName));
+        MeasureUnitTypeCode measureUnitTypeCode = GetMeasureUnitTypeCode(measureUnit);
+        IMeasurement measurement = CreateDefault(measureUnitTypeCode);
+
+        if (measurement is ICustomMeasurement customMeasurement 
+            && customMeasurement.TrySetCustomMeasureUnit(measureUnit, exchangeRate, customName))
+        {
+            return GetStoredMeasurement(measureUnit);
+        }
+
+        throw InvalidMeasureUnitEnumArgumentException(measureUnit);
     }
 
     public IMeasurement Create(Enum measureUnit)
@@ -63,7 +77,7 @@ public sealed class MeasurementFactory : BaseMeasurementFactory, IMeasurementFac
 
     public IMeasurement Create(string name)
     {
-        IMeasurement measurement = GetFirstStoredMeasurement();
+        IMeasurement measurement = MeasurementCollection.First().Value; ;
         Enum? measureUnit = measurement.GetMeasureUnit(name);
 
         if (measureUnit != null) return GetStoredMeasurement(measureUnit);
@@ -71,28 +85,7 @@ public sealed class MeasurementFactory : BaseMeasurementFactory, IMeasurementFac
         throw NameArgumentOutOfRangeException(name);
     }
 
-    //public IMeasurement Create(IMeasurement other)
-    //{
-    //    Enum measureUnit = NullChecked(other, nameof(other)) switch
-    //    {
-    //        Measurement measurement => measurement.GetMeasureUnit(),
-    //        //BaseMeasure baseMmeasure => getMeasureUnit(baseMmeasure),
-    //        //Rate rate => getMeasureUnit(rate.Denominator),
-
-    //        _ => throw new InvalidOperationException(null),
-    //    };
-
-    //    return GetStoredMeasurement(measureUnit);
-
-    //    //#region Local methods
-    //    //static Enum getMeasureUnit(IBaseMeasure baseMmeasure)
-    //    //{
-    //    //    return baseMmeasure.Measurement.GetMeasureUnit();
-    //    //}
-    //    //#endregion
-    //}
-
-    public override IMeasurement CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
+    public IMeasurement CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
     {
         Enum measureUnit = measureUnitTypeCode.GetDefaultMeasureUnit();
 
@@ -102,9 +95,14 @@ public sealed class MeasurementFactory : BaseMeasurementFactory, IMeasurementFac
 
     #region Private methods
     #region Static methods
-    private static IMeasurement GetFirstStoredMeasurement()
+    private static IMeasurement CreateMeasurement(Enum measureUnit)
     {
-        return MeasurementCollection.First().Value;
+        MeasureUnitTypeCode measureUnitTypeCode = GetMeasureUnitTypeCode(measureUnit);
+        MeasurementFactory factory = new();
+
+        return measureUnitTypeCode.IsCustomMeasureUnitTypeCode() ?
+            new CustomMeasurement(factory, measureUnit)
+            : new ConstantMeasurement(factory, measureUnit);
     }
 
     private static IMeasurement GetStoredMeasurement(Enum measureUnit)

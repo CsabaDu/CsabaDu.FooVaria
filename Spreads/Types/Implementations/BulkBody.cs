@@ -10,6 +10,11 @@ internal sealed class BulkBody : Spread<IBulkBody, IVolume, VolumeUnit>, IBulkBo
     public BulkBody(IBulkBodyFactory factory, IVolume volume) : base(factory, volume)
     {
     }
+
+    public IBody GetBody()
+    {
+        return this;
+    }
     #endregion
 
     #region Public methods

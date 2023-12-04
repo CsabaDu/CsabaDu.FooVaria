@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
 
-internal sealed class Denominator : RateComponent, IDenominator
+internal sealed class Denominator : RateComponent<IDenominator>, IDenominator
 {
     #region Constructors
     internal Denominator(IDenominatorFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
@@ -11,6 +11,8 @@ internal sealed class Denominator : RateComponent, IDenominator
     {
     }
     #endregion
+
+    public override TypeCode QuantityTypeCode => TypeCode.Decimal;
 
     #region Public methods
     public IDenominator GetDefaultRateComponent()
@@ -115,12 +117,7 @@ internal sealed class Denominator : RateComponent, IDenominator
         return (IDenominatorFactory)Factory;
     }
 
-    public override LimitMode? GetLimitMode()
-    {
-        return null;
-    }
-
-    //public override IDenominator GetMeasurable(IMeasurable other)
+    //public override IDenominator GetMeasurable(IDefaultMeasurable other)
     //{
     //    return (IDenominator)GetFactory().Create(other);
     //}

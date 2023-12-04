@@ -133,20 +133,15 @@ public static class SpreadMeasures
         {
             decimal quantity = item.GetDecimalQuantity();
 
-            if (item.DefaultQuantity <= 0)
-            {
-                throw QuantityArgumentOutOfRangeException(paramName, quantity);
-            }
+            if (item.DefaultQuantity <= 0) throw QuantityArgumentOutOfRangeException(paramName, quantity);
         }
 
         #region Local methods
         void validateShapeExtentsCount(int minValue, int maxValue)
         {
-            if (count < minValue || count > maxValue)
-            {
-                throw new ArgumentOutOfRangeException(paramName, count, null);
-            }
+            if (count >= minValue && count <= maxValue) return;
 
+            throw new ArgumentOutOfRangeException(paramName, count, null);
         }
         #endregion
     }

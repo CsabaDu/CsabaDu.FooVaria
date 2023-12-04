@@ -10,7 +10,7 @@
         {
         }
 
-        protected BaseShape(IBaseSpreadFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IMeasurable[] baseMeasurables) : base(factory, measureUnitTypeCode, baseMeasurables)
+        protected BaseShape(IBaseSpreadFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IMeasurable[] measurables) : base(factory, measureUnitTypeCode, measurables)
         {
         }
 

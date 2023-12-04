@@ -19,7 +19,7 @@ public abstract class BaseMeasureFactory : IRateComponentFactory
 
     #region Public methods
     #region Abstract methods
-    //public abstract IMeasurable Create(IMeasurable other);
+    //public abstract IDefaultMeasurable Create(IDefaultMeasurable other);
     #endregion
     #endregion
 

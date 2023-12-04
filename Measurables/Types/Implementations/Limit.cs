@@ -18,6 +18,7 @@ internal sealed class Limit : RateComponent, ILimit
 
     #region Properties
     public LimitMode LimitMode { get; init; }
+    public override TypeCode QuantityTypeCode => TypeCode.UInt64;
     #endregion
 
     #region Public methods
@@ -146,7 +147,7 @@ internal sealed class Limit : RateComponent, ILimit
         return GetDefaultRateComponent();
     }
 
-    //public override ILimit GetMeasurable(IMeasurable other)
+    //public override ILimit GetMeasurable(IDefaultMeasurable other)
     //{
     //    return (ILimit)GetFactory().Create(other);
     //}

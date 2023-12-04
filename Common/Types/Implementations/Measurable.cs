@@ -18,12 +18,17 @@ public abstract class Measurable : CommonBase, IMeasurable
 
     protected Measurable(IMeasurableFactory factory, Enum measureUnit) : base(factory)
     {
-        MeasureUnitTypeCode = MeasureUnitTypes.GetValidMeasureUnitTypeCode(measureUnit);
+        MeasureUnitTypeCode = GetValidMeasureUnitTypeCode(measureUnit);
     }
 
-    protected Measurable(IMeasurableFactory factory, IMeasurable baseMeasurable) : base(factory, baseMeasurable)
+    protected Measurable(IMeasurableFactory factory, IMeasurable measurable) : base(factory, measurable)
     {
-        MeasureUnitTypeCode = baseMeasurable.MeasureUnitTypeCode;
+        MeasureUnitTypeCode = measurable.MeasureUnitTypeCode;
+    }
+
+    protected Measurable(IMeasurableFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IMeasurable[] measurables) : base(factory, measurables)
+    {
+        MeasureUnitTypeCode = Defined(measureUnitTypeCode, nameof(measureUnitTypeCode));
     }
 
     protected Measurable(IMeasurable other) : base(other)
@@ -57,6 +62,11 @@ public abstract class Measurable : CommonBase, IMeasurable
         return measureUnitTypeCode == MeasureUnitTypeCode;
     }
 
+    public bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        return GetMeasureUnitTypeCodes().Contains(measureUnitTypeCode);
+    }
+
     #region Override methods
     public override bool Equals(object? obj)
     {
@@ -68,19 +78,20 @@ public abstract class Measurable : CommonBase, IMeasurable
     {
         return (IMeasurableFactory)Factory;
     }
+
     public override int GetHashCode()
     {
-        return HashCode.Combine(typeof(IMeasurable), MeasureUnitTypeCode);
+        return MeasureUnitTypeCode.GetHashCode();
     }
 
     public override void Validate(IRootObject? rootObject, string paramName)
     {
-        Validate(this, rootObject, validateBaseMeasurable, paramName);
+        Validate(this, rootObject, validateMeasurable, paramName);
 
         #region Local methods
-        void validateBaseMeasurable()
+        void validateMeasurable()
         {
-            _ = GetValidBaseMeasurable(this, rootObject!, paramName);
+            _ = GetValidMeasurable(this, rootObject!, paramName);
         }
         #endregion
     }
@@ -90,11 +101,6 @@ public abstract class Measurable : CommonBase, IMeasurable
     public virtual IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
     {
         return MeasureUnitTypes.GetMeasureUnitTypeCodes();
-    }
-
-    public bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        return GetMeasureUnitTypeCodes().Contains(measureUnitTypeCode);
     }
 
     public virtual void ValidateMeasureUnit(Enum measureUnit, string paramName)
@@ -111,7 +117,7 @@ public abstract class Measurable : CommonBase, IMeasurable
 
     #region Protected methods
     #region Static methods
-    protected static T GetValidBaseMeasurable<T>(T commonBase, IRootObject other, string paramName) where T : class, IMeasurable
+    protected static T GetValidMeasurable<T>(T commonBase, IRootObject other, string paramName) where T : class, IMeasurable
     {
         T baseMeasurable = GetValidCommonBase(commonBase, other, paramName);
         MeasureUnitTypeCode measureUnitTypeCode = commonBase.MeasureUnitTypeCode;
@@ -125,11 +131,6 @@ public abstract class Measurable : CommonBase, IMeasurable
         if (commonBaseProperty.Equals(otherProperty)) return other;
 
         throw new ArgumentOutOfRangeException(paramName, otherProperty, null);
-    }
-
-    public bool IsExchangeableTo(MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        return measureUnitTypeCode == MeasureUnitTypeCode;
     }
     #endregion
     #endregion

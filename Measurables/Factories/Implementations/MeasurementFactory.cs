@@ -71,7 +71,7 @@
 //        throw NameArgumentOutOfRangeException(name);
 //    }
 
-//    public override IMeasurement Create(IMeasurable other)
+//    public override IMeasurement Create(IDefaultMeasurable other)
 //    {
 //        Enum measureUnit = NullChecked(other, nameof(other)) switch
 //        {

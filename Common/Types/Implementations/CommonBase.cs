@@ -8,11 +8,11 @@ public abstract class CommonBase : ICommonBase
         Factory = NullChecked(factory, nameof(factory));
     }
 
-    protected CommonBase(IFactory factory, ICommonBase commonBase)
+    protected CommonBase(IFactory factory, params ICommonBase[] commonBases)
     {
         Factory = NullChecked(factory, nameof(factory));
 
-        _ = NullChecked(commonBase, nameof(commonBase));
+        _ = NullChecked(commonBases, nameof(commonBases));
     }
 
     protected CommonBase(ICommonBase other)

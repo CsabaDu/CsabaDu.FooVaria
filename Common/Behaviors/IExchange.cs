@@ -6,5 +6,10 @@ public interface IExchange<T, in U> : IProportional<T>, IExchangeable<U> where T
 {
     T? ExchangeTo(U context);
 
-    bool TryExchangeTo(U context, [NotNullWhen(true)] out T? exchanged);
+    public bool TryExchangeTo(U context, [NotNullWhen(true)] out T? exchanged)
+    {
+        exchanged = ExchangeTo(context);
+
+        return exchanged != null;
+    }
 }

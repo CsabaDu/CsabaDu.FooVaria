@@ -2,14 +2,6 @@
 {
     public interface IMeasure : IRateComponent<IMeasure>, ILimitable, ICalculate, ICalculate<decimal, IMeasure>
     {
-        //IMeasure GetMeasure(ValueType quantity, string name); //
-        //IMeasure GetMeasure(ValueType quantity, Enum measureUnit); //
-        //IMeasure GetMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName); //
-        //IMeasure GetMeasure(ValueType quantity, string customName, decimal exchangeRate);
-        //IMeasure GetMeasure(ValueType quantity); //
-        //IMeasure GetMeasure(ValueType quantity, IMeasurement measurement); //
-        //IMeasure GetMeasure(IRateComponent baseMeasure); //
-        //IMeasure GetMeasure(IMeasure other); //
     }
 
     public interface IMeasure<T, U> : IMeasure, IDefaultRateComponent<T, U> where T : class, IMeasure, IDefaultRateComponent where U : struct
@@ -26,3 +18,12 @@
         T GetMeasure(W measureUnit);
     }
 }
+
+        //IMeasure GetMeasure(ValueType quantity, string name); //
+        //IMeasure GetMeasure(ValueType quantity, Enum measureUnit); //
+        //IMeasure GetMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName); //
+        //IMeasure GetMeasure(ValueType quantity, string customName, decimal exchangeRate);
+        //IMeasure GetMeasure(ValueType quantity); //
+        //IMeasure GetMeasure(ValueType quantity, IMeasurement measurement); //
+        //IMeasure GetMeasure(IRateComponent baseMeasure); //
+        //IMeasure GetMeasure(IMeasure other); //

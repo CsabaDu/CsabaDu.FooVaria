@@ -601,7 +601,7 @@
       <FileName>Types\ICustomMeasurement.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.RateComponents.Types.IBaseMeasurement" Collapsed="true">
+  <Interface Name="CsabaDu.FooVaria.RateComponents.Types.IMeasurementBase" Collapsed="true">
     <Position X="12.25" Y="16.75" Width="1.75" />
     <InheritanceLine Type="CsabaDu.FooVaria.RateComponents.Types.IMeasurable" FixedFromPoint="true">
       <Path>
@@ -625,7 +625,7 @@
     </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
-      <FileName>Types\IBaseMeasurement.cs</FileName>
+      <FileName>Types\IMeasurementBase.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

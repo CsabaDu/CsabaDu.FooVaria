@@ -6,15 +6,15 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
     internal abstract class Spread : BaseSpread, ISpread
     {
         #region Constructors
-        protected Spread(ISpread other) : base(other)
+        private protected Spread(ISpread other) : base(other)
         {
         }
 
-        protected Spread(ISpreadFactory factory, IMeasure spreadMeasure) : base(factory, spreadMeasure)
+        private protected Spread(ISpreadFactory factory, IMeasure spreadMeasure) : base(factory, spreadMeasure)
         {
         }
 
-        protected Spread(ISpreadFactory factory, Enum measureUnit, ValueType quantity) : base(factory, measureUnit)
+        private protected Spread(ISpreadFactory factory, Enum measureUnit, ValueType quantity) : base(factory, measureUnit)
         {
             ValidateQuantity(quantity, nameof(quantity));
         }
@@ -83,35 +83,60 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         #endregion
     }
 
-    internal abstract class Spread<T, U, W> : Spread, ISpread<T, U, W> where T : class, ISpread where U : class, IMeasure, ISpreadMeasure, IDefaultRateComponent where W : struct, Enum
+    internal abstract class Spread<T, U> : Spread, ISpread<T, U> where T : class, ISpread<T, U> where U : class, IMeasure<U, double>, ISpreadMeasure
     {
-        #region Constructors
-        protected Spread(T other) : base(other)
+        private protected Spread(T other) : base(other)
         {
-            SpreadMeasure = (U)other.GetSpreadMeasure();
+            SpreadMeasure = other.SpreadMeasure;
         }
 
-        protected Spread(ISpreadFactory<T, U> factory, U spreadMeasure) : base(factory, spreadMeasure)
+        private protected Spread(ISpreadFactory<T, U> factory, U spreadMeasure) : base(factory, spreadMeasure)
         {
-            SpreadMeasure = (U)SpreadMeasures.GetValidSpreadMeasure(spreadMeasure);
+            SpreadMeasure = spreadMeasure;
         }
 
-        protected Spread(ISpreadFactory<T, U> factory, W measureUnit, ValueType quantity) : base(factory, measureUnit, quantity)
+        private protected Spread(ISpreadFactory<T, U> factory, Enum measureUnit, double quantity) : base(factory, measureUnit, quantity)
         {
             SpreadMeasure = (U)factory.MeasureFactory.Create(quantity, measureUnit);
         }
-        #endregion
 
-        #region Properties
         public U SpreadMeasure { get; init; }
+
+        public T GetSpread(U spreadMeasure)
+        {
+            return GetFactory().Create(spreadMeasure);
+        }
+
+        public override ISpreadFactory<T, U> GetFactory()
+        {
+            return (ISpreadFactory<T, U>)Factory;
+        }
+        public override sealed U GetSpreadMeasure()
+        {
+            return SpreadMeasure;
+        }
+    }
+
+    internal abstract class Spread<T, U, W> : Spread<T, U>, ISpread<T, U, W> where T : class, ISpread<T, U, W> where U : class, IMeasure<U, double, W>, ISpreadMeasure where W : struct, Enum
+    {
+        #region Constructors
+        private protected Spread(T other) : base(other)
+        {
+            //SpreadMeasure = (U)other.GetSpreadMeasure();
+        }
+
+        private protected Spread(ISpreadFactory<T, U, W> factory, U spreadMeasure) : base(factory, spreadMeasure)
+        {
+            //SpreadMeasure = (U)SpreadMeasures.GetValidSpreadMeasure(spreadMeasure);
+        }
+
+        private protected Spread(ISpreadFactory<T, U, W> factory, W measureUnit, double quantity) : base(factory, measureUnit, quantity)
+        {
+            //SpreadMeasure = (U)factory.MeasureFactory.Create(quantity, measureUnit);
+        }
         #endregion
 
         #region Public methods
-        public double GetQuantity()
-        {
-            return (double)SpreadMeasure.Quantity;
-        }
-
         #region Override methods
         public override sealed T GetBaseSpread(ISpreadMeasure spreadMeasure)
         {
@@ -120,9 +145,9 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
             return GetFactory().Create((U)spreadMeasure);
         }
 
-        public override ISpreadFactory<T, U> GetFactory()
+        public override ISpreadFactory<T, U, W> GetFactory()
         {
-            return (ISpreadFactory<T, U>)Factory;
+            return (ISpreadFactory<T, U, W>)Factory;
         }
 
         #region Sealed methods
@@ -147,14 +172,9 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
             throw ArgumentTypeOutOfRangeException(nameof(spreadMeasure), spreadMeasure!);
         }
 
-        public override sealed U GetSpreadMeasure()
-        {
-            return SpreadMeasure;
-        }
-
         public override sealed void ValidateMeasureUnit(Enum measureUnit, string paramName)
         {
-            if (NullChecked(measureUnit, paramName) is U) return;
+            if (NullChecked(measureUnit, paramName) is W) return;
 
             throw InvalidMeasureUnitEnumArgumentException(measureUnit, paramName);
         }
@@ -162,9 +182,16 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         #endregion
 
         #region Abstract methods
-        public abstract W GetMeasureUnit();
-        public abstract T GetSpread(U spreadMeasure);
-        public abstract T GetSpread(W measureUnit);
+        public W GetMeasureUnit()
+        {
+            return SpreadMeasure.GetMeasureUnit();
+        }
+        public T GetSpread(W measureUnit)
+        {
+            U spreadMeasure = SpreadMeasure.GetMeasure(measureUnit);
+
+            return GetFactory().Create(spreadMeasure);
+        }
         #endregion
         #endregion
     }

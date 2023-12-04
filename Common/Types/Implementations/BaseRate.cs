@@ -1,43 +1,27 @@
 ﻿namespace CsabaDu.FooVaria.Common.Types.Implementations
 {
-    public abstract class BaseRate : BaseMeasure, IBaseRate
+    public abstract class BaseRate : BaseMeasure<IBaseRate, IMeasurable>, IBaseRate
     {
         #region Constructors
-        //public decimal DefaultQuantity { get; }
-
         public BaseRate(IBaseRate other) : base(other)
         {
-            //DefaultQuantity = other.DefaultQuantity;
         }
 
-        public BaseRate(IBaseRateFactory factory, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, defaultQuantity, denominatorMeasureUnitTypeCode)
+        public BaseRate(IBaseRateFactory factory, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, denominatorMeasureUnitTypeCode)
         {
-            //DefaultQuantity = defaultQuantity;
         }
 
         public BaseRate(IBaseRateFactory factory, IBaseRate baseRate) : base(factory, baseRate)
         {
-            //DefaultQuantity = baseRate.DefaultQuantity;
         }
 
-        public BaseRate(IBaseRateFactory factory, IQuantifiable numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, numerator, denominatorMeasureUnitTypeCode)
+        public BaseRate(IBaseRateFactory factory, IBaseMeasure denominator) : base(factory, denominator)
         {
-            //DefaultQuantity = NullChecked(numerator, nameof(numerator)).GetDefaultQuantity();
-        }
-
-        public BaseRate(IBaseRateFactory factory, IQuantifiable numerator, IBaseMeasure denominator) : base(factory, denominator)
-        {
-            //DefaultQuantity = NullChecked(numerator, nameof(numerator)).GetDefaultQuantity();
-        }
-
-        public BaseRate(IBaseRateFactory factory, IQuantifiable numerator, Enum denominatorMeasureUnit) : base(factory, numerator, denominatorMeasureUnit)
-        {
-            //DefaultQuantity = NullChecked(numerator, nameof(numerator)).GetDefaultQuantity();
         }
         #endregion
 
         #region Public methods
-        public int CompareTo(IBaseRate? other)
+        public override int CompareTo(IBaseRate? other)
         {
             if (other == null) return 1;
 
@@ -46,7 +30,7 @@
             throw BaseRateArgumentMeasureUnitTypeCodesOutOfRangeException(other, nameof(other));
         }
 
-        public bool Equals(IBaseRate? other)
+        public override bool Equals(IBaseRate? other)
         {
             return AreExchangeables(this, other)
                 && other!.GetDefaultQuantity() == DefaultQuantity;
@@ -57,7 +41,7 @@
             return DefaultQuantity;
         }
 
-        public decimal ProportionalTo(IBaseRate other)
+        public override decimal ProportionalTo(IBaseRate other)
         {
             string name = nameof(other);
             decimal quantity = NullChecked(other, name).GetDefaultQuantity();
@@ -129,7 +113,7 @@
         #region Static methods
         public static bool AreExchangeables(IBaseRate baseRate, IMeasurable? baseMeasurable)
         {
-            if (baseMeasurable is not IBaseRate other) return baseMeasurable?.IsExchangeableTo(baseRate.MeasureUnitTypeCode) == true;
+            if (baseMeasurable is not IBaseRate other) return baseMeasurable?.HasMeasureUnitTypeCode(baseRate.MeasureUnitTypeCode) == true;
 
             return AreExchangeables(baseRate, other);
         }
@@ -167,7 +151,7 @@
         #region Static methods
         protected static T GetValidBaseRate<T>(T commonBase, IRootObject other, string paramName) where T : class, IBaseRate
         {
-            T baseRate = GetValidBaseMeasurable(commonBase, other, paramName);
+            T baseRate = GetValidMeasurable(commonBase, other, paramName);
 
             commonBase.ValidateQuantity(baseRate.GetDefaultQuantity(), paramName);
 
@@ -186,7 +170,7 @@
         {
             MeasureUnitTypeCode measureUnitTypeCode = baseRate.MeasureUnitTypeCode;
 
-            if (!IsExchangeableTo(measureUnitTypeCode))
+            if (!HasMeasureUnitTypeCode(measureUnitTypeCode))
             {
                 throw exception();
             }
@@ -220,65 +204,6 @@
             throw new NotImplementedException();
         }
         #endregion
-    }
-
-    public abstract class BaseMeasure : Measurable, IBaseMeasure
-    {
-        #region Enums
-        protected enum SummingMode
-        {
-            Add,
-            Subtract,
-        }
-        #endregion
-
-        protected BaseMeasure(IBaseMeasure other) : base(other)
-        {
-            DefaultQuantity = other.DefaultQuantity;
-        }
-
-        protected BaseMeasure(IMeasurableFactory factory, decimal defaultQuantity, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
-        {
-            ValidateQuantity(defaultQuantity, nameof(defaultQuantity));
-
-            DefaultQuantity = defaultQuantity;
-        }
-
-        protected BaseMeasure(IMeasurableFactory factory, IQuantifiable quantifiable, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
-        {
-            DefaultQuantity = GetValidDefaultQuantity(quantifiable, nameof(quantifiable));
-        }
-
-        protected BaseMeasure(IMeasurableFactory factory, IQuantifiable quantifiable, Enum measureUnit) : base(factory, measureUnit)
-        {
-            DefaultQuantity = GetValidDefaultQuantity(quantifiable, nameof(quantifiable));
-        }
-
-        protected BaseMeasure(IMeasurableFactory factory, IBaseMeasure baseMeasure) : base(factory, baseMeasure)
-        {
-            DefaultQuantity = GetValidDefaultQuantity(baseMeasure, nameof(baseMeasure));
-        }
-
-        public decimal DefaultQuantity { get; init; }
-
-        public decimal GetDefaultQuantity()
-        {
-            return DefaultQuantity;
-        }
-
-        public void ValidateQuantifiable(IQuantifiable? quantifiable, string paramName)
-        {
-            ValidateQuantity(NullChecked(quantifiable, paramName).GetDefaultQuantity(), paramName);
-        }
-
-        public abstract void ValidateQuantity(ValueType? quantity, string paramName);
-
-        private decimal GetValidDefaultQuantity(IQuantifiable? quantifiable, string paramName)
-        {
-            ValidateQuantifiable(quantifiable, paramName);
-
-            return quantifiable!.GetDefaultQuantity();
-        }
     }
 }
 

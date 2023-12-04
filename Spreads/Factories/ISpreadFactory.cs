@@ -13,4 +13,9 @@ namespace CsabaDu.FooVaria.Spreads.Factories
     {
         T Create(U spreadMeasure);
     }
+
+    public interface ISpreadFactory<T, in U, in W> : ISpreadFactory<T, U> where T : class, ISpread where U : class, IMeasure, ISpreadMeasure where W : struct, Enum
+    {
+        T Create(W measureUnit, double quantity);
+    }
 }

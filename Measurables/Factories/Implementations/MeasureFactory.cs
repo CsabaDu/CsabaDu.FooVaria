@@ -77,7 +77,7 @@ public sealed class MeasureFactory : BaseMeasureFactory, IMeasureFactory
         return Create(quantity, measureUnit);
     }
 
-    //public override IMeasure Create(IMeasurable other)
+    //public override IMeasure Create(IDefaultMeasurable other)
     //{
     //    return NullChecked(other, nameof(other)) switch
     //    {

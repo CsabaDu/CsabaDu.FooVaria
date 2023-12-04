@@ -49,10 +49,7 @@ public static class Extensions
             MeasureUnitTypeCode.VolumeUnit or
             MeasureUnitTypeCode.WeightUnit => TypeCode.Double,
 
-            _ => throw new InvalidEnumArgumentException(nameof(measureUnitTypeCode), (int)(object)measureUnitTypeCode, typeof(MeasureUnitTypeCode)
-            
-            
-            ),
+            _ => throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode),
         };
     }
 
@@ -81,12 +78,22 @@ public static class Extensions
         {
             yield return item;
         }
-
     }
 
     public static Enum GetDefaultMeasureUnit(this MeasureUnitTypeCode measureUnitTypeCode)
     {
         return measureUnitTypeCode.GetAllMeasureUnits().First();
+    }
+
+    public static bool IsCustomMeasureUnitTypeCode(this MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        if (!Enum.IsDefined(measureUnitTypeCode)) return false;
+
+        Enum measureUnit = measureUnitTypeCode.GetDefaultMeasureUnit();
+        Type measureUnitType = measureUnit.GetType();
+        string name = Enum.GetName(measureUnitType, measureUnit)!;
+
+        return name == DefaultCustomMeasureUnitDefaultName;
     }
     #endregion
 }

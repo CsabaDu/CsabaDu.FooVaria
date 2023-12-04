@@ -18,14 +18,17 @@ public abstract class BaseSpread : Measurable, IBaseSpread
     //{
     //}
 
-    protected BaseSpread(IBaseSpreadFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IMeasurable[] baseMeasurables) : base(factory, measureUnitTypeCode)
+    protected BaseSpread(IBaseSpreadFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IMeasurable[] measurables) : base(factory, measureUnitTypeCode, measurables)
     {
-        _ = NullChecked(baseMeasurables, nameof(baseMeasurables));
     }
 
-    protected BaseSpread(IBaseSpreadFactory factory, Enum measureUnit, params IMeasurable[] measurables) : base(factory, measureUnit)
+    protected BaseSpread(IBaseSpreadFactory factory, IBaseMeasure baseMeasure) : base(factory, baseMeasure)
     {
-        _ = NullChecked(measurables, nameof(measurables));
+
+    }
+
+    protected BaseSpread(IBaseSpreadFactory factory, Enum measureUnit) : base(factory, measureUnit)
+    {
     }
 
     #endregion
@@ -82,18 +85,18 @@ public abstract class BaseSpread : Measurable, IBaseSpread
     {
         if (context == null) return false;
 
-        if (context is MeasureUnitTypeCode measureUnitTypeCode) return isExchangeableToMeasureUnitTypeCode();
+        if (context is MeasureUnitTypeCode measureUnitTypeCode) return hasMeasureUnitTypeCode();
 
         if (!MeasureUnitTypes.IsDefinedMeasureUnit(context)) return false;
 
         measureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(context);
 
-        return isExchangeableToMeasureUnitTypeCode();
+        return hasMeasureUnitTypeCode();
 
         #region Local methods
-        bool isExchangeableToMeasureUnitTypeCode()
+        bool hasMeasureUnitTypeCode()
         {
-            return base.IsExchangeableTo(measureUnitTypeCode);
+            return HasMeasureUnitTypeCode(measureUnitTypeCode);
         }
         #endregion
     }
@@ -105,12 +108,12 @@ public abstract class BaseSpread : Measurable, IBaseSpread
         return DefaultQuantity / other.GetDefaultQuantity();
     }
 
-    public bool TryExchangeTo(Enum measureUnit, [NotNullWhen(true)] out IBaseSpread? exchanged)
-    {
-        exchanged = ExchangeTo(measureUnit);
+    //public bool TryExchangeTo(Enum measureUnit, [NotNullWhen(true)] out IBaseSpread? exchanged)
+    //{
+    //    exchanged = ExchangeTo(measureUnit);
 
-        return exchanged != null;
-    }
+    //    return exchanged != null;
+    //}
 
     public void ValidateQuantifiable(IQuantifiable? quantifiable, string paramName)
     {

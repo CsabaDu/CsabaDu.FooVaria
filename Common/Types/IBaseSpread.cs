@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Common.Types;
 
-public interface IBaseSpread : IMeasurable/*, IQuantifiable<double>*/, ISpreadMeasure, IExchange<IBaseSpread, Enum>, IFit<IBaseSpread>
+public interface IBaseSpread : IMeasurable, ISpreadMeasure, IExchange<IBaseSpread, Enum>, IFit<IBaseSpread>
 {
     IBaseSpread GetBaseSpread(ISpreadMeasure spreadMeasure);
 
