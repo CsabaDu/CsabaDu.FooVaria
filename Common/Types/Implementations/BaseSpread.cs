@@ -24,7 +24,6 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
 
     protected BaseSpread(IBaseSpreadFactory factory, IBaseMeasure baseMeasure) : base(factory, baseMeasure)
     {
-
     }
 
     protected BaseSpread(IBaseSpreadFactory factory, Enum measureUnit) : base(factory, measureUnit)
@@ -33,9 +32,9 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
 
     #endregion
 
-    #region Properties
-    public decimal DefaultQuantity => (GetSpreadMeasure() as IBaseMeasure ?? throw new InvalidOperationException(null)).DefaultQuantity;
-    #endregion
+    //#region Properties
+    //public decimal DefaultQuantity => (GetSpreadMeasure() as IBaseMeasure ?? throw new InvalidOperationException(null)).DefaultQuantity;
+    //#endregion
 
     #region Public methods
     public int CompareTo(IBaseSpread? other)
@@ -48,7 +47,7 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
     public bool Equals(IBaseSpread? other)
     {
         return other?.MeasureUnitTypeCode == MeasureUnitTypeCode
-            && other.GetDefaultQuantity() == DefaultQuantity;
+            && other.GetDefaultQuantity() == GetDefaultQuantity();
     }
 
     public bool? FitsIn(IBaseSpread? baseSpread, LimitMode? limitMode)
@@ -68,7 +67,7 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
 
     public override sealed decimal GetDefaultQuantity()
     {
-        return DefaultQuantity;
+        return (GetSpreadMeasure() as IBaseMeasure ?? throw new InvalidOperationException(null)).DefaultQuantity;
     }
 
     public MeasureUnitTypeCode GetMeasureUnitTypeCode()
@@ -87,7 +86,7 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
 
         if (context is MeasureUnitTypeCode measureUnitTypeCode) return hasMeasureUnitTypeCode();
 
-        if (!MeasureUnitTypes.IsDefinedMeasureUnit(context)) return false;
+        if (!IsDefinedMeasureUnit(context)) return false;
 
         measureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(context);
 
@@ -105,7 +104,7 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
     {
         ValidateSpreadMeasure(other, nameof(other));
 
-        return DefaultQuantity / other.GetDefaultQuantity();
+        return GetDefaultQuantity() / other.GetDefaultQuantity();
     }
 
     //public bool TryExchangeTo(Enum measureUnit, [NotNullWhen(true)] out IBaseSpread? exchanged)
@@ -157,11 +156,11 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
 
     #region Private methods
     #region Static methods
-    private static int? Compare(IBaseSpread baseSpread, IBaseSpread other)
+    private static int? Compare(IBaseSpread baseSpread, IBaseSpread? other)
     {
         if (other == null) return null;
 
-        if (other.MeasureUnitTypeCode != baseSpread.MeasureUnitTypeCode) return null;
+        if (baseSpread.MeasureUnitTypeCode != other.MeasureUnitTypeCode) return null;
 
         return baseSpread.GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
     }

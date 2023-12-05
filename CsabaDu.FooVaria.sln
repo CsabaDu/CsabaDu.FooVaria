@@ -5,7 +5,7 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{DFCB3751-74F8-4D63-9F81-91CFF600808F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RateComponents", "Measurables\RateComponents.csproj", "{1D382C47-2CD3-486B-A4D4-94A9BAAA1194}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RateComponents", "RateComponents\RateComponents.csproj", "{1D382C47-2CD3-486B-A4D4-94A9BAAA1194}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spreads", "Spreads\Spreads.csproj", "{90449B9B-F322-4063-89D5-A5E8E98A33A9}"
 EndProject
