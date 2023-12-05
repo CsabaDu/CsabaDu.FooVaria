@@ -4,7 +4,7 @@
     {
     }
 
-    public interface IDefaultRateComponent<T, U> : IDefaultRateComponent, IDefaultMeasurable<T>, IQuantifiable<U>, ICommonBase<T> where T : class, IRateComponent, IDefaultRateComponent where U : struct
+    public interface IDefaultRateComponent<T, U> : IDefaultRateComponent, IDefaultMeasurable<T>, IQuantity<U>, ICommonBase<T> where T : class, IRateComponent, IDefaultRateComponent where U : struct
     {
         U GetDefaultRateComponentQuantity();
         T GetDefaultRateComponent();

@@ -346,6 +346,8 @@ namespace CsabaDu.FooVaria.Measurements.Types.Implementations
 
         public bool TryGetMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, [NotNullWhen(true)] out Enum? measureUnit)
         {
+            exchangeRate.ValidateExchangeRate();
+
             measureUnit = (Enum)GetExchangeRateCollection(measureUnitTypeCode).FirstOrDefault(x => x.Value == exchangeRate).Key;
 
             return measureUnit != null;

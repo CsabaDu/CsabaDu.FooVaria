@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace CsabaDu.FooVaria.Common.Types.Implementations;
 
-public abstract class BaseSpread : Measurable, IBaseSpread
+public abstract class BaseSpread : Quantifiable, IBaseSpread
 {
     #region Constructors
     protected BaseSpread(IBaseSpread other) : base(other)
@@ -14,7 +14,7 @@ public abstract class BaseSpread : Measurable, IBaseSpread
     {
     }
 
-    //protected BaseSpread(IBaseSpreadFactory factory, IBaseMeasure baseMeasurable) : base(factory, baseMeasurable)
+    //protected BaseSpread(IBaseSpreadFactory factory, IBaseMeasure baseMeasure) : base(factory, baseMeasure)
     //{
     //}
 
@@ -34,7 +34,7 @@ public abstract class BaseSpread : Measurable, IBaseSpread
     #endregion
 
     #region Properties
-    public decimal DefaultQuantity => GetSpreadMeasure().GetDefaultQuantity();
+    public decimal DefaultQuantity => (GetSpreadMeasure() as IBaseMeasure ?? throw new InvalidOperationException(null)).DefaultQuantity;
     #endregion
 
     #region Public methods
@@ -66,7 +66,7 @@ public abstract class BaseSpread : Measurable, IBaseSpread
         return comparison.Value.FitsIn(limitMode);
     }
 
-    public decimal GetDefaultQuantity()
+    public override sealed decimal GetDefaultQuantity()
     {
         return DefaultQuantity;
     }
@@ -122,13 +122,13 @@ public abstract class BaseSpread : Measurable, IBaseSpread
 
     public void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)
     {
-        if (NullChecked(spreadMeasure, paramName).GetSpreadMeasure() is not IMeasurable baseMeasurable
-            || baseMeasurable.MeasureUnitTypeCode != MeasureUnitTypeCode)
-        {
-            throw ArgumentTypeOutOfRangeException(paramName, spreadMeasure!);
-        }
+        IBaseMeasure baseMeasure = NullChecked(spreadMeasure, paramName).GetSpreadMeasure() as IBaseMeasure ?? throw new InvalidOperationException(null);
 
-        decimal quantity = spreadMeasure!.GetDefaultQuantity();
+        MeasureUnitTypeCode measureUnitTypeCode = baseMeasure.MeasureUnitTypeCode;
+
+        if (measureUnitTypeCode != MeasureUnitTypeCode) throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode, paramName);
+
+        decimal quantity = baseMeasure.DefaultQuantity;
 
         if (quantity > 0) return;
 
@@ -152,7 +152,6 @@ public abstract class BaseSpread : Measurable, IBaseSpread
     public abstract IBaseSpread? ExchangeTo(Enum measureUnit);
     public abstract IBaseSpread GetBaseSpread(ISpreadMeasure spreadMeasure);
     public abstract ISpreadMeasure GetSpreadMeasure();
-    public abstract void ValidateQuantity(ValueType? quantity, string paramName);
     #endregion
     #endregion
 

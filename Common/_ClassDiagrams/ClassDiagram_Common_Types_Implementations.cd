@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="CsabaDu.FooVaria.Common.Types.Implementations.Measurable" Collapsed="true">
-    <Position X="2" Y="1.75" Width="1.5" />
+    <Position X="2" Y="1.75" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAADKAgQAAAACCAIEAQIAAAAAABAAAAAA=</HashCode>
       <FileName>Types\Implementations\Measurable.cs</FileName>
@@ -9,7 +9,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.Common.Types.Implementations.BaseRate" Collapsed="true">
-    <Position X="0.5" Y="6.25" Width="2.5" />
+    <Position X="0.5" Y="7.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>QAAAAAAAAQCCQASAgQABAACCABAAAIBAAABAAAQAAIA=</HashCode>
       <FileName>Types\Implementations\BaseRate.cs</FileName>
@@ -17,15 +17,15 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.Common.Types.Implementations.BaseMeasure" Collapsed="true">
-    <Position X="1" Y="3.25" Width="1.5" />
+    <Position X="1" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAgAAAAABAAAIAAABAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAgAAAAABAAAAAAABAAAA=</HashCode>
       <FileName>Types\Implementations\BaseMeasure.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.Common.Types.Implementations.BaseShape" Collapsed="true">
-    <Position X="3.25" Y="4.75" Width="1.5" />
+    <Position X="3.25" Y="6.25" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAABAAAAQAgQAAAACAAAAAAAAAAACAAAACAAA=</HashCode>
       <FileName>Types\Implementations\BaseShape.cs</FileName>
@@ -33,15 +33,15 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.Common.Types.Implementations.BaseSpread" Collapsed="true">
-    <Position X="3.25" Y="3.25" Width="1.5" />
+    <Position X="3.25" Y="4.75" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>QAAAAAAAAAACgAQAgQAAAACAgAAAWABAAALAIABAAAQ=</HashCode>
+      <HashCode>QAAAAAAAAAACgAQAgQAAAACAgAAAWABAAADAIABAAAQ=</HashCode>
       <FileName>Types\Implementations\BaseSpread.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.Common.Types.Implementations.CommonBase" Collapsed="true">
-    <Position X="2" Y="0.5" Width="1.5" />
+    <Position X="2" Y="0.5" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAACAAAACACAAAIAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Types\Implementations\CommonBase.cs</FileName>
@@ -49,10 +49,18 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.Common.Types.Implementations.BaseMeasure&lt;T, U&gt;" Collapsed="true">
-    <Position X="1" Y="4.75" Width="1.5" />
+    <Position X="1" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAAAAAAAAAAAAAQAgAAAAAAAAAAAQAAAAAAAIAAAAAA=</HashCode>
+      <HashCode>QAAAAAAAAAAAAAQAgAAAAAAAAAAAQIAAAAAAIAAAAAA=</HashCode>
       <FileName>Types\Implementations\BaseMeasure.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Common.Types.Implementations.Quantifiable" Collapsed="true">
+    <Position X="2" Y="3.25" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAIAAAAAAAA=</HashCode>
+      <FileName>Types\Implementations\Quantifiable.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>

@@ -358,7 +358,7 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
         //    throw new NotImplementedException();
         //}
 
-        //public void ValidateQuantifiable(IQuantifiable? quantifiable, string paramName)
+        //public void ValidateQuantifiable(IQuantity? quantifiable, string paramName)
         //{
         //    throw new NotImplementedException();
         //}

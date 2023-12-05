@@ -1,5 +1,6 @@
 ﻿using CsabaDu.FooVaria.Measurements.Types.Implementations;
 using static CsabaDu.FooVaria.Measurements.Types.Implementations.MeasurementBase;
+
 namespace CsabaDu.FooVaria.Measurements.Factories.Implementations;
 
 public sealed class MeasurementFactory : IMeasurementFactory
@@ -131,11 +132,6 @@ public sealed class MeasurementFactory : IMeasurementFactory
             : new ConstantMeasurement(factory, measureUnit);
     }
 
-    private static IMeasurement GetStoredMeasurement(Enum measureUnit)
-    {
-        return MeasurementCollection[measureUnit];
-    }
-
     private static IDictionary<object, string> GetNameCollection()
     {
         return MeasurementCollection.ToDictionary
@@ -143,6 +139,11 @@ public sealed class MeasurementFactory : IMeasurementFactory
                 x => x.Key,
                 x => x.Value.GetName()
             );
+    }
+
+    private static IMeasurement GetStoredMeasurement(Enum measureUnit)
+    {
+        return MeasurementCollection[measureUnit];
     }
     #endregion
     #endregion

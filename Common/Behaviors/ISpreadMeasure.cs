@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Common.Behaviors;
 
-public interface ISpreadMeasure : IQuantifiable<double>
+public interface ISpreadMeasure : IQuantity<double>
 {
     ISpreadMeasure GetSpreadMeasure();
     MeasureUnitTypeCode GetMeasureUnitTypeCode();

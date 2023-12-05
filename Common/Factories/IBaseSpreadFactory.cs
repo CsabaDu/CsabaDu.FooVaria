@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Common.Factories;
 
-public interface IBaseSpreadFactory : IMeasurableFactory
+public interface IBaseSpreadFactory : IQuantifiableFactory
 {
     IBaseSpread Create(ISpreadMeasure spreadMeasure);
 }
