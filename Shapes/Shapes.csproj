@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
-    <ProjectReference Include="..\Measurables\RateComponents.csproj" />
+    <ProjectReference Include="..\RateComponents\RateComponents.csproj" />
     <ProjectReference Include="..\Spreads\Spreads.csproj" />
   </ItemGroup>
 
