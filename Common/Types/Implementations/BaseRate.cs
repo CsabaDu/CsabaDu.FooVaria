@@ -33,7 +33,7 @@
         public override bool Equals(IBaseRate? other)
         {
             return AreExchangeables(this, other)
-                && other!.GetDefaultQuantity() == DefaultQuantity;
+                && other!.DefaultQuantity == DefaultQuantity;
         }
     
         public decimal GetQuantity()
@@ -66,7 +66,7 @@
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(DefaultQuantity, MeasureUnitTypeCode/*, NumeratorMeasureUnitTypeCode*/);
+            return HashCode.Combine(DefaultQuantity, MeasureUnitTypeCode, GetNumeratorMeasureUnitTypeCode());
         }
 
 

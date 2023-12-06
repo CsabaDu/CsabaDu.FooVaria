@@ -1,125 +1,125 @@
-﻿using CsabaDu.FooVaria.RateComponents.Types.Implementations;
+﻿//using CsabaDu.FooVaria.RateComponents.Types.Implementations;
 
-namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
+//namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
 
-public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
-{
-    #region Constructors
-    public LimitedRateFactory(IDenominatorFactory denominatorFactory, ILimitFactory limitFactory) : base(denominatorFactory)
-    {
-        LimitFactory = NullChecked(limitFactory, nameof(limitFactory));
-    }
-    #endregion
+//public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
+//{
+//    #region Constructors
+//    public LimitedRateFactory(IDenominatorFactory denominatorFactory, ILimitFactory limitFactory) : base(denominatorFactory)
+//    {
+//        LimitFactory = NullChecked(limitFactory, nameof(limitFactory));
+//    }
+//    #endregion
 
-    #region Properties
-    public ILimitFactory LimitFactory { get; init; }
-    #endregion
+//    #region Properties
+//    public ILimitFactory LimitFactory { get; init; }
+//    #endregion
 
-    #region Public methods
-    public ILimitedRate Create(ILimitedRate other)
-    {
-        return new LimitedRate(other);
-    }
+//    #region Public methods
+//    public ILimitedRate Create(ILimitedRate other)
+//    {
+//        return new LimitedRate(other);
+//    }
 
-    public ILimitedRate Create(IMeasure numerator, string name, ValueType quantity, ILimit limit)
-    {
-        IDenominator denominator = DenominatorFactory.Create(name, quantity);
+//    public ILimitedRate Create(IMeasure numerator, string name, ValueType quantity, ILimit limit)
+//    {
+//        IDenominator denominator = DenominatorFactory.Create(name, quantity);
 
-        return Create(numerator, denominator, limit);
-    }
+//        return Create(numerator, denominator, limit);
+//    }
 
-    public ILimitedRate Create(IMeasure numerator, Enum measureUnit, ValueType quantity, ILimit limit)
-    {
-        IDenominator denominator = DenominatorFactory.Create(measureUnit, quantity);
+//    public ILimitedRate Create(IMeasure numerator, Enum measureUnit, ValueType quantity, ILimit limit)
+//    {
+//        IDenominator denominator = DenominatorFactory.Create(measureUnit, quantity);
 
-        return Create(numerator, denominator, limit);
-    }
+//        return Create(numerator, denominator, limit);
+//    }
 
-    public ILimitedRate Create(IMeasure numerator, string name, ILimit limit)
-    {
-        IDenominator denominator = DenominatorFactory.Create(name);
+//    public ILimitedRate Create(IMeasure numerator, string name, ILimit limit)
+//    {
+//        IDenominator denominator = DenominatorFactory.Create(name);
 
-        return Create(numerator, denominator, limit);
-    }
+//        return Create(numerator, denominator, limit);
+//    }
 
-    public ILimitedRate Create(IMeasure numerator, Enum measureUnit, ILimit limit)
-    {
-        IDenominator denominator = DenominatorFactory.Create(measureUnit);
+//    public ILimitedRate Create(IMeasure numerator, Enum measureUnit, ILimit limit)
+//    {
+//        IDenominator denominator = DenominatorFactory.Create(measureUnit);
 
-        return Create(numerator, denominator, limit);
-    }
+//        return Create(numerator, denominator, limit);
+//    }
 
-    public ILimitedRate Create(IMeasure numerator, IMeasurement measurement, ILimit limit)
-    {
-        return new LimitedRate(this, numerator, measurement, limit);
-    }
+//    public ILimitedRate Create(IMeasure numerator, IMeasurement measurement, ILimit limit)
+//    {
+//        return new LimitedRate(this, numerator, measurement, limit);
+//    }
 
-    public ILimitedRate Create(IMeasure numerator, IMeasurement measurement, ValueType quantity, ILimit limit)
-    {
-        IDenominator denominator = DenominatorFactory.Create(measurement, quantity);
+//    public ILimitedRate Create(IMeasure numerator, IMeasurement measurement, ValueType quantity, ILimit limit)
+//    {
+//        IDenominator denominator = DenominatorFactory.Create(measurement, quantity);
 
-        return Create(numerator, denominator, limit);
-    }
+//        return Create(numerator, denominator, limit);
+//    }
 
-    public ILimitedRate Create(IMeasure numerator, IDenominator denominator, ILimit limit)
-    {
-        return new LimitedRate(this, numerator, denominator, limit);
-    }
+//    public ILimitedRate Create(IMeasure numerator, IDenominator denominator, ILimit limit)
+//    {
+//        return new LimitedRate(this, numerator, denominator, limit);
+//    }
 
-    public ILimitedRate Create(IRate rate, ILimit limit)
-    {
-        IMeasure numerator = NullChecked(rate, nameof(rate)).Numerator;
-        IDenominator denominator = rate.Denominator;
+//    public ILimitedRate Create(IRate rate, ILimit limit)
+//    {
+//        IMeasure numerator = NullChecked(rate, nameof(rate)).Numerator;
+//        IDenominator denominator = rate.Denominator;
 
-        return Create(numerator, denominator, limit);
-    }
+//        return Create(numerator, denominator, limit);
+//    }
 
-    public override ILimitedRate Create(IMeasurable other)
-    {
-        _ = NullChecked(other, nameof(other));
+//    public override ILimitedRate Create(IMeasurable other)
+//    {
+//        _ = NullChecked(other, nameof(other));
 
-        if (other is ILimitedRate limitedRate) return Create(limitedRate);
+//        if (other is ILimitedRate limitedRate) return Create(limitedRate);
 
-        if (other is IRate rate) return Create(rate, CreateLimit(rate.Denominator));
+//        if (other is IRate rate) return Create(rate, CreateLimit(rate.Denominator));
 
-        throw new ArgumentOutOfRangeException(nameof(other), other.GetType(), null);
-    }
+//        throw new ArgumentOutOfRangeException(nameof(other), other.GetType(), null);
+//    }
 
-    public ILimit CreateLimit(IDenominator denominator)
-    {
-        return (ILimit)LimitFactory.Create(denominator);
-    }
+//    public ILimit CreateLimit(IDenominator denominator)
+//    {
+//        return (ILimit)LimitFactory.Create(denominator);
+//    }
 
-    public override ILimitedRate Create(IBaseMeasure numerator, MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        string name = nameof(numerator);
+//    public override ILimitedRate Create(IBaseMeasure numerator, MeasureUnitTypeCode measureUnitTypeCode)
+//    {
+//        string name = nameof(numerator);
 
-        if (NullChecked(numerator, name) is not IMeasure measure) throw ArgumentTypeOutOfRangeException(name, numerator);
+//        if (NullChecked(numerator, name) is not IMeasure measure) throw ArgumentTypeOutOfRangeException(name, numerator);
 
-        ILimit limit = LimitFactory.CreateDefault(measureUnitTypeCode);
+//        ILimit limit = LimitFactory.CreateDefault(measureUnitTypeCode);
 
-        return new LimitedRate(this, measure, measureUnitTypeCode, limit);
-    }
+//        return new LimitedRate(this, measure, measureUnitTypeCode, limit);
+//    }
 
-    public override IBaseRate Create(IBaseMeasure numerator, Enum denominatorMeasureUnit)
-    {
-        string name = nameof(numerator);
+//    public override IBaseRate Create(IBaseMeasure numerator, Enum denominatorMeasureUnit)
+//    {
+//        string name = nameof(numerator);
 
-        if (NullChecked(numerator, name) is not IMeasure measure) throw ArgumentTypeOutOfRangeException(name, numerator);
+//        if (NullChecked(numerator, name) is not IMeasure measure) throw ArgumentTypeOutOfRangeException(name, numerator);
 
-        name = nameof(denominatorMeasureUnit);
+//        name = nameof(denominatorMeasureUnit);
 
-        measure.ValidateMeasureUnit(denominatorMeasureUnit, name);
+//        measure.ValidateMeasureUnit(denominatorMeasureUnit, name);
 
-        MeasureUnitTypeCode measureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(denominatorMeasureUnit);
-        ILimit limit = LimitFactory.CreateDefault(measureUnitTypeCode);
+//        MeasureUnitTypeCode measureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(denominatorMeasureUnit);
+//        ILimit limit = LimitFactory.CreateDefault(measureUnitTypeCode);
 
-        return new LimitedRate(this, measure, denominatorMeasureUnit, limit);
-    }
+//        return new LimitedRate(this, measure, denominatorMeasureUnit, limit);
+//    }
 
-    public override IRate Create(IRate other)
-    {
-        throw new NotImplementedException();
-    }
-    #endregion
-}
+//    public override IRate Create(IRate other)
+//    {
+//        throw new NotImplementedException();
+//    }
+//    #endregion
+//}

@@ -1,10 +1,11 @@
-﻿using CsabaDu.FooVaria.Measurements.Factories;
-
-namespace CsabaDu.FooVaria.RateComponents.Factories;
-
-public interface IRateComponentFactory : IMeasurableFactory, IFactory<IRateComponent>
+﻿namespace CsabaDu.FooVaria.RateComponents.Factories
 {
-    IMeasurementFactory MeasurementFactory { get; init; }
-    RateComponentCode RateComponentCode { get; }
-    int DefaultRateComponentQuantity { get; }
+    public interface IRateComponentFactory : IBaseMeasureFactory, IFactory<IRateComponent>
+    {
+        IMeasurementFactory MeasurementFactory { get; init; }
+        RateComponentCode RateComponentCode { get; }
+        int DefaultRateComponentQuantity { get; }
+    }
+
+    public interface IRateComponentFactory<T> : IRateComponentFactory
 }

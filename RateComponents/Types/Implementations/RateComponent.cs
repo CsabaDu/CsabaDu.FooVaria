@@ -1,4 +1,5 @@
-﻿using static CsabaDu.FooVaria.RateComponents.Statics.QuantityTypes;
+﻿using System.Runtime.CompilerServices;
+using static CsabaDu.FooVaria.RateComponents.Statics.QuantityTypes;
 
 namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
 {
@@ -127,11 +128,6 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
             return GetValidQuantityTypeCodeOrNull(quantityTypeCode);
         }
 
-        public IRateComponent? GetRateComponent(IRate rate, RateComponentCode rateComponentCode)
-        {
-            return NullChecked(rate, nameof(rate))[rateComponentCode];
-        }
-
         public RateComponentCode GetRateComponentCode()
         {
             return GetFactory().RateComponentCode;
@@ -164,26 +160,6 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
         //    return exchanged != null;
         //}
 
-        public bool TryGetRateComponent(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName, [NotNullWhen(true)] out IRateComponent? baseMeasure)
-        {
-            baseMeasure = null;
-
-            if (!Measurement.TrySetCustomMeasurement(measureUnit, exchangeRate, customName)) return false;
-
-            if (!TryGetQuantity(quantity, out ValueType? rateComponentQuantity)) return false;
-
-            try
-            {
-                baseMeasure = GetRateComponent(rateComponentQuantity, measureUnit);
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
         public void ValidateExchangeRate(decimal exchangeRate, string paramName)
         {
             Measurement.ValidateExchangeRate(exchangeRate, paramName);
@@ -207,7 +183,7 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
             throw QuantityArgumentOutOfRangeException(quantity);
         }
 
-        public override void ValidateQuantity(ValueType? quantity, string paramName)
+        public override void ValidateQuantity(ValueType? quantity, string paramName) // TODO
         {
             try
             {
@@ -255,7 +231,7 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
         #region Sealed methods
         public override sealed bool Equals(object? obj)
         {
-            return obj is IRateComponent other && Equals(other);
+            return base.Equals(obj);
         }
 
         public override sealed int GetHashCode()
