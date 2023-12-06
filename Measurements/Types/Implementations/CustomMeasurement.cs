@@ -2,9 +2,11 @@
 
 internal sealed class CustomMeasurement : Measurement, ICustomMeasurement
 {
+    #region Constructors
     internal CustomMeasurement(IMeasurementFactory factory, Enum measureUnit) : base(factory, measureUnit)
     {
     }
+    #endregion
 
     #region Public methods
     public IEnumerable<Enum> GetNotUsedCustomMeasureUnits(MeasureUnitTypeCode measureUnitTypeCode)
@@ -30,7 +32,8 @@ internal sealed class CustomMeasurement : Measurement, ICustomMeasurement
 
         for (int i = 1; i < measureUnitTypeCodes.Count(); i++)
         {
-            IEnumerable<Enum> next = GetNotUsedCustomMeasureUnits(measureUnitTypeCodes.ElementAt(i));
+            MeasureUnitTypeCode measureUnitTypeCode = measureUnitTypeCodes.ElementAt(i);
+            IEnumerable<Enum> next = GetNotUsedCustomMeasureUnits(measureUnitTypeCode);
             notUsedCustomMeasureUnits = notUsedCustomMeasureUnits.Union(next);
         }
 

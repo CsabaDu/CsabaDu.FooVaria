@@ -196,11 +196,6 @@ internal abstract class Measurement : MeasurementBase, IMeasurement
     }
 
     #region Override methods
-    public override IMeasurementFactory GetFactory()
-    {
-        return (IMeasurementFactory)Factory;
-    }
-
     #region Sealed methods
     public override sealed decimal GetExchangeRate(string name)
     {
@@ -209,6 +204,11 @@ internal abstract class Measurement : MeasurementBase, IMeasurement
         if (measureUnit != null) return GetExchangeRate(measureUnit);
 
         throw NameArgumentOutOfRangeException(name);
+    }
+
+    public override sealed IMeasurementFactory GetFactory()
+    {
+        return (IMeasurementFactory)Factory;
     }
 
     public override sealed Enum GetMeasureUnit()

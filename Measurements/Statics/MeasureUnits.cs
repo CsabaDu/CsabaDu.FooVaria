@@ -1,6 +1,4 @@
-﻿using static CsabaDu.FooVaria.Measurements.Types.Implementations.MeasurementBase;
-
-namespace CsabaDu.FooVaria.Measurements.Statics
+﻿namespace CsabaDu.FooVaria.Measurements.Statics
 {
     public static class MeasureUnits
     {

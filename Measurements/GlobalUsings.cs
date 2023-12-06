@@ -13,3 +13,4 @@ global using static CsabaDu.FooVaria.Common.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.Common.Statics.Extensions;
 global using static CsabaDu.FooVaria.Common.Statics.MeasureUnitTypes;
 global using static CsabaDu.FooVaria.Measurements.Statics.MeasureUnits;
+global using static CsabaDu.FooVaria.Measurements.Types.Implementations.MeasurementBase;
