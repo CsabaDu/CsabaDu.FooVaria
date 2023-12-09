@@ -126,9 +126,16 @@ internal sealed class Limit : RateComponent, ILimit
         return LimitMode;
     }
 
+    public override TypeCode? GetQuantityTypeCode(object quantity)
+    {
+        if (quantity is IQuantity<ulong> limit) return Quantifiable.GetQuantityTypeCode(limit);
+
+        return base.GetQuantityTypeCode(quantity);
+    }
+
     public override TypeCode GetQuantityTypeCode()
     {
-        return GetQuantityTypeCode(this)!.Value;
+        return Quantifiable.GetQuantityTypeCode(this);
     }
 
     public ILimit GetDefault(MeasureUnitTypeCode measureUnitTypeCode)

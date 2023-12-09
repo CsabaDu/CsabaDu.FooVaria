@@ -104,7 +104,7 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
             return quantity.ToQuantity(quantityTypeCode) ?? throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
         }
 
-        public TypeCode? GetQuantityTypeCode(object quantity)
+        public virtual TypeCode? GetQuantityTypeCode(object quantity)
         {
             TypeCode quantityTypeCode = Type.GetTypeCode(quantity?.GetType());
 
@@ -421,6 +421,18 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
         public TSelf GetRateComponent(TNum quantity)
         {
             return GetFactory().Create(Measurement, quantity);
+        }
+
+        public override sealed TypeCode? GetQuantityTypeCode(object quantity)
+        {
+            if (quantity is IQuantity<TNum> rateComponent) return Quantifiable.GetQuantityTypeCode(rateComponent);
+
+            return base.GetQuantityTypeCode(quantity);
+        }
+
+        public override sealed TypeCode GetQuantityTypeCode()
+        {
+            return Quantifiable.GetQuantityTypeCode(this);
         }
 
         #region Abstract methods

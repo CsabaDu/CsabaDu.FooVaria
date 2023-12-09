@@ -13,7 +13,7 @@ internal sealed class Denominator : RateComponent<IDenominator>, IDenominator
     #region Public methods
     public IDenominator GetDefault()
     {
-        return GetDefault(this);
+        return GetDefault(MeasureUnitTypeCode);
     }
 
     public decimal GetDefaultRateComponentQuantity()
@@ -21,29 +21,9 @@ internal sealed class Denominator : RateComponent<IDenominator>, IDenominator
         return GetDefaultRateComponentQuantity<decimal>();
     }
 
-    public IDenominator GetDenominator(IMeasurement measurement, ValueType quantity)
-    {
-        return GetFactory().Create(measurement, quantity);
-    }
-
     public IDenominator GetDenominator(IMeasurement measurement)
     {
         return GetFactory().Create(measurement);
-    }
-
-    public IDenominator GetDenominator(IRateComponent baseMeasure)
-    {
-        return (IDenominator)GetFactory().Create(baseMeasure);
-    }
-
-    public IDenominator GetDenominator(IDenominator other)
-    {
-        return GetFactory().Create(other);
-    }
-
-    public IDenominator GetDenominator(Enum measureUnit, ValueType quantity)
-    {
-        return GetFactory().Create(measureUnit, quantity);
     }
 
     public IDenominator GetDenominator(Enum measureUnit)
@@ -103,20 +83,10 @@ internal sealed class Denominator : RateComponent<IDenominator>, IDenominator
             && base.Equals(other);
     }
 
-    public override IRateComponent GetRateComponent(ValueType quantity, Enum measureUnit)
-    {
-        return GetDenominator(measureUnit, quantity);
-    }
-
     public override IDenominatorFactory GetFactory()
     {
         return (IDenominatorFactory)Factory;
     }
-
-    //public override IDenominator GetMeasurable(IDefaultMeasurable other)
-    //{
-    //    return (IDenominator)GetFactory().Create(other);
-    //}
 
     public override TypeCode GetQuantityTypeCode()
     {

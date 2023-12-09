@@ -57,6 +57,11 @@ public abstract class Measurable : CommonBase, IMeasurable
         return MeasureUnitTypes.GetMeasureUnitType(MeasureUnitTypeCode);
     }
 
+    public virtual TypeCode GetQuantityTypeCode()
+    {
+        return MeasureUnitTypeCode.GetQuantityTypeCode();
+    }
+
     public bool HasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
     {
         return measureUnitTypeCode == MeasureUnitTypeCode;

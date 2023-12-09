@@ -2,6 +2,7 @@
 
 public abstract class Quantifiable : Measurable, IQuantifiable
 {
+    #region Constructors
     protected Quantifiable(IQuantifiable other) : base(other)
     {
     }
@@ -21,15 +22,17 @@ public abstract class Quantifiable : Measurable, IQuantifiable
     protected Quantifiable(IQuantifiableFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IMeasurable[] measurables) : base(factory, measureUnitTypeCode, measurables)
     {
     }
+    #endregion
 
-    public virtual TypeCode GetQuantityTypeCode()
-    {
-        return MeasureUnitTypeCode.GetQuantityTypeCode();
-    }
-
+    #region Public methods
+    #region Abstract methods
     public abstract decimal GetDefaultQuantity();
     public abstract void ValidateQuantity(ValueType? quantity, string paramName);
+    #endregion
+    #endregion
 
+    #region Protected methods
+    #region Static methods
     protected static TypeCode? GetQuantityTypeCode(ValueType quantity)
     {
         Type? quantityType = quantity?.GetType();
@@ -44,6 +47,7 @@ public abstract class Quantifiable : Measurable, IQuantifiable
         return Type.GetTypeCode(typeof(TNum));
 
     }
-
+    #endregion
+    #endregion
 }
 

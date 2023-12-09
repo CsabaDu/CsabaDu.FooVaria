@@ -121,6 +121,11 @@ internal abstract class MeasurementBase : Measurable, IMeasurementBase
         return HashCode.Combine(MeasureUnitTypeCode, ExchangeRate);
     }
 
+    public override sealed TypeCode GetQuantityTypeCode()
+    {
+        return base.GetQuantityTypeCode();
+    }
+
     public override sealed void ValidateMeasureUnit(Enum measureUnit, string paramName)
     {
         if (ExchangeRateCollection.ContainsKey(measureUnit)) return;
