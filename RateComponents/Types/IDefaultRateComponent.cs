@@ -4,10 +4,10 @@
     {
     }
 
-    public interface IDefaultRateComponent<T, U> : IDefaultRateComponent, IDefaultMeasurable<T>, IQuantity<U>, ICommonBase<T> where T : class, IRateComponent, IDefaultRateComponent where U : struct
+    public interface IDefaultRateComponent<TSelf, TNum> : IDefaultRateComponent, IDefaultMeasurable<TSelf>, IQuantity<TNum>, ICommonBase<TSelf> where TSelf : class, IRateComponent, IDefaultRateComponent where TNum : struct
     {
-        U GetDefaultRateComponentQuantity();
-        T GetDefaultRateComponent();
-        T GetRateComponent(IRateComponent other);
+        TNum GetDefaultRateComponentQuantity();
+        TSelf GetDefault();
+        TSelf GetRateComponent(IRateComponent rateComponent);
     }
 }

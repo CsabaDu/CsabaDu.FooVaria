@@ -310,7 +310,7 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 
         #region Protected methods
         #region Static methods
-        //protected static T GetTangentShape<T>(ITangentShape<T> shape, SideCode sideCode) where T : class, IShape, ITangentShape
+        //protected static TNum GetTangentShape<TNum>(ITangentShape<TNum> shape, SideCode sideCode) where TNum : class, IShape, ITangentShape
         //{
         //    return sideCode switch
         //    {

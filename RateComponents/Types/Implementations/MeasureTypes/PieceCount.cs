@@ -22,7 +22,7 @@ internal sealed class PieceCount : Measure<IPieceCount, long, Pieces>, IPieceCou
 }
 
 
-    //public IPieceCount GetDefaultRateComponent()
+    //public IPieceCount GetDefault()
     //{
     //    return GetDefault(this);
     //}

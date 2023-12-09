@@ -4,9 +4,9 @@
     {
     }
 
-    public interface IConvertMeasure<T, X> : IConvertMeasure where T : class, IMeasure where X : notnull
+    public interface IConvertMeasure<TSelf, TOther> : IConvertMeasure where TSelf : class, IMeasure where TOther : notnull
     {
-        T ConvertFrom(X other);
-        X ConvertMeasure();
+        TSelf ConvertFrom(TOther other);
+        TOther ConvertMeasure();
     }
 }

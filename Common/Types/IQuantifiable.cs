@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Common.Types;
 
-public interface IQuantifiable : IMeasurable
+public interface IQuantifiable : IMeasurable, IQuantityType
 {
     decimal GetDefaultQuantity();
 

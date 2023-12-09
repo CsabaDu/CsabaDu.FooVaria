@@ -8,7 +8,7 @@ namespace CsabaDu.FooVaria.Proportions.Types
 
     public interface IMeasureProportion<out T, in U> : IMeasureProportion where T : class, IProportion, IMeasureProportion where U : class, IMeasure, IDefaultRateComponent
     {
-        //T GetProportion(U numerator, IMeasurement denominatorMeasurement);
+        //TNum GetProportion(TContext numerator, IMeasurement denominatorMeasurement);
         T GetProportion(U numerator, IDenominator denominator);
     }
 

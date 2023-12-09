@@ -10,6 +10,6 @@ namespace CsabaDu.FooVaria.Shapes.Behaviors
     public interface ISpatialRotation<T> : ISpatialRotation where T : class, IDryBody, IRectangularShape
     {
         T RotateSpatially();
-        //T RotateSpatiallyWith(IDryBody other);
+        //TNum RotateSpatiallyWith(IDryBody other);
     }
 }

@@ -69,6 +69,10 @@
             return HashCode.Combine(DefaultQuantity, MeasureUnitTypeCode, GetNumeratorMeasureUnitTypeCode());
         }
 
+        public override sealed TypeCode GetQuantityTypeCode()
+        {
+            return GetQuantityTypeCode(this);
+        }
 
         public override sealed void Validate(IRootObject? rootObject, string paramName)
         {

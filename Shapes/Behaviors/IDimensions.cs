@@ -1,18 +1,18 @@
 ﻿namespace CsabaDu.FooVaria.Shapes.Behaviors
 {
-    //public interface ITangentShape<T> : IShape where T : class, IShape, ITangentShape
+    //public interface ITangentShape<TNum> : IShape where TNum : class, IShape, ITangentShape
     //{
-    //    T GetOuterTangentShape();
+    //    TNum GetOuterTangentShape();
     //}
 
-    //public interface IRectangularShape<T> : IRectangularShape where T : class, IShape, ICircularShape
+    //public interface IRectangularShape<TNum> : IRectangularShape where TNum : class, IShape, ICircularShape
     //{
-    //    T GetInnerTangentShape(ComparisonCode comparisonCode);
+    //    TNum GetInnerTangentShape(ComparisonCode comparisonCode);
     //}
 
-    //public interface ICircularShape<T> : ITangentShape, ICircularShape where T : class, IShape, IRectangularShape
+    //public interface ICircularShape<TNum> : ITangentShape, ICircularShape where TNum : class, IShape, IRectangularShape
     //{
-    //    T GetInnerTangentShape(IExtent innerTangentRectangleSide);
+    //    TNum GetInnerTangentShape(IExtent innerTangentRectangleSide);
     //}
 
     public interface IDimensions

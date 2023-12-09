@@ -22,7 +22,7 @@ internal sealed class Distance : Measure<IDistance, double, DistanceUnit>, IDist
 }
 
 
-    //public IDistance GetDefaultRateComponent()
+    //public IDistance GetDefault()
     //{
     //    return GetDefault(this);
     //}

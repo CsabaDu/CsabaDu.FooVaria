@@ -2,11 +2,11 @@
 
 namespace CsabaDu.FooVaria.Common.Behaviors;
 
-public interface IExchange<T, in U> : IProportional<T>, IExchangeable<U> where T : class, IMeasurable, IQuantifiable where U : notnull
+public interface IExchange<TSelf, in TContext> : IProportional<TSelf>, IExchangeable<TContext> where TSelf : class, IMeasurable, IQuantifiable where TContext : notnull
 {
-    T? ExchangeTo(U context);
+    TSelf? ExchangeTo(TContext context);
 
-    public bool TryExchangeTo(U context, [NotNullWhen(true)] out T? exchanged)
+    public bool TryExchangeTo(TContext context, [NotNullWhen(true)] out TSelf? exchanged)
     {
         exchanged = ExchangeTo(context);
 

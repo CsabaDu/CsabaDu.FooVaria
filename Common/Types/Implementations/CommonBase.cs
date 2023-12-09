@@ -87,17 +87,30 @@ public abstract class CommonBase : ICommonBase
     #region Static methods
     private static void ValidateInterfaces(IRootObject rootObject, IRootObject other, string paramName)
     {
-        Type type = rootObject.GetType();
-        IEnumerable<Type> interfaces = type.GetInterfaces();
-        Type otherType = other.GetType();
+        if (AreValidInterfaces(rootObject, other)) return;
 
-        foreach (Type item in interfaces)
-        {
-            if (!otherType.GetInterfaces().Contains(item))
-            {
-                throw ArgumentTypeOutOfRangeException(paramName, other);
-            }
-        }
+        throw ArgumentTypeOutOfRangeException(paramName, other);
+
+        //Type type = rootObject.GetType();
+        //IEnumerable<Type> interfaces = type.GetInterfaces();
+        //Type otherType = other.GetType();
+        //IEnumerable<Type> otherInterfaces = otherType.GetInterfaces();
+
+        //foreach (Type item in interfaces)
+        //{
+        //    if (!otherType.GetInterfaces().Contains(item))
+        //    {
+        //        throw ArgumentTypeOutOfRangeException(paramName, other);
+        //    }
+        //}
+    }
+
+    private static bool AreValidInterfaces(IRootObject rootObject, IRootObject other)
+    {
+        IEnumerable<Type> interfaces = rootObject.GetType().GetInterfaces();
+        IEnumerable<Type> otherInterfaces = other.GetType().GetInterfaces();
+
+        return otherInterfaces.Intersect(interfaces).SequenceEqual(otherInterfaces);
     }
     #endregion
     #endregion

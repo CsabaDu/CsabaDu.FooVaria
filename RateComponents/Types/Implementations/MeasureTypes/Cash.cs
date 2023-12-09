@@ -21,7 +21,7 @@ internal sealed class Cash : Measure<ICash, decimal, Currency>, ICash
     #endregion
 }
 
-    //public ICash GetDefaultRateComponent()
+    //public ICash GetDefault()
     //{
     //    return GetDefault(this);
     //}

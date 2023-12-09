@@ -1,21 +1,21 @@
 ﻿namespace CsabaDu.FooVaria.RateComponents.Types
 {
-    public interface IMeasure : IRateComponent<IMeasure>, ILimitable, ICalculate, ICalculate<decimal, IMeasure>
+    public interface IMeasure : IRateComponent<IMeasure>, ILimitable, ICalculate<decimal, IMeasure>
     {
     }
 
-    public interface IMeasure<T, U> : IMeasure, IDefaultRateComponent<T, U> where T : class, IMeasure, IDefaultRateComponent where U : struct
+    public interface IMeasure<TSelf, TNum> : IMeasure, IRateComponent<TSelf, TNum> where TSelf : class, IMeasure<TSelf, TNum>, IDefaultRateComponent where TNum : struct
     {
-        T GetMeasure(string name, U quantity);
-        T GetMeasure(U quantity);
-        T GetMeasure(IMeasurement measurement, U quantity);
+        TSelf GetMeasure(string name, TNum quantity);
+        TSelf GetMeasure(TNum quantity);
+        TSelf GetMeasure(IMeasurement measurement, TNum quantity);
     }
 
-    public interface IMeasure<T, U, W> : IMeasure<T, U>, IMeasureUnit<W> where T : class, IMeasure<T, U>, IDefaultRateComponent where U : struct where W : struct, Enum
+    public interface IMeasure<TSelf, TNum, TEnum> : IMeasure<TSelf, TNum>, IMeasureUnit<TEnum> where TSelf : class, IMeasure<TSelf, TNum> where TNum : struct where TEnum : struct, Enum
     {
-        T GetMeasure(W measureUnit, U quantity);
-        T GetMeasure(T other);
-        T GetMeasure(W measureUnit);
+        TSelf GetMeasure(TEnum measureUnit, TNum quantity);
+        TSelf GetMeasure(TSelf other);
+        TSelf GetMeasure(TEnum measureUnit);
     }
 }
 

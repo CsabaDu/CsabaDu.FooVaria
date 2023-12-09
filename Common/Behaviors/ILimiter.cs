@@ -1,10 +1,10 @@
 ﻿namespace CsabaDu.FooVaria.Common.Behaviors;
 
-public interface ILimiter<in T, in U> : IEqualityComparer<T> where T : class, IBaseMeasure where U : class, IBaseMeasure
+public interface ILimiter<in TSelf, in TLimitable> : IEqualityComparer<TSelf> where TSelf : class, IBaseMeasure where TLimitable : class, IBaseMeasure
 {
-    LimitMode GetLimitMode(T limiter);
+    LimitMode GetLimitMode(TSelf limiter);
 
-    bool? Includes(U limitable);
+    bool? Includes(TLimitable limitable);
 
     void ValidateLimitMode(LimitMode limitMode);
 }

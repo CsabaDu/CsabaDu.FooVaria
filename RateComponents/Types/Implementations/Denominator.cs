@@ -3,19 +3,15 @@
 internal sealed class Denominator : RateComponent<IDenominator>, IDenominator
 {
     #region Constructors
-    internal Denominator(IDenominatorFactory factory, ValueType quantity, IMeasurement measurement) : base(factory, quantity, measurement)
-    {
-    }
-
-    internal Denominator(IDenominatorFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
+    internal Denominator(IDenominatorFactory factory, IMeasurement measurement, ValueType quantity) : base(factory, measurement, quantity)
     {
     }
     #endregion
 
-    public override TypeCode QuantityTypeCode => TypeCode.Decimal;
+    //public override TypeCode QuantityTypeCode => TypeCode.Decimal;
 
     #region Public methods
-    public IDenominator GetDefaultRateComponent()
+    public IDenominator GetDefault()
     {
         return GetDefault(this);
     }

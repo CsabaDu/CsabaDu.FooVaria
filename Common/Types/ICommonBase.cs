@@ -9,9 +9,9 @@
         void Validate(IRootObject? rootObject, string paramName);
     }
 
-    public interface ICommonBase<T> : ICommonBase where T : class, ICommonBase
+    public interface ICommonBase<TSelf> : ICommonBase where TSelf : class, ICommonBase
     {
-        T GetNew(T other);
+        TSelf GetNew(TSelf other);
     }
 
 }

@@ -1,6 +1,6 @@
 ﻿//namespace CsabaDu.FooVaria.RateComponents.Factories;
 
-//public interface IMeasurableFactory : IMeasurableFactory/*, IFactory<IDefaultMeasurable>*/
+//public interface IDefaultMeasurableFactory : IDefaultMeasurableFactory/*, IFactory<IDefaultMeasurable>*/
 //{
 //}
 

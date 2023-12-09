@@ -84,6 +84,16 @@ public static class ExceptionMethods
     {
         return new InvalidEnumArgumentException(paramName, (int)sideCode, sideCode.GetType());
     }
+
+    public static InvalidEnumArgumentException InvalidRateComponentCodeArgumentException(RateComponentCode rateComponentCode)
+    {
+        return InvalidRateComponentCodeArgumentException(rateComponentCode, nameof(rateComponentCode));
+    }
+
+    public static InvalidEnumArgumentException InvalidRateComponentCodeArgumentException(RateComponentCode rateComponentCode, string paramName)
+    {
+        return new InvalidEnumArgumentException(paramName, (int)rateComponentCode, rateComponentCode.GetType());
+    }
     #endregion
 
     #region ArgumentOutOfRangeException

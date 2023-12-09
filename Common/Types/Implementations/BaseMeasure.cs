@@ -35,9 +35,9 @@
         }
     }
 
-    public abstract class BaseMeasure<T, U> : BaseMeasure, IBaseMeasure<T, U> where T : class, IBaseMeasure<T, U> where U : notnull
+    public abstract class BaseMeasure<TSelf, TContext> : BaseMeasure, IBaseMeasure<TSelf, TContext> where TSelf : class, IBaseMeasure<TSelf, TContext> where TContext : notnull
     {
-        protected BaseMeasure(T other) : base(other)
+        protected BaseMeasure(TSelf other) : base(other)
         {
         }
 
@@ -57,7 +57,7 @@
         {
         }
 
-        public virtual int CompareTo(T? other)
+        public virtual int CompareTo(TSelf? other)
         {
             if (other == null) return 1;
 
@@ -66,13 +66,13 @@
             return DefaultQuantity.CompareTo(other.DefaultQuantity);
         }
 
-        public virtual bool Equals(T? other)
+        public virtual bool Equals(TSelf? other)
         {
             return MeasureUnitTypeCode == other?.MeasureUnitTypeCode
                 && DefaultQuantity == other?.DefaultQuantity;
         }
 
-        public virtual decimal ProportionalTo(T other)
+        public virtual decimal ProportionalTo(TSelf other)
         {
             if (NullChecked(other, nameof(other)).HasMeasureUnitTypeCode(MeasureUnitTypeCode)) return DefaultQuantity / other.DefaultQuantity;
 
@@ -81,7 +81,7 @@
 
         public override bool Equals(object? obj)
         {
-            return obj is T other && Equals(other);
+            return obj is TSelf other && Equals(other);
         }
 
         public override int GetHashCode()
@@ -89,8 +89,8 @@
             return HashCode.Combine(MeasureUnitTypeCode, DefaultQuantity);
         }
 
-        public abstract T? ExchangeTo(U context);
-        public abstract bool IsExchangeableTo(U? context);
+        public abstract TSelf? ExchangeTo(TContext context);
+        public abstract bool IsExchangeableTo(TContext? context);
     }
 }
 

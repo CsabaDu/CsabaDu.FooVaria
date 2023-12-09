@@ -4,4 +4,10 @@
     {
 
     }
+
+    public interface IBaseMeasureFactory<out T> : IBaseMeasureFactory where T : class, IBaseMeasure
+    {
+
+    }
+
 }

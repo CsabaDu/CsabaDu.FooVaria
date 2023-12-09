@@ -21,7 +21,7 @@ internal sealed class Extent : Measure<IExtent, double,ExtentUnit>, IExtent
     #endregion
 }
 
-    //public IExtent GetDefaultRateComponent()
+    //public IExtent GetDefault()
     //{
     //    return GetDefault(this);
     //}

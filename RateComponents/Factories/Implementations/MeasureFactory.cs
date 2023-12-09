@@ -4,7 +4,7 @@ using CsabaDu.FooVaria.Measurements.Factories;
 
 namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
 
-public sealed class MeasureFactory : BaseMeasureFactory, IMeasureFactory
+public sealed class MeasureFactory : RateComponentFactory, IMeasureFactory
 {
     #region Constructors
     public MeasureFactory(IMeasurementFactory measurementFactory) : base(measurementFactory)

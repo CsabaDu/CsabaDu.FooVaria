@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
 
-public sealed class LimitFactory : BaseMeasureFactory, ILimitFactory
+public sealed class LimitFactory : RateComponentFactory, ILimitFactory
 {
     #region Constructors
     public LimitFactory(IMeasurementFactory measurementFactory) : base(measurementFactory)

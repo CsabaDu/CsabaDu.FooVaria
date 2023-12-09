@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Common.Behaviors;
 
-public interface IRound<out T> where T : class, IBaseMeasure
+public interface IRound<out TSelf> where TSelf : class, IBaseMeasure
 {
-    T Round(RoundingMode roundingMode);
+    TSelf Round(RoundingMode roundingMode);
 }

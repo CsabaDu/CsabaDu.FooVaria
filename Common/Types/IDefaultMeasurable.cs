@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Common.Types;
 
-public interface IDefaultMeasurable<out T> : IMeasurable where T : class, IMeasurable
+public interface IDefaultMeasurable<out TSelf> : IMeasurable where TSelf : class, IMeasurable
 {
-    T GetDefault(MeasureUnitTypeCode measureUnitTypeCode);
+    TSelf GetDefault(MeasureUnitTypeCode measureUnitTypeCode);
 }

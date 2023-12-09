@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Enums;
+﻿namespace CsabaDu.FooVaria.Common.Enums;
 
 public enum RateComponentCode
 {

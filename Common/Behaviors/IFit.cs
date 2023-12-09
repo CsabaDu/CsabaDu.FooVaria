@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Common.Behaviors;
 
-public interface IFit<T> : IComparable<T>, IEquatable<T> where T : class, IMeasurable, IQuantifiable
+public interface IFit<TSelf> : IComparable<TSelf>, IEquatable<TSelf> where TSelf : class, IMeasurable, IQuantifiable
 {
-    bool? FitsIn(T? comparable, LimitMode? limitMode);
+    bool? FitsIn(TSelf? comparable, LimitMode? limitMode);
 }

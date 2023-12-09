@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Statics;
+﻿namespace CsabaDu.FooVaria.Common.Statics;
 
 public static class QuantityTypes
 {

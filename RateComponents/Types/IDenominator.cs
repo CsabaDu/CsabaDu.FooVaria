@@ -1,15 +1,16 @@
 ﻿namespace CsabaDu.FooVaria.RateComponents.Types;
 
-public interface IDenominator : IRateComponent<IDenominator>, IMeasureUnit<Enum>, IDefaultRateComponent<IDenominator, decimal>
+public interface IDenominator : IRateComponent<IDenominator, decimal>, IMeasureUnit<Enum>/*, IDefaultRateComponent<IDenominator, decimal>*/
 {
     IDenominator GetDenominator(Enum measureUnit);
-    IDenominator GetDenominator(Enum measureUnit, decimal exchangeRate, string customName);
     IDenominator GetDenominator(string name);
-    IDenominator GetDenominator(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate);
     IDenominator GetDenominator(IMeasurement measurement);
     IDenominator GetDenominator(IRateComponent baseMeasure, ValueType quantity);
 }
 
+    //IDenominator GetDenominator(decimal quantity);
+    //IDenominator GetDenominator(Enum measureUnit, decimal exchangeRate, string customName);
+    //IDenominator GetDenominator(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate);
     //IDenominator GetDenominator(Enum measureUnit, ValueType quantity); //
     //IDenominator GetDenominator(Enum measureUnit, decimal exchangeRate, string customName, ValueType quantity); //
     //IDenominator GetDenominator(string name, ValueType quantity); //

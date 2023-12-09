@@ -164,7 +164,7 @@
 
 
 
-    //internal abstract class Proportion<T, U, W> : Proportion, IProportion<T, U, W> where T : class, IProportion where U : struct, Enum where W : struct, Enum
+    //internal abstract class Proportion<TNum, TContext, TEnum> : Proportion, IProportion<TNum, TContext, TEnum> where TNum : class, IProportion where TContext : struct, Enum where TEnum : struct, Enum
     //{
     //    #region Constructors
     //    private protected Proportion(IProportionFactory factory, IBaseRate baseRate) : base(factory, baseRate)
@@ -177,21 +177,21 @@
     //    #endregion
 
     //    #region Public methods
-    //    public T GetProportion(U numeratorMeasureUnit, ValueType quantity, W denominatorMeasureUnit)
+    //    public TNum GetProportion(TContext numeratorMeasureUnit, ValueType quantity, TEnum denominatorMeasureUnit)
     //    {
     //        ValidateQuantity(quantity, nameof(quantity));
 
     //        decimal decimalQuantity = (decimal?)quantity.ToQuantity(TypeCode.Decimal) ?? throw new InvalidOperationException(null);
 
-    //        return (T)GetFactory().Create(numeratorMeasureUnit, decimalQuantity, denominatorMeasureUnit);
+    //        return (TNum)GetFactory().Create(numeratorMeasureUnit, decimalQuantity, denominatorMeasureUnit);
     //    }
 
-    //    public T GetProportion(IMeasure numerator, W denominatorMeasureUnit)
+    //    public TNum GetProportion(IMeasure numerator, TEnum denominatorMeasureUnit)
     //    {
-    //        return (T)GetFactory().Create(numerator, denominatorMeasureUnit);
+    //        return (TNum)GetFactory().Create(numerator, denominatorMeasureUnit);
     //    }
 
-    //    public decimal GetQuantity(U numeratorMeasureUnit, W denominatorMeasureUnit)
+    //    public decimal GetQuantity(TContext numeratorMeasureUnit, TEnum denominatorMeasureUnit)
     //    {
     //        return DefaultQuantity
     //            / GetExchangeRate(Defined(numeratorMeasureUnit, nameof(numeratorMeasureUnit)))
@@ -202,8 +202,8 @@
     //    #region Sealed methods
     //    public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
     //    {
-    //        yield return MeasureUnitTypes.GetMeasureUnitTypeCode(typeof(U));
-    //        yield return MeasureUnitTypes.GetMeasureUnitTypeCode(typeof(W));
+    //        yield return MeasureUnitTypes.GetMeasureUnitTypeCode(typeof(TContext));
+    //        yield return MeasureUnitTypes.GetMeasureUnitTypeCode(typeof(TEnum));
     //    }
     //    #endregion
     //    #endregion

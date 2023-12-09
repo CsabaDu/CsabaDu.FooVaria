@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace CsabaDu.FooVaria.Common.Behaviors;
+﻿namespace CsabaDu.FooVaria.Common.Behaviors;
 
 public interface IExchangeRate
 {

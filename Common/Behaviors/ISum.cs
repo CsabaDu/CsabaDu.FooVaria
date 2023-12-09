@@ -1,8 +1,8 @@
 ﻿namespace CsabaDu.FooVaria.Common.Behaviors;
 
-public interface ISum<T> where T : class, IBaseMeasure, ICalculate
+public interface ISum<TSelf> where TSelf : class, IBaseMeasure, ICalculate
 {
-    T Add(T? other);
-    T Subtract(T? other);
+    TSelf Add(TSelf? other);
+    TSelf Subtract(TSelf? other);
 }
 

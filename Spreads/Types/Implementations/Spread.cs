@@ -122,17 +122,17 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         #region Constructors
         private protected Spread(T other) : base(other)
         {
-            //SpreadMeasure = (U)other.GetSpreadMeasure();
+            //SpreadMeasure = (TContext)other.GetSpreadMeasure();
         }
 
         private protected Spread(ISpreadFactory<T, U, W> factory, U spreadMeasure) : base(factory, spreadMeasure)
         {
-            //SpreadMeasure = (U)SpreadMeasures.GetValidSpreadMeasure(spreadMeasure);
+            //SpreadMeasure = (TContext)SpreadMeasures.GetValidSpreadMeasure(spreadMeasure);
         }
 
         private protected Spread(ISpreadFactory<T, U, W> factory, W measureUnit, double quantity) : base(factory, measureUnit, quantity)
         {
-            //SpreadMeasure = (U)factory.MeasureFactory.Create(quantity, measureUnit);
+            //SpreadMeasure = (TContext)factory.MeasureFactory.Create(quantity, measureUnit);
         }
         #endregion
 
@@ -155,7 +155,7 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         //{
         //    if (other == null) return null;
 
-        //    U spreadMeasure = (U)SpreadMeasures.GetValidSpreadMeasure(other);
+        //    TContext spreadMeasure = (TContext)SpreadMeasures.GetValidSpreadMeasure(other);
 
         //    return SpreadMeasure.FitsIn(spreadMeasure, limitMode);
         //}

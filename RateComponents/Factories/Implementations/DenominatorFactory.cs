@@ -3,7 +3,7 @@ using CsabaDu.FooVaria.Measurements.Factories;
 
 namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
 
-public sealed class DenominatorFactory : BaseMeasureFactory, IDenominatorFactory
+public sealed class DenominatorFactory : RateComponentFactory, IDenominatorFactory
 {
     #region Constructors
     public DenominatorFactory(IMeasurementFactory measurementFactory) : base(measurementFactory)

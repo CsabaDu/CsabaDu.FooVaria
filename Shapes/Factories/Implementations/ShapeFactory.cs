@@ -328,7 +328,7 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
         }
 
         public abstract T Create(U baseFace, IExtent height);
-        //public abstract U CreateBaseFace(params IExtent[] shapeExtents);
+        //public abstract TContext CreateBaseFace(params IExtent[] shapeExtents);
     }
 
     public sealed class CuboidFactory : DryBodyFactory<ICuboid, IRectangle>, ICuboidFactory

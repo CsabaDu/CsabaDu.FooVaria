@@ -280,9 +280,9 @@
 
 //    #region Protected methods
 //    #region Static methods
-//    protected static T GetValidRate<T>(T commonBase, IRootObject other, string paramName) where T : class, IRate
+//    protected static TNum GetValidRate<TNum>(TNum commonBase, IRootObject other, string paramName) where TNum : class, IRate
 //    {
-//        T rate = GetValidMeasurable(commonBase, other, paramName);
+//        TNum rate = GetValidMeasurable(commonBase, other, paramName);
 //        MeasureUnitTypeCode measureUnitTypeCode = commonBase.Numerator.MeasureUnitTypeCode;
 //        MeasureUnitTypeCode otherMeasureUnitTypeCode = rate.Numerator.MeasureUnitTypeCode;
 

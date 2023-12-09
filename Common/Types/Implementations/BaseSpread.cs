@@ -1,5 +1,4 @@
 ﻿using CsabaDu.FooVaria.Common.Statics;
-using System.Diagnostics.CodeAnalysis;
 
 namespace CsabaDu.FooVaria.Common.Types.Implementations;
 
@@ -145,6 +144,13 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
         yield return MeasureUnitTypeCode.AreaUnit;
         yield return MeasureUnitTypeCode.VolumeUnit;
     }
+
+    #region Sealed methods
+    public override sealed TypeCode GetQuantityTypeCode()
+    {
+        return GetQuantityTypeCode(this);
+    }
+    #endregion
     #endregion
 
     #region Abstract methods

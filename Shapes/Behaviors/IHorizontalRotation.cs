@@ -10,6 +10,6 @@ namespace CsabaDu.FooVaria.Shapes.Behaviors
     public interface IHorizontalRotation<T> : IHorizontalRotation where T : class, IShape, IRectangularShape
     {
         T RotateHorizontally();
-        //T RotateHorizontallyWith(IRectangularShape other);
+        //TNum RotateHorizontallyWith(IRectangularShape other);
     }
 }

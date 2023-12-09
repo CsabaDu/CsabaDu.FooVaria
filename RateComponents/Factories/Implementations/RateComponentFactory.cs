@@ -1,11 +1,9 @@
-﻿using CsabaDu.FooVaria.Measurements.Factories;
+﻿namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
 
-namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
-
-public abstract class BaseMeasureFactory : IRateComponentFactory
+public abstract class RateComponentFactory : IRateComponentFactory
 {
     #region Constructors
-    private protected BaseMeasureFactory(IMeasurementFactory measurementFactory)
+    private protected RateComponentFactory(IMeasurementFactory measurementFactory)
     {
         MeasurementFactory = NullChecked(measurementFactory, nameof(measurementFactory));
     }
