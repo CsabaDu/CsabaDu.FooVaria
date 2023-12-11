@@ -30,24 +30,21 @@ public sealed class MeasurementFactory : IMeasurementFactory
             success = measurement!.TrySetCustomName(measureUnit, customName);
 
             return GetStoredMeasurementOrNull(success, measureUnit);
-        }  
+        }
 
         success = measurement is ICustomMeasurement customMeasurement
             && customMeasurement.TrySetCustomMeasureUnit(customName, measureUnitTypeCode, exchangeRate);
 
-        if (!success) return null;
-
-        measureUnit = measurement.GetMeasureUnit(customName)!;
+        measureUnit = measurement.GetMeasureUnit(customName);
 
         return GetStoredMeasurementOrNull(success, measureUnit);
     }
 
     public IMeasurement? Create(Enum measureUnit, decimal exchangeRate, string customName) // TODO
     {
-        IMeasurement? measurement;
         bool success;
 
-        if (MeasurementCollection.TryGetValue(NullChecked(measureUnit, nameof(measureUnit)), out measurement))
+        if (MeasurementCollection.TryGetValue(NullChecked(measureUnit, nameof(measureUnit)), out IMeasurement? measurement))
         {
             success = ExchangeRateCollection.TryGetValue(measureUnit, out decimal validExchangeRate)
                 && exchangeRate != validExchangeRate
