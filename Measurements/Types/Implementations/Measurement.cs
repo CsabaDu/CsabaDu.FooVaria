@@ -47,7 +47,7 @@ internal abstract class Measurement : MeasurementBase, IMeasurement
         return GetMeasureUnitBasedCollection(CustomNameCollection, measureUnitTypeCode);
     }
 
-    public IMeasurement GetDefault(MeasureUnitTypeCode measureUnitTypeCode)
+    public IMeasurement? GetDefault(MeasureUnitTypeCode measureUnitTypeCode)
     {
         return GetFactory().CreateDefault(measureUnitTypeCode);
     }
@@ -79,12 +79,12 @@ internal abstract class Measurement : MeasurementBase, IMeasurement
         return GetFactory().Create(name);
     }
 
-    public IMeasurement GetMeasurement(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
+    public IMeasurement? GetMeasurement(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
     {
         return GetFactory().Create(customName, measureUnitTypeCode, exchangeRate);
     }
 
-    public IMeasurement GetMeasurement(Enum measureUnit, decimal exchangeRate, string customName)
+    public IMeasurement? GetMeasurement(Enum measureUnit, decimal exchangeRate, string customName)
     {
         return GetFactory().Create(measureUnit, exchangeRate, customName);
     }
@@ -159,7 +159,7 @@ internal abstract class Measurement : MeasurementBase, IMeasurement
 
     public bool TryGetMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, [NotNullWhen(true)] out Enum? measureUnit)
     {
-        exchangeRate.ValidateExchangeRate();
+        //exchangeRate.ValidateExchangeRate();
 
         measureUnit = (Enum)GetExchangeRateCollection(measureUnitTypeCode).FirstOrDefault(x => x.Value == exchangeRate).Key;
 
@@ -173,7 +173,7 @@ internal abstract class Measurement : MeasurementBase, IMeasurement
         return measureUnit != null;
     }
 
-    public bool TrySetCustomName(Enum measureUnit, string customName)
+    public bool TrySetCustomName(Enum? measureUnit, string? customName)
     {
         if (measureUnit == null) return false;
 

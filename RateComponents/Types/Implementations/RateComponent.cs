@@ -437,7 +437,7 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
 
         #region Abstract methods
         public abstract TSelf GetRateComponent(IRateComponent rateComponent);
-        public abstract TSelf GetDefault(MeasureUnitTypeCode measureUnitTypeCode);
+        public abstract TSelf? GetDefault(MeasureUnitTypeCode measureUnitTypeCode);
         #endregion
         #endregion
     }

@@ -2,5 +2,5 @@
 
 public interface IDefaultMeasurable<out TSelf> : IMeasurable where TSelf : class, IMeasurable
 {
-    TSelf GetDefault(MeasureUnitTypeCode measureUnitTypeCode);
+    TSelf? GetDefault(MeasureUnitTypeCode measureUnitTypeCode);
 }

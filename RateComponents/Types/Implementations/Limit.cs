@@ -29,7 +29,7 @@ internal sealed class Limit : RateComponent, ILimit
 
     public ILimit GetDefault()
     {
-        return GetFactory().CreateDefault(MeasureUnitTypeCode);
+        return GetDefault(MeasureUnitTypeCode)!;
     }
 
     public ulong GetDefaultRateComponentQuantity()
@@ -138,9 +138,9 @@ internal sealed class Limit : RateComponent, ILimit
         return Quantifiable.GetQuantityTypeCode(this);
     }
 
-    public ILimit GetDefault(MeasureUnitTypeCode measureUnitTypeCode)
+    public ILimit? GetDefault(MeasureUnitTypeCode measureUnitTypeCode)
     {
-        return GetDefault();
+        return GetFactory().CreateDefault(measureUnitTypeCode);
     }
 
     public override void Validate(IRootObject? rootObject, string paramName)

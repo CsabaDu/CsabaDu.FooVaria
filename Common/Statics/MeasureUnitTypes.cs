@@ -1,4 +1,6 @@
 ﻿
+using System.Diagnostics.CodeAnalysis;
+
 namespace CsabaDu.FooVaria.Common.Statics;
 
 public static class MeasureUnitTypes
@@ -37,8 +39,10 @@ public static class MeasureUnitTypes
         return (Enum)Enum.ToObject(measureUnitType, value);
     }
 
-    public static Enum GetDefaultMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode)
+    public static Enum? GetDefaultMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode)
     {
+        if (!Enum.IsDefined(measureUnitTypeCode)) return null;
+
         return measureUnitTypeCode.GetDefaultMeasureUnit();
     }
 
@@ -155,7 +159,7 @@ public static class MeasureUnitTypes
             && measureUnitTypeCode == GetMeasureUnitTypeCode(measureUnit!);
     }
 
-    public static bool IsDefinedMeasureUnit(Enum measureUnit)
+    public static bool IsDefinedMeasureUnit(Enum? measureUnit)
     {
         if (measureUnit == null) return false;
 
@@ -163,6 +167,17 @@ public static class MeasureUnitTypes
 
         return GetMeasureUnitTypes().Contains(measureUnitType)
             && Enum.IsDefined(measureUnitType, measureUnit);
+    }
+
+    public static bool TryGetMeasureUnitTypeCode(Enum? measureUnit, [NotNullWhen(true)] out MeasureUnitTypeCode? measureUnitTypeCode)
+    {
+        measureUnitTypeCode = default;
+
+        if (!IsDefinedMeasureUnit(measureUnit)) return false;
+
+        measureUnitTypeCode = GetMeasureUnitTypeCode(measureUnit!);
+
+        return true;
     }
 
     public static void ValidateMeasureUnit(Enum measureUnit, string paramName)

@@ -23,9 +23,9 @@ public sealed class LimitFactory : RateComponentFactory, ILimitFactory
     #region Public methods
     public override ILimit CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
     {
-        ILimit limit = new Limit(this, measureUnitTypeCode);
+        IMeasurement measurement = MeasurementFactory.CreateDefault(measureUnitTypeCode);
 
-        return Create(limit);
+        return Create(measurement, DefaultRateComponentQuantity, default);
     }
 
     public ILimit Create(ILimit limit)
@@ -35,7 +35,7 @@ public sealed class LimitFactory : RateComponentFactory, ILimitFactory
 
     public ILimit Create(IMeasurement measurement, ValueType quantity, LimitMode limitMode)
     {
-        ILimit limit = new Limit(this, quantity, measurement, limitMode);
+        ILimit limit = new Limit(this, measurement, quantity, limitMode);
 
         return Create(limit);
     }
@@ -61,7 +61,7 @@ public sealed class LimitFactory : RateComponentFactory, ILimitFactory
         return Create(measurement, quantity, limitMode);
     }
 
-    public ILimit Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity, LimitMode limitMode)
+    public ILimit? Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity, LimitMode limitMode)
     {
         IMeasurement measurement = MeasurementFactory.Create(customName, measureUnitTypeCode, exchangeRate);
 
@@ -130,6 +130,20 @@ public sealed class LimitFactory : RateComponentFactory, ILimitFactory
         if (other is ILimit limit) return Create(limit);
 
         return Create(other, default);
+    }
+
+    public override ILimit Create(Enum measureUnit, ValueType quantity)
+    {
+        IMeasurement measurement = MeasurementFactory.Create(measureUnit);
+
+        return Create(measurement, quantity, default);
+    }
+
+    public ILimit? Create(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName, LimitMode limitMode)
+    {
+        IMeasurement measurement = MeasurementFactory.Create(measureUnit, exchangeRate, customName);
+
+        return Create(measurement, quantity, limitMode);
     }
     #endregion
     #endregion

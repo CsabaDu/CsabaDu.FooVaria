@@ -44,7 +44,7 @@ public abstract class Measurable : CommonBase, IMeasurable
     #region Public methods
     public Enum GetDefaultMeasureUnit()
     {
-        return MeasureUnitTypes.GetDefaultMeasureUnit(MeasureUnitTypeCode);
+        return MeasureUnitTypeCode.GetDefaultMeasureUnit();
     }
 
     public IEnumerable<string> GetDefaultMeasureUnitNames()

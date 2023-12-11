@@ -165,7 +165,7 @@
         {
         }
 
-        public abstract TSelf GetDefault(MeasureUnitTypeCode measureUnitTypeCode);
+        public abstract TSelf? GetDefault(MeasureUnitTypeCode measureUnitTypeCode);
 
         #region Public methods
 

@@ -87,7 +87,7 @@
             }
 
             decimal quantity = measure.DefaultQuantity * DefaultQuantity;
-            Enum measureUnit = MeasureUnitTypes.GetDefaultMeasureUnit(NumeratorMeasureUnitTypeCode);
+            Enum measureUnit = NumeratorMeasureUnitTypeCode.GetDefaultMeasureUnit();
 
             return measure.GetRateComponent(measureUnit, quantity);
         }

@@ -30,5 +30,6 @@ public abstract class RateComponentFactory : IRateComponentFactory
     }
 
     public abstract IRateComponent Create(IRateComponent other);
+    public abstract IRateComponent Create(Enum measureUnit, ValueType quantity);
     public abstract IMeasurable CreateDefault(MeasureUnitTypeCode measureUnitTypeCode);
 }

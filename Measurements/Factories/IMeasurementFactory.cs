@@ -4,6 +4,6 @@ public interface IMeasurementFactory : IFactory<IMeasurement>, IDefaultMeasurabl
 {
     IMeasurement Create(Enum measureUnit);
     IMeasurement Create(string name);
-    IMeasurement Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate);
-    IMeasurement Create(Enum measureUnit, decimal exchangeRate, string customName);
+    IMeasurement? Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate);
+    IMeasurement? Create(Enum measureUnit, decimal exchangeRate, string customName);
 }
