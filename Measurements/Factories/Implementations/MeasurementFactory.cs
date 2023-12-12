@@ -1,5 +1,4 @@
-﻿using CsabaDu.FooVaria.Measurements.Types;
-using CsabaDu.FooVaria.Measurements.Types.Implementations;
+﻿using CsabaDu.FooVaria.Measurements.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Measurements.Factories.Implementations;
 
@@ -23,44 +22,40 @@ public sealed class MeasurementFactory : IMeasurementFactory
 
         if (measurement == null) return null;
 
-        bool success;
+        bool success = measurement.TryGetMeasureUnit(measureUnitTypeCode, exchangeRate, out Enum? measureUnit)
+            && measurement.TrySetCustomName(measureUnit, customName);
 
-        if (measurement.TryGetMeasureUnit(measureUnitTypeCode, exchangeRate, out Enum? measureUnit))
-        {
-            success = measurement!.TrySetCustomName(measureUnit, customName);
-
-            return GetStoredMeasurementOrNull(success, measureUnit);
-        }
+        if (success) return MeasurementCollection[measureUnit!];
 
         success = measurement is ICustomMeasurement customMeasurement
             && customMeasurement.TrySetCustomMeasureUnit(customName, measureUnitTypeCode, exchangeRate);
-
         measureUnit = measurement.GetMeasureUnit(customName);
+        success = success && measureUnit != null;
 
-        return GetStoredMeasurementOrNull(success, measureUnit);
+        return success ?
+            MeasurementCollection[measureUnit!]
+            : null;
     }
 
-    public IMeasurement? Create(Enum measureUnit, decimal exchangeRate, string customName) // TODO
+    public IMeasurement? Create(Enum measureUnit, decimal exchangeRate, string customName)
     {
-        bool success;
+        bool success = IsDefinedMeasureUnit(measureUnit)
+            && MeasurementCollection.TryGetValue(measureUnit, out IMeasurement? measurement)
+            && ExchangeRateCollection.TryGetValue(measureUnit, out decimal validExchangeRate)
+            && exchangeRate == validExchangeRate
+            && measurement.TrySetCustomName(measureUnit, customName);
 
-        if (MeasurementCollection.TryGetValue(NullChecked(measureUnit, nameof(measureUnit)), out IMeasurement? measurement))
-        {
-            success = ExchangeRateCollection.TryGetValue(measureUnit, out decimal validExchangeRate)
-                && exchangeRate != validExchangeRate
-                && measurement.TrySetCustomName(measureUnit, customName);
-
-            return GetStoredMeasurementOrNull(success, measureUnit);
-        }
+        if (success) return MeasurementCollection[measureUnit];
 
         if (!TryGetMeasureUnitTypeCode(measureUnit, out MeasureUnitTypeCode? measureUnitTypeCode)) return null;
 
         measurement = CreateDefault(measureUnitTypeCode.Value);
-
         success = measurement is ICustomMeasurement customMeasurement
             && customMeasurement.TrySetCustomMeasureUnit(measureUnit, exchangeRate, customName);
 
-        return GetStoredMeasurementOrNull(success, measureUnit);
+        return success ?
+            MeasurementCollection[measureUnit]
+            : null;
     }
 
     public IMeasurement Create(Enum measureUnit)
@@ -94,7 +89,12 @@ public sealed class MeasurementFactory : IMeasurementFactory
 
         object? getMeasureUnitByDefaultName()
         {
-            return GetNameCollection().Keys.FirstOrDefault(x => GetDefaultName((Enum)x).ToLower() == nameToLower);
+            return GetNameCollection().Keys.FirstOrDefault(x => getDefaultNameToLower(x) == nameToLower);
+        }
+
+        string getDefaultNameToLower(object measureUnit)
+        {
+            return GetDefaultName((Enum)measureUnit).ToLower();
         }
         #endregion
     }
@@ -104,7 +104,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
         Enum? measureUnit = GetDefaultMeasureUnit(measureUnitTypeCode);
 
         return measureUnit != null ?
-            MeasurementCollection[measureUnit]
+            MeasurementCollection[measureUnit!]
             : null;
     }
     #endregion
@@ -128,13 +128,6 @@ public sealed class MeasurementFactory : IMeasurementFactory
                 x => x.Key,
                 x => x.Value.GetName()
             );
-    }
-
-    private static IMeasurement? GetStoredMeasurementOrNull(bool success, object? measureUnit)
-    {
-        return success && measureUnit != null ?
-            MeasurementCollection[measureUnit]
-            : null;
     }
     #endregion
     #endregion
