@@ -39,8 +39,9 @@ public sealed class MeasurementFactory : IMeasurementFactory
 
     public IMeasurement? Create(Enum measureUnit, decimal exchangeRate, string customName)
     {
-        bool success = IsDefinedMeasureUnit(measureUnit)
-            && MeasurementCollection.TryGetValue(measureUnit, out IMeasurement? measurement)
+        if (!IsDefinedMeasureUnit(measureUnit)) return null;
+
+        bool success = MeasurementCollection.TryGetValue(measureUnit, out IMeasurement? measurement)
             && ExchangeRateCollection.TryGetValue(measureUnit, out decimal validExchangeRate)
             && exchangeRate == validExchangeRate
             && measurement.TrySetCustomName(measureUnit, customName);
