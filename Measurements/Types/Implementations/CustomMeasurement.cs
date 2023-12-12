@@ -46,7 +46,7 @@ internal sealed class CustomMeasurement : Measurement, ICustomMeasurement
 
         int count = NullChecked(customExchangeRateCollection, nameof(customExchangeRateCollection)).Count;
 
-        if (count == 0) throw new ArgumentOutOfRangeException(nameof(customExchangeRateCollection), count, null);
+        if (count == 0) throw CountArgumentOutOfRangeException(count, nameof(customExchangeRateCollection));
 
         for (int i = 0; i < count; i++)
         {
@@ -120,7 +120,20 @@ internal sealed class CustomMeasurement : Measurement, ICustomMeasurement
 
         if (!exchangeRate.IsValidExchangeRate()) return false;
 
-        return TrySetCustomMeasureUnit(this, measureUnit, exchangeRate, customName);
+        return trySetCustomMeasureUnit(this, measureUnit, exchangeRate, customName);
+
+        #region Local methods
+        static bool trySetCustomMeasureUnit(IMeasurement measurement, Enum measureUnit, decimal exchangeRate, string customName)
+        {
+            if (!TrySetExchangeRate(measureUnit, exchangeRate)) return false;
+
+            if (measurement.TrySetCustomName(measureUnit, customName)) return true;
+
+            if (RemoveExchangeRate(measureUnit)) return false;
+
+            throw new InvalidOperationException(null);
+        }
+        #endregion
     }
 
     public bool TrySetCustomMeasureUnit(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
@@ -161,17 +174,6 @@ internal sealed class CustomMeasurement : Measurement, ICustomMeasurement
         if (TrySetExchangeRate(measureUnit, exchangeRate)) return;
 
         throw InvalidMeasureUnitEnumArgumentException(measureUnit);
-    }
-
-    private static bool TrySetCustomMeasureUnit(IMeasurement measurement, Enum measureUnit, decimal exchangeRate, string customName)
-    {
-        if (!TrySetExchangeRate(measureUnit, exchangeRate)) return false;
-
-        if (measurement.TrySetCustomName(measureUnit, customName)) return true;
-
-        if (RemoveExchangeRate(measureUnit)) return false;
-
-        throw new InvalidOperationException(null);
     }
 
     private static bool TrySetExchangeRate(Enum measureUnit, decimal exchangeRate)

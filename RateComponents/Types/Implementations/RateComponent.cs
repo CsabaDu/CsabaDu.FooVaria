@@ -232,8 +232,8 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
         #region Virtual methods
         public virtual bool Equals(IRateComponent? other)
         {
-            return MeasureUnitTypeCode == other?.MeasureUnitTypeCode
-                && DefaultQuantity == other?.DefaultQuantity;
+            return DefaultQuantity == other?.DefaultQuantity
+                && MeasureUnitTypeCode == other?.MeasureUnitTypeCode;
         }
         #endregion
 
@@ -245,7 +245,7 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
         #region Protected methods
         protected TNum GetDefaultRateComponentQuantity<TNum>() where TNum : struct
         {
-            return (TNum)(object)GetFactory().DefaultRateComponentQuantity;
+            return (TNum)GetFactory().DefaultRateComponentQuantity;
         }
 
         protected object GetValidQuantity(ValueType? quantity)
@@ -335,27 +335,27 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
             return (IRateComponentFactory<TSelf>)Factory;
         }
 
-        public TSelf GetRateComponent(ValueType quantity)
+        public virtual TSelf GetRateComponent(ValueType quantity)
         {
             return GetFactory().Create(Measurement, quantity);
         }
 
-        public TSelf GetRateComponent(string name, ValueType quantity)
+        public virtual TSelf GetRateComponent(string name, ValueType quantity)
         {
             return GetFactory().Create(name, quantity);
         }
 
-        public TSelf GetRateComponent(IMeasurement measurement, ValueType quantity)
+        public virtual TSelf GetRateComponent(IMeasurement measurement, ValueType quantity)
         {
             return GetFactory().Create(measurement, quantity);
         }
 
-        public TSelf? GetRateComponent(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
+        public virtual TSelf? GetRateComponent(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
         {
             return GetFactory().Create(measureUnit, quantity, exchangeRate, customName);
         }
 
-        public TSelf? GetRateComponent(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
+        public virtual TSelf? GetRateComponent(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
         {
             return GetFactory().Create(customName, measureUnitTypeCode, exchangeRate, quantity);
         }
@@ -400,7 +400,7 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
         #region Public metthods
         public TSelf GetDefault()
         {
-            return GetDefault(MeasureUnitTypeCode);
+            return GetDefault(MeasureUnitTypeCode)!;
         }
 
         public TNum GetDefaultRateComponentQuantity()

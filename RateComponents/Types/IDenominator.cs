@@ -5,7 +5,7 @@ public interface IDenominator : IRateComponent<IDenominator, decimal>, IMeasureU
     IDenominator GetDenominator(Enum measureUnit);
     IDenominator GetDenominator(string name);
     IDenominator GetDenominator(IMeasurement measurement);
-    IDenominator GetDenominator(IRateComponent baseMeasure, ValueType quantity);
+    IDenominator GetDenominator(IRateComponent rateComponent, ValueType quantity);
 }
 
     //IDenominator GetDenominator(decimal quantity);
@@ -16,6 +16,6 @@ public interface IDenominator : IRateComponent<IDenominator, decimal>, IMeasureU
     //IDenominator GetDenominator(string name, ValueType quantity); //
     //IDenominator GetDenominator(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity);
     //IDenominator GetDenominator(IMeasurement measurement, ValueType quantity); //
-    //IDenominator GetDenominator(IRateComponent baseMeasure); //
+    //IDenominator GetDenominator(IRateComponent rateComponent); //
     //IDenominator GetDenominator(IDenominator other); //
     //IDenominatorFactory GetFactory();

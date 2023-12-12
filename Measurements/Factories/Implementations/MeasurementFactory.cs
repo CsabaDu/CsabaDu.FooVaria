@@ -93,7 +93,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
             return GetNameCollection().Keys.FirstOrDefault(x => getDefaultNameToLower(x) == nameToLower);
         }
 
-        string getDefaultNameToLower(object measureUnit)
+        static string getDefaultNameToLower(object measureUnit)
         {
             return GetDefaultName((Enum)measureUnit).ToLower();
         }

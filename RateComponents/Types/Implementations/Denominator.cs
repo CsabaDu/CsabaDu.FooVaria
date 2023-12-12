@@ -9,8 +9,6 @@ internal sealed class Denominator : RateComponent<IDenominator>, IDenominator
     }
     #endregion
 
-    //public override TypeCode QuantityTypeCode => TypeCode.Decimal;
-
     #region Public methods
     public IDenominator GetDefault()
     {
@@ -24,52 +22,52 @@ internal sealed class Denominator : RateComponent<IDenominator>, IDenominator
 
     public decimal GetDefaultRateComponentQuantity()
     {
-        throw new NotImplementedException();
+        return GetDefaultRateComponentQuantity<ulong>();
     }
 
     public IDenominator GetDenominator(Enum measureUnit)
     {
-        throw new NotImplementedException();
+        return GetFactory().Create(measureUnit);
     }
 
     public IDenominator GetDenominator(string name)
     {
-        throw new NotImplementedException();
+        return GetFactory().Create(name);
     }
 
     public IDenominator GetDenominator(IMeasurement measurement)
     {
-        throw new NotImplementedException();
+        return GetFactory().Create(measurement);
     }
 
-    public IDenominator GetDenominator(IRateComponent baseMeasure, ValueType quantity)
+    public IDenominator GetDenominator(IRateComponent rateComponent, ValueType quantity)
     {
-        throw new NotImplementedException();
+        return GetFactory().Create(rateComponent, quantity);
     }
 
     public Enum GetMeasureUnit()
     {
-        throw new NotImplementedException();
+        return Measurement.GetMeasureUnit();
     }
 
     public IDenominator GetNew(IDenominator other)
     {
-        throw new NotImplementedException();
+        return GetFactory().Create(other);
     }
 
     public decimal GetQuantity()
     {
-        throw new NotImplementedException();
+        return (decimal)Quantity;
     }
 
     public IDenominator GetRateComponent(decimal quantity)
     {
-        throw new NotImplementedException();
+        return GetFactory().Create(Measurement, quantity);
     }
 
     public IDenominator GetRateComponent(IRateComponent rateComponent)
     {
-        throw new NotImplementedException();
+        return (IDenominator)GetFactory().Create(rateComponent);
     }
 
     #region Override methods

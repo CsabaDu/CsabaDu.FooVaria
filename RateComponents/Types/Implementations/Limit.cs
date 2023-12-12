@@ -47,7 +47,7 @@ internal sealed class Limit : RateComponent, ILimit
         return Measurement.GetMeasureUnit();
     }
 
-    public ILimit GetLimit(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName, LimitMode limitMode)
+    public ILimit? GetLimit(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName, LimitMode limitMode)
     {
         return GetFactory().Create(measureUnit, exchangeRate, quantity, customName, limitMode);
     }
@@ -82,7 +82,7 @@ internal sealed class Limit : RateComponent, ILimit
         return GetFactory().Create(measureUnit, quantity, limitMode);
     }
 
-    public ILimit GetLimit(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity, LimitMode limitMode)
+    public ILimit? GetLimit(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity, LimitMode limitMode)
     {
         return GetFactory().Create(customName, measureUnitTypeCode, exchangeRate, quantity, limitMode);
     }

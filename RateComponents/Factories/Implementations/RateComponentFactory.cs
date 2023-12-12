@@ -12,7 +12,7 @@ public abstract class RateComponentFactory : IRateComponentFactory
     #region Properties
     public IMeasurementFactory MeasurementFactory { get; init; }
     public abstract RateComponentCode RateComponentCode { get; }
-    public virtual int DefaultRateComponentQuantity => default;
+    public virtual object DefaultRateComponentQuantity => default(int);
     #endregion
 
     #region Public methods
@@ -31,5 +31,4 @@ public abstract class RateComponentFactory : IRateComponentFactory
 
     public abstract IRateComponent Create(IRateComponent other);
     public abstract IRateComponent Create(Enum measureUnit, ValueType quantity);
-    public abstract IMeasurable CreateDefault(MeasureUnitTypeCode measureUnitTypeCode);
 }

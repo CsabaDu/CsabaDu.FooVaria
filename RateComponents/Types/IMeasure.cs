@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.RateComponents.Types
 {
-    public interface IMeasure : IRateComponent<IMeasure>, ILimitable, ICalculate<decimal, IMeasure>
+    public interface IMeasure : IRateComponent, ILimitable, ICalculate<decimal, IMeasure>
     {
     }
 
@@ -18,12 +18,3 @@
         TSelf GetMeasure(TEnum measureUnit);
     }
 }
-
-        //IMeasure GetMeasure(ValueType quantity, string name); //
-        //IMeasure GetMeasure(ValueType quantity, Enum measureUnit); //
-        //IMeasure GetMeasure(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName); //
-        //IMeasure GetMeasure(ValueType quantity, string customName, decimal exchangeRate);
-        //IMeasure GetMeasure(ValueType quantity); //
-        //IMeasure GetMeasure(ValueType quantity, IMeasurement measurement); //
-        //IMeasure GetMeasure(IRateComponent baseMeasure); //
-        //IMeasure GetMeasure(IMeasure other); //

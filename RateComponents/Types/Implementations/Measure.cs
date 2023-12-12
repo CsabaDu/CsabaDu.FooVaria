@@ -160,15 +160,88 @@
         #endregion
     }
 
-    internal abstract class Measure<TSelf, TNum> : Measure, IMeasure<TSelf, TNum> where TSelf : class, IMeasure, IDefaultRateComponent where TNum : struct
+    internal abstract class Measure<TSelf, TNum> : Measure, IMeasure<TSelf, TNum> where TSelf : class, IMeasure<TSelf, TNum>, IDefaultRateComponent where TNum : struct
     {
         private protected Measure(IMeasureFactory factory, Enum measureUnit, ValueType quantity) : base(factory, measureUnit, quantity)
         {
         }
 
-        public abstract TSelf? GetDefault(MeasureUnitTypeCode measureUnitTypeCode);
-
         #region Public methods
+
+        public TSelf? GetDefault(MeasureUnitTypeCode measureUnitTypeCode)
+        {
+            return (TSelf?)GetFactory().CreateDefault(measureUnitTypeCode);
+        }
+
+        public TSelf GetDefault()
+        {
+            return GetDefault(MeasureUnitTypeCode)!;
+        }
+
+        public TNum GetDefaultRateComponentQuantity()
+        {
+            return GetDefaultRateComponentQuantity<TNum>();
+        }
+
+        public TSelf GetMeasure(string name, TNum quantity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TSelf GetMeasure(TNum quantity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TSelf GetMeasure(IMeasurement measurement, TNum quantity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TSelf GetNew(TSelf other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TNum GetQuantity()
+        {
+            throw new NotImplementedException();
+        }
+
+        public TSelf GetRateComponent(TNum quantity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TSelf GetRateComponent(IRateComponent rateComponent)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override sealed TSelf GetRateComponent(ValueType quantity)
+        {
+            return (TSelf)base.GetRateComponent(quantity);
+        }
+
+        public override sealed TSelf GetRateComponent(string name, ValueType quantity)
+        {
+            return (TSelf)base.GetRateComponent(name, quantity);
+        }
+
+        public override sealed TSelf GetRateComponent(IMeasurement measurement, ValueType quantity)
+        {
+            return (TSelf)base.GetRateComponent(measurement, quantity);
+        }
+
+        public override sealed TSelf? GetRateComponent(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
+        {
+            return (TSelf?)base.GetRateComponent(measureUnit, exchangeRate, quantity, customName);
+        }
+
+        public override sealed TSelf? GetRateComponent(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
+        {
+            return (TSelf?)base.GetRateComponent(customName, measureUnitTypeCode, exchangeRate, quantity);
+        }
 
         #endregion
     }
@@ -190,52 +263,28 @@
         #endregion
 
         #region Public methods
-        public TSelf GetMeasure(TNum quantity, TEnum measureUnit)
-        {
-            return (TSelf)base.GetMeasure(quantity, measureUnit);
-        }
-
-        public TSelf GetMeasure(TSelf other)
-        {
-            return (TSelf)base.GetMeasure(other);
-        }
-
-        public TSelf GetMeasure(TEnum measureUnit)
-        {
-            return (TSelf)base.GetMeasure(measureUnit);
-        }
-
-        public TEnum GetMeasureUnit()
-        {
-            return (TEnum)Measurement.MeasureUnit;
-        }
-
-        #region Override methods
-        #region Sealed methods
-        public override sealed TSelf GetDefault(MeasureUnitTypeCode measureUnitTypeCode)
+        public TSelf GetMeasure(TEnum measureUnit, TNum quantity)
         {
             throw new NotImplementedException();
         }
 
-        public override sealed TSelf GetMeasure(IRateComponent baseMeasure)
+        public TSelf GetMeasure(TSelf other)
         {
-            return GetMeasure(getValidQuantity(), baseMeasure.Measurement);
-
-            #region Local methods
-            TNum getValidQuantity()
-            {
-                string paramName = nameof(baseMeasure);
-
-                (this as IMeasurable).Validate(baseMeasure, paramName);
-
-                object? quantity = GetValidQuantityOrNull(this, baseMeasure.Quantity);
-
-                if (quantity != null) return (TNum)quantity;
-
-                throw QuantityArgumentOutOfRangeException(paramName, baseMeasure.GetDecimalQuantity());
-            }
-            #endregion
+            throw new NotImplementedException();
         }
+
+        public TSelf GetMeasure(TEnum measureUnit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TEnum GetMeasureUnit()
+        {
+            throw new NotImplementedException();
+        }
+
+        #region Override methods
+        #region Sealed methods
         #endregion
         #endregion
         #endregion
@@ -253,12 +302,12 @@
                 _ => throw new InvalidOperationException(null),
             };
 
-            return (X)GetRateComponent(quantity, default(Y));
+            return (X)GetRateComponent(default(Y), quantity);
         }
 
         protected TSelf GetMeasure(TNum quantity, TEnum measureUnit, decimal exchangeRate, string customName)
         {
-            return (TSelf)base.GetRateComponent(quantity, measureUnit, exchangeRate, customName);
+            return (TSelf)base.GetRateComponent(measureUnit, exchangeRate, quantity, customName);
         }
 
         protected TSelf GetMeasure(TNum quantity, string customName, decimal exchangeRate)
@@ -277,11 +326,6 @@
             if (quantity > 0) return;
 
             throw QuantityArgumentOutOfRangeException(paramName, quantity);
-        }
-
-        public TSelf GetMeasure(TEnum measureUnit, TNum quantity)
-        {
-            throw new NotImplementedException();
         }
         #endregion
     }

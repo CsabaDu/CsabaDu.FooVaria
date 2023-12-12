@@ -142,6 +142,18 @@ public static class ExceptionMethods
     {
         return new ArgumentOutOfRangeException(paramName, measureUnitType.FullName, null);
     }
+
+    public static ArgumentOutOfRangeException CountArgumentOutOfRangeException(int count)
+    {
+        return CountArgumentOutOfRangeException(count, nameof(count));
+    }
+
+    public static ArgumentOutOfRangeException CountArgumentOutOfRangeException(int count, string paramName)
+    {
+        return new ArgumentOutOfRangeException(paramName, count, null);
+    }
+
+
     #endregion
 
     #region Generic checkers
