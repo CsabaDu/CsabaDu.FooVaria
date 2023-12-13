@@ -5,6 +5,7 @@ namespace CsabaDu.FooVaria.Measurements.Factories.Implementations;
 public sealed class MeasurementFactory : IMeasurementFactory
 {
     #region Properties
+    #region Private properties
     #region Static properties
     private static IDictionary<object, IMeasurement> MeasurementCollection
         => ExchangeRateCollection.Keys.ToDictionary
@@ -12,6 +13,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
             x => x,
             x => CreateMeasurement(x)
         );
+    #endregion
     #endregion
     #endregion
 
@@ -25,16 +27,15 @@ public sealed class MeasurementFactory : IMeasurementFactory
         bool success = measurement.TryGetMeasureUnit(measureUnitTypeCode, exchangeRate, out Enum? measureUnit)
             && measurement.TrySetCustomName(measureUnit, customName);
 
-        if (success) return MeasurementCollection[measureUnit!];
+        if (success) return GetStoredMeasurement(measureUnit!);
 
         success = measurement is ICustomMeasurement customMeasurement
             && customMeasurement.TrySetCustomMeasureUnit(customName, measureUnitTypeCode, exchangeRate);
         measureUnit = measurement.GetMeasureUnit(customName);
-        success = success && measureUnit != null;
+        success = success
+            && measureUnit != null;
 
-        return success ?
-            MeasurementCollection[measureUnit!]
-            : null;
+        return GetStoredMeasurementOrNull(measureUnit!, success);
     }
 
     public IMeasurement? Create(Enum measureUnit, decimal exchangeRate, string customName)
@@ -46,7 +47,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
             && exchangeRate == validExchangeRate
             && measurement.TrySetCustomName(measureUnit, customName);
 
-        if (success) return MeasurementCollection[measureUnit];
+        if (success) return GetStoredMeasurement(measureUnit);
 
         if (!TryGetMeasureUnitTypeCode(measureUnit, out MeasureUnitTypeCode? measureUnitTypeCode)) return null;
 
@@ -54,14 +55,12 @@ public sealed class MeasurementFactory : IMeasurementFactory
         success = measurement is ICustomMeasurement customMeasurement
             && customMeasurement.TrySetCustomMeasureUnit(measureUnit, exchangeRate, customName);
 
-        return success ?
-            MeasurementCollection[measureUnit]
-            : null;
+        return GetStoredMeasurementOrNull(measureUnit!, success);
     }
 
     public IMeasurement Create(Enum measureUnit)
     {
-        if (IsValidMeasureUnit(NullChecked(measureUnit, nameof(measureUnit)))) return MeasurementCollection[measureUnit];
+        if (IsValidMeasureUnit(NullChecked(measureUnit, nameof(measureUnit)))) return GetStoredMeasurement(measureUnit);
 
         throw InvalidMeasureUnitEnumArgumentException(measureUnit);
     }
@@ -70,7 +69,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
     {
         Enum measureUnit = NullChecked(measurement, nameof(measurement)).GetMeasureUnit();
 
-        return MeasurementCollection[measureUnit];
+        return GetStoredMeasurement(measureUnit);
     }
 
     public IMeasurement Create(string name)
@@ -78,7 +77,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
         string nameToLower = NullChecked(name, nameof(name)).ToLower();
         object? obj = getMeasureUnitByStoredName() ?? getMeasureUnitByDefaultName();
 
-        if (obj is Enum measureUnit) return MeasurementCollection[measureUnit];
+        if (obj is Enum measureUnit) return GetStoredMeasurement(measureUnit);
 
         throw NameArgumentOutOfRangeException(name);
 
@@ -104,9 +103,9 @@ public sealed class MeasurementFactory : IMeasurementFactory
     {
         Enum? measureUnit = GetDefaultMeasureUnit(measureUnitTypeCode);
 
-        return measureUnit != null ?
-            MeasurementCollection[measureUnit!]
-            : null;
+        bool success = measureUnit != null;
+
+        return GetStoredMeasurementOrNull(measureUnit!, success);
     }
     #endregion
 
@@ -122,6 +121,17 @@ public sealed class MeasurementFactory : IMeasurementFactory
             : new ConstantMeasurement(factory, measureUnit);
     }
 
+    private static IMeasurement GetStoredMeasurement(Enum measureUnit)
+    {
+        return MeasurementCollection[measureUnit];
+    }
+
+    private static IMeasurement? GetStoredMeasurementOrNull(Enum measureUnit, bool success)
+    {
+        return success ?
+            GetStoredMeasurement(measureUnit)
+            : null;
+    }
     private static IDictionary<object, string> GetNameCollection()
     {
         return MeasurementCollection.ToDictionary

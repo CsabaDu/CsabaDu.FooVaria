@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.RateComponents.Types.Implementations;
-using CsabaDu.FooVaria.RateComponents.Types.Implementations.MeasureTypes;
-using CsabaDu.FooVaria.Measurements.Factories;
+﻿using CsabaDu.FooVaria.RateComponents.Types.Implementations.MeasureTypes;
 
 namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
 
@@ -13,81 +11,89 @@ public sealed class MeasureFactory : RateComponentFactory, IMeasureFactory
     #endregion
 
     #region Properties
+    #region Override properties
     public override RateComponentCode RateComponentCode => RateComponentCode.Numerator;
+    #endregion
     #endregion
 
     #region Public methods
-    public override IMeasure CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
+    public override IMeasure Create(Enum measureUnit, ValueType quantity)
     {
-        Enum measureUnit = measureUnitTypeCode.GetDefaultMeasureUnit();
-
-        return Create((ValueType)DefaultRateComponentQuantity, measureUnit);
+        return CreateMeasure(NullChecked(measureUnit, nameof(measureUnit)), quantity);
     }
 
-    public IMeasure Create(ValueType quantity, Enum measureUnit)
+    public IMeasure Create(string name, ValueType quantity)
     {
-        return NullChecked(measureUnit, nameof(measureUnit)) switch
+        IMeasurement measurement = MeasurementFactory.Create(name);
+
+        return CreateMeasure(measurement, quantity);
+    }
+
+    public IMeasure Create(IMeasurement measurement, ValueType quantity)
+    {
+        return CreateMeasure(NullChecked(measurement, nameof(measurement)), quantity);
+    }
+
+    public IMeasure? Create(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
+    {
+        IMeasurement? measurement = MeasurementFactory.Create(measureUnit, exchangeRate, customName);
+
+        if (measurement == null) return null;
+
+        return CreateMeasure(measurement, quantity);
+    }
+
+    public IMeasure? Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
+    {
+        IMeasurement? measurement = MeasurementFactory.Create(customName, measureUnitTypeCode, exchangeRate);
+
+        if (measurement == null) return null;
+
+        return CreateMeasure(measurement, quantity);
+    }
+
+    public IMeasure Create(IMeasure other)
+    {
+        var (measurement, quantity) = GetRateComponentParams(other);
+
+        return CreateMeasure(measurement, quantity);
+    }
+
+    public IMeasure? CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        IMeasurement? measurement = MeasurementFactory.CreateDefault(measureUnitTypeCode);
+
+        if (measurement == null) return null;
+
+        ValueType quantity = (ValueType)DefaultRateComponentQuantity;
+
+        return CreateMeasure(measurement, quantity);
+    }
+    #endregion
+
+    #region Private methods
+    private IMeasure CreateMeasure([DisallowNull] Enum measureUnit, ValueType quantity)
+    {
+        return measureUnit switch
         {
-            AreaUnit areaUnit => new Area(this, quantity, areaUnit),
-            Currency currency => new Cash(this, quantity, currency),
-            DistanceUnit distanceUnit => new Distance(this, quantity, distanceUnit),
-            ExtentUnit extentUnit => new Extent(this, quantity, extentUnit),
-            Pieces pieces => new PieceCount(this, quantity, pieces),
-            TimePeriodUnit timePeriodUnit => new TimePeriod(this, quantity, timePeriodUnit),
-            VolumeUnit volumeUnit => new Volume(this, quantity, volumeUnit),
-            WeightUnit weightUnit => new Weight(this, quantity, weightUnit),
+            AreaUnit areaUnit => new Area(this, areaUnit, quantity),
+            Currency currency => new Cash(this, currency, quantity),
+            DistanceUnit distanceUnit => new Distance(this, distanceUnit, quantity),
+            ExtentUnit extentUnit => new Extent(this, extentUnit, quantity),
+            Pieces pieces => new PieceCount(this, pieces, quantity),
+            TimePeriodUnit timePeriodUnit => new TimePeriod(this, timePeriodUnit, quantity),
+            VolumeUnit volumeUnit => new Volume(this, volumeUnit, quantity),
+            WeightUnit weightUnit => new Weight(this, weightUnit, quantity),
 
             _ => throw InvalidMeasureUnitEnumArgumentException(measureUnit),
         };
     }
 
-    public IMeasure Create(ValueType quantity, string name)
+    private IMeasure CreateMeasure([DisallowNull] IMeasurement measurement, ValueType quantity)
     {
-        IMeasurement measurement = MeasurementFactory.Create(name);
-
-        return Create(quantity, measurement);
-    }
-
-    public IMeasure Create(ValueType quantity, Enum measureUnit, decimal exchangeRate, string customName)
-    {
-        IMeasurement measurement = MeasurementFactory.Create(measureUnit, exchangeRate, customName);
-
-        return Create(quantity, measurement);
-    }
-
-    public IMeasure Create(ValueType quantity, string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
-    {
-        IMeasurement measurement = MeasurementFactory.Create(customName, measureUnitTypeCode, exchangeRate);
-
-        return Create(quantity, measurement);
-    }
-
-    public IMeasure Create(ValueType quantity, IMeasurement measurement)
-    {
-        Enum measureUnit = NullChecked(measurement, nameof(measurement)).GetMeasureUnit();
-
-        return Create(quantity, measureUnit);
-    }
-
-    public override IMeasure Create(IRateComponent baseMeasure)
-    {
-        var (quantity, measurement) = GetBaseMeasureParams(baseMeasure);
         Enum measureUnit = measurement.GetMeasureUnit();
 
-        return Create(quantity, measureUnit);
+        return CreateMeasure(measureUnit, quantity);
     }
-
-    //public override IMeasure Create(IDefaultMeasurable other)
-    //{
-    //    return NullChecked(other, nameof(other)) switch
-    //    {
-    //        Measurement measurement => Create(measurement),
-    //        BaseMeasure baseMeasure => Create(baseMeasure),
-    //        Rate rate => Create(rate.Numerator),
-
-    //        _ => throw new InvalidOperationException(null),
-    //    };
-    //}
     #endregion
 }
-

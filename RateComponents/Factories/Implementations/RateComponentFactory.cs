@@ -38,6 +38,20 @@
 
             return (measurement, quantity);
         }
+
+        protected static T GetStored<T>([DisallowNull] T rateComponent, HashSet<T> set)
+        {
+            bool exists = set.Contains(rateComponent) || set.Add(rateComponent);
+
+            if (exists
+                && set.TryGetValue(rateComponent, out T? stored)
+                && stored != null)
+            {
+                return stored;
+            }
+
+            throw new InvalidOperationException(null);
+        }
         #endregion
         #endregion
     }

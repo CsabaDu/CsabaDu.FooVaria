@@ -1,5 +1,4 @@
-﻿using CsabaDu.FooVaria.RateComponents.Types;
-using CsabaDu.FooVaria.RateComponents.Types.Implementations;
+﻿using CsabaDu.FooVaria.RateComponents.Types.Implementations;
 
 namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
 
@@ -110,26 +109,17 @@ public sealed class LimitFactory : RateComponentFactory, ILimitFactory
     #endregion
 
     #region Private methods
-    #region Static methods
-    private static ILimit GetStoredLimit([DisallowNull] ILimit limit)
-    {
-        bool exists = LimitSet.Contains(limit) || LimitSet.Add(limit);
-
-        if (exists
-            && LimitSet.TryGetValue(limit, out ILimit? stored)
-            && stored != null)
-        {
-            return stored;
-        }
-
-        throw new InvalidOperationException(null);
-    }
-
     private ILimit GetOrCreateStoredLimit(IMeasurement measurement, ValueType quantity, LimitMode limitMode)
     {
         ILimit limit = new Limit(this, measurement, quantity, limitMode);
 
         return GetStoredLimit(limit);
+    }
+
+    #region Static methods
+    private static ILimit GetStoredLimit([DisallowNull] ILimit limit)
+    {
+        return GetStored(limit, LimitSet);
     }
     #endregion
     #endregion

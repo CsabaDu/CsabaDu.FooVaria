@@ -1,7 +1,7 @@
 ﻿
 namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
 
-internal sealed class Denominator : RateComponent<IDenominator>, IDenominator
+internal sealed class Denominator : RateComponent<IDenominator, decimal>, IDenominator
 {
     #region Constructors
     internal Denominator(IDenominatorFactory factory, IMeasurement measurement, ValueType quantity) : base(factory, measurement, quantity)
@@ -10,19 +10,9 @@ internal sealed class Denominator : RateComponent<IDenominator>, IDenominator
     #endregion
 
     #region Public methods
-    public IDenominator GetDefault()
-    {
-        throw new NotImplementedException();
-    }
-
-    public IDenominator? GetDefault(MeasureUnitTypeCode measureUnitTypeCode)
+    public override IDenominator? GetDefault(MeasureUnitTypeCode measureUnitTypeCode)
     {
         return GetFactory().CreateDefault(measureUnitTypeCode);
-    }
-
-    public decimal GetDefaultRateComponentQuantity()
-    {
-        return GetDefaultRateComponentQuantity<ulong>();
     }
 
     public IDenominator GetDenominator(Enum measureUnit)
@@ -50,24 +40,9 @@ internal sealed class Denominator : RateComponent<IDenominator>, IDenominator
         return Measurement.GetMeasureUnit();
     }
 
-    public IDenominator GetNew(IDenominator other)
+    public override IDenominator GetRateComponent(IRateComponent rateComponent)
     {
-        return GetFactory().Create(other);
-    }
-
-    public decimal GetQuantity()
-    {
-        return (decimal)Quantity;
-    }
-
-    public IDenominator GetRateComponent(decimal quantity)
-    {
-        return GetFactory().Create(Measurement, quantity);
-    }
-
-    public IDenominator GetRateComponent(IRateComponent rateComponent)
-    {
-        return (IDenominator)GetFactory().Create(rateComponent);
+        throw new NotImplementedException();
     }
 
     #region Override methods

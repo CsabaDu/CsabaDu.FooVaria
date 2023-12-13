@@ -122,16 +122,7 @@ public sealed class DenominatorFactory : RateComponentFactory, IDenominatorFacto
     #region Static methods
     private static IDenominator GetStoredDenominator([DisallowNull] IDenominator denominator)
     {
-        bool exists = DenominatorSet.Contains(denominator) || DenominatorSet.Add(denominator);
-
-        if (exists
-            && DenominatorSet.TryGetValue(denominator, out IDenominator? stored)
-            && stored != null)
-        {
-            return stored;
-        }
-
-        throw new InvalidOperationException(null);
+        return GetStored(denominator, DenominatorSet);
     }
     #endregion
     #endregion
