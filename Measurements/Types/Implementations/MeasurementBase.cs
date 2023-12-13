@@ -17,7 +17,9 @@ internal abstract class MeasurementBase : Measurable, IMeasurementBase
     #endregion
 
     #region Properties
+    #region Abstract properties
     public abstract decimal ExchangeRate { get; init; }
+    #endregion
 
     #region Static properties
     public static IDictionary<object, decimal> ExchangeRateCollection { get; protected set; }

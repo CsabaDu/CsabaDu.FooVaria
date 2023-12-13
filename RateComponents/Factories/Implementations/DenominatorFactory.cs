@@ -1,5 +1,4 @@
 ﻿using CsabaDu.FooVaria.RateComponents.Types.Implementations;
-using CsabaDu.FooVaria.Measurements.Factories;
 
 namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
 
@@ -12,8 +11,10 @@ public sealed class DenominatorFactory : RateComponentFactory, IDenominatorFacto
     #endregion
 
     #region Properties
+    #region Override properties
     public override RateComponentCode RateComponentCode => RateComponentCode.Denominator;
-    public override int DefaultRateComponentQuantity => 1;
+    public override object DefaultRateComponentQuantity => 1;
+    #endregion
 
     #region Private properties
     #region Static properties
@@ -23,93 +24,111 @@ public sealed class DenominatorFactory : RateComponentFactory, IDenominatorFacto
     #endregion
 
     #region Public methods
-    public override IDenominator CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        IDenominator denominator = new Denominator(this, measureUnitTypeCode);
-
-        return Create(denominator);
-    }
-
     public IDenominator Create(IDenominator denominator)
     {
-        return GetStoredDenominator(denominator);
-    }
-
-    public IDenominator Create(IMeasurement measurement, ValueType quantity)
-    {
-        IDenominator denominator = new Denominator(this, quantity, measurement);
-
-        return Create(denominator);
-    }
-
-    public IDenominator Create(string name)
-    {
-        IMeasurement measurement = MeasurementFactory.Create(name);
-
-        return Create(measurement);
-    }
-
-    public IDenominator Create(string name, ValueType quantity)
-    {
-        IMeasurement measurement = MeasurementFactory.Create(name);
-
-        return Create(measurement, quantity);
+        return GetStoredDenominator(NullChecked(denominator, nameof(denominator)));
     }
 
     public IDenominator Create(Enum measureUnit)
     {
         IMeasurement measurement = MeasurementFactory.Create(measureUnit);
 
-        return Create(measurement);
+        return GetOrCreateStoredDenominator(measurement);
     }
 
-    public IDenominator Create(Enum measureUnit, ValueType quantity)
+    public IDenominator Create(string name)
     {
-        IMeasurement measurement = MeasurementFactory.Create(measureUnit);
+        IMeasurement measurement = MeasurementFactory.Create(name);
 
-        return Create(measurement, quantity);
-    }
-
-    public IDenominator Create(Enum measureUnit, decimal exchangeRate, string customName, ValueType quantity)
-    {
-        IMeasurement measurement = MeasurementFactory.Create(measureUnit, exchangeRate, customName);
-
-        return Create(measurement, quantity);
-    }
-
-    public IDenominator Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
-    {
-        IMeasurement measurement = MeasurementFactory.Create(customName, measureUnitTypeCode, exchangeRate);
-
-        return Create(measurement, quantity);
-    }
-
-    public override IDenominator Create(IRateComponent baseMeasure)
-    {
-        if (baseMeasure is IDenominator denominator) return Create(denominator);
-
-        var (quantity, measurement) = GetBaseMeasureParams(baseMeasure);
-
-        return Create(measurement, quantity);
+        return GetOrCreateStoredDenominator(measurement);
     }
 
     public IDenominator Create(IMeasurement measurement)
     {
-        return Create(measurement, (decimal)DefaultRateComponentQuantity);
+        return GetOrCreateStoredDenominator(measurement);
     }
+
+    public IDenominator Create(IRateComponent rateComponent, ValueType quantity)
+    {
+        IMeasurement measurement = NullChecked(rateComponent, nameof(rateComponent)).Measurement;
+
+        return GetOrCreateStoredDenominator(measurement, quantity);
+    }
+
+    public IDenominator Create(string name, ValueType quantity)
+    {
+        IMeasurement measurement = MeasurementFactory.Create(name);
+
+        return GetOrCreateStoredDenominator(measurement, quantity);
+    }
+
+    public IDenominator Create(IMeasurement measurement, ValueType quantity)
+    {
+        return GetOrCreateStoredDenominator(measurement, quantity);
+    }
+
+    public IDenominator? Create(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
+    {
+        IMeasurement? measurement = MeasurementFactory.Create(measureUnit, exchangeRate, customName);
+
+        if (measurement == null) return null;
+
+        return GetOrCreateStoredDenominator(measurement, quantity);
+    }
+
+    public IDenominator? Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
+    {
+        IMeasurement? measurement = MeasurementFactory.Create(customName, measureUnitTypeCode, exchangeRate);
+
+        if (measurement == null) return null;
+
+        return GetOrCreateStoredDenominator(measurement, quantity);
+    }
+
+    public IDenominator? CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        IMeasurement? measurement = MeasurementFactory.CreateDefault(measureUnitTypeCode);
+
+        if (measurement == null) return null;
+
+        return GetOrCreateStoredDenominator(measurement);
+    }
+
+    #region Override methods
+    public override IDenominator Create(Enum measureUnit, ValueType quantity)
+    {
+        IMeasurement measurement = MeasurementFactory.Create(measureUnit);
+
+        return GetOrCreateStoredDenominator(measurement, quantity);
+    }
+    #endregion
     #endregion
 
     #region Private methods
+    private IDenominator GetOrCreateStoredDenominator(IMeasurement measurement, ValueType quantity)
+    {
+        IDenominator denominator = new Denominator(this, measurement, quantity);
+
+        return GetStoredDenominator(denominator);
+    }
+
+    private IDenominator GetOrCreateStoredDenominator(IMeasurement measurement)
+    {
+        ValueType quantity = (decimal)DefaultRateComponentQuantity;
+
+        return GetOrCreateStoredDenominator(measurement, quantity);
+    }
+
     #region Static methods
     private static IDenominator GetStoredDenominator([DisallowNull] IDenominator denominator)
     {
-        bool isExistingDenominator = DenominatorSet.Contains(denominator) || DenominatorSet.Add(denominator);
+        bool exists = DenominatorSet.Contains(denominator) || DenominatorSet.Add(denominator);
 
-        if (isExistingDenominator
-            && DenominatorSet.TryGetValue(denominator, out IDenominator? storedDenominator)
-            && storedDenominator != null)
+        if (exists
+            && DenominatorSet.TryGetValue(denominator, out IDenominator? stored)
+            && stored != null)
         {
-            return storedDenominator;
+            return stored;
         }
 
         throw new InvalidOperationException(null);

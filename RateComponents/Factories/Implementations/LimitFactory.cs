@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Behaviors;
-using CsabaDu.FooVaria.Common.Enums;
-using CsabaDu.FooVaria.RateComponents.Behaviors;
+﻿using CsabaDu.FooVaria.RateComponents.Types;
 using CsabaDu.FooVaria.RateComponents.Types.Implementations;
 
 namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
@@ -115,11 +113,13 @@ public sealed class LimitFactory : RateComponentFactory, ILimitFactory
     #region Static methods
     private static ILimit GetStoredLimit([DisallowNull] ILimit limit)
     {
-        if ((LimitSet.Contains(limit) || LimitSet.Add(limit))
-            && LimitSet.TryGetValue(limit, out ILimit? storedLimit)
-            && storedLimit != null)
+        bool exists = LimitSet.Contains(limit) || LimitSet.Add(limit);
+
+        if (exists
+            && LimitSet.TryGetValue(limit, out ILimit? stored)
+            && stored != null)
         {
-            return storedLimit;
+            return stored;
         }
 
         throw new InvalidOperationException(null);

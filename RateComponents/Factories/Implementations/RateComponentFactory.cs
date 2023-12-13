@@ -56,7 +56,7 @@
         }
 
         public abstract T Create(IMeasurement measurement, ValueType quantity);
-        public abstract T? Create(Enum measureUnit, ValueType quantity, decimal exchangeRate, string customName);
+        public abstract T? Create(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName);
         public abstract T? Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity);
     }
 
