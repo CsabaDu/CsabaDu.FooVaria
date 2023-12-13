@@ -193,22 +193,9 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
 
         public override void ValidateQuantity(ValueType? quantity, string paramName) // TODO
         {
-            try
-            {
-                _ = GetValidQuantity(quantity);
-            }
-            catch (ArgumentNullException)
-            {
-                throw new ArgumentNullException(paramName);
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                throw QuantityArgumentOutOfRangeException(paramName, quantity);
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException(ex.Message, ex.InnerException);
-            }
+            if (GetValidQuantityOrNull(this, NullChecked(quantity, paramName)) != null) return;
+
+            throw QuantityArgumentOutOfRangeException(paramName, quantity);
         }
 
         #region Sealed methods
@@ -266,11 +253,11 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
             throw QuantityArgumentOutOfRangeException(paramName, (ValueType)quantity);
         }
 
-        protected static object? GetValidQuantityOrNull(IRateComponent baseMeasure, object? quantity)
+        protected static object? GetValidQuantityOrNull(IRateComponent rateComponent, object? quantity)
         {
-            quantity = ((ValueType?)quantity)?.ToQuantity(baseMeasure.GetQuantityTypeCode());
+            quantity = ((ValueType?)quantity)?.ToQuantity(rateComponent.GetQuantityTypeCode());
 
-            return baseMeasure.GetRateComponentCode() switch
+            return rateComponent.GetRateComponentCode() switch
             {
                 RateComponentCode.Denominator => getValidDenominatorQuantity(),
                 RateComponentCode.Numerator or

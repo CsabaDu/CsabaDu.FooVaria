@@ -3,7 +3,7 @@
 internal sealed class Area : Measure<IArea, double, AreaUnit>, IArea
 {
     #region Constructors
-    internal Area(IMeasureFactory factory, ValueType quantity, AreaUnit areaUnit) : base(factory, quantity, areaUnit)
+    internal Area(IMeasureFactory factory, AreaUnit areaUnit, ValueType quantity) : base(factory, areaUnit, quantity)
     {
     }
     #endregion
@@ -18,6 +18,11 @@ internal sealed class Area : Measure<IArea, double, AreaUnit>, IArea
     public ISpreadMeasure GetSpreadMeasure()
     {
         return this;
+    }
+
+    public override void ValidateQuantity(ValueType? quantity, string paramName)
+    {
+        ValidateSpreadQuantity(quantity, paramName);
     }
 
     public void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)

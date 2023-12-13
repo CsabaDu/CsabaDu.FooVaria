@@ -290,10 +290,10 @@
         #endregion
 
         #region Protected methods
-        protected X ConvertMeasure<X, Y>(ConvertMode convertMode) where X : class, IMeasure, IConvertMeasure where Y : struct, Enum // TODO Check!!!
+        protected TSelf ConvertMeasure<TSelf, TOther>(ConvertMode convertMode) where TSelf : class, IMeasure, IConvertMeasure where TOther : struct, Enum
         {
             decimal quantity = DefaultQuantity;
-            decimal ratio = 1000; // Mindig?
+            decimal ratio = IConvertMeasure.ConvertRatio;
             quantity = convertMode switch
             {
                 ConvertMode.Multiply => quantity * ratio,
@@ -302,26 +302,26 @@
                 _ => throw new InvalidOperationException(null),
             };
 
-            return (X)GetRateComponent(default(Y), quantity);
+            return (TSelf)GetRateComponent(default(TOther), quantity);
         }
 
-        protected TSelf GetMeasure(TNum quantity, TEnum measureUnit, decimal exchangeRate, string customName)
+        protected void ValidateSpreadQuantity(ValueType? quantity, string paramName)
         {
-            return (TSelf)base.GetRateComponent(measureUnit, exchangeRate, quantity, customName);
-        }
+            if (GetValidQuantityOrNull(this, NullChecked(quantity, paramName)) is double spreadQuantity && spreadQuantity > 0) return;
 
-        protected TSelf GetMeasure(TNum quantity, string customName, decimal exchangeRate)
-        {
-            return (TSelf)base.GetMeasure(quantity, customName, exchangeRate);
+            throw QuantityArgumentOutOfRangeException(paramName, quantity);
         }
 
         protected void ValidateSpreadMeasure(string paramName, ISpreadMeasure? spreadMeasure)
         {
-            MeasureUnitTypeCode measureUnitTypeCode = NullChecked(spreadMeasure, paramName).GetMeasureUnitTypeCode();
+            if (NullChecked(spreadMeasure, paramName).GetSpreadMeasure() is not IMeasure measure)
+            {
+                throw ArgumentTypeOutOfRangeException(nameof(spreadMeasure), spreadMeasure!);
+            }
 
-            ValidateMeasureUnitTypeCode(measureUnitTypeCode, paramName);
+            ValidateMeasureUnitTypeCode(measure.MeasureUnitTypeCode, paramName);
 
-            decimal quantity = spreadMeasure!.GetDefaultQuantity();
+            decimal quantity = measure.GetDecimalQuantity();
 
             if (quantity > 0) return;
 

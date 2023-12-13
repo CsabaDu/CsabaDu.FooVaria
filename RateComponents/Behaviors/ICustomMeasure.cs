@@ -6,7 +6,7 @@
 
     public interface ICustomMeasure<TSelf, TNum, TEnum> : ICustomMeasure where TSelf : class, IBaseMeasure where TNum : struct where TEnum : struct, Enum
     {
-        TSelf GetNextCustomMeasure(TNum quantity, string customName, decimal exchangeRate);
-        TSelf GetCustomMeasure(TNum quantity, TEnum measureUnit, decimal exchangeRate, string customName);
+        TSelf? GetNextCustomMeasure(string customName, decimal exchangeRate, TNum quantity);
+        TSelf? GetCustomMeasure(TEnum measureUnit, decimal exchangeRate, TNum quantity, string customName);
     }
 }
