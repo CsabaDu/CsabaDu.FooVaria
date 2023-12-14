@@ -307,11 +307,11 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
     internal abstract class RateComponent<TSelf> : RateComponent, IRateComponent<TSelf> where TSelf : class, IRateComponent
     {
         #region Constructors
-        private protected RateComponent(IRateComponentFactory<TSelf> factory, Enum measureUnit, ValueType quantity) : base(factory, measureUnit, quantity)
+        private protected RateComponent(IRateComponentFactory factory, Enum measureUnit, ValueType quantity) : base(factory, measureUnit, quantity)
         {
         }
 
-        private protected RateComponent(IRateComponentFactory<TSelf> factory, IMeasurement measurement, ValueType quantity) : base(factory, measurement, quantity)
+        private protected RateComponent(IRateComponentFactory factory, IMeasurement measurement, ValueType quantity) : base(factory, measurement, quantity)
         {
         }
         #endregion
@@ -339,7 +339,7 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
 
         public virtual TSelf? GetRateComponent(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
         {
-            return GetFactory().Create(measureUnit, quantity, exchangeRate, customName);
+            return GetFactory().Create(measureUnit, exchangeRate, quantity, customName);
         }
 
         public virtual TSelf? GetRateComponent(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
@@ -375,11 +375,11 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
     internal abstract class RateComponent<TSelf, TNum> : RateComponent<TSelf>, IRateComponent<TSelf, TNum> where TSelf : class, IRateComponent<TSelf>, IDefaultRateComponent<TSelf, TNum> where TNum : struct
     {
         #region Constructors
-        private protected RateComponent(IRateComponentFactory<TSelf> factory, Enum measureUnit, ValueType quantity) : base(factory, measureUnit, quantity)
+        private protected RateComponent(IRateComponentFactory factory, Enum measureUnit, ValueType quantity) : base(factory, measureUnit, quantity)
         {
         }
 
-        private protected RateComponent(IRateComponentFactory<TSelf> factory, IMeasurement measurement, ValueType quantity) : base(factory, measurement, quantity)
+        private protected RateComponent(IRateComponentFactory factory, IMeasurement measurement, ValueType quantity) : base(factory, measurement, quantity)
         {
         }
         #endregion
