@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
 
-public sealed class DenominatorFactory : RateComponentFactory, IDenominatorFactory
+public sealed class DenominatorFactory : RateComponentFactory<IDenominator>, IDenominatorFactory
 {
     #region Constructors
     public DenominatorFactory(IMeasurementFactory measurementFactory) : base(measurementFactory)
@@ -55,19 +55,12 @@ public sealed class DenominatorFactory : RateComponentFactory, IDenominatorFacto
         return GetOrCreateStoredDenominator(measurement, quantity);
     }
 
-    public IDenominator Create(string name, ValueType quantity)
-    {
-        IMeasurement measurement = MeasurementFactory.Create(name);
-
-        return GetOrCreateStoredDenominator(measurement, quantity);
-    }
-
-    public IDenominator Create(IMeasurement measurement, ValueType quantity)
+    public override  IDenominator Create(IMeasurement measurement, ValueType quantity)
     {
         return GetOrCreateStoredDenominator(measurement, quantity);
     }
 
-    public IDenominator? Create(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
+    public override IDenominator? Create(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
     {
         IMeasurement? measurement = MeasurementFactory.Create(measureUnit, exchangeRate, customName);
 
@@ -76,7 +69,7 @@ public sealed class DenominatorFactory : RateComponentFactory, IDenominatorFacto
         return GetOrCreateStoredDenominator(measurement, quantity);
     }
 
-    public IDenominator? Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
+    public override IDenominator? Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
     {
         IMeasurement? measurement = MeasurementFactory.Create(customName, measureUnitTypeCode, exchangeRate);
 
