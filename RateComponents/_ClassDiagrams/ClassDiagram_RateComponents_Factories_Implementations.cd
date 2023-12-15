@@ -17,7 +17,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.RateComponents.Factories.Implementations.MeasureFactory" Collapsed="true">
-    <Position X="3.75" Y="3.75" Width="2.25" />
+    <Position X="3.5" Y="3.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAACAIAAAgAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\Implementations\MeasureFactory.cs</FileName>
@@ -33,7 +33,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.RateComponents.Factories.Implementations.RateComponentFactory&lt;T&gt;" Collapsed="true">
-    <Position X="2.75" Y="2" Width="2" />
+    <Position X="2.5" Y="2" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\Implementations\RateComponentFactory.cs</FileName>
