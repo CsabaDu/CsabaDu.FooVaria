@@ -162,12 +162,13 @@
 
     internal abstract class Measure<TSelf, TNum> : Measure, IMeasure<TSelf, TNum> where TSelf : class, IMeasure, IDefaultRateComponent where TNum : struct
     {
+        #region Constructors
         private protected Measure(IMeasureFactory factory, Enum measureUnit, ValueType quantity) : base(factory, measureUnit, quantity)
         {
         }
+        #endregion
 
         #region Public methods
-
         public TSelf? GetDefault(MeasureUnitTypeCode measureUnitTypeCode)
         {
             return (TSelf?)GetFactory().CreateDefault(measureUnitTypeCode);
@@ -185,39 +186,38 @@
 
         public TSelf GetMeasure(string name, TNum quantity)
         {
-            throw new NotImplementedException();
-        }
-
-        public TSelf GetMeasure(TNum quantity)
-        {
-            throw new NotImplementedException();
+            return (TSelf)GetFactory().Create(name, quantity);
         }
 
         public TSelf GetMeasure(IMeasurement measurement, TNum quantity)
         {
-            throw new NotImplementedException();
+            return (TSelf)GetFactory().Create(measurement, quantity);
         }
 
         public TSelf GetNew(TSelf other)
         {
-            throw new NotImplementedException();
+            return (TSelf)GetFactory().Create(other);
         }
 
         public TNum GetQuantity()
         {
-            throw new NotImplementedException();
+            return (TNum)Quantity;
         }
 
         public TSelf GetRateComponent(TNum quantity)
         {
-            throw new NotImplementedException();
+            return GetMeasure(Measurement, quantity);
         }
 
         public TSelf GetRateComponent(IRateComponent rateComponent)
         {
-            throw new NotImplementedException();
+            if (NullChecked(rateComponent, nameof(rateComponent)) is TSelf other) return GetNew(other);
+
+            return (TSelf)GetRateComponent(rateComponent, GetFactory());
         }
 
+        #region Override methods
+        #region Sealed methods
         public override sealed TSelf GetRateComponent(ValueType quantity)
         {
             return (TSelf)base.GetRateComponent(quantity);
@@ -242,7 +242,8 @@
         {
             return (TSelf?)base.GetRateComponent(customName, measureUnitTypeCode, exchangeRate, quantity);
         }
-
+        #endregion
+        #endregion
         #endregion
     }
 
@@ -265,44 +266,34 @@
         #region Public methods
         public TSelf GetMeasure(TEnum measureUnit, TNum quantity)
         {
-            throw new NotImplementedException();
-        }
-
-        public TSelf GetMeasure(TSelf other)
-        {
-            throw new NotImplementedException();
+            return (TSelf)GetRateComponent(measureUnit, quantity);
         }
 
         public TSelf GetMeasure(TEnum measureUnit)
         {
-            throw new NotImplementedException();
+            return (TSelf)(ExchangeTo(measureUnit) ?? throw InvalidMeasureUnitEnumArgumentException(measureUnit));
         }
 
         public TEnum GetMeasureUnit()
         {
-            throw new NotImplementedException();
+            return (TEnum)Measurement.MeasureUnit;
         }
-
-        #region Override methods
-        #region Sealed methods
-        #endregion
-        #endregion
         #endregion
 
         #region Protected methods
-        protected TSelf ConvertMeasure<TSelf, TOther>(ConvertMode convertMode) where TSelf : class, IMeasure, IConvertMeasure where TOther : struct, Enum
+        protected TOther ConvertMeasure<TOther, TOtherEnum>(ConvertMode convertMode) where TOther : IMeasure, IConvertMeasure where TOtherEnum : struct, Enum
         {
-            decimal quantity = DefaultQuantity;
+            decimal defaultQuantity = DefaultQuantity;
             decimal ratio = IConvertMeasure.ConvertRatio;
-            quantity = convertMode switch
+            defaultQuantity = convertMode switch
             {
-                ConvertMode.Multiply => quantity * ratio,
-                ConvertMode.Divide => quantity / ratio,
+                ConvertMode.Multiply => defaultQuantity * ratio,
+                ConvertMode.Divide => defaultQuantity / ratio,
 
                 _ => throw new InvalidOperationException(null),
             };
 
-            return (TSelf)GetRateComponent(default(TOther), quantity);
+            return (TOther)GetRateComponent(default(TOtherEnum), defaultQuantity);
         }
 
         protected void ValidateSpreadQuantity(ValueType? quantity, string paramName)

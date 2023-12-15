@@ -1,4 +1,6 @@
 ﻿
+using System.Runtime.CompilerServices;
+
 namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
 
 internal sealed class Denominator : RateComponent<IDenominator, decimal>, IDenominator
@@ -42,7 +44,9 @@ internal sealed class Denominator : RateComponent<IDenominator, decimal>, IDenom
 
     public override IDenominator GetRateComponent(IRateComponent rateComponent)
     {
-        throw new NotImplementedException();
+        if (rateComponent is IDenominator other) return GetNew(other);
+
+        return (IDenominator)GetRateComponent(rateComponent, GetFactory());
     }
 
     #region Override methods

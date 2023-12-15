@@ -235,6 +235,13 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
             return (TNum)GetFactory().DefaultRateComponentQuantity;
         }
 
+        protected IRateComponent GetRateComponent(IRateComponent rateComponent, IRateComponentFactory factory)
+        {
+            if (rateComponent.IsExchangeableTo(MeasureUnitTypeCode)) return factory.Create(rateComponent);
+
+            throw InvalidMeasureUnitTypeCodeEnumArgumentException(rateComponent.MeasureUnitTypeCode, nameof(rateComponent));
+        }
+
         protected object GetValidQuantity(ValueType? quantity)
         {
             _ = NullChecked(quantity, nameof(quantity));

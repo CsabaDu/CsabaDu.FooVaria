@@ -57,7 +57,7 @@
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.RateComponents.Factories.IRateComponentFactory" FixedFromPoint="true">
       <Path>
-        <Point X="6.75" Y="5.441" />
+        <Point X="6.75" Y="5.57" />
         <Point X="6.75" Y="10.875" />
         <Point X="4.25" Y="10.875" />
         <Point X="4.25" Y="11.25" />
@@ -102,7 +102,7 @@
     <Position X="4" Y="6.5" Width="2.25" />
     <InheritanceLine Type="CsabaDu.FooVaria.RateComponents.Factories.IRateComponentFactory" FixedFromPoint="true">
       <Path>
-        <Point X="6.25" Y="5.441" />
+        <Point X="6.25" Y="5.57" />
         <Point X="6.25" Y="6.125" />
         <Point X="5.125" Y="6.125" />
         <Point X="5.125" Y="6.5" />

@@ -26,6 +26,13 @@
   </Class>
   <Class Name="CsabaDu.FooVaria.RateComponents.Types.Implementations.Measure&lt;TSelf, TNum, TEnum&gt;" Collapsed="true">
     <Position X="3.25" Y="8.75" Width="2.25" />
+    <NestedTypes>
+      <Enum Name="CsabaDu.FooVaria.RateComponents.Types.Implementations.Measure&lt;TSelf, TNum, TEnum&gt;.ConvertMode" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Types\Implementations\Measure.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
     <TypeIdentifier>
       <HashCode>AAAAAAAAgAAAgAAAAAAAAAAAAAAAAAQAAAAACCAAAAA=</HashCode>
       <FileName>Types\Implementations\Measure.cs</FileName>
