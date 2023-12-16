@@ -58,10 +58,13 @@
 
     public abstract class RateComponentFactory<T> : RateComponentFactory, IRateComponentFactory<T> where T : class, IRateComponent
     {
-        public RateComponentFactory(IMeasurementFactory measurementFactory) : base(measurementFactory)
+        #region Constructors
+        private protected RateComponentFactory(IMeasurementFactory measurementFactory) : base(measurementFactory)
         {
         }
+        #endregion
 
+        #region Public methods
         public T Create(string name, ValueType quantity)
         {
             IMeasurement measurement = MeasurementFactory.Create(name);
@@ -69,8 +72,11 @@
             return Create(measurement, quantity);
         }
 
+        #region Abstract methods
         public abstract T Create(IMeasurement measurement, ValueType quantity);
         public abstract T? Create(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName);
         public abstract T? Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity);
+        #endregion
+        #endregion
     }
 }

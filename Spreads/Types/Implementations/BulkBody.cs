@@ -3,11 +3,11 @@
 internal sealed class BulkBody : Spread<IBulkBody, IVolume, VolumeUnit>, IBulkBody
 {
     #region Constructors
-    public BulkBody(IBulkBody other) : base(other)
+    internal BulkBody(IBulkBody other) : base(other)
     {
     }
 
-    public BulkBody(IBulkBodyFactory factory, IVolume volume) : base(factory, volume)
+    internal BulkBody(IBulkBodyFactory factory, IVolume volume) : base(factory, volume)
     {
     }
     #endregion

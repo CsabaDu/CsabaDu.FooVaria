@@ -3,22 +3,22 @@
 internal sealed class BulkSurface : Spread<IBulkSurface, IArea, AreaUnit>, IBulkSurface
 {
     #region Constructors
-    public BulkSurface(IBulkSurface other) : base(other)
+    internal BulkSurface(IBulkSurface other) : base(other)
     {
     }
 
-    public BulkSurface(IBulkSurfaceFactory factory, IArea area) : base(factory, area)
+    internal BulkSurface(IBulkSurfaceFactory factory, IArea area) : base(factory, area)
     {
     }
     #endregion
 
     #region Public methods
-    public IBulkSurface GetBulkSurface(IExtent radius)
+    internal IBulkSurface GetBulkSurface(IExtent radius)
     {
         return GetSpread(radius);
     }
 
-    public IBulkSurface GetBulkSurface(IExtent length, IExtent width)
+    internal IBulkSurface GetBulkSurface(IExtent length, IExtent width)
     {
         return GetSpread(length, width);
     }

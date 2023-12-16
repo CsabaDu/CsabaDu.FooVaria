@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Spreads.Behaviors;
-
-namespace CsabaDu.FooVaria.Spreads.Types.Implementations
+﻿namespace CsabaDu.FooVaria.Spreads.Types.Implementations
 {
     internal abstract class Spread : BaseSpread, ISpread
     {
@@ -12,10 +10,6 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         private protected Spread(ISpreadFactory factory, IMeasure spreadMeasure) : base(factory, spreadMeasure)
         {
         }
-
-        private protected Spread(ISpreadFactory factory, Enum measureUnit) : base(factory, measureUnit)
-        {
-        }
         #endregion
 
         #region Public methods
@@ -23,16 +17,12 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         {
             SpreadMeasures.ValidateShapeExtents(MeasureUnitTypeCode, paramName, shapeExtents);
         }
+
         #region Override methods
         public override ISpreadFactory GetFactory()
         {
             return (ISpreadFactory)Factory;
         }
-
-        //public override bool IsValidMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
-        //{
-        //    return GetMeasureUnitTypeCodes().Contains(measureUnitTypeCode);
-        //}
 
         public override void ValidateMeasureUnit(Enum measureUnit, string paramName)
         {
@@ -40,17 +30,17 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
 
             if (IsValidMeasureUnitTypeCode(measureUnitTypeCode)) return;
 
-            throw InvalidMeasureUnitEnumArgumentException(measureUnit);
+            throw InvalidMeasureUnitEnumArgumentException(measureUnit, paramName);
         }
 
         #region Sealed methods
         public override sealed ISpread? ExchangeTo(Enum measureUnit)
         {
-            IRateComponent? exchanged = ((IRateComponent)GetSpreadMeasure()).ExchangeTo(measureUnit);
+            IRateComponent? exchanged = (GetSpreadMeasure() as IRateComponent)?.ExchangeTo(measureUnit);
 
-            if (exchanged == null) return null;
+            if (exchanged is not ISpreadMeasure spreadMeasure) return null;
 
-            return (ISpread)GetFactory().Create((ISpreadMeasure)exchanged);
+            return (ISpread)GetFactory().Create(spreadMeasure);
         }
 
         public override sealed void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, string paramName)
@@ -83,6 +73,7 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
 
     internal abstract class Spread<TSelf, TSMeasure> : Spread, ISpread<TSelf, TSMeasure> where TSelf : class, ISpread where TSMeasure : class, IMeasure<TSMeasure, double>, ISpreadMeasure
     {
+        #region Constructors
         private protected Spread(ISpread<TSelf, TSMeasure> other) : base(other)
         {
             SpreadMeasure = other.SpreadMeasure;
@@ -92,29 +83,32 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         {
             SpreadMeasure = spreadMeasure;
         }
+        #endregion
 
-        private protected Spread(ISpreadFactory<TSelf, TSMeasure> factory, Enum measureUnit, double quantity) : base(factory, measureUnit)
-        {
-            SpreadMeasure = quantity > 0 ?
-                (TSMeasure)factory.MeasureFactory.Create(measureUnit, quantity)
-                : throw QuantityArgumentOutOfRangeException(quantity);
-        }
-
+        #region Properties
         public TSMeasure SpreadMeasure { get; init; }
+        #endregion
 
+        #region Public methods
         public TSelf GetSpread(TSMeasure spreadMeasure)
         {
             return GetFactory().Create(spreadMeasure);
         }
 
+        #region Override methods
         public override ISpreadFactory<TSelf, TSMeasure> GetFactory()
         {
             return (ISpreadFactory<TSelf, TSMeasure>)Factory;
         }
+
+        #region Sealed methods
         public override sealed TSMeasure GetSpreadMeasure()
         {
             return SpreadMeasure;
         }
+        #endregion
+        #endregion
+        #endregion
     }
 
     internal abstract class Spread<TSelf, TSMeasure, TEnum> : Spread<TSelf, TSMeasure>, ISpread<TSelf, TSMeasure, TEnum> where TSelf : class, ISpread where TSMeasure : class, IMeasure<TSMeasure, double, TEnum>, ISpreadMeasure where TEnum : struct, Enum
@@ -125,10 +119,6 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         }
 
         private protected Spread(ISpreadFactory<TSelf, TSMeasure, TEnum> factory, TSMeasure spreadMeasure) : base(factory, spreadMeasure)
-        {
-        }
-
-        private protected Spread(ISpreadFactory<TSelf, TSMeasure, TEnum> factory, TEnum measureUnit, double quantity) : base(factory, measureUnit, quantity)
         {
         }
         #endregion
@@ -185,9 +175,7 @@ namespace CsabaDu.FooVaria.Spreads.Types.Implementations
         }
         public TSelf GetSpread(TEnum measureUnit)
         {
-            TSMeasure spreadMeasure = SpreadMeasure.GetMeasure(measureUnit);
-
-            return GetFactory().Create(spreadMeasure);
+            return (TSelf)(ExchangeTo(measureUnit) ?? throw InvalidMeasureUnitEnumArgumentException(measureUnit));
         }
 
         public TSelf GetSpread(TEnum measureUnit, double quantity)

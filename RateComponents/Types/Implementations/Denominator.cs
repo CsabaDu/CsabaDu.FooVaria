@@ -1,7 +1,4 @@
-﻿
-using System.Runtime.CompilerServices;
-
-namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
 
 internal sealed class Denominator : RateComponent<IDenominator, decimal>, IDenominator
 {
