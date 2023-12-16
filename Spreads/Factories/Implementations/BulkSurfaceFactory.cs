@@ -3,7 +3,7 @@ using CsabaDu.FooVaria.Spreads.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Spreads.Factories.Implementations;
 
-public sealed class BulkSurfaceFactory : SpreadFactory<IBulkSurface, IArea>, IBulkSurfaceFactory
+public sealed class BulkSurfaceFactory : SpreadFactory<IBulkSurface, IArea, AreaUnit>, IBulkSurfaceFactory
 {
     #region Constructors
     public BulkSurfaceFactory(IMeasureFactory measureFactory) : base(measureFactory)
@@ -37,7 +37,7 @@ public sealed class BulkSurfaceFactory : SpreadFactory<IBulkSurface, IArea>, IBu
         return Create(area);
     }
 
-    public IBulkSurface Create(AreaUnit areaUnit, double quantity)
+    public override IBulkSurface Create(AreaUnit areaUnit, double quantity)
     {
         IArea area = (IArea)MeasureFactory.Create(areaUnit, quantity);
 

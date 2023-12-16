@@ -9,13 +9,13 @@ namespace CsabaDu.FooVaria.Spreads.Factories
         ISpread Create(params IExtent[] shapeExtents);
     }
 
-    public interface ISpreadFactory<T, in U> : ISpreadFactory, IFactory<T> where T : class, ISpread where U : class, IMeasure, ISpreadMeasure
+    public interface ISpreadFactory<T, in TSMeasure> : ISpreadFactory, IFactory<T> where T : class, ISpread where TSMeasure : class, IMeasure, ISpreadMeasure
     {
-        T Create(U spreadMeasure);
+        T Create(TSMeasure spreadMeasure);
     }
 
-    public interface ISpreadFactory<T, in U, in W> : ISpreadFactory<T, U> where T : class, ISpread where U : class, IMeasure, ISpreadMeasure where W : struct, Enum
+    public interface ISpreadFactory<T, in TSMeasure, in TEnum> : ISpreadFactory<T, TSMeasure> where T : class, ISpread where TSMeasure : class, IMeasure, ISpreadMeasure where TEnum : struct, Enum
     {
-        T Create(W measureUnit, double quantity);
+        T Create(TEnum measureUnit, double quantity);
     }
 }

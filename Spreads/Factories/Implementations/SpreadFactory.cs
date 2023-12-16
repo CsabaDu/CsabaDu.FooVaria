@@ -23,7 +23,7 @@ namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
         #endregion
     }
 
-    public abstract class SpreadFactory<T, U> : SpreadFactory, ISpreadFactory<T, U> where T : class, ISpread where U : class, IMeasure, ISpreadMeasure
+    public abstract class SpreadFactory<T, TSMeasure> : SpreadFactory, ISpreadFactory<T, TSMeasure> where T : class, ISpread where TSMeasure : class, IMeasure, ISpreadMeasure
     {
         #region Constructors
         public SpreadFactory(IMeasureFactory measureFactory) : base(measureFactory)
@@ -36,7 +36,7 @@ namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
         #region Sealed methods
         public override sealed T Create(ISpreadMeasure spreadMeasure)
         {
-            if (SpreadMeasures.GetValidSpreadMeasure(spreadMeasure) is U measure) return Create(measure);
+            if (SpreadMeasures.GetValidSpreadMeasure(spreadMeasure) is TSMeasure measure) return Create(measure);
 
             throw ArgumentTypeOutOfRangeException(nameof(spreadMeasure), spreadMeasure);
         }
@@ -44,18 +44,18 @@ namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
         #endregion
 
         #region Abstract methods
-        public abstract T Create(U spreadMeasure);
+        public abstract T Create(TSMeasure spreadMeasure);
         public abstract T Create(T other);
         #endregion
         #endregion
     }
 
-    public abstract class SpreadFactory<T, U, W> : SpreadFactory<T, U>, ISpreadFactory<T, U, W> where T : class, ISpread where U : class, IMeasure, ISpreadMeasure where W : struct, Enum
+    public abstract class SpreadFactory<T, TSMeasure, TEnum> : SpreadFactory<T, TSMeasure>, ISpreadFactory<T, TSMeasure, TEnum> where T : class, ISpread where TSMeasure : class, IMeasure, ISpreadMeasure where TEnum : struct, Enum
     {
         protected SpreadFactory(IMeasureFactory measureFactory) : base(measureFactory)
         {
         }
 
-        public abstract T Create(W measureUnit, double quantity);
+        public abstract T Create(TEnum measureUnit, double quantity);
     }
 }
