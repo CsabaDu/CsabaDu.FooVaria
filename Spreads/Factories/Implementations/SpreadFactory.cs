@@ -49,4 +49,13 @@ namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
         #endregion
         #endregion
     }
+
+    public abstract class SpreadFactory<T, U, W> : SpreadFactory<T, U>, ISpreadFactory<T, U, W> where T : class, ISpread where U : class, IMeasure, ISpreadMeasure where W : struct, Enum
+    {
+        protected SpreadFactory(IMeasureFactory measureFactory) : base(measureFactory)
+        {
+        }
+
+        public abstract T Create(W measureUnit, double quantity);
+    }
 }

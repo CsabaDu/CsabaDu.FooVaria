@@ -3,7 +3,7 @@ using CsabaDu.FooVaria.Spreads.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Spreads.Factories.Implementations;
 
-public sealed class BulkBodyFactory : SpreadFactory<IBulkBody, IVolume>, IBulkBodyFactory
+public sealed class BulkBodyFactory : SpreadFactory<IBulkBody, IVolume, VolumeUnit>, IBulkBodyFactory
 {
     #region Constructors
     public BulkBodyFactory(IMeasureFactory measureFactory) : base(measureFactory)
@@ -30,9 +30,16 @@ public sealed class BulkBodyFactory : SpreadFactory<IBulkBody, IVolume>, IBulkBo
         return Create(volume);
     }
 
-    public IBulkBody Create(IBody body)
+    public IBody Create(IBody body)
     {
         IVolume volume = (IVolume)NullChecked(body, nameof(body)).GetSpreadMeasure();
+
+        return Create(volume);
+    }
+
+    public override IBulkBody Create(VolumeUnit volumeUnit, double quantity)
+    {
+        IVolume volume = (IVolume)MeasureFactory.Create(volumeUnit, quantity);
 
         return Create(volume);
     }

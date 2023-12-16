@@ -10,14 +10,14 @@ internal sealed class BulkBody : Spread<IBulkBody, IVolume, VolumeUnit>, IBulkBo
     public BulkBody(IBulkBodyFactory factory, IVolume volume) : base(factory, volume)
     {
     }
+    #endregion
 
+    #region Public methods
     public IBody GetBody()
     {
         return this;
     }
-    #endregion
 
-    #region Public methods
     public IBulkBody GetBulkBody(IExtent radius, IExtent height)
     {
         return GetSpread(radius, height);
@@ -32,21 +32,6 @@ internal sealed class BulkBody : Spread<IBulkBody, IVolume, VolumeUnit>, IBulkBo
     public override IBulkBodyFactory GetFactory()
     {
         return (IBulkBodyFactory)Factory;
-    }
-
-    public override VolumeUnit GetMeasureUnit()
-    {
-        return SpreadMeasure.GetMeasureUnit();
-    }
-
-    public override IBulkBody GetSpread(IVolume volume)
-    {
-        return GetFactory().Create(volume);
-    }
-
-    public override IBulkBody GetSpread(VolumeUnit measureUnit)
-    {
-        return (IBulkBody?)ExchangeTo(measureUnit) ?? throw InvalidMeasureUnitEnumArgumentException(measureUnit);
     }
 
     public override IBulkBody GetSpread(IBaseSpread baseSppread)

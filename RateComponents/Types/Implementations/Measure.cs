@@ -257,6 +257,10 @@
         }
         #endregion
 
+        #region Constants
+        private const decimal ConvertRatio = 1000m;
+        #endregion
+
         #region Constructors
         private protected Measure(IMeasureFactory factory, TEnum measureUnit, ValueType quantity) : base(factory, measureUnit, quantity)
         {
@@ -281,19 +285,19 @@
         #endregion
 
         #region Protected methods
-        protected TOther ConvertMeasure<TOther, TOtherEnum>(ConvertMode convertMode) where TOther : IMeasure, IConvertMeasure where TOtherEnum : struct, Enum
+        protected TOther ConvertMeasure<TOther>(ConvertMode convertMode) where TOther : IMeasure, IConvertMeasure
         {
-            decimal defaultQuantity = DefaultQuantity;
-            decimal ratio = IConvertMeasure.ConvertRatio;
-            defaultQuantity = convertMode switch
+            MeasureUnitTypeCode measureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(typeof(TOther));
+            Enum measureUnit = measureUnitTypeCode.GetDefaultMeasureUnit();
+            decimal quantity = convertMode switch
             {
-                ConvertMode.Multiply => defaultQuantity * ratio,
-                ConvertMode.Divide => defaultQuantity / ratio,
+                ConvertMode.Multiply => DefaultQuantity * ConvertRatio,
+                ConvertMode.Divide => DefaultQuantity / ConvertRatio,
 
                 _ => throw new InvalidOperationException(null),
             };
 
-            return (TOther)GetRateComponent(default(TOtherEnum), defaultQuantity);
+            return (TOther)GetRateComponent(measureUnit, quantity);
         }
 
         protected void ValidateSpreadQuantity(ValueType? quantity, string paramName)

@@ -9,16 +9,16 @@ namespace CsabaDu.FooVaria.Spreads.Types
         ISpread GetSpread(IBaseSpread baseSpread);
     }
 
-    public interface ISpread<out T, U> : ISpread where T : class, ISpread where U : class, IMeasure<U, double>, ISpreadMeasure
+    public interface ISpread<out TSelf, TSMeasure> : ISpread where TSelf : class, ISpread where TSMeasure : class, IMeasure<TSMeasure, double>, ISpreadMeasure
     {
-        U SpreadMeasure { get; init; }
+        TSMeasure SpreadMeasure { get; init; }
 
-        T GetSpread(U spreadMeasure);
+        TSelf GetSpread(TSMeasure spreadMeasure);
     }
 
-    public interface ISpread<out T, U, W> : ISpread<T, U>, ISpreadMeasure<U, W> where T : class, ISpread where U : class, IMeasure<U, double, W>, ISpreadMeasure<U, W> where W : struct, Enum
+    public interface ISpread<out TSelf, TSMeasure, TEnum> : ISpread<TSelf, TSMeasure>, ISpreadMeasure<TSMeasure, TEnum> where TSelf : class, ISpread where TSMeasure : class, IMeasure<TSMeasure, double, TEnum>, ISpreadMeasure where TEnum : struct, Enum
     {
-        T GetSpread(W measureUnit);
-        T GetSpread(W measureUnit, double quantity);
+        TSelf GetSpread(TEnum measureUnit);
+        TSelf GetSpread(TEnum measureUnit, double quantity);
     }
 }

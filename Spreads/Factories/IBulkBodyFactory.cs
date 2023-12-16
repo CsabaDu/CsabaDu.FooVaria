@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Spreads.Factories;
 
-public interface IBulkBodyFactory : ISpreadFactory<IBulkBody, IVolume>
+public interface IBulkBodyFactory : ISpreadFactory<IBulkBody, IVolume, VolumeUnit>, IFactory<IBody>
 {
-    IBulkBody Create(IBody body);
+    //IBulkBody Create(IBody body);
 }

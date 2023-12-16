@@ -23,25 +23,15 @@ internal sealed class BulkSurface : Spread<IBulkSurface, IArea, AreaUnit>, IBulk
         return GetSpread(length, width);
     }
 
+    public ISurface GetSurface()
+    {
+        return this;
+    }
+
     #region Override methods
     public override IBulkSurfaceFactory GetFactory()
     {
         return (IBulkSurfaceFactory)Factory;
-    }
-
-    public override AreaUnit GetMeasureUnit()
-    {
-        return SpreadMeasure.GetMeasureUnit();
-    }
-
-    public override IBulkSurface GetSpread(IArea area)
-    {
-        return GetFactory().Create(area);
-    }
-
-    public override IBulkSurface GetSpread(AreaUnit measureUnit)
-    {
-        return (IBulkSurface?)ExchangeTo(measureUnit) ?? throw InvalidMeasureUnitEnumArgumentException(measureUnit);
     }
 
     public override IBulkSurface GetSpread(IBaseSpread baseSppread)
@@ -49,11 +39,6 @@ internal sealed class BulkSurface : Spread<IBulkSurface, IArea, AreaUnit>, IBulk
         if (NullChecked(baseSppread, nameof(baseSppread)) is ISurface surface) return GetSpread(surface.GetSpreadMeasure());
 
         throw ArgumentTypeOutOfRangeException(nameof(baseSppread), baseSppread);
-    }
-
-    public ISurface GetSurface()
-    {
-        return this;
     }
     #endregion
     #endregion
