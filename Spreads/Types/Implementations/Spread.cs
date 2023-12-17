@@ -13,9 +13,9 @@
         #endregion
 
         #region Public methods
-        public void ValidateShapeExtents(string paramName, params IExtent[] shapeExtents)
+        public bool AreValidShapeExtents(params IExtent[] shapeExtents)
         {
-            SpreadMeasures.ValidateShapeExtents(MeasureUnitTypeCode, paramName, shapeExtents);
+            return SpreadMeasures.AreValidShapeExtents(MeasureUnitTypeCode, shapeExtents);
         }
 
         #region Override methods

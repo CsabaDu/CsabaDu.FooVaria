@@ -7,9 +7,9 @@ namespace CsabaDu.FooVaria.Shapes.Behaviors
         IShape GetTangentShape(SideCode sideCode);
     }
 
-    public interface ITangentShape<out T> : IShape where T : class, IShape, ITangentShape
+    public interface ITangentShape<out TSelf> : IShape where TSelf : class, IShape, ITangentShape
     {
-        T GetOuterTangentShape();
-        T GetInnerTangentShape();
+        TSelf GetOuterTangentShape();
+        TSelf GetInnerTangentShape();
     }
 }

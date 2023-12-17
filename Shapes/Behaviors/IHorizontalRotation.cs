@@ -7,9 +7,9 @@ namespace CsabaDu.FooVaria.Shapes.Behaviors
         IExtent GetComparedShapeExtent(ComparisonCode? comparisonCode);
     }
 
-    public interface IHorizontalRotation<T> : IHorizontalRotation where T : class, IShape, IRectangularShape
+    public interface IHorizontalRotation<TSelf> : IHorizontalRotation where TSelf : class, IShape, IRectangularShape
     {
-        T RotateHorizontally();
+        TSelf RotateHorizontally();
         //TNum RotateHorizontallyWith(IRectangularShape other);
     }
 }

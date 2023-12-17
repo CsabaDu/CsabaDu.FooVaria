@@ -12,6 +12,28 @@ public static class SpreadMeasures
     #endregion
 
     #region Public methods
+
+    public static bool AreValidShapeExtents(MeasureUnitTypeCode measureUnitTypeCode, params IExtent[] shapeExtents)
+    {
+        int count = shapeExtents?.Length ?? 0;
+        bool isValidShapeExtentCount = measureUnitTypeCode switch
+        {
+            MeasureUnitTypeCode.AreaUnit => isValidateShapeExtentsCount(CircleShapeExtentCount, RectangleShapeExtentCount),
+            MeasureUnitTypeCode.VolumeUnit => isValidateShapeExtentsCount(CylinderShapeExtentCount, CuboidShapeExtentCount);
+
+            _ => false,
+        };
+
+        return isValidShapeExtentCount && !shapeExtents!.Any(x => x.DefaultQuantity <= 0);
+
+        #region Local methods
+        bool isValidateShapeExtentsCount(int minValue, int maxValue)
+        {
+            return count >= minValue && count <= maxValue;
+        }
+        #endregion
+    }
+
     public static IArea GetArea(IMeasureFactory factory, params IExtent[] shapeExtents)
     {
         ValidateShapeExtents(MeasureUnitTypeCode.AreaUnit, nameof(shapeExtents), shapeExtents);
