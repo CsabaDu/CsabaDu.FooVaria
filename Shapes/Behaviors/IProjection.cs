@@ -1,15 +1,6 @@
-﻿using CsabaDu.FooVaria.Shapes.Types;
+﻿namespace CsabaDu.FooVaria.Shapes.Behaviors;
 
-namespace CsabaDu.FooVaria.Shapes.Behaviors
+public interface IProjection
 {
-    public interface IProjection
-    {
-        IPlaneShape GetProjection(ShapeExtentTypeCode perpendicular);
-        //IExtent GetShapeExtent(IPlaneShape projection, IVolume volume);
-    }
-
-    //public interface IProjection<out TNum> : IProjection where TNum : IPlaneShape, IShape
-    //{
-    //    //TNum GetHorizontalProjection();
-    //}
+    IPlaneShape GetProjection(ShapeExtentTypeCode perpendicular);
 }

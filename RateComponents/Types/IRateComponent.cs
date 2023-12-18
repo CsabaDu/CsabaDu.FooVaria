@@ -8,7 +8,8 @@
         IRateComponent GetRateComponent(Enum measureUnit, ValueType quantity);
     }
 
-    public interface IRateComponent<out TSelf> : IRateComponent where TSelf : class, IRateComponent
+    public interface IRateComponent<out TSelf> : IRateComponent
+        where TSelf : class, IRateComponent
     {
         TSelf GetRateComponent(ValueType quantity);
         TSelf GetRateComponent(string name, ValueType quantity);
@@ -19,7 +20,9 @@
         bool TryGetRateComponent(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity, [NotNullWhen(true)] out IRateComponent? baseMeasure);
     }
 
-    public interface IRateComponent<TSelf, TNum> : IRateComponent<TSelf>, IDefaultRateComponent<TSelf, TNum> where TSelf : class, IRateComponent, IDefaultRateComponent where TNum : struct
+    public interface IRateComponent<TSelf, TNum> : IRateComponent<TSelf>, IDefaultRateComponent<TSelf, TNum>
+        where TSelf : class, IRateComponent, IDefaultRateComponent
+        where TNum : struct
     {
         TSelf GetRateComponent(TNum quantity);
     }

@@ -160,7 +160,9 @@
         #endregion
     }
 
-    internal abstract class Measure<TSelf, TNum> : Measure, IMeasure<TSelf, TNum> where TSelf : class, IMeasure, IDefaultRateComponent where TNum : struct
+    internal abstract class Measure<TSelf, TNum> : Measure, IMeasure<TSelf, TNum>
+        where TSelf : class, IMeasure, IDefaultRateComponent
+        where TNum : struct
     {
         #region Constructors
         private protected Measure(IMeasureFactory factory, Enum measureUnit, ValueType quantity) : base(factory, measureUnit, quantity)
@@ -247,7 +249,10 @@
         #endregion
     }
 
-    internal abstract class Measure<TSelf, TNum, TEnum> : Measure<TSelf, TNum>, IMeasure where TSelf : class, IMeasure, IDefaultRateComponent, IMeasureUnit where TNum : struct where TEnum : struct, Enum
+    internal abstract class Measure<TSelf, TNum, TEnum> : Measure<TSelf, TNum>, IMeasure
+        where TSelf : class, IMeasure, IDefaultRateComponent, IMeasureUnit
+        where TNum : struct
+        where TEnum : struct, Enum
     {
         #region Enums
         protected enum ConvertMode

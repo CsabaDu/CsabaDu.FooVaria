@@ -4,8 +4,9 @@
     {
     }
 
-    public interface IDenominate<in TOperand, out TSelf> : IDataErrorInfo, IMultiply<TOperand, TSelf> where TOperand : notnull where TSelf : class, IBaseMeasure
+    public interface IDenominate<out TSelf, in TOperand> : IDataErrorInfo, IMultiply<TSelf, TOperand>
+        where TSelf : class, IBaseMeasure
+        where TOperand : notnull
     {
-
     }
 }

@@ -4,7 +4,9 @@
     {
     }
 
-    public interface ICalculate<in TOperand, TSelf> : ISum<TSelf>, IMultiply<TOperand, TSelf>, IDivide<TOperand, TSelf>, ICalculate where TOperand : notnull where TSelf : class, IBaseMeasure, ICalculate
+    public interface ICalculate<TSelf, in TOperand> : ISum<TSelf>, IMultiply<TSelf, TOperand>, IDivide<TSelf, TOperand>, ICalculate
+        where TSelf : class, IBaseMeasure, ICalculate
+        where TOperand : notnull
     {
     }
 }

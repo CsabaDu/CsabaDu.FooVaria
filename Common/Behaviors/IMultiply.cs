@@ -1,6 +1,8 @@
 ﻿namespace CsabaDu.FooVaria.Common.Behaviors;
 
-public interface IMultiply<in TOperand, out TSelf> where TOperand : notnull where TSelf : class, IQuantifiable/*, IBaseMeasurable, ICalculate*/
+public interface IMultiply<out TSelf, in TOperand>
+    where TSelf : class, IQuantifiable
+    where TOperand : notnull
 {
     TSelf Multiply(TOperand multiplier);
 }

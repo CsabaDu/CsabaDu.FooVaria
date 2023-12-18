@@ -1,8 +1,4 @@
-﻿using CsabaDu.FooVaria.RateComponents.Types;
-using CsabaDu.FooVaria.Shapes.Types;
-using CsabaDu.FooVaria.Shapes.Types.Implementations;
-
-namespace CsabaDu.FooVaria.Shapes.Statics
+﻿namespace CsabaDu.FooVaria.Shapes.Statics
 {
     public static class ShapeExtents
     {
@@ -128,7 +124,7 @@ namespace CsabaDu.FooVaria.Shapes.Statics
 
         private static decimal GetSpreadMeasureUnitExchangeRate(IShape shape, Enum measureUnit)
         {
-            IMeasure spreadMeasure = (IMeasure)shape.GetSpreadMeasure();
+            IRateComponent spreadMeasure = (IRateComponent)shape.GetSpreadMeasure();
 
             return spreadMeasure.Measurement.GetExchangeRate(measureUnit);
         }

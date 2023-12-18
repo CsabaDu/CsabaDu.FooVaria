@@ -4,7 +4,8 @@
     {
     }
 
-    public interface IMeasureUnit<out TEnum> : IMeasureUnit where TEnum : Enum
+    public interface IMeasureUnit<out TEnum> : IMeasureUnit
+        where TEnum : Enum
     {
         TEnum GetMeasureUnit();
     }

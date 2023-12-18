@@ -1,12 +1,9 @@
-﻿using CsabaDu.FooVaria.Shapes.Types;
+﻿namespace CsabaDu.FooVaria.Shapes.Behaviors;
 
-namespace CsabaDu.FooVaria.Shapes.Behaviors
+public interface IBaseFace
 {
-    public interface IBaseFace
-    {
-        IPlaneShape GetBaseFace();
-        IPlaneShape GetBaseFace(ExtentUnit extentUnit);
+    IPlaneShape GetBaseFace();
+    IPlaneShape GetBaseFace(ExtentUnit extentUnit);
 
-        void ValidateBaseFace(IPlaneShape planeShape, string paramName);
-    }
+    void ValidateBaseFace(IPlaneShape planeShape, string paramName);
 }

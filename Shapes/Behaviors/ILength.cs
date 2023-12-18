@@ -1,8 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Shapes.Behaviors
+﻿namespace CsabaDu.FooVaria.Shapes.Behaviors;
+
+public interface ILength
 {
-    public interface ILength
-    {
-        IExtent GetLength();
-        IExtent GetLength(ExtentUnit extentUnit);
-    }
+    IExtent GetLength();
+    IExtent GetLength(ExtentUnit extentUnit);
 }

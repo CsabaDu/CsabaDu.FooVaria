@@ -311,7 +311,8 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
         #endregion
     }
 
-    internal abstract class RateComponent<TSelf> : RateComponent, IRateComponent<TSelf> where TSelf : class, IRateComponent
+    internal abstract class RateComponent<TSelf> : RateComponent, IRateComponent<TSelf>
+        where TSelf : class, IRateComponent
     {
         #region Constructors
         private protected RateComponent(IRateComponentFactory factory, Enum measureUnit, ValueType quantity) : base(factory, measureUnit, quantity)
@@ -379,7 +380,9 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
         #endregion
     }
 
-    internal abstract class RateComponent<TSelf, TNum> : RateComponent<TSelf>, IRateComponent<TSelf, TNum> where TSelf : class, IRateComponent, IDefaultRateComponent where TNum : struct
+    internal abstract class RateComponent<TSelf, TNum> : RateComponent<TSelf>, IRateComponent<TSelf, TNum>
+        where TSelf : class, IRateComponent, IDefaultRateComponent
+        where TNum : struct
     {
         #region Constructors
         private protected RateComponent(IRateComponentFactory factory, Enum measureUnit, ValueType quantity) : base(factory, measureUnit, quantity)

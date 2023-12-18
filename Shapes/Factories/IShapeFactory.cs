@@ -1,6 +1,5 @@
 ﻿using CsabaDu.FooVaria.RateComponents.Factories;
 using CsabaDu.FooVaria.Shapes.Types;
-using CsabaDu.FooVaria.Spreads.Factories;
 
 namespace CsabaDu.FooVaria.Shapes.Factories
 {
@@ -17,79 +16,13 @@ namespace CsabaDu.FooVaria.Shapes.Factories
         //IShape Create(params IExtent[] shapeExtents);
     }
 
-    public interface ITangentShapeFactory : IBaseShapeFactory
+    public interface IShapeFactory<T, out TTangent> : IShapeFactory, IFactory<T>
+        where T : class, IShape, ITangentShape
+        where TTangent : class, IShape, ITangentShape
     {
+        TTangent CreateTangentShape(T shape, SideCode sideCode);
+        TTangent CreateOuterTangentShape(T shape);
+        TTangent CreateInnerTangentShape(T shape);
     }
 
-    public interface ITangentShapeFactory<out T, U> : ITangentShapeFactory where T : class, IShape, ITangentShape where U : IShape, ITangentShape
-    {
-        T CreateTangentShape(U shape, SideCode sideCode);
-        T CreateOuterTangentShape(U shape);
-        T CreateInnerTangentShape(U shape);
-
-        U Create(U other);
-    }
-
-    public interface IRectangularShapeFactory : ITangentShapeFactory
-    {
-
-    }
-
-    public interface IRectangularShapeFactory<out T, U> : ITangentShapeFactory<T, U>, IRectangularShapeFactory where T : class, IShape, ICircularShape where U : IShape, IRectangularShape
-    {
-        T CreateInnerTangentShape(U rectangularShape, ComparisonCode comparisonCode);
-    }
-
-    public interface IPlaneShapeFactory : IShapeFactory, IFactory<IPlaneShape>
-    {
-        IPlaneShape Create(IDryBody dryBody, ShapeExtentTypeCode perpendicular);
-    }
-
-    public interface IRectangleFactory : IPlaneShapeFactory, IRectangularShapeFactory<ICircle, IRectangle>
-    {
-        IRectangle Create(IExtent length, IExtent width);
-    }
-
-    public interface ICircularShapeFactory : ITangentShapeFactory
-    {
-
-    }
-
-    public interface ICircularShapeFactory<out T, U> : ITangentShapeFactory<T, U>, ICircularShapeFactory where T : class, IShape, IRectangularShape where U : IShape, ICircularShape
-    {
-        T CreateInnerTangentShape(U circularShape, IExtent tangentRectangleSide);
-    }
-
-    public interface ICircleFactory : IPlaneShapeFactory, ICircularShapeFactory<IRectangle, ICircle>
-    {
-        ICircle Create(IExtent radius);
-    }
-
-    public interface IDryBodyFactory : IShapeFactory, IFactory<IDryBody>
-    {
-        IPlaneShapeFactory BaseFaceFactory { get; init; }
-
-        IPlaneShape CreateProjection(IDryBody dryBody, ShapeExtentTypeCode perpendicular);
-        IDryBody Create(IPlaneShape baseFace, IExtent height);
-        IPlaneShapeFactory GetBaseFaceFactory();
-    }
-
-    public interface IDryBodyFactory<out T, U> : IDryBodyFactory where T : class, IDryBody, ITangentShape where U : IPlaneShape, ITangentShape
-    {
-        T Create(U baseFace, IExtent height);
-    }
-
-    public interface ICuboidFactory : IDryBodyFactory<ICuboid, IRectangle>, IRectangularShapeFactory<ICylinder, ICuboid>
-    {
-        ICuboid Create(IExtent length, IExtent width, IExtent height);
-        IRectangle CreateBaseFace(IExtent length, IExtent width);
-        IRectangle CreateVerticalProjection(ICuboid cuboid, ComparisonCode comparisonCode);
-    }
-
-    public interface ICylinderFactory : IDryBodyFactory<ICylinder, ICircle>, ICircularShapeFactory<ICuboid, ICylinder>
-    {
-        ICylinder Create(IExtent radius, IExtent height);
-        ICircle CreateBaseFace(IExtent radius);
-        IRectangle CreateVerticalProjection(ICylinder cylinder);
-    }
 }
