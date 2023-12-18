@@ -1,4 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Enums.MeasureUnits;
+﻿using CsabaDu.FooVaria.RateComponents.Types;
 using CsabaDu.FooVaria.Shapes.Types;
 using CsabaDu.FooVaria.Shapes.Types.Implementations;
 
@@ -6,17 +6,82 @@ namespace CsabaDu.FooVaria.Shapes.Statics
 {
     public static class ShapeExtents
     {
+        #region Public methods
         public static IExtent GetDiagonal(IShape shape, ExtentUnit extentUnit = default)
         {
             return NullChecked(shape, nameof(shape)) switch
             {
-                Circle circle => GetCircleDiagonal(circle, extentUnit),
-                Cuboid cuboid => GetCuboidDiagonal(cuboid, extentUnit),
-                Cylinder cylinder => GetCylinderDiagonal(cylinder, extentUnit),
-                Rectangle rectangle => GetRectangleDiagonal(rectangle, extentUnit),
+                Circle circle => getCircleDiagonal(circle),
+                Cuboid cuboid => getCuboidDiagonal(cuboid),
+                Cylinder cylinder => getCylinderDiagonal(cylinder),
+                Rectangle rectangle => getRectangleDiagonal(rectangle),
 
                 _ => throw new InvalidOperationException(null)
             };
+
+            #region Local methods
+            IExtent getCircleDiagonal(ICircle circle)
+            {
+                ValidateMeasureUnit(extentUnit, nameof(extentUnit));
+
+                IRateComponent radius = circle.Radius;
+                decimal quantity = radius.DefaultQuantity * 2;
+                quantity = IsDefaultMeasureUnit(extentUnit) ?
+                    quantity
+                    : quantity / GetSpreadMeasureUnitExchangeRate(shape, extentUnit);
+
+
+                return (IExtent)radius.GetRateComponent(extentUnit, quantity);
+            }
+
+            IExtent getCuboidDiagonal(ICuboid cuboid)
+            {
+                return getRectangularShapeDiagonal(cuboid);
+            }
+
+            IExtent getCylinderDiagonal(ICylinder cylinder)
+            {
+                IRectangle verticalProjection = cylinder.GetVerticalProjection();
+
+                return getRectangleDiagonal(verticalProjection);
+            }
+
+            IExtent getRectangleDiagonal(IRectangle rectangle)
+            {
+                return getRectangularShapeDiagonal(rectangle);
+            }
+
+            IExtent getRectangularShapeDiagonal<T>(T shape) where T : class, IShape, IRectangularShape
+            {
+                ValidateMeasureUnit(extentUnit, nameof(extentUnit));
+
+                IEnumerable<ShapeExtentTypeCode> shapeExtentTypeCodes = shape.GetShapeExtentTypeCodes();
+                int i = 0;
+                decimal quantitySquares = getDefaultQuantitySquare();
+
+                for (i = 1; i < shapeExtentTypeCodes.Count(); i++)
+                {
+                    quantitySquares += getDefaultQuantitySquare();
+                }
+
+                double quantity = GetExchangedQuantitySqrt(shape, extentUnit, quantitySquares);
+                IExtent edge = getShapeExtent();
+
+                return edge.GetMeasure(extentUnit, quantity);
+
+                #region Local methods
+                IExtent getShapeExtent()
+                {
+                    return shape.GetShapeExtent(shapeExtentTypeCodes.ElementAt(i));
+                }
+
+                decimal getDefaultQuantitySquare()
+                {
+                    return GetDefaultQuantitySquare(getShapeExtent());
+                }
+                #endregion
+            }
+            #endregion
         }
 
         public static IExtent GetInnerTangentRectangleSide(ICircle circle, IExtent innerTangentRectangleSide, ExtentUnit extentUnit = default)
@@ -40,83 +105,14 @@ namespace CsabaDu.FooVaria.Shapes.Statics
 
             return innerTangentRectangleSide.GetMeasure(extentUnit, quantity);
         }
+        #endregion
 
+        #region Private methods
         private static decimal GetDefaultQuantitySquare(IExtent extent)
         {
-            return Square(extent.DefaultQuantity);
-        }
+            decimal quantity = extent.DefaultQuantity;
 
-        public static IExtent GetShapeExtent(IVolume volume, IPlaneShape planeShape, ExtentUnit extentUnit = default)
-        {
-            decimal quantity = NullChecked(volume, nameof(volume)).DefaultQuantity;
-            quantity /= NullChecked(planeShape, nameof(planeShape)).Area.DefaultQuantity;
-            quantity = Exchange(planeShape, extentUnit, quantity);
-
-            return GetExtent(volume, extentUnit, quantity);
-        }
-
-        private static IExtent GetRectangleDiagonal(IRectangle rectangle, ExtentUnit extentUnit)
-        {
-            return GetRectangularShapeDiagonal(rectangle, extentUnit);
-        }
-
-        private static IExtent GetCircleDiagonal(ICircle circle, ExtentUnit extentUnit)
-        {
-            ValidateMeasureUnit(extentUnit, nameof(extentUnit));
-
-            IRateComponent radius = circle.Radius;
-            decimal quantity = radius.DefaultQuantity * 2;
-            quantity = Exchange(circle, extentUnit, quantity);
-
-            return GetExtent(radius, extentUnit, quantity);
-        }
-
-        private static IExtent GetCuboidDiagonal(ICuboid cuboid, ExtentUnit extentUnit)
-        {
-            return GetRectangularShapeDiagonal(cuboid, extentUnit);
-        }
-
-        private static IExtent GetCylinderDiagonal(ICylinder cylinder, ExtentUnit extentUnit)
-        {
-            IRectangle verticalProjection = cylinder.GetVerticalProjection();
-
-            return GetRectangleDiagonal(verticalProjection, extentUnit);
-        }
-
-        private static IExtent GetExtent(IRateComponent rateComponent, ExtentUnit extentUnit, ValueType quantity)
-        {
-            return (IExtent)rateComponent.GetRateComponent(extentUnit, quantity);
-        }
-
-        private static IExtent GetRectangularShapeDiagonal<T>(T shape, ExtentUnit extentUnit) where T : class, IShape, IRectangularShape
-        {
-            ValidateMeasureUnit(extentUnit, nameof(extentUnit));
-
-            IEnumerable<ShapeExtentTypeCode> shapeExtentTypeCodes = shape.GetShapeExtentTypeCodes();
-            int i = 0;
-            decimal quantitySquares = getDefaultQuantitySquare();
-
-            for (i = 1; i < shapeExtentTypeCodes.Count(); i++)
-            {
-                quantitySquares += getDefaultQuantitySquare();
-            }
-
-            double quantity = GetExchangedQuantitySqrt(shape, extentUnit, quantitySquares);
-            IExtent edge = getShapeExtent();
-
-            return edge.GetMeasure(extentUnit, quantity);
-
-            #region Local methods
-            IExtent getShapeExtent()
-            {
-                return shape.GetShapeExtent(shapeExtentTypeCodes.ElementAt(i));
-            }
-
-            decimal getDefaultQuantitySquare()
-            {
-                return GetDefaultQuantitySquare(getShapeExtent());
-            }
-            #endregion
+            return quantity * quantity;
         }
 
         private static double GetExchangedQuantitySqrt(IShape shape, ExtentUnit extentUnit, decimal quantitySquare)
@@ -124,21 +120,10 @@ namespace CsabaDu.FooVaria.Shapes.Statics
             double quantity = decimal.ToDouble(quantitySquare);
             quantity = Math.Sqrt(quantity);
 
-            return Exchange(shape, extentUnit, quantity);
-
-        }
-        private static decimal Exchange(IShape shape, Enum measureUnit,  decimal quantity)
-        {
-            return IsDefaultMeasureUnit(measureUnit) ?
+            return IsDefaultMeasureUnit(extentUnit) ?
                 quantity
-                : quantity / GetSpreadMeasureUnitExchangeRate(shape, measureUnit);
-        }
+                : quantity / decimal.ToDouble(GetSpreadMeasureUnitExchangeRate(shape, extentUnit));
 
-        private static double Exchange(IShape shape, Enum measureUnit, double quantity)
-        {
-            return IsDefaultMeasureUnit(measureUnit) ?
-                quantity
-                : quantity / decimal.ToDouble(GetSpreadMeasureUnitExchangeRate(shape, measureUnit));
         }
 
         private static decimal GetSpreadMeasureUnitExchangeRate(IShape shape, Enum measureUnit)
@@ -147,11 +132,6 @@ namespace CsabaDu.FooVaria.Shapes.Statics
 
             return spreadMeasure.Measurement.GetExchangeRate(measureUnit);
         }
-
-        private static decimal Square(decimal quantity)
-        {
-            return quantity * quantity;
-        }
-
+        #endregion
     }
 }

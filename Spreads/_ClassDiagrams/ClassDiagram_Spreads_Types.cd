@@ -129,7 +129,7 @@
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Spreads.Behaviors.IValidShapeExtents" Collapsed="true">
-    <Position X="3.75" Y="6.75" Width="1.75" />
+    <Position X="3.25" Y="6.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
       <FileName>Behaviors\IValidShapeExtents.cs</FileName>
