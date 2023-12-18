@@ -1,9 +1,4 @@
-﻿using CsabaDu.FooVaria.Common;
-using CsabaDu.FooVaria.RateComponents.Types;
-using CsabaDu.FooVaria.Shapes.Statics;
-using CsabaDu.FooVaria.Spreads.Factories;
-using CsabaDu.FooVaria.Spreads.Types;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
 
 namespace CsabaDu.FooVaria.Shapes.Types.Implementations

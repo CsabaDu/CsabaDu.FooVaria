@@ -159,6 +159,13 @@ public static class MeasureUnitTypes
             && measureUnitTypeCode == GetMeasureUnitTypeCode(measureUnit!);
     }
 
+
+    public static bool IsDefaultMeasureUnit(Enum measureUnit)
+    {
+        return IsDefinedMeasureUnit(measureUnit)
+            && (int)(object)measureUnit == default;
+    }
+
     public static bool IsDefinedMeasureUnit(Enum? measureUnit)
     {
         if (measureUnit == null) return false;
