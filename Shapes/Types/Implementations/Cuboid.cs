@@ -16,8 +16,8 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
 
     public override IExtent? this[ShapeExtentTypeCode shapeExtentTypeCode] => shapeExtentTypeCode switch
     {
-        ShapeExtentTypeCode.Length => BaseFace.Length,
-        ShapeExtentTypeCode.Width => BaseFace.Width,
+        ShapeExtentTypeCode.Length => GetLength(),
+        ShapeExtentTypeCode.Width => GetWidth(),
         ShapeExtentTypeCode.Height => Height,
 
         _ => null,

@@ -12,7 +12,13 @@ internal sealed class Circle : PlaneShape, ICircle
         Radius = radius;
     }
 
-    public override IExtent? this[ShapeExtentTypeCode shapeExtentTypeCode] => throw new NotImplementedException();
+
+    public override IExtent? this[ShapeExtentTypeCode shapeExtentTypeCode] => shapeExtentTypeCode switch
+    {
+        ShapeExtentTypeCode.Radius => Radius,
+
+        _ => null,
+    };
 
     public IExtent Radius { get; init; }
 
@@ -27,33 +33,16 @@ internal sealed class Circle : PlaneShape, ICircle
     public IRectangle GetInnerTangentShape(IExtent innerTangentRectangleSide)
     {
         return GetFactory().CreateInnerTangentShape(this, innerTangentRectangleSide);
-
-        //IExtent otherSide = GetInnerTangentRectangleSide(this, innerTangentRectangleSide);
-
-        //return GetTangentShapeFactory().Create(innerTangentRectangleSide, otherSide);
     }
 
     public IRectangle GetInnerTangentShape()
     {
         return GetFactory().CreateInnerTangentShape(this);
-
-        //IExtent diagonal = GetDiagonal();
-        //decimal diagonalQuantity = diagonal.DefaultQuantity;
-        //diagonalQuantity *= diagonalQuantity;
-        //diagonalQuantity /= 2;
-        //double legQuantity = Math.Sqrt(decimal.ToDouble(diagonalQuantity));
-        //IExtent leg = diagonal.GetMeasure(legQuantity, default(ExtentUnit)); 
-
-        //return GetInnerTangentShape(leg);
     }
 
     public IRectangle GetOuterTangentShape()
     {
         return GetFactory().CreateOuterTangentShape(this);
-
-        //IExtent diagonal = GetDiagonal();
-
-        //return GetTangentShapeFactory().Create(diagonal, diagonal);
     }
 
     public override ICircleFactory GetFactory()

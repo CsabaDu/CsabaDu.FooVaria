@@ -8,7 +8,7 @@ namespace CsabaDu.FooVaria.Shapes.Behaviors
         //IExtent GetShapeExtent(IPlaneShape projection, IVolume volume);
     }
 
-    //public interface IProjection<out TNum> : IProjection where TNum : IPlaneShape, ITangentShape
+    //public interface IProjection<out TNum> : IProjection where TNum : IPlaneShape, IShape
     //{
     //    //TNum GetHorizontalProjection();
     //}

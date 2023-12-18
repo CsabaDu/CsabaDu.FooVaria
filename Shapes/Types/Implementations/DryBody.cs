@@ -49,6 +49,11 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
             return (IPlaneShape)GetBaseFace().GetShape(extentUnit);
         }
 
+        public IBody GetBody()
+        {
+            return this;
+        }
+
         public IDryBody GetDryBody(IPlaneShape baseFace, IExtent height)
         {
             return GetFactory().Create(baseFace, height);
@@ -98,33 +103,33 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
         public abstract IPlaneShape GetProjection(ShapeExtentTypeCode perpendicular);
     }
 
-    internal abstract class DryBody<T, U> : DryBody, IDryBody<T, U> where T : class, IDryBody, ITangentShape where U : IPlaneShape, ITangentShape
+    internal abstract class DryBody<TSelf, TBFace> : DryBody, IDryBody<TSelf, TBFace> where TSelf : class, IDryBody, ITangentShape where TBFace : IPlaneShape, ITangentShape
     {
-        private protected DryBody(T other) : base(other)
+        private protected DryBody(TSelf other) : base(other)
         {
-            BaseFace = (U)other.GetBaseFace();
+            BaseFace = (TBFace)other.GetBaseFace();
         }
 
         private protected DryBody(IDryBodyFactory factory, params IExtent[] shapeExtents) : base(factory, shapeExtents)
         {
-            BaseFace = (U)GetShape(shapeExtents.SkipLast(1).ToArray());
+            BaseFace = (TBFace)GetShape(shapeExtents.SkipLast(1).ToArray());
         }
 
-        private protected DryBody(IDryBodyFactory factory, U baseFace, IExtent height) : base(factory, baseFace, height)
+        private protected DryBody(IDryBodyFactory factory, TBFace baseFace, IExtent height) : base(factory, baseFace, height)
         {
             BaseFace = baseFace;
         }
 
-        public U BaseFace { get; init; }
+        public TBFace BaseFace { get; init; }
 
-        public T GetDryBody(U baseFace, IExtent height)
+        public TSelf GetDryBody(TBFace baseFace, IExtent height)
         {
             return GetFactory().Create(baseFace, height);
         }
 
-        public override IDryBodyFactory<T, U> GetFactory()
+        public override IDryBodyFactory<TSelf, TBFace> GetFactory()
         {
-            return (IDryBodyFactory<T, U>)Factory;
+            return (IDryBodyFactory<TSelf, TBFace>)Factory;
         }
 
         public override sealed IPlaneShape GetBaseFace()

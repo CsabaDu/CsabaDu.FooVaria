@@ -14,7 +14,14 @@ internal sealed class Cylinder : DryBody<ICylinder, ICircle>, ICylinder
     {
     }
 
-    public override IExtent? this[ShapeExtentTypeCode shapeExtentTypeCode] => throw new NotImplementedException();
+
+    public override IExtent? this[ShapeExtentTypeCode shapeExtentTypeCode] => shapeExtentTypeCode switch
+    {
+        ShapeExtentTypeCode.Radius => GetRadius(),
+        ShapeExtentTypeCode.Height => Height,
+
+        _ => null,
+    };
 
     public ICuboid GetInnerTangentShape(IExtent innerTangentRectangleSide)
     {

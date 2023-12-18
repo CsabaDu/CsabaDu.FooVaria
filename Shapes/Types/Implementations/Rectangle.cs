@@ -48,10 +48,6 @@ internal sealed class Rectangle : PlaneShape, IRectangle
     public ICircle GetInnerTangentShape(ComparisonCode comparisonCode)
     {
         return GetFactory().CreateInnerTangentShape(this, comparisonCode);
-
-        //IExtent radius = (IExtent)GetComparedShapeExtent(comparisonCode).Divide(2);
-
-        //return GetTangentShapeFactory().Create(radius);
     }
 
     public ICircle GetInnerTangentShape()

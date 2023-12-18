@@ -1,7 +1,4 @@
-﻿using CsabaDu.FooVaria.Spreads.Types;
-
-
-namespace CsabaDu.FooVaria.Shapes.Types.Implementations
+﻿namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 {
     internal abstract class PlaneShape : Shape, IPlaneShape
     {
@@ -20,6 +17,11 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
         public override sealed IArea GetSpreadMeasure()
         {
             return Area;
+        }
+
+        public ISurface GetSurface()
+        {
+            return this;
         }
 
         private IArea GetArea(object arg, string paramName)

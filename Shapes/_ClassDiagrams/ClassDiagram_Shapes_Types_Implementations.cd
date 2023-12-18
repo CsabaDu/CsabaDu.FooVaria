@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CsabaDu.FooVaria.Shapes.Types.Implementations.Circle" Collapsed="true">
+    <Position X="0.5" Y="7.75" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>IAAIAIAAAAAAAAAACAAAAACAAIAQAABAAAAAAAgAAIA=</HashCode>
+      <FileName>Types\Implementations\Circle.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Shapes.Types.Implementations.Cuboid" Collapsed="true">
+    <Position X="3" Y="9.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAABAYAAAAIAAAAADAAAAACAAIQQEBRAAAAAAEAAAAA=</HashCode>
+      <FileName>Types\Implementations\Cuboid.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Shapes.Types.Implementations.Cylinder" Collapsed="true">
+    <Position X="5.75" Y="9.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAABYAAAAIAAAAACAAAAACAAIAQAARAAAAAAAgAAAA=</HashCode>
+      <FileName>Types\Implementations\Cylinder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Shapes.Types.Implementations.DryBody" Collapsed="true">
+    <Position X="4.75" Y="6.25" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAARAABAIAAAAAAAAFAADAAAAAGAAAAgIAAAAAAIA=</HashCode>
+      <FileName>Types\Implementations\DryBody.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Shapes.Types.Implementations.DryBody&lt;TSelf, TBFace&gt;" Collapsed="true">
+    <Position X="4.5" Y="7.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAFAACAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Types\Implementations\DryBody.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Shapes.Types.Implementations.PlaneShape" Collapsed="true">
+    <Position X="1.5" Y="6.25" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAQAEQAAAAA=</HashCode>
+      <FileName>Types\Implementations\PlaneShape.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Shapes.Types.Implementations.Rectangle" Collapsed="true">
+    <Position X="2.5" Y="7.75" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAABAIAAIAAAAAAADAAAAEDAAIAQEABAAAAAAEAAAIA=</HashCode>
+      <FileName>Types\Implementations\Rectangle.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Shapes.Types.Implementations.Shape" Collapsed="true">
+    <Position X="3.25" Y="4.75" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAABCAAQQAiCAAAACAAABQAQAABAPAIBACRoQ=</HashCode>
+      <FileName>Types\Implementations\Shape.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Common.Types.Implementations.BaseShape" Collapsed="true">
+    <Position X="3.25" Y="3.5" Width="1.25" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
