@@ -1,7 +1,7 @@
 ﻿namespace CsabaDu.FooVaria.Common.Types;
 
-public interface IBaseShape : IBaseSpread, IShapeExtentCount, IFit<IBaseShape>
+public interface IBaseShape : IBaseSpread, IShapeComponentCount, IFit<IBaseShape>, IShapeComponent
 {
-    void ValidateShapeExtent(IQuantifiable shapeExtent, string paramName);
+    void ValidateShapeComponent(IQuantifiable shapeComponent, string paramName);
 }
 

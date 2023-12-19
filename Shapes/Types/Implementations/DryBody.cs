@@ -19,7 +19,7 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
             #region Local methods
             (IExtent Height, IVolume Volume) getDryBodyProperties()
             {
-                ValidateShapeExtent(height, nameof(height));
+                ValidateShapeComponent(height, nameof(height));
 
                 IExtent[] shapeExtents = baseFace.GetShapeExtents().Append(height).ToArray();
 
@@ -70,9 +70,9 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 
         public void ValidateBaseFace(IPlaneShape planeShape, string paramName)
         {
-            int baseFaceShapeExtentCout = GetShapeExtentCount() - 1;
+            int baseFaceShapeExtentCout = GetShapeComponentCount() - 1;
 
-            if (NullChecked(planeShape, paramName).GetShapeExtentCount() == baseFaceShapeExtentCout) return;
+            if (NullChecked(planeShape, paramName).GetShapeComponentCount() == baseFaceShapeExtentCout) return;
 
             throw ArgumentTypeOutOfRangeException(paramName, planeShape);
         }

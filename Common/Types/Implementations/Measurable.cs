@@ -42,6 +42,10 @@ public abstract class Measurable : CommonBase, IMeasurable
     #endregion
 
     #region Public methods
+    //public bool Equals(IMeasurable? other)
+    //{
+    //    return MeasureUnitTypeCode.Equals(other?.MeasureUnitTypeCode);
+    //}
     public Enum GetDefaultMeasureUnit()
     {
         return MeasureUnitTypeCode.GetDefaultMeasureUnit();
@@ -49,7 +53,7 @@ public abstract class Measurable : CommonBase, IMeasurable
 
     public IEnumerable<string> GetDefaultMeasureUnitNames()
     {
-        return MeasureUnitTypes.GetDefaultNames(MeasureUnitTypeCode);
+        return GetDefaultNames(MeasureUnitTypeCode);
     }
 
     public Type GetMeasureUnitType()
@@ -76,7 +80,7 @@ public abstract class Measurable : CommonBase, IMeasurable
     public override bool Equals(object? obj)
     {
         return obj is IMeasurable other
-            && other.MeasureUnitTypeCode == MeasureUnitTypeCode;
+            && MeasureUnitTypeCode.Equals(other?.MeasureUnitTypeCode);
     }
 
     public override IMeasurableFactory GetFactory()

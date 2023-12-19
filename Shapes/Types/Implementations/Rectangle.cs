@@ -2,6 +2,7 @@
 
 internal sealed class Rectangle : PlaneShape, IRectangle
 {
+    #region Constructors
     internal Rectangle(IRectangle other) : base(other)
     {
         Length = other.Length;
@@ -13,7 +14,13 @@ internal sealed class Rectangle : PlaneShape, IRectangle
         Length = length;
         Width = width;
     }
+    #endregion
 
+    #region Properties
+    public IExtent Length { get; init; }
+    public IExtent Width { get; init; }
+
+    #region Override properties
     public override IExtent? this[ShapeExtentTypeCode shapeExtentTypeCode] => shapeExtentTypeCode switch
     {
         ShapeExtentTypeCode.Length => Length,
@@ -21,10 +28,10 @@ internal sealed class Rectangle : PlaneShape, IRectangle
 
         _ => null,
     };
+    #endregion
+    #endregion
 
-    public IExtent Length { get; init; }
-    public IExtent Width { get; init; }
-
+    #region Public methods
     public IExtent GetComparedShapeExtent(ComparisonCode? comparisonCode)
     {
         _ = NullChecked(comparisonCode, nameof(comparisonCode));
@@ -38,11 +45,6 @@ internal sealed class Rectangle : PlaneShape, IRectangle
 
             _ => throw InvalidComparisonCodeEnumArgumentException(comparisonCode!.Value),
         };
-    }
-
-    public override IEnumerable<IExtent> GetDimensions()
-    {
-        return GetShapeExtents();
     }
 
     public ICircle GetInnerTangentShape(ComparisonCode comparisonCode)
@@ -75,16 +77,6 @@ internal sealed class Rectangle : PlaneShape, IRectangle
         return GetFactory().CreateTangentShape(this, sideCode);
     }
 
-    public override IRectangleFactory GetFactory()
-    {
-        return (IRectangleFactory)Factory;
-    }
-
-    public override ICircleFactory GetTangentShapeFactory()
-    {
-        return (ICircleFactory)GetFactory().TangentShapeFactory;
-    }
-
     public IExtent GetWidth()
     {
         return Width;
@@ -104,4 +96,22 @@ internal sealed class Rectangle : PlaneShape, IRectangle
     {
         return GetFactory().Create(length, width);
     }
+
+    #region Override methods
+    public override IEnumerable<IExtent> GetDimensions()
+    {
+        return GetShapeExtents();
+    }
+
+    public override IRectangleFactory GetFactory()
+    {
+        return (IRectangleFactory)Factory;
+    }
+
+    public override ICircleFactory GetTangentShapeFactory()
+    {
+        return (ICircleFactory)GetFactory().TangentShapeFactory;
+    }
+    #endregion
+    #endregion
 }

@@ -10,13 +10,9 @@
         {
         }
 
-        protected BaseShape(IBaseSpreadFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IMeasurable[] measurables) : base(factory, measureUnitTypeCode, measurables)
+        protected BaseShape(IBaseSpreadFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IQuantifiable[] shapeComponents) : base(factory, measureUnitTypeCode, shapeComponents)
         {
         }
-
-        public abstract int CompareTo(IBaseShape? other);
-        public abstract bool Equals(IBaseShape? other);
-        public abstract bool? FitsIn(IBaseShape? comparable, LimitMode? limitMode);
 
         public override IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
         {
@@ -28,7 +24,16 @@
             return (IBaseShapeFactory)Factory;
         }
 
-        public abstract int GetShapeExtentCount();
-        public abstract void ValidateShapeExtent(IQuantifiable shapeExtent, string paramName);
+        public virtual bool Equals(IBaseShape? other)
+        {
+            return base.Equals(other)
+                && GetShapeComponents().SequenceEqual(other.GetShapeComponents());
+        }
+
+        public abstract int CompareTo(IBaseShape? other);
+        public abstract bool? FitsIn(IBaseShape? other, LimitMode? limitMode);
+        public abstract int GetShapeComponentCount();
+        public abstract void ValidateShapeComponent(IQuantifiable shapeComponent, string paramName);
+        public abstract IEnumerable<IQuantifiable> GetShapeComponents();
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-
 namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 {
     internal abstract class Shape : BaseShape, IShape
@@ -102,7 +101,7 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
         {
             _ = NullChecked(shapeExtent, nameof(shapeExtent));
 
-            for (int i = 0; i < GetShapeExtentCount(); i++)
+            for (int i = 0; i < GetShapeComponentCount(); i++)
             {
                 if (GetShapeExtents().ElementAt(i).Equals(shapeExtent))
                 {
@@ -119,7 +118,7 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 
         public void ValidateShapeExtentCount(int count, string name)
         {
-            if (count == GetShapeExtentCount()) return;
+            if (count == GetShapeComponentCount()) return;
 
             throw QuantityArgumentOutOfRangeException(name, count);
         }
@@ -132,7 +131,7 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 
             foreach (IExtent item in shapeExtents)
             {
-                ValidateShapeExtent(item, paramName);
+                ValidateShapeComponent(item, paramName);
             }
         }
 
@@ -163,8 +162,8 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 
         public override sealed bool Equals(IBaseShape? other)
         {
-            return other is IShape shape
-                && shape.MeasureUnitTypeCode == MeasureUnitTypeCode
+            return (this as Measurable).Equals(other)
+                && other is IShape shape
                 && shape.GetShapeExtents().SequenceEqual(GetShapeExtents());
         }
 
@@ -243,7 +242,7 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
                 SideCode.Outer
                 : SideCode.Inner;
 
-            if (shape.GetShapeExtentCount() != GetShapeExtentCount())
+            if (shape.GetShapeComponentCount() != GetShapeComponentCount())
             {
                 shape = tangentShape.GetTangentShape(sideCode);
             }
@@ -256,7 +255,17 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
             return GetFactory().SpreadFactory.Create(spreadMeasure);
         }
 
-        public override sealed int GetShapeExtentCount()
+        public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
+        {
+            return base.GetMeasureUnitTypeCodes();
+        }
+
+        public override sealed IEnumerable<IQuantifiable> GetShapeComponents()
+        {
+            return GetShapeExtents();
+        }
+
+        public override sealed int GetShapeComponentCount()
         {
             return GetShapeExtentTypeCodes().Count();
         }
@@ -286,11 +295,11 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
             ValidateDecimalQuantity((decimal)converted, paramName);
         }
 
-        public override sealed void ValidateShapeExtent(IQuantifiable shapeExtent, string paramName)
+        public override sealed void ValidateShapeComponent(IQuantifiable shapeComponent, string paramName)
         {
-            decimal defaultQuantity = NullChecked(shapeExtent, paramName).GetDefaultQuantity();
+            decimal defaultQuantity = NullChecked(shapeComponent, paramName).GetDefaultQuantity();
 
-            if (shapeExtent is not IExtent) throw ArgumentTypeOutOfRangeException(paramName, shapeExtent);
+            if (shapeComponent is not IExtent) throw ArgumentTypeOutOfRangeException(paramName, shapeComponent);
 
             ValidateDecimalQuantity(defaultQuantity, paramName);
         }

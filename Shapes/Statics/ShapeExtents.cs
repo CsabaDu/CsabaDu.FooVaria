@@ -82,7 +82,7 @@
 
         public static IExtent GetInnerTangentRectangleSide(ICircle circle, IExtent innerTangentRectangleSide, ExtentUnit extentUnit = default)
         {
-            NullChecked(circle, nameof(circle)).ValidateShapeExtent(innerTangentRectangleSide, nameof(innerTangentRectangleSide));
+            NullChecked(circle, nameof(circle)).ValidateShapeComponent(innerTangentRectangleSide, nameof(innerTangentRectangleSide));
             ValidateMeasureUnit(extentUnit, nameof(extentUnit));
 
             decimal sideQuantitySquare = GetDefaultQuantitySquare(innerTangentRectangleSide);

@@ -39,7 +39,7 @@ internal abstract class MeasurementBase : Measurable, IMeasurementBase
 
     public bool Equals(IMeasurementBase? other)
     {
-        return MeasureUnitTypeCode.Equals(other?.MeasureUnitTypeCode)
+        return base.Equals(other)
             && other.ExchangeRate == ExchangeRate;
     }
 

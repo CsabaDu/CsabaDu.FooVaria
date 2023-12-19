@@ -30,7 +30,7 @@ public abstract class ShapeFactory : IShapeFactory
         return SpreadFactory.MeasureFactory;
     }
 
-    public abstract int GetShapeExtentCount();
+    public abstract int GetShapeComponentCount();
 
     public abstract ISpreadFactory GetSpreadFactory();
     //{

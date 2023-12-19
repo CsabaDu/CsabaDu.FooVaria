@@ -2,6 +2,7 @@
 
 internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
 {
+    #region Constructors
     internal Cuboid(ICuboid other) : base(other)
     {
     }
@@ -13,7 +14,10 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
     internal Cuboid(ICuboidFactory factory, IRectangle baseFace, IExtent height) : base(factory, baseFace, height)
     {
     }
+    #endregion
 
+    #region Properties
+    #region Override properties
     public override IExtent? this[ShapeExtentTypeCode shapeExtentTypeCode] => shapeExtentTypeCode switch
     {
         ShapeExtentTypeCode.Length => GetLength(),
@@ -22,12 +26,10 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
 
         _ => null,
     };
+    #endregion
+    #endregion
 
-    public override IRectangleFactory GetBaseFaceFactory()
-    {
-        return (IRectangleFactory)base.GetBaseFaceFactory();
-    }
-
+    #region Public methods
     public IExtent GetComparedShapeExtent(ComparisonCode? comparisonCode)
     {
         IEnumerable<IExtent> shapeExtents = GetSortedDimensions();
@@ -69,20 +71,11 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
         return GetFactory().CreateOuterTangentShape(this);
     }
 
-    public override IPlaneShape GetProjection(ShapeExtentTypeCode perpendicular)
-    {
-        return GetFactory().CreateProjection(this, perpendicular);
-    }
-
     public IShape GetTangentShape(SideCode sideCode)
     {
         return GetFactory().CreateTangentShape(this, sideCode);
     }
 
-    public override ICylinderFactory GetTangentShapeFactory()
-    {
-        return (ICylinderFactory)GetFactory().TangentShapeFactory;
-    }
     public IRectangle GetVerticalProjection(ComparisonCode comparisonCode)
     {
         return GetFactory().CreateVerticalProjection(this, comparisonCode);
@@ -110,13 +103,31 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
         return (ICuboid)GetShape(GetSortedDimensions().ToArray());
     }
 
-    public override ICuboidFactory GetFactory()
-    {
-        return (ICuboidFactory)Factory;
-    }
-
     public ICuboid GetCuboid(IExtent length, IExtent width, IExtent height)
     {
         return GetFactory().Create(length, width, height);
     }
+
+    #region Override methods
+    public override IRectangleFactory GetBaseFaceFactory()
+    {
+        return (IRectangleFactory)base.GetBaseFaceFactory();
+    }
+
+    public override IPlaneShape GetProjection(ShapeExtentTypeCode perpendicular)
+    {
+        return GetFactory().CreateProjection(this, perpendicular);
+    }
+
+    public override ICylinderFactory GetTangentShapeFactory()
+    {
+        return (ICylinderFactory)GetFactory().TangentShapeFactory;
+    }
+
+    public override ICuboidFactory GetFactory()
+    {
+        return (ICuboidFactory)Factory;
+    }
+    #endregion
+    #endregion
 }

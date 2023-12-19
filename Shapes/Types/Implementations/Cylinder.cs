@@ -2,6 +2,7 @@
 
 internal sealed class Cylinder : DryBody<ICylinder, ICircle>, ICylinder
 {
+    #region Constructors
     internal Cylinder(ICylinder other) : base(other)
     {
     }
@@ -13,8 +14,10 @@ internal sealed class Cylinder : DryBody<ICylinder, ICircle>, ICylinder
     internal Cylinder(ICylinderFactory factory, ICircle baseFace, IExtent height) : base(factory, baseFace, height)
     {
     }
+    #endregion
 
-
+    #region Properties
+    #region Override properties
     public override IExtent? this[ShapeExtentTypeCode shapeExtentTypeCode] => shapeExtentTypeCode switch
     {
         ShapeExtentTypeCode.Radius => GetRadius(),
@@ -22,7 +25,10 @@ internal sealed class Cylinder : DryBody<ICylinder, ICircle>, ICylinder
 
         _ => null,
     };
+    #endregion
+    #endregion
 
+    #region Public methods
     public ICuboid GetInnerTangentShape(IExtent innerTangentRectangleSide)
     {
         return GetFactory().CreateInnerTangentShape(this, innerTangentRectangleSide);
@@ -36,16 +42,6 @@ internal sealed class Cylinder : DryBody<ICylinder, ICircle>, ICylinder
     public ICuboid GetOuterTangentShape()
     {
         return GetFactory().CreateOuterTangentShape(this);
-    }
-
-    public override ICircleFactory GetBaseFaceFactory()
-    {
-        return (ICircleFactory)base.GetBaseFaceFactory();
-    }
-
-    public override IPlaneShape GetProjection(ShapeExtentTypeCode perpendicular)
-    {
-        return GetFactory().CreateProjection(this, perpendicular);
     }
 
     public IExtent GetRadius()
@@ -63,13 +59,20 @@ internal sealed class Cylinder : DryBody<ICylinder, ICircle>, ICylinder
         return GetFactory().CreateTangentShape(this, sideCode);
     }
 
-    public override ICuboidFactory GetTangentShapeFactory()
-    {
-        return (ICuboidFactory)GetFactory().TangentShapeFactory;
-    }
     public IRectangle GetVerticalProjection()
     {
         return GetFactory().CreateVerticalProjection(this);
+    }
+
+    public ICylinder GetCylinder(IExtent radius, IExtent height)
+    {
+        return GetFactory().Create(radius, height);
+    }
+
+    #region Override methods
+    public override ICircleFactory GetBaseFaceFactory()
+    {
+        return (ICircleFactory)base.GetBaseFaceFactory();
     }
 
     public override ICylinderFactory GetFactory()
@@ -77,8 +80,15 @@ internal sealed class Cylinder : DryBody<ICylinder, ICircle>, ICylinder
         return (ICylinderFactory)Factory;
     }
 
-    public ICylinder GetCylinder(IExtent radius, IExtent height)
+    public override IPlaneShape GetProjection(ShapeExtentTypeCode perpendicular)
     {
-        return GetFactory().Create(radius, height);
+        return GetFactory().CreateProjection(this, perpendicular);
     }
+
+    public override ICuboidFactory GetTangentShapeFactory()
+    {
+        return (ICuboidFactory)GetFactory().TangentShapeFactory;
+    }
+    #endregion
+    #endregion
 }

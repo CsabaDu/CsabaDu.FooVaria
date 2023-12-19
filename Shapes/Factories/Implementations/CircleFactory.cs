@@ -59,7 +59,7 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
             return CreateTangentShape(this, circle, sideCode);
         }
 
-        public override int GetShapeExtentCount()
+        public override int GetShapeComponentCount()
         {
             return CircleShapeExtentCount;
         }

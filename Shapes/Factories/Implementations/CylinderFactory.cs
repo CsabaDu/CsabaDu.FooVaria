@@ -68,7 +68,7 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
             throw new NotImplementedException();
         }
 
-        public override int GetShapeExtentCount()
+        public override int GetShapeComponentCount()
         {
             return CylinderShapeExtentCount;
         }

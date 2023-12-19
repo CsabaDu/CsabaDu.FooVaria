@@ -31,10 +31,6 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
 
     #endregion
 
-    //#region Properties
-    //public decimal DefaultQuantity => (GetSpreadMeasure() as IBaseMeasure ?? throw new InvalidOperationException(null)).DefaultQuantity;
-    //#endregion
-
     #region Public methods
     public int CompareTo(IBaseSpread? other)
     {
@@ -45,8 +41,8 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
 
     public bool Equals(IBaseSpread? other)
     {
-        return other?.MeasureUnitTypeCode == MeasureUnitTypeCode
-            && other.GetDefaultQuantity() == GetDefaultQuantity();
+        return base.Equals(other)
+            && GetDefaultQuantity() == other.GetDefaultQuantity();
     }
 
     public bool? FitsIn(IBaseSpread? baseSpread, LimitMode? limitMode)
