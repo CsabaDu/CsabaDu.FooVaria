@@ -1,6 +1,4 @@
-﻿using static CsabaDu.FooVaria.Spreads.Statics.SpreadMeasures;
-
-namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
+﻿namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
 {
     public sealed class CylinderFactory : DryBodyFactory<ICylinder, ICircle>, ICylinderFactory
     {
@@ -9,11 +7,6 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
         }
 
         public override ICylinder Create(ICircle baseFace, IExtent height)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override ICylinder Create(IDryBody other)
         {
             throw new NotImplementedException();
         }
@@ -28,9 +21,42 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
             throw new NotImplementedException();
         }
 
-        public override IBaseShape Create(params IQuantifiable[] rateComponents)
+        public override ICylinder Create(params IQuantifiable[] shapeComponents)
         {
-            throw new NotImplementedException();
+            int count = GetValidShapeComponentsCount(shapeComponents);
+
+            return count switch
+            {
+                1 => createCylinderFromOneParam(),
+                2 => createCylinderFromTwoParams(),
+
+                _ => throw CountArgumentOutOfRangeException(count, nameof(shapeComponents)),
+
+            };
+
+            #region Local methods
+            ICylinder createCylinderFromOneParam()
+            {
+                if (shapeComponents[0] is ICylinder cylinder) return Create(cylinder);
+
+                throw ArgumentTypeOutOfRangeException(nameof(shapeComponents), shapeComponents);
+            }
+
+            ICylinder createCylinderFromTwoParams()
+            {
+                IQuantifiable last = shapeComponents[1];
+
+                if (last is not IExtent height) throw ArgumentTypeOutOfRangeException(nameof(shapeComponents), last);
+
+                IQuantifiable first = shapeComponents[0];
+
+                if (first is ICircle circle) return Create(circle, height);
+
+                if (first is IExtent radius) return Create(radius, height);
+
+                throw ArgumentTypeOutOfRangeException(nameof(shapeComponents), first);
+            }
+            #endregion
         }
 
         public ICircle CreateBaseFace(IExtent radius)
@@ -49,6 +75,11 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
         }
 
         public ICuboid CreateOuterTangentShape(ICylinder shape)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IPlaneShape CreateProjection(IDryBody dryBody, ShapeExtentTypeCode perpendicular)
         {
             throw new NotImplementedException();
         }

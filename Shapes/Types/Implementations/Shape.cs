@@ -43,25 +43,27 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 
         public IShape GetShape(params IExtent[] shapeExtents)
         {
-            ValidateShapeExtents(shapeExtents, nameof(shapeExtents));
+            return (IShape)GetFactory().Create(shapeExtents);
 
-            return getShape(this, shapeExtents);
+            //ValidateShapeExtents(shapeExtents, nameof(shapeExtents));
 
-            #region Local methods
-            static IShape getShape<T>(T shape, IExtent[] shapeExtents)
-                where T : IShape
-            {
-                return shape switch
-                {
-                    Circle circle => circle.GetCircle(shapeExtents[0]),
-                    Cuboid cuboid => cuboid.GetCuboid(shapeExtents[0], shapeExtents[1], shapeExtents[2]),
-                    Cylinder cylinder => cylinder.GetCylinder(shapeExtents[0], shapeExtents[1]),
-                    Rectangle rectangle => rectangle.GetRectangle(shapeExtents[0], shapeExtents[1]),
+            //return getShape(this, shapeExtents);
 
-                    _ => throw new InvalidOperationException(null),
-                };
-            }
-            #endregion
+            //#region Local methods
+            //static IShape getShape<T>(T shape, IExtent[] shapeExtents)
+            //    where T : IShape
+            //{
+            //    return shape switch
+            //    {
+            //        Circle circle => circle.GetCircle(shapeExtents[0]),
+            //        Cuboid cuboid => cuboid.GetCuboid(shapeExtents[0], shapeExtents[1], shapeExtents[2]),
+            //        Cylinder cylinder => cylinder.GetCylinder(shapeExtents[0], shapeExtents[1]),
+            //        Rectangle rectangle => rectangle.GetRectangle(shapeExtents[0], shapeExtents[1]),
+
+            //        _ => throw new InvalidOperationException(null),
+            //    };
+            //}
+            //#endregion
         }
 
         public IExtent GetShapeExtent(ShapeExtentTypeCode shapeExtentTypeCode)
@@ -93,7 +95,7 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
             return GetDimensions().OrderBy(x => x);
         }
 
-        public ISpreadFactory GetSpreadFactory()
+        public virtual ISpreadFactory GetSpreadFactory()
         {
             return GetFactory().SpreadFactory;
         }
@@ -312,6 +314,11 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
         public abstract ITangentShapeFactory GetTangentShapeFactory();
         #endregion
         #endregion
+
+        protected ISpreadMeasure GetSpreadMeasure(IExtent[] shapeExtents)
+        {
+            return GetSpreadFactory().Create(shapeExtents).GetSpreadMeasure();
+        }
 
         #region Private methods
         #region Static methods

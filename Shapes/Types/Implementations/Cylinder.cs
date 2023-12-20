@@ -89,6 +89,11 @@ internal sealed class Cylinder : DryBody<ICylinder, ICircle>, ICylinder
     {
         return (ICuboidFactory)GetFactory().TangentShapeFactory;
     }
+
+    public ICylinder GetNew(ICylinder other)
+    {
+        throw new NotImplementedException();
+    }
     #endregion
     #endregion
 }

@@ -2,5 +2,5 @@
 
 public interface IBaseShapeFactory : IBaseSpreadFactory
 {
-    IBaseShape Create(params IQuantifiable[] rateComponents);
+    IBaseShape Create(params IQuantifiable[] shapeComponents);
 }

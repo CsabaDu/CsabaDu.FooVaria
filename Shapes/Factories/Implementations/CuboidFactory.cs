@@ -1,4 +1,4 @@
-﻿using static CsabaDu.FooVaria.Spreads.Statics.SpreadMeasures;
+﻿using System.Collections.Generic;
 
 namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
 {
@@ -26,17 +26,6 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
         public ICuboid Create(ICuboid other)
         {
             return new Cuboid(other);
-        }
-
-        public override ICuboid Create(IDryBody other)
-        {
-            return NullChecked(other, nameof(other)) switch
-            {
-                Cylinder cylinder => cylinder.GetOuterTangentShape(),
-                Cuboid cuboid => Create(cuboid),
-
-                _ => throw ArgumentTypeOutOfRangeException(nameof(other), other),
-            };
         }
 
         public IRectangle CreateBaseFace(IExtent length, IExtent width)
@@ -79,7 +68,52 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
             return (ICylinderFactory)TangentShapeFactory;
         }
 
-        public override IBaseShape Create(params IQuantifiable[] rateComponents)
+        public override IBaseShape Create(params IQuantifiable[] shapeComponents)
+        {
+            int count = GetValidShapeComponentsCount(shapeComponents);
+
+            return count switch
+            {
+                1 => createCuboidFromOneParam(),
+                2 => createCuboidFromTwoParams(),
+                3 => createCuboidFromThreeParams(),
+
+                _ => throw CountArgumentOutOfRangeException(count, nameof(shapeComponents)),
+
+            };
+
+            #region Local methods
+            ICuboid createCuboidFromOneParam()
+            {
+                if (shapeComponents[0] is ICuboid cuboid) return Create(cuboid);
+
+                throw ArgumentTypeOutOfRangeException(nameof(shapeComponents), shapeComponents);
+            }
+
+            ICuboid createCuboidFromTwoParams()
+            {
+                IQuantifiable last = shapeComponents[1];
+
+                if (last is not IExtent height) throw ArgumentTypeOutOfRangeException(nameof(shapeComponents), last);
+
+                IQuantifiable first = shapeComponents[0];
+
+                if (first is IRectangle rectangle) return Create(rectangle, height);
+
+                throw ArgumentTypeOutOfRangeException(nameof(shapeComponents), first);
+
+            }
+
+            ICuboid createCuboidFromThreeParams()
+            {
+                IEnumerable<IExtent> shapeExtents = GetShapeExtents(shapeComponents);
+
+                return Create(shapeExtents.First(), shapeExtents.ElementAt(1), shapeExtents.Last());
+            }
+            #endregion
+        }
+
+        public override IPlaneShape CreateProjection(IDryBody dryBody, ShapeExtentTypeCode perpendicular)
         {
             throw new NotImplementedException();
         }

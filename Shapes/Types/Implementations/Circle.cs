@@ -81,6 +81,11 @@ internal sealed class Circle : PlaneShape, ICircle
     {
         return (IRectangleFactory)GetFactory().TangentShapeFactory;
     }
+
+    public ICircle GetNew(ICircle other)
+    {
+        throw new NotImplementedException();
+    }
     #endregion
     #endregion
 }

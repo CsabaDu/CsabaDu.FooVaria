@@ -23,7 +23,7 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 
                 IExtent[] shapeExtents = baseFace.GetShapeExtents().Append(height).ToArray();
 
-                return (height, GetVolume(shapeExtents));
+                return (height, (IVolume)GetSpreadMeasure(shapeExtents));
             }
             #endregion
         }
@@ -31,14 +31,7 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
         private protected DryBody(IDryBodyFactory factory, params IExtent[] shapeExtents) : base(factory, MeasureUnitTypeCode.VolumeUnit, shapeExtents)
         {
             Height = shapeExtents.Last();
-            Volume = GetVolume(shapeExtents);
-        }
-
-        private IVolume GetVolume(IExtent[] shapeExtents)
-        {
-            IMeasureFactory measureFactory = GetFactory().SpreadFactory.MeasureFactory;
-
-            return SpreadMeasures.GetVolume(measureFactory, shapeExtents);
+            Volume = (IVolume)GetSpreadMeasure(shapeExtents);
         }
 
         public IVolume Volume { get; init; }

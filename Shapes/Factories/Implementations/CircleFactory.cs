@@ -11,17 +11,6 @@
             throw new NotImplementedException();
         }
 
-        public override ICircle Create(IPlaneShape other)
-        {
-            return NullChecked(other, nameof(other)) switch
-            {
-                Circle circle =>  Create(circle),
-                Rectangle rectangle => rectangle.GetOuterTangentShape(),
-
-                _ => throw new InvalidOperationException(null),
-            };
-        }
-
         public ICircle Create(IExtent radius)
         {
             return new Circle(this, radius);
@@ -32,9 +21,20 @@
             return new Circle(other);
         }
 
-        public override IBaseShape Create(params IQuantifiable[] rateComponents)
+        public override ICircle Create(params IQuantifiable[] shapeComponents)
         {
-            throw new NotImplementedException();
+            int count = GetValidShapeComponentsCount(shapeComponents);
+
+            switch (count)
+            {
+                case 1:
+                    if (shapeComponents[0] is ICircle circle) return Create(circle);
+                    if (shapeComponents[0] is IExtent radius) return Create(radius);
+                    throw ArgumentTypeOutOfRangeException(nameof(shapeComponents), shapeComponents);
+
+                default:
+                    throw CountArgumentOutOfRangeException(count, nameof(shapeComponents));
+            }
         }
 
         public IRectangle CreateInnerTangentShape(ICircle circle, IExtent tangentRectangleSide)

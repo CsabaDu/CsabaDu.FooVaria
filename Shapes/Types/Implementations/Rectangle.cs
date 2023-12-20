@@ -112,6 +112,11 @@ internal sealed class Rectangle : PlaneShape, IRectangle
     {
         return (ICircleFactory)GetFactory().TangentShapeFactory;
     }
+
+    public IRectangle GetNew(IRectangle other)
+    {
+        throw new NotImplementedException();
+    }
     #endregion
     #endregion
 }

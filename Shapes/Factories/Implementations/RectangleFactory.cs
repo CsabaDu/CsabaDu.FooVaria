@@ -1,4 +1,4 @@
-﻿using static CsabaDu.FooVaria.Spreads.Statics.SpreadMeasures;
+﻿using CsabaDu.FooVaria.Common.Behaviors;
 
 namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
 {
@@ -11,6 +11,36 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
         #endregion
 
         #region Public methods
+        public override IRectangle Create(params IQuantifiable[] shapeComponents)
+        {
+            int count = GetValidShapeComponentsCount(shapeComponents);
+
+            return count switch
+            {
+                1 => createRectangleFromOneParam(),
+                2 => createRectangleFromTwoParams(),
+
+                _ => throw CountArgumentOutOfRangeException(count, nameof(shapeComponents)),
+
+            };
+
+            #region Local methods
+            IRectangle createRectangleFromOneParam()
+            {
+                if (shapeComponents[0] is IRectangle rectangle) return Create(rectangle);
+
+                throw ArgumentTypeOutOfRangeException(nameof(shapeComponents), shapeComponents);
+            }
+
+            IRectangle createRectangleFromTwoParams()
+            {
+                IEnumerable<IExtent> shapeExtents = GetShapeExtents(shapeComponents);
+
+                return Create(shapeExtents.First(), shapeExtents.Last());
+            }
+            #endregion
+        }
+
         public IRectangle Create(IExtent length, IExtent width)
         {
             return new Rectangle(this, length, width);
@@ -91,17 +121,6 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
             #endregion
         }
 
-        public override IRectangle Create(IPlaneShape other)
-        {
-            return NullChecked(other, nameof(other)) switch
-            {
-                Circle circle => circle.GetOuterTangentShape(),
-                Rectangle rectangle => Create(rectangle),
-
-                _ => throw new InvalidOperationException(null),
-            };
-        }
-
         public override ICircleFactory GetTangentShapeFactory()
         {
             return (ICircleFactory)TangentShapeFactory;
@@ -115,11 +134,6 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
             IExtent radius = (IExtent)diagonal.Divide(2);
 
             return GetTangentShapeFactory().Create(radius);
-        }
-
-        public override IBaseShape Create(params IQuantifiable[] rateComponents)
-        {
-            throw new NotImplementedException();
         }
         #endregion
     }

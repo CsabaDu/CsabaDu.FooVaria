@@ -10,7 +10,7 @@ internal abstract class PlaneShape : Shape, IPlaneShape
 
     private protected PlaneShape(IPlaneShapeFactory factory, params IExtent[] shapeExtents) : base(factory, MeasureUnitTypeCode.AreaUnit, shapeExtents)
     {
-        Area = GetArea(shapeExtents, nameof(shapeExtents));
+        Area = (IArea)GetSpreadMeasure(shapeExtents);
     }
     #endregion
 
@@ -31,6 +31,11 @@ internal abstract class PlaneShape : Shape, IPlaneShape
     }
 
     #region Sealed methods
+    public override sealed IBulkSurfaceFactory GetSpreadFactory()
+    {
+        return (IBulkSurfaceFactory)GetFactory().SpreadFactory;
+    }
+
     public override sealed IArea GetSpreadMeasure()
     {
         return Area;
@@ -39,40 +44,4 @@ internal abstract class PlaneShape : Shape, IPlaneShape
     #endregion
     #endregion
 
-    #region Private methods
-    private IArea GetArea(object arg, string paramName)
-    {
-        if (arg is IBaseShape baseShape) // Kell?
-        {
-            return getArea(getBaseShape());
-        }
-        else if (arg is IExtent[] shapeExtents)
-        {
-            return getArea(getSpread(shapeExtents));
-        }
-        else
-        {
-            throw new InvalidOperationException(null);
-        }
-
-        #region Local methods
-        IArea getArea(IBaseSpread baseSpread)
-        {
-            return (IArea)baseSpread.GetSpreadMeasure();
-        }
-
-        IBaseShape getBaseShape()
-        {
-            Validate(baseShape, paramName);
-
-            return baseShape;
-        }
-
-        ISpread getSpread(IExtent[] shapeExtents)
-        {
-            return GetSpreadFactory().Create(shapeExtents);
-        }
-        #endregion
-    }
-    #endregion
 }

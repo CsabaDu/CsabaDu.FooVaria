@@ -128,6 +128,11 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
     {
         return (ICuboidFactory)Factory;
     }
+
+    public ICuboid GetNew(ICuboid other)
+    {
+        throw new NotImplementedException();
+    }
     #endregion
     #endregion
 }
