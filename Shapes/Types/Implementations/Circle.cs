@@ -43,6 +43,11 @@ internal sealed class Circle : PlaneShape, ICircle
         return GetFactory().CreateOuterTangentShape(this);
     }
 
+    public ICircle GetNew(ICircle other)
+    {
+        return GetFactory().Create(other);
+    }
+
     public IExtent GetRadius()
     {
         return Radius;
@@ -80,11 +85,6 @@ internal sealed class Circle : PlaneShape, ICircle
     public override IRectangleFactory GetTangentShapeFactory()
     {
         return (IRectangleFactory)GetFactory().TangentShapeFactory;
-    }
-
-    public ICircle GetNew(ICircle other)
-    {
-        throw new NotImplementedException();
     }
     #endregion
     #endregion

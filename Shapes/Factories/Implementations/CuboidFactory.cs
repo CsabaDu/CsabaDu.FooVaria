@@ -68,7 +68,7 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
             return (ICylinderFactory)TangentShapeFactory;
         }
 
-        public override IBaseShape Create(params IQuantifiable[] shapeComponents)
+        public override ICuboid Create(params IQuantifiable[] shapeComponents)
         {
             int count = GetValidShapeComponentsCount(shapeComponents);
 
@@ -111,11 +111,6 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
                 return Create(shapeExtents.First(), shapeExtents.ElementAt(1), shapeExtents.Last());
             }
             #endregion
-        }
-
-        public override IPlaneShape CreateProjection(IDryBody dryBody, ShapeExtentTypeCode perpendicular)
-        {
-            throw new NotImplementedException();
         }
     }
 }

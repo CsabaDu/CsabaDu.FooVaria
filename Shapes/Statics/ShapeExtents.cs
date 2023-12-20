@@ -81,26 +81,35 @@
             #endregion
         }
 
-        public static IExtent GetInnerTangentRectangleSide(ICircle circle, IExtent innerTangentRectangleSide, ExtentUnit extentUnit = default)
+        public static IExtent GetInnerTangentRectangleSide(ICircle circle, ExtentUnit extentUnit = default)
         {
-            NullChecked(circle, nameof(circle)).ValidateShapeComponent(innerTangentRectangleSide, nameof(innerTangentRectangleSide));
+            IExtent diagonal = NullChecked(circle, nameof(circle)).GetDiagonal();
+            decimal quantitySquare = GetDefaultQuantitySquare(diagonal) / 2;
+            double quantity = GetExchangedQuantitySqrt(circle, extentUnit, quantitySquare);
+
+            return diagonal.GetMeasure(extentUnit, quantity);
+        }
+
+        public static IExtent GetInnerTangentRectangleSide(ICircle circle, IExtent tangentRectangleSide, ExtentUnit extentUnit = default)
+        {
+            NullChecked(circle, nameof(circle)).ValidateShapeComponent(tangentRectangleSide, nameof(tangentRectangleSide));
             ValidateMeasureUnit(extentUnit, nameof(extentUnit));
 
-            decimal sideQuantitySquare = GetDefaultQuantitySquare(innerTangentRectangleSide);
+            decimal sideQuantitySquare = GetDefaultQuantitySquare(tangentRectangleSide);
             IExtent diagonal = circle.GetDiagonal();
             double quantity;
 
-            if (innerTangentRectangleSide.CompareTo(diagonal) <= 0)
+            if (tangentRectangleSide.CompareTo(diagonal) <= 0)
             {
-                quantity = innerTangentRectangleSide.GetQuantity();
+                quantity = tangentRectangleSide.GetQuantity();
 
-                throw QuantityArgumentOutOfRangeException(nameof(innerTangentRectangleSide), quantity);
+                throw QuantityArgumentOutOfRangeException(nameof(tangentRectangleSide), quantity);
             }
 
             decimal quantitySquare = GetDefaultQuantitySquare(diagonal) - sideQuantitySquare;
             quantity = GetExchangedQuantitySqrt(circle, extentUnit, quantitySquare);
 
-            return innerTangentRectangleSide.GetMeasure(extentUnit, quantity);
+            return diagonal.GetMeasure(extentUnit, quantity);
         }
         #endregion
 

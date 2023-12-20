@@ -6,11 +6,6 @@
         {
         }
 
-        public override IPlaneShape Create(IDryBody dryBody, ShapeExtentTypeCode perpendicular)
-        {
-            throw new NotImplementedException();
-        }
-
         public ICircle Create(IExtent radius)
         {
             return new Circle(this, radius);
@@ -39,12 +34,16 @@
 
         public IRectangle CreateInnerTangentShape(ICircle circle, IExtent tangentRectangleSide)
         {
-            throw new NotImplementedException();
+            IExtent otherSide = ShapeExtents.GetInnerTangentRectangleSide(circle, tangentRectangleSide);
+
+            return GetTangentShapeFactory().Create(tangentRectangleSide, otherSide);
         }
 
         public IRectangle CreateInnerTangentShape(ICircle circle)
         {
-            throw new NotImplementedException();
+            IExtent side = ShapeExtents.GetInnerTangentRectangleSide(circle);
+
+            return GetTangentShapeFactory().Create(side, side);
         }
 
         public IRectangle CreateOuterTangentShape(ICircle circle)

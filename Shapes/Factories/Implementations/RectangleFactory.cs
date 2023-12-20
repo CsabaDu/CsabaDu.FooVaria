@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Behaviors;
-
-namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
+﻿namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
 {
     public sealed class RectangleFactory : PlaneShapeFactory, IRectangleFactory
     {
@@ -76,51 +74,6 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
         }
 
         #region Override methods
-        public override IRectangle Create(IDryBody dryBody, ShapeExtentTypeCode perpendicular)
-        {
-            _ = NullChecked(dryBody, nameof(dryBody));
-            _ = Defined(perpendicular, nameof(perpendicular));
-
-            return dryBody switch
-            {
-                Cylinder cylinder => create(getCylinderShapeExtents(cylinder)),
-                Cuboid cuboid => create(getCuboidShapeExtents(cuboid)),
-
-                _ => throw new InvalidOperationException(null),
-            };
-
-            #region Local methods
-            IRectangle create((IExtent Length, IExtent Width) shapeExtents)
-            {
-                return Create(shapeExtents.Length, shapeExtents.Width);
-            }
-
-            (IExtent Length, IExtent Width) getCylinderShapeExtents(ICylinder cylinder)
-            {
-                IExtent baseFaceDiagonal = cylinder.BaseFace.GetDiagonal();
-                return perpendicular switch
-                {
-                    ShapeExtentTypeCode.Radius => (baseFaceDiagonal, cylinder.Height),
-                    ShapeExtentTypeCode.Height => (baseFaceDiagonal, baseFaceDiagonal),
-
-                    _ => throw InvalidShapeExtentTypeCodeEnumArgumentException(perpendicular, nameof(perpendicular)),
-                };
-            }
-
-            (IExtent Length, IExtent Width) getCuboidShapeExtents(ICuboid cuboid)
-            {
-                return perpendicular switch
-                {
-                    ShapeExtentTypeCode.Length => (cuboid.GetWidth(), cuboid.Height),
-                    ShapeExtentTypeCode.Width => (cuboid.GetLength(), cuboid.Height),
-                    ShapeExtentTypeCode.Height => (cuboid.GetLength(), cuboid.GetWidth()),
-
-                    _ => throw InvalidShapeExtentTypeCodeEnumArgumentException(perpendicular, nameof(perpendicular)),
-                };
-            }
-            #endregion
-        }
-
         public override ICircleFactory GetTangentShapeFactory()
         {
             return (ICircleFactory)TangentShapeFactory;

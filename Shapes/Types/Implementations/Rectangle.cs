@@ -72,6 +72,11 @@ internal sealed class Rectangle : PlaneShape, IRectangle
         return GetFactory().CreateOuterTangentShape(this);
     }
 
+    public IRectangle GetNew(IRectangle other)
+    {
+        return GetFactory().Create(other);
+    }
+
     public IShape GetTangentShape(SideCode sideCode)
     {
         return GetFactory().CreateTangentShape(this, sideCode);
@@ -111,11 +116,6 @@ internal sealed class Rectangle : PlaneShape, IRectangle
     public override ICircleFactory GetTangentShapeFactory()
     {
         return (ICircleFactory)GetFactory().TangentShapeFactory;
-    }
-
-    public IRectangle GetNew(IRectangle other)
-    {
-        throw new NotImplementedException();
     }
     #endregion
     #endregion

@@ -39,7 +39,7 @@
 
         #region Abstract methods
         public abstract IDryBody Create(IPlaneShape baseFace, IExtent height);
-        public abstract IPlaneShape CreateProjection(IDryBody dryBody, ShapeExtentTypeCode perpendicular);
+        //public abstract IPlaneShape CreateProjection(IDryBody dryBody, ShapeExtentTypeCode perpendicular);
         #endregion
         #endregion
     }

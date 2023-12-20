@@ -4,7 +4,7 @@
     {
         IPlaneShapeFactory BaseFaceFactory { get; init; }
 
-        IPlaneShape CreateProjection(IDryBody dryBody, ShapeExtentTypeCode perpendicular);
+        //IPlaneShape CreateProjection(IDryBody dryBody, ShapeExtentTypeCode perpendicular);
         IDryBody Create(IPlaneShape baseFace, IExtent height);
         IPlaneShapeFactory GetBaseFaceFactory();
     }

@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
+﻿using CsabaDu.FooVaria.Shapes.Behaviors;
+
+namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
 {
     public sealed class CylinderFactory : DryBodyFactory<ICylinder, ICircle>, ICylinderFactory
     {
@@ -8,17 +10,17 @@
 
         public override ICylinder Create(ICircle baseFace, IExtent height)
         {
-            throw new NotImplementedException();
+            return new Cylinder(this, baseFace, height);
         }
 
         public ICylinder Create(IExtent radius, IExtent height)
         {
-            throw new NotImplementedException();
+            return new Cylinder(this, radius, height);
         }
 
         public ICylinder Create(ICylinder other)
         {
-            throw new NotImplementedException();
+            return new Cylinder(other);
         }
 
         public override ICylinder Create(params IQuantifiable[] shapeComponents)
@@ -61,7 +63,7 @@
 
         public ICircle CreateBaseFace(IExtent radius)
         {
-            throw new NotImplementedException();
+            return GetBaseFaceFactory().Create(radius);
         }
 
         public ICuboid CreateInnerTangentShape(ICylinder circularShape, IExtent tangentRectangleSide)
@@ -75,11 +77,6 @@
         }
 
         public ICuboid CreateOuterTangentShape(ICylinder shape)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override IPlaneShape CreateProjection(IDryBody dryBody, ShapeExtentTypeCode perpendicular)
         {
             throw new NotImplementedException();
         }

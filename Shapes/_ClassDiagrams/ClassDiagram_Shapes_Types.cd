@@ -150,8 +150,8 @@
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.Common.Types.ICommonBase&lt;TSelf&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="8.188" Y="14.82" />
-        <Point X="8.188" Y="16.875" />
+        <Point X="8.302" Y="14.82" />
+        <Point X="8.302" Y="16.875" />
         <Point X="4.75" Y="16.875" />
         <Point X="4.75" Y="17.25" />
       </Path>
@@ -162,37 +162,35 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Shapes.Types.ICuboid" Collapsed="true">
-    <Position X="6.5" Y="19.25" Width="2.5" />
+    <Position X="7.25" Y="19.25" Width="2.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Types.IDryBody&lt;TSelf, TBFace&gt;" FixedFromPoint="true">
       <Path>
         <Point X="12" Y="13.191" />
         <Point X="12" Y="18.875" />
-        <Point X="7.75" Y="18.875" />
-        <Point X="7.75" Y="19.25" />
+        <Point X="8.5" Y="18.875" />
+        <Point X="8.5" Y="19.25" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Types.IRectangularShape&lt;TSelf, TTangent&gt;" FixedFromPoint="true">
       <Path>
         <Point X="2.875" Y="15.57" />
         <Point X="2.875" Y="18.875" />
-        <Point X="7.75" Y="18.875" />
-        <Point X="7.75" Y="19.25" />
+        <Point X="8.5" Y="18.875" />
+        <Point X="8.5" Y="19.25" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Behaviors.IHorizontalRotation&lt;TSelf&gt;" FixedFromPoint="true">
       <Path>
         <Point X="1.375" Y="12.941" />
         <Point X="1.375" Y="18.875" />
-        <Point X="7.75" Y="18.875" />
-        <Point X="7.75" Y="19.25" />
+        <Point X="8.5" Y="18.875" />
+        <Point X="8.5" Y="19.25" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.Common.Types.ICommonBase&lt;TSelf&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="8.375" Y="14.82" />
-        <Point X="8.375" Y="18.875" />
-        <Point X="7.75" Y="18.875" />
-        <Point X="7.75" Y="19.25" />
+        <Point X="8.5" Y="14.82" />
+        <Point X="8.5" Y="19.25" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -220,8 +218,8 @@
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.Common.Types.ICommonBase&lt;TSelf&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="8" Y="14.82" />
-        <Point X="8" Y="15.125" />
+        <Point X="8.083" Y="14.82" />
+        <Point X="8.083" Y="15.125" />
         <Point X="6.625" Y="15.125" />
         <Point X="6.625" Y="15.5" />
       </Path>
@@ -251,8 +249,8 @@
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.Common.Types.ICommonBase&lt;TSelf&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="8.562" Y="14.82" />
-        <Point X="8.562" Y="15.125" />
+        <Point X="8.688" Y="14.82" />
+        <Point X="8.688" Y="15.125" />
         <Point X="9.875" Y="15.125" />
         <Point X="9.875" Y="15.5" />
       </Path>
@@ -410,7 +408,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Common.Types.ICommonBase&lt;TSelf&gt;" Collapsed="true">
-    <Position X="7.5" Y="14" Width="1.5" />
+    <Position X="7.5" Y="14" Width="1.75" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />

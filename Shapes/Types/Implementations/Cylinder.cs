@@ -44,6 +44,11 @@ internal sealed class Cylinder : DryBody<ICylinder, ICircle>, ICylinder
         return GetFactory().CreateOuterTangentShape(this);
     }
 
+    public ICylinder GetNew(ICylinder other)
+    {
+        return GetFactory().Create(other);
+    }
+
     public IExtent GetRadius()
     {
         return BaseFace.Radius;
@@ -88,11 +93,6 @@ internal sealed class Cylinder : DryBody<ICylinder, ICircle>, ICylinder
     public override ICuboidFactory GetTangentShapeFactory()
     {
         return (ICuboidFactory)GetFactory().TangentShapeFactory;
-    }
-
-    public ICylinder GetNew(ICylinder other)
-    {
-        throw new NotImplementedException();
     }
     #endregion
     #endregion

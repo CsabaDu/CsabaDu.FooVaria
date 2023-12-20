@@ -2,5 +2,5 @@
 
 public interface IPlaneShapeFactory : IShapeFactory, ISurfaceFactory
 {
-    IPlaneShape Create(IDryBody dryBody, ShapeExtentTypeCode perpendicular);
+    IPlaneShape? CreateProjection(IDryBody dryBody, ShapeExtentTypeCode perpendicular);
 }
