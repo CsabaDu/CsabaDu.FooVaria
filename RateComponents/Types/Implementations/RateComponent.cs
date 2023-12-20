@@ -230,7 +230,8 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
         #endregion
 
         #region Protected methods
-        protected TNum GetDefaultRateComponentQuantity<TNum>() where TNum : struct
+        protected TNum GetDefaultRateComponentQuantity<TNum>()
+            where TNum : struct
         {
             return (TNum)GetFactory().DefaultRateComponentQuantity;
         }
@@ -250,7 +251,8 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
         }
 
         #region Static methods
-        protected static T GetValidBaseMeasure<T>(T commonBase, IRootObject other, string paramName) where T : class, IRateComponent
+        protected static T GetValidBaseMeasure<T>(T commonBase, IRootObject other, string paramName)
+            where T : class, IRateComponent
         {
             T baseMeasure = GetValidMeasurable(commonBase, other, paramName);
             object quantity = baseMeasure.Quantity;
@@ -283,7 +285,8 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
             #endregion
         }
 
-        protected static void ValidateBaseMeasure<T>(T commonBase, IRootObject other, string paramName) where T : class, IRateComponent
+        protected static void ValidateBaseMeasure<T>(T commonBase, IRootObject other, string paramName)
+            where T : class, IRateComponent
         {
             T baseMeasure = GetValidMeasurable(commonBase, other, paramName);
             RateComponentCode rateComponentCode = commonBase.GetRateComponentCode();

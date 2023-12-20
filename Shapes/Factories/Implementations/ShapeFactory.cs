@@ -13,8 +13,12 @@ public abstract class ShapeFactory : IShapeFactory
     public ISpreadFactory SpreadFactory { get; init; }
     public ITangentShapeFactory TangentShapeFactory { get; init; }
 
-    public abstract IBaseSpread Create(ISpreadMeasure spreadMeasure);
-    public abstract IShape Create(params IExtent[] shapeExtents);
+    public IBaseSpread Create(ISpreadMeasure spreadMeasure)
+    {
+        return SpreadFactory.Create(spreadMeasure);
+    }
+
+    public abstract IBaseShape Create(params IQuantifiable[] rateComponents);
 
     public IExtent CreateShapeExtent(ExtentUnit extentUnit, ValueType quantity)
     {
@@ -30,15 +34,13 @@ public abstract class ShapeFactory : IShapeFactory
         return SpreadFactory.MeasureFactory;
     }
 
-    public abstract int GetShapeComponentCount();
+    public virtual ISpreadFactory GetSpreadFactory()
+    {
+        return SpreadFactory;
+    }
 
-    public abstract ISpreadFactory GetSpreadFactory();
-    //{
-    //    return SpreadFactory;
-    //}
-
-    public abstract ITangentShapeFactory GetTangentShapeFactory();
-    //{
-    //    return TangentShapeFactory;
-    //}
+    public virtual ITangentShapeFactory GetTangentShapeFactory()
+    {
+        return TangentShapeFactory;
+    }
 }

@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Spreads.Factories;
 
-public interface IBulkSurfaceFactory : ISpreadFactory<IBulkSurface, IArea, AreaUnit>, IFactory<ISurface>
+public interface IBulkSurfaceFactory : ISurfaceFactory, ISpreadFactory<IBulkSurface, IArea, AreaUnit>
 {
     //IBulkSurface Create(ISurface surface);
 }

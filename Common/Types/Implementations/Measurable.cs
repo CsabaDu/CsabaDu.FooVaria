@@ -126,7 +126,8 @@ public abstract class Measurable : CommonBase, IMeasurable
 
     #region Protected methods
     #region Static methods
-    protected static TSelf GetValidMeasurable<TSelf>(TSelf commonBase, IRootObject other, string paramName) where TSelf : class, IMeasurable
+    protected static TSelf GetValidMeasurable<TSelf>(TSelf commonBase, IRootObject other, string paramName)
+        where TSelf : class, IMeasurable
     {
         TSelf baseMeasurable = GetValidCommonBase(commonBase, other, paramName);
         MeasureUnitTypeCode measureUnitTypeCode = commonBase.MeasureUnitTypeCode;
@@ -135,7 +136,9 @@ public abstract class Measurable : CommonBase, IMeasurable
         return GetValidBaseMeasurable(baseMeasurable, measureUnitTypeCode, otherMeasureUnitTypeCode, paramName);
     }
 
-    protected static TSelf GetValidBaseMeasurable<TSelf, TEnum>(TSelf other, TEnum commonBaseProperty, TEnum otherProperty, string paramName) where TSelf : class, IMeasurable where TEnum : struct, Enum
+    protected static TSelf GetValidBaseMeasurable<TSelf, TEnum>(TSelf other, TEnum commonBaseProperty, TEnum otherProperty, string paramName)
+        where TSelf : class, IMeasurable
+        where TEnum : struct, Enum
     {
         if (commonBaseProperty.Equals(otherProperty)) return other;
 

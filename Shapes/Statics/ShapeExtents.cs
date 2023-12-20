@@ -47,7 +47,8 @@
                 return getRectangularShapeDiagonal(rectangle);
             }
 
-            IExtent getRectangularShapeDiagonal<T>(T shape) where T : class, IShape, IRectangularShape
+            IExtent getRectangularShapeDiagonal<T>(T shape)
+                where T : class, IShape, IRectangularShape
             {
                 ValidateMeasureUnit(extentUnit, nameof(extentUnit));
 

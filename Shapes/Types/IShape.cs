@@ -9,7 +9,8 @@
         ITangentShapeFactory GetTangentShapeFactory();
     }
 
-    public interface IShape<out TTangent> : IShape where TTangent : class, IShape, ITangentShape
+    public interface IShape<out TTangent> : IShape
+        where TTangent : class, IShape, ITangentShape
     {
         TTangent GetOuterTangentShape();
         TTangent GetInnerTangentShape();

@@ -71,7 +71,9 @@
         #endregion
     }
 
-    internal abstract class Spread<TSelf, TSMeasure> : Spread, ISpread<TSelf, TSMeasure> where TSelf : class, ISpread where TSMeasure : class, IMeasure<TSMeasure, double>, ISpreadMeasure
+    internal abstract class Spread<TSelf, TSMeasure> : Spread, ISpread<TSelf, TSMeasure>
+        where TSelf : class, ISpread
+        where TSMeasure : class, IMeasure<TSMeasure, double>, ISpreadMeasure
     {
         #region Constructors
         private protected Spread(ISpread<TSelf, TSMeasure> other) : base(other)
@@ -111,7 +113,10 @@
         #endregion
     }
 
-    internal abstract class Spread<TSelf, TSMeasure, TEnum> : Spread<TSelf, TSMeasure>, ISpread<TSelf, TSMeasure, TEnum> where TSelf : class, ISpread where TSMeasure : class, IMeasure<TSMeasure, double, TEnum>, ISpreadMeasure where TEnum : struct, Enum
+    internal abstract class Spread<TSelf, TSMeasure, TEnum> : Spread<TSelf, TSMeasure>, ISpread<TSelf, TSMeasure, TEnum>
+        where TSelf : class, ISpread
+        where TSMeasure : class, IMeasure<TSMeasure, double, TEnum>, ISpreadMeasure
+        where TEnum : struct, Enum
     {
         #region Constructors
         private protected Spread(ISpread<TSelf, TSMeasure, TEnum> other) : base(other)

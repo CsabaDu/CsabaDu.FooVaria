@@ -4,7 +4,9 @@
     {
     }
 
-    public interface IDefaultRateComponent<TSelf, TNum> : IDefaultRateComponent, IDefaultMeasurable<TSelf>, IQuantity<TNum>, ICommonBase<TSelf> where TSelf : class, IRateComponent, IDefaultRateComponent where TNum : struct
+    public interface IDefaultRateComponent<TSelf, TNum> : IDefaultRateComponent, IDefaultMeasurable<TSelf>, IQuantity<TNum>, ICommonBase<TSelf>
+        where TSelf : class, IRateComponent, IDefaultRateComponent
+        where TNum : struct
     {
         TNum GetDefaultRateComponentQuantity();
         TSelf GetDefault();

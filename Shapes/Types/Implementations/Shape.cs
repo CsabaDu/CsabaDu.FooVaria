@@ -48,7 +48,8 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
             return getShape(this, shapeExtents);
 
             #region Local methods
-            static IShape getShape<T>(T shape, IExtent[] shapeExtents) where T : IShape
+            static IShape getShape<T>(T shape, IExtent[] shapeExtents)
+                where T : IShape
             {
                 return shape switch
                 {
@@ -309,21 +310,6 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
         #region Abstract methods
         public abstract IEnumerable<IExtent> GetDimensions();
         public abstract ITangentShapeFactory GetTangentShapeFactory();
-        #endregion
-        #endregion
-
-        #region Protected methods
-        #region Static methods
-        //protected static TNum GetTangentShape<TNum>(IShape<TNum> shape, SideCode sideCode) where TNum : class, IShape, IShape
-        //{
-        //    return sideCode switch
-        //    {
-        //        SideCode.Inner => shape.GetInnerTangentShape(),
-        //        SideCode.Outer => shape.GetOuterTangentShape(),
-
-        //        _ => throw InvalidSideCodeEnumArgumentException(sideCode),
-        //    };
-        //}
         #endregion
         #endregion
 

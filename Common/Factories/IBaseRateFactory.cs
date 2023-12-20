@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Common.Factories;
 
-public interface IBaseRateFactory : IBaseMeasureFactory
+public interface IBaseRateFactory : IBaseMeasureFactory<IBaseRate>
 {
     IBaseRate Create(IBaseMeasure numerator, IMeasurable denominator);
     IBaseRate Create(IBaseMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);

@@ -4,7 +4,9 @@
     {
     }
 
-    public interface ICircularShape<out TSelf, out TTangent> : ICircularShape, IShape<TTangent> where TSelf : class, IShape, ICircularShape where TTangent : class, IShape, IRectangularShape
+    public interface ICircularShape<out TSelf, out TTangent> : ICircularShape, IShape<TTangent>
+        where TSelf : class, IShape, ICircularShape
+        where TTangent : class, IShape, IRectangularShape
     {
         TTangent GetInnerTangentShape(IExtent innerTangentRectangleSide);
     }

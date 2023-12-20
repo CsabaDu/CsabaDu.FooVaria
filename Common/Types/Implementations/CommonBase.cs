@@ -47,7 +47,8 @@ public abstract class CommonBase : ICommonBase
     #endregion
 
     #region Protected methods
-    protected static void Validate<T>(T commonBase, IRootObject? rootObject, Action validateCommonBase, string paramName) where T : class, ICommonBase
+    protected static void Validate<T>(T commonBase, IRootObject? rootObject, Action validateCommonBase, string paramName)
+        where T : class, ICommonBase
     {
         _ = NullChecked(rootObject, paramName);
 
@@ -74,7 +75,8 @@ public abstract class CommonBase : ICommonBase
     }
 
     #region Static methods
-    protected static T GetValidCommonBase<T>(T commonBase, IRootObject other, string paramName) where T : class, ICommonBase
+    protected static T GetValidCommonBase<T>(T commonBase, IRootObject other, string paramName)
+        where T : class, ICommonBase
     {
         ValidateInterfaces(commonBase, other, paramName);
 

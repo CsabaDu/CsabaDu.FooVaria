@@ -7,7 +7,8 @@ namespace CsabaDu.FooVaria.Shapes.Behaviors
         //IRectangle GetComparedVerticalFace(ComparisonCode comparisonCode);
     }
 
-    public interface ISpatialRotation<TSelf> : ISpatialRotation where TSelf : class, IDryBody, IRectangularShape
+    public interface ISpatialRotation<TSelf> : ISpatialRotation
+        where TSelf : class, IDryBody, IRectangularShape
     {
         TSelf RotateSpatially();
         //TNum RotateSpatiallyWith(IDryBody other);

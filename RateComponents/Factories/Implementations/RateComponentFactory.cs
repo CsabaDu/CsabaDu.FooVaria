@@ -56,7 +56,8 @@
         #endregion
     }
 
-    public abstract class RateComponentFactory<T> : RateComponentFactory, IRateComponentFactory<T> where T : class, IRateComponent
+    public abstract class RateComponentFactory<T> : RateComponentFactory, IRateComponentFactory<T>
+        where T : class, IRateComponent
     {
         #region Constructors
         private protected RateComponentFactory(IMeasurementFactory measurementFactory) : base(measurementFactory)

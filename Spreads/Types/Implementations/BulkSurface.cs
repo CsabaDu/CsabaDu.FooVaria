@@ -13,12 +13,12 @@ internal sealed class BulkSurface : Spread<IBulkSurface, IArea, AreaUnit>, IBulk
     #endregion
 
     #region Public methods
-    internal IBulkSurface GetBulkSurface(IExtent radius)
+    public IBulkSurface GetBulkSurface(IExtent radius)
     {
         return GetSpread(radius);
     }
 
-    internal IBulkSurface GetBulkSurface(IExtent length, IExtent width)
+    public IBulkSurface GetBulkSurface(IExtent length, IExtent width)
     {
         return GetSpread(length, width);
     }

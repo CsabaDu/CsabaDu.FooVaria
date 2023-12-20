@@ -18,17 +18,17 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
             throw new NotImplementedException();
         }
 
-        public override ICylinder Create(params IExtent[] shapeExtents)
-        {
-            throw new NotImplementedException();
-        }
-
         public ICylinder Create(IExtent radius, IExtent height)
         {
             throw new NotImplementedException();
         }
 
         public ICylinder Create(ICylinder other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IBaseShape Create(params IQuantifiable[] rateComponents)
         {
             throw new NotImplementedException();
         }
@@ -66,11 +66,6 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
         public override ICircleFactory GetBaseFaceFactory()
         {
             throw new NotImplementedException();
-        }
-
-        public override int GetShapeComponentCount()
-        {
-            return CylinderShapeExtentCount;
         }
 
         public override ICuboidFactory GetTangentShapeFactory()

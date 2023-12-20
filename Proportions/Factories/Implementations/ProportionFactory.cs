@@ -17,12 +17,17 @@
         #endregion
     }
 
-    public abstract class ProportionFactory<T, U> : ProportionFactory, IProportionFactory<T, U> where T : class, IProportion<T, U>, IMeasureProportion where U : struct, Enum
+    public abstract class ProportionFactory<T, U> : ProportionFactory, IProportionFactory<T, U>
+        where T : class, IProportion<T, U>, IMeasureProportion
+        where U : struct, Enum
     {
         public abstract T Create(IRateComponent numerator, U denominatorMeasureUnit);
     }
 
-    public abstract class ProportionFactory<T, W, U> : ProportionFactory, IProportionFactory<T, W, U> where T : class, IProportion<T, W, U>, IMeasureProportion where U : struct, Enum where W : struct, Enum
+    public abstract class ProportionFactory<T, W, U> : ProportionFactory, IProportionFactory<T, W, U>
+        where T : class, IProportion<T, W, U>, IMeasureProportion
+        where U : struct, Enum
+        where W : struct, Enum
     {
         public abstract T Create(IRateComponent numerator, U denominatorMeasureUnit);
         //public abstract TNum Create(IRateComponent numerator, TEnum denominatorMeasureUnit);

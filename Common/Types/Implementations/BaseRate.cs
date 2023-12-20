@@ -153,7 +153,8 @@
 
         #region Protected methods
         #region Static methods
-        protected static T GetValidBaseRate<T>(T commonBase, IRootObject other, string paramName) where T : class, IBaseRate
+        protected static T GetValidBaseRate<T>(T commonBase, IRootObject other, string paramName)
+            where T : class, IBaseRate
         {
             T baseRate = GetValidMeasurable(commonBase, other, paramName);
 

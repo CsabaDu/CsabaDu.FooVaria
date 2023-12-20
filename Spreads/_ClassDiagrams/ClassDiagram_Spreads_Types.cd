@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Interface Name="CsabaDu.FooVaria.Spreads.Types.IBulkBody" Collapsed="true">
-    <Position X="1.25" Y="12.25" Width="2.5" />
+    <Position X="0.75" Y="12.75" Width="2.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.Spreads.Types.ISpread&lt;TSelf, TSMeasure, TEnum&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="4.125" Y="11.57" />
-        <Point X="4.125" Y="11.875" />
-        <Point X="2.5" Y="11.875" />
-        <Point X="2.5" Y="12.25" />
+        <Point X="3.125" Y="12.07" />
+        <Point X="3.125" Y="12.375" />
+        <Point X="2" Y="12.375" />
+        <Point X="2" Y="12.75" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -16,13 +16,13 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Spreads.Types.IBulkSurface" Collapsed="true">
-    <Position X="5" Y="12.25" Width="2.5" />
+    <Position X="3.5" Y="12.75" Width="2.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.Spreads.Types.ISpread&lt;TSelf, TSMeasure, TEnum&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="4.625" Y="11.57" />
-        <Point X="4.625" Y="11.875" />
-        <Point X="6.25" Y="11.875" />
-        <Point X="6.25" Y="12.25" />
+        <Point X="3.625" Y="12.07" />
+        <Point X="3.625" Y="12.375" />
+        <Point X="4.75" Y="12.375" />
+        <Point X="4.75" Y="12.75" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -31,21 +31,21 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Spreads.Types.ISpread" Collapsed="true">
-    <Position X="2.75" Y="8" Width="1.25" />
+    <Position X="2.75" Y="8.5" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Types\ISpread.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Spreads.Types.ISpread&lt;TSelf, TSMeasure&gt;" Collapsed="true">
-    <Position X="2.25" Y="9.25" Width="2.25" />
+    <Position X="2.25" Y="9.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
       <FileName>Types\ISpread.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Spreads.Types.ISpread&lt;TSelf, TSMeasure, TEnum&gt;" Collapsed="true">
-    <Position X="3" Y="10.75" Width="2.75" />
+    <Position X="2" Y="11.25" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Types\ISpread.cs</FileName>
@@ -64,13 +64,13 @@
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Spreads.Behaviors.ISpreadMeasure&lt;TSelf, TEnum&gt;" Collapsed="true">
-    <Position X="4.75" Y="9.25" Width="2.5" />
+    <Position X="4.25" Y="8.5" Width="2.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.Common.Behaviors.ISpreadMeasure" ManuallyRouted="true" FixedFromPoint="true">
       <Path>
         <Point X="4.25" Y="1.191" />
         <Point X="4.25" Y="1.863" />
-        <Point X="6" Y="1.863" />
-        <Point X="6" Y="9.25" />
+        <Point X="5.5" Y="1.863" />
+        <Point X="5.5" Y="8.5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -79,7 +79,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Common.Behaviors.IMeasureUnit&lt;TEnum&gt;" Collapsed="true">
-    <Position X="3.75" Y="5.5" Width="2" />
+    <Position X="3.25" Y="5.5" Width="2" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Common.Behaviors.ISpreadMeasure" Collapsed="true">
@@ -87,49 +87,49 @@
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Common.Types.IBody" Collapsed="true">
-    <Position X="0.5" Y="5.5" Width="2" />
+    <Position X="0.75" Y="5.5" Width="2" />
     <InheritanceLine Type="CsabaDu.FooVaria.Common.Types.IBaseSpread" FixedFromPoint="true">
       <Path>
         <Point X="2.75" Y="4.752" />
         <Point X="2.75" Y="5.125" />
-        <Point X="1.5" Y="5.125" />
-        <Point X="1.5" Y="5.5" />
+        <Point X="1.75" Y="5.125" />
+        <Point X="1.75" Y="5.5" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.Common.Behaviors.ISpreadMeasure" ManuallyRouted="true" FixedFromPoint="true">
       <Path>
         <Point X="3.875" Y="1.191" />
         <Point X="3.875" Y="1.573" />
-        <Point X="1.5" Y="1.573" />
-        <Point X="1.5" Y="5.5" />
+        <Point X="1.75" Y="1.573" />
+        <Point X="1.75" Y="5.5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Common.Types.ISurface" Collapsed="true">
-    <Position X="6.5" Y="5.5" Width="2" />
+    <Position X="6" Y="5.5" Width="2" />
     <InheritanceLine Type="CsabaDu.FooVaria.Common.Types.IBaseSpread" FixedFromPoint="true">
       <Path>
         <Point X="3.25" Y="4.752" />
         <Point X="3.25" Y="5.125" />
-        <Point X="5.917" Y="5.125" Type="JumpStart" />
-        <Point X="6.083" Y="5.125" Type="JumpEnd" />
-        <Point X="7.5" Y="5.125" />
-        <Point X="7.5" Y="5.5" />
+        <Point X="5.417" Y="5.125" Type="JumpStart" />
+        <Point X="5.583" Y="5.125" Type="JumpEnd" />
+        <Point X="7" Y="5.125" />
+        <Point X="7" Y="5.5" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.Common.Behaviors.ISpreadMeasure" ManuallyRouted="true">
       <Path>
         <Point X="4.438" Y="1.191" />
         <Point X="4.438" Y="1.61" />
-        <Point X="7.5" Y="1.61" />
-        <Point X="7.5" Y="5.5" />
+        <Point X="7" Y="1.61" />
+        <Point X="7" Y="5.5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Spreads.Behaviors.IValidShapeExtents" Collapsed="true">
-    <Position X="3.25" Y="6.75" Width="1.75" />
+    <Position X="3.25" Y="7.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
       <FileName>Behaviors\IValidShapeExtents.cs</FileName>

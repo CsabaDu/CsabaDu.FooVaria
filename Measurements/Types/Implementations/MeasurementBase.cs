@@ -147,7 +147,8 @@ internal abstract class MeasurementBase : Measurable, IMeasurementBase
 
     #region Protected methods
     #region Static methods
-    protected static IDictionary<object, T> GetMeasureUnitBasedCollection<T>(IDictionary<object, T> measureUnitBasedCollection, MeasureUnitTypeCode measureUnitTypeCode) where T : notnull
+    protected static IDictionary<object, T> GetMeasureUnitBasedCollection<T>(IDictionary<object, T> measureUnitBasedCollection, MeasureUnitTypeCode measureUnitTypeCode)
+        where T : notnull
     {
         MeasureUnitTypes.ValidateMeasureUnitTypeCode(measureUnitTypeCode, nameof(measureUnitTypeCode));
 
@@ -174,7 +175,8 @@ internal abstract class MeasurementBase : Measurable, IMeasurementBase
             .ToDictionary(x => x.Key, x => x.Value);
 
         #region Local methods
-        static IEnumerable<KeyValuePair<object, decimal>> initConstantExchangeRates<T>(params decimal[] exchangeRates) where T : struct, Enum
+        static IEnumerable<KeyValuePair<object, decimal>> initConstantExchangeRates<T>(params decimal[] exchangeRates)
+            where T : struct, Enum
         {
             yield return getMeasureUnitExchangeRatePair(default(T), decimal.One);
 

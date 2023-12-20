@@ -1,4 +1,5 @@
-﻿namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
+﻿
+namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
 {
     public abstract class PlaneShapeFactory : ShapeFactory, IPlaneShapeFactory
     {
@@ -7,13 +8,6 @@
         }
 
         public abstract IPlaneShape Create(IDryBody dryBody, ShapeExtentTypeCode perpendicular);
-
-        public override IBulkSurface Create(ISpreadMeasure spreadMeasure)
-        {
-            IMeasure area = SpreadMeasures.GetValidSpreadMeasure(MeasureUnitTypeCode.AreaUnit, spreadMeasure);
-
-            return GetSpreadFactory().Create((IArea)area);
-        }
 
         public override sealed IBulkSurfaceFactory GetSpreadFactory()
         {
@@ -34,5 +28,12 @@
         }
 
         public abstract IPlaneShape Create(IPlaneShape other);
+
+        public ISurface Create(ISurface other)
+        {
+            IArea area = (IArea)NullChecked(other, nameof(other)).GetSpreadMeasure();
+
+            return GetSpreadFactory().Create(area);
+        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="CsabaDu.FooVaria.Measurements.Types.Implementations.ConstantMeasurement" Collapsed="true">
-    <Position X="3" Y="5.75" Width="2" />
+    <Position X="2.5" Y="5.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Types\Implementations\ConstantMeasurement.cs</FileName>
@@ -9,7 +9,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.Measurements.Types.Implementations.CustomMeasurement" Collapsed="true">
-    <Position X="0.5" Y="5.75" Width="2" />
+    <Position X="0.5" Y="5.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAACAAIAAABEAAAQIAAJAEAAAAAIAAAAAAAgAAAAA=</HashCode>
       <FileName>Types\Implementations\CustomMeasurement.cs</FileName>
@@ -17,7 +17,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.Measurements.Types.Implementations.Measurement" Collapsed="true">
-    <Position X="2" Y="4.25" Width="1.5" />
+    <Position X="1.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAACEAgADAgAAAIQAAAAAACIAAQIAEAgCAABCAAABgE=</HashCode>
       <FileName>Types\Implementations\Measurement.cs</FileName>
@@ -25,15 +25,15 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.Measurements.Types.Implementations.MeasurementBase" Collapsed="true">
-    <Position X="2" Y="2.75" Width="1.5" />
+    <Position X="1.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QgECAAAABAAAAQYAgQAAgAACAAACQIAAAQAICAAABAA=</HashCode>
+      <HashCode>QgECAgAABAAAAQYAgQAAgAACAAACQIAAAQAICAAABAA=</HashCode>
       <FileName>Types\Implementations\MeasurementBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.Common.Types.Implementations.Measurable" Collapsed="true">
-    <Position X="2" Y="1.25" Width="1.5" />
+    <Position X="1.75" Y="1.25" Width="1.5" />
     <TypeIdentifier />
     <Lollipop Position="0.2" />
   </Class>

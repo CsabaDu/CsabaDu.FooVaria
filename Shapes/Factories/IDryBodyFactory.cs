@@ -1,8 +1,6 @@
-﻿using CsabaDu.FooVaria.Shapes.Types;
-
-namespace CsabaDu.FooVaria.Shapes.Factories
+﻿namespace CsabaDu.FooVaria.Shapes.Factories
 {
-    public interface IDryBodyFactory : IShapeFactory
+    public interface IDryBodyFactory : IShapeFactory, IBodyFactory
     {
         IPlaneShapeFactory BaseFaceFactory { get; init; }
 
@@ -11,7 +9,9 @@ namespace CsabaDu.FooVaria.Shapes.Factories
         IPlaneShapeFactory GetBaseFaceFactory();
     }
 
-    public interface IDryBodyFactory<out T, TBFace> : IDryBodyFactory where T : class, IDryBody, ITangentShape where TBFace : IPlaneShape, ITangentShape
+    public interface IDryBodyFactory<out T, TBFace> : IDryBodyFactory
+        where T : class, IDryBody, ITangentShape
+        where TBFace : IPlaneShape, ITangentShape
     {
         T Create(TBFace baseFace, IExtent height);
     }

@@ -1,9 +1,6 @@
-﻿using CsabaDu.FooVaria.Shapes.Types;
+﻿namespace CsabaDu.FooVaria.Shapes.Factories;
 
-namespace CsabaDu.FooVaria.Shapes.Factories
+public interface IPlaneShapeFactory : IShapeFactory, ISurfaceFactory
 {
-    public interface IPlaneShapeFactory : IShapeFactory
-    {
-        IPlaneShape Create(IDryBody dryBody, ShapeExtentTypeCode perpendicular);
-    }
+    IPlaneShape Create(IDryBody dryBody, ShapeExtentTypeCode perpendicular);
 }

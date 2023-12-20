@@ -1,5 +1,4 @@
 ﻿using CsabaDu.FooVaria.RateComponents.Factories;
-using CsabaDu.FooVaria.Shapes.Types;
 
 namespace CsabaDu.FooVaria.Shapes.Factories
 {
@@ -13,7 +12,6 @@ namespace CsabaDu.FooVaria.Shapes.Factories
         ITangentShapeFactory GetTangentShapeFactory();
 
         IExtent CreateShapeExtent(ExtentUnit extentUnit, ValueType quantity);
-        //IShape Create(params IExtent[] shapeExtents);
     }
 
     public interface IShapeFactory<T, out TTangent> : IShapeFactory, IFactory<T>

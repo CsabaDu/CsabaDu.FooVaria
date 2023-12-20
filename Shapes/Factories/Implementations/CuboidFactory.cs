@@ -79,14 +79,9 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
             return (ICylinderFactory)TangentShapeFactory;
         }
 
-        public override ICuboid Create(params IExtent[] shapeExtents)
+        public override IBaseShape Create(params IQuantifiable[] rateComponents)
         {
             throw new NotImplementedException();
-        }
-
-        public override int GetShapeComponentCount()
-        {
-            return CuboidShapeExtentCount;
         }
     }
 }

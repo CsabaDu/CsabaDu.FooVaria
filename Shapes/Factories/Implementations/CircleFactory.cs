@@ -1,6 +1,4 @@
-﻿using static CsabaDu.FooVaria.Spreads.Statics.SpreadMeasures;
-
-namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
+﻿namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
 {
     public sealed class CircleFactory : PlaneShapeFactory, ICircleFactory
     {
@@ -34,7 +32,7 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
             return new Circle(other);
         }
 
-        public override ICircle Create(params IExtent[] shapeExtents)
+        public override IBaseShape Create(params IQuantifiable[] rateComponents)
         {
             throw new NotImplementedException();
         }
@@ -57,11 +55,6 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
         public IRectangle CreateTangentShape(ICircle circle, SideCode sideCode)
         {
             return CreateTangentShape(this, circle, sideCode);
-        }
-
-        public override int GetShapeComponentCount()
-        {
-            return CircleShapeExtentCount;
         }
 
         public override IRectangleFactory GetTangentShapeFactory()

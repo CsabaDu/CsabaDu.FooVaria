@@ -96,7 +96,9 @@
         #endregion
     }
 
-    internal abstract class Proportion<T, U> : Proportion, IProportion<T, U> where T : class, IProportion, IMeasureProportion where U : struct, Enum
+    internal abstract class Proportion<T, U> : Proportion, IProportion<T, U>
+        where T : class, IProportion, IMeasureProportion
+        where U : struct, Enum
     {
         private protected Proportion(T other) : base(other)
         {
@@ -129,7 +131,10 @@
         public abstract T GetProportion(IRateComponent numerator, U denominatorMeasureUnit);
     }
 
-    internal abstract class Proportion<T, W, U> : Proportion<T, U>, IProportion<T, W, U> where T : class, IProportion<T, W, U>, IMeasureProportion where U : struct, Enum where W : struct, Enum
+    internal abstract class Proportion<T, W, U> : Proportion<T, U>, IProportion<T, W, U>
+        where T : class, IProportion<T, W, U>, IMeasureProportion
+        where U : struct, Enum
+        where W : struct, Enum
     {
         private protected Proportion(T other) : base(other)
         {
@@ -161,51 +166,3 @@
     }
 
 }
-
-
-
-    //internal abstract class Proportion<TNum, TContext, TEnum> : Proportion, IProportion<TNum, TContext, TEnum> where TNum : class, IProportion where TContext : struct, Enum where TEnum : struct, Enum
-    //{
-    //    #region Constructors
-    //    private protected Proportion(IProportionFactory factory, IBaseRate baseRate) : base(factory, baseRate)
-    //    {
-    //    }
-
-    //    private protected Proportion(IProportionFactory factory, MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode)
-    //    {
-    //    }
-    //    #endregion
-
-    //    #region Public methods
-    //    public TNum GetProportion(TContext numeratorMeasureUnit, ValueType quantity, TEnum denominatorMeasureUnit)
-    //    {
-    //        ValidateQuantity(quantity, nameof(quantity));
-
-    //        decimal decimalQuantity = (decimal?)quantity.ToQuantity(TypeCode.Decimal) ?? throw new InvalidOperationException(null);
-
-    //        return (TNum)GetFactory().Create(numeratorMeasureUnit, decimalQuantity, denominatorMeasureUnit);
-    //    }
-
-    //    public TNum GetProportion(IMeasure numerator, TEnum denominatorMeasureUnit)
-    //    {
-    //        return (TNum)GetFactory().Create(numerator, denominatorMeasureUnit);
-    //    }
-
-    //    public decimal GetQuantity(TContext numeratorMeasureUnit, TEnum denominatorMeasureUnit)
-    //    {
-    //        return DefaultQuantity
-    //            / GetExchangeRate(Defined(numeratorMeasureUnit, nameof(numeratorMeasureUnit)))
-    //            * GetExchangeRate(Defined(denominatorMeasureUnit, nameof(denominatorMeasureUnit)));
-    //    }
-
-    //    #region Override methods
-    //    #region Sealed methods
-    //    public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
-    //    {
-    //        yield return MeasureUnitTypes.GetMeasureUnitTypeCode(typeof(TContext));
-    //        yield return MeasureUnitTypes.GetMeasureUnitTypeCode(typeof(TEnum));
-    //    }
-    //    #endregion
-    //    #endregion
-    //    #endregion
-    //}

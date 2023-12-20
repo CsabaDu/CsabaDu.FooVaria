@@ -9,7 +9,8 @@
         IRateComponent Create(Enum measureUnit, ValueType quantity);
     }
 
-    public interface IRateComponentFactory<T> : IRateComponentFactory where T : class, IRateComponent
+    public interface IRateComponentFactory<T> : IRateComponentFactory
+        where T : class, IRateComponent
     {
         T Create(string name, ValueType quantity);
         T Create(IMeasurement measurement, ValueType quantity);

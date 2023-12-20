@@ -42,7 +42,8 @@ public abstract class Quantifiable : Measurable, IQuantifiable
             : null;
     }
 
-    protected static TypeCode GetQuantityTypeCode<TNum>(IQuantity<TNum> quantifiable) where TNum : struct 
+    protected static TypeCode GetQuantityTypeCode<TNum>(IQuantity<TNum> quantifiable)
+        where TNum : struct 
     {
         return Type.GetTypeCode(typeof(TNum));
 

@@ -290,7 +290,8 @@
         #endregion
 
         #region Protected methods
-        protected TOther ConvertMeasure<TOther>(ConvertMode convertMode) where TOther : IMeasure, IConvertMeasure
+        protected TOther ConvertMeasure<TOther>(ConvertMode convertMode)
+            where TOther : IMeasure, IConvertMeasure
         {
             MeasureUnitTypeCode measureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(typeof(TOther));
             Enum measureUnit = measureUnitTypeCode.GetDefaultMeasureUnit();

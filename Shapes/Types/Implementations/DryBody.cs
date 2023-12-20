@@ -103,7 +103,9 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
         public abstract IPlaneShape GetProjection(ShapeExtentTypeCode perpendicular);
     }
 
-    internal abstract class DryBody<TSelf, TBFace> : DryBody, IDryBody<TSelf, TBFace> where TSelf : class, IDryBody, ITangentShape where TBFace : IPlaneShape, ITangentShape
+    internal abstract class DryBody<TSelf, TBFace> : DryBody, IDryBody<TSelf, TBFace>
+        where TSelf : class, IDryBody, ITangentShape
+        where TBFace : IPlaneShape, ITangentShape
     {
         private protected DryBody(TSelf other) : base(other)
         {

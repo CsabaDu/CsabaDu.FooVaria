@@ -12,14 +12,13 @@ public static class SpreadMeasures
     #endregion
 
     #region Public methods
-
-    public static bool AreValidShapeExtents(MeasureUnitTypeCode measureUnitTypeCode, params IExtent[] shapeExtents)
+        public static bool AreValidShapeExtents(MeasureUnitTypeCode measureUnitTypeCode, params IExtent[] shapeExtents)
     {
         int count = shapeExtents?.Length ?? 0;
         bool isValidShapeExtentCount = measureUnitTypeCode switch
         {
             MeasureUnitTypeCode.AreaUnit => isValidateShapeExtentsCount(CircleShapeExtentCount, RectangleShapeExtentCount),
-            MeasureUnitTypeCode.VolumeUnit => isValidateShapeExtentsCount(CylinderShapeExtentCount, CuboidShapeExtentCount);
+            MeasureUnitTypeCode.VolumeUnit => isValidateShapeExtentsCount(CylinderShapeExtentCount, CuboidShapeExtentCount),
 
             _ => false,
         };
@@ -172,7 +171,7 @@ public static class SpreadMeasures
     #region Private methods
     private static IArea GetArea(IMeasureFactory factory, decimal quantity)
     {
-        return (IArea)factory.Create(quantity, default(AreaUnit));
+        return (IArea)factory.Create(default(AreaUnit), quantity);
     }
 
     private static decimal GetCircleAreaDefaultQuantity(IExtent radius)
@@ -203,7 +202,7 @@ public static class SpreadMeasures
     {
         quantity *= GetValidShapeExtentDefaultQuantity(height, nameof(height));
 
-        return (IVolume)factory.Create(quantity, default(VolumeUnit));
+        return (IVolume)factory.Create(default(VolumeUnit), quantity);
     }
     #endregion
 }

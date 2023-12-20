@@ -36,7 +36,9 @@ namespace CsabaDu.FooVaria.Common.Types.Implementations
         }
     }
 
-    public abstract class BaseMeasure<TSelf, TContext> : BaseMeasure, IBaseMeasure<TSelf, TContext> where TSelf : class, IBaseMeasure<TSelf, TContext> where TContext : notnull
+    public abstract class BaseMeasure<TSelf, TContext> : BaseMeasure, IBaseMeasure<TSelf, TContext>
+        where TSelf : class, IBaseMeasure<TSelf, TContext>
+        where TContext : notnull
     {
         protected BaseMeasure(TSelf other) : base(other)
         {

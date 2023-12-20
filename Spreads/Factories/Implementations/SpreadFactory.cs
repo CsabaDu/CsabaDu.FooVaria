@@ -23,7 +23,9 @@ namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
         #endregion
     }
 
-    public abstract class SpreadFactory<T, TSMeasure> : SpreadFactory, ISpreadFactory<T, TSMeasure> where T : class, ISpread where TSMeasure : class, IMeasure, ISpreadMeasure
+    public abstract class SpreadFactory<T, TSMeasure> : SpreadFactory, ISpreadFactory<T, TSMeasure>
+        where T : class, ISpread
+        where TSMeasure : class, IMeasure, ISpreadMeasure
     {
         #region Constructors
         private protected SpreadFactory(IMeasureFactory measureFactory) : base(measureFactory)
@@ -50,7 +52,10 @@ namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
         #endregion
     }
 
-    public abstract class SpreadFactory<T, TSMeasure, TEnum> : SpreadFactory<T, TSMeasure>, ISpreadFactory<T, TSMeasure, TEnum> where T : class, ISpread where TSMeasure : class, IMeasure, ISpreadMeasure where TEnum : struct, Enum
+    public abstract class SpreadFactory<T, TSMeasure, TEnum> : SpreadFactory<T, TSMeasure>, ISpreadFactory<T, TSMeasure, TEnum>
+        where T : class, ISpread
+        where TSMeasure : class, IMeasure, ISpreadMeasure
+        where TEnum : struct, Enum
     {
         #region Constructors
         private protected SpreadFactory(IMeasureFactory measureFactory) : base(measureFactory)

@@ -9,7 +9,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.Spreads.Factories.Implementations.BulkSurfaceFactory" Collapsed="true">
-    <Position X="4" Y="4.75" Width="2.75" />
+    <Position X="3.75" Y="4.75" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\Implementations\BulkSurfaceFactory.cs</FileName>

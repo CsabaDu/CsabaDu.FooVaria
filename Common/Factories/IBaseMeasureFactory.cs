@@ -4,7 +4,8 @@
     {
     }
 
-    public interface IBaseMeasureFactory<out T> : IBaseMeasureFactory where T : class, IBaseMeasure
+    public interface IBaseMeasureFactory<out T> : IBaseMeasureFactory
+        where T : class, IBaseMeasure
     {
     }
 }

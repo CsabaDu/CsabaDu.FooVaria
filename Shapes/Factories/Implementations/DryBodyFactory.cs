@@ -1,4 +1,5 @@
-﻿namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
+﻿
+namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
 {
     public abstract class DryBodyFactory : ShapeFactory, IDryBodyFactory
     {
@@ -9,23 +10,20 @@
 
         public IPlaneShapeFactory BaseFaceFactory { get; init; }
 
-        public override sealed IBulkBody Create(ISpreadMeasure spreadMeasure)
-        {
-            IMeasure volume = SpreadMeasures.GetValidSpreadMeasure(MeasureUnitTypeCode.VolumeUnit, spreadMeasure);
-
-            return GetSpreadFactory().Create((IVolume)volume);
-        }
-
         public abstract IDryBody Create(IPlaneShape baseFace, IExtent height);
 
-        public abstract IDryBody Create(IDryBody other);
-
-        public IPlaneShape CreateProjection(IDryBody dryBody, ShapeExtentTypeCode perpendicular)
+        public IBody Create(IBody other)
         {
-            throw new NotImplementedException();
+            IVolume volume = (IVolume)NullChecked(other, nameof(other)).GetSpreadMeasure();
+
+            return GetSpreadFactory().Create(volume);
         }
 
-        public abstract IPlaneShapeFactory GetBaseFaceFactory();
+        public abstract IPlaneShape CreateProjection(IDryBody dryBody, ShapeExtentTypeCode perpendicular);
+        public virtual IPlaneShapeFactory GetBaseFaceFactory()
+        {
+            return BaseFaceFactory;
+        }
 
         public override sealed IBulkBodyFactory GetSpreadFactory()
         {
@@ -51,6 +49,5 @@
         }
 
         public abstract T Create(TBFace baseFace, IExtent height);
-        //public abstract TContext CreateBaseFace(params IExtent[] shapeExtents);
     }
 }
