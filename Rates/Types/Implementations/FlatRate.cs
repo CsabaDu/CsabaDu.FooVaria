@@ -37,52 +37,52 @@
 
 //    public IFlatRate GetFlatRate(IMeasure numerator, string name, decimal quantity)
 //    {
-//        return GetFactory().Create(numerator, name, quantity);
+//        return GetFactory().CreateNew(numerator, name, quantity);
 //    }
 
 //    public IFlatRate GetFlatRate(IMeasure numerator, string name)
 //    {
-//        return GetFactory().Create(numerator, name);
+//        return GetFactory().CreateNew(numerator, name);
 //    }
 
 //    public IFlatRate GetFlatRate(IMeasure numerator, Enum measureUnit, decimal quantity)
 //    {
-//        return GetFactory().Create(numerator, measureUnit, quantity);
+//        return GetFactory().CreateNew(numerator, measureUnit, quantity);
 //    }
 
 //    public IFlatRate GetFlatRate(IMeasure numerator, Enum measureUnit)
 //    {
-//        return GetFactory().Create(numerator, measureUnit);
+//        return GetFactory().CreateNew(numerator, measureUnit);
 //    }
 
 //    public IFlatRate GetFlatRate(IMeasure numerator, IMeasurement measurement, decimal quantity)
 //    {
-//        return GetFactory().Create(numerator, measurement, quantity);
+//        return GetFactory().CreateNew(numerator, measurement, quantity);
 //    }
 
 //    public IFlatRate GetFlatRate(IMeasure numerator, IMeasurement measurement)
 //    {
-//        return GetFactory().Create(numerator, measurement);
+//        return GetFactory().CreateNew(numerator, measurement);
 //    }
 
 //    public IFlatRate GetFlatRate(IMeasure numerator, IDenominator denominator)
 //    {
-//        return GetFactory().Create(numerator, denominator);
+//        return GetFactory().CreateNew(numerator, denominator);
 //    }
 
 //    public IFlatRate GetFlatRate(IMeasure numerator)
 //    {
-//        return GetFactory().Create(numerator, Denominator);
+//        return GetFactory().CreateNew(numerator, Denominator);
 //    }
 
 //    public IFlatRate GetFlatRate(IRate rate)
 //    {
-//        return (IFlatRate)GetFactory().Create(rate);
+//        return (IFlatRate)GetFactory().CreateNew(rate);
 //    }
 
 //    public IFlatRate GetFlatRate(IFlatRate other)
 //    {
-//        return GetFactory().Create(other);
+//        return GetFactory().CreateNew(other);
 //    }
 
 //    public IFlatRate Multiply(decimal multiplier)
@@ -126,7 +126,7 @@
 
 //    //public override IFlatRate GetMeasurable(IDefaultMeasurable other)
 //    //{
-//    //    return (IFlatRate)GetFactory().Create(other);
+//    //    return (IFlatRate)GetFactory().CreateNew(other);
 //    //}
 //    #endregion
 //    #endregion

@@ -9,7 +9,7 @@
         #endregion
 
         #region Public methods
-        public override IRectangle Create(params IQuantifiable[] shapeComponents)
+        public override IRectangle CreateBaseShape(params IQuantifiable[] shapeComponents)
         {
             int count = GetValidShapeComponentsCount(shapeComponents);
 
@@ -25,7 +25,7 @@
             #region Local methods
             IRectangle createRectangleFromOneParam()
             {
-                if (shapeComponents[0] is IRectangle rectangle) return Create(rectangle);
+                if (shapeComponents[0] is IRectangle rectangle) return CreateNew(rectangle);
 
                 throw ArgumentTypeOutOfRangeException(nameof(shapeComponents), shapeComponents);
             }
@@ -44,7 +44,7 @@
             return new Rectangle(this, length, width);
         }
 
-        public IRectangle Create(IRectangle other)
+        public IRectangle CreateNew(IRectangle other)
         {
             return new Rectangle(other);
         }

@@ -12,78 +12,78 @@
 //    #endregion
 
 //    #region Public methods
-//    public IFlatRate Create(IFlatRate flatRate)
+//    public IFlatRate CreateNew(IFlatRate flatRate)
 //    {
 //        return new FlatRate(flatRate);
 //    }
 
-//    public IFlatRate Create(IMeasure numerator, IDenominator denominator)
+//    public IFlatRate CreateNew(IMeasure numerator, IDenominator denominator)
 //    {
 //        return new FlatRate(this, numerator, denominator);
 //    }
 
-//    public IFlatRate Create(IMeasure numerator, string name, ValueType quantity)
+//    public IFlatRate CreateNew(IMeasure numerator, string name, ValueType quantity)
 //    {
-//        IDenominator denominator = DenominatorFactory.Create(name, quantity);
+//        IDenominator denominator = DenominatorFactory.CreateNew(name, quantity);
 
-//        return Create(numerator, denominator);
+//        return CreateNew(numerator, denominator);
 //    }
 
-//    public IFlatRate Create(IMeasure numerator, Enum measureUnit, ValueType quantity)
+//    public IFlatRate CreateNew(IMeasure numerator, Enum measureUnit, ValueType quantity)
 //    {
-//        IDenominator denominator = DenominatorFactory.Create(measureUnit, quantity);
+//        IDenominator denominator = DenominatorFactory.CreateNew(measureUnit, quantity);
 
-//        return Create(numerator, denominator);
+//        return CreateNew(numerator, denominator);
 //    }
 
-//    public IFlatRate Create(IMeasure numerator, string name)
+//    public IFlatRate CreateNew(IMeasure numerator, string name)
 //    {
-//        IDenominator denominator = DenominatorFactory.Create(name);
+//        IDenominator denominator = DenominatorFactory.CreateNew(name);
 
-//        return Create(numerator, denominator);
+//        return CreateNew(numerator, denominator);
 //    }
 
-//    public IFlatRate Create(IMeasure numerator, Enum measureUnit)
+//    public IFlatRate CreateNew(IMeasure numerator, Enum measureUnit)
 //    {
-//        if (measureUnit is MeasureUnitTypeCode measureUnitTypeCode) return Create(numerator, measureUnitTypeCode);
+//        if (measureUnit is MeasureUnitTypeCode measureUnitTypeCode) return CreateNew(numerator, measureUnitTypeCode);
 
-//        IDenominator denominator = DenominatorFactory.Create(measureUnit);
+//        IDenominator denominator = DenominatorFactory.CreateNew(measureUnit);
 
-//        return Create(numerator, denominator);
+//        return CreateNew(numerator, denominator);
 //    }
 
-//    public IFlatRate Create(IMeasure numerator, IMeasurement measurement)
+//    public IFlatRate CreateNew(IMeasure numerator, IMeasurement measurement)
 //    {
 //        return new FlatRate(this, numerator, measurement);
 //    }
 
-//    public IFlatRate Create(IMeasure numerator, IMeasurement measurement, ValueType quantity)
+//    public IFlatRate CreateNew(IMeasure numerator, IMeasurement measurement, ValueType quantity)
 //    {
-//        IDenominator denominator = DenominatorFactory.Create(measurement, quantity);
+//        IDenominator denominator = DenominatorFactory.CreateNew(measurement, quantity);
 
-//        return Create(numerator, denominator);
+//        return CreateNew(numerator, denominator);
 //    }
 
-//    public override IFlatRate Create(IRate rate)
+//    public override IFlatRate CreateNew(IRate rate)
 //    {
 //        IMeasure numerator = NullChecked(rate, nameof(rate)).Numerator;
 //        IDenominator denominator = rate.Denominator;
 
-//        return Create(numerator, denominator);
+//        return CreateNew(numerator, denominator);
 //    }
 
-//    public override IFlatRate Create(IMeasurable other)
+//    public override IFlatRate CreateNew(IMeasurable other)
 //    {
 //        _ = NullChecked(other, nameof(other));
 
-//        if (other is IFlatRate flatRate) return Create(flatRate);
+//        if (other is IFlatRate flatRate) return CreateNew(flatRate);
 
-//        if (other is IRate rate) return Create(rate);
+//        if (other is IRate rate) return CreateNew(rate);
 
 //        throw new ArgumentOutOfRangeException(nameof(other), other.GetType(), null);
 //    }
 
-//    public override IFlatRate Create(IBaseMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTpeCode)
+//    public override IFlatRate CreateNew(IBaseMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTpeCode)
 //    {
 //        string name = nameof(numerator);
 
@@ -92,7 +92,7 @@
 //        return new FlatRate(this, measure, denominatorMeasureUnitTpeCode);
 //    }
 
-//    public override IBaseRate Create(IBaseMeasure numerator, Enum denominatorMeasureUnit)
+//    public override IBaseRate CreateNew(IBaseMeasure numerator, Enum denominatorMeasureUnit)
 //    {
 //        string name = nameof(numerator);
 

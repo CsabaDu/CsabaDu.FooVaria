@@ -65,7 +65,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
         throw InvalidMeasureUnitEnumArgumentException(measureUnit);
     }
 
-    public IMeasurement Create(IMeasurement measurement)
+    public IMeasurement CreateNew(IMeasurement measurement)
     {
         Enum measureUnit = NullChecked(measurement, nameof(measurement)).GetMeasureUnit();
 

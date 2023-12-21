@@ -18,12 +18,12 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
             return new Cylinder(this, radius, height);
         }
 
-        public ICylinder Create(ICylinder other)
+        public ICylinder CreateNew(ICylinder other)
         {
             return new Cylinder(other);
         }
 
-        public override ICylinder Create(params IQuantifiable[] shapeComponents)
+        public override ICylinder CreateBaseShape(params IQuantifiable[] shapeComponents)
         {
             int count = GetValidShapeComponentsCount(shapeComponents);
 
@@ -39,7 +39,7 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
             #region Local methods
             ICylinder createCylinderFromOneParam()
             {
-                if (shapeComponents[0] is ICylinder cylinder) return Create(cylinder);
+                if (shapeComponents[0] is ICylinder cylinder) return CreateNew(cylinder);
 
                 throw ArgumentTypeOutOfRangeException(nameof(shapeComponents), shapeComponents);
             }

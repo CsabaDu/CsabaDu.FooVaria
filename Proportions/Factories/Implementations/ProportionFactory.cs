@@ -6,9 +6,9 @@
         public abstract IProportion Create(IBaseRate baseRate);
         public abstract IBaseRate Create(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
         public abstract IProportion Create(IRateComponent numerator, IRateComponent denominator);
-        public abstract IBaseRate Create(IBaseMeasure numerator, IMeasurable denominator);
-        public abstract IBaseRate Create(IBaseMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
-        public abstract IBaseRate Create(IBaseMeasure numerator, Enum denominatorMeasureUnit);
+        public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, IMeasurable denominator);
+        public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
+        public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit);
 
         IProportion IProportionFactory.Create(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
         {
@@ -30,8 +30,8 @@
         where W : struct, Enum
     {
         public abstract T Create(IRateComponent numerator, U denominatorMeasureUnit);
-        //public abstract TNum Create(IRateComponent numerator, TEnum denominatorMeasureUnit);
-        public abstract T Create(T other);
+        //public abstract TNum CreateNew(IRateComponent numerator, TEnum denominatorMeasureUnit);
+        public abstract T CreateNew(T other);
         public abstract T Create(W numeratorMeasureUnit, decimal quantity, U denominatorMeasureUnit);
     }
 

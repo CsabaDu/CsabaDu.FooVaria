@@ -196,7 +196,7 @@
 
         public IBaseRate GetBaseRate(IBaseMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
         {
-            return GetFactory().Create(numerator, denominatorMeasureUnitTypeCode);
+            return GetFactory().CreateBaseRate(numerator, denominatorMeasureUnitTypeCode);
         }
 
         public abstract IBaseRate GetBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit);

@@ -9,11 +9,63 @@
         #endregion
 
         #region Public methods
-        public ISurface Create(ISurface other)
+        public ISurface CreateNew(ISurface other)
         {
             IArea area = (IArea)NullChecked(other, nameof(other)).GetSpreadMeasure();
 
             return GetSpreadFactory().Create(area);
+        }
+
+        public IPlaneShape? CreateProjection(IDryBody dryBody, ShapeExtentTypeCode perpendicular)
+        {
+            if (dryBody?.IsValidShapeExtentTypeCode(perpendicular) != true) return null;
+
+            return perpendicular switch
+            {
+                ShapeExtentTypeCode.Radius => createCylinderVerticalProjection(),
+                ShapeExtentTypeCode.Length => createCuboidVerticalProjection(),
+                ShapeExtentTypeCode.Width => createCuboidVerticalProjection(),
+                ShapeExtentTypeCode.Height => createHorizontalProjection(),
+
+                _ => null,
+            };
+
+            #region Local methods
+            IRectangle createCylinderVerticalProjection()
+            {
+                IExtent horizontal = dryBody.GetBaseFace().GetDiagonal();
+                ICuboidFactory factory = (ICuboidFactory)dryBody.GetTangentShapeFactory();
+
+                return createRectangle(factory, horizontal);
+            }
+
+            IRectangle createCuboidVerticalProjection()
+            {
+                perpendicular = perpendicular == ShapeExtentTypeCode.Length ?
+                    ShapeExtentTypeCode.Width
+                    : ShapeExtentTypeCode.Length;
+
+                IExtent horizontal = dryBody.GetShapeExtent(perpendicular);
+                ICuboidFactory factory = (ICuboidFactory)dryBody.GetFactory();
+
+                return createRectangle(factory, horizontal);
+            }
+
+            IRectangle createRectangle(ICuboidFactory factory, IExtent horizontal)
+            {
+                IRectangleFactory baseFaceFactory = (IRectangleFactory)factory.GetBaseFaceFactory();
+
+                return baseFaceFactory.Create(horizontal, dryBody.Height);
+            }
+
+            IPlaneShape createHorizontalProjection()
+            {
+                IEnumerable<IExtent> shapeExtents = dryBody.GetShapeExtents().SkipLast(1);
+                IPlaneShapeFactory factory = dryBody.GetBaseFaceFactory();
+
+                return (IPlaneShape)factory.CreateBaseShape(shapeExtents.ToArray());
+            }
+            #endregion
         }
 
         #region Override methods
@@ -23,58 +75,6 @@
             return (IBulkSurfaceFactory)SpreadFactory;
         }
         #endregion
-        #endregion
-
-        #region Abstract methods
-        public IPlaneShape? CreateProjection(IDryBody dryBody, ShapeExtentTypeCode perpendicular)
-        {
-            return perpendicular switch
-            {
-                ShapeExtentTypeCode.Radius => createCylinderVerticalProjection(),
-                ShapeExtentTypeCode.Length => createCuboidVerticalProjection(ShapeExtentTypeCode.Width),
-                ShapeExtentTypeCode.Width => createCuboidVerticalProjection(ShapeExtentTypeCode.Length),
-                ShapeExtentTypeCode.Height => createHorizontalProjection(),
-
-                _ => null,
-            };
-
-            #region Local methods
-            IRectangle? createCylinderVerticalProjection()
-            {
-                if (dryBody is not ICylinder cylinder) return null;
-
-                IExtent horizontal = cylinder.BaseFace.GetDiagonal();
-                ICuboidFactory factory = (ICuboidFactory)cylinder.GetTangentShapeFactory();
-
-                return createRectangle(factory, horizontal);
-            }
-
-            IRectangle? createCuboidVerticalProjection(ShapeExtentTypeCode shapeExtentTypeCode)
-            {
-                if (dryBody is not ICuboid cuboid) return null;
-
-                IExtent horizontal = cuboid.GetShapeExtent(shapeExtentTypeCode);
-                ICuboidFactory factory = (ICuboidFactory)cuboid.GetFactory();
-
-                return createRectangle(factory, horizontal);
-            }
-
-            IRectangle? createRectangle(ICuboidFactory factory, IExtent horizontal)
-            {
-                IPlaneShapeFactory baseFaceFactory = factory.GetBaseFaceFactory();
-
-                return (IRectangle)baseFaceFactory.Create(horizontal, dryBody.Height);
-            }
-
-            IPlaneShape createHorizontalProjection()
-            {
-                IEnumerable<IExtent> shapeExtents = dryBody.GetShapeExtents().SkipLast(1);
-                IPlaneShapeFactory factory = dryBody.GetBaseFaceFactory();
-
-                return (IPlaneShape)factory.Create(shapeExtents.ToArray());
-            }
-            #endregion
-        }
         #endregion
         #endregion
 

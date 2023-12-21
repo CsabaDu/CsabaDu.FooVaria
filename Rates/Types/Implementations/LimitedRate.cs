@@ -54,52 +54,52 @@
 
 //    public ILimitedRate GetLimitedRate(IMeasure numerator, string name, decimal quantity, ILimit limit)
 //    {
-//        return GetFactory().Create(numerator, name, quantity, limit);
+//        return GetFactory().CreateNew(numerator, name, quantity, limit);
 //    }
 
 //    public ILimitedRate GetLimitedRate(IMeasure numerator, string name, ILimit limit)
 //    {
-//        return GetFactory().Create(numerator, name, limit);
+//        return GetFactory().CreateNew(numerator, name, limit);
 //    }
 
 //    public ILimitedRate GetLimitedRate(IMeasure numerator, Enum measureUnit, decimal quantity, ILimit limit)
 //    {
-//        return GetFactory().Create(numerator, measureUnit, quantity, limit);
+//        return GetFactory().CreateNew(numerator, measureUnit, quantity, limit);
 //    }
 
 //    public ILimitedRate GetLimitedRate(IMeasure numerator, Enum measureUnit, ILimit limit)
 //    {
-//        return GetFactory().Create(numerator, measureUnit, limit);
+//        return GetFactory().CreateNew(numerator, measureUnit, limit);
 //    }
 
 //    public ILimitedRate GetLimitedRate(IMeasure numerator, IMeasurement measurement, decimal quantity, ILimit limit)
 //    {
-//        return GetFactory().Create(numerator, measurement, quantity, limit);
+//        return GetFactory().CreateNew(numerator, measurement, quantity, limit);
 //    }
 
 //    public ILimitedRate GetLimitedRate(IMeasure numerator, IMeasurement measurement, ILimit limit)
 //    {
-//        return GetFactory().Create(numerator, measurement, limit);
+//        return GetFactory().CreateNew(numerator, measurement, limit);
 //    }
 
 //    public ILimitedRate GetLimitedRate(IMeasure numerator, IDenominator denominator, ILimit limit)
 //    {
-//        return GetFactory().Create(numerator, denominator, limit);
+//        return GetFactory().CreateNew(numerator, denominator, limit);
 //    }
 
 //    public ILimitedRate GetLimitedRate(IMeasure numerator, ILimit limit)
 //    {
-//        return GetFactory().Create(numerator, Denominator, limit);
+//        return GetFactory().CreateNew(numerator, Denominator, limit);
 //    }
 
 //    public ILimitedRate GetLimitedRate(IRate rate, ILimit limit)
 //    {
-//        return GetFactory().Create(rate, limit);
+//        return GetFactory().CreateNew(rate, limit);
 //    }
 
 //    public ILimitedRate GetLimitedRate(ILimitedRate other)
 //    {
-//        return GetFactory().Create(other);
+//        return GetFactory().CreateNew(other);
 //    }
 
 //    public LimitMode GetLimitMode(ILimitedRate limitedRate)
@@ -137,7 +137,7 @@
 
 //    //public override ILimitedRate GetMeasurable(IDefaultMeasurable other)
 //    //{
-//    //    return (ILimitedRate)GetFactory().Create(other);
+//    //    return (ILimitedRate)GetFactory().CreateNew(other);
 //    //}
 
 //    public override ILimitedRate GetRate(IMeasure numerator, IDenominator denominator, ILimit? limit)

@@ -10,13 +10,13 @@ public interface IDenominatorFactory : IRateComponentFactory<IDenominator>, IDef
 
 
 
-    //IDenominator Create(string name);
-    //IDenominator Create(string name, ValueType quantity);
-    //IDenominator Create(Enum measureUnit);
-    //IDenominator Create(Enum measureUnit, ValueType quantity);
-    //IDenominator Create(IMeasurement measurement);
-    //IDenominator Create(IMeasurement measurement, ValueType quantity);
-    //IDenominator Create(Enum measureUnit, decimal exchangeRate, string customName, ValueType quantity);
-    //IDenominator Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity);
-    ////IDenominator Create(IRateComponent rateComponent);
-    //IDenominator Create(IDenominator denominator);
+    //IDenominator CreateNew(string name);
+    //IDenominator CreateNew(string name, ValueType quantity);
+    //IDenominator CreateNew(Enum measureUnit);
+    //IDenominator CreateNew(Enum measureUnit, ValueType quantity);
+    //IDenominator CreateNew(IMeasurement measurement);
+    //IDenominator CreateNew(IMeasurement measurement, ValueType quantity);
+    //IDenominator CreateNew(Enum measureUnit, decimal exchangeRate, string customName, ValueType quantity);
+    //IDenominator CreateNew(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity);
+    ////IDenominator CreateNew(IRateComponent rateComponent);
+    //IDenominator CreateNew(IDenominator denominator);

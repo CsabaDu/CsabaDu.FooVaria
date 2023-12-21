@@ -33,7 +33,7 @@ public sealed class LimitFactory : RateComponentFactory, ILimitFactory
         return GetOrCreateStoredLimit(measurement, quantity, limitMode);
     }
 
-    public ILimit Create(ILimit limit)
+    public ILimit CreateNew(ILimit limit)
     {
         return GetStoredLimit(NullChecked(limit, nameof(limit)));
     }

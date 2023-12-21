@@ -4,14 +4,14 @@
 //{
 //    ILimitFactory LimitFactory { get; init; }
 
-//    ILimitedRate Create(ILimitedRate other);
-//    ILimitedRate Create(IMeasure numerator, string name, ValueType quantity, ILimit limit);
-//    ILimitedRate Create(IMeasure numerator, Enum measureUnit, ValueType quantity, ILimit limit);
-//    ILimitedRate Create(IMeasure numerator, string name, ILimit limit);
-//    ILimitedRate Create(IMeasure numerator, Enum measureUnit, ILimit limit);
-//    ILimitedRate Create(IMeasure numerator, IMeasurement measurement, ILimit limit);
-//    ILimitedRate Create(IMeasure numerator, IMeasurement measurement, ValueType quantity, ILimit limit);
-//    ILimitedRate Create(IMeasure numerator, IDenominator denominator, ILimit limit);
-//    ILimitedRate Create(IRate rate, ILimit limit);
+//    ILimitedRate CreateNew(ILimitedRate other);
+//    ILimitedRate CreateNew(IMeasure numerator, string name, ValueType quantity, ILimit limit);
+//    ILimitedRate CreateNew(IMeasure numerator, Enum measureUnit, ValueType quantity, ILimit limit);
+//    ILimitedRate CreateNew(IMeasure numerator, string name, ILimit limit);
+//    ILimitedRate CreateNew(IMeasure numerator, Enum measureUnit, ILimit limit);
+//    ILimitedRate CreateNew(IMeasure numerator, IMeasurement measurement, ILimit limit);
+//    ILimitedRate CreateNew(IMeasure numerator, IMeasurement measurement, ValueType quantity, ILimit limit);
+//    ILimitedRate CreateNew(IMeasure numerator, IDenominator denominator, ILimit limit);
+//    ILimitedRate CreateNew(IRate rate, ILimit limit);
 //    ILimit CreateLimit(IDenominator denominator);
 //}

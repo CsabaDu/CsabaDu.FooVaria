@@ -14,7 +14,7 @@
         #endregion
 
         #region Public methods
-        public IBody Create(IBody other)
+        public IBody CreateNew(IBody other)
         {
             IVolume volume = (IVolume)NullChecked(other, nameof(other)).GetSpreadMeasure();
 
@@ -39,7 +39,6 @@
 
         #region Abstract methods
         public abstract IDryBody Create(IPlaneShape baseFace, IExtent height);
-        //public abstract IPlaneShape CreateProjection(IDryBody dryBody, ShapeExtentTypeCode perpendicular);
         #endregion
         #endregion
     }

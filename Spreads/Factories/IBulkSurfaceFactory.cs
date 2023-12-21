@@ -2,5 +2,5 @@
 
 public interface IBulkSurfaceFactory : ISurfaceFactory, ISpreadFactory<IBulkSurface, IArea, AreaUnit>
 {
-    //IBulkSurface Create(ISurface surface);
+    //IBulkSurface CreateNew(ISurface surface);
 }

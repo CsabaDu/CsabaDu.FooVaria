@@ -11,19 +11,19 @@
             return new Circle(this, radius);
         }
 
-        public ICircle Create(ICircle other)
+        public ICircle CreateNew(ICircle other)
         {
             return new Circle(other);
         }
 
-        public override ICircle Create(params IQuantifiable[] shapeComponents)
+        public override ICircle CreateBaseShape(params IQuantifiable[] shapeComponents)
         {
             int count = GetValidShapeComponentsCount(shapeComponents);
 
             switch (count)
             {
                 case 1:
-                    if (shapeComponents[0] is ICircle circle) return Create(circle);
+                    if (shapeComponents[0] is ICircle circle) return CreateNew(circle);
                     if (shapeComponents[0] is IExtent radius) return Create(radius);
                     throw ArgumentTypeOutOfRangeException(nameof(shapeComponents), shapeComponents);
 
@@ -48,7 +48,7 @@
 
         public IRectangle CreateOuterTangentShape(ICircle circle)
         {
-            return (IRectangle)GetTangentShapeFactory().Create(circle);
+            return (IRectangle)GetTangentShapeFactory().CreateNew(circle);
         }
 
         public IRectangle CreateTangentShape(ICircle circle, SideCode sideCode)

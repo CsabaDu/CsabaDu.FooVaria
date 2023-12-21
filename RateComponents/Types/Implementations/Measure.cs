@@ -198,7 +198,7 @@
 
         public TSelf GetNew(TSelf other)
         {
-            return (TSelf)GetFactory().Create(other);
+            return (TSelf)GetFactory().CreateNew(other);
         }
 
         public TNum GetQuantity()

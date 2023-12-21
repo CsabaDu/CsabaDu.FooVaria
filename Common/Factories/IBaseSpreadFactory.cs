@@ -2,5 +2,5 @@
 
 public interface IBaseSpreadFactory : IQuantifiableFactory
 {
-    IBaseSpread Create(ISpreadMeasure spreadMeasure);
+    IBaseSpread CreateBaseSpread(ISpreadMeasure spreadMeasure);
 }

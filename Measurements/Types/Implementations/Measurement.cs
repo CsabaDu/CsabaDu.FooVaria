@@ -71,7 +71,7 @@ internal abstract class Measurement : MeasurementBase, IMeasurement
 
     public IMeasurement GetMeasurement(IMeasurement other)
     {
-        return GetFactory().Create(other);
+        return GetFactory().CreateNew(other);
     }
 
     public IMeasurement GetMeasurement(string name)

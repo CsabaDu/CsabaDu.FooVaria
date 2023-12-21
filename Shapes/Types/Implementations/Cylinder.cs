@@ -46,7 +46,7 @@ internal sealed class Cylinder : DryBody<ICylinder, ICircle>, ICylinder
 
     public ICylinder GetNew(ICylinder other)
     {
-        return GetFactory().Create(other);
+        return GetFactory().CreateNew(other);
     }
 
     public IExtent GetRadius()
@@ -87,7 +87,7 @@ internal sealed class Cylinder : DryBody<ICylinder, ICircle>, ICylinder
 
     public override IPlaneShape GetProjection(ShapeExtentTypeCode perpendicular)
     {
-        return GetFactory().CreateProjection(this, perpendicular);
+        return GetBaseFaceFactory().CreateProjection(this, perpendicular)!;
     }
 
     public override ICuboidFactory GetTangentShapeFactory()

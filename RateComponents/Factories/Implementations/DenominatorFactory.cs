@@ -24,7 +24,7 @@ public sealed class DenominatorFactory : RateComponentFactory<IDenominator>, IDe
     #endregion
 
     #region Public methods
-    public IDenominator Create(IDenominator denominator)
+    public IDenominator CreateNew(IDenominator denominator)
     {
         return GetStoredDenominator(NullChecked(denominator, nameof(denominator)));
     }

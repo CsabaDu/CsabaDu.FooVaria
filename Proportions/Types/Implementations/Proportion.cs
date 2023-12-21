@@ -47,7 +47,7 @@
 
         public override sealed IProportion GetBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit)
         {
-            return (IProportion)GetFactory().Create(numerator, denominatorMeasureUnit);
+            return (IProportion)GetFactory().CreateBaseRate(numerator, denominatorMeasureUnit);
         }
 
         public override IProportionFactory GetFactory()

@@ -17,7 +17,7 @@ namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
 
         #region Public methods
         #region Abstract methods
-        public abstract IBaseSpread Create(ISpreadMeasure spreadMeasure);
+        public abstract IBaseSpread CreateBaseSpread(ISpreadMeasure spreadMeasure);
         public abstract ISpread Create(params IExtent[] shapeExtents);
         #endregion
         #endregion
@@ -36,7 +36,7 @@ namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
         #region Public methods
         #region Override methods
         #region Sealed methods
-        public override sealed T Create(ISpreadMeasure spreadMeasure)
+        public override sealed T CreateBaseSpread(ISpreadMeasure spreadMeasure)
         {
             if (SpreadMeasures.GetValidSpreadMeasure(spreadMeasure) is TSMeasure measure) return Create(measure);
 
@@ -47,7 +47,7 @@ namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
 
         #region Abstract methods
         public abstract T Create(TSMeasure spreadMeasure);
-        public abstract T Create(T other);
+        public abstract T CreateNew(T other);
         #endregion
         #endregion
     }

@@ -19,9 +19,9 @@ public abstract class ShapeFactory : IShapeFactory
     #endregion
 
     #region Public methods
-    public IBaseSpread Create(ISpreadMeasure spreadMeasure)
+    public IBaseSpread CreateBaseSpread(ISpreadMeasure spreadMeasure)
     {
-        return SpreadFactory.Create(spreadMeasure);
+        return SpreadFactory.CreateBaseSpread(spreadMeasure);
     }
 
 
@@ -52,10 +52,12 @@ public abstract class ShapeFactory : IShapeFactory
     #endregion
 
     #region Abstract methods
-    public abstract IBaseShape Create(params IQuantifiable[] shapeComponents);
+    public abstract IBaseShape CreateBaseShape(params IQuantifiable[] shapeComponents);
     #endregion
     #endregion
 
+    #region Protected methods
+    #region Static methods
     protected static int GetValidShapeComponentsCount(IQuantifiable[] shapeComponents)
     {
         int count = NullChecked(shapeComponents, nameof(shapeComponents)).Length;
@@ -77,4 +79,6 @@ public abstract class ShapeFactory : IShapeFactory
             yield return shapeExtent;
         }
     }
+    #endregion
+    #endregion
 }

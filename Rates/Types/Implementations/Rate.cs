@@ -12,7 +12,7 @@
 //    private protected Rate(IRateFactory factory, IMeasure numerator, Enum measureUnit) : base(factory, measureUnit)
 //    {
 //        Numerator = NullChecked(numerator, nameof(numerator));
-//        Denominator = factory.DenominatorFactory.Create(measureUnit);
+//        Denominator = factory.DenominatorFactory.CreateNew(measureUnit);
 //    }
 
 //    private protected Rate(IRateFactory factory, IMeasure numerator, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
@@ -24,7 +24,7 @@
 //    private protected Rate(IRateFactory factory, IMeasure numerator, IMeasurement measurement) : base(factory, measurement)
 //    {
 //        Numerator = NullChecked(numerator, nameof(numerator));
-//        Denominator = factory.DenominatorFactory.Create(measurement);
+//        Denominator = factory.DenominatorFactory.CreateNew(measurement);
 //    }
 
 //    private protected Rate(IRateFactory factory, IMeasure numerator, IDenominator denominator) : base(factory, denominator)
@@ -81,12 +81,12 @@
 
 //    public IBaseRate GetBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit)
 //    {
-//        return GetFactory().Create(numerator, denominatorMeasureUnit);
+//        return GetFactory().CreateNew(numerator, denominatorMeasureUnit);
 //    }
 
 //    public IBaseRate GetBaseRate(IBaseMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
 //    {
-//        return GetFactory().Create(numerator, denominatorMeasureUnitTypeCode);
+//        return GetFactory().CreateNew(numerator, denominatorMeasureUnitTypeCode);
 //    }
 
 //    public IBaseRate GetBaseRate(IQuantifiable numerator, IMeasurable denominator)
@@ -106,12 +106,12 @@
 
 //        if (denominator is IMeasurement measurement)
 //        {
-//            createdDenominator = denominatorFactory.Create(measurement);
+//            createdDenominator = denominatorFactory.CreateNew(measurement);
 
 //        }
 //        else if (denominator is IRateComponent baseMeasure)
 //        {
-//            createdDenominator = (IDenominator)denominatorFactory.Create(baseMeasure);
+//            createdDenominator = (IDenominator)denominatorFactory.CreateNew(baseMeasure);
 //        }
 //        else
 //        {
@@ -128,7 +128,7 @@
 
 //    public IRate GetRate(IRate other)
 //    {
-//        return (IRate)GetFactory().Create(other);
+//        return (IRate)GetFactory().CreateNew(other);
 //    }
 
 //    public IRateComponent? GetRateComponent(RateComponentCode rateComponentCode)

@@ -15,17 +15,17 @@
 
 //    #region Public methods
 //    #region Abstract methods
-//    public abstract IMeasurable Create(IMeasurable other);
-//    public abstract IBaseRate Create(IBaseMeasure numerator, MeasureUnitTypeCode measureUnitTypeCode);
-//    public abstract IBaseRate Create(IBaseMeasure numerator, Enum denominatorMeasureUnit);
-//    public abstract IRate Create(IRate other);
+//    public abstract IMeasurable CreateNew(IMeasurable other);
+//    public abstract IBaseRate CreateNew(IBaseMeasure numerator, MeasureUnitTypeCode measureUnitTypeCode);
+//    public abstract IBaseRate CreateNew(IBaseMeasure numerator, Enum denominatorMeasureUnit);
+//    public abstract IRate CreateNew(IRate other);
 
-//    public IBaseRate Create(IBaseMeasure numerator, IMeasurable denominator)
+//    public IBaseRate CreateNew(IBaseMeasure numerator, IMeasurable denominator)
 //    {
 //        throw new NotImplementedException();
 //    }
 
-//    //public IBaseRate Create(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
+//    //public IBaseRate CreateNew(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
 //    //{
 //    //    throw new NotImplementedException();
 //    //}

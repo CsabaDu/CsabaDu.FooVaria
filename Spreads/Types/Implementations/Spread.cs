@@ -40,7 +40,7 @@
 
             if (exchanged is not ISpreadMeasure spreadMeasure) return null;
 
-            return (ISpread)GetFactory().Create(spreadMeasure);
+            return (ISpread)GetFactory().CreateBaseSpread(spreadMeasure);
         }
 
         public override sealed void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, string paramName)

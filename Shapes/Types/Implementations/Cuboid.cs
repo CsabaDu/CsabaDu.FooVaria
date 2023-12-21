@@ -73,7 +73,7 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
 
     public ICuboid GetNew(ICuboid other)
     {
-        return GetFactory().Create(other);
+        return GetFactory().CreateNew(other);
     }
 
     public IShape GetTangentShape(SideCode sideCode)
@@ -121,7 +121,7 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
 
     public override IPlaneShape GetProjection(ShapeExtentTypeCode perpendicular)
     {
-        return GetFactory().CreateProjection(this, perpendicular);
+        return GetBaseFaceFactory().CreateProjection(this, perpendicular)!;
     }
 
     public override ICylinderFactory GetTangentShapeFactory()

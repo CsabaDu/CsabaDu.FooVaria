@@ -64,7 +64,7 @@ internal sealed class Limit : RateComponent, ILimit
 
     public ILimit GetLimit(ILimit other)
     {
-        return GetFactory().Create(other);
+        return GetFactory().CreateNew(other);
     }
 
     public ILimit GetLimit(ulong quantity)
@@ -164,7 +164,7 @@ internal sealed class Limit : RateComponent, ILimit
 
     public ILimit GetNew(ILimit other)
     {
-        return GetFactory().Create(other);
+        return GetFactory().CreateNew(other);
     }
     #endregion
     #endregion

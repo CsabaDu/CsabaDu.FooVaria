@@ -16,7 +16,7 @@
         #endregion
 
         #region Public methods
-        public IRateComponent Create(IRateComponent other)
+        public IRateComponent CreateNew(IRateComponent other)
         {
             var (measurement, quantity) = GetRateComponentParams(other);
             Enum measureUnit = measurement.GetMeasureUnit();

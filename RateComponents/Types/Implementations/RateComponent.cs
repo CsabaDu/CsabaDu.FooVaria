@@ -15,7 +15,7 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
         private protected RateComponent(IRateComponentFactory factory, IMeasurement measurement, ValueType quantity) : base(factory, measurement)
         {
             Quantity = GetValidQuantity(quantity);
-            Measurement = factory.MeasurementFactory.Create(measurement);
+            Measurement = factory.MeasurementFactory.CreateNew(measurement);
             DefaultQuantity = GetDefaultQuantity(this);
         }
         #endregion
@@ -238,7 +238,7 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
 
         protected IRateComponent GetRateComponent(IRateComponent rateComponent, IRateComponentFactory factory)
         {
-            if (rateComponent.IsExchangeableTo(MeasureUnitTypeCode)) return factory.Create(rateComponent);
+            if (rateComponent.IsExchangeableTo(MeasureUnitTypeCode)) return factory.CreateNew(rateComponent);
 
             throw InvalidMeasureUnitTypeCodeEnumArgumentException(rateComponent.MeasureUnitTypeCode, nameof(rateComponent));
         }

@@ -23,7 +23,7 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
             return new Cuboid(this, length, width, height);
         }
 
-        public ICuboid Create(ICuboid other)
+        public ICuboid CreateNew(ICuboid other)
         {
             return new Cuboid(other);
         }
@@ -68,7 +68,7 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
             return (ICylinderFactory)TangentShapeFactory;
         }
 
-        public override ICuboid Create(params IQuantifiable[] shapeComponents)
+        public override ICuboid CreateBaseShape(params IQuantifiable[] shapeComponents)
         {
             int count = GetValidShapeComponentsCount(shapeComponents);
 
@@ -85,7 +85,7 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
             #region Local methods
             ICuboid createCuboidFromOneParam()
             {
-                if (shapeComponents[0] is ICuboid cuboid) return Create(cuboid);
+                if (shapeComponents[0] is ICuboid cuboid) return CreateNew(cuboid);
 
                 throw ArgumentTypeOutOfRangeException(nameof(shapeComponents), shapeComponents);
             }

@@ -43,7 +43,7 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 
         public IShape GetShape(params IExtent[] shapeExtents)
         {
-            return (IShape)GetFactory().Create(shapeExtents);
+            return (IShape)GetFactory().CreateBaseShape(shapeExtents);
 
             //ValidateShapeExtents(shapeExtents, nameof(shapeExtents));
 
@@ -100,6 +100,11 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
             return GetFactory().SpreadFactory;
         }
 
+        public bool IsValidShapeExtentTypeCode(ShapeExtentTypeCode shapeExtentTypeCode)
+        {
+            return GetShapeExtentTypeCodes().Contains(shapeExtentTypeCode);
+        }
+
         public bool TryGetShapeExtentTypeCode(IExtent shapeExtent, [NotNullWhen(true)] out ShapeExtentTypeCode? shapeExtentTypeCode)
         {
             _ = NullChecked(shapeExtent, nameof(shapeExtent));
@@ -136,13 +141,6 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
             {
                 ValidateShapeComponent(item, paramName);
             }
-        }
-
-        public void ValidateShapeExtentTypeCode(ShapeExtentTypeCode shapeExtentTypeCode, string paramName)
-        {
-            if (GetShapeExtentTypeCodes().Contains(shapeExtentTypeCode)) return;
-
-            throw InvalidShapeExtentTypeCodeEnumArgumentException(shapeExtentTypeCode, paramName);
         }
 
         #region Override methods
@@ -210,14 +208,14 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
             {
                 if (getExchangedSpreadMeasure(areaUnit) is not IArea area) return null;
 
-                return (IBulkSurface)GetFactory().SpreadFactory.Create(area);
+                return (IBulkSurface)GetFactory().SpreadFactory.CreateBaseSpread(area);
             }
 
             IBulkBody? exchangeToVolumeUnit(VolumeUnit volumeUnit)
             {
                 if (getExchangedSpreadMeasure(volumeUnit) is not IVolume volume) return null;
 
-                return (IBulkBody)GetFactory().SpreadFactory.Create(volume);
+                return (IBulkBody)GetFactory().SpreadFactory.CreateBaseSpread(volume);
             }
 
             IRateComponent? getExchangedSpreadMeasure(Enum measureUnit)
@@ -255,7 +253,7 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 
         public override sealed IBaseSpread GetBaseSpread(ISpreadMeasure spreadMeasure)
         {
-            return GetFactory().SpreadFactory.Create(spreadMeasure);
+            return GetFactory().SpreadFactory.CreateBaseSpread(spreadMeasure);
         }
 
         public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()

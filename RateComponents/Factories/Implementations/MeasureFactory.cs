@@ -45,7 +45,7 @@ public sealed class MeasureFactory : RateComponentFactory<IMeasure>, IMeasureFac
         return CreateMeasure(measurement, quantity);
     }
 
-    public IMeasure Create(IMeasure other)
+    public IMeasure CreateNew(IMeasure other)
     {
         var (measurement, quantity) = GetRateComponentParams(other);
 
