@@ -3,10 +3,21 @@
     internal abstract class Proportion : BaseRate, IProportion
     {
         #region Constructors
-        private protected Proportion(IProportionFactory factory, MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, defaultQuantity, denominatorMeasureUnitTypeCode)
+        private protected Proportion(IProportionFactory factory, MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, denominatorMeasureUnitTypeCode)
         {
-            NumeratorMeasureUnitTypeCode = Defined(numeratorMeasureUnitTypeCode, nameof(numeratorMeasureUnitTypeCode));
-            DefaultQuantity = defaultQuantity;
+            NumeratorMeasureUnitTypeCode = getValidParams().MeasureUnitTypeCode;
+            DefaultQuantity = getValidParams().DefaultQuantity;
+
+            #region Local methods
+            (MeasureUnitTypeCode MeasureUnitTypeCode, decimal DefaultQuantity) getValidParams()
+            {
+                MeasureUnitTypeCode measureUnitTypeCode = Defined(numeratorMeasureUnitTypeCode, nameof(numeratorMeasureUnitTypeCode));
+
+                ValidateQuantity(defaultQuantity, nameof(defaultQuantity));
+
+                return (measureUnitTypeCode, defaultQuantity);
+            }
+            #endregion
         }
 
         private protected Proportion(IProportionFactory factory, IBaseRate baseRate) : base(factory, baseRate)
@@ -33,7 +44,7 @@
             return GetFactory().Create(baseRate);
         }
 
-        public IProportion GetProportion(IRateComponent numerator, IRateComponent denominator)
+        public IProportion GetProportion(IBaseMeasure numerator, IBaseMeasure denominator)
         {
             return GetFactory().Create(numerator, denominator);
         }
@@ -54,6 +65,7 @@
         {
             return (IProportionFactory)Factory;
         }
+
         public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
         {
             return base.GetMeasureUnitTypeCodes();
@@ -70,99 +82,96 @@
 
             if ((decimal)converted > 0) return;
 
-            if (QuantityTypes.GetQuantityTypes().Contains(NullChecked(quantity, paramName).GetType())) return;
-
             throw QuantityArgumentOutOfRangeException(paramName, quantity);
         }
 
         public override sealed IMeasure Multiply(IBaseMeasure multiplier)
         {
-            MeasureUnitTypeCode measureUnitTypeCode = NullChecked(multiplier, nameof(multiplier)).MeasureUnitTypeCode;
-
-            ValidateMeasureUnitTypeCode(measureUnitTypeCode, nameof(multiplier));
-
-            if (multiplier is not IMeasure measure)
+            if (NullChecked(multiplier, nameof(multiplier)) is not IMeasure measure)
             {
                 throw ArgumentTypeOutOfRangeException(nameof(multiplier), multiplier);
             }
 
+            ValidateMeasureUnitTypeCode(measure.MeasureUnitTypeCode, nameof(multiplier));
+
             decimal quantity = measure.DefaultQuantity * DefaultQuantity;
             Enum measureUnit = NumeratorMeasureUnitTypeCode.GetDefaultMeasureUnit();
 
-            return measure.GetRateComponent(measureUnit, quantity);
+            return (IMeasure)measure.GetRateComponent(measureUnit, quantity);
         }
         #endregion
         #endregion
         #endregion
     }
-
-    internal abstract class Proportion<T, U> : Proportion, IProportion<T, U>
-        where T : class, IProportion, IMeasureProportion
-        where U : struct, Enum
-    {
-        private protected Proportion(T other) : base(other)
-        {
-        }
-
-        private protected Proportion(IProportionFactory<T, U> factory, IBaseRate baseRate) : base(factory, baseRate)
-        {
-        }
-
-        private protected Proportion(IProportionFactory<T, U> factory, MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode)
-        {
-            ValidateMeasureUnitTypeCode(denominatorMeasureUnitTypeCode, nameof(denominatorMeasureUnitTypeCode));
-        }
-
-        public T GetProportion(IMeasure numerator, U denominatorMeasureUnit)
-        {
-            throw new NotImplementedException();
-        }
-
-        public decimal GetQuantity(U denominatorMeasureUnit)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override IProportionFactory<T, U> GetFactory()
-        {
-            return (IProportionFactory<T, U>)Factory;
-        }
-
-        public abstract T GetProportion(IRateComponent numerator, U denominatorMeasureUnit);
-    }
-
-    internal abstract class Proportion<T, W, U> : Proportion<T, U>, IProportion<T, W, U>
-        where T : class, IProportion<T, W, U>, IMeasureProportion
-        where U : struct, Enum
-        where W : struct, Enum
-    {
-        private protected Proportion(T other) : base(other)
-        {
-        }
-
-        private protected Proportion(IProportionFactory<T, W, U> factory, IBaseRate baseRate) : base(factory, baseRate)
-        {
-        }
-
-        private protected Proportion(IProportionFactory<T, W, U> factory, MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode)
-        {
-            ValidateMeasureUnitTypeCode(numeratorMeasureUnitTypeCode, nameof(numeratorMeasureUnitTypeCode));
-        }
-
-        public T GetProportion(W numeratorMeasureUnit, ValueType quantity, U denominatorMeasureUnit)
-        {
-            throw new NotImplementedException();
-        }
-
-        public decimal GetQuantity(W numeratorMeasureUnit, U denominatorMeasureUnit)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override IProportionFactory<T, W, U> GetFactory()
-        {
-            return (IProportionFactory<T, W, U>)Factory;
-        }
-    }
-
 }
+
+//    internal abstract class Proportion<T, U> : Proportion, IProportion<T, U>
+//        where T : class, IProportion, IMeasureProportion
+//        where U : struct, Enum
+//    {
+//        private protected Proportion(T other) : base(other)
+//        {
+//        }
+
+//        private protected Proportion(IProportionFactory<T, U> factory, IBaseRate baseRate) : base(factory, baseRate)
+//        {
+//        }
+
+//        private protected Proportion(IProportionFactory<T, U> factory, MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode)
+//        {
+//            ValidateMeasureUnitTypeCode(denominatorMeasureUnitTypeCode, nameof(denominatorMeasureUnitTypeCode));
+//        }
+
+//        public T GetProportion(IMeasure numerator, U denominatorMeasureUnit)
+//        {
+//            throw new NotImplementedException();
+//        }
+
+//        public decimal GetQuantity(U denominatorMeasureUnit)
+//        {
+//            throw new NotImplementedException();
+//        }
+
+//        public override IProportionFactory<T, U> GetFactory()
+//        {
+//            return (IProportionFactory<T, U>)Factory;
+//        }
+
+//        public abstract T GetProportion(IRateComponent numerator, U denominatorMeasureUnit);
+//    }
+
+//    internal abstract class Proportion<T, W, U> : Proportion<T, U>, IProportion<T, W, U>
+//        where T : class, IProportion<T, W, U>, IMeasureProportion
+//        where U : struct, Enum
+//        where W : struct, Enum
+//    {
+//        private protected Proportion(T other) : base(other)
+//        {
+//        }
+
+//        private protected Proportion(IProportionFactory<T, W, U> factory, IBaseRate baseRate) : base(factory, baseRate)
+//        {
+//        }
+
+//        private protected Proportion(IProportionFactory<T, W, U> factory, MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode)
+//        {
+//            ValidateMeasureUnitTypeCode(numeratorMeasureUnitTypeCode, nameof(numeratorMeasureUnitTypeCode));
+//        }
+
+//        public T GetProportion(W numeratorMeasureUnit, ValueType quantity, U denominatorMeasureUnit)
+//        {
+//            throw new NotImplementedException();
+//        }
+
+//        public decimal GetQuantity(W numeratorMeasureUnit, U denominatorMeasureUnit)
+//        {
+//            throw new NotImplementedException();
+//        }
+
+//        public override IProportionFactory<T, W, U> GetFactory()
+//        {
+//            return (IProportionFactory<T, W, U>)Factory;
+//        }
+//    }
+
+//}
