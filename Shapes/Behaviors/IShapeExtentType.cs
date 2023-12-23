@@ -8,6 +8,6 @@ namespace CsabaDu.FooVaria.Shapes.Behaviors
         IEnumerable<ShapeExtentTypeCode> GetShapeExtentTypeCodes();
         bool IsValidShapeExtentTypeCode(ShapeExtentTypeCode shapeExtentTypeCode);
 
-        void ValidateShapeExtentTypeCode(ShapeExtentTypeCode shapeExtentTypeCode, string paramName);
+        //void ValidateShapeExtentTypeCode(ShapeExtentTypeCode shapeExtentTypeCode, string paramName);
     }
 }

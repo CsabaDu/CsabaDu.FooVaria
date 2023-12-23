@@ -103,11 +103,6 @@ internal sealed class Rectangle : PlaneShape, IRectangle
     }
 
     #region Override methods
-    public override IEnumerable<IExtent> GetDimensions()
-    {
-        return GetShapeExtents();
-    }
-
     public override IRectangleFactory GetFactory()
     {
         return (IRectangleFactory)Factory;
@@ -115,7 +110,7 @@ internal sealed class Rectangle : PlaneShape, IRectangle
 
     public override ICircleFactory GetTangentShapeFactory()
     {
-        return (ICircleFactory)GetFactory().TangentShapeFactory;
+        return (ICircleFactory)base.GetTangentShapeFactory();
     }
     #endregion
     #endregion

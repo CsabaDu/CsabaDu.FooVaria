@@ -25,6 +25,21 @@ public abstract class Quantifiable : Measurable, IQuantifiable
     #endregion
 
     #region Public methods
+    #region Override methods
+    public override bool Equals(object? obj)
+    {
+        return obj is IQuantifiable other
+            && base.Equals(other)
+            && GetDefaultQuantity() == other.GetDefaultQuantity();
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(MeasureUnitTypeCode, GetDefaultQuantity());
+    }
+
+    #endregion
+
     #region Abstract methods
     public abstract decimal GetDefaultQuantity();
     public abstract void ValidateQuantity(ValueType? quantity, string paramName);
@@ -48,6 +63,12 @@ public abstract class Quantifiable : Measurable, IQuantifiable
         return Type.GetTypeCode(typeof(TNum));
 
     }
+
+    protected static bool IsValidShapeComponentOf<T>(IBaseShape baseShape, T shapeComponent) where T : class, IQuantifiable, IShapeComponent
+    {
+        return baseShape?.GetShapeComponents() is IEnumerable<T>;
+    }
+
     #endregion
     #endregion
 }

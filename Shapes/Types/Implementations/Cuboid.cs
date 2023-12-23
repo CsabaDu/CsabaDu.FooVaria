@@ -126,7 +126,7 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
 
     public override ICylinderFactory GetTangentShapeFactory()
     {
-        return (ICylinderFactory)GetFactory().TangentShapeFactory;
+        return (ICylinderFactory)base.GetTangentShapeFactory();
     }
 
     public override ICuboidFactory GetFactory()

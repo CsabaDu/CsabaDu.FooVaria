@@ -33,7 +33,7 @@ internal abstract class PlaneShape : Shape, IPlaneShape
     #region Sealed methods
     public override sealed IBulkSurfaceFactory GetSpreadFactory()
     {
-        return (IBulkSurfaceFactory)GetFactory().SpreadFactory;
+        return (IBulkSurfaceFactory)base.GetSpreadFactory();
     }
 
     public override sealed IArea GetSpreadMeasure()

@@ -32,8 +32,13 @@
 
         public abstract int CompareTo(IBaseShape? other);
         public abstract bool? FitsIn(IBaseShape? other, LimitMode? limitMode);
-        public abstract int GetShapeComponentCount();
+        public int GetShapeComponentCount()
+        {
+            return GetShapeComponents().Count();
+        }
         public abstract void ValidateShapeComponent(IQuantifiable shapeComponent, string paramName);
-        public abstract IEnumerable<IQuantifiable> GetShapeComponents();
+
+        public abstract IQuantifiable? GetValidShapeComponent(IShapeComponent shapeComponent);
+        public abstract IEnumerable<IShapeComponent> GetShapeComponents();
     }
 }

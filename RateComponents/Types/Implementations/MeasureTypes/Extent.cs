@@ -1,4 +1,5 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations.MeasureTypes;
+﻿
+namespace CsabaDu.FooVaria.RateComponents.Types.Implementations.MeasureTypes;
 
 internal sealed class Extent : Measure<IExtent, double,ExtentUnit>, IExtent
 {
@@ -17,6 +18,11 @@ internal sealed class Extent : Measure<IExtent, double,ExtentUnit>, IExtent
     public IDistance ConvertMeasure()
     {
         return ConvertMeasure<IDistance>(ConvertMode.Divide);
+    }
+
+    public bool IsValidShapeComponentOf(IBaseShape baseShape)
+    {
+        return IsValidShapeComponentOf(baseShape, this);
     }
     #endregion
 }

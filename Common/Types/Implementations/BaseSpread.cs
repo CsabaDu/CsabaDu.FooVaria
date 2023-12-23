@@ -41,8 +41,7 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
 
     public bool Equals(IBaseSpread? other)
     {
-        return base.Equals(other)
-            && GetDefaultQuantity() == other.GetDefaultQuantity();
+        return base.Equals(other);
     }
 
     public bool? FitsIn(IBaseSpread? baseSpread, LimitMode? limitMode)
@@ -101,13 +100,6 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
 
         return GetDefaultQuantity() / other.GetDefaultQuantity();
     }
-
-    //public bool TryExchangeTo(Enum measureUnit, [NotNullWhen(true)] out IBaseSpread? exchanged)
-    //{
-    //    exchanged = ExchangeTo(measureUnit);
-
-    //    return exchanged != null;
-    //}
 
     public void ValidateQuantifiable(IQuantifiable? quantifiable, string paramName)
     {

@@ -5,23 +5,20 @@
         MeasureUnitTypeCode NumeratorMeasureUnitTypeCode { get; init; }
 
         IProportion GetProportion(IBaseRate baseRate);
-        IProportion GetProportion(IRateComponent numerator, IRateComponent denominator);
     }
 
-    public interface IProportion<out T, in U> : IProportion, IDenominate<U, IMeasure>
-        where T : class, IProportion, IMeasureProportion
-        where U : struct, Enum
+    public interface IProportion<TDEnum> : IProportion, IDenominate<IBaseMeasure, TDEnum>
+        where TDEnum : struct, Enum
     {
-        T GetProportion(IRateComponent numerator, U denominatorMeasureUnit);
-        decimal GetQuantity(U denominatorMeasureUnit);
+        IProportion<TDEnum> GetProportion(IBaseMeasure numerator, TDEnum denominatorMeasureUnit);
+        decimal GetQuantity(TDEnum denominatorMeasureUnit);
     }
 
-    public interface IProportion<out T, in W, in U> : IProportion<T, U>
-        where T : class, IProportion<T, W, U>, IMeasureProportion
-        where U : struct, Enum
-        where W : struct, Enum
+    public interface IProportion<TNEnum, TDEnum> : IProportion<TDEnum>
+        where TNEnum : struct, Enum
+        where TDEnum : struct, Enum
     {
-        T GetProportion(W numeratorMeasureUnit, ValueType quantity, U denominatorMeasureUnit);
-        decimal GetQuantity(W numeratorMeasureUnit, U denominatorMeasureUnit);
+        IProportion<TNEnum, TDEnum> GetProportion(TNEnum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit);
+        decimal GetQuantity(TNEnum numeratorMeasureUnit, TDEnum denominatorMeasureUnit);
     }
 }

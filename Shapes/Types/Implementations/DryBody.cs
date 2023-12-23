@@ -1,7 +1,4 @@
-﻿using CsabaDu.FooVaria.RateComponents.Factories;
-
-
-namespace CsabaDu.FooVaria.Shapes.Types.Implementations
+﻿namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 {
     internal abstract class DryBody : Shape, IDryBody
     {
@@ -75,13 +72,6 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
             return Volume;
         }
 
-        public override sealed IEnumerable<IExtent> GetDimensions()
-        {
-            IPlaneShape baseFace = GetBaseFace();
-
-            return baseFace.GetDimensions().Append(Height);
-        }
-
         public override IDryBodyFactory GetFactory()
         {
             return (IDryBodyFactory)Factory;
@@ -89,7 +79,7 @@ namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 
         public virtual IPlaneShapeFactory GetBaseFaceFactory()
         {
-            return GetFactory().GetBaseFaceFactory();
+            return GetFactory().BaseFaceFactory;
         }
 
         public abstract IPlaneShape GetBaseFace();

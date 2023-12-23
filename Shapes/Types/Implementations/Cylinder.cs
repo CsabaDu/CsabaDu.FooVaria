@@ -92,7 +92,7 @@ internal sealed class Cylinder : DryBody<ICylinder, ICircle>, ICylinder
 
     public override ICuboidFactory GetTangentShapeFactory()
     {
-        return (ICuboidFactory)GetFactory().TangentShapeFactory;
+        return (ICuboidFactory)base.GetTangentShapeFactory();
     }
     #endregion
     #endregion

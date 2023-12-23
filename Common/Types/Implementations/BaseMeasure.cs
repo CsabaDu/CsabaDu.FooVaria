@@ -71,8 +71,7 @@ namespace CsabaDu.FooVaria.Common.Types.Implementations
 
         public virtual bool Equals(TSelf? other)
         {
-            return MeasureUnitTypeCode == other?.MeasureUnitTypeCode
-                && DefaultQuantity == other?.DefaultQuantity;
+            return base.Equals(other);
         }
 
         public virtual decimal ProportionalTo(TSelf other)
@@ -80,16 +79,6 @@ namespace CsabaDu.FooVaria.Common.Types.Implementations
             if (NullChecked(other, nameof(other)).HasMeasureUnitTypeCode(MeasureUnitTypeCode)) return DefaultQuantity / other.DefaultQuantity;
 
             throw InvalidMeasureUnitTypeCodeEnumArgumentException(other.MeasureUnitTypeCode, nameof(other));
-        }
-
-        public override bool Equals(object? obj)
-        {
-            return obj is TSelf other && Equals(other);
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(MeasureUnitTypeCode, DefaultQuantity);
         }
 
         public abstract TSelf? ExchangeTo(TContext context);

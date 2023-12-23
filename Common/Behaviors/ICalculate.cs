@@ -9,9 +9,4 @@
         where TOperand : notnull
     {
     }
-
-    public interface IShapeComponent
-    {
-        IEnumerable<IQuantifiable> GetShapeComponents();
-    }
 }

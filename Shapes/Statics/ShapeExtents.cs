@@ -129,7 +129,6 @@ public static class ShapeExtents
         return IsDefaultMeasureUnit(extentUnit) ?
             quantity
             : quantity / decimal.ToDouble(GetSpreadMeasureUnitExchangeRate(shape, extentUnit));
-
     }
 
     private static decimal GetSpreadMeasureUnitExchangeRate(IShape shape, Enum measureUnit)

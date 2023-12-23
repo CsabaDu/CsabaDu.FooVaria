@@ -204,10 +204,7 @@
         //    throw new NotImplementedException();
         //}
 
-        public IBaseRate GetBaseRate(IBaseMeasure numerator, IMeasurable denominator)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract IBaseRate GetBaseRate(IBaseMeasure numerator, IMeasurable denominator);
         #endregion
     }
 }

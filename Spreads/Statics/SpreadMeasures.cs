@@ -23,7 +23,7 @@ public static class SpreadMeasures
             _ => false,
         };
 
-        return isValidShapeExtentCount && !shapeExtents!.Any(x => x.DefaultQuantity <= 0);
+        return isValidShapeExtentCount && shapeExtents!.All(x => x.DefaultQuantity > 0);
 
         #region Local methods
         bool isValidateShapeExtentsCount(int minValue, int maxValue)

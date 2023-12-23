@@ -69,14 +69,6 @@ internal sealed class Circle : PlaneShape, ICircle
     }
 
     #region Override methods
-    public override IEnumerable<IExtent> GetDimensions()
-    {
-        for (int i = 0; i < GetShapeComponentCount(); i++)
-        {
-            yield return GetDiagonal();
-        }
-    }
-
     public override ICircleFactory GetFactory()
     {
         return (ICircleFactory)Factory;
@@ -84,7 +76,7 @@ internal sealed class Circle : PlaneShape, ICircle
 
     public override IRectangleFactory GetTangentShapeFactory()
     {
-        return (IRectangleFactory)GetFactory().TangentShapeFactory;
+        return (IRectangleFactory)base.GetTangentShapeFactory();
     }
     #endregion
     #endregion

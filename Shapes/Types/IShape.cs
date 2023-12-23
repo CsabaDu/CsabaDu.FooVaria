@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Shapes.Types
 {
-    public interface IShape : IBaseShape, IShapeExtents, IDimensions, IDiagonal
+    public interface IShape : IBaseShape, IShapeExtents, IDimensions, IDiagonal,IShapeComponent, IShapeComponents<IExtent>
     {
         IShape GetShape(ExtentUnit measureUnit);
         IShape GetShape(params IExtent[] shapeExtents);
