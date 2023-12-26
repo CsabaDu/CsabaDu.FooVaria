@@ -1,4 +1,5 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations
+﻿
+namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations
 {
     public abstract class RateComponentFactory : IRateComponentFactory
     {
@@ -11,11 +12,18 @@
 
         #region Properties
         public IMeasurementFactory MeasurementFactory { get; init; }
-        public abstract RateComponentCode RateComponentCode { get; }
         public virtual object DefaultRateComponentQuantity => default(int);
+        public abstract RateComponentCode RateComponentCode { get; }
         #endregion
 
         #region Public methods
+        public IRateComponent CreateBaseMeasure(Enum measureUnit, decimal defaultQuantity)
+        {
+            if (NullChecked(measureUnit, nameof(measureUnit)) is not MeasureUnitTypeCode measureUnitTypeCode) return Create(measureUnit, defaultQuantity);
+
+            return Create(measureUnitTypeCode.GetDefaultMeasureUnit(), defaultQuantity);
+        }
+
         public IRateComponent CreateNew(IRateComponent other)
         {
             var (measurement, quantity) = GetRateComponentParams(other);

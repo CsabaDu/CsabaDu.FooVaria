@@ -44,21 +44,15 @@
             return GetFactory().Create(baseRate);
         }
 
-        public IProportion GetProportion(IBaseMeasure numerator, IBaseMeasure denominator)
+        public IProportion GetProportion(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
         {
-            return GetFactory().Create(numerator, denominator);
+            return GetFactory().Create(numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode);
         }
-
         #region Override methods
         #region Sealed methods
         public override sealed IProportion GetBaseRate(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
         {
             return GetFactory().Create(numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode);
-        }
-
-        public override sealed IProportion GetBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit)
-        {
-            return (IProportion)GetFactory().CreateBaseRate(numerator, denominatorMeasureUnit);
         }
 
         public override IProportionFactory GetFactory()
@@ -85,7 +79,7 @@
             throw QuantityArgumentOutOfRangeException(paramName, quantity);
         }
 
-        public override sealed IMeasure Multiply(IBaseMeasure multiplier)
+        public override sealed IMeasure Multiply(IBaseMeasure multiplier) // Validate?
         {
             if (NullChecked(multiplier, nameof(multiplier)) is not IMeasure measure)
             {
@@ -99,9 +93,79 @@
 
             return (IMeasure)measure.GetRateComponent(measureUnit, quantity);
         }
+
         #endregion
         #endregion
         #endregion
+    }
+
+    internal abstract class Proportion<TDEnum> : Proportion, IProportion<TDEnum>
+        where TDEnum : struct, Enum
+    {
+        private protected Proportion(IProportion<TDEnum> other) : base(other)
+        {
+        }
+
+        private protected Proportion(IProportionFactory factory, IBaseRate baseRate) : base(factory, baseRate)
+        {
+        }
+
+        private protected Proportion(IProportionFactory factory, MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode)
+        {
+        }
+
+        public IProportion<TDEnum> GetProportion(IBaseMeasure numerator, TDEnum denominatorMeasureUnit)
+        {
+            return (IProportion<TDEnum>)GetFactory().Create(numerator, denominatorMeasureUnit);
+        }
+        public decimal GetQuantity(TDEnum denominatorMeasureUnit)
+        {
+            return DefaultQuantity / GetExchangeRate(denominatorMeasureUnit);
+        }
+
+        public IBaseMeasure Multiply(TDEnum measureUnit)
+        {
+            decimal quantity = GetQuantity(measureUnit);
+
+            return GetFactory().CreateBaseMeasure(measureUnit, quantity);
+        }
+    }
+
+    internal sealed class Proportion<TNEnum, TDEnum> : Proportion<TDEnum>, IProportion<TNEnum, TDEnum>
+        where TNEnum : struct, Enum
+        where TDEnum : struct, Enum
+    {
+        public Proportion(IProportion<TNEnum, TDEnum> other) : base(other)
+        {
+        }
+
+        public Proportion(IProportionFactory factory, IBaseRate baseRate) : base(factory, baseRate)
+        {
+        }
+
+        public Proportion(IProportionFactory factory, MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode)
+        {
+        }
+
+        public override IBaseRate? ExchangeTo(IMeasurable context)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IProportion<TNEnum, TDEnum> GetProportion(TNEnum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public decimal GetQuantity(TNEnum numeratorMeasureUnit, TDEnum denominatorMeasureUnit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool IsExchangeableTo(IMeasurable? context)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

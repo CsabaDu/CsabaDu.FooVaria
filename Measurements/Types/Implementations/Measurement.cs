@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurements.Types.Implementations;
 
-internal abstract class Measurement : MeasurementBase, IMeasurement
+internal abstract class Measurement : BaseMeasurement, IMeasurement
 {
     #region Constructors
     #region Static constructor
@@ -106,14 +106,14 @@ internal abstract class Measurement : MeasurementBase, IMeasurement
 
     public IDictionary<string, object> GetMeasureUnitCollection()
     {
-        IEnumerable<object> validMeasureUnits = Statics.MeasureUnits.GetValidMeasureUnits();
+        IEnumerable<object> validMeasureUnits = MeasureUnits.GetValidMeasureUnits();
 
         return GetMeasureUnitCollection(validMeasureUnits, CustomNameCollection);
     }
 
     public IEnumerable<object> GetValidMeasureUnits(MeasureUnitTypeCode measureUnitTypeCode)
     {
-        return Statics.MeasureUnits.GetValidMeasureUnits().Where(x => x.GetType().Equals(measureUnitTypeCode.GetMeasureUnitType()));
+        return MeasureUnits.GetValidMeasureUnits().Where(x => x.GetType().Equals(measureUnitTypeCode.GetMeasureUnitType()));
     }
 
     public void RestoreCustomNameCollection()

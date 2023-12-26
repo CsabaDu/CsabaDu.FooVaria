@@ -1,5 +1,42 @@
 ﻿namespace CsabaDu.FooVaria.Proportions.Factories.Implementations
 {
+    public sealed class ProportionFactory : IProportionFactory
+    {
+        public IProportion Create(IBaseRate baseRate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IProportion Create(IBaseMeasure numerator, IBaseMeasure denominator)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IProportion Create(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IBaseMeasure CreateBaseMeasure(Enum measureUnit, decimal defaultQuantity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IBaseRate CreateBaseRate(IBaseMeasure numerator, IMeasurable denominator)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IBaseRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IBaseRate CreateBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit)
+        {
+            throw new NotImplementedException();
+        }
+    }
     //public abstract class ProportionFactory : IProportionFactory
     //{
     //    #region Public methods

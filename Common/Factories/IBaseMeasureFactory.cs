@@ -4,8 +4,10 @@
     {
     }
 
-    public interface IBaseMeasureFactory<out T> : IBaseMeasureFactory
+    public interface IBaseMeasureFactory<out T, TContext> : IBaseMeasureFactory
         where T : class, IBaseMeasure
+        where TContext : notnull
     {
+        T CreateBaseMeasure(TContext context, decimal quantity);
     }
 }

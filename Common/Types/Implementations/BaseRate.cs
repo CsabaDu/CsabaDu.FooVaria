@@ -25,32 +25,35 @@
         {
             if (other == null) return 1;
 
-            if (AreExchangeables(this, other)) return DefaultQuantity.CompareTo(other.GetDefaultQuantity());
+            if (IsExchangeableTo(other)) return DefaultQuantity.CompareTo(other.GetDefaultQuantity());
 
             throw BaseRateArgumentMeasureUnitTypeCodesOutOfRangeException(other, nameof(other));
         }
 
         public override bool Equals(IBaseRate? other)
         {
-            return AreExchangeables(this, other)
+            return IsExchangeableTo(other)
                 && other!.DefaultQuantity == DefaultQuantity;
         }
-    
+
+        public IBaseRate GetBaseRate(IBaseMeasure numerator, IBaseMeasure denominator)
+        {
+            return GetFactory().CreateBaseRate(numerator, denominator);
+        }
+
+        public IBaseRate GetBaseRate(IBaseMeasure numerator, IMeasurable denominatorMeasurement)
+        {
+            return GetFactory().CreateBaseRate(numerator, denominatorMeasurement);
+        }
+
+        public IBaseRate GetBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit)
+        {
+            return GetFactory().CreateBaseRate(numerator, denominatorMeasureUnit);
+        }
+
         public decimal GetQuantity()
         {
             return DefaultQuantity;
-        }
-
-        public override decimal ProportionalTo(IBaseRate other)
-        {
-            string name = nameof(other);
-            decimal quantity = NullChecked(other, name).GetDefaultQuantity();
-
-            if (quantity == 0) throw QuantityArgumentOutOfRangeException(name, quantity);
-
-            if (AreExchangeables(this, other)) return Math.Abs(DefaultQuantity / quantity);
-
-            throw BaseRateArgumentMeasureUnitTypeCodesOutOfRangeException(other, name);
         }
 
         #region Override methods
@@ -72,6 +75,26 @@
         public override sealed TypeCode GetQuantityTypeCode()
         {
             return GetQuantityTypeCode(this);
+        }
+
+        public override sealed bool IsExchangeableTo(IMeasurable? measurable)
+        {
+            if (measurable is not IBaseRate other) return measurable?.HasMeasureUnitTypeCode(MeasureUnitTypeCode) == true;
+
+            return MeasureUnitTypeCode == other.MeasureUnitTypeCode
+                && GetNumeratorMeasureUnitTypeCode() == other.GetNumeratorMeasureUnitTypeCode();
+        }
+
+        public override decimal ProportionalTo(IBaseRate other)
+        {
+            string name = nameof(other);
+            decimal quantity = NullChecked(other, name).GetDefaultQuantity();
+
+            if (quantity == 0) throw QuantityArgumentOutOfRangeException(name, quantity);
+
+            if (IsExchangeableTo(other)) return Math.Abs(DefaultQuantity / quantity);
+
+            throw BaseRateArgumentMeasureUnitTypeCodesOutOfRangeException(other, name);
         }
 
         public override sealed void Validate(IRootObject? rootObject, string paramName)
@@ -107,47 +130,8 @@
 
         #region Abstract methods
         public abstract IBaseRate GetBaseRate(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
-        public abstract IBaseRate GetBaseRate(IQuantifiable numerator, IMeasurable denominator);
-        public abstract IBaseRate GetBaseRate(IQuantifiable numerator, Enum denominatorMeasureUnit);
         public abstract MeasureUnitTypeCode GetNumeratorMeasureUnitTypeCode();
         public abstract IQuantifiable Multiply(IBaseMeasure multiplier);
-        //public abstract void ValidateQuantity(ValueType? quantity, string paramName);
-        #endregion
-
-        #region Static methods
-        public static bool AreExchangeables(IBaseRate baseRate, IMeasurable? baseMeasurable)
-        {
-            if (baseMeasurable is not IBaseRate other) return baseMeasurable?.HasMeasureUnitTypeCode(baseRate.MeasureUnitTypeCode) == true;
-
-            return AreExchangeables(baseRate, other);
-        }
-
-        public static bool AreExchangeables(IBaseRate? baseRate, IBaseRate? other)
-        {
-            if (baseRate == null || other == null) return false;
-
-            return baseRate.MeasureUnitTypeCode == other.MeasureUnitTypeCode
-                && baseRate.GetNumeratorMeasureUnitTypeCode() == other.GetNumeratorMeasureUnitTypeCode();
-        }
-
-        public static int Compare(IBaseRate? baseRate, IBaseRate? other)
-        {
-            if (baseRate == null && other == null) return 0;
-
-            if (baseRate == null) return -1;
-
-            return baseRate.CompareTo(other);
-        }
-
-        public static bool Equals(IBaseRate baseRate, IBaseRate? other)
-        {
-            return baseRate?.Equals(other) == true;
-        }
-
-        public static decimal Proportionals(IBaseRate baseRate, IBaseRate other)
-        {
-            return NullChecked(baseRate, nameof(baseRate)).ProportionalTo(other);
-        }
         #endregion
         #endregion
 
@@ -198,13 +182,6 @@
         {
             return GetFactory().CreateBaseRate(numerator, denominatorMeasureUnitTypeCode);
         }
-
-        public abstract IBaseRate GetBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit);
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        public abstract IBaseRate GetBaseRate(IBaseMeasure numerator, IMeasurable denominator);
         #endregion
     }
 }

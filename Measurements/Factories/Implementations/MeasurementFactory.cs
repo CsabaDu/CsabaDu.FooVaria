@@ -64,6 +64,10 @@ public sealed class MeasurementFactory : IMeasurementFactory
 
         throw InvalidMeasureUnitEnumArgumentException(measureUnit);
     }
+    public IBaseMeasurement CreateBaseMeasurement(Enum measureUnit)
+    {
+        return Create(measureUnit);
+    }
 
     public IMeasurement CreateNew(IMeasurement measurement)
     {

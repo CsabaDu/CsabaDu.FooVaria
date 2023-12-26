@@ -15,7 +15,7 @@
       <FileName>Factories\IBaseMeasureFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.Common.Factories.IBaseMeasureFactory&lt;T&gt;" Collapsed="true">
+  <Interface Name="CsabaDu.FooVaria.Common.Factories.IBaseMeasureFactory&lt;T, TContext&gt;" Collapsed="true">
     <Position X="0.75" Y="7.25" Width="2" />
     <InheritanceLine Type="CsabaDu.FooVaria.Common.Factories.IBaseMeasureFactory" FixedFromPoint="true">
       <Path>
@@ -24,14 +24,14 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\IBaseMeasureFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Common.Factories.IBaseRateFactory" Collapsed="true">
     <Position X="0.5" Y="8.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <HashCode>CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\IBaseRateFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -44,7 +44,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\IBaseShapeFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -54,12 +54,14 @@
       <Path>
         <Point X="3.625" Y="5.191" />
         <Point X="3.625" Y="5.625" />
+        <Point X="4.417" Y="5.625" Type="JumpStart" />
+        <Point X="4.583" Y="5.625" Type="JumpEnd" />
         <Point X="5.125" Y="5.625" />
         <Point X="5.125" Y="6" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
       <FileName>Factories\IBaseSpreadFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -96,7 +98,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\IFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>

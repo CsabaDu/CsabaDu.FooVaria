@@ -1,9 +1,9 @@
 ﻿namespace CsabaDu.FooVaria.RateComponents.Factories
 {
-    public interface IRateComponentFactory : IBaseMeasureFactory<IRateComponent>, IFactory<IRateComponent>
+    public interface IRateComponentFactory : IBaseMeasureFactory<IRateComponent, Enum>, IFactory<IRateComponent>
     {
         IMeasurementFactory MeasurementFactory { get; init; }
-        RateComponentCode RateComponentCode { get; }
+        RateComponentCode RateComponentCode { get; }    
         object DefaultRateComponentQuantity { get; }
 
         IRateComponent Create(Enum measureUnit, ValueType quantity);

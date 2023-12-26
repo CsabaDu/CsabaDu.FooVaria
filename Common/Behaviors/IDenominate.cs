@@ -4,7 +4,7 @@
     {
     }
 
-    public interface IDenominate<out TSelf, in TOperand> : IDataErrorInfo, IMultiply<TSelf, TOperand>
+    public interface IDenominate<out TSelf, in TOperand> : IDenominate, IMultiply<TSelf, TOperand>
         where TSelf : class, IBaseMeasure
         where TOperand : notnull
     {

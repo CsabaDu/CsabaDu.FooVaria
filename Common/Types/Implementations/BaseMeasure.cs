@@ -1,5 +1,4 @@
-﻿
-namespace CsabaDu.FooVaria.Common.Types.Implementations
+﻿namespace CsabaDu.FooVaria.Common.Types.Implementations
 {
     public abstract class BaseMeasure : Quantifiable, IBaseMeasure
     {
@@ -30,6 +29,10 @@ namespace CsabaDu.FooVaria.Common.Types.Implementations
             return DefaultQuantity;
         }
 
+        public override IBaseMeasureFactory GetFactory()
+        {
+            return (IBaseMeasureFactory)Factory;
+        }
         public void ValidateQuantifiable(IQuantifiable? quantifiable, string paramName)
         {
             ValidateQuantity(NullChecked(quantifiable, paramName).GetDefaultQuantity(), paramName);
@@ -74,6 +77,11 @@ namespace CsabaDu.FooVaria.Common.Types.Implementations
             return base.Equals(other);
         }
 
+        public TSelf GetBaseMeasure(TContext context, decimal quantity)
+        {
+            return GetFactory().CreateBaseMeasure(context, quantity);
+        }
+
         public virtual decimal ProportionalTo(TSelf other)
         {
             if (NullChecked(other, nameof(other)).HasMeasureUnitTypeCode(MeasureUnitTypeCode)) return DefaultQuantity / other.DefaultQuantity;
@@ -81,33 +89,38 @@ namespace CsabaDu.FooVaria.Common.Types.Implementations
             throw InvalidMeasureUnitTypeCodeEnumArgumentException(other.MeasureUnitTypeCode, nameof(other));
         }
 
+        public override IBaseMeasureFactory<TSelf, TContext> GetFactory()
+        {
+            return (IBaseMeasureFactory<TSelf, TContext>)Factory;
+        }
+
         public abstract TSelf? ExchangeTo(TContext context);
         public abstract bool IsExchangeableTo(TContext? context);
     }
 
-    public abstract class Body : BaseSpread, IBody
-    {
-        public Body(IBody other) : base(other)
-        {
-        }
+    //public abstract class Body : BaseSpread, IBody
+    //{
+    //    public Body(IBody other) : base(other)
+    //    {
+    //    }
 
-        public Body(IBaseSpreadFactory factory, IBody body) : base(factory, body)
-        {
-        }
+    //    public Body(IBaseSpreadFactory factory, IBody body) : base(factory, body)
+    //    {
+    //    }
 
-        public Body(IBaseSpreadFactory factory, IBaseMeasure baseMeasure) : base(factory, baseMeasure)
-        {
-        }
+    //    public Body(IBaseSpreadFactory factory, IBaseMeasure baseMeasure) : base(factory, baseMeasure)
+    //    {
+    //    }
 
-        public Body(IBaseSpreadFactory factory, Enum measureUnit) : base(factory, measureUnit)
-        {
-        }
+    //    public Body(IBaseSpreadFactory factory, Enum measureUnit) : base(factory, measureUnit)
+    //    {
+    //    }
 
-        public Body(IBaseSpreadFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IMeasurable[] measurables) : base(factory, measureUnitTypeCode, measurables)
-        {
-        }
+    //    public Body(IBaseSpreadFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IMeasurable[] measurables) : base(factory, measureUnitTypeCode, measurables)
+    //    {
+    //    }
 
-        public abstract IBody GetBody();
-    }
+    //    public abstract IBody GetBody();
+    //}
 }
 

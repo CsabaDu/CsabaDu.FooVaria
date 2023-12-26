@@ -1,14 +1,15 @@
-﻿using CsabaDu.FooVaria.RateComponents.Types.MeasureTypes;
-
-namespace CsabaDu.FooVaria.Proportions.Factories
+﻿namespace CsabaDu.FooVaria.Proportions.Factories
 {
     public interface IProportionFactory : IBaseRateFactory
     {
         IProportion Create(IBaseRate baseRate);
-        IProportion Create(IBaseMeasure numerator, IBaseMeasure denominator);
         IProportion Create(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
+        IProportion Create(IBaseMeasure numerator, Enum denominatorMeasureUnit);
+        IProportion Create(Enum numeratorMeasureUnit, ValueType quantity, Enum denominatorMeasureUnit);
     }
 }
+
+//IProportion Create(IBaseMeasure numerator, IBaseMeasure denominator);
 
 //    public interface IProportionFactory<out T, in U> : IProportionFactory
 //        where T : class, IProportion, IMeasureProportion

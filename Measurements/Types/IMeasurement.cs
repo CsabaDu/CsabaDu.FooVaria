@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurements.Types;
 
-public interface IMeasurement : IMeasurementBase, IMeasureUnitCollection, ICustomNameCollection, IDefaultMeasurable<IMeasurement>
+public interface IMeasurement : IBaseMeasurement, IMeasureUnitCollection, ICustomNameCollection, IDefaultMeasurable<IMeasurement>
 {
     object MeasureUnit { get; init; }
 
