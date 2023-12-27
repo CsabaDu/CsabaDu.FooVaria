@@ -81,11 +81,9 @@ public static class MeasureUnitTypes
 
     public static string GetDefaultName(Enum measureUnit)
     {
-        ValidateMeasureUnit(measureUnit, nameof(measureUnit));
-
-        Type measureUnitType = measureUnit.GetType();
+        Type measureUnitType = DefinedMeasureUnit(measureUnit, nameof(measureUnit)).GetType();
         string measureUnitName = Enum.GetName(measureUnitType, measureUnit)!;
-        string measureUnitTypeName = measureUnit.GetType().Name;
+        string measureUnitTypeName = measureUnitType.Name;
 
         return measureUnitName + measureUnitTypeName;
     }

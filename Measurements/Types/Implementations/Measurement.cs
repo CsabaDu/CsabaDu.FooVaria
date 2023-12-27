@@ -3,13 +3,6 @@
 internal abstract class Measurement : BaseMeasurement, IMeasurement
 {
     #region Constructors
-    #region Static constructor
-    static Measurement()
-    {
-        CustomNameCollection = new Dictionary<object, string>();
-    }
-    #endregion
-
     private protected Measurement(IMeasurementFactory factory, Enum measureUnit) : base(factory, measureUnit)
     {
         ExchangeRate = GetExchangeRate(measureUnit);
@@ -19,15 +12,10 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
 
     #region Properties
     public object MeasureUnit { get; init; }
-
-    #region Override properties
-    #region Sealed properties
-    public override sealed decimal ExchangeRate { get; init; }
-    #endregion
-    #endregion
+    public decimal ExchangeRate { get; init; }
 
     #region Static prpperties
-    public static IDictionary<object, string> CustomNameCollection { get; protected set; }
+    public static IDictionary<object, string> CustomNameCollection { get; protected set; } = new Dictionary<object, string>();
     #endregion
     #endregion
 
@@ -54,14 +42,12 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
 
     public string GetDefaultName()
     {
-        return Enum.GetName(MeasureUnit.GetType(), MeasureUnit)!;
+        return GetDefaultName(GetMeasureUnit());
     }
 
     public string GetDefaultName(Enum measureUnit)
     {
-        Type measureUnitType = DefinedMeasureUnit(measureUnit, nameof(MeasureUnit)).GetType();
-
-        return Enum.GetName(measureUnitType, measureUnit)!;
+        return MeasureUnitTypes.GetDefaultName(GetMeasureUnit());
     }
 
     public IMeasurement GetMeasurement(Enum measureUnit)
@@ -195,6 +181,11 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
 
     #region Override methods
     #region Sealed methods
+    public override sealed decimal GetExchangeRate()
+    {
+        return ExchangeRate;
+    }
+
     public override sealed decimal GetExchangeRate(string name)
     {
         Enum? measureUnit = GetMeasureUnit(NullChecked(name, nameof(name)));
@@ -222,7 +213,6 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
     public override sealed void RestoreConstantExchangeRates()
     {
         RestoreCustomNameCollection();
-
         ExchangeRateCollection = new Dictionary<object, decimal>(ConstantExchangeRateCollection);
     }
     #endregion

@@ -40,5 +40,6 @@
 
         public abstract IQuantifiable? GetValidShapeComponent(IShapeComponent shapeComponent);
         public abstract IEnumerable<IShapeComponent> GetShapeComponents();
+        public abstract IBaseShape? GetBaseShape(params IShapeComponent[] shapeComponents);
     }
 }

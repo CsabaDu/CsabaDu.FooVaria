@@ -1,93 +1,94 @@
-﻿namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
+﻿namespace CsabaDu.FooVaria.Shapes.Factories.Implementations;
+
+public sealed class RectangleFactory : PlaneShapeFactory, IRectangleFactory
 {
-    public sealed class RectangleFactory : PlaneShapeFactory, IRectangleFactory
+    #region Constructors
+    public RectangleFactory(IBulkSurfaceFactory spreadFactory, ICircleFactory tangentShapeFactory) : base(spreadFactory, tangentShapeFactory)
     {
-        #region Constructors
-        public RectangleFactory(IBulkSurfaceFactory spreadFactory, ICircleFactory tangentShapeFactory) : base(spreadFactory, tangentShapeFactory)
+    }
+    #endregion
+
+    #region Public methods
+    public override IRectangle? CreateBaseShape(params IShapeComponent[] shapeComponents)
+    {
+        int count = GetShapeComponentsCount(shapeComponents);
+
+        return count switch
         {
-        }
-        #endregion
+            1 => createRectangleFrom1Param(),
+            2 => createRectangleFrom2Params(),
 
-        #region Public methods
-        public override IRectangle CreateBaseShape(params IQuantifiable[] shapeComponents)
+            _ => null,
+
+        };
+
+        #region Local methods
+        IRectangle? createRectangleFrom1Param()
         {
-            int count = GetValidShapeComponentsCount(shapeComponents);
-
-            return count switch
-            {
-                1 => createRectangleFromOneParam(),
-                2 => createRectangleFromTwoParams(),
-
-                _ => throw CountArgumentOutOfRangeException(count, nameof(shapeComponents)),
-
-            };
-
-            #region Local methods
-            IRectangle createRectangleFromOneParam()
-            {
-                if (shapeComponents[0] is IRectangle rectangle) return CreateNew(rectangle);
-
-                throw ArgumentTypeOutOfRangeException(nameof(shapeComponents), shapeComponents);
-            }
-
-            IRectangle createRectangleFromTwoParams()
-            {
-                IEnumerable<IExtent> shapeExtents = GetShapeExtents(shapeComponents);
-
-                return Create(shapeExtents.First(), shapeExtents.Last());
-            }
-            #endregion
+            return shapeComponents[0] is IRectangle rectangle ?
+                CreateNew(rectangle)
+                : null;
         }
 
-        public IRectangle Create(IExtent length, IExtent width)
+        IRectangle? createRectangleFrom2Params()
         {
-            return new Rectangle(this, length, width);
-        }
+            IEnumerable<IExtent>? shapeExtents = GetShapeExtents(shapeComponents);
 
-        public IRectangle CreateNew(IRectangle other)
-        {
-            return new Rectangle(other);
-        }
-
-        public ICircle CreateInnerTangentShape(IRectangle rectangle, ComparisonCode comparisonCode)
-        {
-            IExtent diagonal = NullChecked(rectangle, nameof(rectangle)).GetComparedShapeExtent(comparisonCode);
-
-            return CreateCircle(diagonal);
-        }
-
-        public ICircle CreateInnerTangentShape(IRectangle rectangle)
-        {
-            return CreateInnerTangentShape(rectangle, ComparisonCode.Less);
-        }
-
-        public ICircle CreateOuterTangentShape(IRectangle rectangle)
-        {
-            IExtent diagonal = NullChecked(rectangle, nameof(rectangle)).GetDiagonal();
-
-            return CreateCircle(diagonal);
-        }
-
-        public ICircle CreateTangentShape(IRectangle rectangle, SideCode sideCode)
-        {
-            return CreateTangentShape(this, rectangle, sideCode);
-        }
-
-        #region Override methods
-        public override ICircleFactory GetTangentShapeFactory()
-        {
-            return (ICircleFactory)TangentShapeFactory;
-        }
-        #endregion
-        #endregion
-
-        #region Private methods
-        private ICircle CreateCircle(IExtent diagonal)
-        {
-            IExtent radius = (IExtent)diagonal.Divide(2);
-
-            return GetTangentShapeFactory().Create(radius);
+            return shapeExtents != null ?
+                Create(shapeExtents.First(), shapeExtents.Last())
+                : null;
         }
         #endregion
     }
+
+    public IRectangle Create(IExtent length, IExtent width)
+    {
+        return new Rectangle(this, length, width);
+    }
+
+    public IRectangle CreateNew(IRectangle other)
+    {
+        return new Rectangle(other);
+    }
+
+    public ICircle CreateInnerTangentShape(IRectangle rectangle, ComparisonCode comparisonCode)
+    {
+        IExtent diagonal = NullChecked(rectangle, nameof(rectangle)).GetComparedShapeExtent(comparisonCode);
+
+        return CreateCircle(diagonal);
+    }
+
+    public ICircle CreateInnerTangentShape(IRectangle rectangle)
+    {
+        return CreateInnerTangentShape(rectangle, ComparisonCode.Less);
+    }
+
+    public ICircle CreateOuterTangentShape(IRectangle rectangle)
+    {
+        IExtent diagonal = NullChecked(rectangle, nameof(rectangle)).GetDiagonal();
+
+        return CreateCircle(diagonal);
+    }
+
+    public ICircle CreateTangentShape(IRectangle rectangle, SideCode sideCode)
+    {
+        return CreateTangentShape(this, rectangle, sideCode);
+    }
+
+    #region Override methods
+    public override ICircleFactory GetTangentShapeFactory()
+    {
+        return (ICircleFactory)TangentShapeFactory;
+    }
+    #endregion
+    #endregion
+
+    #region Private methods
+    private ICircle CreateCircle(IExtent diagonal)
+    {
+        IExtent radius = (IExtent)diagonal.Divide(2);
+
+        return GetTangentShapeFactory().Create(radius);
+    }
+    #endregion
 }

@@ -41,7 +41,7 @@
             return GetFactory().CreateBaseRate(numerator, denominator);
         }
 
-        public IBaseRate GetBaseRate(IBaseMeasure numerator, IMeasurable denominatorMeasurement)
+        public IBaseRate GetBaseRate(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement)
         {
             return GetFactory().CreateBaseRate(numerator, denominatorMeasurement);
         }

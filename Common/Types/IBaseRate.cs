@@ -7,6 +7,6 @@ public interface IBaseRate : IBaseMeasure<IBaseRate, IMeasurable>, IQuantity<dec
     IBaseRate GetBaseRate(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
     IBaseRate GetBaseRate(IBaseMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
     IBaseRate GetBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit);
-    IBaseRate GetBaseRate(IBaseMeasure numerator, IMeasurable denominatorMeasurement);
+    IBaseRate GetBaseRate(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement);
     IBaseRate GetBaseRate(IBaseMeasure numerator, IBaseMeasure denominator);
 }

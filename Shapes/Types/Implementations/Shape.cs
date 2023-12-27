@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using CsabaDu.FooVaria.Shapes.Statics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CsabaDu.FooVaria.Shapes.Types.Implementations;
 
@@ -26,6 +27,11 @@ internal abstract class Shape : BaseShape, IShape
     #endregion
 
     #region Public methods
+    public override sealed IBaseShape? GetBaseShape(params IShapeComponent[] shapeComponents)
+    {
+        return GetFactory().CreateBaseShape(shapeComponents);
+    }
+
     public IExtent GetDiagonal(ExtentUnit extentUnit)
     {
         return ShapeExtents.GetDiagonal(this, extentUnit);
@@ -50,7 +56,14 @@ internal abstract class Shape : BaseShape, IShape
 
     public IShape GetShape(params IExtent[] shapeExtents)
     {
-        return (IShape)GetFactory().CreateBaseShape(shapeExtents);
+        ValidateShapeExtents(shapeExtents, nameof (shapeExtents));
+
+        return (IShape)GetBaseShape(shapeExtents)!;
+    }
+
+    public IEnumerable<IExtent> GetShapeComponents(IBaseShape baseShape)
+    {
+        throw new NotImplementedException();
     }
 
     public IExtent GetShapeExtent(ShapeExtentTypeCode shapeExtentTypeCode)
@@ -237,6 +250,11 @@ internal abstract class Shape : BaseShape, IShape
         return Compare(this, shape)?.FitsIn(limitMode);
     }
 
+    public override sealed IShape? GetBaseShape(params IShapeComponents[] shapeComponents)
+    {
+        throw new NotImplementedException();
+    }
+
     public override sealed IBaseSpread GetBaseSpread(ISpreadMeasure spreadMeasure)
     {
         return GetFactory().SpreadFactory.CreateBaseSpread(spreadMeasure);
@@ -350,11 +368,6 @@ internal abstract class Shape : BaseShape, IShape
         if (quantity > 0) return;
 
         throw QuantityArgumentOutOfRangeException(name, quantity);
-    }
-
-    public IEnumerable<IExtent> GetShapeComponents(IBaseShape baseShape)
-    {
-        throw new NotImplementedException();
     }
     #endregion
     #endregion

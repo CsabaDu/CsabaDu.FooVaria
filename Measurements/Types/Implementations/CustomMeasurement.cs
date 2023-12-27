@@ -14,15 +14,9 @@ internal sealed class CustomMeasurement : Measurement, ICustomMeasurement
         ValidateCustomMeasureUnitTypeCode(measureUnitTypeCode);
 
         Type measureUnitType = MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode);
-        Array customMeasureUnits = Enum.GetValues(measureUnitType);
+        IEnumerable<Enum> customMeasureUnits = Enum.GetValues(measureUnitType).Cast<Enum>();
 
-        foreach (Enum item in customMeasureUnits)
-        {
-            if (!ExchangeRateCollection.ContainsKey(item))
-            {
-                yield return item;
-            }
-        }
+        return customMeasureUnits.Where(x => !ExchangeRateCollection.ContainsKey(x));
     }
 
     public IEnumerable<Enum> GetNotUsedCustomMeasureUnits()

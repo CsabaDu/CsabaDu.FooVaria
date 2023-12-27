@@ -1,64 +1,61 @@
-﻿namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
+﻿namespace CsabaDu.FooVaria.Shapes.Factories.Implementations;
+
+public sealed class CircleFactory : PlaneShapeFactory, ICircleFactory
 {
-    public sealed class CircleFactory : PlaneShapeFactory, ICircleFactory
+    public CircleFactory(IBulkSurfaceFactory spreadFactory, IRectangleFactory tangentShapeFactory) : base(spreadFactory, tangentShapeFactory)
     {
-        public CircleFactory(IBulkSurfaceFactory spreadFactory, IRectangleFactory tangentShapeFactory) : base(spreadFactory, tangentShapeFactory)
+    }
+
+    public ICircle Create(IExtent radius)
+    {
+        return new Circle(this, radius);
+    }
+
+    public ICircle CreateNew(ICircle other)
+    {
+        return new Circle(other);
+    }
+
+    public override ICircle? CreateBaseShape(params IShapeComponent[] shapeComponents)
+    {
+        int count = GetShapeComponentsCount(shapeComponents);
+
+        if (count == 1)
         {
+            if (GetShapeExtent(shapeComponents[0]) is IExtent radius) return Create(radius);
+
+            if (shapeComponents[0] is ICircle circle) return CreateNew(circle);
         }
 
-        public ICircle Create(IExtent radius)
-        {
-            return new Circle(this, radius);
-        }
+        return null;
+    }
 
-        public ICircle CreateNew(ICircle other)
-        {
-            return new Circle(other);
-        }
+    public IRectangle CreateInnerTangentShape(ICircle circle, IExtent tangentRectangleSide)
+    {
+        IExtent otherSide = ShapeExtents.GetInnerTangentRectangleSide(circle, tangentRectangleSide);
 
-        public override ICircle CreateBaseShape(params IQuantifiable[] shapeComponents)
-        {
-            int count = GetValidShapeComponentsCount(shapeComponents);
+        return GetTangentShapeFactory().Create(tangentRectangleSide, otherSide);
+    }
 
-            switch (count)
-            {
-                case 1:
-                    if (shapeComponents[0] is ICircle circle) return CreateNew(circle);
-                    if (shapeComponents[0] is IExtent radius) return Create(radius);
-                    throw ArgumentTypeOutOfRangeException(nameof(shapeComponents), shapeComponents);
+    public IRectangle CreateInnerTangentShape(ICircle circle)
+    {
+        IExtent side = ShapeExtents.GetInnerTangentRectangleSide(circle);
 
-                default:
-                    throw CountArgumentOutOfRangeException(count, nameof(shapeComponents));
-            }
-        }
+        return GetTangentShapeFactory().Create(side, side);
+    }
 
-        public IRectangle CreateInnerTangentShape(ICircle circle, IExtent tangentRectangleSide)
-        {
-            IExtent otherSide = ShapeExtents.GetInnerTangentRectangleSide(circle, tangentRectangleSide);
+    public IRectangle CreateOuterTangentShape(ICircle circle)
+    {
+        return (IRectangle)GetTangentShapeFactory().CreateNew(circle);
+    }
 
-            return GetTangentShapeFactory().Create(tangentRectangleSide, otherSide);
-        }
+    public IRectangle CreateTangentShape(ICircle circle, SideCode sideCode)
+    {
+        return CreateTangentShape(this, circle, sideCode);
+    }
 
-        public IRectangle CreateInnerTangentShape(ICircle circle)
-        {
-            IExtent side = ShapeExtents.GetInnerTangentRectangleSide(circle);
-
-            return GetTangentShapeFactory().Create(side, side);
-        }
-
-        public IRectangle CreateOuterTangentShape(ICircle circle)
-        {
-            return (IRectangle)GetTangentShapeFactory().CreateNew(circle);
-        }
-
-        public IRectangle CreateTangentShape(ICircle circle, SideCode sideCode)
-        {
-            return CreateTangentShape(this, circle, sideCode);
-        }
-
-        public override IRectangleFactory GetTangentShapeFactory()
-        {
-            return (IRectangleFactory)TangentShapeFactory;
-        }
+    public override IRectangleFactory GetTangentShapeFactory()
+    {
+        return (IRectangleFactory)TangentShapeFactory;
     }
 }

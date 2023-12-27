@@ -1,4 +1,5 @@
-﻿namespace CsabaDu.FooVaria.Shapes.Types.Implementations;
+﻿
+namespace CsabaDu.FooVaria.Shapes.Types.Implementations;
 
 internal sealed class Cylinder : DryBody<ICylinder, ICircle>, ICylinder
 {

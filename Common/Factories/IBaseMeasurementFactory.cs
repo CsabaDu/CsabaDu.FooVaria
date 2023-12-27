@@ -2,5 +2,5 @@
 
 public interface IBaseMeasurementFactory : IMeasurableFactory
 {
-    IBaseMeasurement CreateBaseMeasurement(Enum measureUnit);
+    IBaseMeasurement? CreateBaseMeasurement(object context);
 }

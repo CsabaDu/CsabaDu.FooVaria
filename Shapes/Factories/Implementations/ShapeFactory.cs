@@ -1,5 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Behaviors;
-using CsabaDu.FooVaria.RateComponents.Factories;
+﻿using CsabaDu.FooVaria.RateComponents.Factories;
 
 namespace CsabaDu.FooVaria.Shapes.Factories.Implementations;
 
@@ -52,32 +51,35 @@ public abstract class ShapeFactory : IShapeFactory
     #endregion
 
     #region Abstract methods
-    public abstract IBaseShape CreateBaseShape(params IQuantifiable[] shapeComponents);
+    public abstract IBaseShape? CreateBaseShape(params IShapeComponent[] shapeComponents);
     #endregion
     #endregion
 
     #region Protected methods
     #region Static methods
-    protected static int GetValidShapeComponentsCount(IQuantifiable[] shapeComponents)
+    protected static int GetShapeComponentsCount(IShapeComponent[] shapeComponents)
     {
-        int count = NullChecked(shapeComponents, nameof(shapeComponents)).Length;
-
-        if (count != 0) return count;
-
-        throw CountArgumentOutOfRangeException(count, nameof(shapeComponents));
+        return shapeComponents?.Length ?? 0;
     }
 
-    protected static IEnumerable<IExtent> GetShapeExtents(IQuantifiable[] shapeComponents)
+    protected static IEnumerable<IExtent>? GetShapeExtents(IShapeComponent[] shapeComponents)
     {
-        foreach (IQuantifiable item in shapeComponents)
-        {
-            if (item is not IExtent shapeExtent)
-            {
-                throw ArgumentTypeOutOfRangeException(nameof(shapeComponents), item);
-            }
+        if (shapeComponents.Any(x => x is not IExtent)) return null;
 
-            yield return shapeExtent;
-        }
+        IEnumerable<IExtent> shapeExtents = shapeComponents.Cast<IExtent>();
+
+        return shapeExtents.All(x => x.DefaultQuantity > 0) ?
+            shapeExtents
+            : null;
+    }
+
+    protected static IExtent? GetShapeExtent(IShapeComponent shapeComponent)
+    {
+        if (shapeComponent is not IExtent shapeExtent) return null;
+        
+        if (shapeExtent.DefaultQuantity > 0) return shapeExtent;
+
+        return null;
     }
     #endregion
     #endregion
