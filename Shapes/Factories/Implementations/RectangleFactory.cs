@@ -55,7 +55,7 @@ public sealed class RectangleFactory : PlaneShapeFactory, IRectangleFactory
     {
         IExtent diagonal = NullChecked(rectangle, nameof(rectangle)).GetComparedShapeExtent(comparisonCode);
 
-        return CreateCircle(diagonal);
+        return CreateTangentShape(this, GetRadius(diagonal));
     }
 
     public ICircle CreateInnerTangentShape(IRectangle rectangle)
@@ -67,7 +67,7 @@ public sealed class RectangleFactory : PlaneShapeFactory, IRectangleFactory
     {
         IExtent diagonal = NullChecked(rectangle, nameof(rectangle)).GetDiagonal();
 
-        return CreateCircle(diagonal);
+        return CreateTangentShape(this, GetRadius(diagonal));
     }
 
     public ICircle CreateTangentShape(IRectangle rectangle, SideCode sideCode)
@@ -84,11 +84,9 @@ public sealed class RectangleFactory : PlaneShapeFactory, IRectangleFactory
     #endregion
 
     #region Private methods
-    private ICircle CreateCircle(IExtent diagonal)
+    private static IExtent GetRadius(IExtent diagonal)
     {
-        IExtent radius = (IExtent)diagonal.Divide(2);
-
-        return GetTangentShapeFactory().Create(radius);
+        return (IExtent)diagonal.Divide(2);
     }
     #endregion
 }

@@ -34,19 +34,19 @@ public sealed class CircleFactory : PlaneShapeFactory, ICircleFactory
     {
         IExtent otherSide = ShapeExtents.GetInnerTangentRectangleSide(circle, tangentRectangleSide);
 
-        return GetTangentShapeFactory().Create(tangentRectangleSide, otherSide);
+        return CreateTangentShape(this, tangentRectangleSide, otherSide);
     }
 
     public IRectangle CreateInnerTangentShape(ICircle circle)
     {
         IExtent side = ShapeExtents.GetInnerTangentRectangleSide(circle);
 
-        return GetTangentShapeFactory().Create(side, side);
+        return CreateTangentShape(this, side, side);
     }
 
     public IRectangle CreateOuterTangentShape(ICircle circle)
     {
-        return (IRectangle)GetTangentShapeFactory().CreateNew(circle);
+        return CreateTangentShape(this, circle);
     }
 
     public IRectangle CreateTangentShape(ICircle circle, SideCode sideCode)

@@ -1,8 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Shapes.Behaviors
+﻿namespace CsabaDu.FooVaria.Shapes.Behaviors;
+
+public interface IRadius
 {
-    public interface IRadius
-    {
-        IExtent GetRadius();
-        IExtent GetRadius(ExtentUnit extentUnit);
-    }
+    IExtent GetRadius();
+    IExtent GetRadius(ExtentUnit extentUnit);
 }

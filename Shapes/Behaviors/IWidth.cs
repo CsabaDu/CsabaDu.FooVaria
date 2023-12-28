@@ -1,8 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Shapes.Behaviors
+﻿namespace CsabaDu.FooVaria.Shapes.Behaviors;
+
+public interface IWidth
 {
-    public interface IWidth
-    {
-        IExtent GetWidth();
-        IExtent GetWidth(ExtentUnit extentUnit);
-    }
+    IExtent GetWidth();
+    IExtent GetWidth(ExtentUnit extentUnit);
 }

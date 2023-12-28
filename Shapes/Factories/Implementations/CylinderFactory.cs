@@ -62,38 +62,45 @@ public sealed class CylinderFactory : DryBodyFactory<ICylinder, ICircle>, ICylin
         return GetBaseFaceFactory().Create(radius);
     }
 
-    public ICuboid CreateInnerTangentShape(ICylinder circularShape, IExtent tangentRectangleSide)
+    public ICuboid CreateInnerTangentShape(ICylinder cylinder, IExtent tangentRectangleSide)
     {
-        throw new NotImplementedException();
+        IRectangle baseFace = cylinder.BaseFace.GetInnerTangentShape(tangentRectangleSide);
+
+        return CreateTangentShape(this, baseFace, cylinder);
     }
 
-    public ICuboid CreateInnerTangentShape(ICylinder shape)
+    public ICuboid CreateInnerTangentShape(ICylinder cylinder)
     {
-        throw new NotImplementedException();
+        IRectangle baseFace = cylinder.BaseFace.GetInnerTangentShape();
+
+        return CreateTangentShape(this, baseFace, cylinder);
     }
 
-    public ICuboid CreateOuterTangentShape(ICylinder shape)
+    public ICuboid CreateOuterTangentShape(ICylinder cylinder)
     {
-        throw new NotImplementedException();
+        return CreateTangentShape(this, cylinder);
     }
 
-    public ICuboid CreateTangentShape(ICylinder shape, SideCode sideCode)
+    public ICuboid CreateTangentShape(ICylinder cylinder, SideCode sideCode)
     {
-        throw new NotImplementedException();
+        return CreateTangentShape(this, cylinder, sideCode);
     }
 
     public IRectangle CreateVerticalProjection(ICylinder cylinder)
     {
-        throw new NotImplementedException();
+        IExtent horizontal = NullChecked(cylinder, nameof(cylinder)).BaseFace.GetDiagonal();
+        IRectangleFactory factory = (IRectangleFactory)BaseFaceFactory.GetTangentShapeFactory();
+
+        return CreateVerticalProjection(factory, horizontal, cylinder)!;
     }
 
     public override ICircleFactory GetBaseFaceFactory()
     {
-        throw new NotImplementedException();
+        return (ICircleFactory)BaseFaceFactory;
     }
 
     public override ICuboidFactory GetTangentShapeFactory()
     {
-        throw new NotImplementedException();
+        return (ICuboidFactory)TangentShapeFactory;
     }
 }

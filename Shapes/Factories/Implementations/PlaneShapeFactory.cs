@@ -80,18 +80,6 @@
 
         #region Protected methods
         #region Static methods
-        protected static TTangent CreateTangentShape<T, TTangent>(IShapeFactory<T, TTangent> factory,  T tangentShape, SideCode sideCode)
-            where T : class, IShape, ITangentShape
-            where TTangent : class, IShape, ITangentShape
-        {
-            return sideCode switch
-            {
-                SideCode.Outer => factory.CreateOuterTangentShape(tangentShape),
-                SideCode.Inner => factory.CreateInnerTangentShape(tangentShape),
-
-                _ => throw InvalidSidenCodeEnumArgumentException(sideCode),
-            };
-        }
         #endregion
         #endregion
     }

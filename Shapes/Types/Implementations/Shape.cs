@@ -1,5 +1,4 @@
-﻿using CsabaDu.FooVaria.Shapes.Statics;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace CsabaDu.FooVaria.Shapes.Types.Implementations;
 
@@ -45,7 +44,7 @@ internal abstract class Shape : BaseShape, IShape
     public IEnumerable<IExtent> GetDimensions()
     {
         return this is ICircularShape circularShape ?
-            GetShapeComponents(circularShape.GetTangentShape(SideCode.Outer))
+            GetShapeComponents(circularShape.GetTangentShape(SideCode.Outer))!
             : GetShapeExtents();
     }
 
@@ -61,9 +60,16 @@ internal abstract class Shape : BaseShape, IShape
         return (IShape)GetBaseShape(shapeExtents)!;
     }
 
-    public IEnumerable<IExtent> GetShapeComponents(IBaseShape baseShape)
+    public IEnumerable<IExtent>? GetShapeComponents(IBaseShape baseShape)
     {
-        throw new NotImplementedException();
+        if (baseShape is IShape shape) return shape.GetShapeExtents();
+
+        if (baseShape is IComplexShape complexShape)
+        {
+            throw new NotImplementedException();
+        }
+
+        return null;
     }
 
     public IExtent GetShapeExtent(ShapeExtentTypeCode shapeExtentTypeCode)
@@ -154,11 +160,21 @@ internal abstract class Shape : BaseShape, IShape
     {
         if (other == null) return 1;
 
-        if (other is not IShape shape) throw ArgumentTypeOutOfRangeException(nameof(other), other);
+        string paramName = nameof(other);
 
-        shape.Validate(this, nameof(other));
+        if (other is not IShape shape)
+        {
+            if (other is IComplexShape complexShape)
+            {
+                throw new NotImplementedException();
+            }
 
-        return Compare(this, shape) ?? throw new ArgumentOutOfRangeException(nameof(other));
+            throw ArgumentTypeOutOfRangeException(paramName, other);
+        }
+
+        ValidateMeasureUnitTypeCode(shape.MeasureUnitTypeCode, paramName);
+
+        return Compare(this, shape) ?? throw new ArgumentOutOfRangeException(paramName);
     }
 
     public override sealed bool Equals(IBaseShape? other)
@@ -228,13 +244,17 @@ internal abstract class Shape : BaseShape, IShape
 
     public override sealed bool? FitsIn(IBaseShape? other, LimitMode? limitMode)
     {
-        if (other == null) return null;
+        if (other is not IShape shape)
+        {
+            if (other is IComplexShape complexShape)
+            {
+                throw new NotImplementedException();
+            }
 
-        if (!other.IsExchangeableTo(MeasureUnitTypeCode)) return null;
+            return null;
+        }
 
-        if (other is not IShape shape) return null;
-
-        if (other is not ITangentShape tangentShape) return null;
+        if (!shape.IsExchangeableTo(MeasureUnitTypeCode)) return null;
 
         limitMode ??= LimitMode.BeNotGreater;
 
@@ -244,15 +264,10 @@ internal abstract class Shape : BaseShape, IShape
 
         if (shape.GetShapeComponentCount() != GetShapeComponentCount())
         {
-            shape = tangentShape.GetTangentShape(sideCode);
+            shape = (shape as ITangentShape)!.GetTangentShape(sideCode);
         }
 
         return Compare(this, shape)?.FitsIn(limitMode);
-    }
-
-    public override sealed IShape? GetBaseShape(params IShapeComponents[] shapeComponents)
-    {
-        throw new NotImplementedException();
     }
 
     public override sealed IBaseSpread GetBaseSpread(ISpreadMeasure spreadMeasure)
@@ -267,7 +282,7 @@ internal abstract class Shape : BaseShape, IShape
 
     public override sealed IEnumerable<IShapeComponent> GetShapeComponents()
     {
-        return GetShapeExtents();
+        return GetShapeComponents();
     }
 
     public override sealed IExtent? GetValidShapeComponent(IShapeComponent shapeComponent)

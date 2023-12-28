@@ -11,6 +11,6 @@ namespace CsabaDu.FooVaria.Shapes.Behaviors
         where TSelf : class, IDryBody, IRectangularShape
     {
         TSelf RotateSpatially();
-        //TNum RotateSpatiallyWith(IDryBody other);
+        //TSelf RotateSpatiallyWith(TSelf other);
     }
 }

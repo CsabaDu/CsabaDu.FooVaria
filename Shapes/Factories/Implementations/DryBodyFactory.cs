@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
+﻿using CsabaDu.FooVaria.Shapes.Types.Implementations;
+
+namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
 {
     public abstract class DryBodyFactory : ShapeFactory, IDryBodyFactory
     {
@@ -41,6 +43,13 @@
         public abstract IDryBody Create(IPlaneShape baseFace, IExtent height);
         #endregion
         #endregion
+
+
+        protected static IRectangle CreateVerticalProjection(IRectangleFactory factory, IExtent horizontal, IDryBody dryBody)
+        {
+            return factory.Create(horizontal, dryBody.Height)!;
+        }
+
     }
 
     public abstract class DryBodyFactory<T, TBFace> : DryBodyFactory, IDryBodyFactory<T, TBFace>
@@ -70,6 +79,16 @@
         #region Abstract methods
         public abstract T Create(TBFace baseFace, IExtent height);
         #endregion
+        #endregion
+
+        #region Protected methods
+        protected TTangent CreateTangentShape<TTangent>(IShapeFactory<T, TTangent> factory, IPlaneShape baseFace, T dryBody)
+            where TTangent : class, IDryBody, ITangentShape
+        {
+            IDryBodyFactory tangentShapeFactory = (GetTangentShapeFactory() as IDryBodyFactory)!;
+
+            return (TTangent)tangentShapeFactory.Create(baseFace, dryBody.Height);
+        }
         #endregion
     }
 }

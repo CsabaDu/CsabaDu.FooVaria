@@ -5,8 +5,8 @@
         IEnumerable<IShapeComponent> GetShapeComponents();
     }
 
-    public interface IShapeComponents<T> : IShapeComponents where T : class, IQuantifiable, IShapeComponent
+    public interface IShapeComponents<out T> : IShapeComponents where T : class, IQuantifiable, IShapeComponent
     {
-        IEnumerable<T> GetShapeComponents(IBaseShape baseShape);
+        IEnumerable<T>? GetShapeComponents(IBaseShape baseShape);
     }
 }

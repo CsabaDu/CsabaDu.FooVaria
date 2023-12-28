@@ -31,34 +31,67 @@ public sealed class CuboidFactory : DryBodyFactory<ICuboid, IRectangle>, ICuboid
         return GetBaseFaceFactory().Create(length, width);
     }
 
-    public ICylinder CreateInnerTangentShape(ICuboid rectangularShape, ComparisonCode comparisonCode)
+    public ICylinder CreateInnerTangentShape(ICuboid cuboid, ComparisonCode comparisonCode)
     {
-        throw new NotImplementedException();
+        ICircle baseFace = cuboid.BaseFace.GetInnerTangentShape(comparisonCode);
+
+        return CreateTangentShape(this, baseFace, cuboid);
     }
 
     public ICylinder CreateInnerTangentShape(ICuboid cuboid)
     {
-        throw new NotImplementedException();
+        ICircle baseFace = cuboid.BaseFace.GetInnerTangentShape();
+
+        return CreateTangentShape(this, baseFace, cuboid);
     }
 
     public ICylinder CreateOuterTangentShape(ICuboid cuboid)
     {
-        throw new NotImplementedException();
+        ICircle baseFace = cuboid.BaseFace.GetInnerTangentShape();
+
+        return CreateTangentShape(this, baseFace, cuboid);
     }
 
-    public IRectangle CreateProjection(ICuboid cuboid, ShapeExtentTypeCode perpendicular)
-    {
-        throw new NotImplementedException();
-    }
+    //public IRectangle CreateProjection(ICuboid cuboid, ShapeExtentTypeCode perpendicular)
+    //{
+    //    IExtent horizontal = NullChecked(cuboid, nameof(cuboid)).GetShapeExtent(getPerpendicularShapeExtentTypeCode());
+    //    IRectangleFactory factory = GetBaseFaceFactory();
+
+    //    return perpendicular switch
+    //    {
+    //        ShapeExtentTypeCode.Length => CreateVerticalProjection(factory, horizontal, cuboid),
+    //        ShapeExtentTypeCode.Width => CreateVerticalProjection(factory, horizontal, cuboid),
+    //        ShapeExtentTypeCode.Height => factory.CreateNew(cuboid.BaseFace),
+
+    //        _ => throw new InvalidOperationException(),
+    //    };
+
+    //    #region Local methods
+    //    ShapeExtentTypeCode getPerpendicularShapeExtentTypeCode()
+    //    {
+    //        return perpendicular switch
+    //        {
+    //            ShapeExtentTypeCode.Length => ShapeExtentTypeCode.Width,
+    //            ShapeExtentTypeCode.Width => ShapeExtentTypeCode.Length,
+    //            ShapeExtentTypeCode.Height => ShapeExtentTypeCode.Height,
+
+    //            _ => throw InvalidShapeExtentTypeCodeEnumArgumentException(perpendicular, nameof(perpendicular)),
+    //        };
+    //    }
+    //    #endregion
+    //}
 
     public ICylinder CreateTangentShape(ICuboid cuboid, SideCode sideCode)
     {
-        throw new NotImplementedException();
+        return CreateTangentShape(this, cuboid, sideCode);
     }
 
     public IRectangle CreateVerticalProjection(ICuboid cuboid, ComparisonCode comparisonCode)
     {
-        throw new NotImplementedException();
+        IExtent horizontal = NullChecked(cuboid, nameof(cuboid)).BaseFace.GetComparedShapeExtent(comparisonCode);
+        IRectangleFactory factory = GetBaseFaceFactory();
+
+        return CreateVerticalProjection(factory, horizontal, cuboid);
     }
 
     public override ICylinderFactory GetTangentShapeFactory()
@@ -77,7 +110,6 @@ public sealed class CuboidFactory : DryBodyFactory<ICuboid, IRectangle>, ICuboid
             3 => createCuboidFrom3Params(),
 
             _ => null,
-
         };
 
         #region Local methods

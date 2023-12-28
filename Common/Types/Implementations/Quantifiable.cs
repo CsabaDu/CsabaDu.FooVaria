@@ -38,6 +38,11 @@ public abstract class Quantifiable : Measurable, IQuantifiable
         return HashCode.Combine(MeasureUnitTypeCode, GetDefaultQuantity());
     }
 
+    public override void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, string paramName)
+    {
+        if (GetMeasureUnitTypeCodes().Contains(measureUnitTypeCode)) return;
+    }
+
     #endregion
 
     #region Abstract methods

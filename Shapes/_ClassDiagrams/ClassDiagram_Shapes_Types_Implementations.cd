@@ -1,39 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="CsabaDu.FooVaria.Shapes.Types.Implementations.Circle" Collapsed="true">
-    <Position X="2.25" Y="9" Width="1.25" />
+    <Position X="2.25" Y="8" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>IAAIAIAAAAAAAAAACAAAAACAAIAQAABAAAAAAAgAAIA=</HashCode>
+      <HashCode>IAAIAIAAAAAAAAAACAAAACCAAIAQAABAAAAAAAgAAAA=</HashCode>
       <FileName>Types\Implementations\Circle.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.Shapes.Types.Implementations.Cuboid" Collapsed="true">
-    <Position X="4" Y="9" Width="2" />
+    <Position X="3" Y="9.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAABAYAAAAIAAAAADAAAAACAAIQQEBRAAAAAAEAAAAA=</HashCode>
+      <HashCode>AAABAYAAAAIAAAAADAAAACCAAIQQEBRAAAAAAEAAAAA=</HashCode>
       <FileName>Types\Implementations\Cuboid.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.Shapes.Types.Implementations.Cylinder" Collapsed="true">
-    <Position X="6.25" Y="9" Width="1.75" />
+    <Position X="5.25" Y="9.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAABYAAAAIAAAAACAAAAACAAIAQAARAAAAAAAgAAAA=</HashCode>
+      <HashCode>AAAABYAAAAIAAAAACAAAACCAAIAQAARAAAAAAAgAAAA=</HashCode>
       <FileName>Types\Implementations\Cylinder.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.Shapes.Types.Implementations.DryBody" Collapsed="true">
-    <Position X="5.5" Y="6.5" Width="1.25" />
+    <Position X="4.5" Y="6.5" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>AAAAARAABAIAAAAAAAAFAADAAAAAGAAAAgIAAAAAAIA=</HashCode>
+      <HashCode>AAAAARAABAIAAAAAAAAFAADAAAAAEAAAAgIAAAAAAAA=</HashCode>
       <FileName>Types\Implementations\DryBody.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.Shapes.Types.Implementations.DryBody&lt;TSelf, TBFace&gt;" Collapsed="true">
-    <Position X="5.25" Y="7.75" Width="1.75" />
+    <Position X="4.25" Y="8" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAFAACAAAAAAAAAAAAAABAAAAA=</HashCode>
       <FileName>Types\Implementations\DryBody.cs</FileName>
@@ -43,29 +43,29 @@
   <Class Name="CsabaDu.FooVaria.Shapes.Types.Implementations.PlaneShape" Collapsed="true">
     <Position X="1.5" Y="6.5" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAEAAAAAQAEQAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAABAEAAAAAQAAQAAAAA=</HashCode>
       <FileName>Types\Implementations\PlaneShape.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.Shapes.Types.Implementations.Rectangle" Collapsed="true">
-    <Position X="0.75" Y="9" Width="1.25" />
+    <Position X="0.75" Y="8" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>AAABAIAAIAAAAAAADAAAAEDAAIAQEABAAAAAAEAAAIA=</HashCode>
+      <HashCode>AAABAIAAIAAAAAAADAAAAGDAAIAQEABAAAAAAEAAAAA=</HashCode>
       <FileName>Types\Implementations\Rectangle.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.Shapes.Types.Implementations.Shape" Collapsed="true">
-    <Position X="3.5" Y="5" Width="1.25" />
+    <Position X="3" Y="5" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>AAAAIABAAACAAQQAiaAAAACAAABQAQAABgPAIBAARoQ=</HashCode>
+      <HashCode>QAAAIABgAACAAQSAiaAAAACAAABQUQAABAPAIBAARIQ=</HashCode>
       <FileName>Types\Implementations\Shape.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.Common.Types.Implementations.BaseShape" Collapsed="true">
-    <Position X="3.5" Y="3.75" Width="1.25" />
+    <Position X="3" Y="3.75" Width="1.25" />
     <TypeIdentifier />
     <Lollipop Position="0.2" />
   </Class>

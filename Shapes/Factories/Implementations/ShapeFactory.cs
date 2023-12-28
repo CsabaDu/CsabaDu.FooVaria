@@ -56,6 +56,13 @@ public abstract class ShapeFactory : IShapeFactory
     #endregion
 
     #region Protected methods
+    protected TTangent CreateTangentShape<T, TTangent>(IShapeFactory<T, TTangent> factory, params IShapeComponent[] shapeComponents)
+    where T : class, IShape, ITangentShape
+    where TTangent : class, IShape, ITangentShape
+    {
+        return (TTangent)GetTangentShapeFactory().CreateBaseShape(shapeComponents)!;
+    }
+
     #region Static methods
     protected static int GetShapeComponentsCount(IShapeComponent[] shapeComponents)
     {
@@ -80,6 +87,19 @@ public abstract class ShapeFactory : IShapeFactory
         if (shapeExtent.DefaultQuantity > 0) return shapeExtent;
 
         return null;
+    }
+
+    protected static TTangent CreateTangentShape<T, TTangent>(IShapeFactory<T, TTangent> factory, T shape, SideCode sideCode)
+        where T : class, IShape, ITangentShape
+        where TTangent : class, IShape, ITangentShape
+    {
+        return sideCode switch
+        {
+            SideCode.Outer => factory.CreateOuterTangentShape(shape),
+            SideCode.Inner => factory.CreateInnerTangentShape(shape),
+
+            _ => throw InvalidSidenCodeEnumArgumentException(sideCode),
+        };
     }
     #endregion
     #endregion

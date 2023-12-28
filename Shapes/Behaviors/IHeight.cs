@@ -1,8 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Shapes.Behaviors
+﻿namespace CsabaDu.FooVaria.Shapes.Behaviors;
+
+public interface IHeight
 {
-    public interface IHeight
-    {
-        IExtent GetHeight();
-        IExtent GetHeight(ExtentUnit extentUnit);
-    }
+    IExtent GetHeight();
+    IExtent GetHeight(ExtentUnit extentUnit);
 }

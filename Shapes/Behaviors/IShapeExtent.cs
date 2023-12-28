@@ -1,7 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Shapes.Behaviors
+﻿namespace CsabaDu.FooVaria.Shapes.Behaviors;
+
+public interface IShapeExtent
 {
-    public interface IShapeExtent
-    {
-        IExtent GetShapeExtent(ShapeExtentTypeCode shapeExtentTypeCode);
-    }
+    IExtent GetShapeExtent(ShapeExtentTypeCode shapeExtentTypeCode);
 }
