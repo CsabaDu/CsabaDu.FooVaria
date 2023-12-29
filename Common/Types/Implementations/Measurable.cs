@@ -144,6 +144,9 @@ public abstract class Measurable : CommonBase, IMeasurable
 
         throw new ArgumentOutOfRangeException(paramName, otherProperty, null);
     }
+
+    public abstract Enum GetMeasureUnit();
+
     #endregion
     #endregion
 }

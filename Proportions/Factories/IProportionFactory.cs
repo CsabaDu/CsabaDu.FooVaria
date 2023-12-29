@@ -1,62 +1,23 @@
-﻿namespace CsabaDu.FooVaria.Proportions.Factories
+﻿using CsabaDu.FooVaria.RateComponents.Factories;
+
+namespace CsabaDu.FooVaria.Proportions.Factories;
+
+public interface IProportionFactory : IBaseRateFactory
 {
-    public interface IProportionFactory : IBaseRateFactory
-    {
-        IProportion Create(IBaseRate baseRate);
-        IProportion Create(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
-        IProportion Create(IBaseMeasure numerator, Enum denominatorMeasureUnit);
-        IProportion Create(Enum numeratorMeasureUnit, ValueType quantity, Enum denominatorMeasureUnit);
-    }
+    IMeasureFactory MeasureFactory { get; init; }
+
+    IProportion Create(IBaseRate baseRate);
+    IProportion Create(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
+    IProportion Create(Enum numeratorMeasureUnit, ValueType quantity, Enum denominatorMeasureUnit);
+
+    IProportion<TDEnum> Create<TDEnum>(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal numeratorDefaultQuantity, TDEnum denominatorMeasureUnit)
+        where TDEnum : struct, Enum;
+    IProportion<TDEnum> Create<TDEnum>(Enum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit)
+        where TDEnum : struct, Enum;
+    IProportion<TDEnum> Create<TDEnum>(IBaseMeasure numerator, TDEnum denominatorMeasureUnit)
+        where TDEnum : struct, Enum;
+
+    IProportion<TNEnum, TDEnum> Create<TNEnum, TDEnum>(TNEnum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit)
+        where TNEnum : struct, Enum
+        where TDEnum : struct, Enum;
 }
-
-//IProportion Create(IBaseMeasure numerator, IBaseMeasure denominator);
-
-//    public interface IProportionFactory<out T, in U> : IProportionFactory
-//        where T : class, IProportion, IMeasureProportion
-//        where U : struct, Enum
-//    {
-//        T Create(IRateComponent numerator, U denominatorMeasureUnit);
-//    }
-
-//    public interface IProportionFactory<T, in W, in U> : IProportionFactory<T, U>, IFactory<T>
-//        where T : class, IProportion<T, U>, IMeasureProportion
-//        where U : struct, Enum
-//        where W : struct, Enum
-//    {
-//        T Create(W numeratorMeasureUnit, decimal quantity, U denominatorMeasureUnit);
-//    }
-
-//    public interface IFrequencyFactory : IProportionFactory<IFrequency, Pieces, TimePeriodUnit>, IMeasureProportionFactory<IFrequency, IPieceCount, ITimePeriod>
-//    {
-//    }
-
-//    public interface IValuabilityFactory : IProportionFactory<IValuability, Currency, WeightUnit>, IMeasureProportionFactory<IValuability, ICash, IWeight>
-//    {
-//    }
-
-//    public interface IDensityFactory : IProportionFactory<IDensity, WeightUnit, VolumeUnit>, IMeasureProportionFactory<IDensity, IWeight, IVolume>
-//    {
-//    }
-
-//    public interface IMeasureProportionFactory : IBaseRateFactory
-//    {
-//    }
-
-//    public interface IMeasureProportionFactory<out T, in U> : IMeasureProportionFactory
-//        where T : class, IProportion, IMeasureProportion<T, U>
-//        where U : class, IMeasure, IDefaultRateComponent
-//    {
-//        T GetProportion(U numerator, IMeasurement denominatorMeasurement);
-//        T GetProportion(U numerator, IDenominator denominator);
-//    }
-
-
-//    public interface IMeasureProportionFactory<out T, in U, in W> : IMeasureProportionFactory<T, U>
-//        where T : class, IProportion, IMeasureProportion<T, U, W>
-//        where U : class, IMeasure, IDefaultRateComponent
-//        where W : class, IMeasure, IDefaultRateComponent
-//    {
-//        T GetProportion(U numerator, W denominator);
-//    }
-
-//}

@@ -184,6 +184,11 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
             return (IRateComponentFactory)Factory;
         }
 
+        public override Enum GetMeasureUnit()
+        {
+            return Measurement.GetMeasureUnit();
+        }
+
         public override void Validate(IRootObject? rootObject, string paramName)
         {
             Validate(this, rootObject, validateBaseMeasure, paramName);

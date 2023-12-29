@@ -1,4 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Statics;
+﻿using CsabaDu.FooVaria.Common.Behaviors;
 
 namespace CsabaDu.FooVaria.Common.Types.Implementations;
 
@@ -13,10 +13,6 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
     {
     }
 
-    //protected BaseSpread(IBaseSpreadFactory factory, IBaseMeasure baseMeasure) : base(factory, baseMeasure)
-    //{
-    //}
-
     protected BaseSpread(IBaseSpreadFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IMeasurable[] measurables) : base(factory, measureUnitTypeCode, measurables)
     {
     }
@@ -28,7 +24,6 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
     protected BaseSpread(IBaseSpreadFactory factory, Enum measureUnit) : base(factory, measureUnit)
     {
     }
-
     #endregion
 
     #region Public methods
@@ -62,6 +57,11 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
     public override sealed decimal GetDefaultQuantity()
     {
         return (GetSpreadMeasure() as IBaseMeasure ?? throw new InvalidOperationException(null)).DefaultQuantity;
+    }
+
+    public override sealed Enum GetMeasureUnit()
+    {
+        return (GetSpreadMeasure() as IMeasurable)!.GetMeasureUnit();
     }
 
     public MeasureUnitTypeCode GetMeasureUnitTypeCode()

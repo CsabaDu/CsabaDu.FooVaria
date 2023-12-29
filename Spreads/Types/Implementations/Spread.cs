@@ -130,27 +130,18 @@
 
         #region Public methods
         #region Override methods
-        public override sealed TSelf GetBaseSpread(ISpreadMeasure spreadMeasure)
-        {
-            ValidateSpreadMeasure(spreadMeasure, nameof(spreadMeasure));
-
-            return GetFactory().Create((TSMeasure)spreadMeasure);
-        }
-
         public override ISpreadFactory<TSelf, TSMeasure, TEnum> GetFactory()
         {
             return (ISpreadFactory<TSelf, TSMeasure, TEnum>)Factory;
         }
 
         #region Sealed methods
-        //public override sealed bool? FitsIn(IBaseSpread? other, LimitMode? limitMode)
-        //{
-        //    if (other == null) return null;
+        public override sealed TSelf GetBaseSpread(ISpreadMeasure spreadMeasure)
+        {
+            ValidateSpreadMeasure(spreadMeasure, nameof(spreadMeasure));
 
-        //    TContext spreadMeasure = (TContext)SpreadMeasures.GetValidSpreadMeasure(other);
-
-        //    return SpreadMeasure.FitsIn(spreadMeasure, limitMode);
-        //}
+            return GetFactory().Create((TSMeasure)spreadMeasure);
+        }
 
         public override sealed TSelf GetSpread(params IExtent[] shapeExtents)
         {

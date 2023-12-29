@@ -5,13 +5,14 @@
         MeasureUnitTypeCode NumeratorMeasureUnitTypeCode { get; init; }
 
         IProportion GetProportion(IBaseRate baseRate);
-        IProportion GetProportion(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
+        //IProportion GetProportion(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
     }
 
     public interface IProportion<TDEnum> : IProportion, IDenominate<IBaseMeasure, TDEnum>
         where TDEnum : struct, Enum
     {
         IProportion<TDEnum> GetProportion(IBaseMeasure numerator, TDEnum denominatorMeasureUnit);
+        IProportion<TDEnum> GetProportion(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal numeratorDefaultQuantity, TDEnum denominatorMeasureUnit);
         decimal GetQuantity(TDEnum denominatorMeasureUnit);
     }
 

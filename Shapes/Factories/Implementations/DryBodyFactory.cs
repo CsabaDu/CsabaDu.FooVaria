@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Shapes.Types.Implementations;
-
-namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
+﻿namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
 {
     public abstract class DryBodyFactory : ShapeFactory, IDryBodyFactory
     {
@@ -44,12 +42,10 @@ namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
         #endregion
         #endregion
 
-
         protected static IRectangle CreateVerticalProjection(IRectangleFactory factory, IExtent horizontal, IDryBody dryBody)
         {
             return factory.Create(horizontal, dryBody.Height)!;
         }
-
     }
 
     public abstract class DryBodyFactory<T, TBFace> : DryBodyFactory, IDryBodyFactory<T, TBFace>

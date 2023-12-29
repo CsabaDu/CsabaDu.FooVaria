@@ -1,4 +1,5 @@
 ﻿
+
 namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations
 {
     public abstract class RateComponentFactory : IRateComponentFactory
@@ -59,6 +60,11 @@ namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations
             }
 
             throw new InvalidOperationException(null);
+        }
+
+        public IBaseMeasure CreateBaseMeasure(Enum measureUnit, ValueType quantity)
+        {
+            throw new NotImplementedException();
         }
         #endregion
         #endregion

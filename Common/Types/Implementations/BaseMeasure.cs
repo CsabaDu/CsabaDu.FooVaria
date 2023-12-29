@@ -97,30 +97,5 @@
         public abstract TSelf? ExchangeTo(TContext context);
         public abstract bool IsExchangeableTo(TContext? context);
     }
-
-    //public abstract class Body : BaseSpread, IBody
-    //{
-    //    public Body(IBody other) : base(other)
-    //    {
-    //    }
-
-    //    public Body(IBaseSpreadFactory factory, IBody body) : base(factory, body)
-    //    {
-    //    }
-
-    //    public Body(IBaseSpreadFactory factory, IBaseMeasure baseMeasure) : base(factory, baseMeasure)
-    //    {
-    //    }
-
-    //    public Body(IBaseSpreadFactory factory, Enum measureUnit) : base(factory, measureUnit)
-    //    {
-    //    }
-
-    //    public Body(IBaseSpreadFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IMeasurable[] measurables) : base(factory, measureUnitTypeCode, measurables)
-    //    {
-    //    }
-
-    //    public abstract IBody GetBody();
-    //}
 }
 

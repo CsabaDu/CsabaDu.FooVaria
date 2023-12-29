@@ -2,6 +2,7 @@
 {
     public interface IMeasureUnit
     {
+        Enum GetMeasureUnit();
     }
 
     public interface IMeasureUnit<out TEnum> : IMeasureUnit

@@ -2,6 +2,7 @@
 {
     public interface IBaseMeasureFactory : IQuantifiableFactory
     {
+        IBaseMeasure CreateBaseMeasure(Enum measureUnit, ValueType quantity);
     }
 
     public interface IBaseMeasureFactory<out T, TContext> : IBaseMeasureFactory

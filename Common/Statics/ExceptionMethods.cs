@@ -195,7 +195,7 @@ public static class ExceptionMethods
     public static T DefinedMeasureUnit<T>(T measureUnit, string paramName)
         where T : Enum
     {
-        if (MeasureUnitTypes.IsDefinedMeasureUnit(NullChecked(measureUnit, paramName))) return measureUnit;
+        if (IsDefinedMeasureUnit(NullChecked(measureUnit, paramName))) return measureUnit;
 
         throw new InvalidEnumArgumentException(paramName, (int)(object)measureUnit, typeof(T));
     }

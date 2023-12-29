@@ -34,11 +34,6 @@ internal sealed class Denominator : RateComponent<IDenominator, decimal>, IDenom
         return GetFactory().Create(rateComponent, quantity);
     }
 
-    public Enum GetMeasureUnit()
-    {
-        return Measurement.GetMeasureUnit();
-    }
-
     public override IDenominator GetRateComponent(IRateComponent rateComponent)
     {
         if (rateComponent is IDenominator other) return GetNew(other);

@@ -42,11 +42,6 @@ internal sealed class Limit : RateComponent, ILimit
         return HashCode.Combine(limit.DefaultQuantity, limit.MeasureUnitTypeCode, limit.LimitMode);
     }
 
-    public Enum GetMeasureUnit()
-    {
-        return Measurement.GetMeasureUnit();
-    }
-
     public ILimit? GetLimit(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName, LimitMode limitMode)
     {
         return GetFactory().Create(measureUnit, exchangeRate, quantity, customName, limitMode);

@@ -13,6 +13,7 @@ public abstract class BaseShape : BaseSpread, IBaseShape
     protected BaseShape(IBaseSpreadFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IQuantifiable[] shapeComponents) : base(factory, measureUnitTypeCode, shapeComponents)
     {
     }
+
     public int GetShapeComponentCount()
     {
         return GetShapeComponents().Count();
@@ -37,7 +38,6 @@ public abstract class BaseShape : BaseSpread, IBaseShape
     public abstract int CompareTo(IBaseShape? other);
     public abstract bool? FitsIn(IBaseShape? other, LimitMode? limitMode);
     public abstract void ValidateShapeComponent(IQuantifiable shapeComponent, string paramName);
-
     public abstract IQuantifiable? GetValidShapeComponent(IShapeComponent shapeComponent);
     public abstract IEnumerable<IShapeComponent> GetShapeComponents();
     public abstract IBaseShape? GetBaseShape(params IShapeComponent[] shapeComponents);

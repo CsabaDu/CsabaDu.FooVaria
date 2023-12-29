@@ -3,19 +3,23 @@
     public abstract class BaseRate : BaseMeasure<IBaseRate, IMeasurable>, IBaseRate
     {
         #region Constructors
-        public BaseRate(IBaseRate other) : base(other)
+        protected BaseRate(IBaseRate other) : base(other)
         {
         }
 
-        public BaseRate(IBaseRateFactory factory, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, denominatorMeasureUnitTypeCode)
+        protected BaseRate(IBaseRateFactory factory, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, denominatorMeasureUnitTypeCode)
         {
         }
 
-        public BaseRate(IBaseRateFactory factory, IBaseRate baseRate) : base(factory, baseRate)
+        protected BaseRate(IBaseRateFactory factory, Enum denominatorMeasureUnit) : base(factory, denominatorMeasureUnit)
         {
         }
 
-        public BaseRate(IBaseRateFactory factory, IBaseMeasure denominator) : base(factory, denominator)
+        protected BaseRate(IBaseRateFactory factory, IBaseRate baseRate) : base(factory, baseRate)
+        {
+        }
+
+        protected BaseRate(IBaseRateFactory factory, IBaseMeasure denominator) : base(factory, denominator)
         {
         }
         #endregion

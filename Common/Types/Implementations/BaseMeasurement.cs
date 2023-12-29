@@ -142,7 +142,6 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
     #region Abstract methods
     public abstract decimal GetExchangeRate();
     public abstract decimal GetExchangeRate(string name);
-    public abstract Enum GetMeasureUnit();
     public abstract string GetName();
     public abstract void RestoreConstantExchangeRates();
     #endregion

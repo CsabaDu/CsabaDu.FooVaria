@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.RateComponents.Types;
 
-public interface IDenominator : IRateComponent<IDenominator, decimal>, IMeasureUnit<Enum>
+public interface IDenominator : IRateComponent<IDenominator, decimal>
 {
     IDenominator GetDenominator(Enum measureUnit);
     IDenominator GetDenominator(string name);

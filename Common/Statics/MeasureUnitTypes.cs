@@ -134,7 +134,7 @@ public static class MeasureUnitTypes
 
     public static MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum measureUnit)
     {
-        string name = NullChecked(measureUnit, nameof(measureUnit)).GetType().Name;
+        string name = DefinedMeasureUnit(measureUnit, nameof(measureUnit)).GetType().Name;
 
         return GetMeasureUnitTypeCode(name);
     }

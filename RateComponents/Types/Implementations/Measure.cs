@@ -283,7 +283,7 @@
             return (TSelf)(ExchangeTo(measureUnit) ?? throw InvalidMeasureUnitEnumArgumentException(measureUnit));
         }
 
-        public TEnum GetMeasureUnit()
+        public new TEnum GetMeasureUnit()
         {
             return (TEnum)Measurement.MeasureUnit;
         }
