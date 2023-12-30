@@ -115,7 +115,7 @@ public sealed class ProportionFactory : IProportionFactory
         return Create(numeratorMeasureUnit, defaultQuantity, denominatorMeasureUnit);
     }
 
-    public IBaseRate CreateBaseMeasure(IMeasurable measurable, decimal quantity)
+    public IBaseRate Create(IMeasurable measurable, decimal quantity)
     {
         if (NullChecked(measurable, nameof(measurable)) is not IBaseRate baseRate)
         {

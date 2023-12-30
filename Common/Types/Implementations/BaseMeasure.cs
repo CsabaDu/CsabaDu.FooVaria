@@ -79,7 +79,7 @@
 
         public TSelf GetBaseMeasure(TContext context, decimal quantity)
         {
-            return GetFactory().CreateBaseMeasure(context, quantity);
+            return GetFactory().Create(context, quantity);
         }
 
         public virtual decimal ProportionalTo(TSelf other)

@@ -9,6 +9,6 @@
         where T : class, IBaseMeasure
         where TContext : notnull
     {
-        T CreateBaseMeasure(TContext context, decimal quantity);
+        T Create(TContext context, decimal quantity);
     }
 }

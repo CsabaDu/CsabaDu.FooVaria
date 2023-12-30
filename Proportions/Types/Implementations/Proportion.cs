@@ -3,53 +3,23 @@
     internal abstract class Proportion : BaseRate, IProportion
     {
         #region Constructors
-        private protected Proportion(IProportionFactory factory, MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, denominatorMeasureUnitTypeCode)
-        {
-            NumeratorMeasureUnitTypeCode = getValidParams().MeasureUnitTypeCode;
-            DefaultQuantity = getValidParams().DefaultQuantity;
-
-            #region Local methods
-            (MeasureUnitTypeCode MeasureUnitTypeCode, decimal DefaultQuantity) getValidParams()
-            {
-                MeasureUnitTypeCode measureUnitTypeCode = Defined(numeratorMeasureUnitTypeCode, nameof(numeratorMeasureUnitTypeCode));
-
-                ValidateQuantity(defaultQuantity, nameof(defaultQuantity));
-
-                return (measureUnitTypeCode, defaultQuantity);
-            }
-            #endregion
-        }
-
         private protected Proportion(IProportionFactory factory, Enum numeratorMeasureUnit, ValueType quantity, Enum denominatorMeasureUnit) : base(factory, denominatorMeasureUnit)
         {
-            NumeratorMeasureUnitTypeCode = getValidParams().MeasureUnitTypeCode;
-            DefaultQuantity = getValidParams().DefaultQuantity;
+            NumeratorMeasureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(numeratorMeasureUnit);
+            DefaultQuantity = getValidDefaultQuantity();
 
             #region Local methods
-            (MeasureUnitTypeCode MeasureUnitTypeCode, decimal DefaultQuantity) getValidParams()
+            decimal getValidDefaultQuantity()
             {
-                MeasureUnitTypeCode measureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(numeratorMeasureUnit);
                 string paramName = nameof(quantity);
                 object? converted = NullChecked(quantity, paramName).ToQuantity(TypeCode.Decimal);
                 decimal defaultQuantity = (decimal)(converted ?? throw ArgumentTypeOutOfRangeException(paramName, quantity));
 
-                if (defaultQuantity > 0) return (measureUnitTypeCode, defaultQuantity);
+                if (defaultQuantity > 0) return defaultQuantity * GetExchangeRate(numeratorMeasureUnit) / GetExchangeRate(denominatorMeasureUnit);
 
                 throw QuantityArgumentOutOfRangeException(paramName, quantity);
             }
             #endregion
-        }
-
-        private protected Proportion(IProportionFactory factory, IBaseRate baseRate) : base(factory, baseRate)
-        {
-            NumeratorMeasureUnitTypeCode = baseRate.GetNumeratorMeasureUnitTypeCode();
-            DefaultQuantity = baseRate.GetDefaultQuantity();
-        }
-
-        private protected Proportion(IProportion other) : base(other)
-        {
-            NumeratorMeasureUnitTypeCode = other.NumeratorMeasureUnitTypeCode;
-            DefaultQuantity = other.DefaultQuantity;
         }
         #endregion
 
@@ -68,6 +38,7 @@
         {
             return GetFactory().Create(numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode);
         }
+
         #region Override methods
         #region Sealed methods
         public override sealed IProportion GetBaseRate(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
@@ -122,19 +93,7 @@
     internal abstract class Proportion<TDEnum> : Proportion, IProportion<TDEnum>
         where TDEnum : struct, Enum
     {
-        private protected Proportion(IProportion<TDEnum> other) : base(other)
-        {
-        }
-
-        private protected Proportion(IProportionFactory factory, IBaseRate baseRate) : base(factory, baseRate)
-        {
-        }
-
         private protected Proportion(IProportionFactory factory, Enum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit) : base(factory, numeratorMeasureUnit, quantity, denominatorMeasureUnit)
-        {
-        }
-
-        private protected Proportion(IProportionFactory factory, MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode)
         {
         }
 
@@ -170,18 +129,6 @@
         where TNEnum : struct, Enum
         where TDEnum : struct, Enum
     {
-        internal Proportion(IProportion<TNEnum, TDEnum> other) : base(other)
-        {
-        }
-
-        internal Proportion(IProportionFactory factory, IBaseRate baseRate) : base(factory, baseRate)
-        {
-        }
-
-        internal Proportion(IProportionFactory factory, MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode)
-        {
-        }
-
         internal Proportion(IProportionFactory factory, TNEnum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit) : base(factory, numeratorMeasureUnit, quantity, denominatorMeasureUnit)
         {
         }

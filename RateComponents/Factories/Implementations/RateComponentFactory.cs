@@ -18,7 +18,7 @@ namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations
         #endregion
 
         #region Public methods
-        public IRateComponent CreateBaseMeasure(Enum measureUnit, decimal defaultQuantity)
+        public IRateComponent Create(Enum measureUnit, decimal defaultQuantity)
         {
             if (NullChecked(measureUnit, nameof(measureUnit)) is not MeasureUnitTypeCode measureUnitTypeCode) return Create(measureUnit, defaultQuantity);
 

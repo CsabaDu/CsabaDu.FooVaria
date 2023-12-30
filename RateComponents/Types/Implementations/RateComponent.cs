@@ -51,7 +51,7 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
 
         public IRateComponent GetBaseMeasure(Enum measureUnit, decimal quantity)
         {
-            return GetFactory().CreateBaseMeasure(measureUnit, quantity);
+            return GetFactory().Create(measureUnit, quantity);
         }
 
         public decimal GetDecimalQuantity()
