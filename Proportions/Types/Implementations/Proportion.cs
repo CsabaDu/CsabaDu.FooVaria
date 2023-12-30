@@ -133,10 +133,31 @@
         {
         }
 
-        public override IBaseRate? ExchangeTo(IMeasurable context)
-        {
-            throw new NotImplementedException();
-        }
+        //public override IBaseRate? ExchangeTo(IMeasurable context)
+        //{
+        //    if (context?.HasMeasureUnitTypeCode(MeasureUnitTypeCode) != true) return null;
+
+        //    return context switch
+        //    {
+        //        BaseMeasurement baseMeasurement => exchangeToBaseMeasurement(baseMeasurement),
+        //        BaseMeasure baseMeasure => exchangeToBaseMeasure(baseMeasure),
+
+        //        _ => null,
+        //    };
+
+        //    IBaseRate? exchangeToBaseMeasurement(IBaseMeasurement baseMeasurement)
+        //    {
+        //        Enum denominatorMeasureUnit = baseMeasurement.GetMeasureUnit();
+        //        decimal exchangeRate = GetExchangeRate(denominatorMeasureUnit);
+        //        throw new NotImplementedException();
+        //    }
+
+        //    IBaseRate? exchangeToBaseMeasure(IBaseMeasure baseMeasure)
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+
+        //}
 
         public IProportion<TNEnum, TDEnum> GetProportion(TNEnum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit)
         {

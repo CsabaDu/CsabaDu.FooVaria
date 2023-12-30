@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Common.Types.Implementations
 {
-    public abstract class BaseRate : BaseMeasure<IBaseRate, IMeasurable>, IBaseRate
+    public abstract class BaseRate : BaseMeasure/*<IBaseRate, IMeasurable>*/, IBaseRate
     {
         #region Constructors
         protected BaseRate(IBaseRate other) : base(other)
@@ -25,20 +25,20 @@
         #endregion
 
         #region Public methods
-        public override int CompareTo(IBaseRate? other)
-        {
-            if (other == null) return 1;
+        //public override int CompareTo(IBaseRate? other)
+        //{
+        //    if (other == null) return 1;
 
-            if (IsExchangeableTo(other)) return DefaultQuantity.CompareTo(other.GetDefaultQuantity());
+        //    if (IsExchangeableTo(other)) return DefaultQuantity.CompareTo(other.GetDefaultQuantity());
 
-            throw BaseRateArgumentMeasureUnitTypeCodesOutOfRangeException(other, nameof(other));
-        }
+        //    throw BaseRateArgumentMeasureUnitTypeCodesOutOfRangeException(other, nameof(other));
+        //}
 
-        public override bool Equals(IBaseRate? other)
-        {
-            return IsExchangeableTo(other)
-                && other!.DefaultQuantity == DefaultQuantity;
-        }
+        //public override bool Equals(IBaseRate? other)
+        //{
+        //    return IsExchangeableTo(other)
+        //        && other!.DefaultQuantity == DefaultQuantity;
+        //}
 
         public IBaseRate GetBaseRate(IBaseMeasure numerator, IBaseMeasure denominator)
         {
@@ -81,25 +81,25 @@
             return GetQuantityTypeCode(this);
         }
 
-        public override sealed bool IsExchangeableTo(IMeasurable? measurable)
-        {
-            if (measurable is not IBaseRate other) return measurable?.HasMeasureUnitTypeCode(MeasureUnitTypeCode) == true;
+        //public override sealed bool IsExchangeableTo(IMeasurable? measurable)
+        //{
+        //    if (measurable is not IBaseRate other) return measurable?.HasMeasureUnitTypeCode(MeasureUnitTypeCode) == true;
 
-            return MeasureUnitTypeCode == other.MeasureUnitTypeCode
-                && GetNumeratorMeasureUnitTypeCode() == other.GetNumeratorMeasureUnitTypeCode();
-        }
+        //    return MeasureUnitTypeCode == other.MeasureUnitTypeCode
+        //        && GetNumeratorMeasureUnitTypeCode() == other.GetNumeratorMeasureUnitTypeCode();
+        //}
 
-        public override decimal ProportionalTo(IBaseRate other)
-        {
-            string name = nameof(other);
-            decimal quantity = NullChecked(other, name).GetDefaultQuantity();
+        //public override decimal ProportionalTo(IBaseRate other)
+        //{
+        //    string name = nameof(other);
+        //    decimal quantity = NullChecked(other, name).GetDefaultQuantity();
 
-            if (quantity == 0) throw QuantityArgumentOutOfRangeException(name, quantity);
+        //    if (quantity == 0) throw QuantityArgumentOutOfRangeException(name, quantity);
 
-            if (IsExchangeableTo(other)) return Math.Abs(DefaultQuantity / quantity);
+        //    if (IsExchangeableTo(other)) return Math.Abs(DefaultQuantity / quantity);
 
-            throw BaseRateArgumentMeasureUnitTypeCodesOutOfRangeException(other, name);
-        }
+        //    throw BaseRateArgumentMeasureUnitTypeCodesOutOfRangeException(other, name);
+        //}
 
         public override sealed void Validate(IRootObject? rootObject, string paramName)
         {

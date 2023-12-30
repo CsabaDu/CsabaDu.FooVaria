@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Enums;
-
-namespace CsabaDu.FooVaria.Rates.Types
+﻿namespace CsabaDu.FooVaria.Rates.Types
 {
 
     public interface IRate : IBaseRate, IExchange<IRate, IMeasurable>, IDenominate<IRateComponent, IMeasure>/*, ICommonBase<IRate>*/
