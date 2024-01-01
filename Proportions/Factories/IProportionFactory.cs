@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.RateComponents.Factories;
-
-namespace CsabaDu.FooVaria.Proportions.Factories;
+﻿namespace CsabaDu.FooVaria.Proportions.Factories;
 
 public interface IProportionFactory : IBaseRateFactory
 {

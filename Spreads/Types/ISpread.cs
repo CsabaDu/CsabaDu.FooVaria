@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Spreads.Behaviors;
-
-namespace CsabaDu.FooVaria.Spreads.Types
+﻿namespace CsabaDu.FooVaria.Spreads.Types
 {
     public interface ISpread : IBaseSpread, IValidShapeExtents
     {

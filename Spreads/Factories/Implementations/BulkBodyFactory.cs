@@ -1,7 +1,4 @@
-﻿using CsabaDu.FooVaria.RateComponents.Factories;
-using CsabaDu.FooVaria.Spreads.Types.Implementations;
-
-namespace CsabaDu.FooVaria.Spreads.Factories.Implementations;
+﻿namespace CsabaDu.FooVaria.Spreads.Factories.Implementations;
 
 public sealed class BulkBodyFactory : SpreadFactory<IBulkBody, IVolume, VolumeUnit>, IBulkBodyFactory
 {

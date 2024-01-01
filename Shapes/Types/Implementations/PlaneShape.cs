@@ -43,5 +43,4 @@ internal abstract class PlaneShape : Shape, IPlaneShape
     #endregion
     #endregion
     #endregion
-
 }
