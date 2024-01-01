@@ -16,7 +16,7 @@
         decimal GetQuantity(TDEnum denominatorMeasureUnit);
     }
 
-    public interface IProportion<TNEnum, TDEnum> : IProportion<TDEnum>
+    public interface IProportion<TNEnum, TDEnum> : IProportion<TDEnum>, IMeasureUnit<TNEnum>
         where TNEnum : struct, Enum
         where TDEnum : struct, Enum
     {

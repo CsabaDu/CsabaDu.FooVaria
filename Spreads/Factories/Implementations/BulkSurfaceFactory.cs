@@ -30,12 +30,12 @@ public sealed class BulkSurfaceFactory : SpreadFactory<IBulkSurface, IArea, Area
         return Create(area);
     }
 
-    public ISurface CreateNew(ISurface surface)
-    {
-        IArea area = (IArea)NullChecked(surface, nameof(surface)).GetSpreadMeasure();
+    //public ISurface CreateNew(ISurface surface)
+    //{
+    //    IArea area = (IArea)NullChecked(surface, nameof(surface)).GetSpreadMeasure();
 
-        return Create(area);
-    }
+    //    return Create(area);
+    //}
 
     public override IBulkSurface Create(AreaUnit areaUnit, double quantity)
     {

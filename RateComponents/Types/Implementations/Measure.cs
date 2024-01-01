@@ -249,7 +249,7 @@
         #endregion
     }
 
-    internal abstract class Measure<TSelf, TNum, TEnum> : Measure<TSelf, TNum>, IMeasure
+    internal abstract class Measure<TSelf, TNum, TEnum> : Measure<TSelf, TNum>, IMeasure<TSelf, TNum, TEnum>
         where TSelf : class, IMeasure, IDefaultRateComponent, IMeasureUnit
         where TNum : struct
         where TEnum : struct, Enum
@@ -283,9 +283,9 @@
             return (TSelf)(ExchangeTo(measureUnit) ?? throw InvalidMeasureUnitEnumArgumentException(measureUnit));
         }
 
-        public new TEnum GetMeasureUnit()
+        public TEnum GetMeasureUnit(IMeasureUnit<TEnum>? other)
         {
-            return (TEnum)Measurement.MeasureUnit;
+            return (TEnum)(other ?? this).GetMeasureUnit();
         }
         #endregion
 

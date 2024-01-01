@@ -1,6 +1,5 @@
-﻿namespace CsabaDu.FooVaria.Common.Factories
+﻿namespace CsabaDu.FooVaria.Common.Factories;
+
+public interface ISurfaceFactory : IBaseSpreadFactory/*, IFactory<ISurface>*/
 {
-    public interface ISurfaceFactory : IBaseSpreadFactory, IFactory<ISurface>
-    {
-    }
 }

@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations.MeasureTypes;
+﻿
+
+namespace CsabaDu.FooVaria.RateComponents.Types.Implementations.MeasureTypes;
 
 internal sealed class Weight : Measure<IWeight, double, WeightUnit>, IWeight
 {

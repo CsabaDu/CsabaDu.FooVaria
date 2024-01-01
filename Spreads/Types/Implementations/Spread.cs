@@ -165,9 +165,9 @@
         #endregion
 
         #region Abstract methods
-        public TEnum GetMeasureUnit()
+        public TEnum GetMeasureUnit(IMeasureUnit<TEnum>? other)
         {
-            return SpreadMeasure.GetMeasureUnit();
+            return SpreadMeasure.GetMeasureUnit(other);
         }
         public TSelf GetSpread(TEnum measureUnit)
         {

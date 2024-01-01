@@ -12,9 +12,9 @@
         IRateComponent? GetRateComponent(RateComponentCode rateComponentCode);
     }
 
-    public interface IRate<T> : IRate, ICommonBase<T>
-        where T : class, IRate
-    {
-        T GetRate(IRate other);
-    }
+    //public interface IRate<T> : IRate, ICommonBase<T>
+    //    where T : class, IRate
+    //{
+    //    T GetRate(IRate other);
+    //}
 }

@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Proportions.Types.Implementations
+﻿using System.ComponentModel;
+
+namespace CsabaDu.FooVaria.Proportions.Types.Implementations
 {
     internal abstract class Proportion : BaseRate, IProportion
     {
@@ -51,6 +53,11 @@
             return (IProportionFactory)Factory;
         }
 
+        public override sealed Enum GetMeasureUnit()
+        {
+            return GetNumeratorMeasureUnitTypeCode().GetDefaultMeasureUnit();
+        }
+
         public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
         {
             return base.GetMeasureUnitTypeCodes();
@@ -97,11 +104,6 @@
         {
         }
 
-        public override sealed Enum GetMeasureUnit()
-        {
-            return GetNumeratorMeasureUnitTypeCode().GetDefaultMeasureUnit();
-        }
-
         public IProportion<TDEnum> GetProportion(IBaseMeasure numerator, TDEnum denominatorMeasureUnit)
         {
             return GetFactory().Create(numerator, denominatorMeasureUnit);
@@ -133,31 +135,12 @@
         {
         }
 
-        //public override IBaseRate? ExchangeTo(IMeasurable context)
-        //{
-        //    if (context?.HasMeasureUnitTypeCode(MeasureUnitTypeCode) != true) return null;
+        public TNEnum GetMeasureUnit(IMeasureUnit<TNEnum>? other)
+        {
+            if (other == null) return default;
 
-        //    return context switch
-        //    {
-        //        BaseMeasurement baseMeasurement => exchangeToBaseMeasurement(baseMeasurement),
-        //        BaseMeasure baseMeasure => exchangeToBaseMeasure(baseMeasure),
-
-        //        _ => null,
-        //    };
-
-        //    IBaseRate? exchangeToBaseMeasurement(IBaseMeasurement baseMeasurement)
-        //    {
-        //        Enum denominatorMeasureUnit = baseMeasurement.GetMeasureUnit();
-        //        decimal exchangeRate = GetExchangeRate(denominatorMeasureUnit);
-        //        throw new NotImplementedException();
-        //    }
-
-        //    IBaseRate? exchangeToBaseMeasure(IBaseMeasure baseMeasure)
-        //    {
-        //        throw new NotImplementedException();
-        //    }
-
-        //}
+            return (TNEnum)other.GetMeasureUnit();
+        }
 
         public IProportion<TNEnum, TDEnum> GetProportion(TNEnum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit)
         {

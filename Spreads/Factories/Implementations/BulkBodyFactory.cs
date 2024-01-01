@@ -30,12 +30,12 @@ public sealed class BulkBodyFactory : SpreadFactory<IBulkBody, IVolume, VolumeUn
         return Create(volume);
     }
 
-    public IBody CreateNew(IBody body)
-    {
-        IVolume volume = (IVolume)NullChecked(body, nameof(body)).GetSpreadMeasure();
+    //public IBody CreateNew(IBody body)
+    //{
+    //    IVolume volume = (IVolume)NullChecked(body, nameof(body)).GetSpreadMeasure();
 
-        return Create(volume);
-    }
+    //    return Create(volume);
+    //}
 
     public override IBulkBody Create(VolumeUnit volumeUnit, double quantity)
     {

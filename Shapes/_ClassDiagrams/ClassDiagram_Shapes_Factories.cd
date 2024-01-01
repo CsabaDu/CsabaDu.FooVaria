@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Interface Name="CsabaDu.FooVaria.Shapes.Factories.IShapeFactory" Collapsed="true">
-    <Position X="5.75" Y="5.75" Width="1.75" />
+    <Position X="6" Y="4.75" Width="1.75" />
     <InheritanceLine Type="CsabaDu.FooVaria.Common.Factories.IBaseShapeFactory" FixedFromPoint="true">
       <Path>
-        <Point X="6.625" Y="3.209" />
-        <Point X="6.625" Y="5.75" />
+        <Point X="6.875" Y="1.709" />
+        <Point X="6.875" Y="4.75" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -14,20 +14,20 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Shapes.Factories.IShapeFactory&lt;T, TTangent&gt;" Collapsed="true">
-    <Position X="5.5" Y="8.75" Width="2.25" />
+    <Position X="5.75" Y="7.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAQAAAAAAIAAA=</HashCode>
       <FileName>Factories\IShapeFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Shapes.Factories.ITangentShapeFactory" Collapsed="true">
-    <Position X="2.25" Y="7" Width="1.75" />
+    <Position X="8" Y="2.5" Width="1.75" />
     <InheritanceLine Type="CsabaDu.FooVaria.Common.Factories.IBaseShapeFactory" FixedFromPoint="true">
       <Path>
-        <Point X="6.125" Y="3.209" />
-        <Point X="6.125" Y="3.584" />
-        <Point X="3.125" Y="3.584" />
-        <Point X="3.125" Y="7" />
+        <Point X="7.375" Y="1.709" />
+        <Point X="7.375" Y="2.125" />
+        <Point X="8.875" Y="2.125" />
+        <Point X="8.875" Y="2.5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -36,19 +36,11 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Shapes.Factories.ICircularShapeFactory" Collapsed="true">
-    <Position X="8" Y="9" Width="1.75" />
+    <Position X="8.25" Y="7.5" Width="1.75" />
     <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Factories.ITangentShapeFactory" FixedFromPoint="true">
       <Path>
-        <Point X="3.375" Y="7.691" />
-        <Point X="3.375" Y="8.066" />
-        <Point X="4.542" Y="8.066" Type="JumpStart" />
-        <Point X="4.708" Y="8.066" Type="JumpEnd" />
-        <Point X="6.542" Y="8.066" Type="JumpStart" />
-        <Point X="6.708" Y="8.066" Type="JumpEnd" />
-        <Point X="7.792" Y="8.066" Type="JumpStart" />
-        <Point X="7.958" Y="8.066" Type="JumpEnd" />
-        <Point X="8.875" Y="8.066" />
-        <Point X="8.875" Y="9" />
+        <Point X="9.125" Y="3.191" />
+        <Point X="9.125" Y="7.5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -57,13 +49,13 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Shapes.Factories.ICircularShapeFactory&lt;T, TTangent&gt;" Collapsed="true">
-    <Position X="6" Y="10.5" Width="2.75" />
+    <Position X="6" Y="9" Width="2.75" />
     <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Factories.IShapeFactory&lt;T, TTangent&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="6.875" Y="9.57" />
-        <Point X="6.875" Y="10.125" />
-        <Point X="7.375" Y="10.125" />
-        <Point X="7.375" Y="10.5" />
+        <Point X="7.125" Y="8.07" />
+        <Point X="7.125" Y="8.625" />
+        <Point X="7.375" Y="8.625" />
+        <Point X="7.375" Y="9" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -72,21 +64,21 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Shapes.Factories.ICircleFactory" Collapsed="true">
-    <Position X="5" Y="12" Width="2.5" />
+    <Position X="5" Y="10.5" Width="2.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Factories.IPlaneShapeFactory" FixedFromPoint="true">
       <Path>
-        <Point X="4.875" Y="11.32" />
-        <Point X="4.875" Y="11.625" />
-        <Point X="6.25" Y="11.625" />
-        <Point X="6.25" Y="12" />
+        <Point X="4.875" Y="9.82" />
+        <Point X="4.875" Y="10.125" />
+        <Point X="6.25" Y="10.125" />
+        <Point X="6.25" Y="10.5" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Factories.ICircularShapeFactory&lt;T, TTangent&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="7.125" Y="11.32" />
-        <Point X="7.125" Y="11.625" />
-        <Point X="6.25" Y="11.625" />
-        <Point X="6.25" Y="12" />
+        <Point X="7.125" Y="9.82" />
+        <Point X="7.125" Y="10.125" />
+        <Point X="6.25" Y="10.125" />
+        <Point X="6.25" Y="10.5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -95,21 +87,21 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Shapes.Factories.ICylinderFactory" Collapsed="true">
-    <Position X="7.75" Y="12" Width="2.5" />
+    <Position X="7.75" Y="10.5" Width="2.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Factories.IDryBodyFactory&lt;T, TBFace&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="10.125" Y="11.191" />
-        <Point X="10.125" Y="11.625" />
-        <Point X="9" Y="11.625" />
-        <Point X="9" Y="12" />
+        <Point X="10.125" Y="9.691" />
+        <Point X="10.125" Y="10.125" />
+        <Point X="9" Y="10.125" />
+        <Point X="9" Y="10.5" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Factories.ICircularShapeFactory&lt;T, TTangent&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="7.625" Y="11.32" />
-        <Point X="7.625" Y="11.625" />
-        <Point X="9" Y="11.625" />
-        <Point X="9" Y="12" />
+        <Point X="7.625" Y="9.82" />
+        <Point X="7.625" Y="10.125" />
+        <Point X="9" Y="10.125" />
+        <Point X="9" Y="10.5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -118,13 +110,13 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Shapes.Factories.IPlaneShapeFactory" Collapsed="true">
-    <Position X="3.75" Y="10.5" Width="1.75" />
+    <Position X="3.75" Y="9" Width="1.75" />
     <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Factories.IShapeFactory" FixedFromPoint="true">
       <Path>
-        <Point X="6.375" Y="6.441" />
-        <Point X="6.375" Y="6.816" />
-        <Point X="4.625" Y="6.816" />
-        <Point X="4.625" Y="10.5" />
+        <Point X="6.625" Y="5.441" />
+        <Point X="6.625" Y="5.816" />
+        <Point X="4.625" Y="5.816" />
+        <Point X="4.625" Y="9" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -133,13 +125,15 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Shapes.Factories.IRectangularShapeFactory" Collapsed="true">
-    <Position X="1" Y="8.5" Width="2" />
+    <Position X="1" Y="7" Width="2" />
     <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Factories.ITangentShapeFactory" FixedFromPoint="true">
       <Path>
-        <Point X="2.875" Y="7.691" />
-        <Point X="2.875" Y="8.125" />
-        <Point X="2" Y="8.125" />
-        <Point X="2" Y="8.5" />
+        <Point X="8.625" Y="3.191" />
+        <Point X="8.625" Y="3.491" />
+        <Point X="6.958" Y="3.491" Type="JumpStart" />
+        <Point X="6.792" Y="3.491" Type="JumpEnd" />
+        <Point X="2" Y="3.491" />
+        <Point X="2" Y="7" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -148,15 +142,15 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Shapes.Factories.IRectangularShapeFactory&lt;T, TTangent&gt;" Collapsed="true">
-    <Position X="0.5" Y="10.5" Width="3" />
+    <Position X="0.5" Y="9" Width="3" />
     <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Factories.IShapeFactory&lt;T, TTangent&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="6.375" Y="9.57" />
-        <Point X="6.375" Y="10.125" />
-        <Point X="4.708" Y="10.125" Type="JumpStart" />
-        <Point X="4.542" Y="10.125" Type="JumpEnd" />
-        <Point X="2" Y="10.125" />
-        <Point X="2" Y="10.5" />
+        <Point X="6.625" Y="8.07" />
+        <Point X="6.625" Y="8.625" />
+        <Point X="4.708" Y="8.625" Type="JumpStart" />
+        <Point X="4.542" Y="8.625" Type="JumpEnd" />
+        <Point X="2" Y="8.625" />
+        <Point X="2" Y="9" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -165,15 +159,17 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Shapes.Factories.IDryBodyFactory" Collapsed="true">
-    <Position X="9.5" Y="7.25" Width="1.75" />
+    <Position X="9.5" Y="6.25" Width="1.75" />
     <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Factories.IShapeFactory" FixedFromPoint="true">
       <Path>
-        <Point X="6.875" Y="6.441" />
-        <Point X="6.875" Y="6.875" />
-        <Point X="7.792" Y="6.875" Type="JumpStart" />
-        <Point X="7.958" Y="6.875" Type="JumpEnd" />
-        <Point X="10.375" Y="6.875" />
-        <Point X="10.375" Y="7.25" />
+        <Point X="7.125" Y="5.441" />
+        <Point X="7.125" Y="5.875" />
+        <Point X="8.042" Y="5.875" Type="JumpStart" />
+        <Point X="8.208" Y="5.875" Type="JumpEnd" />
+        <Point X="9.042" Y="5.875" Type="JumpStart" />
+        <Point X="9.208" Y="5.875" Type="JumpEnd" />
+        <Point X="10.375" Y="5.875" />
+        <Point X="10.375" Y="6.25" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -182,28 +178,28 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Shapes.Factories.IDryBodyFactory&lt;T, TBFace&gt;" Collapsed="true">
-    <Position X="9.25" Y="10.5" Width="2.25" />
+    <Position X="9.25" Y="9" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\IDryBodyFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Shapes.Factories.IRectangleFactory" Collapsed="true">
-    <Position X="2" Y="12" Width="2.75" />
+    <Position X="2" Y="10.5" Width="2.75" />
     <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Factories.IPlaneShapeFactory" FixedFromPoint="true">
       <Path>
-        <Point X="4.375" Y="11.32" />
-        <Point X="4.375" Y="11.625" />
-        <Point X="3.375" Y="11.625" />
-        <Point X="3.375" Y="12" />
+        <Point X="4.375" Y="9.82" />
+        <Point X="4.375" Y="10.125" />
+        <Point X="3.375" Y="10.125" />
+        <Point X="3.375" Y="10.5" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Factories.IRectangularShapeFactory&lt;T, TTangent&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="2.25" Y="11.32" />
-        <Point X="2.25" Y="11.625" />
-        <Point X="3.375" Y="11.625" />
-        <Point X="3.375" Y="12" />
+        <Point X="2.25" Y="9.82" />
+        <Point X="2.25" Y="10.125" />
+        <Point X="3.375" Y="10.125" />
+        <Point X="3.375" Y="10.5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -212,21 +208,21 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Shapes.Factories.ICuboidFactory" Collapsed="true">
-    <Position X="5" Y="13.5" Width="2.75" />
+    <Position X="5" Y="12" Width="2.75" />
     <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Factories.IDryBodyFactory&lt;T, TBFace&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="10.625" Y="11.191" />
-        <Point X="10.625" Y="13.125" />
-        <Point X="6.375" Y="13.125" />
-        <Point X="6.375" Y="13.5" />
+        <Point X="10.625" Y="9.691" />
+        <Point X="10.625" Y="11.625" />
+        <Point X="6.375" Y="11.625" />
+        <Point X="6.375" Y="12" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Factories.IRectangularShapeFactory&lt;T, TTangent&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="1.75" Y="11.32" />
-        <Point X="1.75" Y="13.125" />
-        <Point X="6.375" Y="13.125" />
-        <Point X="6.375" Y="13.5" />
+        <Point X="1.75" Y="9.82" />
+        <Point X="1.75" Y="11.625" />
+        <Point X="6.375" Y="11.625" />
+        <Point X="6.375" Y="12" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -235,37 +231,19 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Common.Factories.IFactory&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="7.25" Y="3.5" Width="1.25" />
+    <Position X="7.5" Y="3.75" Width="1.25" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Common.Factories.IBaseShapeFactory" Collapsed="true">
-    <Position X="5.5" Y="2" Width="1.75" />
+    <Position X="6.25" Y="0.5" Width="1.75" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Common.Factories.ISurfaceFactory" Collapsed="true">
-    <Position X="3.75" Y="5" Width="1.75" />
-    <InheritanceLine Type="CsabaDu.FooVaria.Common.Factories.IFactory&lt;T&gt;" FixedFromPoint="true">
-      <Path>
-        <Point X="7.625" Y="4.191" />
-        <Point X="7.625" Y="4.625" />
-        <Point X="6.708" Y="4.625" Type="JumpStart" />
-        <Point X="6.542" Y="4.625" Type="JumpEnd" />
-        <Point X="4.625" Y="4.625" />
-        <Point X="4.625" Y="5" />
-      </Path>
-    </InheritanceLine>
+    <Position X="3.75" Y="4.25" Width="1.75" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Common.Factories.IBodyFactory" Collapsed="true">
-    <Position X="9.5" Y="5" Width="1.75" />
-    <InheritanceLine Type="CsabaDu.FooVaria.Common.Factories.IFactory&lt;T&gt;" FixedFromPoint="true">
-      <Path>
-        <Point X="8.125" Y="4.191" />
-        <Point X="8.125" Y="4.625" />
-        <Point X="10.375" Y="4.625" />
-        <Point X="10.375" Y="5" />
-      </Path>
-    </InheritanceLine>
+    <Position X="9.5" Y="4.25" Width="1.75" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />

@@ -15,8 +15,8 @@
     <Position X="0.5" Y="0.5" Width="1.25" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.Common.Factories.IMeasurableFactory&lt;T&gt;" Collapsed="true">
-    <Position X="4.25" Y="0.5" Width="2" />
+  <Interface Name="CsabaDu.FooVaria.Common.Factories.IDefaultMeasurableFactory&lt;T&gt;" Collapsed="true">
+    <Position X="4.25" Y="0.5" Width="2.5" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />

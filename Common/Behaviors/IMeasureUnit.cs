@@ -5,9 +5,9 @@
         Enum GetMeasureUnit();
     }
 
-    public interface IMeasureUnit<out TEnum> : IMeasureUnit
+    public interface IMeasureUnit<TEnum> : IMeasureUnit
         where TEnum : Enum
     {
-        TEnum GetMeasureUnit();
+        TEnum GetMeasureUnit(IMeasureUnit<TEnum>? other);
     }
 }

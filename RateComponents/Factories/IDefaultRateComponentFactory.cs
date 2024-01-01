@@ -4,7 +4,7 @@
     {
     }
 
-    public interface IDefaultRateComponentFactory<T> : IDefaultRateComponentFactory, IMeasurableFactory<T>, IFactory<T>
+    public interface IDefaultRateComponentFactory<T> : IDefaultRateComponentFactory, IDefaultMeasurableFactory<T>, IFactory<T>
         where T : class, IRateComponent
     {
     }
