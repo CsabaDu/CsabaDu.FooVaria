@@ -11,7 +11,7 @@
   <Class Name="CsabaDu.FooVaria.Common.Types.Implementations.BaseRate" Collapsed="true">
     <Position X="1.5" Y="6.25" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>QAAAAgAAAAiCQASAgQAAAACCAAAAQIBAAAAQAAAAAIA=</HashCode>
+      <HashCode>QAAAAgAAAAiCQASAiQAAAACCAAAAQIBAAAAQAAAAAIA=</HashCode>
       <FileName>Types\Implementations\BaseRate.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -61,6 +61,14 @@
     <TypeIdentifier>
       <HashCode>QgECAgAABAAAAQQAgQAAgACCAAACQIAAAQAICAAABAA=</HashCode>
       <FileName>Types\Implementations\BaseMeasurement.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Common.Types.Implementations.ComplexShape" Collapsed="true">
+    <Position X="3.25" Y="7.75" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\Implementations\ComplexShape.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
