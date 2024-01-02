@@ -8,7 +8,7 @@
         IRateComponent? this[RateComponentCode rateComponentCode] { get; }
 
         ILimit? GetLimit();
-        IRate GetRate(IMeasure numerator, IDenominator denominator, ILimit? limit);
+        IRate GetRate(params IRateComponent[] rateComponents);
         IRateComponent? GetRateComponent(RateComponentCode rateComponentCode);
     }
 

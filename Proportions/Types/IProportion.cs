@@ -3,6 +3,7 @@
     public interface IProportion : IBaseRate
     {
         MeasureUnitTypeCode NumeratorMeasureUnitTypeCode { get; init; }
+        MeasureUnitTypeCode? this[RateComponentCode rateComponentCode] { get; }
 
         IProportion GetProportion(IBaseRate baseRate);
         IProportion GetProportion(IRateComponent numerator, IRateComponent denominator);

@@ -40,7 +40,19 @@
 
         #region Properties
         public MeasureUnitTypeCode NumeratorMeasureUnitTypeCode { get; init; }
+        public MeasureUnitTypeCode? this[RateComponentCode rateComponentCode] => rateComponentCode switch
+        {
+            RateComponentCode.Numerator => NumeratorMeasureUnitTypeCode,
+            RateComponentCode.Denominator => MeasureUnitTypeCode,
+
+            _ => null,
+        };
+
+        #region Override properties
+        #region Sealed properties
         public override sealed decimal DefaultQuantity { get; init; }
+        #endregion
+        #endregion
         #endregion
 
         #region Public methods
@@ -95,7 +107,7 @@
             throw QuantityArgumentOutOfRangeException(paramName, quantity);
         }
 
-        public override sealed IMeasure Multiply(IBaseMeasure multiplier) // Validate?
+        public IMeasure Multiply(Enum multiplier) // Validate?
         {
             if (NullChecked(multiplier, nameof(multiplier)) is not IMeasure measure)
             {
@@ -150,11 +162,6 @@
     {
         internal Proportion(IProportionFactory factory, TNEnum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit) : base(factory, numeratorMeasureUnit, quantity, denominatorMeasureUnit)
         {
-        }
-
-        public override IBaseRate GetBaseRate(params IBaseMeasure[] baseMeasures)
-        {
-            throw new NotImplementedException();
         }
 
         public TNEnum GetMeasureUnit(IMeasureUnit<TNEnum>? other)

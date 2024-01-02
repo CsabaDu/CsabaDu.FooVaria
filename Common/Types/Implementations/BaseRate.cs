@@ -55,6 +55,21 @@
             return GetFactory().CreateBaseRate(numerator, denominatorMeasureUnit);
         }
 
+        public IBaseRate GetBaseRate(IBaseMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
+        {
+            return GetFactory().CreateBaseRate(numerator, denominatorMeasureUnitTypeCode);
+        }
+
+        public IBaseRate GetBaseRate(params IBaseMeasure[] baseMeasures)
+        {
+            return GetFactory().CreateBaseRate(baseMeasures);
+        }
+
+        public MeasureUnitTypeCode GetDenominatorMeasureUnitTypeCode()
+        {
+            return MeasureUnitTypeCode;
+        }
+
         public decimal GetQuantity()
         {
             return DefaultQuantity;
@@ -135,7 +150,6 @@
         #region Abstract methods
         public abstract IBaseRate GetBaseRate(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
         public abstract MeasureUnitTypeCode GetNumeratorMeasureUnitTypeCode();
-        public abstract IQuantifiable Multiply(IBaseMeasure multiplier);
         #endregion
         #endregion
 
@@ -156,38 +170,6 @@
             return baseRate;
         }
         #endregion
-        #endregion
-
-        #region Private methods
-        private ArgumentOutOfRangeException BaseRateArgumentMeasureUnitTypeCodesOutOfRangeException(IBaseRate baseRate, string name)
-        {
-            MeasureUnitTypeCode measureUnitTypeCode = baseRate.MeasureUnitTypeCode;
-
-            if (!HasMeasureUnitTypeCode(measureUnitTypeCode))
-            {
-                throw exception();
-            }
-            else
-            {
-                measureUnitTypeCode = baseRate.GetNumeratorMeasureUnitTypeCode();
-
-                throw exception();
-            }
-
-            #region Local methods
-            ArgumentOutOfRangeException exception()
-            {
-                return new ArgumentOutOfRangeException(name, measureUnitTypeCode, null);
-            }
-            #endregion
-        }
-
-        public IBaseRate GetBaseRate(IBaseMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
-        {
-            return GetFactory().CreateBaseRate(numerator, denominatorMeasureUnitTypeCode);
-        }
-
-        public abstract IBaseRate GetBaseRate(params IBaseMeasure[] baseMeasures);
         #endregion
     }
 }

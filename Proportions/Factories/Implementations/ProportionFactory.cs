@@ -134,7 +134,7 @@ public sealed class ProportionFactory : IProportionFactory
         return Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit);
     }
 
-    public IBaseRate CreateBaseRate(params IBaseMeasure[] baseMeasures) // TODO
+    public IBaseRate CreateBaseRate(params IBaseMeasure[] baseMeasures)
     {
         int count = baseMeasures?.Length ?? 0;
 
