@@ -133,7 +133,14 @@
         {
         }
 
-        public IProportion<TDEnum> GetProportion(IBaseMeasure numerator, TDEnum denominatorMeasureUnit)
+        public IRateComponent Denominate(TDEnum measureUnit)
+        {
+            decimal quantity = GetQuantity(measureUnit);
+
+            return (IRateComponent)GetFactory().CreateBaseMeasure(measureUnit, quantity);
+        }
+
+        public IProportion<TDEnum> GetProportion(IRateComponent numerator, TDEnum denominatorMeasureUnit)
         {
             return GetFactory().Create(numerator, denominatorMeasureUnit);
         }
@@ -146,13 +153,6 @@
         public decimal GetQuantity(TDEnum denominatorMeasureUnit)
         {
             return DefaultQuantity / GetExchangeRate(denominatorMeasureUnit);
-        }
-
-        public IBaseMeasure Multiply(TDEnum measureUnit)
-        {
-            decimal quantity = GetQuantity(measureUnit);
-
-            return GetFactory().CreateBaseMeasure(measureUnit, quantity);
         }
     }
 

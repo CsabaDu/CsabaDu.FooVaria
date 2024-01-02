@@ -64,7 +64,7 @@ namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations
 
         public IBaseMeasure CreateBaseMeasure(Enum measureUnit, ValueType quantity)
         {
-            throw new NotImplementedException();
+            return Create(measureUnit, quantity);
         }
         #endregion
         #endregion

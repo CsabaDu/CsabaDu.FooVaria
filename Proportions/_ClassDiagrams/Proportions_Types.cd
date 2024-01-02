@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Interface Name="CsabaDu.FooVaria.Proportions.Types.IProportion" Collapsed="true">
-    <Position X="3.25" Y="3.25" Width="1.5" />
+    <Position X="3.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAACAAAEAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Types\IProportion.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -15,22 +15,22 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Proportions.Types.IProportion&lt;TNEnum, TDEnum&gt;" Collapsed="true">
-    <Position X="2.75" Y="6.25" Width="2.5" />
+    <Position X="2.5" Y="6.25" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAACAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Types\IProportion.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="CsabaDu.FooVaria.Common.Behaviors.IDenominate&lt;TSelf, TOperand&gt;" Collapsed="true">
-    <Position X="0.5" Y="3.25" Width="2.5" />
-    <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Common.Behaviors.IMeasureUnit&lt;TEnum&gt;" Collapsed="true">
     <Position X="0.5" Y="4.75" Width="2" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Common.Types.IBaseRate" Collapsed="true">
-    <Position X="3.25" Y="0.5" Width="1.5" />
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Common.Behaviors.IDenominate&lt;TSelf, TDenominator&gt;" Collapsed="true">
+    <Position X="0.5" Y="3.25" Width="2.75" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />

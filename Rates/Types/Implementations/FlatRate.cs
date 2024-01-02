@@ -85,12 +85,12 @@
 //        return GetFactory().CreateNew(other);
 //    }
 
-//    public IFlatRate Multiply(decimal multiplier)
+//    public IFlatRate Denominate(decimal multiplier)
 //    {
-//        return GetFlatRate(Numerator.Multiply(multiplier));
+//        return GetFlatRate(Numerator.Denominate(multiplier));
 //    }
 
-//    //public IMeasure Multiply(IMeasure multiplier)
+//    //public IMeasure Denominate(IMeasure multiplier)
 //    //{
 //    //    if (NullChecked(multiplier, nameof(multiplier)).IsExchangeableTo(MeasureUnitTypeCode))
 //    //    {

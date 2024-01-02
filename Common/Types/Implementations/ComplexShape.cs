@@ -1,41 +1,17 @@
 ﻿namespace CsabaDu.FooVaria.Common.Types.Implementations
 {
-    public abstract class BaseMeasure : Quantifiable, IBaseMeasure
+    public abstract class ComplexShape : BaseShape, IComplexShape
     {
-        protected BaseMeasure(IBaseMeasureFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
+        protected ComplexShape(IBaseShape other) : base(other)
         {
         }
 
-        protected BaseMeasure(IBaseMeasureFactory factory, Enum measureUnit) : base(factory, measureUnit)
+        protected ComplexShape(IBaseShapeFactory factory, IBaseShape baseShape) : base(factory, baseShape)
         {
         }
 
-        protected BaseMeasure(IBaseMeasureFactory factory, IMeasurable measurable) : base(factory, measurable)
+        protected ComplexShape(IBaseSpreadFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IQuantifiable[] shapeComponents) : base(factory, measureUnitTypeCode, shapeComponents)
         {
-        }
-
-        protected BaseMeasure(IBaseMeasureFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IBaseMeasure[] baseMeasures) : base(factory, measureUnitTypeCode, baseMeasures)
-        {
-        }
-
-        protected BaseMeasure(IBaseMeasure other) : base(other)
-        {
-        }
-
-        public abstract decimal DefaultQuantity { get; init; }
-
-        public override sealed decimal GetDefaultQuantity()
-        {
-            return DefaultQuantity;
-        }
-
-        public override IBaseMeasureFactory GetFactory()
-        {
-            return (IBaseMeasureFactory)Factory;
-        }
-        public void ValidateQuantifiable(IQuantifiable? quantifiable, string paramName)
-        {
-            ValidateQuantity(NullChecked(quantifiable, paramName).GetDefaultQuantity(), paramName);
         }
     }
 }

@@ -141,13 +141,13 @@
 //        return BaseRate.AreExchangeables(this, baseMeasurable);
 //    }
 
-//    public IQuantifiable Multiply(IBaseMeasure multiplier)
+//    public IQuantifiable Denominate(IBaseMeasure multiplier)
 //    {
 //        MeasureUnitTypeCode measureUnitTypeCode = NullChecked(multiplier, nameof(multiplier)).MeasureUnitTypeCode;
 
 //        ValidateMeasureUnitTypeCode(measureUnitTypeCode, nameof(multiplier));
 
-//        if (multiplier is IMeasure measure) return Numerator.Multiply(measure.DefaultQuantity);
+//        if (multiplier is IMeasure measure) return Numerator.Denominate(measure.DefaultQuantity);
 
 //        if (multiplier is IMeasurement measurement) return Numerator.ExchangeTo(measurement.GetMeasureUnit())!;
 

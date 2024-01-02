@@ -13,7 +13,7 @@ public interface IProportionFactory : IBaseRateFactory
         where TDEnum : struct, Enum;
     IProportion<TDEnum> Create<TDEnum>(Enum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit)
         where TDEnum : struct, Enum;
-    IProportion<TDEnum> Create<TDEnum>(IBaseMeasure numerator, TDEnum denominatorMeasureUnit)
+    IProportion<TDEnum> Create<TDEnum>(IRateComponent numerator, TDEnum denominatorMeasureUnit)
         where TDEnum : struct, Enum;
 
     IProportion<TNEnum, TDEnum> Create<TNEnum, TDEnum>(TNEnum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit)

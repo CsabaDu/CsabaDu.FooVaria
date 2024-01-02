@@ -5,9 +5,10 @@
         MeasureUnitTypeCode GetDenominatorMeasureUnitTypeCode();
     }
 
-    public interface IDenominate<out TSelf, in TOperand> : IDenominate, IMultiply<TSelf, TOperand>
+    public interface IDenominate<out TSelf, in TDenominator> : IDenominate/*, IMultiply<TSelf, TDenominator>*/
         where TSelf : class, IBaseMeasure
-        where TOperand : notnull
+        where TDenominator : notnull
     {
+        TSelf Denominate(TDenominator denominator);
     }
 }

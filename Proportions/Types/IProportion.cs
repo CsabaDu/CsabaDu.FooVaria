@@ -9,10 +9,10 @@
         IProportion GetProportion(IRateComponent numerator, IRateComponent denominator);
     }
 
-    public interface IProportion<TDEnum> : IProportion, IDenominate<IBaseMeasure, TDEnum>
+    public interface IProportion<TDEnum> : IProportion, IDenominate<IRateComponent, TDEnum>
         where TDEnum : struct, Enum
     {
-        IProportion<TDEnum> GetProportion(IBaseMeasure numerator, TDEnum denominatorMeasureUnit);
+        IProportion<TDEnum> GetProportion(IRateComponent numerator, TDEnum denominatorMeasureUnit);
         IProportion<TDEnum> GetProportion(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal numeratorDefaultQuantity, TDEnum denominatorMeasureUnit);
         decimal GetQuantity(TDEnum denominatorMeasureUnit);
     }
