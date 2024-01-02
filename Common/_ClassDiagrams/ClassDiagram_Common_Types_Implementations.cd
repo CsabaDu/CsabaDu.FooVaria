@@ -11,7 +11,7 @@
   <Class Name="CsabaDu.FooVaria.Common.Types.Implementations.BaseRate" Collapsed="true">
     <Position X="1.5" Y="6.25" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAgAAAQCCQACAgQABAACCAAAAAIBAAAAAAAAAAIA=</HashCode>
+      <HashCode>QAAAAgAAAAiCQASAgQAAAACCAAAAQIBAAAAQAAAAAIA=</HashCode>
       <FileName>Types\Implementations\BaseRate.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />

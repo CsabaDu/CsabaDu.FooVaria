@@ -40,13 +40,6 @@
 
         #region Properties
         public MeasureUnitTypeCode NumeratorMeasureUnitTypeCode { get; init; }
-        public MeasureUnitTypeCode? this[RateComponentCode rateComponentCode] => rateComponentCode switch
-        {
-            RateComponentCode.Numerator => NumeratorMeasureUnitTypeCode,
-            RateComponentCode.Denominator => MeasureUnitTypeCode,
-
-            _ => null,
-        };
 
         #region Override properties
         #region Sealed properties
@@ -85,7 +78,7 @@
 
         public override sealed Enum GetMeasureUnit()
         {
-            return GetNumeratorMeasureUnitTypeCode().GetDefaultMeasureUnit();
+            return NumeratorMeasureUnitTypeCode.GetDefaultMeasureUnit();
         }
 
         public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()

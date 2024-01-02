@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Common.Types.Implementations
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace CsabaDu.FooVaria.Common.Types.Implementations
 {
     public abstract class BaseRate : BaseMeasure, IBaseRate
     {
@@ -24,21 +26,31 @@
         }
         #endregion
 
+        #region Properties
+        public MeasureUnitTypeCode? this[RateComponentCode rateComponentCode] => rateComponentCode switch
+        {
+            RateComponentCode.Numerator => GetNumeratorMeasureUnitTypeCode(),
+            RateComponentCode.Denominator => GetDenominatorMeasureUnitTypeCode(),
+
+            _ => null,
+        };
+        #endregion
+
         #region Public methods
-        //public override int CompareTo(IBaseRate? other)
-        //{
-        //    if (other == null) return 1;
+        public int CompareTo(IBaseRate? other)
+        {
+            if (other == null) return 1;
 
-        //    if (IsExchangeableTo(other)) return DefaultQuantity.CompareTo(other.GetDefaultQuantity());
+            ValidateMeasureUnitTypeCodes(other!);
 
-        //    throw BaseRateArgumentMeasureUnitTypeCodesOutOfRangeException(other, nameof(other));
-        //}
+            return DefaultQuantity.CompareTo(other.GetDefaultQuantity());
+        }
 
-        //public override bool Equals(IBaseRate? other)
-        //{
-        //    return IsExchangeableTo(other)
-        //        && other!.DefaultQuantity == DefaultQuantity;
-        //}
+        public bool Equals(IBaseRate? other)
+        {
+            return IsExchangeableTo(other)
+                && other!.DefaultQuantity == DefaultQuantity;
+        }
 
         public IBaseRate GetBaseRate(IBaseMeasure numerator, IBaseMeasure denominator)
         {
@@ -96,25 +108,14 @@
             return GetQuantityTypeCode(this);
         }
 
-        //public override sealed bool IsExchangeableTo(IMeasurable? measurable)
-        //{
-        //    if (measurable is not IBaseRate other) return measurable?.HasMeasureUnitTypeCode(MeasureUnitTypeCode) == true;
+        public decimal ProportionalTo(IBaseRate other)
+        {
+            decimal defaultQuantity = NullChecked(other, nameof(other)).GetDefaultQuantity();
 
-        //    return MeasureUnitTypeCode == other.MeasureUnitTypeCode
-        //        && GetNumeratorMeasureUnitTypeCode() == other.GetNumeratorMeasureUnitTypeCode();
-        //}
+            ValidateMeasureUnitTypeCodes(other!);
 
-        //public override decimal ProportionalTo(IBaseRate other)
-        //{
-        //    string name = nameof(other);
-        //    decimal quantity = NullChecked(other, name).GetDefaultQuantity();
-
-        //    if (quantity == 0) throw QuantityArgumentOutOfRangeException(name, quantity);
-
-        //    if (IsExchangeableTo(other)) return Math.Abs(DefaultQuantity / quantity);
-
-        //    throw BaseRateArgumentMeasureUnitTypeCodesOutOfRangeException(other, name);
-        //}
+            return Math.Abs(DefaultQuantity / defaultQuantity);
+        }
 
         public override sealed void Validate(IRootObject? rootObject, string paramName)
         {
@@ -154,6 +155,25 @@
         #endregion
 
         #region Protected methods
+        protected void ValidateMeasureUnitTypeCodes([DisallowNull] IBaseRate other)
+        {
+            string paramName = nameof(other);
+
+            ValidateMeasureUnitTypeCode(other.MeasureUnitTypeCode, paramName);
+
+            MeasureUnitTypeCode numeratorMeasureUnitTypeCode = other.GetNumeratorMeasureUnitTypeCode();
+
+            if (numeratorMeasureUnitTypeCode == GetNumeratorMeasureUnitTypeCode()) return;
+
+            throw InvalidMeasureUnitTypeCodeEnumArgumentException(numeratorMeasureUnitTypeCode, paramName);
+        }
+
+        protected bool IsExchangeableTo(IBaseRate? baseRate)
+        {
+            return baseRate?.HasMeasureUnitTypeCode(MeasureUnitTypeCode) == true
+                && baseRate.GetNumeratorMeasureUnitTypeCode() == (MeasureUnitTypeCode);
+        }
+
         #region Static methods
         protected static T GetValidBaseRate<T>(T commonBase, IRootObject other, string paramName)
             where T : class, IBaseRate

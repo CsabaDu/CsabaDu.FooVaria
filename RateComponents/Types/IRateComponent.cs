@@ -16,8 +16,20 @@
         TSelf GetRateComponent(IMeasurement measurement, ValueType quantity);
         TSelf? GetRateComponent(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName);
         TSelf? GetRateComponent(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity);
-        bool TryGetRateComponent(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName, [NotNullWhen(true)] out IRateComponent? baseMeasure);
-        bool TryGetRateComponent(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity, [NotNullWhen(true)] out IRateComponent? baseMeasure);
+
+        public bool TryGetRateComponent(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName, [NotNullWhen(true)] out IRateComponent? rateComponent)
+        {
+            rateComponent = GetRateComponent(measureUnit, exchangeRate, quantity, customName);
+
+            return rateComponent != null;
+        }
+
+        public bool TryGetRateComponent(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity, [NotNullWhen(true)] out IRateComponent? rateComponent)
+        {
+            rateComponent = GetRateComponent(customName, measureUnitTypeCode, exchangeRate, quantity);
+
+            return rateComponent != null;
+        }
     }
 
     public interface IRateComponent<TSelf, TNum> : IRateComponent<TSelf>, IDefaultRateComponent<TSelf, TNum>
@@ -27,4 +39,3 @@
         TSelf GetRateComponent(TNum quantity);
     }
 }
-

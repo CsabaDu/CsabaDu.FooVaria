@@ -87,13 +87,7 @@ internal abstract class Shape : BaseShape, IShape
 
     public IEnumerable<ShapeExtentTypeCode> GetShapeExtentTypeCodes()
     {
-        foreach (ShapeExtentTypeCode item in Enum.GetValues<ShapeExtentTypeCode>())
-        {
-            if (this[item] != null)
-            {
-                yield return item;
-            }
-        }
+        return Enum.GetValues<ShapeExtentTypeCode>().Where(x => this[x] != null);
     }
 
     public IEnumerable<IExtent> GetSortedDimensions()

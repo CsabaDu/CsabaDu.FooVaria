@@ -1,7 +1,9 @@
 ﻿namespace CsabaDu.FooVaria.Common.Types;
 
-public interface IBaseRate : IBaseMeasure/*<IBaseRate, IMeasurable>*/, IQuantity<decimal>/*, IProportional<IBaseRate>*/, IDenominate
+public interface IBaseRate : IBaseMeasure/*<IBaseRate, IMeasurable>*/, IQuantity<decimal>, IProportional<IBaseRate>, IDenominate
 {
+    MeasureUnitTypeCode? this[RateComponentCode rateComponentCode] { get; }
+
     MeasureUnitTypeCode GetNumeratorMeasureUnitTypeCode();
 
     IBaseRate GetBaseRate(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);

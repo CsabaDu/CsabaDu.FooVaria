@@ -1,6 +1,124 @@
-﻿//namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
+﻿
+namespace CsabaDu.FooVaria.Rates.Types.Implementations;
 
-//internal sealed class FlatRate : Rate, IFlatRate
+internal sealed class FlatRate : Rate, IFlatRate
+{
+    internal FlatRate(IFlatRate other) : base(other)
+    {
+    }
+
+    internal FlatRate(IFlatRateFactory factory, IRate baseRate) : base(factory, baseRate)
+    {
+    }
+
+    internal FlatRate(IFlatRateFactory factory, IMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, numerator, denominatorMeasureUnitTypeCode)
+    {
+    }
+
+    internal FlatRate(IFlatRateFactory factory, IMeasure numerator, Enum denominatorMeasureUnit) : base(factory, numerator, denominatorMeasureUnit)
+    {
+    }
+
+    internal FlatRate(IFlatRateFactory factory, IMeasure numerator, IDenominator denominator) : base(factory, numerator, denominator)
+    {
+    }
+
+    public IFlatRate Add(IFlatRate? other)
+    {
+        throw new NotImplementedException();
+    }
+
+    public IFlatRate Divide(decimal divisor)
+    {
+        throw new NotImplementedException();
+    }
+
+    public IFlatRate GetFlatRate(IMeasure numerator, string name, decimal quantity)
+    {
+        throw new NotImplementedException();
+    }
+
+    public IFlatRate GetFlatRate(IMeasure numerator, string name)
+    {
+        throw new NotImplementedException();
+    }
+
+    public IFlatRate GetFlatRate(IMeasure numerator, Enum measureUnit, decimal quantity)
+    {
+        throw new NotImplementedException();
+    }
+
+    public IFlatRate GetFlatRate(IMeasure numerator, Enum measureUnit)
+    {
+        throw new NotImplementedException();
+    }
+
+    public IFlatRate GetFlatRate(IMeasure numerator, IDenominator denominator)
+    {
+        throw new NotImplementedException();
+    }
+
+    public IFlatRate GetFlatRate(IMeasure numerator)
+    {
+        throw new NotImplementedException();
+    }
+
+    public IFlatRate GetFlatRate(IBaseRate baseRate)
+    {
+        return NullChecked(baseRate, nameof(baseRate)) switch
+        {
+            FlatRate flatRate => GetNew(flatRate),
+            Rate rate => GetFactory().Create(rate),
+
+            _ => getFlatRate(),
+        };
+
+        #region Local methods
+        IFlatRate getFlatRate()
+        {
+            MeasureUnitTypeCode numeratorMeasureUnitTypeCode = getMeasureUnitTypeCode(RateComponentCode.Numerator);
+            decimal defaultQuantity = baseRate.DefaultQuantity;
+            MeasureUnitTypeCode denominatorMeasureUnitTypeCode = getMeasureUnitTypeCode(RateComponentCode.Denominator);
+
+            return (IFlatRate)GetBaseRate(numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode);
+        }
+
+        MeasureUnitTypeCode getMeasureUnitTypeCode(RateComponentCode rateComponentCode)
+        {
+            return baseRate[rateComponentCode]!.Value;
+        }
+        #endregion
+    }
+
+    public override ILimit? GetLimit()
+    {
+        return null;
+    }
+
+    public IFlatRate GetNew(IFlatRate other)
+    {
+        return GetFactory().CreateNew(other);
+    }
+
+    public IFlatRate Multiply(decimal multiplier)
+    {
+        IMeasure numerator = Numerator.Multiply(multiplier);
+
+        return GetFlatRate(numerator);
+    }
+
+    public IFlatRate Subtract(IFlatRate? other)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override IFlatRateFactory GetFactory()
+    {
+        return (IFlatRateFactory)Factory;
+    }
+}
+
+
 //{
 //    #region Constructors
 //    internal FlatRate(IFlatRate other) : base(other)

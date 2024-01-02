@@ -10,7 +10,7 @@ public interface ILimitedRate : IRate/*<ILimitedRate>*/, ILimiter<ILimitedRate, 
     ILimitedRate GetLimitedRate(IMeasure numerator, Enum measureUnit, ILimit limit);
     ILimitedRate GetLimitedRate(IMeasure numerator, IDenominator denominator, ILimit limit);
     ILimitedRate GetLimitedRate(IMeasure numerator, ILimit limit);
-    ILimitedRate GetLimitedRate(IRate rate, ILimit limit);
+    ILimitedRate GetLimitedRate(IBaseRate baseRate, ILimit? limit);
 }
 
     //ILimitedRate GetLimitedRate(ILimitedRate other);

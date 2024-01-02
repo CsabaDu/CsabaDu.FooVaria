@@ -53,7 +53,7 @@ public abstract class Quantifiable : Measurable, IQuantifiable
 
     #region Protected methods
     #region Static methods
-    protected static TypeCode? GetQuantityTypeCode(ValueType quantity)
+    protected static TypeCode? GetQuantityTypeCode(ValueType? quantity)
     {
         Type? quantityType = quantity?.GetType();
 

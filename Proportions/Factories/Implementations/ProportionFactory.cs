@@ -60,7 +60,7 @@ public sealed class ProportionFactory : IProportionFactory
         return Create(numeratorMeasureUnit, defaultQuantity, denominatorMeasureUnit);
     }
 
-    public IProportion<TDEnum> Create<TDEnum>(IMeasure numerator, TDEnum denominatorMeasureUnit)
+    public IProportion<TDEnum> Create<TDEnum>(IRateComponent numerator, TDEnum denominatorMeasureUnit)
         where TDEnum : struct, Enum
     {
         Enum numeratorMeasureUnit = NullChecked(numerator, nameof(numerator)).GetMeasureUnit();
