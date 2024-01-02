@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.RateComponents.Types
 {
-    public interface IRateComponent : IBaseMeasure/*<IRateComponent, Enum>*/, IQuantity, IQuantityTypeCode, IDecimalQuantity, ILimitMode, IRateComponentCode, IExchangeRate, IExchange<IRateComponent, Enum>, IRound<IRateComponent>
+    public interface IRateComponent : IBaseMeasure, IQuantity, IQuantityTypeCode, IDecimalQuantity, ILimitMode, IRateComponentCode, IExchangeRate, IExchange<IRateComponent, Enum>, IRound<IRateComponent>
     {
         IMeasurement Measurement { get; init; }
         object Quantity { get; init; }

@@ -2,6 +2,7 @@
 {
     public interface IMeasure : IRateComponent, ILimitable, ICalculate<IMeasure, decimal>
     {
+        IMeasure GetMeasure(IRateComponent rateComponent);
     }
 
     public interface IMeasure<TSelf, TNum> : IMeasure, IRateComponent<TSelf, TNum>

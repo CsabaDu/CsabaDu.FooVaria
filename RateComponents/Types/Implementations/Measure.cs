@@ -11,7 +11,7 @@
         #region Public methods
         public IMeasure Add(IMeasure? other)
         {
-            return GetSum(this, other, SummingMode.Add);
+            return GetSum(other, SummingMode.Add);
         }
 
         public IMeasure Divide(decimal divisor)
@@ -84,7 +84,7 @@
 
         public IMeasure Subtract(IMeasure? other)
         {
-            return GetSum(this, other, SummingMode.Subtract);
+            return GetSum(other, SummingMode.Subtract);
         }
 
         #region Override methods
@@ -115,36 +115,26 @@
         #endregion
         #endregion
 
+        public abstract IMeasure GetMeasure(IRateComponent rateComponent);
+
         #region Private methods
-        #region Static methods
-        private static IMeasure GetSum(IMeasure measure, IMeasure? other, SummingMode summingMode)
+        private IMeasure GetSum(IMeasure? other, SummingMode summingMode)
         {
-            Enum measureUnit = measure.Measurement.GetMeasureUnit();
-            decimal quantity = measure.GetDecimalQuantity();
+            if (other == null) return GetMeasure(this);
 
-            if (other == null) return getMeasure();
+            if (other.IsExchangeableTo(MeasureUnitTypeCode)) return getMeasure();
 
-            MeasureUnitTypeCode measureUnitTypeCode = other.MeasureUnitTypeCode;
-
-            if (measure.IsExchangeableTo(measureUnitTypeCode))
-            {
-                quantity = getDefaultQuantitySum() / measure.GetExchangeRate();
-
-                return getMeasure();
-            }
-
-            throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode, nameof(other));
+            throw InvalidMeasureUnitTypeCodeEnumArgumentException(other.MeasureUnitTypeCode, nameof(other));
 
             #region Local methods
             decimal getDefaultQuantitySum()
             {
-                quantity = measure.DefaultQuantity;
                 decimal otherQuantity = other!.DefaultQuantity;
 
                 return summingMode switch
                 {
-                    SummingMode.Add => decimal.Add(quantity, otherQuantity),
-                    SummingMode.Subtract => decimal.Subtract(quantity, otherQuantity),
+                    SummingMode.Add => decimal.Add(DefaultQuantity, otherQuantity),
+                    SummingMode.Subtract => decimal.Subtract(DefaultQuantity, otherQuantity),
 
                     _ => throw new InvalidOperationException(null),
                 };
@@ -152,11 +142,13 @@
 
             IMeasure getMeasure()
             {
-                return (IMeasure)measure.GetRateComponent(measureUnit, quantity);
+                Enum measureUnit = Measurement.GetMeasureUnit();
+                decimal quantity = getDefaultQuantitySum() / GetExchangeRate();
+
+                return (IMeasure)GetRateComponent(measureUnit, quantity);
             }
             #endregion
         }
-        #endregion
         #endregion
     }
 
@@ -220,6 +212,11 @@
 
         #region Override methods
         #region Sealed methods
+        public override sealed TSelf GetMeasure(IRateComponent rateComponent)
+        {
+            return GetRateComponent(rateComponent);
+        }
+
         public override sealed TSelf GetRateComponent(ValueType quantity)
         {
             return (TSelf)base.GetRateComponent(quantity);
