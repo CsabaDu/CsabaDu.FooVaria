@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Common.Types.Implementations
 {
-    public abstract class BaseRate : BaseMeasure/*<IBaseRate, IMeasurable>*/, IBaseRate
+    public abstract class BaseRate : BaseMeasure, IBaseRate
     {
         #region Constructors
         protected BaseRate(IBaseRate other) : base(other)
@@ -186,6 +186,8 @@
         {
             return GetFactory().CreateBaseRate(numerator, denominatorMeasureUnitTypeCode);
         }
+
+        public abstract IBaseRate GetBaseRate(params IBaseMeasure[] baseMeasures);
         #endregion
     }
 }

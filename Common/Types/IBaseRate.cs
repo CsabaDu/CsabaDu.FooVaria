@@ -8,5 +8,5 @@ public interface IBaseRate : IBaseMeasure/*<IBaseRate, IMeasurable>*/, IQuantity
     IBaseRate GetBaseRate(IBaseMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
     IBaseRate GetBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit);
     IBaseRate GetBaseRate(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement);
-    IBaseRate GetBaseRate(IBaseMeasure numerator, IBaseMeasure denominator);
+    IBaseRate GetBaseRate(params IBaseMeasure[] baseMeasures);
 }

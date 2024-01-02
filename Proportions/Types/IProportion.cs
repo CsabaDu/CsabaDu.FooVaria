@@ -5,7 +5,7 @@
         MeasureUnitTypeCode NumeratorMeasureUnitTypeCode { get; init; }
 
         IProportion GetProportion(IBaseRate baseRate);
-        //IProportion GetProportion(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
+        IProportion GetProportion(IRateComponent numerator, IRateComponent denominator);
     }
 
     public interface IProportion<TDEnum> : IProportion, IDenominate<IBaseMeasure, TDEnum>

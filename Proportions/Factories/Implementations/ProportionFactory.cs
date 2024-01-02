@@ -98,6 +98,16 @@ public sealed class ProportionFactory : IProportionFactory
         #endregion
     }
 
+    public IProportion Create(IRateComponent numerator, IRateComponent denominator)
+    {
+        var (numeratorMeasureUnit, quantity) = GetNumeratorComponents(numerator);
+        Enum denominatorMeasureUnit = NullChecked(denominator, nameof(denominator)).GetMeasureUnit();
+        quantity *= GetExchangeRate(denominatorMeasureUnit);
+        quantity /= denominator.DefaultQuantity;
+
+        return Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit);
+    }
+
     public IProportion Create(IBaseRate baseRate)
     {
         MeasureUnitTypeCode denominatorMeasureUnitTypeCode = NullChecked(baseRate, nameof(baseRate)).MeasureUnitTypeCode;
@@ -124,14 +134,38 @@ public sealed class ProportionFactory : IProportionFactory
         return Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit);
     }
 
-    public IBaseRate CreateBaseRate(IBaseMeasure numerator, IBaseMeasure denominator) // TODO
+    public IBaseRate CreateBaseRate(params IBaseMeasure[] baseMeasures) // TODO
     {
-        var (numeratorMeasureUnit, quantity) = GetNumeratorComponents(numerator);
-        Enum denominatorMeasureUnit = NullChecked(denominator, nameof(denominator)).GetMeasureUnit();
-        quantity *= GetExchangeRate(denominatorMeasureUnit);
-        quantity /= denominator.DefaultQuantity;
+        int count = baseMeasures?.Length ?? 0;
 
-        return Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit);
+        return count switch
+        {
+            1 => createProportionFrom1Param(),
+            2 or 3 => createProportionFrom2or3Params(),
+
+            _ => throw CountArgumentOutOfRangeException(count, nameof(baseMeasures)),
+        };
+
+        #region Local methods
+        IProportion createProportionFrom1Param()
+        {
+            if (baseMeasures![0] is IBaseRate baseRate) return Create(baseRate);
+
+            throw exception();
+        }
+
+        IProportion createProportionFrom2or3Params()
+        {
+            if (baseMeasures is IRateComponent[] rateComponents) return Create(rateComponents[0], rateComponents[1]);
+
+            throw exception();
+        }
+
+        ArgumentOutOfRangeException exception()
+        {
+            return ArgumentTypeOutOfRangeException(nameof(baseMeasures), baseMeasures!);
+        }
+        #endregion
     }
 
     public IBaseRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
@@ -163,8 +197,12 @@ public sealed class ProportionFactory : IProportionFactory
     #region Static methods
     private static (Enum MeasureUnit, decimal Quantity) GetNumeratorComponents(IBaseMeasure numerator)
     {
-        Enum nmeasureUnit = NullChecked(numerator, nameof(numerator)).GetMeasureUnit();
-        decimal quantity = numerator.DefaultQuantity / GetExchangeRate(nmeasureUnit);
+
+        Enum nmeasureUnit = NullChecked(numerator, nameof(numerator)) is IRateComponent rateComponent ?
+            rateComponent.GetMeasureUnit()
+            : throw ArgumentTypeOutOfRangeException(nameof(numerator), numerator);
+
+        decimal quantity = rateComponent.DefaultQuantity / GetExchangeRate(nmeasureUnit);
 
         return (nmeasureUnit, quantity);
     }

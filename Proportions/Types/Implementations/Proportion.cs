@@ -1,16 +1,29 @@
-﻿using System.ComponentModel;
-
-namespace CsabaDu.FooVaria.Proportions.Types.Implementations
+﻿namespace CsabaDu.FooVaria.Proportions.Types.Implementations
 {
     internal abstract class Proportion : BaseRate, IProportion
     {
         #region Constructors
         private protected Proportion(IProportionFactory factory, Enum numeratorMeasureUnit, ValueType quantity, Enum denominatorMeasureUnit) : base(factory, denominatorMeasureUnit)
         {
+            validateMeasureUnits();
+
             NumeratorMeasureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(numeratorMeasureUnit);
             DefaultQuantity = getValidDefaultQuantity();
 
             #region Local methods
+            void validateMeasureUnits()
+            {
+                validateMeasureUnit(numeratorMeasureUnit, nameof(numeratorMeasureUnit));
+                validateMeasureUnit(denominatorMeasureUnit, nameof(denominatorMeasureUnit));
+            }
+
+            void validateMeasureUnit(Enum measureUnit, string paramName)
+            {
+                if (IsValidMeasureUnit(measureUnit)) return;
+
+                throw InvalidMeasureUnitEnumArgumentException(measureUnit, paramName);
+            }
+
             decimal getValidDefaultQuantity()
             {
                 string paramName = nameof(quantity);
@@ -39,6 +52,11 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
         public IProportion GetProportion(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
         {
             return GetFactory().Create(numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode);
+        }
+
+        public IProportion GetProportion(IRateComponent numerator, IRateComponent denominator)
+        {
+            return GetFactory().Create(numerator, denominator);
         }
 
         #region Override methods
@@ -91,7 +109,6 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
 
             return (IMeasure)measure.GetRateComponent(measureUnit, quantity);
         }
-
         #endregion
         #endregion
         #endregion
@@ -133,6 +150,11 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
     {
         internal Proportion(IProportionFactory factory, TNEnum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit) : base(factory, numeratorMeasureUnit, quantity, denominatorMeasureUnit)
         {
+        }
+
+        public override IBaseRate GetBaseRate(params IBaseMeasure[] baseMeasures)
+        {
+            throw new NotImplementedException();
         }
 
         public TNEnum GetMeasureUnit(IMeasureUnit<TNEnum>? other)
