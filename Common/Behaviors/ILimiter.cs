@@ -1,12 +1,17 @@
-﻿namespace CsabaDu.FooVaria.Common.Behaviors;
-
-public interface ILimiter<in TSelf, in TLimitable> : IEqualityComparer<TSelf>
-    where TSelf : class, IBaseMeasure
-    where TLimitable : class, IBaseMeasure
+﻿namespace CsabaDu.FooVaria.Common.Behaviors
 {
-    LimitMode GetLimitMode(TSelf limiter);
+    public interface ILimiter
+    {
+    }
 
-    bool? Includes(TLimitable limitable);
+    public interface ILimiter<in TSelf, in TLimitable> : ILimiter, IEqualityComparer<TSelf>
+        where TSelf : class, IBaseMeasure, ILimiter
+        where TLimitable : class, IBaseMeasure
+    {
+        LimitMode GetLimitMode(TSelf limiter);
 
-    void ValidateLimitMode(LimitMode limitMode);
+        bool? Includes(TLimitable limitable);
+
+        void ValidateLimitMode(LimitMode limitMode);
+    }
 }

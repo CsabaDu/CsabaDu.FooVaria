@@ -1,11 +1,139 @@
-﻿//namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
+﻿
+using System.Diagnostics.CodeAnalysis;
 
-//internal sealed class LimitedRate : Rate, ILimitedRate
+namespace CsabaDu.FooVaria.Rates.Types.Implementations;
+
+internal sealed class LimitedRate : Rate, ILimitedRate
+{
+    internal LimitedRate(ILimitedRate other) : base(other)
+    {
+        Limit = other.Limit;
+    }
+
+    internal LimitedRate(ILimitedRateFactory factory, IRate baseRate, ILimit limit) : base(factory, baseRate)
+    {
+        Limit = NullChecked(limit, nameof(limit));
+    }
+
+    internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode, ILimit limit) : base(factory, numerator, denominatorMeasureUnitTypeCode)
+    {
+        Limit = NullChecked(limit, nameof(limit));
+    }
+
+    internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, Enum denominatorMeasureUnit, ILimit limit) : base(factory, numerator, denominatorMeasureUnit)
+    {
+        Limit = NullChecked(limit, nameof(limit));
+    }
+
+    internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, IDenominator denominator, ILimit limit) : base(factory, numerator, denominator)
+    {
+        Limit = NullChecked(limit, nameof(limit));
+    }
+
+    public ILimit Limit { get ; init; }
+
+    public bool Equals(ILimitedRate? x, ILimitedRate? y)
+    {
+        if (x == null && y == null) return true;
+
+        if (x == null || y == null) return false;
+
+        if (!x.Equals(y)) return false;
+
+        ILimit xLimit = x.Limit;
+
+        return xLimit.Equals(xLimit, y.Limit);
+    }
+
+    public int GetHashCode([DisallowNull] ILimitedRate other)
+    {
+        return other.GetHashCode();
+    }
+
+    public override ILimit? GetLimit()
+    {
+        return Limit;
+    }
+
+    public ILimitedRate GetLimitedRate(IMeasure numerator, string name, ValueType quantity, ILimit limit)
+    {
+        throw new NotImplementedException();
+    }
+
+    public ILimitedRate GetLimitedRate(IMeasure numerator, string name, ILimit limit)
+    {
+        throw new NotImplementedException();
+    }
+
+    public ILimitedRate GetLimitedRate(IMeasure numerator, Enum denominatorMeasureUnit, ValueType quantity, ILimit limit)
+    {
+        throw new NotImplementedException();
+    }
+
+    public ILimitedRate GetLimitedRate(IMeasure numerator, Enum denominatorMeasureUnit, ILimit limit)
+    {
+        throw new NotImplementedException();
+    }
+
+    public ILimitedRate GetLimitedRate(IMeasure numerator, IDenominator denominator, ILimit limit)
+    {
+        throw new NotImplementedException();
+    }
+
+    public ILimitedRate GetLimitedRate(IMeasure numerator, ILimit limit)
+    {
+        throw new NotImplementedException();
+    }
+
+    public ILimitedRate GetLimitedRate(IBaseRate baseRate, ILimit? limit)
+    {
+        throw new NotImplementedException();
+    }
+
+    public LimitMode GetLimitMode(ILimitedRate limiter)
+    {
+        throw new NotImplementedException();
+    }
+
+    public ILimitedRate GetNew(ILimitedRate other)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool? Includes(IMeasure limitable)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void ValidateLimitMode(LimitMode limitMode)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return base.Equals(obj)
+            && obj is ILimitedRate limitedRate
+            && limitedRate.Limit.Equals(Limit);
+    }
+
+    public override ILimitedRateFactory GetFactory()
+    {
+        return (ILimitedRateFactory)Factory;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Numerator, Denominator, Limit);
+    }
+
+}
+
 //{
 //    #region Constructors
-//    public LimitedRate(ILimitedRate other) : base(other)
+//    public LimitedRate(ILimitedRate obj) : base(obj)
 //    {
-//        Limit = other.Limit;
+//        Limit = obj.Limit;
 //    }
 
 //    public LimitedRate(ILimitedRateFactory factory, IMeasure numerator, IDenominator denominator, ILimit limit) : base(factory, numerator, denominator)
@@ -32,7 +160,7 @@
 //    #region Properties
 //    public ILimit Limit { get; init; }
 //    #endregion
-    
+
 //    #region Public methods
 //    public bool Equals(ILimitedRate? x, ILimitedRate? y)
 //    {
@@ -97,9 +225,9 @@
 //        return GetFactory().CreateNew(rate, limit);
 //    }
 
-//    public ILimitedRate GetLimitedRate(ILimitedRate other)
+//    public ILimitedRate GetLimitedRate(ILimitedRate obj)
 //    {
-//        return GetFactory().CreateNew(other);
+//        return GetFactory().CreateNew(obj);
 //    }
 
 //    public LimitMode GetLimitMode(ILimitedRate limitedRate)
@@ -118,10 +246,10 @@
 //    }
 
 //    #region Override methods
-//    public override bool Equals(IBaseRate? other)
+//    public override bool Equals(IBaseRate? obj)
 //    {
-//        return other is ILimitedRate limitedRate
-//            && base.Equals(other)
+//        return obj is ILimitedRate limitedRate
+//            && base.Equals(obj)
 //            && Limit.Equals(limitedRate.Limit);
 //    }
 
@@ -135,9 +263,9 @@
 //        return Limit;
 //    }
 
-//    //public override ILimitedRate GetMeasurable(IDefaultMeasurable other)
+//    //public override ILimitedRate GetMeasurable(IDefaultMeasurable obj)
 //    //{
-//    //    return (ILimitedRate)GetFactory().CreateNew(other);
+//    //    return (ILimitedRate)GetFactory().CreateNew(obj);
 //    //}
 
 //    public override ILimitedRate GetRate(IMeasure numerator, IDenominator denominator, ILimit? limit)

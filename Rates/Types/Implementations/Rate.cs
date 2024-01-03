@@ -162,6 +162,17 @@ internal abstract class Rate : BaseRate, IRate
         return (IRateFactory)Factory;
     }
 
+    public override bool Equals(object? obj)
+    {
+        return obj is IRate other
+            && Equals(other);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Numerator, Denominator);
+    }
+
     #region Sealed methods
     public override sealed IRate GetBaseRate(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
     {

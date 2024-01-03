@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Rates.Types;
 
-public interface ILimitedRate : IRate/*<ILimitedRate>*/, ILimiter<ILimitedRate, IMeasure>, ICommonBase<ILimitedRate>
+public interface ILimitedRate : IRate, ILimiter<ILimitedRate, IMeasure>, ICommonBase<ILimitedRate>
 {
     ILimit Limit { get; init; }
 
