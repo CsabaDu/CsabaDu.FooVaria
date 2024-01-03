@@ -8,7 +8,7 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         Limit = other.Limit;
     }
 
-    internal LimitedRate(ILimitedRateFactory factory, IRate baseRate, ILimit limit) : base(factory, baseRate)
+    internal LimitedRate(ILimitedRateFactory factory, IRate rate, ILimit limit) : base(factory, rate)
     {
         Limit = NullChecked(limit, nameof(limit));
     }
@@ -18,7 +18,12 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         Limit = NullChecked(limit, nameof(limit));
     }
 
-    internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, Enum denominatorMeasureUnit, ILimit limit) : base(factory, numerator, denominatorMeasureUnit)
+    internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, IMeasurement denominatorMeasurement, ILimit limit) : base(factory, numerator, denominatorMeasurement)
+    {
+        Limit = NullChecked(limit, nameof(limit));
+    }
+
+    internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, Enum denominatorMeasureUnit, ValueType denominatorQuantity, ILimit limit) : base(factory, numerator, denominatorMeasureUnit, denominatorQuantity)
     {
         Limit = NullChecked(limit, nameof(limit));
     }
@@ -72,9 +77,14 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         return GetFactory().Create(numerator, denominatorMeasureUnit, quantity, limit);
     }
 
-    public ILimitedRate GetLimitedRate(IMeasure numerator, Enum denominatorMeasureUnit, ILimit limit)
+    public ILimitedRate GetLimitedRate(IMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode, ILimit limit)
     {
-        return GetFactory().Create(numerator, denominatorMeasureUnit, limit);
+        return GetFactory().Create(numerator, denominatorMeasureUnitTypeCode, limit);
+    }
+
+    public ILimitedRate GetLimitedRate(IMeasure numerator, IMeasurement denominatorMeasurement, ILimit limit)
+    {
+        return GetFactory().Create(numerator, denominatorMeasurement, limit);
     }
 
     public ILimitedRate GetLimitedRate(IMeasure numerator, IDenominator denominator, ILimit limit)
@@ -87,10 +97,8 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         return GetLimitedRate(numerator, Denominator, limit);
     }
 
-    public ILimitedRate GetLimitedRate(IBaseRate baseRate, ILimit? limit)
+    public ILimitedRate GetLimitedRate(IBaseRate baseRate, ILimit limit)
     {
-        if (baseRate is ILimitedRate limitedRate) return GetNew(limitedRate);
-
         if (baseRate is IRate rate) return getLimitedRate();
 
         rate = GetRate(baseRate);

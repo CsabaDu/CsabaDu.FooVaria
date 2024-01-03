@@ -4,6 +4,7 @@
     {
         decimal DefaultQuantity { get; init; }
 
+        IBaseMeasure GetBaseMeasure(Enum measureUnit, ValueType quantity);
         void ValidateQuantifiable(IQuantifiable? quantifiable, string paramName);
     }
 

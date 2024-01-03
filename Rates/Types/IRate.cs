@@ -5,7 +5,7 @@
     {
         IDenominator Denominator { get; init; }
         IMeasure Numerator { get; init; }
-        IRateComponent? this[RateComponentCode rateComponentCode] { get; }
+        new IRateComponent? this[RateComponentCode rateComponentCode] { get; }
 
         ILimit? GetLimit();
         IRate GetRate(params IRateComponent[] rateComponents);

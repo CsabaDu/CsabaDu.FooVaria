@@ -7,7 +7,7 @@ internal sealed class FlatRate : Rate, IFlatRate
     {
     }
 
-    internal FlatRate(IFlatRateFactory factory, IRate baseRate) : base(factory, baseRate)
+    internal FlatRate(IFlatRateFactory factory, IRate rate) : base(factory, rate)
     {
     }
 
@@ -15,7 +15,11 @@ internal sealed class FlatRate : Rate, IFlatRate
     {
     }
 
-    internal FlatRate(IFlatRateFactory factory, IMeasure numerator, Enum denominatorMeasureUnit) : base(factory, numerator, denominatorMeasureUnit)
+    internal FlatRate(IFlatRateFactory factory, IMeasure numerator, Enum denominatorMeasureUnit, ValueType denominatorQuantity) : base(factory, numerator, denominatorMeasureUnit, denominatorQuantity)
+    {
+    }
+
+    internal FlatRate(IFlatRateFactory factory, IMeasure numerator, IMeasurement denominatorMeasurement) : base(factory, numerator, denominatorMeasurement)
     {
     }
 
@@ -52,9 +56,14 @@ internal sealed class FlatRate : Rate, IFlatRate
         return GetFactory().Create(numerator, denominatorMeasureUnit, quantity);
     }
 
-    public IFlatRate GetFlatRate(IMeasure numerator, Enum denominatorMeasureUnit)
+    public IFlatRate GetFlatRate(IMeasure numerator, IMeasurement denominatorMeasurement)
     {
-        return GetFactory().Create(numerator, denominatorMeasureUnit);
+        return GetFactory().Create(numerator, denominatorMeasurement);
+    }
+
+    public IFlatRate GetFlatRate(IMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
+    {
+        return GetFactory().Create(numerator, denominatorMeasureUnitTypeCode);
     }
 
     public IFlatRate GetFlatRate(IMeasure numerator, IDenominator denominator)

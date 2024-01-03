@@ -5,6 +5,7 @@ global using CsabaDu.FooVaria.Common.Factories;
 global using CsabaDu.FooVaria.Common.Statics;
 global using CsabaDu.FooVaria.Common.Types;
 global using System.ComponentModel;
+global using System.Diagnostics.CodeAnalysis;
 global using static CsabaDu.FooVaria.Common.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.Common.Statics.Extensions;
 global using static CsabaDu.FooVaria.Common.Statics.MeasureUnits;

@@ -1,6 +1,4 @@
-﻿//using CsabaDu.FooVaria.Common.Statics;
-
-namespace CsabaDu.FooVaria.Common.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Common.Types.Implementations;
 
 public abstract class BaseMeasurement : Measurable, IBaseMeasurement
 {
@@ -213,4 +211,3 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
     #endregion
     #endregion
 }
-

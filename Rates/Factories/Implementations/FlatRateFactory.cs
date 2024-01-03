@@ -1,108 +1,93 @@
-﻿//using CsabaDu.FooVaria.Common.Enums;
-//using CsabaDu.FooVaria.RateComponents.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Rates.Factories.Implementations;
 
-//namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
+public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
+{
+    public FlatRateFactory(IDenominatorFactory denominatorFactory) : base(denominatorFactory)
+    {
+    }
 
-//public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
-//{
-//    #region Constructors
-//    public FlatRateFactory(IDenominatorFactory denominatorFactory) : base(denominatorFactory)
-//    {
-//    }
-//    #endregion
+    public IFlatRate Create(IMeasure numerator, string name, ValueType denominatorQuantity)
+    {
+        IDenominator denominator = DenominatorFactory.Create(name, denominatorQuantity);
 
-//    #region Public methods
-//    public IFlatRate CreateNew(IFlatRate flatRate)
-//    {
-//        return new FlatRate(flatRate);
-//    }
+        return Create(numerator, denominator);
+    }
 
-//    public IFlatRate CreateNew(IMeasure numerator, IDenominator denominator)
-//    {
-//        return new FlatRate(this, numerator, denominator);
-//    }
+    public IFlatRate Create(IMeasure numerator, string name)
+    {
+        IDenominator denominator = DenominatorFactory.Create(name);
 
-//    public IFlatRate CreateNew(IMeasure numerator, string name, ValueType quantity)
-//    {
-//        IDenominator denominator = DenominatorFactory.CreateNew(name, quantity);
+        return Create(numerator, denominator);
+    }
 
-//        return CreateNew(numerator, denominator);
-//    }
+    public IFlatRate Create(IMeasure numerator, Enum denominatorMeasureUnit, ValueType denominatorQuantity)
+    {
+        return new FlatRate(this, numerator, denominatorMeasureUnit, denominatorQuantity);
+    }
 
-//    public IFlatRate CreateNew(IMeasure numerator, Enum measureUnit, ValueType quantity)
-//    {
-//        IDenominator denominator = DenominatorFactory.CreateNew(measureUnit, quantity);
+    public IFlatRate Create(IMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
+    {
+        return new FlatRate(this, numerator, denominatorMeasureUnitTypeCode);
+    }
 
-//        return CreateNew(numerator, denominator);
-//    }
+    public IFlatRate Create(IMeasure numerator, IMeasurement denominatorMeasurement)
+    {
+        return new FlatRate(this, numerator, denominatorMeasurement);
+    }
 
-//    public IFlatRate CreateNew(IMeasure numerator, string name)
-//    {
-//        IDenominator denominator = DenominatorFactory.CreateNew(name);
+    public IFlatRate Create(IMeasure numerator, IDenominator denominator)
+    {
+        return new FlatRate(this, numerator, denominator);
+    }
 
-//        return CreateNew(numerator, denominator);
-//    }
+    public IFlatRate Create(IRate rate)
+    {
+        return new FlatRate(this, rate);
+    }
 
-//    public IFlatRate CreateNew(IMeasure numerator, Enum measureUnit)
-//    {
-//        if (measureUnit is MeasureUnitTypeCode measureUnitTypeCode) return CreateNew(numerator, measureUnitTypeCode);
+    public override IFlatRate Create(params IRateComponent[] rateComponents)
+    {
+        string paramName = nameof(rateComponents);
+        int count = rateComponents?.Length ?? 0;
 
-//        IDenominator denominator = DenominatorFactory.CreateNew(measureUnit);
+        if (count != 2) throw QuantityArgumentOutOfRangeException(paramName, count);
 
-//        return CreateNew(numerator, denominator);
-//    }
+        IMeasure numerator = GetValidRateParam<IMeasure>(rateComponents![0], paramName);
+        IDenominator denominator = GetValidRateParam<IDenominator>(rateComponents[1], paramName);
 
-//    public IFlatRate CreateNew(IMeasure numerator, IMeasurement measurement)
-//    {
-//        return new FlatRate(this, numerator, measurement);
-//    }
+        return Create(numerator, denominator);
+    }
 
-//    public IFlatRate CreateNew(IMeasure numerator, IMeasurement measurement, ValueType quantity)
-//    {
-//        IDenominator denominator = DenominatorFactory.CreateNew(measurement, quantity);
+    public override IFlatRate CreateBaseRate(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement)
+    {
+        IMeasure measure = GetValidRateParam<IMeasure>(numerator, nameof(numerator));
+        IMeasurement measurement = GetValidRateParam<IMeasurement>(denominatorMeasurement, nameof(denominatorMeasurement));
 
-//        return CreateNew(numerator, denominator);
-//    }
+        return Create(measure, measurement);
+    }
 
-//    public override IFlatRate CreateNew(IRate rate)
-//    {
-//        IMeasure numerator = NullChecked(rate, nameof(rate)).Numerator;
-//        IDenominator denominator = rate.Denominator;
+    public override IFlatRate CreateBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit)
+    {
+        IMeasure measure = GetValidRateParam<IMeasure>(numerator, nameof(numerator));
+        IDenominator denominator = DenominatorFactory.Create(denominatorMeasureUnit);
 
-//        return CreateNew(numerator, denominator);
-//    }
+        return Create(measure, denominator);
+    }
 
-//    public override IFlatRate CreateNew(IMeasurable other)
-//    {
-//        _ = NullChecked(other, nameof(other));
+    public override IFlatRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
+    {
+        IMeasure measure = GetValidRateParam<IMeasure>(numerator, nameof(numerator));
 
-//        if (other is IFlatRate flatRate) return CreateNew(flatRate);
+        return Create(measure, denominatorMeasureUnitTypeCode);
+    }
 
-//        if (other is IRate rate) return CreateNew(rate);
+    public IFlatRate CreateNew(IFlatRate other)
+    {
+        return new FlatRate(other);
+    }
 
-//        throw new ArgumentOutOfRangeException(nameof(other), other.GetType(), null);
-//    }
-
-//    public override IFlatRate CreateNew(IBaseMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTpeCode)
-//    {
-//        string name = nameof(numerator);
-
-//        if (NullChecked(numerator, name) is not IMeasure measure) throw ArgumentTypeOutOfRangeException(name, numerator);
-
-//        return new FlatRate(this, measure, denominatorMeasureUnitTpeCode);
-//    }
-
-//    public override IBaseRate CreateNew(IBaseMeasure numerator, Enum denominatorMeasureUnit)
-//    {
-//        string name = nameof(numerator);
-
-//        if (NullChecked(numerator, name) is not IMeasure measure) throw ArgumentTypeOutOfRangeException(name, numerator);
-
-//        name = nameof(denominatorMeasureUnit);
-
-//        measure.ValidateMeasureUnit(denominatorMeasureUnit, name);
-
-//        return new FlatRate(this, measure, denominatorMeasureUnit);
-//    }
-//    #endregion
-//}
+    public override IFlatRate CreateNew(IRate other)
+    {
+        return Create(other);
+    }
+}

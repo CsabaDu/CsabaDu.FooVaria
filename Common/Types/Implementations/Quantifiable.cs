@@ -15,11 +15,15 @@ public abstract class Quantifiable : Measurable, IQuantifiable
     {
     }
 
-    protected Quantifiable(IQuantifiableFactory factory, IMeasurable measurable) : base(factory, measurable)
+    protected Quantifiable(IQuantifiableFactory factory, IBaseMeasurement baseMeasurement) : base(factory, baseMeasurement)
     {
     }
 
-    protected Quantifiable(IQuantifiableFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IMeasurable[] measurables) : base(factory, measureUnitTypeCode, measurables)
+    protected Quantifiable(IQuantifiableFactory factory, IQuantifiable quantifiable) : base(factory, quantifiable)
+    {
+    }
+
+    protected Quantifiable(IQuantifiableFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IQuantifiable[] quantifiables) : base(factory, measureUnitTypeCode, quantifiables)
     {
     }
     #endregion

@@ -6,11 +6,11 @@ public interface ILimitedRate : IRate, ILimiter<ILimitedRate, IMeasure>, ICommon
 
     ILimitedRate GetLimitedRate(IMeasure numerator, string name, ValueType quantity, ILimit limit);
     ILimitedRate GetLimitedRate(IMeasure numerator, string name, ILimit limit);
-    ILimitedRate GetLimitedRate(IMeasure numerator, Enum denominatorMeasureUnit, ValueType quantity, ILimit limit);
-    ILimitedRate GetLimitedRate(IMeasure numerator, Enum denominatorMeasureUnit, ILimit limit);
+    ILimitedRate GetLimitedRate(IMeasure numerator, Enum denominatorMeasureUnit, ValueType denominatorQuantity, ILimit limit);
+    ILimitedRate GetLimitedRate(IMeasure numerator, IMeasurement denominatorMeasurement, ILimit limit);
     ILimitedRate GetLimitedRate(IMeasure numerator, IDenominator denominator, ILimit limit);
     ILimitedRate GetLimitedRate(IMeasure numerator, ILimit limit);
-    ILimitedRate GetLimitedRate(IBaseRate baseRate, ILimit? limit);
+    ILimitedRate GetLimitedRate(IBaseRate baseRate, ILimit limit);
 }
 
     //ILimitedRate GetLimitedRate(ILimitedRate other);

@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Behaviors;
-
-namespace CsabaDu.FooVaria.Common.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Common.Types.Implementations;
 
 public abstract class BaseSpread : Quantifiable, IBaseSpread
 {
@@ -13,7 +11,7 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
     {
     }
 
-    protected BaseSpread(IBaseSpreadFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IMeasurable[] measurables) : base(factory, measureUnitTypeCode, measurables)
+    protected BaseSpread(IBaseSpreadFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IQuantifiable[] quantifiables) : base(factory, measureUnitTypeCode, quantifiables)
     {
     }
 
@@ -152,9 +150,7 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
     #region Static methods
     private static int? Compare(IBaseSpread baseSpread, IBaseSpread? other)
     {
-        if (other == null) return null;
-
-        if (baseSpread.MeasureUnitTypeCode != other.MeasureUnitTypeCode) return null;
+        if (other?.HasMeasureUnitTypeCode(baseSpread.MeasureUnitTypeCode) != true) return null;
 
         return baseSpread.GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
     }
