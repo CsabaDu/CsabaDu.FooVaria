@@ -20,21 +20,21 @@ internal abstract class Rate : BaseRate, IRate
     private protected Rate(IRateFactory factory, IMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode) : base(factory, denominatorMeasureUnitTypeCode)
     {
         Numerator = NullChecked(numerator, nameof(numerator));
-        Denominator = factory.CreateDenominator(denominatorMeasureUnitTypeCode);
+        Denominator = CreateDenominator(denominatorMeasureUnitTypeCode);
         DefaultQuantity = numerator.DefaultQuantity;
     }
 
     private protected Rate(IRateFactory factory, IMeasure numerator, Enum denominatorMeasureUnit, ValueType denominatorQuantity) : base(factory, denominatorMeasureUnit)
     {
         Numerator = NullChecked(numerator, nameof(numerator));
-        Denominator = factory.CreateDenominator(denominatorMeasureUnit, denominatorQuantity);
+        Denominator = (IDenominator)factory.DenominatorFactory.Create(denominatorMeasureUnit, denominatorQuantity);
         DefaultQuantity = numerator.DefaultQuantity * GetExchangeRate(denominatorMeasureUnit) / Denominator.DefaultQuantity;
     }
 
     private protected Rate(IRateFactory factory, IMeasure numerator, IMeasurement denominatorMeasurement) : base(factory, denominatorMeasurement)
     {
         Numerator = NullChecked(numerator, nameof(numerator));
-        Denominator = factory.CreateDenominator(denominatorMeasurement);
+        Denominator = factory.DenominatorFactory.Create(denominatorMeasurement);
         DefaultQuantity = numerator.DefaultQuantity * denominatorMeasurement.GetExchangeRate();
     }
 
@@ -47,6 +47,16 @@ internal abstract class Rate : BaseRate, IRate
     #endregion
 
     #region Properties
+    public IMeasure Numerator { get; init; }
+    public IDenominator Denominator { get; init; }
+
+    #region Override properties
+    #region Sealed properties
+    public override sealed decimal DefaultQuantity { get; init; }
+    #endregion
+    #endregion
+
+    #region New properties
     public new IRateComponent? this[RateComponentCode rateComponentCode] => rateComponentCode switch
     {
         RateComponentCode.Numerator => Numerator,
@@ -55,13 +65,6 @@ internal abstract class Rate : BaseRate, IRate
 
         _ => null,
     };
-    public IMeasure Numerator { get; init; }
-    public IDenominator Denominator { get; init; }
-
-    #region Override properties
-    #region Sealed properties
-    public override sealed decimal DefaultQuantity { get; init; }
-    #endregion
     #endregion
     #endregion
 
@@ -200,7 +203,7 @@ internal abstract class Rate : BaseRate, IRate
 
         ValidateQuantity(defaultQuantity, nameof(defaultQuantity));
 
-        IRateComponent denominator = GetFactory().CreateDenominator(denominatorMeasureUnitTypeCode);
+        IRateComponent denominator = CreateDenominator(denominatorMeasureUnitTypeCode);
         IRateComponent numerator = Numerator.GetRateComponent(numeratorMeasureUnit, defaultQuantity);
 
         return GetRate(numerator, denominator);
@@ -209,6 +212,16 @@ internal abstract class Rate : BaseRate, IRate
     public override sealed Enum GetMeasureUnit()
     {
         return Numerator.GetMeasureUnit();
+    }
+
+    public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
+    {
+        IEnumerable<MeasureUnitTypeCode> measureUnitTypeCodes = base.GetMeasureUnitTypeCodes();
+        ILimit? limit = GetLimit();
+
+        return limit == null ?
+            measureUnitTypeCodes
+            : measureUnitTypeCodes.Append(limit.MeasureUnitTypeCode);
     }
 
     public override sealed MeasureUnitTypeCode GetNumeratorMeasureUnitTypeCode()
@@ -231,6 +244,16 @@ internal abstract class Rate : BaseRate, IRate
     #region Abstract methods
     public abstract ILimit? GetLimit();
     #endregion
+    #endregion
+
+    #region Private methods
+    private IDenominator CreateDenominator(MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
+    {
+        IDenominatorFactory factory = GetFactory().DenominatorFactory;
+
+        return factory.CreateDefault(denominatorMeasureUnitTypeCode)
+            ?? throw InvalidMeasureUnitTypeCodeEnumArgumentException(denominatorMeasureUnitTypeCode, nameof(denominatorMeasureUnitTypeCode));
+    }
     #endregion
 }
 
