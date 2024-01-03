@@ -9,5 +9,6 @@ global using CsabaDu.FooVaria.RateComponents.Factories;
 global using CsabaDu.FooVaria.RateComponents.Types;
 global using CsabaDu.FooVaria.Rates.Factories;
 global using CsabaDu.FooVaria.Rates.Types;
+global using System.Diagnostics.CodeAnalysis;
 global using static CsabaDu.FooVaria.Common.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.Common.Statics.MeasureUnits;

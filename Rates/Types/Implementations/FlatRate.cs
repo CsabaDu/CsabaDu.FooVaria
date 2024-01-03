@@ -69,27 +69,18 @@ internal sealed class FlatRate : Rate, IFlatRate
 
     public IFlatRate GetFlatRate(IBaseRate baseRate)
     {
-        return NullChecked(baseRate, nameof(baseRate)) switch
-        {
-            FlatRate flatRate => GetNew(flatRate),
-            Rate rate => GetFactory().Create(rate),
+        if (baseRate is IFlatRate flatRate) return GetNew(flatRate);
 
-            _ => getFlatRate(),
-        };
+        if (baseRate is IRate rate) return getFlatRate();
+
+        rate = GetRate(baseRate);
+
+        return getFlatRate();
 
         #region Local methods
         IFlatRate getFlatRate()
         {
-            MeasureUnitTypeCode numeratorMeasureUnitTypeCode = getMeasureUnitTypeCode(RateComponentCode.Numerator);
-            decimal defaultQuantity = baseRate.DefaultQuantity;
-            MeasureUnitTypeCode denominatorMeasureUnitTypeCode = getMeasureUnitTypeCode(RateComponentCode.Denominator);
-
-            return (IFlatRate)GetBaseRate(numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode);
-        }
-
-        MeasureUnitTypeCode getMeasureUnitTypeCode(RateComponentCode rateComponentCode)
-        {
-            return baseRate[rateComponentCode]!.Value;
+            return GetFactory().Create(rate);
         }
         #endregion
     }

@@ -1,10 +1,8 @@
-﻿
-using System.Diagnostics.CodeAnalysis;
-
-namespace CsabaDu.FooVaria.Rates.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Rates.Types.Implementations;
 
 internal sealed class LimitedRate : Rate, ILimitedRate
 {
+    #region Constructors
     internal LimitedRate(ILimitedRate other) : base(other)
     {
         Limit = other.Limit;
@@ -29,20 +27,24 @@ internal sealed class LimitedRate : Rate, ILimitedRate
     {
         Limit = NullChecked(limit, nameof(limit));
     }
+    #endregion
 
+    #region Properties
     public ILimit Limit { get ; init; }
+    #endregion
 
+    #region Public methods
     public bool Equals(ILimitedRate? x, ILimitedRate? y)
     {
         if (x == null && y == null) return true;
 
         if (x == null || y == null) return false;
 
-        if (!x.Equals(y)) return false;
-
         ILimit xLimit = x.Limit;
 
-        return xLimit.Equals(xLimit, y.Limit);
+        if (!xLimit.Equals(xLimit, y.Limit)) return false;
+
+        return x.Equals(y);
     }
 
     public int GetHashCode([DisallowNull] ILimitedRate other)
@@ -57,59 +59,75 @@ internal sealed class LimitedRate : Rate, ILimitedRate
 
     public ILimitedRate GetLimitedRate(IMeasure numerator, string name, ValueType quantity, ILimit limit)
     {
-        throw new NotImplementedException();
+        return GetFactory().Create(numerator, name, quantity, limit);
     }
 
     public ILimitedRate GetLimitedRate(IMeasure numerator, string name, ILimit limit)
     {
-        throw new NotImplementedException();
+        return GetFactory().Create(numerator, name, limit);
     }
 
     public ILimitedRate GetLimitedRate(IMeasure numerator, Enum denominatorMeasureUnit, ValueType quantity, ILimit limit)
     {
-        throw new NotImplementedException();
+        return GetFactory().Create(numerator, denominatorMeasureUnit, quantity, limit);
     }
 
     public ILimitedRate GetLimitedRate(IMeasure numerator, Enum denominatorMeasureUnit, ILimit limit)
     {
-        throw new NotImplementedException();
+        return GetFactory().Create(numerator, denominatorMeasureUnit, limit);
     }
 
     public ILimitedRate GetLimitedRate(IMeasure numerator, IDenominator denominator, ILimit limit)
     {
-        throw new NotImplementedException();
+        return GetFactory().Create(numerator, denominator, limit);
     }
 
     public ILimitedRate GetLimitedRate(IMeasure numerator, ILimit limit)
     {
-        throw new NotImplementedException();
+        return GetLimitedRate(numerator, Denominator, limit);
     }
 
     public ILimitedRate GetLimitedRate(IBaseRate baseRate, ILimit? limit)
     {
-        throw new NotImplementedException();
+        if (baseRate is ILimitedRate limitedRate) return GetNew(limitedRate);
+
+        if (baseRate is IRate rate) return getLimitedRate();
+
+        rate = GetRate(baseRate);
+
+        return getLimitedRate();
+
+        #region Local methods
+        ILimitedRate getLimitedRate()
+        {
+            return GetFactory().Create(rate, limit);
+        }
+        #endregion
     }
 
-    public LimitMode GetLimitMode(ILimitedRate limiter)
+    public LimitMode GetLimitMode(ILimitedRate limitedRate)
     {
-        throw new NotImplementedException();
+        ILimit limit = NullChecked(limitedRate, nameof(limitedRate)).Limit;
+
+        return limit.LimitMode;
     }
 
     public ILimitedRate GetNew(ILimitedRate other)
     {
-        throw new NotImplementedException();
+        return GetFactory().CreateNew(other);
     }
 
-    public bool? Includes(IMeasure limitable)
+    public bool? Includes(IMeasure measure)
     {
-        throw new NotImplementedException();
+        return Limit.Includes(measure);
     }
 
     public void ValidateLimitMode(LimitMode limitMode)
     {
-        throw new NotImplementedException();
+        Limit.ValidateLimitMode(limitMode);
     }
 
+    #region Override methods
     public override bool Equals(object? obj)
     {
         return base.Equals(obj)
@@ -126,7 +144,8 @@ internal sealed class LimitedRate : Rate, ILimitedRate
     {
         return HashCode.Combine(Numerator, Denominator, Limit);
     }
-
+    #endregion
+    #endregion
 }
 
 //{

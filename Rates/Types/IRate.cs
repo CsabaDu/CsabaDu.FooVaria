@@ -9,6 +9,7 @@
 
         ILimit? GetLimit();
         IRate GetRate(params IRateComponent[] rateComponents);
+        IRate GetRate(IBaseRate baseRate);
         IRateComponent GetRateComponent(RateComponentCode rateComponentCode);
     }
 }

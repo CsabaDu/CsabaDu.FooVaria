@@ -133,6 +133,22 @@ internal abstract class Rate : BaseRate, IRate
         return GetFactory().Create(rateComponents);
     }
 
+    public IRate GetRate(IBaseRate baseRate)
+    {
+        decimal defaultQuantity = NullChecked(baseRate, nameof(baseRate)).DefaultQuantity;
+        MeasureUnitTypeCode numeratorMeasureUnitTypeCode = getMeasureUnitTypeCode(RateComponentCode.Numerator);
+        MeasureUnitTypeCode denominatorMeasureUnitTypeCode = getMeasureUnitTypeCode(RateComponentCode.Denominator);
+
+        return GetBaseRate(numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode);
+
+        #region Local methods
+        MeasureUnitTypeCode getMeasureUnitTypeCode(RateComponentCode rateComponentCode)
+        {
+            return baseRate[rateComponentCode]!.Value;
+        }
+        #endregion
+    }
+
     public IRateComponent GetRateComponent(RateComponentCode rateComponentCode)
     {
         IRateComponent? rateComponent = this[rateComponentCode];
