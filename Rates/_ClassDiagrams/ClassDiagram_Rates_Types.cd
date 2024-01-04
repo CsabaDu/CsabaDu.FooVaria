@@ -16,13 +16,13 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Rates.Types.ILimitedRate" Collapsed="true">
-    <Position X="5.5" Y="9.25" Width="2" />
+    <Position X="5.25" Y="9.25" Width="2" />
     <InheritanceLine Type="CsabaDu.FooVaria.Rates.Types.IRate" FixedFromPoint="true">
       <Path>
         <Point X="5.25" Y="7.2" />
         <Point X="5.25" Y="8.875" />
-        <Point X="6.5" Y="8.875" />
-        <Point X="6.5" Y="9.25" />
+        <Point X="6.25" Y="8.875" />
+        <Point X="6.25" Y="9.25" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
