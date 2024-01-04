@@ -1,7 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Statics;
-using CsabaDu.FooVaria.RateComponents.Types;
-
-namespace CsabaDu.FooVaria.Masses.Types.Implementations
+﻿namespace CsabaDu.FooVaria.Masses.Types.Implementations
 {
     internal abstract class Mass : Quantifiable, IMass
     {
@@ -11,7 +8,7 @@ namespace CsabaDu.FooVaria.Masses.Types.Implementations
             Weight = other.Weight;
         }
 
-        private protected Mass(IQuantifiableFactory factory, IWeight weight, IBody body) : base(factory, weight)
+        private protected Mass(IMassFactory factory, IWeight weight, IBody body) : base(factory, weight)
         {
             ValidateMassComponent(weight, nameof(weight));
             ValidateMassComponent(body, nameof(body));
@@ -19,7 +16,7 @@ namespace CsabaDu.FooVaria.Masses.Types.Implementations
             Weight = weight; 
         }
 
-        protected Mass(IQuantifiableFactory factory, IWeight weight, params IExtent[] shapeExtents) : base(factory, MeasureUnitTypeCode.WeightUnit, shapeExtents)
+        private protected Mass(IMassFactory factory, IWeight weight, params IExtent[] shapeExtents) : base(factory, MeasureUnitTypeCode.WeightUnit, shapeExtents)
         {
             ValidateMassComponent(weight, nameof(weight));
 
@@ -39,6 +36,18 @@ namespace CsabaDu.FooVaria.Masses.Types.Implementations
         #endregion
 
         #region Public methods
+        public bool Equals(IBaseSpread? other)
+        {
+            return other is IMass mass
+                && Weight.Equals(mass.Weight)
+                && GetBody().Equals(mass.GetBody());
+        }
+        
+        public IBaseSpread GetBaseSpread(ISpreadMeasure spreadMeasure)
+        {
+            return GetFactory().CreateBaseSpread(spreadMeasure);
+        }
+
         public decimal GetDefaultQuantity(decimal ratio)
         {
             return GetVolumeWeight(ratio).DefaultQuantity;
@@ -46,12 +55,12 @@ namespace CsabaDu.FooVaria.Masses.Types.Implementations
 
         public IProportion<WeightUnit, VolumeUnit> GetDensity()
         {
-            throw new NotImplementedException();
+            return GetFactory().CreateDensity(this);
         }
 
         public IMass GetMass(IWeight weight, IBody body)
         {
-            throw new NotImplementedException();
+            return GetFactory().Create(Weight, GetBody());
         }
 
         public MeasureUnitTypeCode GetMeasureUnitTypeCode()
@@ -105,16 +114,35 @@ namespace CsabaDu.FooVaria.Masses.Types.Implementations
             return GetGreaterWeight(volumeWeight);
         }
 
-        public void ValidateMassComponent(IQuantifiable massComponent, string paramName)
+        public bool IsExchangeableTo(Enum? context)
+        {
+            if (context is MeasureUnitTypeCode measureUnitTypeCode) return hasMeasureUnitTypeCode(measureUnitTypeCode);
+
+            return IsValidMeasureUnit(context) && hasMeasureUnitTypeCode(MeasureUnitTypes.GetMeasureUnitTypeCode(context!));
+
+            #region Local methods
+            bool hasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
+            {
+                return GetMeasureUnitTypeCodes().Contains(measureUnitTypeCode);
+            }
+            #endregion
+        }
+
+        public void ValidateMassComponent(IQuantifiable? massComponent, string paramName)
         {
             if (NullChecked(massComponent, paramName) is not IWeight or IVolume or IBody)
             {
-                throw ArgumentTypeOutOfRangeException(paramName, massComponent);
+                throw ArgumentTypeOutOfRangeException(paramName, massComponent!);
             }
 
-            decimal defaultQuantity = massComponent.GetDefaultQuantity();
+            decimal defaultQuantity = massComponent!.GetDefaultQuantity();
 
             ValidateQuantity(defaultQuantity, paramName);
+        }
+
+        public void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)
+        {
+            ValidateMassComponent((IMeasure?)spreadMeasure, paramName);
         }
 
         #region Override methods
@@ -125,6 +153,15 @@ namespace CsabaDu.FooVaria.Masses.Types.Implementations
         }
 
         #region Sealed methods
+        public override IMassFactory GetFactory()
+        {
+            return (IMassFactory)Factory;
+        }
+
+        public override sealed int GetHashCode()
+        {
+            return HashCode.Combine(Weight, GetBody());
+        }
         public override sealed Enum GetMeasureUnit()
         {
             return Weight.GetMeasureUnit();
@@ -139,27 +176,10 @@ namespace CsabaDu.FooVaria.Masses.Types.Implementations
 
         #region Abstract methods
         public abstract int CompareTo(IBaseSpread? other);
-        public abstract bool Equals(IBaseSpread? other);
         public abstract IBaseSpread? ExchangeTo(Enum context);
         public abstract bool? FitsIn(IBaseSpread? comparable, LimitMode? limitMode);
-        public abstract IBaseSpread GetBaseSpread(ISpreadMeasure spreadMeasure);
         public abstract IBody GetBody();
-        public bool IsExchangeableTo(Enum? context)
-        {
-            if (context is MeasureUnitTypeCode measureUnitTypeCode) return haseMeasureUnitTypeCode(measureUnitTypeCode);
-
-            return IsValidMeasureUnit(context) && haseMeasureUnitTypeCode(MeasureUnitTypes.GetMeasureUnitTypeCode(context!));
-
-            #region Local methods
-            bool haseMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
-            {
-                return GetMeasureUnitTypeCodes().Contains(measureUnitTypeCode);
-            }
-            #endregion
-        }
-
         public abstract decimal ProportionalTo(IBaseSpread comparable);
-        public abstract void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName);
         #endregion
         #endregion
 

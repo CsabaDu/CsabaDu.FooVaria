@@ -11,7 +11,7 @@ namespace CsabaDu.FooVaria.Masses.Types
         IVolume GetVolume();
         IMass GetMass(IWeight weight, IBody body);
 
-        void ValidateMassComponent(IQuantifiable massComponent, string paramName);
+        void ValidateMassComponent(IQuantifiable? massComponent, string paramName);
     }
 
     public interface IBulkMass : IMass, ICommonBase<IBulkMass>

@@ -1,5 +1,4 @@
-﻿using CsabaDu.FooVaria.RateComponents.Factories;
-
+﻿
 namespace CsabaDu.FooVaria.Masses.Factories.Implementations
 {
     public abstract class MassFactory : IMassFactory
@@ -14,9 +13,11 @@ namespace CsabaDu.FooVaria.Masses.Factories.Implementations
         public IBodyFactory BodyFactory { get; init; }
 
         public abstract IMass Create(IWeight weight, IBody body);
-        public IProportion<WeightUnit, VolumeUnit> CreateDensity(IWeight weight, IBody body)
+
+        public IProportion<WeightUnit, VolumeUnit> CreateDensity(IMass mass)
         {
-            IVolume? volume = (IVolume?)body?.GetSpreadMeasure();
+            IWeight weight = NullChecked(mass, nameof(mass)).Weight;
+            IVolume volume = mass.GetVolume();
 
             return (IProportion<WeightUnit, VolumeUnit>)ProportionFactory.Create(weight, volume);
         }
@@ -28,6 +29,11 @@ namespace CsabaDu.FooVaria.Masses.Factories.Implementations
         public virtual IBodyFactory GetBodyFactory()
         {
             return BodyFactory;
+        }
+
+        public IBaseSpread CreateBaseSpread(ISpreadMeasure spreadMeasure)
+        {
+            return BodyFactory.CreateBaseSpread(spreadMeasure);
         }
     }
 }

@@ -7,7 +7,7 @@ public interface IProportionFactory : IBaseRateFactory
     IProportion Create(IBaseRate baseRate);
     IProportion Create(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
     IProportion Create(Enum numeratorMeasureUnit, ValueType quantity, Enum denominatorMeasureUnit);
-    IProportion Create(IRateComponent numerator, IRateComponent? denominator);
+    IProportion Create(IRateComponent numerator, IRateComponent denominator);
 
     IProportion<TDEnum> Create<TDEnum>(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal numeratorDefaultQuantity, TDEnum denominatorMeasureUnit)
         where TDEnum : struct, Enum;

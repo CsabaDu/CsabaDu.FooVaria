@@ -32,6 +32,21 @@ public abstract class BaseShape : BaseSpread, IBaseShape
     {
         return (IBaseShapeFactory)Factory;
     }
+
+    public override sealed int GetHashCode()
+    {
+        HashCode hashCode = new();
+
+        hashCode.Add(MeasureUnitTypeCode);
+
+        foreach (IShapeComponent item in GetShapeComponents())
+        {
+            hashCode.Add(item);
+        }
+
+        return hashCode.ToHashCode();
+    }
+
     #endregion
 
     #region Virtual methods
