@@ -1,16 +1,14 @@
-﻿namespace CsabaDu.FooVaria.Masses.Types
+﻿using CsabaDu.FooVaria.RateComponents.Types;
+using Masses.Behaviors;
+
+namespace CsabaDu.FooVaria.Masses.Types
 {
-    public interface IMass : IQuantifiable, IBody
+    public interface IMass : IQuantifiable, IBody, IDensity, IWeightVolumeRatio
     {
         IWeight Weight { get; init; }
-        //IVolume GetVolume();
+        IMeasure? this[MeasureUnitTypeCode measureUnitTypeCode] { get; }
 
-        IWeight GetVolumeWeight();
-        IWeight GetVolumeWeight(decimal ratio);
-        MeasureUnitTypeCode GetMeasureUnitTypeCode(decimal ratio);
-        double GetQuantity(decimal ratio);
-        decimal GetDefaultQuantity(decimal ratio);
-        IProportion<WeightUnit, VolumeUnit> GetDensity();
+        IVolume GetVolume();
         IMass GetMass(IWeight weight, IBody body);
 
         void ValidateMassComponent(IQuantifiable massComponent, string paramName);

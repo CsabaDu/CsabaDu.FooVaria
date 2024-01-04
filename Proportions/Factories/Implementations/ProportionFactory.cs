@@ -98,12 +98,12 @@ public sealed class ProportionFactory : IProportionFactory
         #endregion
     }
 
-    public IProportion Create(IRateComponent numerator, IRateComponent denominator)
+    public IProportion Create(IRateComponent numerator, IRateComponent? denominator)
     {
         var (numeratorMeasureUnit, quantity) = GetNumeratorComponents(numerator);
         Enum denominatorMeasureUnit = NullChecked(denominator, nameof(denominator)).GetMeasureUnit();
         quantity *= GetExchangeRate(denominatorMeasureUnit);
-        quantity /= denominator.DefaultQuantity;
+        quantity /= denominator!.DefaultQuantity;
 
         return Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit);
     }

@@ -63,7 +63,7 @@
                 IEnumerable<IExtent> shapeExtents = dryBody.GetShapeExtents().SkipLast(1);
                 IPlaneShapeFactory factory = dryBody.GetBaseFaceFactory();
 
-                return (IPlaneShape)factory.CreateBaseShape(shapeExtents.ToArray());
+                return (IPlaneShape)factory.CreateBaseShape(shapeExtents.ToArray())!;
             }
             #endregion
         }

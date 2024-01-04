@@ -121,8 +121,11 @@ internal abstract class Rate : BaseRate, IRate
         IRate? exchange(IDenominator denominator, decimal proportionQuantity)
         {
             IMeasure numerator = Numerator.Divide(proportionQuantity);
+            ILimit? limit = GetLimit();
 
-            return GetRate(numerator, denominator, GetLimit());
+            return limit == null ?
+                GetRate(numerator, denominator)
+                : GetRate(numerator, denominator, limit);
         }
         #endregion
     }
