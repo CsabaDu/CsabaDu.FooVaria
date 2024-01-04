@@ -1,34 +1,105 @@
-﻿using CsabaDu.FooVaria.Common.Types.Implementations;
-
-namespace CsabaDu.FooVaria.Masses.Types.Implementations
+﻿namespace CsabaDu.FooVaria.Masses.Types.Implementations
 {
     internal abstract class Mass : Quantifiable, IMass
     {
-        protected Mass(IMass other) : base(other)
+        private protected Mass(IMass other) : base(other)
         {
+            Weight = other.Weight;
         }
 
-        protected Mass(IQuantifiableFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory, measureUnitTypeCode)
+        private protected Mass(IQuantifiableFactory factory, IWeight weight, IBody body) : base(factory, weight)
         {
+            ValidateMassComponent(weight, nameof(weight));
+            ValidateMassComponent(body, nameof(body));
+
+            Weight = weight; 
         }
 
-        protected Mass(IQuantifiableFactory factory, Enum measureUnit) : base(factory, measureUnit)
+        public IWeight Weight { get; init; }
+
+        public decimal GetDefaultQuantity(decimal ratio)
         {
+            return GetVolumeWeight(ratio).DefaultQuantity;
         }
 
-        protected Mass(IQuantifiableFactory factory, IBaseMeasurement baseMeasurement) : base(factory, baseMeasurement)
+        public IProportion<WeightUnit, VolumeUnit> GetDensity()
         {
+            throw new NotImplementedException();
         }
 
-        protected Mass(IQuantifiableFactory factory, IQuantifiable quantifiable) : base(factory, quantifiable)
+        public IMass GetMass(IWeight weight, IBody body)
         {
+            throw new NotImplementedException();
         }
 
-        protected Mass(IQuantifiableFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IQuantifiable[] quantifiables) : base(factory, measureUnitTypeCode, quantifiables)
+        public MeasureUnitTypeCode GetMeasureUnitTypeCode()
         {
+            bool isVolumeWeightGreater = GetDensity().DefaultQuantity < 1;
+
+            return GetMeasureUnitTypeCode(isVolumeWeightGreater);
         }
 
-        public abstract IWeight Weight { get; init; }
+        public MeasureUnitTypeCode GetMeasureUnitTypeCode(decimal ratio)
+        {
+            bool isVolumeWeightGreater = GetVolumeWeight(ratio).CompareTo(Weight) < 0;
+
+            return GetMeasureUnitTypeCode(isVolumeWeightGreater);
+        }
+
+        public double GetQuantity(decimal ratio)
+        {
+            return GetVolumeWeight(ratio).GetQuantity();
+        }
+
+        public double GetQuantity()
+        {
+            return GetVolumeWeight().GetQuantity();
+        }
+
+        public ISpreadMeasure GetSpreadMeasure()
+        {
+            return GetBody().GetSpreadMeasure();
+        }
+
+        public IWeight GetVolumeWeight()
+        {
+            IWeight volumeWeight = GetVolumeWeight(this);
+
+            return GetGreaterWeight(volumeWeight);
+        }
+
+        public IWeight GetVolumeWeight(decimal ratio)
+        {
+            ValidateQuantity(ratio, nameof(ratio));
+
+            IWeight volumeWeight = GetVolumeWeight(this);
+            volumeWeight = (IWeight)volumeWeight.Multiply(ratio);
+
+            return GetGreaterWeight(volumeWeight);
+        }
+
+        public void ValidateMassComponent(IQuantifiable massComponent, string paramName)
+        {
+            decimal defaultQuantity = NullChecked(massComponent, paramName).GetDefaultQuantity();
+
+            ValidateQuantity(defaultQuantity, paramName);
+        }
+
+        public override IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
+        {
+            yield return MeasureUnitTypeCode.WeightUnit;
+            yield return MeasureUnitTypeCode.VolumeUnit;
+        }
+
+        public override sealed Enum GetMeasureUnit()
+        {
+            return Weight.GetMeasureUnit();
+        }
+
+        public override sealed decimal GetDefaultQuantity()
+        {
+            return GetVolumeWeight().DefaultQuantity;
+        }
 
         public abstract int CompareTo(IBaseSpread? other);
         public abstract bool Equals(IBaseSpread? other);
@@ -36,37 +107,29 @@ namespace CsabaDu.FooVaria.Masses.Types.Implementations
         public abstract bool? FitsIn(IBaseSpread? comparable, LimitMode? limitMode);
         public abstract IBaseSpread GetBaseSpread(ISpreadMeasure spreadMeasure);
         public abstract IBody GetBody();
-
-        public override decimal GetDefaultQuantity()
-        {
-            throw new NotImplementedException();
-        }
-
-        public abstract IProportion<WeightUnit, VolumeUnit> GetDensity();
-        public abstract IMass GetMass(IWeight weight, IBody body);
-
-        public override Enum GetMeasureUnit()
-        {
-            throw new NotImplementedException();
-        }
-
-        public abstract MeasureUnitTypeCode GetMeasureUnitTypeCode();
-        public abstract double GetQuantity();
-        public abstract ISpreadMeasure GetSpreadMeasure();
-        public abstract IWeight GetVolumetricWeight(decimal ratio);
         public abstract bool IsExchangeableTo(Enum? context);
         public abstract decimal ProportionalTo(IBaseSpread comparable);
         public abstract void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName);
 
-        public override void ValidateQuantity(ValueType? quantity, string paramName)
+        private IWeight GetGreaterWeight(IWeight volumeWeight)
         {
-            throw new NotImplementedException();
+            return volumeWeight.CompareTo(Weight) < 0 ?
+                (IWeight)volumeWeight.ExchangeTo(GetMeasureUnit())!
+                : Weight;
         }
 
-        public override IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
+        private static MeasureUnitTypeCode GetMeasureUnitTypeCode(bool isVolumeWeightGreater)
         {
-            yield return MeasureUnitTypeCode.WeightUnit;
-            yield return MeasureUnitTypeCode.VolumeUnit;
+            return isVolumeWeightGreater ?
+                MeasureUnitTypeCode.VolumeUnit
+                : MeasureUnitTypeCode.WeightUnit;
+        }
+
+        private static IWeight GetVolumeWeight(IMass mass)
+        {
+            IVolume volume = (IVolume)mass.GetSpreadMeasure();
+
+            return volume.ConvertMeasure();
         }
     }
 }

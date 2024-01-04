@@ -5,9 +5,15 @@
         IWeight Weight { get; init; }
         //IVolume GetVolume();
 
-        IWeight GetVolumetricWeight(decimal ratio);
+        IWeight GetVolumeWeight();
+        IWeight GetVolumeWeight(decimal ratio);
+        MeasureUnitTypeCode GetMeasureUnitTypeCode(decimal ratio);
+        double GetQuantity(decimal ratio);
+        decimal GetDefaultQuantity(decimal ratio);
         IProportion<WeightUnit, VolumeUnit> GetDensity();
         IMass GetMass(IWeight weight, IBody body);
+
+        void ValidateMassComponent(IQuantifiable massComponent, string paramName);
     }
 
     public interface IBulkMass : IMass, ICommonBase<IBulkMass>
