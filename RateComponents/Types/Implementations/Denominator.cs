@@ -9,11 +9,6 @@ internal sealed class Denominator : RateComponent<IDenominator, decimal>, IDenom
     #endregion
 
     #region Public methods
-    public override IDenominator? GetDefault(MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        return GetFactory().CreateDefault(measureUnitTypeCode);
-    }
-
     public IDenominator GetDenominator(Enum measureUnit)
     {
         return GetFactory().Create(measureUnit);
@@ -34,13 +29,6 @@ internal sealed class Denominator : RateComponent<IDenominator, decimal>, IDenom
         return GetFactory().Create(rateComponent, quantity);
     }
 
-    public override IDenominator GetRateComponent(IRateComponent rateComponent)
-    {
-        if (rateComponent is IDenominator other) return GetNew(other);
-
-        return (IDenominator)GetRateComponent(rateComponent, GetFactory());
-    }
-
     #region Override methods
     public override bool Equals(IRateComponent? other)
     {
@@ -48,21 +36,21 @@ internal sealed class Denominator : RateComponent<IDenominator, decimal>, IDenom
             && base.Equals(other);
     }
 
+    public override IDenominator? GetDefault(MeasureUnitTypeCode measureUnitTypeCode)
+    {
+        return GetFactory().CreateDefault(measureUnitTypeCode);
+    }
+
     public override IDenominatorFactory GetFactory()
     {
         return (IDenominatorFactory)Factory;
     }
 
-    public override void Validate(IRootObject? rootObject, string paramName)
+    public override IDenominator GetRateComponent(IRateComponent rateComponent)
     {
-        Validate(this, rootObject, validateDenominator, paramName);
+        if (rateComponent is IDenominator other) return GetNew(other);
 
-        #region Local methods
-        void validateDenominator()
-        {
-            ValidateBaseMeasure(this, rootObject!, paramName);
-        }
-        #endregion
+        return (IDenominator)GetRateComponent(rateComponent, GetFactory());
     }
     #endregion
     #endregion

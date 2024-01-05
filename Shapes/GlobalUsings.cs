@@ -1,5 +1,4 @@
-﻿global using CsabaDu.FooVaria.Common;
-global using CsabaDu.FooVaria.Common.Behaviors;
+﻿global using CsabaDu.FooVaria.Common.Behaviors;
 global using CsabaDu.FooVaria.Common.Enums;
 global using CsabaDu.FooVaria.Common.Enums.MeasureUnits;
 global using CsabaDu.FooVaria.Common.Factories;
@@ -15,6 +14,7 @@ global using CsabaDu.FooVaria.Shapes.Types;
 global using CsabaDu.FooVaria.Shapes.Types.Implementations;
 global using CsabaDu.FooVaria.Spreads.Factories;
 global using CsabaDu.FooVaria.Spreads.Types;
+global using System.Diagnostics.CodeAnalysis;
 global using static CsabaDu.FooVaria.Common.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.Common.Statics.Extensions;
 global using static CsabaDu.FooVaria.Common.Statics.MeasureUnitTypes;

@@ -1,14 +1,14 @@
-﻿using CsabaDu.FooVaria.Common.Statics;
-
-namespace CsabaDu.FooVaria.Common.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Common.Types.Implementations;
 
 public abstract class Measurable : CommonBase, IMeasurable
 {
+    #region Enums
     protected enum SummingMode
     {
         Add,
         Subtract,
     }
+    #endregion
 
     #region Constructors
     protected Measurable(IMeasurableFactory factory, MeasureUnitTypeCode measureUnitTypeCode) : base(factory)
@@ -42,10 +42,6 @@ public abstract class Measurable : CommonBase, IMeasurable
     #endregion
 
     #region Public methods
-    //public bool Equals(IMeasurable? other)
-    //{
-    //    return MeasureUnitTypeCode.Equals(other?.MeasureUnitTypeCode);
-    //}
     public Enum GetDefaultMeasureUnit()
     {
         return MeasureUnitTypeCode.GetDefaultMeasureUnit();
@@ -92,18 +88,6 @@ public abstract class Measurable : CommonBase, IMeasurable
     {
         return MeasureUnitTypeCode.GetHashCode();
     }
-
-    public override void Validate(IRootObject? rootObject, string paramName)
-    {
-        Validate(this, rootObject, validateMeasurable, paramName);
-
-        #region Local methods
-        void validateMeasurable()
-        {
-            _ = GetValidMeasurable(this, rootObject!, paramName);
-        }
-        #endregion
-    }
     #endregion
 
     #region Virtual methods
@@ -122,31 +106,9 @@ public abstract class Measurable : CommonBase, IMeasurable
         MeasureUnitTypes.ValidateMeasureUnitTypeCode(measureUnitTypeCode, paramName);
     }
     #endregion
-    #endregion
 
-    #region Protected methods
-    #region Static methods
-    protected static TSelf GetValidMeasurable<TSelf>(TSelf commonBase, IRootObject other, string paramName)
-        where TSelf : class, IMeasurable
-    {
-        TSelf baseMeasurable = GetValidCommonBase(commonBase, other, paramName);
-        MeasureUnitTypeCode measureUnitTypeCode = commonBase.MeasureUnitTypeCode;
-        MeasureUnitTypeCode otherMeasureUnitTypeCode = baseMeasurable.MeasureUnitTypeCode;
-
-        return GetValidBaseMeasurable(baseMeasurable, measureUnitTypeCode, otherMeasureUnitTypeCode, paramName);
-    }
-
-    protected static TSelf GetValidBaseMeasurable<TSelf, TEnum>(TSelf other, TEnum commonBaseProperty, TEnum otherProperty, string paramName)
-        where TSelf : class, IMeasurable
-        where TEnum : struct, Enum
-    {
-        if (commonBaseProperty.Equals(otherProperty)) return other;
-
-        throw new ArgumentOutOfRangeException(paramName, otherProperty, null);
-    }
-
+    #region Abstract methods
     public abstract Enum GetMeasureUnit();
-
     #endregion
     #endregion
 }

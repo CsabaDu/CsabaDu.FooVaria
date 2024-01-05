@@ -99,23 +99,13 @@
         {
             return (IMeasureFactory)Factory;
         }
-
-        public override sealed void Validate(IRootObject? rootObject, string paramName)
-        {
-            Validate(this, rootObject, validateMeasure, paramName);
-
-            #region Local methods
-            void validateMeasure()
-            {
-                ValidateBaseMeasure(this, rootObject!, paramName);
-            }
-            #endregion
-        }
-        #endregion
         #endregion
         #endregion
 
+        #region Abstract methods
         public abstract IMeasure GetMeasure(IRateComponent rateComponent);
+        #endregion
+        #endregion
 
         #region Private methods
         private IMeasure GetSum(IMeasure? other, SummingMode summingMode)

@@ -189,18 +189,6 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
             return Measurement.GetMeasureUnit();
         }
 
-        public override void Validate(IRootObject? rootObject, string paramName)
-        {
-            Validate(this, rootObject, validateBaseMeasure, paramName);
-
-            #region Local methods
-            void validateBaseMeasure()
-            {
-                _ = GetValidBaseMeasure(this, rootObject!, paramName);
-            }
-            #endregion
-        }
-
         public override void ValidateQuantity(ValueType? quantity, string paramName) // TODO
         {
             if (GetValidQuantityOrNull(this, NullChecked(quantity, paramName)) != null) return;
@@ -261,17 +249,6 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
         }
 
         #region Static methods
-        protected static T GetValidBaseMeasure<T>(T commonBase, IRootObject other, string paramName)
-            where T : class, IRateComponent
-        {
-            T baseMeasure = GetValidMeasurable(commonBase, other, paramName);
-            object quantity = baseMeasure.Quantity;
-
-            if (GetValidQuantityOrNull(commonBase, baseMeasure.Quantity) != null) return baseMeasure;
-
-            throw QuantityArgumentOutOfRangeException(paramName, (ValueType)quantity);
-        }
-
         protected static object? GetValidQuantityOrNull(IRateComponent rateComponent, object? quantity)
         {
             quantity = ((ValueType?)quantity)?.ToQuantity(rateComponent.GetQuantityTypeCode());
@@ -293,16 +270,6 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
                 return quantity;
             }
             #endregion
-        }
-
-        protected static void ValidateBaseMeasure<T>(T commonBase, IRootObject other, string paramName)
-            where T : class, IRateComponent
-        {
-            T baseMeasure = GetValidMeasurable(commonBase, other, paramName);
-            RateComponentCode rateComponentCode = commonBase.GetRateComponentCode();
-            RateComponentCode otherRateComponentCode = baseMeasure.GetRateComponentCode();
-
-            _ = GetValidBaseMeasurable(baseMeasure, rateComponentCode, otherRateComponentCode, paramName);
         }
         #endregion
         #endregion

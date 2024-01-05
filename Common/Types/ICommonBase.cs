@@ -5,8 +5,6 @@
         IFactory Factory { get; init; }
 
         IFactory GetFactory();
-
-        void Validate(IRootObject? rootObject, string paramName);
     }
 
     public interface ICommonBase<TSelf> : ICommonBase

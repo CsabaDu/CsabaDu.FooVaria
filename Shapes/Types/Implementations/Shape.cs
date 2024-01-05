@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace CsabaDu.FooVaria.Shapes.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Shapes.Types.Implementations;
 
 internal abstract class Shape : BaseShape, IShape
 {
@@ -285,24 +283,6 @@ internal abstract class Shape : BaseShape, IShape
             && extent.DefaultQuantity > 0 ?
             extent
             : null;
-    }
-
-    public override sealed void Validate(IRootObject? rootObject, string paramName)
-    {
-        Validate(this, rootObject, validateShape, paramName);
-
-        #region Local methods
-        void validateShape()
-        {
-            base.Validate(rootObject, paramName);
-
-            int shapeExtentCount = GetShapeExtents().Count();
-
-            if (rootObject is IShape shape && shape.GetShapeComponentCount() == shapeExtentCount) return;
-
-            throw ArgumentTypeOutOfRangeException(paramName, rootObject!);
-        }
-        #endregion
     }
 
     public override sealed void ValidateQuantity(ValueType? quantity, string paramName)

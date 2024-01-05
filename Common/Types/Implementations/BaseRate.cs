@@ -89,6 +89,15 @@ public abstract class BaseRate : BaseMeasure, IBaseRate
         return DefaultQuantity;
     }
 
+    public decimal ProportionalTo(IBaseRate other)
+    {
+        decimal defaultQuantity = NullChecked(other, nameof(other)).GetDefaultQuantity();
+
+        ValidateMeasureUnitTypeCodes(other!);
+
+        return Math.Abs(DefaultQuantity / defaultQuantity);
+    }
+
     #region Override methods
     public override bool Equals(object? obj)
     {
@@ -105,41 +114,21 @@ public abstract class BaseRate : BaseMeasure, IBaseRate
         return HashCode.Combine(DefaultQuantity, MeasureUnitTypeCode, GetNumeratorMeasureUnitTypeCode());
     }
 
-    public override sealed TypeCode GetQuantityTypeCode()
+    public override IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
     {
-        return GetQuantityTypeCode(this);
+        yield return GetNumeratorMeasureUnitTypeCode();
+        yield return MeasureUnitTypeCode;
     }
 
-    public decimal ProportionalTo(IBaseRate other)
-    {
-        decimal defaultQuantity = NullChecked(other, nameof(other)).GetDefaultQuantity();
-
-        ValidateMeasureUnitTypeCodes(other!);
-
-        return Math.Abs(DefaultQuantity / defaultQuantity);
-    }
-
-    public override sealed void Validate(IRootObject? rootObject, string paramName)
-    {
-        Validate(this, rootObject, validateBaseRate, paramName);
-
-        #region Local methods
-        void validateBaseRate()
-        {
-            _ = GetValidBaseRate(this, rootObject!, paramName);
-        }
-        #endregion
-    }
-
+    #region Sealed methods
     public override sealed void ValidateMeasureUnit(Enum measureUnit, string paramName)
     {
         base.ValidateMeasureUnit(measureUnit, paramName);
     }
 
-    public override IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
+    public override sealed TypeCode GetQuantityTypeCode()
     {
-        yield return GetNumeratorMeasureUnitTypeCode();
-        yield return MeasureUnitTypeCode;
+        return GetQuantityTypeCode(this);
     }
 
     public override sealed void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, string paramName)
@@ -148,6 +137,7 @@ public abstract class BaseRate : BaseMeasure, IBaseRate
 
         throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode, paramName);
     }
+    #endregion
     #endregion
 
     #region Abstract methods
@@ -175,23 +165,6 @@ public abstract class BaseRate : BaseMeasure, IBaseRate
         return baseRate?.HasMeasureUnitTypeCode(MeasureUnitTypeCode) == true
             && baseRate.GetNumeratorMeasureUnitTypeCode() == (MeasureUnitTypeCode);
     }
-
-    #region Static methods
-    protected static T GetValidBaseRate<T>(T commonBase, IRootObject other, string paramName)
-        where T : class, IBaseRate
-    {
-        T baseRate = GetValidMeasurable(commonBase, other, paramName);
-
-        commonBase.ValidateQuantity(baseRate.GetDefaultQuantity(), paramName);
-
-        MeasureUnitTypeCode measureUnitTypeCode = commonBase.GetNumeratorMeasureUnitTypeCode();
-        MeasureUnitTypeCode otherMeasureUnitTypeCode = baseRate.GetNumeratorMeasureUnitTypeCode();
-
-        _ = GetValidBaseMeasurable(baseRate, measureUnitTypeCode, otherMeasureUnitTypeCode, paramName);
-
-        return baseRate;
-    }
-    #endregion
     #endregion
 }
 
