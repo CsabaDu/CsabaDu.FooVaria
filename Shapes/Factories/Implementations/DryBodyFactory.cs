@@ -14,13 +14,6 @@
         #endregion
 
         #region Public methods
-        public IBody CreateNew(IBody other)
-        {
-            IVolume volume = (IVolume)NullChecked(other, nameof(other)).GetSpreadMeasure();
-
-            return GetSpreadFactory().Create(volume);
-        }
-
         #region Override methods
         #region Sealed methods
         public override sealed IBulkBodyFactory GetSpreadFactory()
@@ -42,10 +35,63 @@
         #endregion
         #endregion
 
+        #region Protected methods
+        protected IDryBody? CreateDryBody(ICuboidFactory cuboidFactory, ICylinderFactory cylinderFactory, IShapeComponent[] shapeComponents)
+        {
+            int count = GetShapeComponentsCount(shapeComponents);
+
+            if (count == 0) return null;
+
+            IShapeComponent firstItem = shapeComponents[0];
+
+            return count switch
+            {
+                1 => createDryBodyFrom1Param(),
+                2 => createDryBodyFrom2Params(),
+                3 => createDryBodyFrom3Params(),
+
+                _ => null,
+            };
+
+            #region Local methods
+            IDryBody? createDryBodyFrom1Param()
+            {
+                if (firstItem is ICuboid cuboid) return cuboidFactory.CreateNew(cuboid);
+
+                if (firstItem is ICylinder cylinder) return cylinderFactory.CreateNew(cylinder);
+
+                return null;
+            }
+
+            IDryBody? createDryBodyFrom2Params()
+            {
+                if (GetShapeExtent(shapeComponents[1]) is not IExtent height) return null;
+
+                if (firstItem is IPlaneShape planeShape) return Create(planeShape, height);
+
+                if (firstItem is IExtent radius) return cylinderFactory.Create(radius, height);
+
+                return null;
+            }
+
+            IDryBody? createDryBodyFrom3Params()
+            {
+                IEnumerable<IExtent>? shapeExtents = GetShapeExtents(shapeComponents);
+
+                return shapeExtents != null ?
+                    cuboidFactory.Create(shapeExtents.First(), shapeExtents.ElementAt(1), shapeExtents.Last())
+                    : null;
+            }
+            #endregion
+        }
+
+        #region Static methods
         protected static IRectangle CreateVerticalProjection(IRectangleFactory factory, IExtent horizontal, IDryBody dryBody)
         {
             return factory.Create(horizontal, dryBody.Height)!;
         }
+        #endregion
+        #endregion
     }
 
     public abstract class DryBodyFactory<T, TBFace> : DryBodyFactory, IDryBodyFactory<T, TBFace>
@@ -59,19 +105,6 @@
         #endregion
 
         #region Public methods
-        #region Override methods
-        #region Sealed methods
-        public override sealed T Create(IPlaneShape baseFace, IExtent height)
-        {
-            string paramName = nameof(baseFace);
-
-            if (NullChecked(baseFace, paramName) is TBFace validBaseFace) return Create(validBaseFace, height);
-
-            throw ArgumentTypeOutOfRangeException(paramName, baseFace);
-        }
-        #endregion
-        #endregion
-
         #region Abstract methods
         public abstract T Create(TBFace baseFace, IExtent height);
         #endregion

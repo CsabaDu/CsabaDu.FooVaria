@@ -14,6 +14,8 @@ namespace CsabaDu.FooVaria.Spreads.Factories
         where TSMeasure : class, IMeasure, ISpreadMeasure
     {
         T Create(TSMeasure spreadMeasure);
+
+        T? Create(IBaseSpread baseSpread);
     }
 
     public interface ISpreadFactory<T, in TSMeasure, in TEnum> : ISpreadFactory<T, TSMeasure>

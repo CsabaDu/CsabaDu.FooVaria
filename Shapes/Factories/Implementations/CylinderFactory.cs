@@ -2,59 +2,16 @@
 
 public sealed class CylinderFactory : DryBodyFactory<ICylinder, ICircle>, ICylinderFactory
 {
+    #region Constructors
     public CylinderFactory(IBulkBodyFactory spreadFactory, ICuboidFactory tangentShapeFactory, ICircleFactory baseFaceFactory) : base(spreadFactory, tangentShapeFactory, baseFaceFactory)
     {
     }
+    #endregion
 
-    public override ICylinder Create(ICircle baseFace, IExtent height)
-    {
-        return new Cylinder(this, baseFace, height);
-    }
-
+    #region Public methods
     public ICylinder Create(IExtent radius, IExtent height)
     {
         return new Cylinder(this, radius, height);
-    }
-
-    public ICylinder CreateNew(ICylinder other)
-    {
-        return new Cylinder(other);
-    }
-
-    public override ICylinder? CreateBaseShape(params IShapeComponent[] shapeComponents)
-    {
-        int count = GetShapeComponentsCount(shapeComponents);
-
-        return count switch
-        {
-            1 => createCylinderFrom1Param(),
-            2 => createCylinderFrom2Params(),
-
-            _ => null,
-
-        };
-
-        #region Local methods
-        ICylinder? createCylinderFrom1Param()
-        {
-            return shapeComponents[0] is ICylinder cylinder ?
-                CreateNew(cylinder)
-                : null;
-        }
-
-        ICylinder? createCylinderFrom2Params()
-        {
-            if (GetShapeExtent(shapeComponents[1]) is not IExtent height) return null;
-
-            IShapeComponent first = shapeComponents[0];
-
-            if (first is ICircle circle) return Create(circle, height);
-
-            if (GetShapeExtent(first) is IExtent radius) return Create(radius, height);
-
-            return null;
-        }
-        #endregion
     }
 
     public ICircle CreateBaseFace(IExtent radius)
@@ -94,6 +51,31 @@ public sealed class CylinderFactory : DryBodyFactory<ICylinder, ICircle>, ICylin
         return CreateVerticalProjection(factory, horizontal, cylinder)!;
     }
 
+    public ICylinder CreateNew(ICylinder other)
+    {
+        return new Cylinder(other);
+    }
+
+    #region Override methods
+    public override ICylinder Create(ICircle baseFace, IExtent height)
+    {
+        return new Cylinder(this, baseFace, height);
+    }
+
+    public override IDryBody Create(IPlaneShape baseFace, IExtent height)
+    {
+        string paramName = nameof(baseFace);
+
+        if (NullChecked(baseFace, paramName) is ICircle circle) return Create(circle, height);
+
+        return GetTangentShapeFactory().Create(baseFace, height);
+    }
+
+    public override IDryBody? CreateBaseShape(params IShapeComponent[] shapeComponents)
+    {
+        return CreateDryBody(GetTangentShapeFactory(), this, shapeComponents);
+    }
+
     public override ICircleFactory GetBaseFaceFactory()
     {
         return (ICircleFactory)BaseFaceFactory;
@@ -103,4 +85,6 @@ public sealed class CylinderFactory : DryBodyFactory<ICylinder, ICircle>, ICylin
     {
         return (ICuboidFactory)TangentShapeFactory;
     }
+    #endregion
+    #endregion
 }

@@ -9,13 +9,6 @@
         #endregion
 
         #region Public methods
-        public ISurface CreateNew(ISurface other)
-        {
-            IArea area = (IArea)NullChecked(other, nameof(other)).GetSpreadMeasure();
-
-            return GetSpreadFactory().Create(area);
-        }
-
         public IPlaneShape? CreateProjection(IDryBody dryBody, ShapeExtentTypeCode perpendicular)
         {
             if (dryBody?.IsValidShapeExtentTypeCode(perpendicular) != true) return null;
@@ -80,6 +73,43 @@
 
         #region Protected methods
         #region Static methods
+        protected static IPlaneShape? CreatePlaneShape(IRectangleFactory rectangleFactory, params IShapeComponent[] shapeComponents)
+        {
+            int count = GetShapeComponentsCount(shapeComponents);
+
+            if (count == 0) return null;
+
+            IShapeComponent firstItem = shapeComponents[0];
+
+            return count switch
+            {
+                1 => createPlaneSapeFrom1Param(),
+                2 => createPlaneSapeFrom2Params(),
+
+                _ => null,
+
+            };
+
+            #region Local methods
+            IPlaneShape? createPlaneSapeFrom1Param()
+            {
+                if (firstItem is IRectangle rectangle) return rectangleFactory.CreateNew(rectangle);
+
+                if (firstItem is ICircle circle) return circle.GetNew(circle);
+
+                return null;
+            }
+
+            IPlaneShape? createPlaneSapeFrom2Params()
+            {
+                IEnumerable<IExtent>? shapeExtents = GetShapeExtents(shapeComponents);
+
+                return shapeExtents != null ?
+                    rectangleFactory.Create(shapeExtents.First(), shapeExtents.Last())
+                    : null;
+            }
+            #endregion
+        }
         #endregion
         #endregion
     }

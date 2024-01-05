@@ -1,7 +1,4 @@
-﻿using CsabaDu.FooVaria.RateComponents.Types;
-using Masses.Behaviors;
-
-namespace CsabaDu.FooVaria.Masses.Types
+﻿namespace CsabaDu.FooVaria.Masses.Types
 {
     public interface IMass : IQuantifiable, IBody, IDensity, IWeightVolumeRatio
     {
@@ -10,6 +7,7 @@ namespace CsabaDu.FooVaria.Masses.Types
 
         IVolume GetVolume();
         IMass GetMass(IWeight weight, IBody body);
+        IBodyFactory GetBodyFactory();
 
         void ValidateMassComponent(IQuantifiable? massComponent, string paramName);
     }
@@ -18,6 +16,7 @@ namespace CsabaDu.FooVaria.Masses.Types
     {
         IBulkBody BulkBody { get; init; }
 
+        IBulkMass GetBulkMass(IWeight weight, IBody body);
         IBulkMass GetBulkMass(IWeight weight, IVolume volume);
     }
 

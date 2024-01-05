@@ -1,6 +1,6 @@
-﻿namespace Masses.Behaviors
+﻿namespace CsabaDu.FooVaria.Masses.Behaviors
 {
-    public interface IWeightVolumeRatio
+    public interface IWeightVolumeRatio : IVolumeWeight
     {
         IWeight GetVolumeWeight(decimal ratio);
         MeasureUnitTypeCode GetMeasureUnitTypeCode(decimal ratio);

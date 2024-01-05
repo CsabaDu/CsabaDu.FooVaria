@@ -48,6 +48,7 @@ namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
         #region Abstract methods
         public abstract T Create(TSMeasure spreadMeasure);
         public abstract T CreateNew(T other);
+        public abstract T? Create(IBaseSpread baseSpread);
         #endregion
         #endregion
     }

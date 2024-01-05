@@ -10,7 +10,6 @@ namespace CsabaDu.FooVaria.Shapes.Factories
         IMeasureFactory GetMeasureFactory();
         ISpreadFactory GetSpreadFactory();
         ITangentShapeFactory GetTangentShapeFactory();
-
         IExtent CreateShapeExtent(ExtentUnit extentUnit, ValueType quantity);
     }
 

@@ -1,4 +1,5 @@
-﻿namespace CsabaDu.FooVaria.Spreads.Factories.Implementations;
+﻿
+namespace CsabaDu.FooVaria.Spreads.Factories.Implementations;
 
 public sealed class BulkBodyFactory : SpreadFactory<IBulkBody, IVolume, VolumeUnit>, IBulkBodyFactory
 {
@@ -27,16 +28,16 @@ public sealed class BulkBodyFactory : SpreadFactory<IBulkBody, IVolume, VolumeUn
         return Create(volume);
     }
 
-    //public IBody CreateNew(IBody body)
-    //{
-    //    IVolume volume = (IVolume)NullChecked(body, nameof(body)).GetSpreadMeasure();
-
-    //    return Create(volume);
-    //}
-
     public override IBulkBody Create(VolumeUnit volumeUnit, double quantity)
     {
         IVolume volume = (IVolume)MeasureFactory.Create(volumeUnit, quantity);
+
+        return Create(volume);
+    }
+
+    public override IBulkBody? Create(IBaseSpread baseSpread)
+    {
+        if (baseSpread?.GetSpreadMeasure() is not IVolume volume) return null;
 
         return Create(volume);
     }

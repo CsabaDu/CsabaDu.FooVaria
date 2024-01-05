@@ -9,36 +9,9 @@ public sealed class RectangleFactory : PlaneShapeFactory, IRectangleFactory
     #endregion
 
     #region Public methods
-    public override IRectangle? CreateBaseShape(params IShapeComponent[] shapeComponents)
+    public override IPlaneShape? CreateBaseShape(params IShapeComponent[] shapeComponents)
     {
-        int count = GetShapeComponentsCount(shapeComponents);
-
-        return count switch
-        {
-            1 => createRectangleFrom1Param(),
-            2 => createRectangleFrom2Params(),
-
-            _ => null,
-
-        };
-
-        #region Local methods
-        IRectangle? createRectangleFrom1Param()
-        {
-            return shapeComponents[0] is IRectangle rectangle ?
-                CreateNew(rectangle)
-                : null;
-        }
-
-        IRectangle? createRectangleFrom2Params()
-        {
-            IEnumerable<IExtent>? shapeExtents = GetShapeExtents(shapeComponents);
-
-            return shapeExtents != null ?
-                Create(shapeExtents.First(), shapeExtents.Last())
-                : null;
-        }
-        #endregion
+        return CreatePlaneShape(this, shapeComponents);
     }
 
     public IRectangle Create(IExtent length, IExtent width)

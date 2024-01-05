@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Shapes.Types;
-
-namespace CsabaDu.FooVaria.Shapes.Factories
+﻿namespace CsabaDu.FooVaria.Shapes.Factories
 {
     public interface ICircularShapeFactory : ITangentShapeFactory
     {
