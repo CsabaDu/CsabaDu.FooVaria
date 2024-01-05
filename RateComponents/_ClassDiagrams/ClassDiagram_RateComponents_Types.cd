@@ -4,7 +4,7 @@
     <Position X="2" Y="8" Width="2" />
     <InheritanceLine Type="CsabaDu.FooVaria.Common.Types.IBaseMeasure" FixedFromPoint="true">
       <Path>
-        <Point X="3" Y="5.105" />
+        <Point X="3" Y="4.976" />
         <Point X="3" Y="8" />
       </Path>
     </InheritanceLine>
@@ -115,11 +115,11 @@
     <Position X="6.25" Y="5.75" Width="2.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.Common.Types.IBaseMeasure" FixedFromPoint="true">
       <Path>
-        <Point X="3.5" Y="5.105" />
-        <Point X="3.5" Y="5.375" />
-        <Point X="4.292" Y="5.375" Type="JumpStart" />
-        <Point X="4.458" Y="5.375" Type="JumpEnd" />
-        <Point X="7.5" Y="5.375" />
+        <Point X="3.5" Y="4.976" />
+        <Point X="3.5" Y="5.351" />
+        <Point X="4.292" Y="5.351" Type="JumpStart" />
+        <Point X="4.458" Y="5.351" Type="JumpEnd" />
+        <Point X="7.5" Y="5.351" />
         <Point X="7.5" Y="5.75" />
       </Path>
     </InheritanceLine>
@@ -320,14 +320,14 @@
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.RateComponents.Behaviors.IConvertMeasure" Collapsed="true">
-    <Position X="4" Y="18" Width="1.5" />
+    <Position X="4" Y="17.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Behaviors\IConvertMeasure.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.RateComponents.Behaviors.IConvertMeasure&lt;TSelf, TOther&gt;" Collapsed="true">
-    <Position X="3.5" Y="19.25" Width="2.5" />
+    <Position X="3.5" Y="19" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
       <FileName>Behaviors\IConvertMeasure.cs</FileName>
