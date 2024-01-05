@@ -14,7 +14,6 @@ global using CsabaDu.FooVaria.Shapes.Statics;
 global using CsabaDu.FooVaria.Shapes.Types;
 global using CsabaDu.FooVaria.Shapes.Types.Implementations;
 global using CsabaDu.FooVaria.Spreads.Factories;
-global using CsabaDu.FooVaria.Spreads.Statics;
 global using CsabaDu.FooVaria.Spreads.Types;
 global using static CsabaDu.FooVaria.Common.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.Common.Statics.Extensions;
