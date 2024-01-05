@@ -85,15 +85,10 @@
                 && Weight.Equals(mass.Weight)
                 && GetBody().Equals(mass.GetBody());
         }
-        
+
         public IBaseSpread GetBaseSpread(ISpreadMeasure spreadMeasure)
         {
             return GetFactory().CreateBaseSpread(spreadMeasure);
-        }
-
-        public virtual IBodyFactory GetBodyFactory()
-        {
-            return GetFactory().BodyFactory;
         }
 
         public decimal GetDefaultQuantity(decimal ratio)
@@ -105,8 +100,6 @@
         {
             return GetFactory().CreateDensity(this);
         }
-
-        public abstract IMass GetMass(IWeight weight, IBody body);
 
         public MeasureUnitTypeCode GetMeasureUnitTypeCode()
         {
@@ -206,12 +199,12 @@
             yield return MeasureUnitTypeCode.VolumeUnit;
         }
 
-        #region Sealed methods
         public override IMassFactory GetFactory()
         {
             return (IMassFactory)Factory;
         }
 
+        #region Sealed methods
         public override sealed int GetHashCode()
         {
             return HashCode.Combine(Weight, GetBody());
@@ -241,6 +234,11 @@
         #endregion
 
         #region Virtual methods
+        public virtual IBodyFactory GetBodyFactory()
+        {
+            return GetFactory().BodyFactory;
+        }
+
         public virtual IBaseSpread? ExchangeTo(Enum measureUnit)
         {
             return measureUnit switch
@@ -313,6 +311,8 @@
 
         #region Abstract methods
         public abstract IBody GetBody();
+        public abstract IMass GetMass(IWeight weight, IBody body);
+
         #endregion
         #endregion
 
@@ -340,168 +340,5 @@
         }
         #endregion
         #endregion
-    }
-
-    internal sealed class BulkMass : Mass, IBulkMass
-    {
-        public BulkMass(IBulkMass other) : base(other)
-        {
-            BulkBody = other.BulkBody;
-        }
-
-        public BulkMass(IBulkMassFactory factory, IWeight weight, IBody body) : base(factory, weight, body)
-        {
-            BulkBody = GetBodyFactory().Create(NullChecked(body, nameof(body)))!;
-        }
-
-        public IBulkBody BulkBody { get; init; }
-
-        public override IBulkBody GetBody()
-        {
-            return BulkBody;
-        }
-
-        public override IBulkBodyFactory GetBodyFactory()
-        {
-            return (IBulkBodyFactory)base.GetBodyFactory();
-        }
-
-        public IBulkMass GetBulkMass(IWeight weight, IVolume volume)
-        {
-            return GetFactory().Create(weight, volume);
-        }
-
-        public IBulkMass GetBulkMass(IWeight weight, IBody body)
-        {
-            return GetFactory().Create(weight, body);
-        }
-
-        public override IBulkMassFactory GetFactory()
-        {
-            return (IBulkMassFactory)Factory;
-        }
-
-        public override IMass GetMass(IWeight weight, IBody body)
-        {
-            return GetBulkMass(weight, body);
-        }
-
-        public IBulkMass GetNew(IBulkMass other)
-        {
-            return GetFactory().CreateNew(other);
-        }
-    }
-
-    internal sealed class DryMass : Mass, IDryMass
-    {
-        internal DryMass(IDryMass other) : base(other)
-        {
-            DryBody = other.DryBody;
-        }
-
-        internal DryMass(IDryMassFactory factory, IWeight weight, IDryBody dryBody) : base(factory, weight, dryBody)
-        {
-            DryBody = dryBody;
-        }
-
-        internal DryMass(IDryMassFactory factory, IWeight weight, params IExtent[] shapeExtents) : base(factory, weight, shapeExtents)
-        {
-            DryBody = getDryBody();
-
-            #region Local methods
-            IDryBody getDryBody()
-            {
-                IBaseShape? baseShape = GetBodyFactory().CreateBaseShape(shapeExtents);
-
-                if (baseShape is IDryBody dryBody) return dryBody;
-
-                throw CountArgumentOutOfRangeException(shapeExtents.Length, nameof(shapeExtents));
-            }
-            #endregion
-        }
-
-        internal DryMass(IDryMassFactory factory, IWeight weight, IPlaneShape baseFace, IExtent height) : base(factory, weight, baseFace, height)
-        {
-            DryBody = GetBodyFactory().Create(baseFace, height);
-        }
-
-        public IDryBody DryBody { get; init; }
-
-        public override IDryBody GetBody()
-        {
-            return DryBody;
-        }
-
-        public IDryMass GetDryMass(IWeight weight, IDryBody dryBody)
-        {
-            return GetFactory().Create(weight, dryBody);
-        }
-
-        public IDryMass GetDryMass(IWeight weight, IPlaneShape baseFace, IExtent height)
-        {
-            return GetFactory().Create(weight, baseFace, height);
-        }
-
-        public IDryMass GetDryMass(IWeight weight, params IExtent[] shapeExtents)
-        {
-            return GetFactory().Create(weight, shapeExtents);
-        }
-
-        public IDryMass GetNew(IDryMass other)
-        {
-            return GetFactory().CreateNew(other);
-        }
-        public override IBaseSpread? ExchangeTo(Enum measureUnit)
-        {
-            if (measureUnit is ExtentUnit extentUnit)
-            {
-                IBaseSpread? baseSpread = DryBody.ExchangeTo(extentUnit);
-
-                return baseSpread is IDryBody dryBody ?
-                    GetDryMass(Weight, dryBody)
-                    : null;
-            }
-
-            return base.ExchangeTo(measureUnit);
-        }
-
-        public override bool? FitsIn(IBaseSpread? baseSpread, LimitMode? limitMode)
-        {
-            bool? bodyFitsIn = GetBody().FitsIn(baseSpread, limitMode);
-
-            if (baseSpread is not IMass mass) return bodyFitsIn;
-
-            bool? weightFitsIn = Weight.FitsIn(mass.Weight, limitMode);
-
-            if (bodyFitsIn == null || weightFitsIn == null) return null;
-
-            if (bodyFitsIn != weightFitsIn) return false;
-
-            return bodyFitsIn;
-        }
-
-        public override IDryBodyFactory GetBodyFactory()
-        {
-            return (IDryBodyFactory)base.GetBodyFactory();
-        }
-
-        public override IDryMassFactory GetFactory()
-        {
-            return (IDryMassFactory)Factory;
-        }
-
-        public override IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
-        {
-            return base.GetMeasureUnitTypeCodes().Append(MeasureUnitTypeCode.ExtentUnit);
-        }
-
-        public override IMass GetMass(IWeight weight, IBody body)
-        {
-            string paramName = nameof(body);
-
-            if (NullChecked(body, paramName) is IDryBody dryBody) return GetDryMass(weight, dryBody);
-
-            throw ArgumentTypeOutOfRangeException(paramName, body);
-        }
     }
 }

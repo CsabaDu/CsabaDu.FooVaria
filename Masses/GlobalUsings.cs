@@ -8,6 +8,7 @@ global using CsabaDu.FooVaria.Common.Types.Implementations;
 global using CsabaDu.FooVaria.Masses.Behaviors;
 global using CsabaDu.FooVaria.Masses.Factories;
 global using CsabaDu.FooVaria.Masses.Types;
+global using CsabaDu.FooVaria.Masses.Types.Implementations;
 global using CsabaDu.FooVaria.Proportions.Factories;
 global using CsabaDu.FooVaria.Proportions.Types;
 global using CsabaDu.FooVaria.RateComponents.Factories;

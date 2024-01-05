@@ -1,4 +1,5 @@
-﻿namespace CsabaDu.FooVaria.Spreads.Factories.Implementations;
+﻿
+namespace CsabaDu.FooVaria.Spreads.Factories.Implementations;
 
 public sealed class BulkSurfaceFactory : SpreadFactory<IBulkSurface, IArea, AreaUnit>, IBulkSurfaceFactory
 {
@@ -27,16 +28,16 @@ public sealed class BulkSurfaceFactory : SpreadFactory<IBulkSurface, IArea, Area
         return Create(area);
     }
 
-    //public ISurface CreateNew(ISurface surface)
-    //{
-    //    IArea area = (IArea)NullChecked(surface, nameof(surface)).GetSpreadMeasure();
-
-    //    return Create(area);
-    //}
-
     public override IBulkSurface Create(AreaUnit areaUnit, double quantity)
     {
         IArea area = (IArea)MeasureFactory.Create(areaUnit, quantity);
+
+        return Create(area);
+    }
+
+    public override IBulkSurface? Create(IBaseSpread baseSpread)
+    {
+        if (baseSpread?.GetSpreadMeasure() is not IArea area) return null;
 
         return Create(area);
     }

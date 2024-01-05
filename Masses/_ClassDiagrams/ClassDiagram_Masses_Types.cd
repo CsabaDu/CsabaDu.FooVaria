@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Interface Name="CsabaDu.FooVaria.Masses.Types.IMass" Collapsed="true">
+    <Position X="2.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAIAAAAAACAAAAAAAACAACAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Types\IMass.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Masses.Types.IDryMass" Collapsed="true">
+    <Position X="4.75" Y="6.25" Width="1.75" />
+    <InheritanceLine Type="CsabaDu.FooVaria.Masses.Types.IMass" FixedFromPoint="true">
+      <Path>
+        <Point X="3.5" Y="5.579" />
+        <Point X="3.5" Y="5.875" />
+        <Point X="5.625" Y="5.875" />
+        <Point X="5.625" Y="6.25" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="CsabaDu.FooVaria.Common.Types.ICommonBase&lt;TSelf&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="3.625" Y="1.32" />
+        <Point X="3.625" Y="1.75" />
+        <Point X="6.25" Y="1.75" />
+        <Point X="6.25" Y="5.875" />
+        <Point X="5.625" Y="5.875" />
+        <Point X="5.625" Y="6.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\IDryMass.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Masses.Types.IBulkMass" Collapsed="true">
+    <Position X="0.5" Y="6.25" Width="1.75" />
+    <InheritanceLine Type="CsabaDu.FooVaria.Masses.Types.IMass" FixedFromPoint="true">
+      <Path>
+        <Point X="3" Y="5.579" />
+        <Point X="3" Y="5.875" />
+        <Point X="1.375" Y="5.875" />
+        <Point X="1.375" Y="6.25" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="CsabaDu.FooVaria.Common.Types.ICommonBase&lt;TSelf&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="3.125" Y="1.32" />
+        <Point X="3.125" Y="1.695" />
+        <Point X="0.75" Y="1.695" />
+        <Point X="0.75" Y="5.875" />
+        <Point X="1.375" Y="5.875" />
+        <Point X="1.375" Y="6.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\IBulkMass.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Masses.Behaviors.IDensity" Collapsed="true">
+    <Position X="1" Y="3.25" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Behaviors\IDensity.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Masses.Behaviors.IVolumeWeight" Collapsed="true">
+    <Position X="4.25" Y="2" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Behaviors\IVolumeWeight.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Masses.Behaviors.IWeightVolumeRatio" Collapsed="true">
+    <Position X="4.25" Y="3" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAAAAAAAAAAACABAAAAAAAAAABA=</HashCode>
+      <FileName>Behaviors\IWeightVolumeRatio.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Common.Types.IQuantifiable" Collapsed="true">
+    <Position X="2.5" Y="2" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Common.Types.ICommonBase&lt;TSelf&gt;" Collapsed="true">
+    <Position X="2.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
