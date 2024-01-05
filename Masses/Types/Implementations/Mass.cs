@@ -394,12 +394,17 @@
 
     internal sealed class DryMass : Mass, IDryMass
     {
-        public DryMass(IDryMass other) : base(other)
+        internal DryMass(IDryMass other) : base(other)
         {
             DryBody = other.DryBody;
         }
 
-        public DryMass(IDryMassFactory factory, IWeight weight, params IExtent[] shapeExtents) : base(factory, weight, shapeExtents)
+        internal DryMass(IDryMassFactory factory, IWeight weight, IDryBody dryBody) : base(factory, weight, dryBody)
+        {
+            DryBody = dryBody;
+        }
+
+        internal DryMass(IDryMassFactory factory, IWeight weight, params IExtent[] shapeExtents) : base(factory, weight, shapeExtents)
         {
             DryBody = getDryBody();
 
@@ -415,7 +420,7 @@
             #endregion
         }
 
-        public DryMass(IDryMassFactory factory, IWeight weight, IPlaneShape baseFace, IExtent height) : base(factory, weight, baseFace, height)
+        internal DryMass(IDryMassFactory factory, IWeight weight, IPlaneShape baseFace, IExtent height) : base(factory, weight, baseFace, height)
         {
             DryBody = GetBodyFactory().Create(baseFace, height);
         }
