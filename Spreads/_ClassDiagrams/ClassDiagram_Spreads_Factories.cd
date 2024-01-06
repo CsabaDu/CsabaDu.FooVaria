@@ -16,13 +16,13 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Spreads.Factories.IBulkSurfaceFactory" Collapsed="true">
-    <Position X="4" Y="6.75" Width="3" />
+    <Position X="3.75" Y="6.75" Width="3" />
     <InheritanceLine Type="CsabaDu.FooVaria.Spreads.Factories.ISpreadFactory&lt;T, TSMeasure, TEnum&gt;" FixedFromPoint="true">
       <Path>
         <Point X="4" Y="5.941" />
         <Point X="4" Y="6.375" />
-        <Point X="5.5" Y="6.375" />
-        <Point X="5.5" Y="6.75" />
+        <Point X="5.25" Y="6.375" />
+        <Point X="5.25" Y="6.75" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
