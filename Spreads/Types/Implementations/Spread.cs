@@ -92,6 +92,11 @@
         #endregion
 
         #region Public methods
+        public TSelf GetNew(TSelf other)
+        {
+            return GetFactory().CreateNew(other);
+        }
+
         public TSelf GetSpread(TSMeasure spreadMeasure)
         {
             return GetFactory().Create(spreadMeasure);

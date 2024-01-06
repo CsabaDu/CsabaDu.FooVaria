@@ -7,7 +7,7 @@
         ISpread GetSpread(IBaseSpread baseSpread);
     }
 
-    public interface ISpread<out TSelf, TSMeasure> : ISpread
+    public interface ISpread<TSelf, TSMeasure> : ISpread, ICommonBase<TSelf>
         where TSelf : class, ISpread
         where TSMeasure : class, IMeasure<TSMeasure, double>, ISpreadMeasure
     {
@@ -16,7 +16,7 @@
         TSelf GetSpread(TSMeasure spreadMeasure);
     }
 
-    public interface ISpread<out TSelf, TSMeasure, TEnum> : ISpread<TSelf, TSMeasure>, ISpreadMeasure<TSMeasure, TEnum>
+    public interface ISpread<TSelf, TSMeasure, TEnum> : ISpread<TSelf, TSMeasure>, ISpreadMeasure<TSMeasure, TEnum>
         where TSelf : class, ISpread
         where TSMeasure : class, IMeasure<TSMeasure, double, TEnum>, ISpreadMeasure
         where TEnum : struct, Enum
