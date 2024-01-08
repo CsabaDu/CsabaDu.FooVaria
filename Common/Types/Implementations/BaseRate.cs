@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Common.Types.Implementations;
 
-public abstract class BaseRate : BaseMeasure, IBaseRate
+public abstract class BaseRate : Quantifiable, IBaseRate
 {
     #region Constructors
     protected BaseRate(IBaseRate other) : base(other)
