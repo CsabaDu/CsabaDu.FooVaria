@@ -1,7 +1,13 @@
-﻿namespace CsabaDu.FooVaria.Common.Behaviors;
-
-public interface IQuantity<out TNum>
-    where TNum : struct
+﻿namespace CsabaDu.FooVaria.Common.Behaviors
 {
-    TNum GetQuantity();
+    public interface IQuantity
+    {
+
+    }
+
+    public interface IQuantity<out TNum> : IQuantity
+        where TNum : struct
+    {
+        TNum GetQuantity();
+    }
 }
