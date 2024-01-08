@@ -2,6 +2,5 @@
 
 public interface IQuantifiable : IMeasurable, IDefaultQuantity
 {
-
-    void ValidateQuantity(ValueType? quantity, string paramName); // TypeCode
+    void ValidateQuantity(ValueType? quantity, string paramName);
 }

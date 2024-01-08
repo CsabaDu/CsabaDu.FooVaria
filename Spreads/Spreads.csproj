@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\Quantifiables\Quantifiables.csproj" />
     <ProjectReference Include="..\RateComponents\RateComponents.csproj" />
   </ItemGroup>
 

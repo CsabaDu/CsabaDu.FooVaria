@@ -1,7 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Common.Behaviors
+﻿namespace CsabaDu.FooVaria.Common.Behaviors;
+
+public interface IDefaultQuantity
 {
-    public interface IDefaultQuantity
-    {
-        decimal GetDefaultQuantity();
-    }
+    decimal GetDefaultQuantity();
 }

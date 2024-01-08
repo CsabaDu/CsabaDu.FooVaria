@@ -1,8 +1,10 @@
 ﻿namespace CsabaDu.FooVaria.Common.Types
 {
-    public interface IBaseMeasure : /*IMeasurable, */IQuantifiable, IExchangeRate, IBaseMeasureQuantity, IQuantityTypeCode, IDecimalQuantity
+    public interface IBaseMeasure : IQuantifiable, IExchangeRate, IDecimalQuantity, IQuantityTypeCode
     {
-        decimal DefaultQuantity { get; init; }
+        IBaseMeasurement Measurement { get; init; }
+        object Quantity { get; init; }
+        RateComponentCode RateComponentCode { get; init; }
 
         IBaseMeasure GetBaseMeasure(Enum measureUnit, ValueType quantity);
         void ValidateQuantifiable(IQuantifiable? quantifiable, string paramName);

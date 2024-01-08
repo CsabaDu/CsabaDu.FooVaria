@@ -21,9 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Masses", "Masses\Masses.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Measures", "Measures\Measures.csproj", "{709E0E62-3759-4299-A56F-A89B8A66569C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Measurables", "Measurables\Measurables.csproj", "{57EE404F-5287-46A4-A5D7-51A0952E9E70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Measurables", "Measurables\Measurables.csproj", "{57EE404F-5287-46A4-A5D7-51A0952E9E70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quantifiables", "Quantifiables\Quantifiables.csproj", "{9F8A045B-68D3-4681-9776-6A326E659ACF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quantifiables", "Quantifiables\Quantifiables.csproj", "{9F8A045B-68D3-4681-9776-6A326E659ACF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shapes", "Shapes\Shapes.csproj", "{A6D5A236-F64B-48A3-92D0-1EC9A19A0FF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{9F8A045B-68D3-4681-9776-6A326E659ACF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F8A045B-68D3-4681-9776-6A326E659ACF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F8A045B-68D3-4681-9776-6A326E659ACF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6D5A236-F64B-48A3-92D0-1EC9A19A0FF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6D5A236-F64B-48A3-92D0-1EC9A19A0FF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6D5A236-F64B-48A3-92D0-1EC9A19A0FF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6D5A236-F64B-48A3-92D0-1EC9A19A0FF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

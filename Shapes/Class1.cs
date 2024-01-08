@@ -1,4 +1,4 @@
-﻿namespace Measurables
+﻿namespace Shapes
 {
     public class Class1
     {

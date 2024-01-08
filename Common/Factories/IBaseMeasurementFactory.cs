@@ -1,6 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Common.Factories;
+﻿//namespace CsabaDu.FooVaria.Common.Factories;
 
-public interface IBaseMeasurementFactory : IMeasurableFactory
-{
-    IBaseMeasurement? CreateBaseMeasurement(object context);
-}
+//public interface IBaseMeasurementFactory : IMeasurableFactory
+//{
+//    IBaseMeasurement? CreateBaseMeasurement(object context);
+//}

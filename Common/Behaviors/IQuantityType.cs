@@ -1,6 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Common.Behaviors;
+﻿//namespace CsabaDu.FooVaria.Common.Behaviors;
 
-public interface IQuantityType
-{
-    TypeCode GetQuantityTypeCode();
-}
+//public interface IQuantityType
+//{
+//    TypeCode GetQuantityTypeCode();
+//}
