@@ -1,0 +1,117 @@
+﻿namespace CsabaDu.FooVaria.SimpleShapes.Types.Implementations;
+
+internal sealed class Rectangle : PlaneShape, IRectangle
+{
+    #region Constructors
+    internal Rectangle(IRectangle other) : base(other)
+    {
+        Length = other.Length;
+        Width = other.Width;
+    }
+
+    internal Rectangle(IRectangleFactory factory, IExtent length, IExtent width) : base(factory, length, width)
+    {
+        Length = length;
+        Width = width;
+    }
+    #endregion
+
+    #region Properties
+    public IExtent Length { get; init; }
+    public IExtent Width { get; init; }
+
+    #region Override properties
+    public override IExtent? this[ShapeExtentTypeCode shapeExtentTypeCode] => shapeExtentTypeCode switch
+    {
+        ShapeExtentTypeCode.Length => Length,
+        ShapeExtentTypeCode.Width => Width,
+
+        _ => null,
+    };
+    #endregion
+    #endregion
+
+    #region Public methods
+    public IExtent GetComparedShapeExtent(ComparisonCode? comparisonCode)
+    {
+        _ = NullChecked(comparisonCode, nameof(comparisonCode));
+
+        IEnumerable<IExtent> shapeExtents = GetSortedDimensions();
+
+        return comparisonCode switch
+        {
+            ComparisonCode.Greater => shapeExtents.Last(),
+            ComparisonCode.Less => shapeExtents.First(),
+
+            _ => throw InvalidComparisonCodeEnumArgumentException(comparisonCode!.Value),
+        };
+    }
+
+    public ICircle GetInnerTangentShape(ComparisonCode comparisonCode)
+    {
+        return GetFactory().CreateInnerTangentShape(this, comparisonCode);
+    }
+
+    public ICircle GetInnerTangentShape()
+    {
+        return GetFactory().CreateInnerTangentShape(this);
+    }
+
+    public IExtent GetLength()
+    {
+        return Length;
+    }
+
+    public IExtent GetLength(ExtentUnit extentUnit)
+    {
+        return Length.GetMeasure(extentUnit);
+    }
+
+    public ICircle GetOuterTangentShape()
+    {
+        return GetFactory().CreateOuterTangentShape(this);
+    }
+
+    public IRectangle GetNew(IRectangle other)
+    {
+        return GetFactory().CreateNew(other);
+    }
+
+    public ISimpleShape GetTangentShape(SideCode sideCode)
+    {
+        return GetFactory().CreateTangentShape(this, sideCode);
+    }
+
+    public IExtent GetWidth()
+    {
+        return Width;
+    }
+
+    public IExtent GetWidth(ExtentUnit extentUnit)
+    {
+        return Width.GetMeasure(extentUnit);
+    }
+
+    public IRectangle RotateHorizontally()
+    {
+        return (IRectangle)GetShape(GetSortedDimensions().ToArray());
+    }
+
+    public IRectangle GetRectangle(IExtent length, IExtent width)
+    {
+        return GetFactory().Create(length, width);
+    }
+
+    #region Override methods
+    public override IRectangleFactory GetFactory()
+    {
+        return (IRectangleFactory)Factory;
+    }
+
+    public override ICircleFactory GetTangentShapeFactory()
+    {
+        return (ICircleFactory)base.GetTangentShapeFactory();
+    }
+    #endregion
+    #endregion
+}

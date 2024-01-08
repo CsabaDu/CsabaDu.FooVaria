@@ -1,7 +1,7 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Behaviors;
+﻿//namespace CsabaDu.FooVaria.Common.Behaviors;
 
-public interface IDecimalQuantity
-{
-    decimal GetDecimalQuantity();
-}
+//public interface IDecimalQuantity
+//{
+//    decimal GetDecimalQuantity();
+//}
 

@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Common.Types
 {
-    public interface IBaseMeasure : /*IMeasurable, */IQuantifiable, IExchangeRate, IBaseMeasureQuantity, IQuantityTypeCode
+    public interface IBaseMeasure : /*IMeasurable, */IQuantifiable, IExchangeRate, IBaseMeasureQuantity, IQuantityTypeCode, IDecimalQuantity
     {
         decimal DefaultQuantity { get; init; }
 

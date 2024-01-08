@@ -1,9 +1,9 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Behaviors;
+﻿//namespace CsabaDu.FooVaria.RateComponents.Behaviors;
 
-public interface IQuantityTypeCode
-{
-    //TypeCode GetQuantityTypeCode();
-    TypeCode? GetQuantityTypeCode(object quantity);
+//public interface IQuantityTypeCode
+//{
+//    //TypeCode GetQuantityTypeCode();
+//    TypeCode? GetQuantityTypeCode(object quantity);
 
-    void ValidateQuantityTypeCode(TypeCode quantityTypeCode, string paramName);
-}
+//    void ValidateQuantityTypeCode(TypeCode quantityTypeCode, string paramName);
+//}
