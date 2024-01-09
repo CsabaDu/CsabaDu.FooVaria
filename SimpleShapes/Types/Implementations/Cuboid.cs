@@ -120,20 +120,20 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
             other = cylinder.GetOuterTangentShape();
         }
 
-        IEnumerable<IExtent> otherSortedDimensions = other.GetSortedDimensions();
+        if (other is not ICuboid cuboid) throw exception();
 
-        if (otherSortedDimensions.Count() != GetShapeComponentCount()
-            || !other.TryGetShapeExtentTypeCode(otherSortedDimensions.Last(), out ShapeExtentTypeCode? longestCode)
-            || !other.TryGetShapeExtentTypeCode(otherSortedDimensions.First(), out ShapeExtentTypeCode? shortestCode))
+        IExtent longest = cuboid.GetComparedShapeExtent(ComparisonCode.Greater);
+        IExtent shortest = cuboid.GetComparedShapeExtent(ComparisonCode.Less);
+
+        if (!cuboid.TryGetShapeExtentTypeCode(longest, out ShapeExtentTypeCode? longestCode)
+            || !cuboid.TryGetShapeExtentTypeCode(shortest, out ShapeExtentTypeCode? shortestCode))
         {
             throw exception();
         }
 
-        ICuboid rotated = RotateSpatially();
-        IEnumerable<IExtent> rotatedShapeExtents = rotated.GetShapeExtents();
-        IExtent longest = rotatedShapeExtents.Last();
-        IExtent shortest = rotatedShapeExtents.First();
-        IExtent medium = rotatedShapeExtents.ElementAt(1);
+        longest = GetComparedShapeExtent(ComparisonCode.Greater);
+        shortest = GetComparedShapeExtent(ComparisonCode.Less);
+        IExtent medium = GetComparedShapeExtent(null);
 
         return longestCode!.Value switch
         {
@@ -153,7 +153,7 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
             },
             ShapeExtentTypeCode.Height => shortestCode!.Value switch
             {
-                ShapeExtentTypeCode.Length => rotated,
+                ShapeExtentTypeCode.Length => RotateSpatially(),
                 ShapeExtentTypeCode.Width => GetCuboid(medium, shortest, longest),
 
                 _ => throw exception(),
