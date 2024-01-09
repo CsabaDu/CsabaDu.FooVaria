@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.SimpleShapes.Behaviors;
-
-namespace CsabaDu.FooVaria.SimpleShapes.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.SimpleShapes.Types.Implementations;
 
 internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
 {
@@ -44,6 +42,11 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
 
             _ => throw InvalidComparisonCodeEnumArgumentException(comparisonCode!.Value),
         };
+    }
+
+    public ICuboid GetCuboid(IExtent length, IExtent width, IExtent height)
+    {
+        return GetFactory().Create(length, width, height);
     }
 
     public ICylinder GetInnerTangentShape(ComparisonCode comparisonCode)
@@ -117,11 +120,11 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
             other = cylinder.GetOuterTangentShape();
         }
 
-        IEnumerable<IExtent> sortedDimensions = other.GetSortedDimensions();
+        IEnumerable<IExtent> otherSortedDimensions = other.GetSortedDimensions();
 
-        if (sortedDimensions.Count() != GetShapeComponentCount()
-            || !other.TryGetShapeExtentTypeCode(sortedDimensions.Last(), out ShapeExtentTypeCode? longestCode)
-            || !other.TryGetShapeExtentTypeCode(sortedDimensions.First(), out ShapeExtentTypeCode? shortestCode))
+        if (otherSortedDimensions.Count() != GetShapeComponentCount()
+            || !other.TryGetShapeExtentTypeCode(otherSortedDimensions.Last(), out ShapeExtentTypeCode? longestCode)
+            || !other.TryGetShapeExtentTypeCode(otherSortedDimensions.First(), out ShapeExtentTypeCode? shortestCode))
         {
             throw exception();
         }
@@ -165,11 +168,6 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
             throw new InvalidOperationException(null);
         }
         #endregion
-    }
-
-    public ICuboid GetCuboid(IExtent length, IExtent width, IExtent height)
-    {
-        return GetFactory().Create(length, width, height);
     }
 
     #region Override methods
