@@ -110,7 +110,7 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
         return (ICuboid)GetSimpleShape(GetSortedDimensions().ToArray());
     }
 
-    public IDryBody RotateTo(IDryBody other)
+    public ICuboid RotateTo(IDryBody other)
     {
         if (NullChecked(other, nameof(other)) is ICylinder cylinder)
         {
@@ -136,22 +136,22 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
         {
             ShapeExtentTypeCode.Length => shortestCode!.Value switch
             {
-                ShapeExtentTypeCode.Width => getDryBody(longest, shortest, medium),
-                ShapeExtentTypeCode.Height => getDryBody(longest, medium, shortest),
+                ShapeExtentTypeCode.Width => GetCuboid(longest, shortest, medium),
+                ShapeExtentTypeCode.Height => GetCuboid(longest, medium, shortest),
 
                 _ => throw exception(),
             },
             ShapeExtentTypeCode.Width => shortestCode!.Value switch
             {
-                ShapeExtentTypeCode.Length => getDryBody(shortest, longest, medium),
-                ShapeExtentTypeCode.Height => getDryBody(medium, longest, shortest),
+                ShapeExtentTypeCode.Length => GetCuboid(shortest, longest, medium),
+                ShapeExtentTypeCode.Height => GetCuboid(medium, longest, shortest),
 
                 _ => throw exception(),
             },
             ShapeExtentTypeCode.Height => shortestCode!.Value switch
             {
                 ShapeExtentTypeCode.Length => rotated,
-                ShapeExtentTypeCode.Width => getDryBody(medium, shortest, longest),
+                ShapeExtentTypeCode.Width => GetCuboid(medium, shortest, longest),
 
                 _ => throw exception(),
             },
@@ -160,11 +160,6 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
         };
 
         #region Local methods
-        IDryBody getDryBody(IExtent length, IExtent width, IExtent height)
-        {
-            return (IDryBody)GetSimpleShape(length, width, height)!;
-        }
-
         InvalidOperationException exception()
         {
             throw new InvalidOperationException(null);
