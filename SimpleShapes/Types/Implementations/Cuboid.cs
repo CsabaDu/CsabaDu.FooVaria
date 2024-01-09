@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.SimpleShapes.Types.Implementations;
+﻿using CsabaDu.FooVaria.SimpleShapes.Behaviors;
+
+namespace CsabaDu.FooVaria.SimpleShapes.Types.Implementations;
 
 internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
 {
@@ -105,7 +107,69 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
 
     public ICuboid RotateSpatially()
     {
-        return (ICuboid)GetShape(GetSortedDimensions().ToArray());
+        return (ICuboid)GetSimpleShape(GetSortedDimensions().ToArray());
+    }
+
+    public IDryBody RotateTo(IDryBody other)
+    {
+        if (NullChecked(other, nameof(other)) is ICylinder cylinder)
+        {
+            other = cylinder.GetOuterTangentShape();
+        }
+
+        IEnumerable<IExtent> sortedDimensions = other.GetSortedDimensions();
+
+        if (sortedDimensions.Count() != GetShapeComponentCount()
+            || !other.TryGetShapeExtentTypeCode(sortedDimensions.Last(), out ShapeExtentTypeCode? longestCode)
+            || !other.TryGetShapeExtentTypeCode(sortedDimensions.First(), out ShapeExtentTypeCode? shortestCode))
+        {
+            throw exception();
+        }
+
+        ICuboid rotated = RotateSpatially();
+        IEnumerable<IExtent> rotatedShapeExtents = rotated.GetShapeExtents();
+        IExtent longest = rotatedShapeExtents.Last();
+        IExtent shortest = rotatedShapeExtents.First();
+        IExtent medium = rotatedShapeExtents.ElementAt(1);
+
+        return longestCode!.Value switch
+        {
+            ShapeExtentTypeCode.Length => shortestCode!.Value switch
+            {
+                ShapeExtentTypeCode.Width => getDryBody(longest, shortest, medium),
+                ShapeExtentTypeCode.Height => getDryBody(longest, medium, shortest),
+
+                _ => throw exception(),
+            },
+            ShapeExtentTypeCode.Width => shortestCode!.Value switch
+            {
+                ShapeExtentTypeCode.Length => getDryBody(shortest, longest, medium),
+                ShapeExtentTypeCode.Height => getDryBody(medium, longest, shortest),
+
+                _ => throw exception(),
+            },
+            ShapeExtentTypeCode.Height => shortestCode!.Value switch
+            {
+                ShapeExtentTypeCode.Length => rotated,
+                ShapeExtentTypeCode.Width => getDryBody(medium, shortest, longest),
+
+                _ => throw exception(),
+            },
+
+            _ => throw exception(),
+        };
+
+        #region Local methods
+        IDryBody getDryBody(IExtent length, IExtent width, IExtent height)
+        {
+            return (IDryBody)GetSimpleShape(length, width, height)!;
+        }
+
+        InvalidOperationException exception()
+        {
+            throw new InvalidOperationException(null);
+        }
+        #endregion
     }
 
     public ICuboid GetCuboid(IExtent length, IExtent width, IExtent height)

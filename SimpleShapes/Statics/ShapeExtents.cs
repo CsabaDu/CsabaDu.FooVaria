@@ -21,7 +21,7 @@ public static class ShapeExtents
             ValidateMeasureUnit(extentUnit, nameof(extentUnit));
 
             IRateComponent radius = circle.Radius;
-            decimal quantity = radius.DefaultQuantity * 2;
+            decimal quantity = radius.GetDefaultQuantity() * 2;
             quantity = IsDefaultMeasureUnit(extentUnit) ?
                 quantity
                 : quantity / GetSpreadMeasureUnitExchangeRate(shape, extentUnit);

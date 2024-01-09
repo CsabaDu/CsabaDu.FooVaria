@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.SSimpleShapeshapes.Behaviors;
+﻿namespace CsabaDu.FooVaria.SimpleShapes.Behaviors;
 
 public interface IShapeExtentType
 {

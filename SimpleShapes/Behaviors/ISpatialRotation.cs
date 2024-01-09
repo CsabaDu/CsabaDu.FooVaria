@@ -2,7 +2,7 @@
 {
     public interface ISpatialRotation
     {
-        //IRectangle GetComparedVerticalFace(ComparisonCode comparisonCode);
+        IDryBody RotateTo(IDryBody other);
     }
 
     public interface ISpatialRotation<TSelf> : ISpatialRotation

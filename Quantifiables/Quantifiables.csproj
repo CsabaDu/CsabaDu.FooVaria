@@ -12,4 +12,10 @@
     <ProjectReference Include="..\Measurements\Measurements.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Factories\" />
+    <Folder Include="Statics\" />
+    <Folder Include="Types\Implementations\" />
+  </ItemGroup>
+
 </Project>
