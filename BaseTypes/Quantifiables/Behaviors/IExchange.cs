@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace CsabaDu.FooVaria.Quantifiables.Behaviors;
+﻿namespace CsabaDu.FooVaria.Quantifiables.Behaviors;
 
 public interface IExchange<TSelf, in TContext> : IProportional<TSelf>, IExchangeable<TContext>
     where TSelf : class, IQuantifiable
@@ -8,10 +6,12 @@ public interface IExchange<TSelf, in TContext> : IProportional<TSelf>, IExchange
 {
     TSelf? ExchangeTo(TContext context);
 
+    #region Default implementations
     public bool TryExchangeTo(TContext context, [NotNullWhen(true)] out TSelf? exchanged)
     {
         exchanged = ExchangeTo(context);
 
         return exchanged != null;
     }
+    #endregion
 }

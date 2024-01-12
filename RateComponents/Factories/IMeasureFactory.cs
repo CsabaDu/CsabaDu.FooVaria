@@ -1,5 +1,5 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Factories;
+﻿//namespace CsabaDu.FooVaria.RateComponents.Factories;
 
-public interface IMeasureFactory : IRateComponentFactory<IMeasure>, IDefaultRateComponentFactory<IMeasure>
-{
-}
+//public interface IMeasureFactory : IRateComponentFactory<IMeasure>, IDefaultRateComponentFactory<IMeasure>
+//{
+//}

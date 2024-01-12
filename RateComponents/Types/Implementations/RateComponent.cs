@@ -347,7 +347,7 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
     }
 
     internal abstract class RateComponent<TSelf, TNum> : RateComponent<TSelf>, IRateComponent<TSelf, TNum>
-        where TSelf : class, IRateComponent, IDefaultRateComponent
+        where TSelf : class, IRateComponent, IDefaultBaseMeasure
         where TNum : struct
     {
         #region Constructors

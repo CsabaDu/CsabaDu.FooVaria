@@ -2,7 +2,6 @@
 {
     public interface IRateComponentFactory : IBaseMeasureFactory/*<IRateComponent, Enum>*/, IFactory<IRateComponent>
     {
-        IMeasurementFactory MeasurementFactory { get; init; }
         RateComponentCode RateComponentCode { get; }    
         object DefaultRateComponentQuantity { get; }
 

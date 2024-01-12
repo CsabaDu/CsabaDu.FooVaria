@@ -1,4 +1,5 @@
 ﻿global using CsabaDu.FooVaria.Common.Enums;
+global using CsabaDu.FooVaria.Common.Factories;
 global using CsabaDu.FooVaria.Measurables.Behaviors;
 global using CsabaDu.FooVaria.Measurables.Factories;
 global using CsabaDu.FooVaria.Measurables.Statics;

@@ -4,14 +4,14 @@ public interface IBaseMeasure : IQuantifiable, IExchangeRate, IDecimalQuantity, 
 {
     IBaseMeasurement Measurement { get; init; }
     object Quantity { get; init; }
-    RateComponentCode RateComponentCode { get; init; }
+    RateComponentCode RateComponentCode { get; }
 
     IBaseMeasure GetBaseMeasure(Enum measureUnit, ValueType quantity);
     IBaseMeasure GetBaseMeasure(ValueType quantity);
     IBaseMeasure GetBaseMeasure(string name, ValueType quantity);
-    IBaseMeasure GetBaseMeasure(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName);
-    IBaseMeasure GetBaseMeasure(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity);
     IBaseMeasure GetBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity);
+    IBaseMeasure? GetBaseMeasure(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName);
+    IBaseMeasure? GetBaseMeasure(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity);
 
     void ValidateQuantifiable(IQuantifiable? quantifiable, string paramName);
 

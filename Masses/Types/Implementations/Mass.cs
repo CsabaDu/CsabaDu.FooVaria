@@ -1,4 +1,8 @@
-﻿namespace CsabaDu.FooVaria.Masses.Types.Implementations
+﻿using CsabaDu.FooVaria.Measurables.Statics;
+using CsabaDu.FooVaria.Quantifiables.Behaviors;
+using CsabaDu.FooVaria.Quantifiables.Statics;
+
+namespace CsabaDu.FooVaria.Masses.Types.Implementations
 {
     internal abstract class Mass : Quantifiable, IMass
     {
@@ -283,9 +287,9 @@
 
             IMass? exchangeMassToWeightUnit(WeightUnit weightUnit)
             {
-                IRateComponent? rateComponent = Weight.ExchangeTo(weightUnit);
+                IBaseMeasure? baseMeasure = Weight.ExchangeTo(weightUnit);
 
-                if (rateComponent is not IWeight weight) return null;
+                if (baseMeasure is not IWeight weight) return null;
 
                 return GetMass(weight, GetBody());
             }

@@ -1,13 +1,12 @@
-﻿global using CsabaDu.FooVaria.Common.Behaviors;
+﻿global using CsabaDu.FooVaria.BaseSpreads.Factories;
+global using CsabaDu.FooVaria.BaseSpreads.Types;
 global using CsabaDu.FooVaria.Common.Enums;
 global using CsabaDu.FooVaria.Common.Enums.MeasureUnits;
 global using CsabaDu.FooVaria.Common.Factories;
-global using CsabaDu.FooVaria.Common.Statics;
 global using CsabaDu.FooVaria.Common.Types;
-global using CsabaDu.FooVaria.Common.Types.Implementations;
+global using CsabaDu.FooVaria.Measures.Types;
+global using CsabaDu.FooVaria.Quantifiables.Behaviors;
 global using CsabaDu.FooVaria.RateComponents.Factories;
-global using CsabaDu.FooVaria.RateComponents.Types;
-global using CsabaDu.FooVaria.RateComponents.Types.MeasureTypes;
 global using CsabaDu.FooVaria.Spreads.Behaviors;
 global using CsabaDu.FooVaria.Spreads.Factories;
 global using CsabaDu.FooVaria.Spreads.Statics;

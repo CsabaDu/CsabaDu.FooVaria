@@ -1,5 +1,5 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Types.MeasureTypes;
+﻿//namespace CsabaDu.FooVaria.RateComponents.Types.MeasureTypes;
 
-public interface ITimePeriod : IMeasure<ITimePeriod, double, TimePeriodUnit>, IConvertMeasure<ITimePeriod, TimeSpan>
-{
-}
+//public interface ITimePeriod : IMeasure<ITimePeriod, double, TimePeriodUnit>, IConvertMeasure<ITimePeriod, TimeSpan>
+//{
+//}

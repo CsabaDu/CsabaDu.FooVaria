@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Spreads.Types;
+﻿using CsabaDu.FooVaria.BaseSpreads.Types;
+
+namespace CsabaDu.FooVaria.Spreads.Types;
 
 public interface IBulkSurface : ISpread<IBulkSurface, IArea, AreaUnit>, ISurface
 {

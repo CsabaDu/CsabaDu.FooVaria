@@ -112,7 +112,7 @@ internal abstract class Rate : BaseRate, IRate
         {
             if (rateComponent?.IsExchangeableTo(MeasureUnitCode) != true) return null;
 
-            IDenominator denominator = Denominator.GetRateComponent(rateComponent);
+            IDenominator denominator = Denominator.GetBaseMeasure(rateComponent);
             decimal proportionQuantity = denominator.ProportionalTo(rateComponent);
 
             return exchange(denominator, proportionQuantity);
@@ -333,7 +333,7 @@ internal abstract class Rate : BaseRate, IRate
 
 //    public IBaseRate GetBaseRate(MeasureUnitCode numeratorMeasureUnitCode, decimal defaultQuantity, MeasureUnitCode denominatorMeasureUnitCode)
 //    {
-//        IMeasure numerator = Numerator.GetRateComponent(numeratorMeasureUnitCode.GetDefaultMeasureUnit());
+//        IMeasure numerator = Numerator.GetBaseMeasure(numeratorMeasureUnitCode.GetDefaultMeasureUnit());
 //        IDenominator rateComponent = Denominator.GetDenominator(denominatorMeasureUnitCode.GetDefaultMeasureUnit(), defaultQuantity);
 
 //        return GetRate(numerator, rateComponent, null);
@@ -391,7 +391,7 @@ internal abstract class Rate : BaseRate, IRate
 //        return (IRate)GetFactory().CreateNew(other);
 //    }
 
-//    public IRateComponent? GetRateComponent(RateComponentCode rateComponentCode)
+//    public IRateComponent? GetBaseMeasure(RateComponentCode rateComponentCode)
 //    {
 //        return this[Defined(rateComponentCode, nameof(rateComponentCode))];
 //    }

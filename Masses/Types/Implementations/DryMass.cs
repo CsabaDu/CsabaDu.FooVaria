@@ -35,7 +35,7 @@
 
         public IDryBody DryBody { get; init; }
 
-        public override IDryBody GetBody()
+        public IDryBody GetBody()
         {
             return DryBody;
         }

@@ -1,22 +1,22 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations.MeasureTypes;
+﻿//namespace CsabaDu.FooVaria.RateComponents.Types.Implementations.MeasureTypes;
 
-internal sealed class Cash : Measure<ICash, decimal, Currency>, ICash
-{
-    #region Constructors
-    internal Cash(IMeasureFactory factory, Currency currency, ValueType quantity) : base(factory, currency, quantity)
-    {
-    }
-    #endregion
+//internal sealed class Cash : Measure<ICash, decimal, Currency>, ICash
+//{
+//    #region Constructors
+//    internal Cash(IMeasureFactory factory, Currency currency, ValueType quantity) : base(factory, currency, quantity)
+//    {
+//    }
+//    #endregion
 
-    #region Public methods
-    public ICash? GetCustomMeasure(Currency currency, decimal exchangeRate, decimal quantity, string customName)
-    {
-        return GetRateComponent(currency, exchangeRate, quantity, customName);
-    }
+//    #region Public methods
+//    public ICash? GetCustomMeasure(Currency currency, decimal exchangeRate, decimal quantity, string customName)
+//    {
+//        return GetBaseMeasure(currency, exchangeRate, quantity, customName);
+//    }
 
-    public ICash? GetNextCustomMeasure(string customName, decimal exchangeRate, decimal quantity)
-    {
-        return GetRateComponent(customName, MeasureUnitCode, exchangeRate, quantity);
-    }
-    #endregion
-}
+//    public ICash? GetNextCustomMeasure(string customName, decimal exchangeRate, decimal quantity)
+//    {
+//        return GetBaseMeasure(customName, MeasureUnitCode, exchangeRate, quantity);
+//    }
+//    #endregion
+//}

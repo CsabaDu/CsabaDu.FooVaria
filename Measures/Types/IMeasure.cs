@@ -2,11 +2,11 @@
 {
     public interface IMeasure : IBaseMeasure, ILimitable, ICalculate<IMeasure, decimal>
     {
-        IMeasure GetMeasure(IBaseMeasure rateComponent);
+        //IMeasure GetMeasure(IBaseMeasure rateComponent);
     }
 
-    public interface IMeasure<TSelf, TNum> : IMeasure/*, IRateComponent<TSelf, TNum>*/
-        where TSelf : class, IMeasure/*, IDefaultRateComponent*/
+    public interface IMeasure<TSelf, TNum> : IMeasure, IDefaultBaseMeasure<TSelf, TNum>
+        where TSelf : class, IMeasure, IDefaultBaseMeasure
         where TNum : struct
     {
         TSelf GetMeasure(string name, TNum quantity);
@@ -14,7 +14,7 @@
     }
 
     public interface IMeasure<TSelf, TNum, TEnum> : IMeasure<TSelf, TNum>, IMeasureUnit<TEnum>
-        where TSelf : class, IMeasure/*, IDefaultRateComponent*/, IMeasureUnit
+        where TSelf : class, IMeasure, IDefaultBaseMeasure, IMeasureUnit
         where TNum : struct
         where TEnum : struct, Enum
     {

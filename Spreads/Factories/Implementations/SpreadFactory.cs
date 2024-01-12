@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.RateComponents.Factories;
-
-namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
+﻿namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
 {
     public abstract class SpreadFactory : ISpreadFactory
     {
