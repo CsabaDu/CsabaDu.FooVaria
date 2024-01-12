@@ -16,7 +16,7 @@ internal sealed class PieceCount : Measure<IPieceCount, long, Pieces>, IPieceCou
 
     public IPieceCount? GetNextCustomMeasure(string customName, decimal exchangeRate, long quantity)
     {
-        return GetRateComponent(customName, MeasureUnitTypeCode, exchangeRate, quantity);
+        return GetRateComponent(customName, MeasureUnitCode, exchangeRate, quantity);
     }
     #endregion
 }

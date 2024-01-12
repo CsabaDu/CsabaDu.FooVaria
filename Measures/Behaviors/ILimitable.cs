@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Types;
-
-namespace CsabaDu.FooVaria.Measures.Behaviors;
+﻿namespace CsabaDu.FooVaria.Measures.Behaviors;
 
 public interface ILimitable : IFit<IBaseMeasure>
 {

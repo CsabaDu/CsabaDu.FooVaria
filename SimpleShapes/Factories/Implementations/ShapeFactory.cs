@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.SimpleShapes.Factories.Implementations;
 
-public abstract class ShapeFactory : IShapeFactory
+public abstract class ShapeFactory : ISimpleShapeFactory
 {
     #region Constructors
     private protected ShapeFactory(ISpreadFactory spreadFactory, ITangentShapeFactory tangentShapeFactory)
@@ -51,7 +51,7 @@ public abstract class ShapeFactory : IShapeFactory
     #endregion
 
     #region Abstract methods
-    public abstract IBaseShape? CreateBaseShape(params IShapeComponent[] shapeComponents);
+    public abstract IShape? CreateBaseShape(params IShapeComponent[] shapeComponents);
     #endregion
     #endregion
 

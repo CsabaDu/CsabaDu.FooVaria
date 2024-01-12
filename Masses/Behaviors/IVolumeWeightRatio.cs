@@ -3,7 +3,7 @@
     public interface IVolumeWeightRatio : IVolumeWeight
     {
         IWeight GetVolumeWeight(decimal ratio);
-        MeasureUnitTypeCode GetMeasureUnitTypeCode(decimal ratio);
+        MeasureUnitCode GetMeasureUnitCode(decimal ratio);
         double GetQuantity(decimal ratio);
         decimal GetDefaultQuantity(decimal ratio);
     }

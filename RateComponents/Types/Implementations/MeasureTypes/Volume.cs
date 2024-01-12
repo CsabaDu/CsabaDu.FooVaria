@@ -19,9 +19,9 @@ internal sealed class Volume : Measure<IVolume, double, VolumeUnit>, IVolume
         return ConvertMeasure<IWeight>(ConvertMode.Divide);
     }
 
-    public MeasureUnitTypeCode GetMeasureUnitTypeCode()
+    public MeasureUnitCode GetMeasureUnitCode()
     {
-        return MeasureUnitTypeCode;
+        return MeasureUnitCode;
     }
 
     public ISpreadMeasure GetSpreadMeasure()

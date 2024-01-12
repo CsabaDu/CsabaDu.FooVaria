@@ -13,7 +13,7 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         Limit = NullChecked(limit, nameof(limit));
     }
 
-    internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode, ILimit limit) : base(factory, numerator, denominatorMeasureUnitTypeCode)
+    internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, MeasureUnitCode denominatorMeasureUnitCode, ILimit limit) : base(factory, numerator, denominatorMeasureUnitCode)
     {
         Limit = NullChecked(limit, nameof(limit));
     }
@@ -77,9 +77,9 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         return GetFactory().Create(numerator, denominatorMeasureUnit, quantity, limit);
     }
 
-    public ILimitedRate GetLimitedRate(IMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode, ILimit limit)
+    public ILimitedRate GetLimitedRate(IMeasure numerator, MeasureUnitCode denominatorMeasureUnitCode, ILimit limit)
     {
-        return GetFactory().Create(numerator, denominatorMeasureUnitTypeCode, limit);
+        return GetFactory().Create(numerator, denominatorMeasureUnitCode, limit);
     }
 
     public ILimitedRate GetLimitedRate(IMeasure numerator, IMeasurement denominatorMeasurement, ILimit limit)
@@ -173,7 +173,7 @@ internal sealed class LimitedRate : Rate, ILimitedRate
 //        Limit = NullChecked(limit, nameof(limit));
 //    }
 
-//    internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, MeasureUnitTypeCode measureUnitTypeCode, ILimit limit) : base(factory, numerator, measureUnitTypeCode)
+//    internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, MeasureUnitCode measureUnitCode, ILimit limit) : base(factory, numerator, measureUnitCode)
 //    {
 //        Limit = NullChecked(limit, nameof(limit));
 //    }

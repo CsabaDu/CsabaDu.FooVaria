@@ -25,7 +25,7 @@
             #endregion
         }
 
-        private protected DryBody(IDryBodyFactory factory, params IExtent[] shapeExtents) : base(factory, MeasureUnitTypeCode.VolumeUnit, shapeExtents)
+        private protected DryBody(IDryBodyFactory factory, params IExtent[] shapeExtents) : base(factory, MeasureUnitCode.VolumeUnit, shapeExtents)
         {
             Height = shapeExtents.Last();
             Volume = (IVolume)GetSpreadMeasure(shapeExtents);
@@ -83,7 +83,7 @@
         }
 
         public abstract IPlaneShape GetBaseFace();
-        public abstract IPlaneShape GetProjection(ShapeExtentTypeCode perpendicular);
+        public abstract IPlaneShape GetProjection(ShapeExtentCode perpendicular);
     }
 
     internal abstract class DryBody<TSelf, TBFace> : DryBody, IDryBody<TSelf, TBFace>

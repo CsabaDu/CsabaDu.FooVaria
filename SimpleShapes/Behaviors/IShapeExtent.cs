@@ -2,5 +2,5 @@
 
 public interface IShapeExtent
 {
-    IExtent GetShapeExtent(ShapeExtentTypeCode shapeExtentTypeCode);
+    IExtent GetShapeExtent(ShapeExtentCode shapeExtentCode);
 }

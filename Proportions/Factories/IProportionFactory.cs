@@ -5,11 +5,11 @@ public interface IProportionFactory : IBaseRateFactory
     IMeasureFactory MeasureFactory { get; init; }
 
     IProportion Create(IBaseRate baseRate);
-    IProportion Create(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
+    IProportion Create(MeasureUnitCode numeratorMeasureUnitCode, decimal defaultQuantity, MeasureUnitCode denominatorMeasureUnitCode);
     IProportion Create(Enum numeratorMeasureUnit, ValueType quantity, Enum denominatorMeasureUnit);
     IProportion Create(IRateComponent numerator, IRateComponent denominator);
 
-    IProportion<TDEnum> Create<TDEnum>(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal numeratorDefaultQuantity, TDEnum denominatorMeasureUnit)
+    IProportion<TDEnum> Create<TDEnum>(MeasureUnitCode numeratorMeasureUnitCode, decimal numeratorDefaultQuantity, TDEnum denominatorMeasureUnit)
         where TDEnum : struct, Enum;
     IProportion<TDEnum> Create<TDEnum>(Enum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit)
         where TDEnum : struct, Enum;

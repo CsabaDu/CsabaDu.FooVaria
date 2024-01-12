@@ -34,7 +34,7 @@
 
             if (isRateComponentNull() && isLimitModeNull) return true;
 
-            if (rateComponent?.HasMeasureUnitTypeCode(MeasureUnitTypeCode) != true) return null;
+            if (rateComponent?.HasMeasureUnitCode(MeasureUnitCode) != true) return null;
 
             if (isLimitModeNull) return CompareTo(rateComponent) <= 0;
 
@@ -112,9 +112,9 @@
         {
             if (other == null) return GetMeasure(this);
 
-            if (other.IsExchangeableTo(MeasureUnitTypeCode)) return getMeasure();
+            if (other.IsExchangeableTo(MeasureUnitCode)) return getMeasure();
 
-            throw InvalidMeasureUnitTypeCodeEnumArgumentException(other.MeasureUnitTypeCode, nameof(other));
+            throw InvalidMeasureUnitCodeEnumArgumentException(other.MeasureUnitCode, nameof(other));
 
             #region Local methods
             decimal getDefaultQuantitySum()
@@ -153,14 +153,14 @@
         #endregion
 
         #region Public methods
-        public TSelf? GetDefault(MeasureUnitTypeCode measureUnitTypeCode)
+        public TSelf? GetDefault(MeasureUnitCode measureUnitCode)
         {
-            return (TSelf?)GetFactory().CreateDefault(measureUnitTypeCode);
+            return (TSelf?)GetFactory().CreateDefault(measureUnitCode);
         }
 
         public TSelf GetDefault()
         {
-            return GetDefault(MeasureUnitTypeCode)!;
+            return GetDefault(MeasureUnitCode)!;
         }
 
         public TNum GetDefaultRateComponentQuantity()
@@ -227,9 +227,9 @@
             return (TSelf?)base.GetRateComponent(measureUnit, exchangeRate, quantity, customName);
         }
 
-        public override sealed TSelf? GetRateComponent(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
+        public override sealed TSelf? GetRateComponent(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity)
         {
-            return (TSelf?)base.GetRateComponent(customName, measureUnitTypeCode, exchangeRate, quantity);
+            return (TSelf?)base.GetRateComponent(customName, measureUnitCode, exchangeRate, quantity);
         }
         #endregion
         #endregion
@@ -280,8 +280,8 @@
         protected TOther ConvertMeasure<TOther>(ConvertMode convertMode)
             where TOther : IMeasure, IConvertMeasure
         {
-            MeasureUnitTypeCode measureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(typeof(TOther));
-            Enum measureUnit = measureUnitTypeCode.GetDefaultMeasureUnit();
+            MeasureUnitCode measureUnitCode = MeasureUnitTypes.GetMeasureUnitCode(typeof(TOther));
+            Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
             decimal quantity = convertMode switch
             {
                 ConvertMode.Multiply => DefaultQuantity * ConvertRatio,
@@ -307,7 +307,7 @@
                 throw ArgumentTypeOutOfRangeException(nameof(spreadMeasure), spreadMeasure!);
             }
 
-            ValidateMeasureUnitTypeCode(measure.MeasureUnitTypeCode, paramName);
+            ValidateMeasureUnitCode(measure.MeasureUnitCode, paramName);
 
             decimal quantity = measure.GetDecimalQuantity();
 

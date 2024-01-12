@@ -10,7 +10,7 @@
         where TNum : struct
     {
         TSelf GetMeasure(string name, TNum quantity);
-        TSelf GetMeasure(IBaseMeasurement measurement, TNum quantity);
+        TSelf GetMeasure(IMeasurement measurement, TNum quantity);
     }
 
     public interface IMeasure<TSelf, TNum, TEnum> : IMeasure<TSelf, TNum>, IMeasureUnit<TEnum>

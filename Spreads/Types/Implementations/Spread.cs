@@ -15,7 +15,7 @@
         #region Public methods
         public bool AreValidShapeExtents(params IExtent[] shapeExtents)
         {
-            return SpreadMeasures.AreValidShapeExtents(MeasureUnitTypeCode, shapeExtents);
+            return SpreadMeasures.AreValidShapeExtents(MeasureUnitCode, shapeExtents);
         }
 
         #region Override methods
@@ -26,9 +26,9 @@
 
         public override void ValidateMeasureUnit(Enum measureUnit, string paramName)
         {
-            MeasureUnitTypeCode measureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(measureUnit);
+            MeasureUnitCode measureUnitCode = MeasureUnitTypes.GetMeasureUnitCode(measureUnit);
 
-            if (IsValidMeasureUnitTypeCode(measureUnitTypeCode)) return;
+            if (IsValidMeasureUnitCode(measureUnitCode)) return;
 
             throw InvalidMeasureUnitEnumArgumentException(measureUnit, paramName);
         }
@@ -43,11 +43,11 @@
             return (ISpread)GetFactory().CreateBaseSpread(spreadMeasure);
         }
 
-        public override sealed void ValidateMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode, string paramName)
+        public override sealed void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
         {
-            if (IsValidMeasureUnitTypeCode(measureUnitTypeCode)) return;
+            if (IsValidMeasureUnitCode(measureUnitCode)) return;
 
-            throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode, paramName);
+            throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
         }
 
         public override sealed void ValidateQuantity(ValueType? quantity, string paramName)

@@ -31,7 +31,7 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
         {
             if (other == null) return 1;
 
-            other.ValidateMeasureUnitTypeCode(MeasureUnitTypeCode, nameof(other));
+            other.ValidateMeasureUnitCode(MeasureUnitCode, nameof(other));
 
             return DefaultQuantity.CompareTo(other.DefaultQuantity);
         }
@@ -133,11 +133,11 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
 
         public decimal ProportionalTo(IRateComponent rateComponent)
         {
-            MeasureUnitTypeCode measureUnitTypeCode = NullChecked(rateComponent, nameof(rateComponent)).MeasureUnitTypeCode;
+            MeasureUnitCode measureUnitCode = NullChecked(rateComponent, nameof(rateComponent)).MeasureUnitCode;
 
-            if (IsExchangeableTo(measureUnitTypeCode)) return DefaultQuantity / rateComponent.DefaultQuantity;
+            if (IsExchangeableTo(measureUnitCode)) return DefaultQuantity / rateComponent.DefaultQuantity;
 
-            throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode, nameof(rateComponent));
+            throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, nameof(rateComponent));
         }
 
         public IRateComponent Round(RoundingMode roundingMode)
@@ -204,7 +204,7 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
 
         public override sealed int GetHashCode()
         {
-            return HashCode.Combine(DefaultQuantity, MeasureUnitTypeCode);
+            return HashCode.Combine(DefaultQuantity, MeasureUnitCode);
         }
 
         public override sealed void ValidateMeasureUnit(Enum measureUnit, string paramName)
@@ -218,7 +218,7 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
         public virtual bool Equals(IRateComponent? other)
         {
             return DefaultQuantity == other?.DefaultQuantity
-                && MeasureUnitTypeCode == other?.MeasureUnitTypeCode;
+                && MeasureUnitCode == other?.MeasureUnitCode;
         }
         #endregion
 
@@ -236,9 +236,9 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
 
         protected IRateComponent GetRateComponent(IRateComponent rateComponent, IRateComponentFactory factory)
         {
-            if (rateComponent.IsExchangeableTo(MeasureUnitTypeCode)) return factory.CreateNew(rateComponent);
+            if (rateComponent.IsExchangeableTo(MeasureUnitCode)) return factory.CreateNew(rateComponent);
 
-            throw InvalidMeasureUnitTypeCodeEnumArgumentException(rateComponent.MeasureUnitTypeCode, nameof(rateComponent));
+            throw InvalidMeasureUnitCodeEnumArgumentException(rateComponent.MeasureUnitCode, nameof(rateComponent));
         }
 
         protected object GetValidQuantity(ValueType? quantity)
@@ -330,9 +330,9 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
             return GetFactory().Create(measureUnit, exchangeRate, quantity, customName);
         }
 
-        public virtual TSelf? GetRateComponent(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
+        public virtual TSelf? GetRateComponent(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity)
         {
-            return GetFactory().Create(customName, measureUnitTypeCode, exchangeRate, quantity);
+            return GetFactory().Create(customName, measureUnitCode, exchangeRate, quantity);
         }
 
         #region Override methods
@@ -363,7 +363,7 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
         #region Public metthods
         public TSelf GetDefault()
         {
-            return GetDefault(MeasureUnitTypeCode)!;
+            return GetDefault(MeasureUnitCode)!;
         }
 
         public TNum GetDefaultRateComponentQuantity()
@@ -400,7 +400,7 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
 
         #region Abstract methods
         public abstract TSelf GetRateComponent(IRateComponent rateComponent);
-        public abstract TSelf? GetDefault(MeasureUnitTypeCode measureUnitTypeCode);
+        public abstract TSelf? GetDefault(MeasureUnitCode measureUnitCode);
         #endregion
         #endregion
     }

@@ -17,6 +17,6 @@ public interface IDenominatorFactory : IRateComponentFactory<IDenominator>, IDef
     //IDenominator CreateNew(IMeasurement measurement);
     //IDenominator CreateNew(IMeasurement measurement, ValueType quantity);
     //IDenominator CreateNew(Enum measureUnit, decimal exchangeRate, string customName, ValueType quantity);
-    //IDenominator CreateNew(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity);
+    //IDenominator CreateNew(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity);
     ////IDenominator CreateNew(IRateComponent rateComponent);
     //IDenominator CreateNew(IDenominator denominator);

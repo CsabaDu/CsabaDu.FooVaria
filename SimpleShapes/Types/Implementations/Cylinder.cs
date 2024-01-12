@@ -18,10 +18,10 @@ internal sealed class Cylinder : DryBody<ICylinder, ICircle>, ICylinder
 
     #region Properties
     #region Override properties
-    public override IExtent? this[ShapeExtentTypeCode shapeExtentTypeCode] => shapeExtentTypeCode switch
+    public override IExtent? this[ShapeExtentCode shapeExtentCode] => shapeExtentCode switch
     {
-        ShapeExtentTypeCode.Radius => GetRadius(),
-        ShapeExtentTypeCode.Height => Height,
+        ShapeExtentCode.Radius => GetRadius(),
+        ShapeExtentCode.Height => Height,
 
         _ => null,
     };
@@ -85,7 +85,7 @@ internal sealed class Cylinder : DryBody<ICylinder, ICircle>, ICylinder
         return (ICylinderFactory)Factory;
     }
 
-    public override IPlaneShape GetProjection(ShapeExtentTypeCode perpendicular)
+    public override IPlaneShape GetProjection(ShapeExtentCode perpendicular)
     {
         return GetBaseFaceFactory().CreateProjection(this, perpendicular)!;
     }

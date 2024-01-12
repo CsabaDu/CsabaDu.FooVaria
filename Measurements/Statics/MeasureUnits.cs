@@ -33,9 +33,9 @@
     //    {
     //        if (!IsDefinedMeasureUnit(measureUnit)) return false;
 
-    //        MeasureUnitTypeCode measureUnitTypeCode = GetMeasureUnitTypeCode(measureUnit);
+    //        MeasureUnitCode measureUnitCode = GetMeasureUnitCode(measureUnit);
 
-    //        return measureUnitTypeCode.IsCustomMeasureUnitTypeCode();
+    //        return measureUnitCode.IsCustomMeasureUnitCode();
     //    }
 
     //    public static bool IsValidMeasureUnit(Enum? measureUnit)

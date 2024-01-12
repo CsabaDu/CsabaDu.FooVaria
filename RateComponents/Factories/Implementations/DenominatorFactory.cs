@@ -69,18 +69,18 @@ public sealed class DenominatorFactory : RateComponentFactory<IDenominator>, IDe
         return GetOrCreateStoredDenominator(measurement, quantity);
     }
 
-    public override IDenominator? Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
+    public override IDenominator? Create(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity)
     {
-        IMeasurement? measurement = MeasurementFactory.Create(customName, measureUnitTypeCode, exchangeRate);
+        IMeasurement? measurement = MeasurementFactory.Create(customName, measureUnitCode, exchangeRate);
 
         if (measurement == null) return null;
 
         return GetOrCreateStoredDenominator(measurement, quantity);
     }
 
-    public IDenominator? CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
+    public IDenominator? CreateDefault(MeasureUnitCode measureUnitCode)
     {
-        IMeasurement? measurement = MeasurementFactory.CreateDefault(measureUnitTypeCode);
+        IMeasurement? measurement = MeasurementFactory.CreateDefault(measureUnitCode);
 
         if (measurement == null) return null;
 

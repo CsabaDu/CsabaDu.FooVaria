@@ -58,11 +58,11 @@
       <FileName>Types\ICustomMeasurement.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.Measurements.Behaviors.ICustomMeasureUnitTypeCode" Collapsed="true">
+  <Interface Name="CsabaDu.FooVaria.Measurements.Behaviors.ICustomMeasureUnitCode" Collapsed="true">
     <Position X="8.25" Y="4.25" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
-      <FileName>Behaviors\ICustomMeasureUnitTypeCode.cs</FileName>
+      <FileName>Behaviors\ICustomMeasureUnitCode.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Common.Types.IDefaultMeasurable&lt;TSelf&gt;" Collapsed="true">

@@ -20,9 +20,9 @@ namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations
         #region Public methods
         public IRateComponent Create(Enum measureUnit, decimal defaultQuantity)
         {
-            if (NullChecked(measureUnit, nameof(measureUnit)) is not MeasureUnitTypeCode measureUnitTypeCode) return Create(measureUnit, defaultQuantity);
+            if (NullChecked(measureUnit, nameof(measureUnit)) is not MeasureUnitCode measureUnitCode) return Create(measureUnit, defaultQuantity);
 
-            return Create(measureUnitTypeCode.GetDefaultMeasureUnit(), defaultQuantity);
+            return Create(measureUnitCode.GetDefaultMeasureUnit(), defaultQuantity);
         }
 
         public IRateComponent CreateNew(IRateComponent other)
@@ -90,7 +90,7 @@ namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations
         #region Abstract methods
         public abstract T Create(IMeasurement measurement, ValueType quantity);
         public abstract T? Create(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName);
-        public abstract T? Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity);
+        public abstract T? Create(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity);
         #endregion
         #endregion
     }

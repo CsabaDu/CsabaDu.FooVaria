@@ -1,6 +1,6 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Behaviors;
+﻿//namespace CsabaDu.FooVaria.RateComponents.Behaviors;
 
-public interface IRateComponentCode
-{
-    RateComponentCode GetRateComponentCode();
-}
+//public interface IRateComponentCode
+//{
+//    RateComponentCode GetRateComponentCode();
+//}

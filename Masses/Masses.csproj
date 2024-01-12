@@ -7,10 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\BaseTypes\Common\Common.csproj" />
+    <ProjectReference Include="..\BaseTypes\Quantifiables\Quantifiables.csproj" />
+    <ProjectReference Include="..\Measurements\Measurements.csproj" />
     <ProjectReference Include="..\Proportions\Proportions.csproj" />
     <ProjectReference Include="..\RateComponents\RateComponents.csproj" />
-    <ProjectReference Include="..\Shapes\SimpleShapes.csproj" />
+    <ProjectReference Include="..\SimpleShapes\SimpleShapes.csproj" />
     <ProjectReference Include="..\Spreads\Spreads.csproj" />
   </ItemGroup>
 

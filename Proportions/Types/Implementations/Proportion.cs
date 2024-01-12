@@ -7,7 +7,7 @@
         {
             validateMeasureUnits();
 
-            NumeratorMeasureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(numeratorMeasureUnit);
+            NumeratorMeasureUnitCode = MeasureUnitTypes.GetMeasureUnitCode(numeratorMeasureUnit);
             DefaultQuantity = getValidDefaultQuantity();
 
             #region Local methods
@@ -39,7 +39,7 @@
         #endregion
 
         #region Properties
-        public MeasureUnitTypeCode NumeratorMeasureUnitTypeCode { get; init; }
+        public MeasureUnitCode NumeratorMeasureUnitCode { get; init; }
 
         #region Override properties
         #region Sealed properties
@@ -54,9 +54,9 @@
             return GetFactory().Create(baseRate);
         }
 
-        public IProportion GetProportion(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
+        public IProportion GetProportion(MeasureUnitCode numeratorMeasureUnitCode, decimal defaultQuantity, MeasureUnitCode denominatorMeasureUnitCode)
         {
-            return GetFactory().Create(numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode);
+            return GetFactory().Create(numeratorMeasureUnitCode, defaultQuantity, denominatorMeasureUnitCode);
         }
 
         public IProportion GetProportion(IRateComponent numerator, IRateComponent denominator)
@@ -66,9 +66,9 @@
 
         #region Override methods
         #region Sealed methods
-        public override sealed IProportion GetBaseRate(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
+        public override sealed IProportion GetBaseRate(MeasureUnitCode numeratorMeasureUnitCode, decimal defaultQuantity, MeasureUnitCode denominatorMeasureUnitCode)
         {
-            return GetFactory().Create(numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode);
+            return GetFactory().Create(numeratorMeasureUnitCode, defaultQuantity, denominatorMeasureUnitCode);
         }
 
         public override sealed IProportionFactory GetFactory()
@@ -78,17 +78,17 @@
 
         public override sealed Enum GetMeasureUnit()
         {
-            return NumeratorMeasureUnitTypeCode.GetDefaultMeasureUnit();
+            return NumeratorMeasureUnitCode.GetDefaultMeasureUnit();
         }
 
-        public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
+        public override sealed IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
         {
-            return base.GetMeasureUnitTypeCodes();
+            return base.GetMeasureUnitCodes();
         }
 
-        public override sealed MeasureUnitTypeCode GetNumeratorMeasureUnitTypeCode()
+        public override sealed MeasureUnitCode GetNumeratorMeasureUnitCode()
         {
-            return NumeratorMeasureUnitTypeCode;
+            return NumeratorMeasureUnitCode;
         }
 
         public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
@@ -107,10 +107,10 @@
                 throw ArgumentTypeOutOfRangeException(nameof(multiplier), multiplier);
             }
 
-            ValidateMeasureUnitTypeCode(measure.MeasureUnitTypeCode, nameof(multiplier));
+            ValidateMeasureUnitCode(measure.MeasureUnitCode, nameof(multiplier));
 
             decimal quantity = measure.DefaultQuantity * DefaultQuantity;
-            Enum measureUnit = NumeratorMeasureUnitTypeCode.GetDefaultMeasureUnit();
+            Enum measureUnit = NumeratorMeasureUnitCode.GetDefaultMeasureUnit();
 
             return (IMeasure)measure.GetRateComponent(measureUnit, quantity);
         }
@@ -138,9 +138,9 @@
             return GetFactory().Create(numerator, denominatorMeasureUnit);
         }
 
-        public IProportion<TDEnum> GetProportion(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal numeratorDefaultQuantity, TDEnum denominatorMeasureUnit)
+        public IProportion<TDEnum> GetProportion(MeasureUnitCode numeratorMeasureUnitCode, decimal numeratorDefaultQuantity, TDEnum denominatorMeasureUnit)
         {
-            return GetFactory().Create(numeratorMeasureUnitTypeCode, numeratorDefaultQuantity, denominatorMeasureUnit);
+            return GetFactory().Create(numeratorMeasureUnitCode, numeratorDefaultQuantity, denominatorMeasureUnit);
         }
 
         public decimal GetQuantity(TDEnum denominatorMeasureUnit)

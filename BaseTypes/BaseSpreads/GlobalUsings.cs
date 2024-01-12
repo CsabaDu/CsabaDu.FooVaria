@@ -1,0 +1,12 @@
+﻿global using CsabaDu.FooVaria.BaseSpreads.Factories;
+global using CsabaDu.FooVaria.BaseSpreads.Types;
+global using CsabaDu.FooVaria.Common.Enums;
+global using CsabaDu.FooVaria.Measurables.Statics;
+global using CsabaDu.FooVaria.Measurables.Types;
+global using CsabaDu.FooVaria.Quantifiables.Behaviors;
+global using CsabaDu.FooVaria.Quantifiables.Factories;
+global using CsabaDu.FooVaria.Quantifiables.Types;
+global using CsabaDu.FooVaria.Quantifiables.Types.Implementations;
+global using static CsabaDu.FooVaria.Common.Statics.ExceptionMethods;
+global using static CsabaDu.FooVaria.Common.Statics.Extensions;
+global using static CsabaDu.FooVaria.Measurables.Statics.MeasureUnitTypes;

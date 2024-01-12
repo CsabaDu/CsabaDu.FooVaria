@@ -1,5 +1,5 @@
 ﻿namespace CsabaDu.FooVaria.SimpleShapes.Factories;
 
-public interface ITangentShapeFactory : IBaseShapeFactory
+public interface ITangentShapeFactory : ISimpleShapeFactory
 {
 }

@@ -28,9 +28,9 @@ public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
         return new LimitedRate(this, numerator, denominatorMeasureUnit, denominatorQuantity, limit);
     }
 
-    public ILimitedRate Create(IMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode, ILimit limit)
+    public ILimitedRate Create(IMeasure numerator, MeasureUnitCode denominatorMeasureUnitCode, ILimit limit)
     {
-        return new LimitedRate(this, numerator, denominatorMeasureUnitTypeCode, limit);
+        return new LimitedRate(this, numerator, denominatorMeasureUnitCode, limit);
     }
 
     public ILimitedRate Create(IMeasure numerator, IMeasurement denominatorMeasurement, ILimit limit)
@@ -82,13 +82,13 @@ public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
         return Create(measure, denominator, limit);
     }
 
-    public override ILimitedRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
+    public override ILimitedRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitCode denominatorMeasureUnitCode)
     {
         IMeasure measure = GetValidRateParam<IMeasure>(numerator, nameof(numerator));
-        ILimit limit = LimitFactory.CreateDefault(denominatorMeasureUnitTypeCode)
-            ?? throw InvalidMeasureUnitTypeCodeEnumArgumentException(denominatorMeasureUnitTypeCode, nameof(denominatorMeasureUnitTypeCode));
+        ILimit limit = LimitFactory.CreateDefault(denominatorMeasureUnitCode)
+            ?? throw InvalidMeasureUnitCodeEnumArgumentException(denominatorMeasureUnitCode, nameof(denominatorMeasureUnitCode));
 
-        return Create(measure, denominatorMeasureUnitTypeCode, limit);
+        return Create(measure, denominatorMeasureUnitCode, limit);
     }
 
     public ILimitedRate CreateNew(ILimitedRate other)

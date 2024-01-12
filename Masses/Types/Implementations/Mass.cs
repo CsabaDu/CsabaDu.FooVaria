@@ -23,7 +23,7 @@
             #endregion
         }
 
-        private protected Mass(IMassFactory factory, IWeight weight, IPlaneShape baseFace, IExtent height) : base(factory, MeasureUnitTypeCode.WeightUnit, baseFace, height)
+        private protected Mass(IMassFactory factory, IWeight weight, IPlaneShape baseFace, IExtent height) : base(factory, MeasureUnitCode.WeightUnit, baseFace, height)
         {
             validateParams();
 
@@ -39,7 +39,7 @@
             #endregion
         }
 
-        private protected Mass(IMassFactory factory, IWeight weight, params IExtent[] shapeExtents) : base(factory, MeasureUnitTypeCode.WeightUnit, shapeExtents)
+        private protected Mass(IMassFactory factory, IWeight weight, params IExtent[] shapeExtents) : base(factory, MeasureUnitCode.WeightUnit, shapeExtents)
         {
             validateParams();
 
@@ -60,10 +60,10 @@
 
         #region Properties
         public IWeight Weight { get; init; }
-        public IMeasure? this[MeasureUnitTypeCode measureUnitTypeCode] => measureUnitTypeCode switch
+        public IMeasure? this[MeasureUnitCode measureUnitCode] => measureUnitCode switch
         {
-            MeasureUnitTypeCode.VolumeUnit => GetVolume(),
-            MeasureUnitTypeCode.WeightUnit => Weight,
+            MeasureUnitCode.VolumeUnit => GetVolume(),
+            MeasureUnitCode.WeightUnit => Weight,
 
             _ => null,
         };
@@ -101,18 +101,18 @@
             return GetFactory().CreateDensity(this);
         }
 
-        public MeasureUnitTypeCode GetMeasureUnitTypeCode()
+        public MeasureUnitCode GetMeasureUnitCode()
         {
             bool isVolumeWeightGreater = GetDensity().DefaultQuantity < 1;
 
-            return GetMeasureUnitTypeCode(isVolumeWeightGreater);
+            return GetMeasureUnitCode(isVolumeWeightGreater);
         }
 
-        public MeasureUnitTypeCode GetMeasureUnitTypeCode(decimal ratio)
+        public MeasureUnitCode GetMeasureUnitCode(decimal ratio)
         {
             bool isVolumeWeightGreater = GetVolumeWeight(ratio).CompareTo(Weight) < 0;
 
-            return GetMeasureUnitTypeCode(isVolumeWeightGreater);
+            return GetMeasureUnitCode(isVolumeWeightGreater);
         }
 
         public double GetQuantity()
@@ -154,14 +154,14 @@
 
         public bool IsExchangeableTo(Enum? context)
         {
-            if (context is MeasureUnitTypeCode measureUnitTypeCode) return hasMeasureUnitTypeCode(measureUnitTypeCode);
+            if (context is MeasureUnitCode measureUnitCode) return hasMeasureUnitCode(measureUnitCode);
 
-            return IsValidMeasureUnit(context) && hasMeasureUnitTypeCode(MeasureUnitTypes.GetMeasureUnitTypeCode(context!));
+            return IsValidMeasureUnit(context) && hasMeasureUnitCode(MeasureUnitTypes.GetMeasureUnitCode(context!));
 
             #region Local methods
-            bool hasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
+            bool hasMeasureUnitCode(MeasureUnitCode measureUnitCode)
             {
-                return GetMeasureUnitTypeCodes().Contains(measureUnitTypeCode);
+                return GetMeasureUnitCodes().Contains(measureUnitCode);
             }
             #endregion
         }
@@ -193,10 +193,10 @@
         }
 
         #region Override methods
-        public override IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
+        public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
         {
-            yield return MeasureUnitTypeCode.WeightUnit;
-            yield return MeasureUnitTypeCode.VolumeUnit;
+            yield return MeasureUnitCode.WeightUnit;
+            yield return MeasureUnitCode.VolumeUnit;
         }
 
         public override IMassFactory GetFactory()
@@ -324,11 +324,11 @@
                 : Weight;
         }
 
-        private MeasureUnitTypeCode GetMeasureUnitTypeCode(bool isVolumeWeightGreater)
+        private MeasureUnitCode GetMeasureUnitCode(bool isVolumeWeightGreater)
         {
             return isVolumeWeightGreater ?
-                GetBody().MeasureUnitTypeCode
-                : Weight.MeasureUnitTypeCode;
+                GetBody().MeasureUnitCode
+                : Weight.MeasureUnitCode;
         }
 
         #region Static methods

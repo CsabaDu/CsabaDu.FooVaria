@@ -36,9 +36,9 @@ public sealed class MeasureFactory : RateComponentFactory<IMeasure>, IMeasureFac
         return CreateMeasure(measurement, quantity);
     }
 
-    public override IMeasure? Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity)
+    public override IMeasure? Create(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity)
     {
-        IMeasurement? measurement = MeasurementFactory.Create(customName, measureUnitTypeCode, exchangeRate);
+        IMeasurement? measurement = MeasurementFactory.Create(customName, measureUnitCode, exchangeRate);
 
         if (measurement == null) return null;
 
@@ -52,9 +52,9 @@ public sealed class MeasureFactory : RateComponentFactory<IMeasure>, IMeasureFac
         return CreateMeasure(measurement, quantity);
     }
 
-    public IMeasure? CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
+    public IMeasure? CreateDefault(MeasureUnitCode measureUnitCode)
     {
-        IMeasurement? measurement = MeasurementFactory.CreateDefault(measureUnitTypeCode);
+        IMeasurement? measurement = MeasurementFactory.CreateDefault(measureUnitCode);
 
         if (measurement == null) return null;
 

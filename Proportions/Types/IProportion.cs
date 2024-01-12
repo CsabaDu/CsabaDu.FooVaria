@@ -2,8 +2,8 @@
 {
     public interface IProportion : IBaseRate
     {
-        MeasureUnitTypeCode NumeratorMeasureUnitTypeCode { get; init; }
-        //MeasureUnitTypeCode? this[RateComponentCode rateComponentCode] { get; }
+        MeasureUnitCode NumeratorMeasureUnitCode { get; init; }
+        //MeasureUnitCode? this[RateComponentCode rateComponentCode] { get; }
 
         IProportion GetProportion(IBaseRate baseRate);
         IProportion GetProportion(IRateComponent numerator, IRateComponent denominator);
@@ -13,7 +13,7 @@
         where TDEnum : struct, Enum
     {
         IProportion<TDEnum> GetProportion(IRateComponent numerator, TDEnum denominatorMeasureUnit);
-        IProportion<TDEnum> GetProportion(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal numeratorDefaultQuantity, TDEnum denominatorMeasureUnit);
+        IProportion<TDEnum> GetProportion(MeasureUnitCode numeratorMeasureUnitCode, decimal numeratorDefaultQuantity, TDEnum denominatorMeasureUnit);
         decimal GetQuantity(TDEnum denominatorMeasureUnit);
     }
 

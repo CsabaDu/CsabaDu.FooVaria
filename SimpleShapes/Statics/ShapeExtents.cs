@@ -52,11 +52,11 @@ public static class ShapeExtents
         {
             ValidateMeasureUnit(extentUnit, nameof(extentUnit));
 
-            IEnumerable<ShapeExtentTypeCode> shapeExtentTypeCodes = shape.GetShapeExtentTypeCodes();
+            IEnumerable<ShapeExtentCode> shapeExtentCodes = shape.GetShapeExtentCodes();
             int i = 0;
             decimal quantitySquares = getDefaultQuantitySquare();
 
-            for (i = 1; i < shapeExtentTypeCodes.Count(); i++)
+            for (i = 1; i < shapeExtentCodes.Count(); i++)
             {
                 quantitySquares += getDefaultQuantitySquare();
             }
@@ -69,7 +69,7 @@ public static class ShapeExtents
             #region Local methods
             IExtent getShapeExtent()
             {
-                return shape.GetShapeExtent(shapeExtentTypeCodes.ElementAt(i));
+                return shape.GetShapeExtent(shapeExtentCodes.ElementAt(i));
             }
 
             decimal getDefaultQuantitySquare()

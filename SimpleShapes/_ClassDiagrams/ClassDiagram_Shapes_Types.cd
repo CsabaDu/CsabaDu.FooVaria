@@ -47,7 +47,7 @@
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Shapes.Types.ITangentShape" Collapsed="true">
     <Position X="8" Y="5.5" Width="1.5" />
-    <InheritanceLine Type="CsabaDu.FooVaria.Common.Types.IBaseShape" FixedFromPoint="true">
+    <InheritanceLine Type="CsabaDu.FooVaria.Common.Types.IShape" FixedFromPoint="true">
       <Path>
         <Point X="8.75" Y="4.899" />
         <Point X="8.75" Y="5.5" />
@@ -270,7 +270,7 @@
       <FileName>Types\ICylinder.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.Common.Types.IBaseShape" Collapsed="true">
+  <Interface Name="CsabaDu.FooVaria.Common.Types.IShape" Collapsed="true">
     <Position X="7.5" Y="1.75" Width="2" />
     <InheritanceLine Type="CsabaDu.FooVaria.Common.Behaviors.IShapeComponents" FixedFromPoint="true">
       <Path>
@@ -403,7 +403,7 @@
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Shapes.Types.IShape" Collapsed="true">
     <Position X="5.25" Y="10.75" Width="2" />
-    <InheritanceLine Type="CsabaDu.FooVaria.Common.Types.IBaseShape" FixedFromPoint="true">
+    <InheritanceLine Type="CsabaDu.FooVaria.Common.Types.IShape" FixedFromPoint="true">
       <Path>
         <Point X="8.25" Y="4.899" />
         <Point X="8.25" Y="5.199" />

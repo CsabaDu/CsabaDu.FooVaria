@@ -36,9 +36,9 @@ internal sealed class Denominator : RateComponent<IDenominator, decimal>, IDenom
             && base.Equals(other);
     }
 
-    public override IDenominator? GetDefault(MeasureUnitTypeCode measureUnitTypeCode)
+    public override IDenominator? GetDefault(MeasureUnitCode measureUnitCode)
     {
-        return GetFactory().CreateDefault(measureUnitTypeCode);
+        return GetFactory().CreateDefault(measureUnitCode);
     }
 
     public override IDenominatorFactory GetFactory()

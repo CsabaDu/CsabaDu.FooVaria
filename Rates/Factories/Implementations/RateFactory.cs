@@ -53,7 +53,7 @@ public abstract class RateFactory : IRateFactory
     public abstract IRate Create(params IRateComponent[] rateComponents);
     public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement);
     public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit);
-    public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode);
+    public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitCode denominatorMeasureUnitCode);
     public abstract IRate CreateNew(IRate other);
 
     protected static T GetValidRateParam<T>(IMeasurable measurable, string paramName) where T : class, IMeasurable
@@ -79,7 +79,7 @@ public abstract class RateFactory : IRateFactory
 //    #region Public methods
 //    #region Abstract methods
 //    public abstract IMeasurable CreateNew(IMeasurable other);
-//    public abstract IBaseRate CreateNew(IBaseMeasure numerator, MeasureUnitTypeCode measureUnitTypeCode);
+//    public abstract IBaseRate CreateNew(IBaseMeasure numerator, MeasureUnitCode measureUnitCode);
 //    public abstract IBaseRate CreateNew(IBaseMeasure numerator, Enum denominatorMeasureUnit);
 //    public abstract IRate CreateNew(IRate other);
 
@@ -88,11 +88,11 @@ public abstract class RateFactory : IRateFactory
 //        throw new NotImplementedException();
 //    }
 
-//    //public IBaseRate CreateNew(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
+//    //public IBaseRate CreateNew(MeasureUnitCode numeratorMeasureUnitCode, decimal defaultQuantity, MeasureUnitCode denominatorMeasureUnitCode)
 //    //{
 //    //    throw new NotImplementedException();
 //    //}
-//    //public abstract IBaseMeasurable CreateDefault(MeasureUnitTypeCode measureUnitTypeCode);
+//    //public abstract IBaseMeasurable CreateDefault(MeasureUnitCode measureUnitCode);
 //    #endregion
 //    #endregion
 //}

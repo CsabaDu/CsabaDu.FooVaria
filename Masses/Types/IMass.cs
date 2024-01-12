@@ -3,7 +3,7 @@
 public interface IMass : IQuantifiable, IBody, IDensity, IVolumeWeightRatio
 {
     IWeight Weight { get; init; }
-    IMeasure? this[MeasureUnitTypeCode measureUnitTypeCode] { get; }
+    IMeasure? this[MeasureUnitCode measureUnitCode] { get; }
 
     IVolume GetVolume();
     IMass GetMass(IWeight weight, IBody body);

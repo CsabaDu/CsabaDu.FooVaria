@@ -21,9 +21,9 @@ public sealed class LimitFactory : RateComponentFactory, ILimitFactory
     #endregion
 
     #region Public methods
-    public ILimit? CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
+    public ILimit? CreateDefault(MeasureUnitCode measureUnitCode)
     {
-        IMeasurement? measurement = MeasurementFactory.CreateDefault(measureUnitTypeCode);
+        IMeasurement? measurement = MeasurementFactory.CreateDefault(measureUnitCode);
 
         if (measurement == null) return null;
 
@@ -66,9 +66,9 @@ public sealed class LimitFactory : RateComponentFactory, ILimitFactory
         return GetOrCreateStoredLimit(measurement, quantity, limitMode);
     }
 
-    public ILimit? Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity, LimitMode limitMode)
+    public ILimit? Create(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity, LimitMode limitMode)
     {
-        IMeasurement? measurement = MeasurementFactory.Create(customName, measureUnitTypeCode, exchangeRate);
+        IMeasurement? measurement = MeasurementFactory.Create(customName, measureUnitCode, exchangeRate);
 
         if (measurement == null) return null;
 

@@ -16,7 +16,7 @@ internal sealed class Cash : Measure<ICash, decimal, Currency>, ICash
 
     public ICash? GetNextCustomMeasure(string customName, decimal exchangeRate, decimal quantity)
     {
-        return GetRateComponent(customName, MeasureUnitTypeCode, exchangeRate, quantity);
+        return GetRateComponent(customName, MeasureUnitCode, exchangeRate, quantity);
     }
     #endregion
 }

@@ -12,13 +12,13 @@ public static class SpreadMeasures
     #endregion
 
     #region Public methods
-        public static bool AreValidShapeExtents(MeasureUnitTypeCode measureUnitTypeCode, params IExtent[] shapeExtents)
+        public static bool AreValidShapeExtents(MeasureUnitCode measureUnitCode, params IExtent[] shapeExtents)
     {
         int count = shapeExtents?.Length ?? 0;
-        bool isValidShapeExtentCount = measureUnitTypeCode switch
+        bool isValidShapeExtentCount = measureUnitCode switch
         {
-            MeasureUnitTypeCode.AreaUnit => isValidateShapeExtentsCount(CircleShapeExtentCount, RectangleShapeExtentCount),
-            MeasureUnitTypeCode.VolumeUnit => isValidateShapeExtentsCount(CylinderShapeExtentCount, CuboidShapeExtentCount),
+            MeasureUnitCode.AreaUnit => isValidateShapeExtentsCount(CircleShapeExtentCount, RectangleShapeExtentCount),
+            MeasureUnitCode.VolumeUnit => isValidateShapeExtentsCount(CylinderShapeExtentCount, CuboidShapeExtentCount),
 
             _ => false,
         };
@@ -35,7 +35,7 @@ public static class SpreadMeasures
 
     public static IArea GetArea(IMeasureFactory factory, params IExtent[] shapeExtents)
     {
-        ValidateShapeExtents(MeasureUnitTypeCode.AreaUnit, nameof(shapeExtents), shapeExtents);
+        ValidateShapeExtents(MeasureUnitCode.AreaUnit, nameof(shapeExtents), shapeExtents);
 
         return shapeExtents.Length switch
         {
@@ -82,14 +82,14 @@ public static class SpreadMeasures
         return GetArea(factory, quantity);
     }
 
-    public static IMeasure GetSpreadMeasure(IMeasureFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IExtent[] shapeExtents)
+    public static IMeasure GetSpreadMeasure(IMeasureFactory factory, MeasureUnitCode measureUnitCode, params IExtent[] shapeExtents)
     {
-        return measureUnitTypeCode switch
+        return measureUnitCode switch
         {
-            MeasureUnitTypeCode.AreaUnit => GetArea(factory, shapeExtents),
-            MeasureUnitTypeCode.VolumeUnit => GetVolume(factory, shapeExtents),
+            MeasureUnitCode.AreaUnit => GetArea(factory, shapeExtents),
+            MeasureUnitCode.VolumeUnit => GetVolume(factory, shapeExtents),
 
-            _ => throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode),
+            _ => throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode),
         };
     }
 
@@ -107,22 +107,22 @@ public static class SpreadMeasures
         throw QuantityArgumentOutOfRangeException(paramName, quantity);
     }
 
-    public static IMeasure GetValidSpreadMeasure(MeasureUnitTypeCode measureUnitTypeCode, ISpreadMeasure? spreadMeasure)
+    public static IMeasure GetValidSpreadMeasure(MeasureUnitCode measureUnitCode, ISpreadMeasure? spreadMeasure)
     {
         string paramName = nameof(spreadMeasure);
 
-        MeasureUnitTypes.ValidateMeasureUnitTypeCode(measureUnitTypeCode, nameof(measureUnitTypeCode));
+        MeasureUnitTypes.ValidateMeasureUnitCode(measureUnitCode, nameof(measureUnitCode));
 
         IMeasure measure = GetValidSpreadMeasure(spreadMeasure);
 
-        if (measure.IsExchangeableTo(measureUnitTypeCode)) return measure;
+        if (measure.IsExchangeableTo(measureUnitCode)) return measure;
         
         throw ArgumentTypeOutOfRangeException(paramName, spreadMeasure!);
     }
 
     public static IVolume GetVolume(IMeasureFactory factory, params IExtent[] shapeExtents)
     {
-        ValidateShapeExtents(MeasureUnitTypeCode.VolumeUnit, nameof(shapeExtents), shapeExtents);
+        ValidateShapeExtents(MeasureUnitCode.VolumeUnit, nameof(shapeExtents), shapeExtents);
 
         return shapeExtents.Length switch
         {
@@ -133,21 +133,21 @@ public static class SpreadMeasures
         };
     }
 
-    public static void ValidateShapeExtents(MeasureUnitTypeCode measureUnitTypeCode, string paramName, params IExtent[] shapeExtents)
+    public static void ValidateShapeExtents(MeasureUnitCode measureUnitCode, string paramName, params IExtent[] shapeExtents)
     {
         int count = shapeExtents?.Length ?? 0;
 
-        switch (measureUnitTypeCode)
+        switch (measureUnitCode)
         {
-            case MeasureUnitTypeCode.AreaUnit:
+            case MeasureUnitCode.AreaUnit:
                 validateShapeExtentsCount(CircleShapeExtentCount, RectangleShapeExtentCount);
                 break;
-            case MeasureUnitTypeCode.VolumeUnit:
+            case MeasureUnitCode.VolumeUnit:
                 validateShapeExtentsCount(CylinderShapeExtentCount, CuboidShapeExtentCount);
                 break;
 
             default:
-                throw InvalidMeasureUnitTypeCodeEnumArgumentException(measureUnitTypeCode);
+                throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode);
         }
 
         foreach (IExtent item in shapeExtents!)

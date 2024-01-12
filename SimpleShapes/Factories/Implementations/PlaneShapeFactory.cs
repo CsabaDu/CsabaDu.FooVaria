@@ -9,16 +9,16 @@
         #endregion
 
         #region Public methods
-        public IPlaneShape? CreateProjection(IDryBody dryBody, ShapeExtentTypeCode perpendicular)
+        public IPlaneShape? CreateProjection(IDryBody dryBody, ShapeExtentCode perpendicular)
         {
-            if (dryBody?.IsValidShapeExtentTypeCode(perpendicular) != true) return null;
+            if (dryBody?.IsValidShapeExtentCode(perpendicular) != true) return null;
 
             return perpendicular switch
             {
-                ShapeExtentTypeCode.Radius => createCylinderVerticalProjection(),
-                ShapeExtentTypeCode.Length => createCuboidVerticalProjection(),
-                ShapeExtentTypeCode.Width => createCuboidVerticalProjection(),
-                ShapeExtentTypeCode.Height => createHorizontalProjection(),
+                ShapeExtentCode.Radius => createCylinderVerticalProjection(),
+                ShapeExtentCode.Length => createCuboidVerticalProjection(),
+                ShapeExtentCode.Width => createCuboidVerticalProjection(),
+                ShapeExtentCode.Height => createHorizontalProjection(),
 
                 _ => null,
             };
@@ -34,9 +34,9 @@
 
             IRectangle createCuboidVerticalProjection()
             {
-                perpendicular = perpendicular == ShapeExtentTypeCode.Length ?
-                    ShapeExtentTypeCode.Width
-                    : ShapeExtentTypeCode.Length;
+                perpendicular = perpendicular == ShapeExtentCode.Length ?
+                    ShapeExtentCode.Width
+                    : ShapeExtentCode.Length;
 
                 IExtent horizontal = dryBody.GetShapeExtent(perpendicular);
                 ICuboidFactory factory = (ICuboidFactory)dryBody.GetFactory();

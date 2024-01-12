@@ -25,19 +25,19 @@ public sealed class MeasurementFactory : IMeasurementFactory
         return GetStoredMeasurement(measureUnit);
     }
 
-    public IMeasurement? Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
+    public IMeasurement? Create(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate)
     {
-        IMeasurement? measurement = CreateDefault(measureUnitTypeCode);
+        IMeasurement? measurement = CreateDefault(measureUnitCode);
 
         if (measurement == null) return null;
 
-        bool success = measurement.TryGetMeasureUnit(measureUnitTypeCode, exchangeRate, out Enum? measureUnit)
+        bool success = measurement.TryGetMeasureUnit(measureUnitCode, exchangeRate, out Enum? measureUnit)
             && measurement.TrySetCustomName(measureUnit, customName);
 
         if (success) return GetStoredMeasurement(measureUnit!);
 
         success = measurement is ICustomMeasurement customMeasurement
-            && customMeasurement.TrySetCustomMeasureUnit(customName, measureUnitTypeCode, exchangeRate);
+            && customMeasurement.TrySetCustomMeasureUnit(customName, measureUnitCode, exchangeRate);
         measureUnit = measurement.GetMeasureUnit(customName);
         success = success
             && measureUnit != null;
@@ -56,9 +56,9 @@ public sealed class MeasurementFactory : IMeasurementFactory
 
         if (success) return GetStoredMeasurement(measureUnit);
 
-        if (!TryGetMeasureUnitTypeCode(measureUnit, out MeasureUnitTypeCode? measureUnitTypeCode)) return null;
+        if (!TryGetMeasureUnitCode(measureUnit, out MeasureUnitCode? measureUnitCode)) return null;
 
-        measurement = CreateDefault(measureUnitTypeCode.Value);
+        measurement = CreateDefault(measureUnitCode.Value);
         success = measurement is ICustomMeasurement customMeasurement
             && customMeasurement.TrySetCustomMeasureUnit(measureUnit, exchangeRate, customName);
 
@@ -83,7 +83,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
     {
         return context switch
         {
-            MeasureUnitTypeCode measureUnitTypeCode => CreateDefault(measureUnitTypeCode),
+            MeasureUnitCode measureUnitCode => CreateDefault(measureUnitCode),
             Enum measureUnit => GetStoredMeasurementOrNull(measureUnit, true),
             string name => GetStoredMeasurementOrNull(name),
             BaseMeasurement baseMeasurement => Create(baseMeasurement),
@@ -92,9 +92,9 @@ public sealed class MeasurementFactory : IMeasurementFactory
         };
     }
 
-    public IMeasurement? CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
+    public IMeasurement? CreateDefault(MeasureUnitCode measureUnitCode)
     {
-        Enum? measureUnit = GetDefaultMeasureUnit(measureUnitTypeCode);
+        Enum? measureUnit = GetDefaultMeasureUnit(measureUnitCode);
 
         bool success = measureUnit != null;
 
@@ -116,7 +116,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
         Enum measureUnit = (Enum)obj;
         MeasurementFactory factory = new();
 
-        return GetMeasureUnitTypeCode(measureUnit).IsCustomMeasureUnitTypeCode() ?
+        return GetMeasureUnitCode(measureUnit).IsCustomMeasureUnitCode() ?
             new CustomMeasurement(factory, measureUnit)
             : new ConstantMeasurement(factory, measureUnit);
     }

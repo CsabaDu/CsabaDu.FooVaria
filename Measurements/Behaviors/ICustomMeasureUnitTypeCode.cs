@@ -1,7 +1,7 @@
 ﻿namespace CsabaDu.FooVaria.Measurements.Behaviors
 {
-    public interface ICustomMeasureUnitTypeCode
+    public interface ICustomMeasureUnitCode
     {
-        void ValidateCustomMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode);
+        void ValidateCustomMeasureUnitCode(MeasureUnitCode measureUnitCode);
     }
 }

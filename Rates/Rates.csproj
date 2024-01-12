@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\BaseTypes\Common\Common.csproj" />
+    <ProjectReference Include="..\BaseTypes\Measurables\Measurables.csproj" />
+    <ProjectReference Include="..\BaseTypes\Quantifiables\Quantifiables.csproj" />
     <ProjectReference Include="..\RateComponents\RateComponents.csproj" />
   </ItemGroup>
 

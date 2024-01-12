@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.SimpleShapes.Factories
 {
-    public interface IDryBodyFactory : IShapeFactory, IBodyFactory
+    public interface IDryBodyFactory : ISimpleShapeFactory, IBodyFactory
     {
         IPlaneShapeFactory BaseFaceFactory { get; init; }
 

@@ -19,7 +19,7 @@
             #region Local methods
             IDryBody getDryBody()
             {
-                IBaseShape? baseShape = GetBodyFactory().CreateBaseShape(shapeExtents);
+                IShape? baseShape = GetBodyFactory().CreateBaseShape(shapeExtents);
 
                 if (baseShape is IDryBody dryBody) return dryBody;
 
@@ -95,9 +95,9 @@
             return (IDryMassFactory)Factory;
         }
 
-        public override IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
+        public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
         {
-            return base.GetMeasureUnitTypeCodes().Append(MeasureUnitTypeCode.ExtentUnit);
+            return base.GetMeasureUnitCodes().Append(MeasureUnitCode.ExtentUnit);
         }
 
         public override IMass GetMass(IWeight weight, IBody body)
