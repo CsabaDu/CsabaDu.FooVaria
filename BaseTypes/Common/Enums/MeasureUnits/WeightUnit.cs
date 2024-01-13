@@ -1,8 +1,8 @@
-﻿namespace CsabaDu.FooVaria.Common.Enums.MeasureUnits;
+﻿//namespace CsabaDu.FooVaria.Common.Enums.MeasureUnits;
 
-public enum WeightUnit
-{
-    g,
-    kg,
-    ton
-}
+//public enum WeightUnit
+//{
+//    g,
+//    kg,
+//    ton
+//}

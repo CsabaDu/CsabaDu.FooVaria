@@ -1,5 +1,6 @@
 ﻿using CsabaDu.FooVaria.Measurables.Statics;
 using CsabaDu.FooVaria.Quantifiables.Behaviors;
+using CsabaDu.FooVaria.Quantifiables.Enums;
 using CsabaDu.FooVaria.Quantifiables.Statics;
 
 namespace CsabaDu.FooVaria.Masses.Types.Implementations

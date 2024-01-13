@@ -1,4 +1,9 @@
-﻿namespace CsabaDu.FooVaria.Proportions.Types.Implementations
+﻿using CsabaDu.FooVaria.Measurables.Enums;
+using CsabaDu.FooVaria.Measurables.Statics;
+using CsabaDu.FooVaria.Quantifiables.Statics;
+using CsabaDu.FooVaria.Quantifiables.Types.Implementations;
+
+namespace CsabaDu.FooVaria.Proportions.Types.Implementations
 {
     internal abstract class Proportion : BaseRate, IProportion
     {
@@ -100,20 +105,20 @@
             throw QuantityArgumentOutOfRangeException(paramName, quantity);
         }
 
-        public IMeasure Multiply(Enum multiplier) // Validate?
-        {
-            if (NullChecked(multiplier, nameof(multiplier)) is not IMeasure measure)
-            {
-                throw ArgumentTypeOutOfRangeException(nameof(multiplier), multiplier);
-            }
+        //public IMeasure Denominate(Enum multiplier) // Validate?
+        //{
+        //    if (NullChecked(multiplier, nameof(multiplier)) is not IMeasure measure)
+        //    {
+        //        throw ArgumentTypeOutOfRangeException(nameof(multiplier), multiplier);
+        //    }
 
-            ValidateMeasureUnitCode(measure.MeasureUnitCode, nameof(multiplier));
+        //    ValidateMeasureUnitCode(measure.MeasureUnitCode, nameof(multiplier));
 
-            decimal quantity = measure.DefaultQuantity * DefaultQuantity;
-            Enum measureUnit = NumeratorMeasureUnitCode.GetDefaultMeasureUnit();
+        //    decimal quantity = measure.GetDefaultQuantity() * DefaultQuantity;
+        //    Enum measureUnit = NumeratorMeasureUnitCode.GetDefaultMeasureUnit();
 
-            return (IMeasure)measure.GetRateComponent(measureUnit, quantity);
-        }
+        //    return (IMeasure)measure.GetBaseMeasure(measureUnit, quantity);
+        //}
         #endregion
         #endregion
         #endregion

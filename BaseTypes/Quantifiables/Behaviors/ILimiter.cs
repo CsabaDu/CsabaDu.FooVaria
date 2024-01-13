@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Quantifiables.Behaviors
+﻿using CsabaDu.FooVaria.Quantifiables.Enums;
+
+namespace CsabaDu.FooVaria.Quantifiables.Behaviors
 {
     public interface ILimiter
     {

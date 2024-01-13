@@ -1,11 +1,16 @@
-﻿global using CsabaDu.FooVaria.Common.Enums;
-global using CsabaDu.FooVaria.Common.Enums.MeasureUnits;
-global using CsabaDu.FooVaria.Measures.Types;
+﻿global using CsabaDu.FooVaria.Measurables.Behaviors;
+global using CsabaDu.FooVaria.Measurables.Enums;
+global using CsabaDu.FooVaria.Measurables.Statics;
+global using CsabaDu.FooVaria.Measurables.Types;
 global using CsabaDu.FooVaria.Proportions.Factories;
 global using CsabaDu.FooVaria.Proportions.Types;
 global using CsabaDu.FooVaria.Proportions.Types.Implementations;
+global using CsabaDu.FooVaria.Quantifiables.Behaviors;
+global using CsabaDu.FooVaria.Quantifiables.Factories;
+global using CsabaDu.FooVaria.Quantifiables.Types;
 global using CsabaDu.FooVaria.RateComponents.Factories;
 global using CsabaDu.FooVaria.RateComponents.Types;
 global using static CsabaDu.FooVaria.Common.Statics.ExceptionMethods;
+global using static CsabaDu.FooVaria.Measurables.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.Measurables.Statics.MeasureUnits;
-
+global using static CsabaDu.FooVaria.Quantifiables.Statics.ExceptionMethods;

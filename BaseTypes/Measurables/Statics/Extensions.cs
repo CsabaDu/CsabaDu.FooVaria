@@ -1,8 +1,10 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Statics;
+﻿using CsabaDu.FooVaria.Measurables.Enums;
+
+namespace CsabaDu.FooVaria.Measurables.Statics;
 
 public static class Extensions
 {
-    #region CsabaDu.FooVaria.Common.Enums.MeasureUnitCode
+    #region CsabaDu.FooVaria.Measurables.Enums.MeasureUnitCode
     public static TypeCode GetQuantityTypeCode(this MeasureUnitCode measureUnitCode)
     {
         return measureUnitCode switch

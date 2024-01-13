@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Quantifiables.Types;
+﻿using CsabaDu.FooVaria.Measurables.Enums;
+using CsabaDu.FooVaria.Quantifiables.Enums;
+
+namespace CsabaDu.FooVaria.Quantifiables.Types;
 
 public interface IBaseRate : IQuantifiable, IQuantity<decimal>, IProportional<IBaseRate>, IDenominate
 {

@@ -75,10 +75,10 @@ public abstract class Quantifiable : Measurable, IQuantifiable
 
     }
 
-    protected static bool IsValidShapeComponentOf<T>(IShape baseShape, T shapeComponent) where T : class, IQuantifiable, IShapeComponent
-    {
-        return baseShape?.GetShapeComponents() is IEnumerable<T>;
-    }
+    //protected static bool IsValidShapeComponentOf<T>(IShape baseShape, T shapeComponent) where T : class, IQuantifiable, IShapeComponent
+    //{
+    //    return baseShape?.GetShapeComponents() is IEnumerable<T>;
+    //}
 
     #endregion
     #endregion

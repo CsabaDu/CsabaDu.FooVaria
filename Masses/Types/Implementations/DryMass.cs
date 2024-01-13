@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Masses.Types.Implementations
+﻿using CsabaDu.FooVaria.Quantifiables.Enums;
+
+namespace CsabaDu.FooVaria.Masses.Types.Implementations
 {
     internal sealed class DryMass : Mass, IDryMass
     {
@@ -35,7 +37,7 @@
 
         public IDryBody DryBody { get; init; }
 
-        public IDryBody GetBody()
+        public override IDryBody GetBody()
         {
             return DryBody;
         }

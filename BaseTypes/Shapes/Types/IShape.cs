@@ -7,9 +7,5 @@ public interface IShape : IBaseSpread, IShapeComponentCount, IFit<IShape>, IShap
     void ValidateShapeComponent(IQuantifiable shapeComponent, string paramName);
 }
 
-public interface IComplexShape : IShape
-{
-}
-
 
 // Visszaállítani

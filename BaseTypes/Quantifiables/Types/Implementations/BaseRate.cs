@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Quantifiables.Types.Implementations;
+﻿using CsabaDu.FooVaria.Measurables.Enums;
+using CsabaDu.FooVaria.Quantifiables.Enums;
+
+namespace CsabaDu.FooVaria.Quantifiables.Types.Implementations;
 
 public abstract class BaseRate : Quantifiable, IBaseRate
 {

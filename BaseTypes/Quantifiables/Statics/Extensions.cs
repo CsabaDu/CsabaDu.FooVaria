@@ -1,8 +1,25 @@
-﻿
+﻿using CsabaDu.FooVaria.Quantifiables.Enums;
+
 namespace CsabaDu.FooVaria.Quantifiables.Statics;
 
 public static class Extensions
 {
+    #region System.Int32
+    public static bool? FitsIn(this int comparison, LimitMode? limitMode)
+    {
+        return limitMode switch
+        {
+            LimitMode.BeNotLess => comparison >= 0,
+            LimitMode.BeNotGreater => comparison <= 0,
+            LimitMode.BeGreater => comparison > 0,
+            LimitMode.BeLess => comparison < 0,
+            LimitMode.BeEqual => comparison == 0,
+
+            _ => null,
+        };
+    }
+    #endregion
+
     #region System.ValueType
     public static object? ToQuantity(this ValueType quantity, Type conversionType)
     {
@@ -92,67 +109,67 @@ public static class Extensions
     }
     #endregion
 
-    #region CsabaDu.FooVaria.Common.Enums.MeasureUnitCode
-    public static TypeCode GetQuantityTypeCode(this MeasureUnitCode measureUnitCode)
-    {
-        return measureUnitCode switch
-        {
-            MeasureUnitCode.Currency => TypeCode.Decimal,
+    //#region CsabaDu.FooVaria.Common.Enums.MeasureUnitCode
+    //public static TypeCode GetQuantityTypeCode(this MeasureUnitCode measureUnitCode)
+    //{
+    //    return measureUnitCode switch
+    //    {
+    //        MeasureUnitCode.Currency => TypeCode.Decimal,
 
-            MeasureUnitCode.Pieces => TypeCode.Int64,
+    //        MeasureUnitCode.Pieces => TypeCode.Int64,
 
-            MeasureUnitCode.AreaUnit or
-            MeasureUnitCode.DistanceUnit or
-            MeasureUnitCode.ExtentUnit or
-            MeasureUnitCode.TimePeriodUnit or
-            MeasureUnitCode.VolumeUnit or
-            MeasureUnitCode.WeightUnit => TypeCode.Double,
+    //        MeasureUnitCode.AreaUnit or
+    //        MeasureUnitCode.DistanceUnit or
+    //        MeasureUnitCode.ExtentUnit or
+    //        MeasureUnitCode.TimePeriodUnit or
+    //        MeasureUnitCode.VolumeUnit or
+    //        MeasureUnitCode.WeightUnit => TypeCode.Double,
 
-            _ => throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode),
-        };
-    }
+    //        _ => throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode),
+    //    };
+    //}
 
-    public static string GetName(this MeasureUnitCode measureUnitCode)
-    {
-        return Enum.GetName(Defined(measureUnitCode, nameof(measureUnitCode)))!;
-    }
+    //public static string GetName(this MeasureUnitCode measureUnitCode)
+    //{
+    //    return Enum.GetName(Defined(measureUnitCode, nameof(measureUnitCode)))!;
+    //}
 
-    public static IEnumerable<string> GetMeasureUnitDefaultNames(this MeasureUnitCode measureUnitCode)
-    {
-        Type measureUnitType = measureUnitCode.GetMeasureUnitType();
+    //public static IEnumerable<string> GetMeasureUnitDefaultNames(this MeasureUnitCode measureUnitCode)
+    //{
+    //    Type measureUnitType = measureUnitCode.GetMeasureUnitType();
 
-        return Enum.GetNames(measureUnitType);
-    }
+    //    return Enum.GetNames(measureUnitType);
+    //}
 
-    public static Type GetMeasureUnitType(this MeasureUnitCode measureUnitCode)
-    {
-        return MeasureUnitTypes.GetMeasureUnitType(measureUnitCode);
-    }
+    //public static Type GetMeasureUnitType(this MeasureUnitCode measureUnitCode)
+    //{
+    //    return MeasureUnitTypes.GetMeasureUnitType(measureUnitCode);
+    //}
 
-    public static IEnumerable<Enum> GetAllMeasureUnits(this MeasureUnitCode measureUnitCode)
-    {
-        Type measureUnitType = measureUnitCode.GetMeasureUnitType();
+    //public static IEnumerable<Enum> GetAllMeasureUnits(this MeasureUnitCode measureUnitCode)
+    //{
+    //    Type measureUnitType = measureUnitCode.GetMeasureUnitType();
 
-        foreach (Enum item in Enum.GetValues(measureUnitType))
-        {
-            yield return item;
-        }
-    }
+    //    foreach (Enum item in Enum.GetValues(measureUnitType))
+    //    {
+    //        yield return item;
+    //    }
+    //}
 
-    public static Enum GetDefaultMeasureUnit(this MeasureUnitCode measureUnitCode)
-    {
-        return measureUnitCode.GetAllMeasureUnits().First();
-    }
+    //public static Enum GetDefaultMeasureUnit(this MeasureUnitCode measureUnitCode)
+    //{
+    //    return measureUnitCode.GetAllMeasureUnits().First();
+    //}
 
-    public static bool IsCustomMeasureUnitCode(this MeasureUnitCode measureUnitCode)
-    {
-        if (!Enum.IsDefined(measureUnitCode)) return false;
+    //public static bool IsCustomMeasureUnitCode(this MeasureUnitCode measureUnitCode)
+    //{
+    //    if (!Enum.IsDefined(measureUnitCode)) return false;
 
-        Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
-        Type measureUnitType = measureUnit.GetType();
-        string name = Enum.GetName(measureUnitType, measureUnit)!;
+    //    Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
+    //    Type measureUnitType = measureUnit.GetType();
+    //    string name = Enum.GetName(measureUnitType, measureUnit)!;
 
-        return name == DefaultCustomMeasureUnitDefaultName;
-    }
-    #endregion
+    //    return name == DefaultCustomMeasureUnitDefaultName;
+    //}
+    //#endregion
 }

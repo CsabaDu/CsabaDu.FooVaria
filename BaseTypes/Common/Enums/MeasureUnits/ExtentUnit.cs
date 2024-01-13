@@ -1,9 +1,9 @@
-﻿namespace CsabaDu.FooVaria.Common.Enums.MeasureUnits;
+﻿//namespace CsabaDu.FooVaria.Common.Enums.MeasureUnits;
 
-public enum ExtentUnit
-{
-    mm,
-    cm,
-    dm,
-    meter
-}
+//public enum ExtentUnit
+//{
+//    mm,
+//    cm,
+//    dm,
+//    meter
+//}

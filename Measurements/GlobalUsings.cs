@@ -1,6 +1,7 @@
-﻿global using CsabaDu.FooVaria.Common.Enums;
-global using CsabaDu.FooVaria.Common.Factories;
+﻿global using CsabaDu.FooVaria.Common.Factories;
 global using CsabaDu.FooVaria.Common.Statics;
+global using CsabaDu.FooVaria.Measurables.Enums;
+global using CsabaDu.FooVaria.Measurables.Statics;
 global using CsabaDu.FooVaria.Measurables.Factories;
 global using CsabaDu.FooVaria.Measurables.Types;
 global using CsabaDu.FooVaria.Measurables.Types.Implementations;
@@ -13,3 +14,4 @@ global using static CsabaDu.FooVaria.Common.Statics.Extensions;
 global using static CsabaDu.FooVaria.Measurables.Statics.MeasureUnits;
 global using static CsabaDu.FooVaria.Measurables.Statics.MeasureUnitTypes;
 global using static CsabaDu.FooVaria.Measurables.Types.Implementations.BaseMeasurement;
+global using static CsabaDu.FooVaria.Measurables.Statics.ExceptionMethods;

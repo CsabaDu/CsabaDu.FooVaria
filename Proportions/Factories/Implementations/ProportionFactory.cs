@@ -64,7 +64,7 @@ public sealed class ProportionFactory : IProportionFactory
         where TDEnum : struct, Enum
     {
         Enum numeratorMeasureUnit = NullChecked(numerator, nameof(numerator)).GetMeasureUnit();
-        decimal quantity = numerator.DefaultQuantity / GetExchangeRate(numeratorMeasureUnit);
+        decimal quantity = numerator.GetDefaultQuantity() / GetExchangeRate(numeratorMeasureUnit);
 
         return Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit);
     }
@@ -103,7 +103,7 @@ public sealed class ProportionFactory : IProportionFactory
         var (numeratorMeasureUnit, quantity) = GetNumeratorComponents(numerator);
         Enum denominatorMeasureUnit = NullChecked(denominator, nameof(denominator)).GetMeasureUnit();
         quantity *= GetExchangeRate(denominatorMeasureUnit);
-        quantity /= denominator!.DefaultQuantity;
+        quantity /= denominator!.GetDefaultQuantity();
 
         return Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit);
     }
@@ -202,7 +202,7 @@ public sealed class ProportionFactory : IProportionFactory
             rateComponent.GetMeasureUnit()
             : throw ArgumentTypeOutOfRangeException(nameof(numerator), numerator);
 
-        decimal quantity = rateComponent.DefaultQuantity / GetExchangeRate(nmeasureUnit);
+        decimal quantity = rateComponent.GetDefaultQuantity() / GetExchangeRate(nmeasureUnit);
 
         return (nmeasureUnit, quantity);
     }

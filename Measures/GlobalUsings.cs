@@ -1,5 +1,5 @@
-﻿global using CsabaDu.FooVaria.Common.Enums.MeasureUnits;
-global using CsabaDu.FooVaria.Measurables.Behaviors;
+﻿global using CsabaDu.FooVaria.Measurables.Behaviors;
+global using CsabaDu.FooVaria.Measurables.Enums;
 global using CsabaDu.FooVaria.Measurements.Factories;
 global using CsabaDu.FooVaria.Measurements.Types;
 global using CsabaDu.FooVaria.Measures.Behaviors;

@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿using CsabaDu.FooVaria.Measurables.Statics;
+
+namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 public abstract class BaseMeasurement : Measurable, IBaseMeasurement
 {

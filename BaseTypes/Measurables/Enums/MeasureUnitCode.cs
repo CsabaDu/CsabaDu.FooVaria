@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Common.Enums;
+﻿namespace CsabaDu.FooVaria.Measurables.Enums;
 
 public enum MeasureUnitCode
 {

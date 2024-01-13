@@ -1,9 +1,8 @@
 ﻿global using CsabaDu.FooVaria.BaseSpreads.Factories;
 global using CsabaDu.FooVaria.BaseSpreads.Types;
-global using CsabaDu.FooVaria.Common.Enums;
-global using CsabaDu.FooVaria.Common.Enums.MeasureUnits;
 global using CsabaDu.FooVaria.Common.Factories;
 global using CsabaDu.FooVaria.Common.Types;
+global using CsabaDu.FooVaria.Measurables.Enums;
 global using CsabaDu.FooVaria.Measures.Types;
 global using CsabaDu.FooVaria.Quantifiables.Behaviors;
 global using CsabaDu.FooVaria.RateComponents.Factories;

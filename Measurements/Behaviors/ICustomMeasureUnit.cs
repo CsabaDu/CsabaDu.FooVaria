@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurements.Behaviors;
+﻿using CsabaDu.FooVaria.Measurables.Enums;
+
+namespace CsabaDu.FooVaria.Measurements.Behaviors;
 
 public interface ICustomMeasureUnit
 {

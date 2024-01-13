@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurements.Factories;
+﻿using CsabaDu.FooVaria.Measurables.Enums;
+
+namespace CsabaDu.FooVaria.Measurements.Factories;
 
 public interface IMeasurementFactory : IBaseMeasurementFactory, IFactory<IMeasurement>, IDefaultMeasurableFactory<IMeasurement>
 {

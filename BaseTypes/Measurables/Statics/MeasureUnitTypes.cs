@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Statics;
+﻿using CsabaDu.FooVaria.Measurables.Enums;
+using System.Diagnostics.CodeAnalysis;
+
+namespace CsabaDu.FooVaria.Measurables.Statics;
 
 public static class MeasureUnitTypes
 {

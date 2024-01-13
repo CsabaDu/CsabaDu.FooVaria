@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Quantifiables.Types;
+﻿using CsabaDu.FooVaria.Measurables.Enums;
+using CsabaDu.FooVaria.Quantifiables.Enums;
+
+namespace CsabaDu.FooVaria.Quantifiables.Types;
 
 public interface IBaseMeasure : IQuantifiable, IExchangeRate, IDecimalQuantity, IQuantityTypeCode, IRateComponentCode, IExchange<IBaseMeasure, Enum>, IRound<IBaseMeasure>
 {

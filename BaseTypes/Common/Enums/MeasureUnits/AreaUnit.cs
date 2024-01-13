@@ -1,9 +1,9 @@
-﻿namespace CsabaDu.FooVaria.Common.Enums.MeasureUnits;
+﻿//namespace CsabaDu.FooVaria.Common.Enums.MeasureUnits;
 
-public enum AreaUnit
-{
-    mmSquare,
-    cmSquare,
-    dmSquare,
-    meterSquare,
-}
+//public enum AreaUnit
+//{
+//    mmSquare,
+//    cmSquare,
+//    dmSquare,
+//    meterSquare,
+//}

@@ -1,4 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Enums;
+﻿using CsabaDu.FooVaria.Quantifiables.Enums;
 
 namespace CsabaDu.FooVaria.Quantifiables.Behaviors
 {

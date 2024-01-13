@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using CsabaDu.FooVaria.Measurables.Enums;
+using System.ComponentModel;
 
 namespace CsabaDu.FooVaria.Measurables.Statics;
 
@@ -47,13 +48,5 @@ public static class MeasureUnits
         return GetValidMeasureUnits().Contains(measureUnit);
     }
 
-
-    public static T DefinedMeasureUnit<T>(T measureUnit, string paramName)
-        where T : Enum
-    {
-        if (IsDefinedMeasureUnit(NullChecked(measureUnit, paramName))) return measureUnit;
-
-        throw new InvalidEnumArgumentException(paramName, (int)(object)measureUnit, typeof(T));
-    }
     #endregion
 }

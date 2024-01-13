@@ -1,7 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Masses.Behaviors
+﻿namespace CsabaDu.FooVaria.Masses.Behaviors;
+
+public interface IVolumeWeight
 {
-    public interface IVolumeWeight
-    {
-        IWeight GetVolumeWeight();
-    }
+    IWeight GetVolumeWeight();
 }

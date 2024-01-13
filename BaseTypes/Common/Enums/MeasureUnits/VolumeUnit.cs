@@ -1,9 +1,9 @@
-﻿namespace CsabaDu.FooVaria.Common.Enums.MeasureUnits;
+﻿//namespace CsabaDu.FooVaria.Common.Enums.MeasureUnits;
 
-public enum VolumeUnit
-{
-    mmCubic,
-    cmCubic,
-    dmCubic,
-    meterCubic
-}
+//public enum VolumeUnit
+//{
+//    mmCubic,
+//    cmCubic,
+//    dmCubic,
+//    meterCubic
+//}

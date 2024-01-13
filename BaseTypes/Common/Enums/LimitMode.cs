@@ -1,10 +1,10 @@
-﻿namespace CsabaDu.FooVaria.Common.Enums;
+﻿//namespace CsabaDu.FooVaria.Common.Enums;
 
-public enum LimitMode
-{
-    BeNotLess,
-    BeNotGreater,
-    BeGreater,
-    BeLess,
-    BeEqual
-}
+//public enum LimitMode
+//{
+//    BeNotLess,
+//    BeNotGreater,
+//    BeGreater,
+//    BeLess,
+//    BeEqual
+//}
