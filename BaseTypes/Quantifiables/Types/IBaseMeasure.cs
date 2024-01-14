@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Quantifiables.Types;
 
-public interface IBaseMeasure : IQuantifiable, IExchangeRate, IDecimalQuantity, IQuantityTypeCode/*, IRateComponentCode*/, IExchange<IBaseMeasure, Enum>, IRound<IBaseMeasure>
+public interface IBaseMeasure : IQuantifiable, IExchangeRate, IDecimalQuantity, IQuantityTypeCode, ILimitMode, IExchange<IBaseMeasure, Enum>, IRound<IBaseMeasure>
 {
     object Quantity { get; init; }
     RateComponentCode RateComponentCode { get; }

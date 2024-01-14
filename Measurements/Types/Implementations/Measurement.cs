@@ -35,6 +35,11 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
         return GetMeasureUnitBasedCollection(CustomNameCollection, measureUnitCode);
     }
 
+    public IMeasurement GetDefault()
+    {
+        return GetDefault(MeasureUnitCode)!;
+    }
+
     public IMeasurement? GetDefault(MeasureUnitCode measureUnitCode)
     {
         return GetFactory().CreateDefault(measureUnitCode);

@@ -219,6 +219,7 @@ public abstract class BaseMeasure : Quantifiable, IBaseMeasure
 
     #region Abstract methods
     public abstract IBaseMeasurement GetBaseMeasurement();
+    public abstract LimitMode? GetLimitMode();
     public abstract void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramNamme);
     #endregion
     #endregion

@@ -1,8 +1,4 @@
-﻿using CsabaDu.FooVaria.Quantifiables.Enums;
-using CsabaDu.FooVaria.Quantifiables.Types.Implementations;
-using static CsabaDu.FooVaria.Quantifiables.Statics.QuantityTypes;
-
-namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
+﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
 {
     internal abstract class RateComponent : BaseMeasure, IRateComponent
     {
@@ -11,158 +7,29 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
         {
             Quantity = GetValidQuantity(quantity);
             Measurement = factory.MeasurementFactory.Create(measureUnit);
-            DefaultQuantity = GetDefaultQuantity(this);
         }
 
         private protected RateComponent(IRateComponentFactory factory, IMeasurement measurement, ValueType quantity) : base(factory, measurement)
         {
             Quantity = GetValidQuantity(quantity);
             Measurement = factory.MeasurementFactory.CreateNew(measurement);
-            DefaultQuantity = GetDefaultQuantity(this);
         }
         #endregion
 
         #region Properties
-        public object Quantity { get; init; }
+        public override sealed object Quantity { get; init; }
         public IMeasurement Measurement { get; init; }
-        public override sealed decimal DefaultQuantity { get; init; }
         #endregion
 
         #region Public methods
-        public int CompareTo(IRateComponent? other)
-        {
-            if (other == null) return 1;
-
-            other.ValidateMeasureUnitCode(MeasureUnitCode, nameof(other));
-
-            return DefaultQuantity.CompareTo(other.GetDefaultQuantity());
-        }
-
-        public IRateComponent? ExchangeTo(Enum measureUnit)
-        {
-            if (!IsExchangeableTo(measureUnit)) return null;
-
-            decimal exchangeRate = Measurement.GetExchangeRate(measureUnit);
-
-            if (GetRateComponentCode() == RateComponentCode.Limit && DefaultQuantity % exchangeRate > 0) return null;
-
-            decimal quantity = DefaultQuantity / exchangeRate;
-
-            return GetRateComponent(measureUnit, quantity);
-        }
-
-        public IRateComponent GetBaseMeasure(Enum measureUnit, decimal quantity)
-        {
-            return GetFactory().Create(measureUnit, quantity);
-        }
-
-        public decimal GetDecimalQuantity()
-        {
-            return (decimal)GetQuantity(TypeCode.Decimal);
-        }
-
-        public decimal GetExchangeRate()
-        {
-            return Measurement.ExchangeRate;
-        }
-
-        public object GetQuantity(RoundingMode roundingMode)
-        {
-            decimal quantity = roundDecimalQuantity();
-
-            return quantity.ToQuantity(GetQuantityTypeCode()) ?? throw new InvalidOperationException(null);
-
-            #region Local methods
-            decimal roundDecimalQuantity()
-            {
-                quantity = GetDecimalQuantity();
-
-                return roundingMode switch
-                {
-                    RoundingMode.General => decimal.Round(quantity),
-                    RoundingMode.Ceiling => decimal.Ceiling(quantity),
-                    RoundingMode.Floor => decimal.Floor(quantity),
-                    RoundingMode.Half => getHalfQuantity(),
-
-                    _ => throw InvalidRoundingModeEnumArgumentException(roundingMode),
-                };
-            }
-
-            decimal getHalfQuantity()
-            {
-                decimal halfQuantity = decimal.Floor(quantity);
-                decimal half = 0.5m;
-
-                if (quantity == halfQuantity) return quantity;
-
-                halfQuantity += half;
-
-                if (quantity <= halfQuantity) return halfQuantity;
-
-                return halfQuantity + half;
-            }
-            #endregion
-        }
-
-        public object GetQuantity(TypeCode quantityTypeCode)
-        {
-            ValueType quantity = (ValueType)Quantity;
-
-            return quantity.ToQuantity(quantityTypeCode) ?? throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
-        }
-
-        public virtual TypeCode? GetQuantityTypeCode(object quantity)
+        public override sealed TypeCode? GetQuantityTypeCode(object quantity)
         {
             TypeCode quantityTypeCode = Type.GetTypeCode(quantity?.GetType());
 
             return GetValidQuantityTypeCodeOrNull(quantityTypeCode);
         }
 
-        public IRateComponent GetRateComponent(Enum measureUnit, ValueType quantity)
-        {
-            return GetFactory().Create(measureUnit, quantity);
-        }
-
-        public RateComponentCode GetRateComponentCode()
-        {
-            return GetFactory().RateComponentCode;
-        }
-
-        public bool IsExchangeableTo(Enum? context)
-        {
-            return Measurement.IsExchangeableTo(context);
-        }
-
-        public decimal ProportionalTo(IRateComponent rateComponent)
-        {
-            MeasureUnitCode measureUnitCode = NullChecked(rateComponent, nameof(rateComponent)).MeasureUnitCode;
-
-            if (IsExchangeableTo(measureUnitCode)) return DefaultQuantity / rateComponent.DefaultQuantity;
-
-            throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, nameof(rateComponent));
-        }
-
-        public IRateComponent Round(RoundingMode roundingMode)
-        {
-            ValueType quantity = (ValueType)GetQuantity(roundingMode);
-            Enum measureUnit = Measurement.GetMeasureUnit();
-
-            return GetRateComponent(measureUnit, quantity);
-        }
-
-        public bool TryGetQuantity(ValueType quantity, [NotNullWhen(true)] out ValueType? thisTypeQuantity)
-        {
-            thisTypeQuantity = (ValueType?)quantity.ToQuantity(GetQuantityTypeCode());
-
-            return thisTypeQuantity != null;
-        }
-
-        public void ValidateExchangeRate(decimal exchangeRate, string paramName)
-        {
-            Measurement.ValidateExchangeRate(exchangeRate, paramName);
-        }
-
-        public void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramName)
+        public override void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramName)
         {
             TypeCode? typeCode = GetQuantityTypeCode(NullChecked(quantity, nameof(quantity)));
 
@@ -173,23 +40,11 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
             throw QuantityArgumentOutOfRangeException(quantity);
         }
 
-        public void ValidateQuantityTypeCode(TypeCode quantityTypeCode, string paramName)
-        {
-            if (GetValidQuantityTypeCodeOrNull(quantityTypeCode) != null) return;
-
-            throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode, paramName);
-        }
-
         #region Override methods
         public override IRateComponentFactory GetFactory()
         {
             return (IRateComponentFactory)Factory;
         }
-
-        //public override Enum GetMeasureUnit()
-        //{
-        //    return Measurement.GetMeasureUnit();
-        //}
 
         public override void ValidateQuantity(ValueType? quantity, string paramName) // TODO
         {
@@ -199,16 +54,6 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
         }
 
         #region Sealed methods
-        public override sealed bool Equals(object? obj)
-        {
-            return base.Equals(obj);
-        }
-
-        public override sealed int GetHashCode()
-        {
-            return HashCode.Combine(DefaultQuantity, MeasureUnitCode);
-        }
-
         public override sealed void ValidateMeasureUnit(Enum measureUnit, string paramName)
         {
             Measurement.ValidateMeasureUnit(measureUnit, paramName);
@@ -217,15 +62,10 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
         #endregion
 
         #region Virtual methods
-        public virtual bool Equals(IRateComponent? other)
-        {
-            return DefaultQuantity == other?.DefaultQuantity
-                && MeasureUnitCode == other?.MeasureUnitCode;
-        }
         #endregion
 
         #region Abstract methods
-        public abstract LimitMode? GetLimitMode();
+        //public abstract LimitMode? GetLimitMode();
         #endregion
         #endregion
 
@@ -236,45 +76,14 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
             return (TNum)GetFactory().DefaultRateComponentQuantity;
         }
 
-        protected IRateComponent GetRateComponent(IRateComponent rateComponent, IRateComponentFactory factory)
-        {
-            if (rateComponent.IsExchangeableTo(MeasureUnitCode)) return factory.CreateNew(rateComponent);
+        //protected IRateComponent GetRateComponent(IRateComponent rateComponent, IRateComponentFactory factory)
+        //{
+        //    if (rateComponent.IsExchangeableTo(MeasureUnitCode)) return factory.CreateNew(rateComponent);
 
-            throw InvalidMeasureUnitCodeEnumArgumentException(rateComponent.MeasureUnitCode, nameof(rateComponent));
-        }
-
-        protected object GetValidQuantity(ValueType? quantity)
-        {
-            _ = NullChecked(quantity, nameof(quantity));
-
-            return GetValidQuantityOrNull(this, quantity) ?? throw QuantityArgumentOutOfRangeException(quantity);
-        }
-
-        #region Static methods
-        protected static object? GetValidQuantityOrNull(IRateComponent rateComponent, object? quantity)
-        {
-            quantity = ((ValueType?)quantity)?.ToQuantity(rateComponent.GetQuantityTypeCode());
-
-            return rateComponent.GetRateComponentCode() switch
-            {
-                RateComponentCode.Denominator => getValidDenominatorQuantity(),
-                RateComponentCode.Numerator or
-                RateComponentCode.Limit => quantity,
-
-                _ => throw new InvalidOperationException(null),
-            };
-
-            #region Local methods
-            object? getValidDenominatorQuantity()
-            {
-                if (quantity == null || (decimal)quantity <= 0) return null;
-
-                return quantity;
-            }
-            #endregion
-        }
+        //    throw InvalidMeasureUnitCodeEnumArgumentException(rateComponent.MeasureUnitCode, nameof(rateComponent));
+        //}
         #endregion
-        #endregion
+        //#endregion
 
         #region Private methods
         #region Static methods

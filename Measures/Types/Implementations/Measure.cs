@@ -8,6 +8,8 @@
         }
         #endregion
 
+        public IMeasurement Measurement { get; init; }
+
         #region Public methods
         public IMeasure Add(IMeasure? other)
         {
@@ -20,7 +22,7 @@
 
             decimal quantity = decimal.Divide(GetDecimalQuantity(), divisor);
 
-            return GetRateComponent(quantity);
+            return GetBaseMeasure(quantity);
         }
 
         public bool? FitsIn(ILimit? limit)

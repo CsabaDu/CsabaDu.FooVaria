@@ -1,4 +1,9 @@
-﻿namespace CsabaDu.FooVaria.Rates.Types
+﻿using CsabaDu.FooVaria.Measurables.Types;
+using CsabaDu.FooVaria.Quantifiables.Behaviors;
+using CsabaDu.FooVaria.Quantifiables.Enums;
+using CsabaDu.FooVaria.Quantifiables.Types;
+
+namespace CsabaDu.FooVaria.Rates.Types
 {
 
     public interface IRate : IBaseRate, IExchange<IRate, IMeasurable>, IDenominate<IMeasure, IRateComponent>

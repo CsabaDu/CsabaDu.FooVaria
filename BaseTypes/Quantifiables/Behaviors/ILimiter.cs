@@ -1,14 +1,12 @@
-﻿using CsabaDu.FooVaria.Quantifiables.Enums;
-
-namespace CsabaDu.FooVaria.Quantifiables.Behaviors
+﻿namespace CsabaDu.FooVaria.Quantifiables.Behaviors
 {
     public interface ILimiter
     {
     }
 
     public interface ILimiter<in TSelf, in TLimitable> : ILimiter, IEqualityComparer<TSelf>
-        where TSelf : class, IBaseMeasure, ILimiter
-        where TLimitable : class, IBaseMeasure
+        where TSelf : class, IQuantifiable, ILimiter
+        where TLimitable : class, IBaseMeasure, ILimitable
     {
         LimitMode GetLimitMode(TSelf limiter);
 

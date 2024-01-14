@@ -1,6 +1,9 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Types;
+﻿using CsabaDu.FooVaria.Measures.Types;
+using CsabaDu.FooVaria.Quantifiables.Enums;
 
-public interface ILimit : IRateComponent, IDefaultBaseMeasure<ILimit, ulong>, ILimiter<ILimit, IMeasure>
+namespace CsabaDu.FooVaria.RateComponents.Types;
+
+public interface ILimit : IRateComponent<ILimit, ulong>, ILimiter<ILimit, IMeasure>
 {
     LimitMode LimitMode { get; init; }
 
