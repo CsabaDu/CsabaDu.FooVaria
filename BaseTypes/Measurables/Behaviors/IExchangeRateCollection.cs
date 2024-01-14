@@ -4,7 +4,6 @@ public interface IExchangeRateCollection : IConstantExchangeRates, IExchangeRate
 {
     IDictionary<object, decimal> GetExchangeRateCollection(MeasureUnitCode measureUnitCode);
     IDictionary<object, decimal> GetExchangeRateCollection();
-    decimal GetExchangeRate(Enum measureUnit);
     decimal GetExchangeRate(string name);
     bool IsValidExchangeRate(decimal exchangeRate, Enum measureUnit);
 

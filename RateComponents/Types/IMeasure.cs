@@ -5,20 +5,20 @@
 //        IMeasure GetMeasure(IRateComponent rateComponent);
 //    }
 
-//    public interface IMeasure<TSelf, TNum> : IMeasure, IRateComponent<TSelf, TNum>
-//        where TSelf : class, IMeasure, IDefaultBaseMeasure
+//    public interface IMeasure<T, TNum> : IMeasure, IRateComponent<T, TNum>
+//        where T : class, IMeasure, IDefaultBaseMeasure
 //        where TNum : struct
 //    {
-//        TSelf GetMeasure(string name, TNum quantity);
-//        TSelf GetMeasure(IMeasurement measurement, TNum quantity);
+//        T GetMeasure(string name, TNum quantity);
+//        T GetMeasure(IMeasurement measurement, TNum quantity);
 //    }
 
-//    public interface IMeasure<TSelf, TNum, TEnum> : IMeasure<TSelf, TNum>, IMeasureUnit<TEnum>
-//        where TSelf : class, IMeasure, IDefaultBaseMeasure, IMeasureUnit
+//    public interface IMeasure<T, TNum, TEnum> : IMeasure<T, TNum>, IMeasureUnit<TEnum>
+//        where T : class, IMeasure, IDefaultBaseMeasure, IMeasureUnit
 //        where TNum : struct
 //        where TEnum : struct, Enum
 //    {
-//        TSelf GetMeasure(TEnum measureUnit, TNum quantity);
-//        TSelf GetMeasure(TEnum measureUnit);
+//        T GetMeasure(TEnum measureUnit, TNum quantity);
+//        T GetMeasure(TEnum measureUnit);
 //    }
 //}

@@ -3,6 +3,7 @@
     public interface IProportion : IBaseRate
     {
         MeasureUnitCode NumeratorMeasureUnitCode { get; init; }
+        decimal DefaultQuantity { get; init; }
         //MeasureUnitCode? this[RateComponentCode rateComponentCode] { get; }
 
         IProportion GetProportion(IBaseRate baseRate);

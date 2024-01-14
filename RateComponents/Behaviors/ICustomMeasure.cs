@@ -4,12 +4,12 @@
 //    {
 //    }
 
-//    public interface ICustomMeasure<TSelf, TNum, TEnum> : ICustomMeasure
-//        where TSelf : class, IMeasure<TSelf, TNum, TEnum>
+//    public interface ICustomMeasure<T, TNum, TEnum> : ICustomMeasure
+//        where T : class, IMeasure<T, TNum, TEnum>
 //        where TNum : struct
 //        where TEnum : struct, Enum
 //    {
-//        TSelf? GetNextCustomMeasure(string customName, decimal exchangeRate, TNum quantity);
-//        TSelf? GetCustomMeasure(TEnum measureUnit, decimal exchangeRate, TNum quantity, string customName);
+//        T? GetNextCustomMeasure(string customName, decimal exchangeRate, TNum quantity);
+//        T? GetCustomMeasure(TEnum measureUnit, decimal exchangeRate, TNum quantity, string customName);
 //    }
 //}

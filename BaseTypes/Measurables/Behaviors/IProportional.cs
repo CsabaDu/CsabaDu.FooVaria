@@ -1,7 +1,7 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Behaviors;
 
-public interface IProportional<TSelf> : IComparable<TSelf>, IEquatable<TSelf>
-    where TSelf : class, Types.IMeasurable
+public interface IProportional<T> : IComparable<T>, IEquatable<T>
+    where T : class, IMeasurable
 {
-    decimal ProportionalTo(TSelf comparable);
+    decimal ProportionalTo(T comparable);
 }

@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Quantifiables.Enums;
-
-namespace CsabaDu.FooVaria.Quantifiables.Behaviors
+﻿namespace CsabaDu.FooVaria.Quantifiables.Behaviors
 {
     public interface IQuantity
     {
@@ -13,7 +11,7 @@ namespace CsabaDu.FooVaria.Quantifiables.Behaviors
     public interface IQuantity<out TNum> : IQuantity
         where TNum : struct
     {
-        decimal DefaultQuantity { get; init; }
+        //decimal DefaultQuantity { get; init; }
 
         TNum GetQuantity();
     }

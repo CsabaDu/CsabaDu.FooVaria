@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Types;
-
-namespace CsabaDu.FooVaria.Quantifiables.Types
+﻿namespace CsabaDu.FooVaria.Quantifiables.Types
 {
     public interface IDefaultBaseMeasure : IBaseMeasure
     {

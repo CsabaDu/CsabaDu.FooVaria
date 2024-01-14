@@ -1,51 +1,8 @@
-﻿using CsabaDu.FooVaria.Quantifiables.Enums;
-using System.ComponentModel;
-
-namespace CsabaDu.FooVaria.Quantifiables.Statics;
+﻿namespace CsabaDu.FooVaria.Quantifiables.Statics;
 
 public static class ExceptionMethods
 {
     #region InvalidEnumArgumentException
-    //public static InvalidEnumArgumentException InvalidMeasureUnitEnumArgumentException(Enum measureUnit)
-    //{
-    //    return InvalidMeasureUnitEnumArgumentException(measureUnit, nameof(measureUnit));
-    //}
-
-    //public static InvalidEnumArgumentException InvalidMeasureUnitEnumArgumentException(Enum measureUnit, string paramName)
-    //{
-    //    return new InvalidEnumArgumentException(paramName, (int)(object)measureUnit, measureUnit.GetType());
-    //}
-
-    //public static InvalidEnumArgumentException InvalidMeasureUnitCodeEnumArgumentException(MeasureUnitCode measureUnitCode)
-    //{
-    //    return InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, nameof(measureUnitCode));
-    //}
-
-    //public static InvalidEnumArgumentException InvalidMeasureUnitCodeEnumArgumentException(MeasureUnitCode measureUnitCode, string paramName)
-    //{
-    //    return new InvalidEnumArgumentException(paramName, (int)measureUnitCode, measureUnitCode.GetType());
-    //}
-
-    //public static InvalidEnumArgumentException InvalidSideCodeEnumArgumentException(SideCode sideCode)
-    //{
-    //    return InvalidSideCodeEnumArgumentException(sideCode, nameof(sideCode));
-    //}
-
-    //public static InvalidEnumArgumentException InvalidSideCodeEnumArgumentException(SideCode sideCode, string paramName)
-    //{
-    //    return new InvalidEnumArgumentException(paramName, (int)sideCode, sideCode.GetType());
-    //}
-
-    //public static InvalidEnumArgumentException InvalidQuantityTypeCodeEnumArgumentException(TypeCode quantityTypeCode)
-    //{
-    //    return InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode, nameof(quantityTypeCode));
-    //}
-
-    //public static InvalidEnumArgumentException InvalidQuantityTypeCodeEnumArgumentException(TypeCode quantityTypeCode, string paramName)
-    //{
-    //    return new InvalidEnumArgumentException(paramName, (int)quantityTypeCode, quantityTypeCode.GetType());
-    //}
-
     public static InvalidEnumArgumentException InvalidRoundingModeEnumArgumentException(RoundingMode roundingMode)
     {
         return InvalidRoundingModeEnumArgumentException(roundingMode, nameof(roundingMode));
@@ -66,26 +23,6 @@ public static class ExceptionMethods
         return new InvalidEnumArgumentException(paramName, (int)limitMode, limitMode.GetType());
     }
 
-    //public static InvalidEnumArgumentException InvalidComparisonCodeEnumArgumentException(ComparisonCode comparisonCode)
-    //{
-    //    return InvalidComparisonCodeEnumArgumentException(comparisonCode, nameof(comparisonCode));
-    //}
-
-    //public static InvalidEnumArgumentException InvalidComparisonCodeEnumArgumentException(ComparisonCode comparisonCode, string paramName)
-    //{
-    //    return new InvalidEnumArgumentException(paramName, (int)comparisonCode, comparisonCode.GetType());
-    //}
-
-    //public static InvalidEnumArgumentException InvalidSidenCodeEnumArgumentException(SideCode sideCode)
-    //{
-    //    return InvalidSidenCodeEnumArgumentException(sideCode, nameof(sideCode));
-    //}
-
-    //public static InvalidEnumArgumentException InvalidSidenCodeEnumArgumentException(SideCode sideCode, string paramName)
-    //{
-    //    return new InvalidEnumArgumentException(paramName, (int)sideCode, sideCode.GetType());
-    //}
-
     public static InvalidEnumArgumentException InvalidRateComponentCodeArgumentException(RateComponentCode rateComponentCode)
     {
         return InvalidRateComponentCodeArgumentException(rateComponentCode, nameof(rateComponentCode));
@@ -98,31 +35,6 @@ public static class ExceptionMethods
     #endregion
 
     #region ArgumentOutOfRangeException
-    //public static ArgumentOutOfRangeException ArgumentTypeOutOfRangeException(string paramName, object arg)
-    //{
-    //    return new ArgumentOutOfRangeException(paramName, arg.GetType().Name, null);
-    //}
-
-    //public static ArgumentOutOfRangeException DecimalArgumentOutOfRangeException(decimal exchangeRate)
-    //{
-    //    return DecimalArgumentOutOfRangeException(nameof(exchangeRate), exchangeRate);
-    //}
-
-    //public static ArgumentOutOfRangeException DecimalArgumentOutOfRangeException(string? paramName, decimal exchangeRate)
-    //{
-    //    return new ArgumentOutOfRangeException(paramName, exchangeRate, null);
-    //}
-
-    //public static ArgumentOutOfRangeException NameArgumentOutOfRangeException(string name)
-    //{
-    //    return new ArgumentOutOfRangeException(nameof(name), name, null);
-    //}
-
-    //public static ArgumentOutOfRangeException NameArgumentOutOfRangeException(string? paramName, string name)
-    //{
-    //    return new ArgumentOutOfRangeException(paramName, name ?? string.Empty, null);
-    //}
-
     public static ArgumentOutOfRangeException QuantityArgumentOutOfRangeException(ValueType? quantity)
     {
         return QuantityArgumentOutOfRangeException(nameof(quantity), quantity);
@@ -133,27 +45,5 @@ public static class ExceptionMethods
         return new ArgumentOutOfRangeException(paramName, Type.GetTypeCode(quantity?.GetType()), null);
 
     }
-
-    //public static ArgumentOutOfRangeException MeasureUnitTypeArgumentOutOfRangeException(Type measureUnitType)
-    //{
-    //    return MeasureUnitTypeArgumentOutOfRangeException(measureUnitType, nameof(measureUnitType));
-    //}
-
-    //public static ArgumentOutOfRangeException MeasureUnitTypeArgumentOutOfRangeException(Type measureUnitType, string paramName)
-    //{
-    //    return new ArgumentOutOfRangeException(paramName, measureUnitType.FullName, null);
-    //}
-
-    //public static ArgumentOutOfRangeException CountArgumentOutOfRangeException(int count)
-    //{
-    //    return CountArgumentOutOfRangeException(count, nameof(count));
-    //}
-
-    //public static ArgumentOutOfRangeException CountArgumentOutOfRangeException(int count, string paramName)
-    //{
-    //    return new ArgumentOutOfRangeException(paramName, count, null);
-    //}
-
-
     #endregion
 }

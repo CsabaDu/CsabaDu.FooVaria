@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Measurables.Enums;
-
-namespace CsabaDu.FooVaria.Measurables.Statics;
+﻿namespace CsabaDu.FooVaria.Measurables.Statics;
 
 public static class Extensions
 {

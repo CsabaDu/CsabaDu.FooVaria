@@ -4,12 +4,12 @@
 //    {
 //    }
 
-//    public interface IDefaultBaseMeasure<TSelf, TNum> : IDefaultBaseMeasure, IDefaultMeasurable<TSelf>, IQuantity<TNum>, ICommonBase<TSelf>
-//        where TSelf : class, IRateComponent, IDefaultBaseMeasure
+//    public interface IDefaultBaseMeasure<T, TNum> : IDefaultBaseMeasure, IDefaultMeasurable<T>, IQuantity<TNum>, ICommonBase<T>
+//        where T : class, IRateComponent, IDefaultBaseMeasure
 //        where TNum : struct
 //    {
 //        TNum GetDefaultRateComponentQuantity();
-//        TSelf GetDefault();
-//        TSelf GetBaseMeasure(IRateComponent rateComponent);
+//        T GetDefault();
+//        T GetBaseMeasure(IRateComponent rateComponent);
 //    }
 //}

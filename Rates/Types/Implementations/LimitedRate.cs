@@ -1,4 +1,8 @@
-﻿namespace CsabaDu.FooVaria.Rates.Types.Implementations;
+﻿using CsabaDu.FooVaria.Measurables.Enums;
+using CsabaDu.FooVaria.Quantifiables.Enums;
+using CsabaDu.FooVaria.Quantifiables.Types;
+
+namespace CsabaDu.FooVaria.Rates.Types.Implementations;
 
 internal sealed class LimitedRate : Rate, ILimitedRate
 {

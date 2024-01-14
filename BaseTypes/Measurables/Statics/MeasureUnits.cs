@@ -1,7 +1,4 @@
-﻿using CsabaDu.FooVaria.Measurables.Enums;
-using System.ComponentModel;
-
-namespace CsabaDu.FooVaria.Measurables.Statics;
+﻿namespace CsabaDu.FooVaria.Measurables.Statics;
 
 public static class MeasureUnits
 {

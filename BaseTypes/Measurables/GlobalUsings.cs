@@ -6,6 +6,7 @@ global using CsabaDu.FooVaria.Measurables.Behaviors;
 global using CsabaDu.FooVaria.Measurables.Enums;
 global using CsabaDu.FooVaria.Measurables.Factories;
 global using CsabaDu.FooVaria.Measurables.Types;
+global using System.ComponentModel;
 global using static CsabaDu.FooVaria.Common.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.Measurables.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.Measurables.Statics.Extensions;

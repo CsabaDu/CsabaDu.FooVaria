@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Factories
+﻿using CsabaDu.FooVaria.Measurables.Enums;
+using CsabaDu.FooVaria.Quantifiables.Enums;
+
+namespace CsabaDu.FooVaria.RateComponents.Factories
 {
     public interface IRateComponentFactory : IBaseMeasureFactory/*<IRateComponent, Enum>*/, IFactory<IRateComponent>
     {

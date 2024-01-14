@@ -2,7 +2,7 @@
 {
     public interface IMeasure : IBaseMeasure, ILimitable, ICalculate<IMeasure, decimal>
     {
-        //IMeasure GetMeasure(IBaseMeasure rateComponent);
+        IMeasurement Measurement { get; init; }
     }
 
     public interface IMeasure<TSelf, TNum> : IMeasure, IDefaultBaseMeasure<TSelf, TNum>

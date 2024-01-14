@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Types;
-
-namespace CsabaDu.FooVaria.Quantifiables.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Quantifiables.Types.Implementations;
 
 public abstract class Quantifiable : Measurable, IQuantifiable
 {

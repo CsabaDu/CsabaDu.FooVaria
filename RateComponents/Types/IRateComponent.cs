@@ -3,7 +3,8 @@
     public interface IRateComponent : IBaseMeasure,/* Behaviors.IBaseMeasureQuantity, IQuantityTypeCode,IDecimalQuantity,*/ ILimitMode
         /*, IRateComponentCode/*, IExchangeRate, IExchange<IRateComponent, Enum>, IRound<IRateComponent> */
     {
-        //IMeasurement Measurement { get; init; }
+        IMeasurement Measurement { get; init; }
+
         //object Quantity { get; init; }
 
         //IRateComponent GetBaseMeasure(Enum measureUnit, ValueType quantity);

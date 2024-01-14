@@ -1,4 +1,6 @@
-﻿using static CsabaDu.FooVaria.Common.Statics.QuantityTypes;
+﻿using CsabaDu.FooVaria.Quantifiables.Enums;
+using CsabaDu.FooVaria.Quantifiables.Types.Implementations;
+using static CsabaDu.FooVaria.Quantifiables.Statics.QuantityTypes;
 
 namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
 {
@@ -33,7 +35,7 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
 
             other.ValidateMeasureUnitCode(MeasureUnitCode, nameof(other));
 
-            return DefaultQuantity.CompareTo(other.DefaultQuantity);
+            return DefaultQuantity.CompareTo(other.GetDefaultQuantity());
         }
 
         public IRateComponent? ExchangeTo(Enum measureUnit)
@@ -184,10 +186,10 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
             return (IRateComponentFactory)Factory;
         }
 
-        public override Enum GetMeasureUnit()
-        {
-            return Measurement.GetMeasureUnit();
-        }
+        //public override Enum GetMeasureUnit()
+        //{
+        //    return Measurement.GetMeasureUnit();
+        //}
 
         public override void ValidateQuantity(ValueType? quantity, string paramName) // TODO
         {
@@ -287,6 +289,8 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
 
             return null;
         }
+
+        public abstract IRateComponent GetRateComponent(IMeasurement measurement, ValueType quantity);
         #endregion
         #endregion
     }

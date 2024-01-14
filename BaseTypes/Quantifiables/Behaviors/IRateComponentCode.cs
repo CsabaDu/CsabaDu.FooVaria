@@ -1,8 +1,6 @@
-﻿using CsabaDu.FooVaria.Quantifiables.Enums;
+﻿//namespace CsabaDu.FooVaria.Quantifiables.Behaviors;
 
-namespace CsabaDu.FooVaria.Quantifiables.Behaviors;
-
-public interface IRateComponentCode
-{
-    RateComponentCode GetRateComponentCode();
-}
+//public interface IRateComponentCode
+//{
+//    RateComponentCode GetRateComponentCode();
+//}

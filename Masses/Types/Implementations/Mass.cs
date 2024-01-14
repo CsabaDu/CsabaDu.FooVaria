@@ -98,7 +98,7 @@ namespace CsabaDu.FooVaria.Masses.Types.Implementations
 
         public decimal GetDefaultQuantity(decimal ratio)
         {
-            return GetVolumeWeight(ratio).DefaultQuantity;
+            return GetVolumeWeight(ratio).GetDefaultQuantity();
         }
 
         public IProportion<WeightUnit, VolumeUnit> GetDensity()
@@ -108,7 +108,7 @@ namespace CsabaDu.FooVaria.Masses.Types.Implementations
 
         public MeasureUnitCode GetMeasureUnitCode()
         {
-            bool isVolumeWeightGreater = GetDensity().DefaultQuantity < 1;
+            bool isVolumeWeightGreater = GetDensity().GetDefaultQuantity() < 1;
 
             return GetMeasureUnitCode(isVolumeWeightGreater);
         }
@@ -222,7 +222,7 @@ namespace CsabaDu.FooVaria.Masses.Types.Implementations
 
         public override sealed decimal GetDefaultQuantity()
         {
-            return GetVolumeWeight().DefaultQuantity;
+            return GetVolumeWeight().GetDefaultQuantity();
         }
 
         public override sealed void ValidateQuantity(ValueType? quantity, string paramName)

@@ -142,8 +142,8 @@
 //        #endregion
 //    }
 
-//    internal abstract class Measure<TSelf, TNum> : Measure, IMeasure<TSelf, TNum>
-//        where TSelf : class, IMeasure, IDefaultBaseMeasure
+//    internal abstract class Measure<T, TNum> : Measure, IMeasure<T, TNum>
+//        where T : class, IMeasure, IDefaultBaseMeasure
 //        where TNum : struct
 //    {
 //        #region Constructors
@@ -153,12 +153,12 @@
 //        #endregion
 
 //        #region Public methods
-//        public TSelf? GetDefault(MeasureUnitCode measureUnitCode)
+//        public T? GetDefault(MeasureUnitCode measureUnitCode)
 //        {
-//            return (TSelf?)GetFactory().CreateDefault(measureUnitCode);
+//            return (T?)GetFactory().CreateDefault(measureUnitCode);
 //        }
 
-//        public TSelf GetDefault()
+//        public T GetDefault()
 //        {
 //            return GetDefault(MeasureUnitCode)!;
 //        }
@@ -168,19 +168,19 @@
 //            return GetDefaultRateComponentQuantity<TNum>();
 //        }
 
-//        public TSelf GetMeasure(string name, TNum quantity)
+//        public T GetMeasure(string name, TNum quantity)
 //        {
-//            return (TSelf)GetFactory().Create(name, quantity);
+//            return (T)GetFactory().Create(name, quantity);
 //        }
 
-//        public TSelf GetMeasure(IMeasurement measurement, TNum quantity)
+//        public T GetMeasure(IMeasurement measurement, TNum quantity)
 //        {
-//            return (TSelf)GetFactory().Create(measurement, quantity);
+//            return (T)GetFactory().Create(measurement, quantity);
 //        }
 
-//        public TSelf GetNew(TSelf other)
+//        public T GetNew(T other)
 //        {
-//            return (TSelf)GetFactory().CreateNew(other);
+//            return (T)GetFactory().CreateNew(other);
 //        }
 
 //        public TNum GetQuantity()
@@ -188,56 +188,56 @@
 //            return (TNum)Quantity;
 //        }
 
-//        public TSelf GetBaseMeasure(TNum quantity)
+//        public T GetBaseMeasure(TNum quantity)
 //        {
 //            return GetMeasure(Measurement, quantity);
 //        }
 
-//        public TSelf GetBaseMeasure(IRateComponent rateComponent)
+//        public T GetBaseMeasure(IRateComponent rateComponent)
 //        {
-//            if (NullChecked(rateComponent, nameof(rateComponent)) is TSelf other) return GetNew(other);
+//            if (NullChecked(rateComponent, nameof(rateComponent)) is T other) return GetNew(other);
 
-//            return (TSelf)GetBaseMeasure(rateComponent, GetFactory());
+//            return (T)GetBaseMeasure(rateComponent, GetFactory());
 //        }
 
 //        #region Override methods
 //        #region Sealed methods
-//        public override sealed TSelf GetMeasure(IRateComponent rateComponent)
+//        public override sealed T GetMeasure(IRateComponent rateComponent)
 //        {
 //            return GetBaseMeasure(rateComponent);
 //        }
 
-//        public override sealed TSelf GetBaseMeasure(ValueType quantity)
+//        public override sealed T GetBaseMeasure(ValueType quantity)
 //        {
-//            return (TSelf)base.GetBaseMeasure(quantity);
+//            return (T)base.GetBaseMeasure(quantity);
 //        }
 
-//        public override sealed TSelf GetBaseMeasure(string name, ValueType quantity)
+//        public override sealed T GetBaseMeasure(string name, ValueType quantity)
 //        {
-//            return (TSelf)base.GetBaseMeasure(name, quantity);
+//            return (T)base.GetBaseMeasure(name, quantity);
 //        }
 
-//        public override sealed TSelf GetBaseMeasure(IMeasurement measurement, ValueType quantity)
+//        public override sealed T GetBaseMeasure(IMeasurement measurement, ValueType quantity)
 //        {
-//            return (TSelf)base.GetBaseMeasure(measurement, quantity);
+//            return (T)base.GetBaseMeasure(measurement, quantity);
 //        }
 
-//        public override sealed TSelf? GetBaseMeasure(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
+//        public override sealed T? GetBaseMeasure(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
 //        {
-//            return (TSelf?)base.GetBaseMeasure(measureUnit, exchangeRate, quantity, customName);
+//            return (T?)base.GetBaseMeasure(measureUnit, exchangeRate, quantity, customName);
 //        }
 
-//        public override sealed TSelf? GetBaseMeasure(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity)
+//        public override sealed T? GetBaseMeasure(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity)
 //        {
-//            return (TSelf?)base.GetBaseMeasure(customName, measureUnitCode, exchangeRate, quantity);
+//            return (T?)base.GetBaseMeasure(customName, measureUnitCode, exchangeRate, quantity);
 //        }
 //        #endregion
 //        #endregion
 //        #endregion
 //    }
 
-//    internal abstract class Measure<TSelf, TNum, TEnum> : Measure<TSelf, TNum>, IMeasure<TSelf, TNum, TEnum>
-//        where TSelf : class, IMeasure, IDefaultBaseMeasure, IMeasureUnit
+//    internal abstract class Measure<T, TNum, TEnum> : Measure<T, TNum>, IMeasure<T, TNum, TEnum>
+//        where T : class, IMeasure, IDefaultBaseMeasure, IMeasureUnit
 //        where TNum : struct
 //        where TEnum : struct, Enum
 //    {
@@ -260,14 +260,14 @@
 //        #endregion
 
 //        #region Public methods
-//        public TSelf GetMeasure(TEnum measureUnit, TNum quantity)
+//        public T GetMeasure(TEnum measureUnit, TNum quantity)
 //        {
-//            return (TSelf)GetBaseMeasure(measureUnit, quantity);
+//            return (T)GetBaseMeasure(measureUnit, quantity);
 //        }
 
-//        public TSelf GetMeasure(TEnum measureUnit)
+//        public T GetMeasure(TEnum measureUnit)
 //        {
-//            return (TSelf)(ExchangeTo(measureUnit) ?? throw InvalidMeasureUnitEnumArgumentException(measureUnit));
+//            return (T)(ExchangeTo(measureUnit) ?? throw InvalidMeasureUnitEnumArgumentException(measureUnit));
 //        }
 
 //        public TEnum GetMeasureUnit(IMeasureUnit<TEnum>? other)

@@ -4,11 +4,11 @@
 //    {
 //    }
 
-//    public interface IConvertMeasure<TSelf, TOther> : IConvertMeasure
-//        where TSelf : class, IMeasure
+//    public interface IConvertMeasure<T, TOther> : IConvertMeasure
+//        where T : class, IMeasure
 //        where TOther : notnull
 //    {
-//        TSelf ConvertFrom(TOther other);
+//        T ConvertFrom(TOther other);
 //        TOther ConvertMeasure();
 //    }
 //}
