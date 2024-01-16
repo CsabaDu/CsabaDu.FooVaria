@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Quantifiables.Types;
 
-public interface IQuantifiable : IMeasurable, IDefaultQuantity, IEqualityComparer<IQuantifiable>
+public interface IQuantifiable : IMeasurable, IDefaultQuantity
 {
     void ValidateQuantity(ValueType? quantity, string paramName);
 }

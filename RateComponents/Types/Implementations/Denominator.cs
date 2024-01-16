@@ -3,12 +3,41 @@
 internal sealed class Denominator : RateComponent<IDenominator, decimal>, IDenominator
 {
     #region Constructors
-    internal Denominator(IDenominatorFactory factory, IMeasurement measurement, ValueType quantity) : base(factory, measurement, quantity)
+    internal Denominator(IDenominatorFactory factory, IMeasurement measurement, decimal quantity) : base(factory, measurement)
     {
+        Quantity = quantity > 0 ?
+            quantity
+            : throw QuantityArgumentOutOfRangeException(quantity);
     }
     #endregion
 
+    #region Properties
+    #region Override properties
+    public override object Quantity { get; init; }
+    #endregion
+    #endregion
+
     #region Public methods
+    public IDenominator GetBaseMeasure(Enum measureUnit, ValueType quantity)
+    {
+        return GetFactory().Create(measureUnit, quantity);
+    }
+
+    public IDenominator GetBaseMeasure(string name, ValueType quantity)
+    {
+        return GetFactory().Create(name, quantity);
+    }
+
+    public IDenominator? GetBaseMeasure(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
+    {
+        return GetFactory().Create(measureUnit, exchangeRate, quantity, customName);
+    }
+
+    public IDenominator? GetBaseMeasure(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity)
+    {
+        return GetFactory().Create(customName, measureUnitCode, exchangeRate, quantity);
+    }
+
     public IDenominator GetDenominator(Enum measureUnit)
     {
         return GetFactory().Create(measureUnit);
@@ -30,27 +59,14 @@ internal sealed class Denominator : RateComponent<IDenominator, decimal>, IDenom
     }
 
     #region Override methods
-    public override bool Equals(IRateComponent? other)
+    public override decimal GetDefaultQuantity()
     {
-        return other is IDenominator
-            && base.Equals(other);
-    }
-
-    public override IDenominator? GetDefault(MeasureUnitCode measureUnitCode)
-    {
-        return GetFactory().CreateDefault(measureUnitCode);
+        return GetDefaultQuantity((decimal)Quantity);
     }
 
     public override IDenominatorFactory GetFactory()
     {
         return (IDenominatorFactory)Factory;
-    }
-
-    public override IDenominator GetRateComponent(IRateComponent rateComponent)
-    {
-        if (rateComponent is IDenominator other) return GetNew(other);
-
-        return (IDenominator)GetRateComponent(rateComponent, GetFactory());
     }
     #endregion
     #endregion

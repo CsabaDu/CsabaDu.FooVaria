@@ -1,33 +1,40 @@
-﻿namespace CsabaDu.FooVaria.Quantifiables.Types;
-
-public interface IBaseMeasure : IQuantifiable, IExchangeRate, IDecimalQuantity, IQuantityTypeCode, ILimitMode, IExchange<IBaseMeasure, Enum>, IRound<IBaseMeasure>
+﻿namespace CsabaDu.FooVaria.Quantifiables.Types
 {
-    object Quantity { get; init; }
-    RateComponentCode RateComponentCode { get; }
-
-    IBaseMeasure GetBaseMeasure(ValueType quantity);
-    IBaseMeasure GetBaseMeasure(Enum measureUnit, ValueType quantity);
-    IBaseMeasure GetBaseMeasure(string name, ValueType quantity);
-    IBaseMeasure GetBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity);
-    IBaseMeasure? GetBaseMeasure(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName);
-    IBaseMeasure? GetBaseMeasure(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity);
-    IBaseMeasurement GetBaseMeasurement();
-
-    void ValidateQuantifiable(IQuantifiable? quantifiable, string paramName);
-
-    #region Default implementations
-    public bool TryGetBaseMeasure(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName, [NotNullWhen(true)] out IBaseMeasure? baseMeasure)
+    public interface IBaseMeasure : IQuantifiable, IExchangeRate, IDecimalQuantity, IQuantityTypeCode, ILimitMode, IExchange<IBaseMeasure, Enum>, IRound<IBaseMeasure>, IEqualityComparer<IBaseMeasure>
     {
-        baseMeasure = GetBaseMeasure(measureUnit, exchangeRate, quantity, customName);
+        object Quantity { get; init; }
 
-        return baseMeasure != null;
+        RateComponentCode GetRateComponentCode();
+        IBaseMeasure GetBaseMeasure(ValueType quantity);
+        IBaseMeasure GetBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity);
+        IBaseMeasurement GetBaseMeasurement();
+        IBaseMeasurementFactory GetBaseMeasurementFactory();
+
+        void ValidateQuantifiable(IQuantifiable? quantifiable, string paramName);
     }
 
-    public bool TryGetBaseMeasure(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity, [NotNullWhen(true)] out IBaseMeasure? baseMeasure)
+    public interface IBaseMeasure<TSelf> : IBaseMeasure where TSelf : class, IBaseMeasure
     {
-        baseMeasure = GetBaseMeasure(customName, measureUnitCode, exchangeRate, quantity);
+        TSelf GetBaseMeasure(Enum measureUnit, ValueType quantity);
+        TSelf GetBaseMeasure(string name, ValueType quantity);
+        TSelf? GetBaseMeasure(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName);
+        TSelf? GetBaseMeasure(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity);
 
-        return baseMeasure != null;
+        #region Default implementations
+        public bool TryGetBaseMeasure(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName, [NotNullWhen(true)] out TSelf? baseMeasure)
+        {
+            baseMeasure = GetBaseMeasure(measureUnit, exchangeRate, quantity, customName);
+
+            return baseMeasure != null;
+        }
+
+        public bool TryGetBaseMeasure(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity, [NotNullWhen(true)] out TSelf? baseMeasure)
+        {
+            baseMeasure = GetBaseMeasure(customName, measureUnitCode, exchangeRate, quantity);
+
+            return baseMeasure != null;
+        }
+        #endregion
+
     }
-    #endregion
 }

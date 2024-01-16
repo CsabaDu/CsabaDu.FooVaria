@@ -1,10 +1,12 @@
 ﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
 
-internal sealed class Limit : RateComponent, ILimit
+internal sealed class Limit : RateComponent<ILimit, ulong>, ILimit
 {
     #region Constructors
-    internal Limit(ILimitFactory factory, IMeasurement measurement, ValueType quantity, LimitMode limitMode) : base(factory, measurement, quantity)
+    internal Limit(ILimitFactory factory, IMeasurement measurement, ulong quantity, LimitMode limitMode) : base(factory, measurement)
     {
+        Quantity = quantity;
+
         ValidateLimitMode(limitMode);
 
         LimitMode = limitMode;
@@ -13,38 +15,21 @@ internal sealed class Limit : RateComponent, ILimit
 
     #region Properties
     public LimitMode LimitMode { get; init; }
+
+    #region Override properties
+    public override object Quantity { get; init; }
+    #endregion
     #endregion
 
     #region Public methods
     public bool Equals(ILimit? x, ILimit? y)
     {
-        if (x == null && y == null) return true;
-
-        if (x == null || y == null) return false;
-
-        if (x.LimitMode != y.LimitMode) return false;
-
-        return x.Equals(y);
-    }
-
-    public ILimit GetDefault()
-    {
-        return GetDefault(MeasureUnitCode)!;
-    }
-
-    public ILimit? GetDefault(MeasureUnitCode measureUnitCode)
-    {
-        return GetFactory().CreateDefault(measureUnitCode);
-    }
-
-    public ulong GetDefaultRateComponentQuantity()
-    {
-        return GetDefaultRateComponentQuantity<ulong>();
+        return base.Equals(x, y);
     }
 
     public int GetHashCode([DisallowNull] ILimit limit)
     {
-        return HashCode.Combine(limit.DefaultQuantity, limit.MeasureUnitCode, limit.LimitMode);
+        return base.GetHashCode(limit);
     }
 
     public ILimit? GetLimit(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName, LimitMode limitMode)
@@ -52,7 +37,7 @@ internal sealed class Limit : RateComponent, ILimit
         return GetFactory().Create(measureUnit, exchangeRate, quantity, customName, limitMode);
     }
 
-    public ILimit GetLimit(IMeasurement measurement, ValueType quantity, LimitMode limitMode)
+    public ILimit GetLimit(IMeasurement measurement, ulong quantity, LimitMode limitMode)
     {
         return GetFactory().Create(measurement, quantity, limitMode);
     }
@@ -92,16 +77,6 @@ internal sealed class Limit : RateComponent, ILimit
         return NullChecked(limit, nameof(limit)).LimitMode;
     }
 
-    public ILimit GetNew(ILimit other)
-    {
-        return GetFactory().CreateNew(other);
-    }
-
-    public ulong GetQuantity()
-    {
-        return (ulong)Quantity;
-    }
-
     public ILimit GetRateComponent(IRateComponent rateComponent)
     {
         LimitMode limitMode = rateComponent.GetLimitMode() ?? default;
@@ -122,10 +97,11 @@ internal sealed class Limit : RateComponent, ILimit
     }
 
     #region Override methods
-    public override bool Equals(IRateComponent? other)
+    public override decimal GetDefaultQuantity()
     {
-        return other is ILimit
-            && Equals(this, other);
+        decimal quantity = Convert.ToDecimal(Quantity);
+
+        return GetDefaultQuantity(quantity);
     }
 
     public override ILimitFactory GetFactory()
@@ -136,18 +112,6 @@ internal sealed class Limit : RateComponent, ILimit
     public override LimitMode? GetLimitMode()
     {
         return LimitMode;
-    }
-
-    public override TypeCode? GetQuantityTypeCode(object quantity)
-    {
-        if (quantity is IQuantity<ulong> limit) return Quantifiable.GetQuantityTypeCode(limit);
-
-        return base.GetQuantityTypeCode(quantity);
-    }
-
-    public override TypeCode GetQuantityTypeCode()
-    {
-        return Quantifiable.GetQuantityTypeCode(this);
     }
     #endregion
     #endregion

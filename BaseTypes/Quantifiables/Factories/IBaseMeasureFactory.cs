@@ -1,13 +1,18 @@
-﻿namespace CsabaDu.FooVaria.Quantifiables.Factories;
-
-public interface IBaseMeasureFactory : IQuantifiableFactory
+﻿namespace CsabaDu.FooVaria.Quantifiables.Factories
 {
-    IBaseMeasurementFactory GetBaseMeasurementFactory();
+    public interface IBaseMeasureFactory : IQuantifiableFactory
+    {
+        RateComponentCode RateComponentCode { get; }
 
-    IBaseMeasure CreateBaseMeasure(Enum measureUnit, ValueType quantity);
-    IBaseMeasure CreateBaseMeasure(string name, ValueType quantity);
-    IBaseMeasure CreateBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity);
-    IBaseMeasure? CreateBaseMeasure(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName);
-    IBaseMeasure? CreateBaseMeasure(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity);
+        IBaseMeasure CreateBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity);
+    }
 
+    public interface IBaseMeasureFactory<T> : IBaseMeasureFactory
+        where T : class, IBaseMeasure
+    {
+        T Create(string name, ValueType quantity);
+        T Create(Enum measureUnit, ValueType quantity);
+        T? Create(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName);
+        T? Create(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity);
+    }
 }

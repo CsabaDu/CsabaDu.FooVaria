@@ -1,5 +1,4 @@
 ﻿using CsabaDu.FooVaria.Measures.Types;
-using CsabaDu.FooVaria.Quantifiables.Enums;
 
 namespace CsabaDu.FooVaria.RateComponents.Types;
 
@@ -11,7 +10,7 @@ public interface ILimit : IRateComponent<ILimit, ulong>, ILimiter<ILimit, IMeasu
     ILimit? GetLimit(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName, LimitMode limitMode);
     ILimit GetLimit(Enum measureUnit, ValueType quantity, LimitMode limitMode);
     ILimit? GetLimit(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity, LimitMode limitMode);
-    ILimit GetLimit(IMeasurement measurement, ValueType quantity, LimitMode limitMode);
+    ILimit GetLimit(IMeasurement measurement, ulong quantity, LimitMode limitMode);
     ILimit GetLimit(IRateComponent baseMeasure, LimitMode limitMode);
     ILimit GetLimit(ILimit other);
     ILimit GetLimit(ulong quantity);

@@ -1,8 +1,6 @@
-﻿using CsabaDu.FooVaria.Common.Types;
-
-namespace CsabaDu.FooVaria.Measures.Types
+﻿namespace CsabaDu.FooVaria.Measures.Types
 {
-    public interface IMeasure : IBaseMeasure, ILimitable, ICalculate<IMeasure, decimal>
+    public interface IMeasure : IBaseMeasure<IMeasure>, ILimitable, ICalculate<IMeasure, decimal>
     {
         IMeasurement Measurement { get; init; }
     }

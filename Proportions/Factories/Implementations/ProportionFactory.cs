@@ -188,7 +188,7 @@ public sealed class ProportionFactory : IProportionFactory
     #region IBaseMeasure
     public IBaseMeasure CreateBaseMeasure(Enum measureUnit, ValueType quantity)
     {
-        return MeasureFactory.CreateBaseMeasure(measureUnit, quantity);
+        return MeasureFactory.Create(measureUnit, quantity);
     }
     #endregion
     #endregion

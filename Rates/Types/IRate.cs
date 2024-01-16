@@ -6,7 +6,7 @@ using CsabaDu.FooVaria.Quantifiables.Types;
 namespace CsabaDu.FooVaria.Rates.Types
 {
 
-    public interface IRate : IBaseRate, IExchange<IRate, IMeasurable>, IDenominate<IMeasure, IRateComponent>
+    public interface IRate : IBaseRate, IExchange<IRate, IMeasurable>, IDenominate<IMeasure, IBaseMeasure>, IEqualityComparer<IRate>
     {
         IDenominator Denominator { get; init; }
         IMeasure Numerator { get; init; }

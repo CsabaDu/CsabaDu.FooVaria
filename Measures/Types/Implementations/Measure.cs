@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measures.Types.Implementations
 {
-    internal abstract class Measure : BaseMeasure, IMeasure
+    internal abstract class Measure : BaseMeasure<IMeasure>, IMeasure
     {
         #region Constructors
         private protected Measure(IMeasureFactory factory, Enum measureUnit, ValueType quantity) : base(factory, measureUnit, quantity)
