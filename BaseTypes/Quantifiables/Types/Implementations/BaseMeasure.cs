@@ -272,10 +272,13 @@
     public abstract class BaseMeasure<TSeff> : BaseMeasure, IBaseMeasure<TSeff>
         where TSeff : class, IBaseMeasure
     {
+        #region Constructors
         protected BaseMeasure(IBaseMeasureFactory<TSeff> factory, Enum measureUnit) : base(factory, measureUnit)
         {
         }
+        #endregion
 
+        #region Public methods
         public TSeff GetBaseMeasure(Enum measureUnit, ValueType quantity)
         {
             return GetFactory().Create(measureUnit, quantity);
@@ -296,9 +299,12 @@
             return GetFactory().Create(customName, measureUnitCode, exchangeRate, quantity);
         }
 
+        #region Override methods
         public override IBaseMeasureFactory<TSeff> GetFactory()
         {
             return (IBaseMeasureFactory<TSeff>)Factory;
         }
+        #endregion
+        #endregion
     }
 }

@@ -11,6 +11,5 @@
         where TNum : struct
     {
         T Create(IMeasurement measurement, TNum quantity);
-        //T Create(string name, TNum quantity);
     }
 }

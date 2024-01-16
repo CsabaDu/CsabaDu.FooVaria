@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Quantifiables.Enums;
-
-namespace CsabaDu.FooVaria.Quantifiables.Statics;
+﻿namespace CsabaDu.FooVaria.Quantifiables.Statics;
 
 public static class Extensions
 {

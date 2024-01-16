@@ -1,5 +1,4 @@
-﻿
-namespace CsabaDu.FooVaria.Quantifiables.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Quantifiables.Types.Implementations;
 
 public abstract class Quantifiable : Measurable, IQuantifiable
 {
@@ -73,15 +72,6 @@ public abstract class Quantifiable : Measurable, IQuantifiable
         return Type.GetTypeCode(typeof(TNum));
 
     }
-
-    //public abstract bool Equals(IQuantifiable? x, IQuantifiable? y);
-    //public abstract int GetHashCode([DisallowNull] IQuantifiable obj);
-
-    //protected static bool IsValidShapeComponentOf<T>(IShape baseShape, T shapeComponent) where T : class, IQuantifiable, IShapeComponent
-    //{
-    //    return baseShape?.GetShapeComponents() is IEnumerable<T>;
-    //}
-
     #endregion
     #endregion
 }

@@ -11,17 +11,18 @@
 
         #region Properties
         public IMeasurementFactory MeasurementFactory { get; init; }
+
+        #region Abstract properties
         public abstract object DefaultRateComponentQuantity {  get; }
         public abstract RateComponentCode RateComponentCode { get; }
         #endregion
+        #endregion
 
         #region Public methods
-
         #region Abstract methods
         public abstract IBaseMeasure CreateBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity);
         #endregion
         #endregion
-
     }
 
     public abstract class RateComponentFactory<T, TNum> : RateComponentFactory, IRateComponentFactory<T, TNum>
@@ -40,22 +41,16 @@
         }
         #endregion
 
-        //#region Private properties
-        //#region Static properties
-        //protected static HashSet<IDenominator> DenominatorSet { get; rateComponentSet; }
-        //protected static HashSet<ILimit> LimitSet { get; rateComponentSet; }
-        //#endregion
-        //#endregion
-
         #region Public methods
         #region Abstract methods
+        public abstract T Create(IMeasurement measurement, TNum quantity);
         public abstract T? CreateDefault(MeasureUnitCode measureUnitCode);
         public abstract T CreateNew(T other);
+
         #endregion
         #endregion
 
         #region Protected methods
-        #region Static methods
         protected T GetOrCreateRateComponent(IBaseMeasurement baseMeasurement, ValueType quantity)
         {
             string paramName = nameof(baseMeasurement);
@@ -68,6 +63,14 @@
             throw ArgumentTypeOutOfRangeException(paramName, baseMeasurement);
         }
 
+        protected T GetOrCreateStoredRateComponent(IMeasurement measurement, ValueType quantity)
+        {
+            TNum convertedQuantity = ConvertQuantity(quantity);
+
+            return Create(measurement, convertedQuantity);
+        }
+
+        #region Static methods
         protected static TNum ConvertQuantity(ValueType quantity)
         {
             string paramName = nameof(quantity);
@@ -90,17 +93,6 @@
                 stored
                 : null;
         }
-
-        protected T GetOrCreateStoredRateComponent(IMeasurement measurement, ValueType quantity)
-        {
-            TNum convertedQuantity = ConvertQuantity(quantity);
-
-            return Create(measurement, convertedQuantity);
-        }
-
-        public abstract T Create(IMeasurement measurement, TNum quantity);
-
-        //public abstract T Create(string name, TNum quantity);
         #endregion
         #endregion
     }
