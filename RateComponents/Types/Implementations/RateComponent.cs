@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
+﻿using CsabaDu.FooVaria.BaseMeasures.Types;
+
+namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
 {
     internal abstract class RateComponent : BaseMeasure, IRateComponent
     {

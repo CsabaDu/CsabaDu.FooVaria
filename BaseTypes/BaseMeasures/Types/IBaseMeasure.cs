@@ -1,10 +1,10 @@
 ﻿namespace CsabaDu.FooVaria.BaseMeasures.Types
 {
-    public interface IBaseMeasure : IQuantifiable, IExchangeRate, IDecimalQuantity, IQuantityTypeCode, ILimitMode, IExchange<IBaseMeasure, Enum>, IRound<IBaseMeasure>, IEqualityComparer<IBaseMeasure>
+    public interface IBaseMeasure : IQuantifiable, IExchangeRate, IRateComponentCode, IDecimalQuantity, IQuantityTypeCode, ILimitMode, IExchange<IBaseMeasure, Enum>, IRound<IBaseMeasure>, IEqualityComparer<IBaseMeasure>
     {
         object Quantity { get; init; }
 
-        RateComponentCode GetRateComponentCode();
+        //RateComponentCode GetRateComponentCode();
         IBaseMeasure GetBaseMeasure(ValueType quantity);
         IBaseMeasure GetBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity);
         IBaseMeasurement GetBaseMeasurement();

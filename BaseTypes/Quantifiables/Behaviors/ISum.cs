@@ -1,7 +1,7 @@
 ﻿namespace CsabaDu.FooVaria.Quantifiables.Behaviors;
 
 public interface ISum<TSelf>
-    where TSelf : class, IBaseMeasure, ICalculate
+    where TSelf : class, IQuantifiable, ICalculate
 {
     TSelf Add(TSelf? other);
     TSelf Subtract(TSelf? other);

@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Quantifiables.Types.Implementations;
-
-namespace CsabaDu.FooVaria.BaseMeasures.Types.Implementations
+﻿namespace CsabaDu.FooVaria.BaseMeasures.Types.Implementations
 {
     public abstract class BaseMeasure : Quantifiable, IBaseMeasure
     {

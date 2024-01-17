@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Factories;
+﻿using CsabaDu.FooVaria.BaseMeasures.Factories;
+using CsabaDu.FooVaria.BaseMeasures.Types;
+
+namespace CsabaDu.FooVaria.RateComponents.Factories;
 
 public interface IDenominatorFactory : IRateComponentFactory<IDenominator, decimal>, IBaseMeasureFactory<IDenominator>, IDefaultBaseMeasureFactory<IDenominator>
 {
