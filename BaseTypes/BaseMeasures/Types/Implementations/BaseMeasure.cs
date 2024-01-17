@@ -33,7 +33,7 @@
             return base.Equals(other);
         }
 
-        public IBaseMeasure? ExchangeTo(Enum measureUnit)
+        public IBaseMeasure? ExchangeTo(Enum measureUnit) // MeasureUnitCode ??
         {
             if (!IsExchangeableTo(measureUnit)) return null;
 

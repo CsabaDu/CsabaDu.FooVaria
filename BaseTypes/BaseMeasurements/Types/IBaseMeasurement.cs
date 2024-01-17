@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types;
+﻿namespace CsabaDu.FooVaria.BaseMeasurements.Types;
 
 public interface IBaseMeasurement : IMeasurable, IExchangeRateCollection, IProportional<IBaseMeasurement>, IMeasureUnit<Enum>, IExchangeable<Enum>, INamed
 {

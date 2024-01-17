@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Behaviors;
+﻿namespace CsabaDu.FooVaria.BaseMeasurements.Behaviors;
 
 public interface IExchangeRateCollection : IConstantExchangeRates, IExchangeRate
 {

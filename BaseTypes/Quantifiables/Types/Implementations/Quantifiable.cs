@@ -15,7 +15,7 @@ public abstract class Quantifiable : Measurable, IQuantifiable
     {
     }
 
-    protected Quantifiable(IQuantifiableFactory factory, IBaseMeasurement baseMeasurement) : base(factory, baseMeasurement)
+    protected Quantifiable(IQuantifiableFactory factory, IMeasurable measurable) : base(factory, measurable)
     {
     }
 
