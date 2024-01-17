@@ -10,7 +10,7 @@
 
     public interface ILimiter<in TSelf, in TLimitable> : ILimiter, IEqualityComparer<TSelf>
         where TSelf : class, IQuantifiable, ILimiter
-        where TLimitable : class, IBaseMeasure, ILimitable
+        where TLimitable : class, IQuantifiable, ILimitable
     {
         LimitMode GetLimitMode(TSelf limiter);
         bool? Includes(TLimitable limitable);

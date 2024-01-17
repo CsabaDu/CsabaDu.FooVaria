@@ -1,5 +1,4 @@
-﻿
-namespace CsabaDu.FooVaria.BaseSpreads.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.BaseSpreads.Types.Implementations;
 
 public abstract class BaseSpread : Quantifiable, IBaseSpread
 {

@@ -1,4 +1,6 @@
-﻿global using CsabaDu.FooVaria.BaseMeasures.Behaviors;
+﻿global using CsabaDu.FooVaria.BaseMeasurements.Factories;
+global using CsabaDu.FooVaria.BaseMeasurements.Types;
+global using CsabaDu.FooVaria.BaseMeasures.Behaviors;
 global using CsabaDu.FooVaria.BaseMeasures.Enums;
 global using CsabaDu.FooVaria.BaseMeasures.Factories;
 global using CsabaDu.FooVaria.BaseMeasures.Types;

@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Measurables", "BaseTypes\Me
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quantifiables", "BaseTypes\Quantifiables\Quantifiables.csproj", "{9F8A045B-68D3-4681-9776-6A326E659ACF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseShapes", "BaseTypes\Shapes\BaseShapes.csproj", "{A6D5A236-F64B-48A3-92D0-1EC9A19A0FF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseShapes", "BaseTypes\BaseShapes\BaseShapes.csproj", "{A6D5A236-F64B-48A3-92D0-1EC9A19A0FF6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Measurements", "Measurements\Measurements.csproj", "{3BA709AD-7F0A-4581-AE2F-7A55EE9C7075}"
 EndProject
@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Measures", "Measures\Measur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spreads", "Spreads\Spreads.csproj", "{90449B9B-F322-4063-89D5-A5E8E98A33A9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shapes", "SimpleShapes\Shapes.csproj", "{D523461C-D1BD-47C6-8B6F-7D29B46EC0F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shapes", "Shapes\Shapes.csproj", "{D523461C-D1BD-47C6-8B6F-7D29B46EC0F5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proportions", "Proportions\Proportions.csproj", "{00A7BD65-4784-4783-94D4-C34149932485}"
 EndProject
