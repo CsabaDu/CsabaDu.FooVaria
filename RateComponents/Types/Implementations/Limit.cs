@@ -32,6 +32,11 @@ internal sealed class Limit : RateComponent<ILimit, ulong>, ILimit
         return base.GetHashCode(limit);
     }
 
+    public MeasureUnitCode GetLimiterMeasureUnitCode()
+    {
+        return MeasureUnitCode;
+    }
+
     public ILimit? GetLimit(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName, LimitMode limitMode)
     {
         return GetFactory().Create(measureUnit, exchangeRate, quantity, customName, limitMode);
@@ -72,16 +77,14 @@ internal sealed class Limit : RateComponent<ILimit, ulong>, ILimit
         return GetFactory().Create(customName, measureUnitCode, exchangeRate, quantity, limitMode);
     }
 
+    public decimal GetLimiterDefaultQuantity()
+    {
+        return GetDefaultQuantity();
+    }
+
     public LimitMode GetLimitMode(ILimit limit)
     {
         return NullChecked(limit, nameof(limit)).LimitMode;
-    }
-
-    public ILimit GetRateComponent(IRateComponent rateComponent)
-    {
-        LimitMode limitMode = rateComponent.GetLimitMode() ?? default;
-
-        return GetLimit(rateComponent, limitMode);
     }
 
     public bool? Includes(IMeasure measure)

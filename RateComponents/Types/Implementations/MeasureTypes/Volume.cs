@@ -19,7 +19,7 @@
 //        return ConvertMeasure<IWeight>(ConvertMode.Divide);
 //    }
 
-//    public MeasureUnitCode GetMeasureUnitCode()
+//    public MeasureUnitCode GetLimiterMeasureUnitCode()
 //    {
 //        return MeasureUnitCode;
 //    }

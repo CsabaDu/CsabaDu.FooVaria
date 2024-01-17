@@ -1,13 +1,13 @@
-﻿namespace CsabaDu.FooVaria.SimpleShapes.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Shapes.Types.Implementations;
 
-internal abstract class SimpleShape : Shape, ISimpleShape
+internal abstract class SimpleShape : Shape, IShape
 {
     #region Constructors
-    private protected SimpleShape(ISimpleShape other) : base(other)
+    private protected SimpleShape(IShape other) : base(other)
     {
     }
 
-    private protected SimpleShape(ISimpleShapeFactory factory, IShape baseShape) : base(factory, baseShape)
+    private protected SimpleShape(ISimpleShapeFactory factory, IBaseShape baseShape) : base(factory, baseShape)
     {
     }
 
@@ -24,7 +24,7 @@ internal abstract class SimpleShape : Shape, ISimpleShape
     #endregion
 
     #region Public methods
-    public override sealed IShape? GetBaseShape(params IShapeComponent[] shapeComponents)
+    public override sealed IBaseShape? GetBaseShape(params IShapeComponent[] shapeComponents)
     {
         return GetFactory().CreateBaseShape(shapeComponents);
     }
@@ -46,21 +46,21 @@ internal abstract class SimpleShape : Shape, ISimpleShape
             : GetShapeExtents();
     }
 
-    public ISimpleShape GetSimpleShape(ExtentUnit extentUnit)
+    public IShape GetSimpleShape(ExtentUnit extentUnit)
     {
-        return (ISimpleShape?)ExchangeTo(extentUnit) ?? throw InvalidMeasureUnitEnumArgumentException(extentUnit, nameof(extentUnit));
+        return (IShape?)ExchangeTo(extentUnit) ?? throw InvalidMeasureUnitEnumArgumentException(extentUnit, nameof(extentUnit));
     }
 
-    public ISimpleShape GetSimpleShape(params IExtent[] shapeExtents)
+    public IShape GetSimpleShape(params IExtent[] shapeExtents)
     {
         ValidateShapeExtents(shapeExtents, nameof (shapeExtents));
 
-        return (ISimpleShape)GetBaseShape(shapeExtents)!;
+        return (IShape)GetBaseShape(shapeExtents)!;
     }
 
-    public IEnumerable<IExtent>? GetShapeComponents(IShape baseShape)
+    public IEnumerable<IExtent>? GetShapeComponents(IBaseShape baseShape)
     {
-        if (baseShape is ISimpleShape simpleShape) return simpleShape.GetShapeExtents();
+        if (baseShape is IShape shape) return shape.GetShapeExtents();
 
         if (baseShape is IComplexShape complexShape)
         {
@@ -93,7 +93,7 @@ internal abstract class SimpleShape : Shape, ISimpleShape
         return GetDimensions().OrderBy(x => x);
     }
 
-    public bool IsValidShapeComponentOf(IShape baseShape)
+    public bool IsValidShapeComponentOf(IBaseShape baseShape)
     {
         return IsValidShapeComponentOf(baseShape, this);
     }
@@ -148,13 +148,13 @@ internal abstract class SimpleShape : Shape, ISimpleShape
     }
 
     #region Sealed methods
-    public override sealed int CompareTo(IShape? other)
+    public override sealed int CompareTo(IBaseShape? other)
     {
         if (other == null) return 1;
 
         string paramName = nameof(other);
 
-        if (other is not ISimpleShape simpleShape)
+        if (other is not IShape shape)
         {
             if (other is IComplexShape complexShape)
             {
@@ -164,15 +164,15 @@ internal abstract class SimpleShape : Shape, ISimpleShape
             throw ArgumentTypeOutOfRangeException(paramName, other);
         }
 
-        ValidateMeasureUnitCode(simpleShape.MeasureUnitCode, paramName);
+        ValidateMeasureUnitCode(shape.MeasureUnitCode, paramName);
 
-        return Compare(this, simpleShape) ?? throw new ArgumentOutOfRangeException(paramName);
+        return Compare(this, shape) ?? throw new ArgumentOutOfRangeException(paramName);
     }
 
-    public override sealed bool Equals(IShape? other)
+    public override sealed bool Equals(IBaseShape? other)
     {
-        return other is ISimpleShape simpleShape
-            && base.Equals(simpleShape);
+        return other is IShape shape
+            && base.Equals(shape);
     }
 
     public override sealed IBaseSpread? ExchangeTo(Enum measureUnit)
@@ -189,7 +189,7 @@ internal abstract class SimpleShape : Shape, ISimpleShape
         };
 
         #region Local methods
-        ISimpleShape? exchangeToExtentUnit(ExtentUnit extentUnit)
+        IShape? exchangeToExtentUnit(ExtentUnit extentUnit)
         {
             IEnumerable<IExtent> exchangedShapeExtents = getExchangedShapeExtents(extentUnit);
 
@@ -234,9 +234,9 @@ internal abstract class SimpleShape : Shape, ISimpleShape
         #endregion
     }
 
-    public override sealed bool? FitsIn(IShape? other, LimitMode? limitMode)
+    public override sealed bool? FitsIn(IBaseShape? other, LimitMode? limitMode)
     {
-        if (other is not ISimpleShape simpleShape)
+        if (other is not IShape shape)
         {
             if (other is IComplexShape complexShape)
             {
@@ -246,7 +246,7 @@ internal abstract class SimpleShape : Shape, ISimpleShape
             return null;
         }
 
-        if (!simpleShape.IsExchangeableTo(MeasureUnitCode)) return null;
+        if (!shape.IsExchangeableTo(MeasureUnitCode)) return null;
 
         limitMode ??= LimitMode.BeNotGreater;
 
@@ -254,12 +254,12 @@ internal abstract class SimpleShape : Shape, ISimpleShape
             SideCode.Outer
             : SideCode.Inner;
 
-        if (simpleShape.GetShapeComponentCount() != GetShapeComponentCount())
+        if (shape.GetShapeComponentCount() != GetShapeComponentCount())
         {
-            simpleShape = (simpleShape as ITangentShape)!.GetTangentShape(sideCode);
+            shape = (shape as ITangentShape)!.GetTangentShape(sideCode);
         }
 
-        return Compare(this, simpleShape)?.FitsIn(limitMode);
+        return Compare(this, shape)?.FitsIn(limitMode);
     }
 
     public override sealed IBaseSpread GetBaseSpread(ISpreadMeasure spreadMeasure)
@@ -325,15 +325,15 @@ internal abstract class SimpleShape : Shape, ISimpleShape
 
     #region Private methods
     #region Static methods
-    private static int? Compare(ISimpleShape simpleShape, ISimpleShape? other)
+    private static int? Compare(IShape shape, IShape? other)
     {
         if (other == null) return null;
 
         int comparison = 0;
 
-        foreach (ShapeExtentCode item in simpleShape.GetShapeExtentCodes())
+        foreach (ShapeExtentCode item in shape.GetShapeExtentCodes())
         {
-            int recentComparison = simpleShape[item]!.CompareTo(other[item]);
+            int recentComparison = shape[item]!.CompareTo(other[item]);
 
             if (recentComparison != 0)
             {

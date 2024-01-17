@@ -63,7 +63,7 @@
 //        return (GetSpreadMeasure() as IMeasurable)!.GetMeasureUnit();
 //    }
 
-//    public MeasureUnitCode GetMeasureUnitCode()
+//    public MeasureUnitCode GetLimiterMeasureUnitCode()
 //    {
 //        return MeasureUnitCode;
 //    }
@@ -81,7 +81,7 @@
 
 //        if (!IsDefinedMeasureUnit(context)) return false;
 
-//        measureUnitCode = MeasureUnitTypes.GetMeasureUnitCode(context);
+//        measureUnitCode = MeasureUnitTypes.GetLimiterMeasureUnitCode(context);
 
 //        return hasMeasureUnitCode();
 

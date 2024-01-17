@@ -104,7 +104,7 @@ public sealed class LimitFactory : RateComponentFactory<ILimit, ulong>, ILimitFa
         return Create(measurement, (ulong)DefaultRateComponentQuantity);
     }
 
-    public override ILimit CreateNew(ILimit other)
+    public ILimit CreateNew(ILimit other)
     {
         return GetStoredRateComponent(other, LimitSet) ?? throw new InvalidOperationException(null);
     }

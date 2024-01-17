@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.SimpleShapes.Factories;
+﻿namespace CsabaDu.FooVaria.Shapes.Factories;
 
 public interface IRectangleFactory : IPlaneShapeFactory, IRectangularShapeFactory<IRectangle, ICircle>/*, IFactory<IRectangle>*/
 {

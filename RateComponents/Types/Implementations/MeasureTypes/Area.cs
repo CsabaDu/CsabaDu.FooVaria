@@ -9,7 +9,7 @@
 //    #endregion
 
 //    #region Public methods
-//    public MeasureUnitCode GetMeasureUnitCode()
+//    public MeasureUnitCode GetLimiterMeasureUnitCode()
 //    {
 //        return MeasureUnitCode;
 //    }

@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.SimpleShapes.Types
+﻿namespace CsabaDu.FooVaria.Shapes.Types
 {
     public interface IRectangle : IPlaneShape, IRectangularShape<IRectangle, ICircle>, IHorizontalRotation<IRectangle>, ICommonBase<IRectangle>
     {

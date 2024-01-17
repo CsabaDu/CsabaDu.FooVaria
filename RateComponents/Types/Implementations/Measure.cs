@@ -280,7 +280,7 @@
 //        protected TOther ConvertMeasure<TOther>(ConvertMode convertMode)
 //            where TOther : IMeasure, IConvertMeasure
 //        {
-//            MeasureUnitCode measureUnitCode = MeasureUnitTypes.GetMeasureUnitCode(typeof(TOther));
+//            MeasureUnitCode measureUnitCode = MeasureUnitTypes.GetLimiterMeasureUnitCode(typeof(TOther));
 //            Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
 //            decimal quantity = convertMode switch
 //            {

@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.SimpleShapes.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Shapes.Types.Implementations;
 
 internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
 {
@@ -81,7 +81,7 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
         return GetFactory().CreateNew(other);
     }
 
-    public ISimpleShape GetTangentShape(SideCode sideCode)
+    public IShape GetTangentShape(SideCode sideCode)
     {
         return GetFactory().CreateTangentShape(this, sideCode);
     }

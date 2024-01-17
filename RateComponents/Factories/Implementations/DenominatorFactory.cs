@@ -109,7 +109,7 @@ public sealed class DenominatorFactory : RateComponentFactory<IDenominator, deci
         return GetOrCreateStoredDenominator(measurement);
     }
 
-    public override IDenominator CreateNew(IDenominator other)
+    public IDenominator CreateNew(IDenominator other)
     {
         return GetStoredRateComponent(other, DenominatorSet) ?? throw new InvalidOperationException(null);
     }

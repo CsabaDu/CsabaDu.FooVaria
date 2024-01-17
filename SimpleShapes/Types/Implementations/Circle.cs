@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.SimpleShapes.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Shapes.Types.Implementations;
 
 internal sealed class Circle : PlaneShape, ICircle
 {
@@ -58,7 +58,7 @@ internal sealed class Circle : PlaneShape, ICircle
         return Radius.GetMeasure(extentUnit);
     }
 
-    public ISimpleShape GetTangentShape(SideCode sideCode)
+    public IShape GetTangentShape(SideCode sideCode)
     {
         return GetFactory().CreateTangentShape(this, sideCode);
     }

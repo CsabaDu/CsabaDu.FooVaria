@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.SimpleShapes.Types
+﻿namespace CsabaDu.FooVaria.Shapes.Types
 {
     public interface ICylinder : IDryBody<ICylinder, ICircle>, ICircularShape<ICylinder, ICuboid>, ICommonBase<ICylinder>
     {

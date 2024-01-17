@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Factories;
+﻿namespace CsabaDu.FooVaria.Measures.Factories;
 
 public interface IMeasureFactory : IBaseMeasureFactory<IMeasure>, IDefaultBaseMeasureFactory<IMeasure>
 {

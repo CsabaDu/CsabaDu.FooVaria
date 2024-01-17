@@ -1,14 +1,14 @@
-﻿namespace CsabaDu.FooVaria.Quantifiables.Types
-{
-    public interface IDefaultBaseMeasure : IBaseMeasure
-    {
-    }
+﻿//namespace CsabaDu.FooVaria.Quantifiables.Types
+//{
+//    public interface IDefaultBaseMeasure : IBaseMeasure
+//    {
+//    }
 
-    public interface IDefaultBaseMeasure<TSelf, TNum> : IDefaultBaseMeasure, IQuantity<TNum>, ICommonBase<TSelf>
-        where TSelf : class, IBaseMeasure, IDefaultBaseMeasure
-        where TNum : struct
-    {
-        TSelf GetBaseMeasure(IBaseMeasure baseMeasure);
-        TSelf GetBaseMeasure(TNum quantity);
-    }
-}
+//    public interface IDefaultBaseMeasure<TSelf, TNum> : IDefaultBaseMeasure, IDefaultMeasurable<TSelf>, IQuantity<TNum>/*, ICommonBase<TSelf>*/
+//        where TSelf : class, IBaseMeasure, IDefaultBaseMeasure
+//        where TNum : struct
+//    {
+//        TSelf GetBaseMeasure(IBaseMeasure baseMeasure);
+//        TSelf GetBaseMeasure(TNum quantity);
+//    }
+//}

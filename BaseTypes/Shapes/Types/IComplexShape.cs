@@ -1,6 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Shapes.Types;
+﻿namespace CsabaDu.FooVaria.BaseShapes.Types;
 
-public interface IComplexShape : IShape
+public interface IComplexShape : IBaseShape
 {
 }
 

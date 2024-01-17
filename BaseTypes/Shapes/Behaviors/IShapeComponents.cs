@@ -1,12 +1,12 @@
-﻿namespace CsabaDu.FooVaria.Shapes.Behaviors
+﻿namespace CsabaDu.FooVaria.BaseShapes.Behaviors
 {
     public interface IShapeComponents
     {
-        IEnumerable<IShapeComponent> GetShapeComponents();
+        IEnumerable<IShapeComponent> GetBaseShapeComponents();
     }
 
     public interface IShapeComponents<out T> : IShapeComponents where T : class/*, IQuantifiable*/, IShapeComponent // Vissza!
     {
-        IEnumerable<T>? GetShapeComponents(IShape baseShape);
+        IEnumerable<T>? GetBaseShapeComponents(IBaseShape baseBaseShape);
     }
 }

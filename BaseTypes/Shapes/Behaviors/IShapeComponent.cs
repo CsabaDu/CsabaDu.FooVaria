@@ -1,7 +1,7 @@
-﻿//namespace CsabaDu.FooVaria.Shapes.Behaviors
+﻿//namespace CsabaDu.FooVaria.BaseShapes.Behaviors
 //{
-//    public interface IShapeComponent
+//    public interface IBaseShapeComponent
 //    {
-//        bool IsValidShapeComponentOf(IShape baseShape);
+//        bool IsValidBaseShapeComponentOf(IBaseShape baseBaseShape);
 //    }
 //}

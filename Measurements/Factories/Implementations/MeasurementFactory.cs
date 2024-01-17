@@ -83,9 +83,9 @@ public sealed class MeasurementFactory : IMeasurementFactory
     {
         return context switch
         {
+            string name => GetStoredMeasurementOrNull(name),
             MeasureUnitCode measureUnitCode => CreateDefault(measureUnitCode),
             Enum measureUnit => GetStoredMeasurementOrNull(measureUnit, true),
-            string name => GetStoredMeasurementOrNull(name),
             BaseMeasurement baseMeasurement => Create(baseMeasurement),
 
             _ => null,

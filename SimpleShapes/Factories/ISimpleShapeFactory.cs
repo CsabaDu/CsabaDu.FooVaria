@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.SimpleShapes.Factories
+﻿namespace CsabaDu.FooVaria.Shapes.Factories
 {
     public interface ISimpleShapeFactory : IShapeFactory
     {
@@ -12,8 +12,8 @@
     }
 
     public interface ISimpleShapeFactory<T, out TTangent> : ISimpleShapeFactory, IFactory<T>
-        where T : class, ISimpleShape, ITangentShape
-        where TTangent : class, ISimpleShape, ITangentShape
+        where T : class, IShape, ITangentShape
+        where TTangent : class, IShape, ITangentShape
     {
         TTangent CreateTangentShape(T shape, SideCode sideCode);
         TTangent CreateOuterTangentShape(T shape);

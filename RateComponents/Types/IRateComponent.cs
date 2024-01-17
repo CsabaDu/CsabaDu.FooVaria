@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Measurables.Types;
-
-namespace CsabaDu.FooVaria.RateComponents.Types
+﻿namespace CsabaDu.FooVaria.RateComponents.Types
 {
     public interface IRateComponent : IBaseMeasure/*, Behaviors.IBaseMeasureQuantity, IQuantityTypeCode,IDecimalQuantity,*/
         /*, IRateComponentCode/*, IExchangeRate, IExchange<IRateComponent, Enum>, IRound<IRateComponent> */
@@ -8,7 +6,7 @@ namespace CsabaDu.FooVaria.RateComponents.Types
         IMeasurement Measurement { get; init; }
     }
 
-    public interface IRateComponent<TSelf, TNum> : IRateComponent, IDefaultBaseMeasure<TSelf, TNum>, IDefaultMeasurable<TSelf>
+    public interface IRateComponent<TSelf, TNum> : IRateComponent, IDefaultBaseMeasure<TSelf, TNum>, IDefaultMeasurable<TSelf>, IBaseMeasure<TSelf>
         where TSelf : class, IRateComponent, IDefaultBaseMeasure
         where TNum : struct
     {

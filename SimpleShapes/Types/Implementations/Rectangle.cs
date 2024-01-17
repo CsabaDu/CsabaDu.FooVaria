@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.SimpleShapes.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Shapes.Types.Implementations;
 
 internal sealed class Rectangle : PlaneShape, IRectangle
 {
@@ -77,7 +77,7 @@ internal sealed class Rectangle : PlaneShape, IRectangle
         return GetFactory().CreateNew(other);
     }
 
-    public ISimpleShape GetTangentShape(SideCode sideCode)
+    public IShape GetTangentShape(SideCode sideCode)
     {
         return GetFactory().CreateTangentShape(this, sideCode);
     }

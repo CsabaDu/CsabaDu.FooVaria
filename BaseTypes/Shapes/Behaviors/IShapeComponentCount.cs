@@ -1,6 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Shapes.Behaviors;
+﻿namespace CsabaDu.FooVaria.BaseShapes.Behaviors;
 
 public interface IShapeComponentCount
 {
-    int GetShapeComponentCount();
+    int GetBaseShapeComponentCount();
 }

@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BaseTypes\Shapes\Shapes.csproj" />
+    <ProjectReference Include="..\BaseTypes\BaseShapes\BaseBaseShapes.csproj" />
+    <ProjectReference Include="..\BaseTypes\Shapes\BaseShapes.csproj" />
     <ProjectReference Include="..\Measures\Measures.csproj" />
     <ProjectReference Include="..\Spreads\Spreads.csproj" />
   </ItemGroup>
@@ -20,7 +21,7 @@
 
 	<ItemGroup>
 		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-			<_Parameter1>ShapesTests</_Parameter1>
+			<_Parameter1>BaseShapesTests</_Parameter1>
 		</AssemblyAttribute>
 	</ItemGroup>
 

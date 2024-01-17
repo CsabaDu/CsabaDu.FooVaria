@@ -1,12 +1,12 @@
-﻿namespace CsabaDu.FooVaria.SimpleShapes.Types
+﻿namespace CsabaDu.FooVaria.Shapes.Types
 {
     public interface ICircularShape : ITangentShape, IRadius
     {
     }
 
-    public interface ICircularShape<out TSelf, out TTangent> : ICircularShape, ISimpleShape<TTangent>
-        where TSelf : class, ISimpleShape, ICircularShape
-        where TTangent : class, ISimpleShape, IRectangularShape
+    public interface ICircularShape<out TSelf, out TTangent> : ICircularShape, IShape<TTangent>
+        where TSelf : class, IShape, ICircularShape
+        where TTangent : class, IShape, IRectangularShape
     {
         TTangent GetInnerTangentShape(IExtent innerTangentRectangleSide);
     }

@@ -45,7 +45,7 @@
         #region Abstract methods
         public abstract T Create(IMeasurement measurement, TNum quantity);
         public abstract T? CreateDefault(MeasureUnitCode measureUnitCode);
-        public abstract T CreateNew(T other);
+        //public abstract T CreateNew(T other);
 
         #endregion
         #endregion
@@ -92,6 +92,31 @@
             return rateComponentSet.TryGetValue(other!, out T? stored) ?
                 stored
                 : null;
+        }
+
+        public T Create(string name, ValueType quantity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public T Create(Enum measureUnit, ValueType quantity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public T? Create(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public T? Create(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public T CreateNew(T other)
+        {
+            throw new NotImplementedException();
         }
         #endregion
         #endregion

@@ -1,9 +1,9 @@
-﻿using CsabaDu.FooVaria.Quantifiables.Enums;
+﻿//using CsabaDu.FooVaria.Quantifiables.Enums;
 
-namespace CsabaDu.FooVaria.Quantifiables.Behaviors;
+//namespace CsabaDu.FooVaria.Quantifiables.Behaviors;
 
-public interface IRound<out TSelf>
-    where TSelf : class, IBaseMeasure
-{
-    TSelf Round(RoundingMode roundingMode);
-}
+//public interface IRound<out TSelf>
+//    where TSelf : class, IBaseMeasure
+//{
+//    TSelf Round(RoundingMode roundingMode);
+//}

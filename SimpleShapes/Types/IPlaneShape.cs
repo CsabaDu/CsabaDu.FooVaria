@@ -1,6 +1,6 @@
-﻿namespace CsabaDu.FooVaria.SimpleShapes.Types;
+﻿namespace CsabaDu.FooVaria.Shapes.Types;
 
-public interface IPlaneShape : ISimpleShape, ISurface
+public interface IPlaneShape : IShape, ISurface
 {
     IArea Area { get; init; }
 }

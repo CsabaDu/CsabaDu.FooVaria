@@ -1,9 +1,9 @@
-﻿namespace CsabaDu.FooVaria.SimpleShapes.Statics;
+﻿namespace CsabaDu.FooVaria.Shapes.Statics;
 
 public static class ShapeExtents
 {
     #region Public methods
-    public static IExtent GetDiagonal(ISimpleShape shape, ExtentUnit extentUnit = default)
+    public static IExtent GetDiagonal(IShape shape, ExtentUnit extentUnit = default)
     {
         return NullChecked(shape, nameof(shape)) switch
         {
@@ -48,7 +48,7 @@ public static class ShapeExtents
         }
 
         IExtent getRectangularShapeDiagonal<T>(T shape)
-            where T : class, ISimpleShape, IRectangularShape
+            where T : class, IShape, IRectangularShape
         {
             ValidateMeasureUnit(extentUnit, nameof(extentUnit));
 
@@ -121,7 +121,7 @@ public static class ShapeExtents
         return quantity * quantity;
     }
 
-    private static double GetExchangedQuantitySqrt(ISimpleShape shape, ExtentUnit extentUnit, decimal quantitySquare)
+    private static double GetExchangedQuantitySqrt(IShape shape, ExtentUnit extentUnit, decimal quantitySquare)
     {
         double quantity = decimal.ToDouble(quantitySquare);
         quantity = Math.Sqrt(quantity);
@@ -131,7 +131,7 @@ public static class ShapeExtents
             : quantity / decimal.ToDouble(GetSpreadMeasureUnitExchangeRate(shape, extentUnit));
     }
 
-    private static decimal GetSpreadMeasureUnitExchangeRate(ISimpleShape shape, Enum measureUnit)
+    private static decimal GetSpreadMeasureUnitExchangeRate(IShape shape, Enum measureUnit)
     {
         IRateComponent spreadMeasure = (IRateComponent)shape.GetSpreadMeasure();
 

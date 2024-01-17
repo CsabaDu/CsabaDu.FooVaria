@@ -5,5 +5,5 @@ public interface IDenominator : IRateComponent<IDenominator, decimal>, IBaseMeas
     IDenominator GetDenominator(Enum measureUnit);
     IDenominator GetDenominator(string name);
     IDenominator GetDenominator(IMeasurement measurement);
-    IDenominator GetDenominator(IRateComponent rateComponent, ValueType quantity);
+    IDenominator GetDenominator(IBaseMeasure baseMeasure, ValueType quantity);
 }

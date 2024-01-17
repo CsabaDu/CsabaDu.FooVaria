@@ -33,7 +33,7 @@
     //    {
     //        if (!IsDefinedMeasureUnit(measureUnit)) return false;
 
-    //        MeasureUnitCode measureUnitCode = GetMeasureUnitCode(measureUnit);
+    //        MeasureUnitCode measureUnitCode = GetLimiterMeasureUnitCode(measureUnit);
 
     //        return measureUnitCode.IsCustomMeasureUnitCode();
     //    }

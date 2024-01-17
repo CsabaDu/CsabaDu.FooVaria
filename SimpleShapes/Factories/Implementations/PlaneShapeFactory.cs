@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.SimpleShapes.Factories.Implementations
+﻿namespace CsabaDu.FooVaria.Shapes.Factories.Implementations
 {
     public abstract class PlaneShapeFactory : ShapeFactory, IPlaneShapeFactory
     {

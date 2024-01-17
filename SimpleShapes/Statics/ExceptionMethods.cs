@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace CsabaDu.FooVaria.SimpleShapes.Statics
+namespace CsabaDu.FooVaria.Shapes.Statics
 {
     public static class ExceptionMethods
     {

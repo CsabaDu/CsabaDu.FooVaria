@@ -47,13 +47,6 @@
             return GetFactory().MeasurementFactory;
         }
 
-        public override sealed TypeCode? GetQuantityTypeCode(object quantity)
-        {
-            TypeCode quantityTypeCode = Type.GetTypeCode(quantity?.GetType());
-
-            return GetValidQuantityTypeCodeOrNull(quantityTypeCode);
-        }
-
         public override sealed RateComponentCode GetRateComponentCode()
         {
             return GetFactory().RateComponentCode;
@@ -141,11 +134,6 @@
         public object GetDefaultRateComponentQuantity()
         {
             return GetFactory().DefaultRateComponentQuantity;
-        }
-
-        public TSelf GetNew(TSelf other)
-        {
-            return GetFactory().CreateNew(other);
         }
 
         public TNum GetQuantity()

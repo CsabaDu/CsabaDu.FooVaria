@@ -3,16 +3,6 @@
 public static class ExceptionMethods
 {
     #region InvalidEnumArgumentException
-    public static InvalidEnumArgumentException InvalidRoundingModeEnumArgumentException(RoundingMode roundingMode)
-    {
-        return InvalidRoundingModeEnumArgumentException(roundingMode, nameof(roundingMode));
-    }
-
-    public static InvalidEnumArgumentException InvalidRoundingModeEnumArgumentException(RoundingMode roundingMode, string paramName)
-    {
-        return new InvalidEnumArgumentException(paramName, (int)roundingMode, roundingMode.GetType());
-    }
-
     public static InvalidEnumArgumentException InvalidLimitModeEnumArgumentException(LimitMode limitMode)
     {
         return InvalidLimitModeEnumArgumentException(limitMode, nameof(limitMode));

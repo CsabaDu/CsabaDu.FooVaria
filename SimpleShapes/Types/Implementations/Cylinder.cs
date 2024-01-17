@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.SimpleShapes.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Shapes.Types.Implementations;
 
 internal sealed class Cylinder : DryBody<ICylinder, ICircle>, ICylinder
 {
@@ -59,7 +59,7 @@ internal sealed class Cylinder : DryBody<ICylinder, ICircle>, ICylinder
         return GetRadius().GetMeasure(extentUnit);
     }
 
-    public ISimpleShape GetTangentShape(SideCode sideCode)
+    public IShape GetTangentShape(SideCode sideCode)
     {
         return GetFactory().CreateTangentShape(this, sideCode);
     }

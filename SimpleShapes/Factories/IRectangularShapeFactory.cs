@@ -1,12 +1,12 @@
-﻿namespace CsabaDu.FooVaria.SimpleShapes.Factories
+﻿namespace CsabaDu.FooVaria.Shapes.Factories
 {
     public interface IRectangularShapeFactory : ITangentShapeFactory
     {
     }
 
     public interface IRectangularShapeFactory<T, out TTangent> : IShapeFactory<T, TTangent>, IRectangularShapeFactory
-        where T : class, ISimpleShape, IRectangularShape
-        where TTangent : class, ISimpleShape, ICircularShape
+        where T : class, IShape, IRectangularShape
+        where TTangent : class, IShape, ICircularShape
     {
         TTangent CreateInnerTangentShape(T rectangularShape, ComparisonCode comparisonCode);
     }

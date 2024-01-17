@@ -1,9 +1,9 @@
-﻿namespace CsabaDu.FooVaria.Quantifiables.Enums;
+﻿//namespace CsabaDu.FooVaria.Quantifiables.Enums;
 
-public enum RoundingMode
-{
-    General,
-    Ceiling,
-    Floor,
-    Half
-}
+//public enum RoundingMode
+//{
+//    General,
+//    Ceiling,
+//    Floor,
+//    Half
+//}

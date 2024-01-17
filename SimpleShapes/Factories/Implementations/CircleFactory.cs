@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.SimpleShapes.Factories.Implementations;
+﻿namespace CsabaDu.FooVaria.Shapes.Factories.Implementations;
 
 public sealed class CircleFactory : PlaneShapeFactory, ICircleFactory
 {

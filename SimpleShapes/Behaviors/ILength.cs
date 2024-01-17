@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.SimpleShapes.Behaviors;
+﻿namespace CsabaDu.FooVaria.Shapes.Behaviors;
 
 public interface ILength
 {

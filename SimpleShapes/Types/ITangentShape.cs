@@ -1,6 +1,6 @@
-﻿namespace CsabaDu.FooVaria.SimpleShapes.Types;
+﻿namespace CsabaDu.FooVaria.Shapes.Types;
 
-public interface ITangentShape : IShape
+public interface ITangentShape : IBaseShape
 {
-    ISimpleShape GetTangentShape(SideCode sideCode);
+    IShape GetTangentShape(SideCode sideCode);
 }

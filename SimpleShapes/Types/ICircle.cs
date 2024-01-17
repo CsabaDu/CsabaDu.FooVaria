@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.SimpleShapes.Types
+﻿namespace CsabaDu.FooVaria.Shapes.Types
 {
     public interface ICircle : IPlaneShape, ICircularShape<ICircle, IRectangle>, ICommonBase<ICircle>
     {

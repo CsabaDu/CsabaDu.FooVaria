@@ -1,6 +1,6 @@
 ﻿using CsabaDu.FooVaria.RateComponents.Factories;
 
-namespace CsabaDu.FooVaria.SimpleShapes.Factories.Implementations;
+namespace CsabaDu.FooVaria.Shapes.Factories.Implementations;
 
 public abstract class ShapeFactory : ISimpleShapeFactory
 {
@@ -51,14 +51,14 @@ public abstract class ShapeFactory : ISimpleShapeFactory
     #endregion
 
     #region Abstract methods
-    public abstract IShape? CreateBaseShape(params IShapeComponent[] shapeComponents);
+    public abstract IBaseShape? CreateBaseShape(params IShapeComponent[] shapeComponents);
     #endregion
     #endregion
 
     #region Protected methods
     protected TTangent CreateTangentShape<T, TTangent>(IShapeFactory<T, TTangent> factory, params IShapeComponent[] shapeComponents)
-    where T : class, ISimpleShape, ITangentShape
-    where TTangent : class, ISimpleShape, ITangentShape
+    where T : class, IShape, ITangentShape
+    where TTangent : class, IShape, ITangentShape
     {
         return (TTangent)GetTangentShapeFactory().CreateBaseShape(shapeComponents)!;
     }
@@ -90,8 +90,8 @@ public abstract class ShapeFactory : ISimpleShapeFactory
     }
 
     protected static TTangent CreateTangentShape<T, TTangent>(IShapeFactory<T, TTangent> factory, T shape, SideCode sideCode)
-        where T : class, ISimpleShape, ITangentShape
-        where TTangent : class, ISimpleShape, ITangentShape
+        where T : class, IShape, ITangentShape
+        where TTangent : class, IShape, ITangentShape
     {
         return sideCode switch
         {

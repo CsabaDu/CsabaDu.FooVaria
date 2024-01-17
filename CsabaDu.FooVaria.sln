@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Measurables", "BaseTypes\Me
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quantifiables", "BaseTypes\Quantifiables\Quantifiables.csproj", "{9F8A045B-68D3-4681-9776-6A326E659ACF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shapes", "BaseTypes\Shapes\Shapes.csproj", "{A6D5A236-F64B-48A3-92D0-1EC9A19A0FF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseShapes", "BaseTypes\Shapes\BaseShapes.csproj", "{A6D5A236-F64B-48A3-92D0-1EC9A19A0FF6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Measurements", "Measurements\Measurements.csproj", "{3BA709AD-7F0A-4581-AE2F-7A55EE9C7075}"
 EndProject
@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Measures", "Measures\Measur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spreads", "Spreads\Spreads.csproj", "{90449B9B-F322-4063-89D5-A5E8E98A33A9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleShapes", "SimpleShapes\SimpleShapes.csproj", "{D523461C-D1BD-47C6-8B6F-7D29B46EC0F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shapes", "SimpleShapes\Shapes.csproj", "{D523461C-D1BD-47C6-8B6F-7D29B46EC0F5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proportions", "Proportions\Proportions.csproj", "{00A7BD65-4784-4783-94D4-C34149932485}"
 EndProject
@@ -29,7 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rates", "Rates\Rates.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Masses", "Masses\Masses.csproj", "{734D60B1-08AC-47D4-B9EA-AE7BE1AEB64B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseSpreads", "BaseTypes\BaseSpreads\BaseSpreads.csproj", "{9A3FEE96-426B-4273-8F73-752EB05ED82C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseSpreads", "BaseTypes\BaseSpreads\BaseSpreads.csproj", "{9A3FEE96-426B-4273-8F73-752EB05ED82C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseMeasures", "BaseTypes\BaseMeasures\BaseMeasures.csproj", "{4EDF3A34-E153-47A9-B40C-CBDFC8F5A139}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,6 +91,10 @@ Global
 		{9A3FEE96-426B-4273-8F73-752EB05ED82C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A3FEE96-426B-4273-8F73-752EB05ED82C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A3FEE96-426B-4273-8F73-752EB05ED82C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EDF3A34-E153-47A9-B40C-CBDFC8F5A139}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EDF3A34-E153-47A9-B40C-CBDFC8F5A139}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EDF3A34-E153-47A9-B40C-CBDFC8F5A139}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EDF3A34-E153-47A9-B40C-CBDFC8F5A139}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,6 +105,7 @@ Global
 		{9F8A045B-68D3-4681-9776-6A326E659ACF} = {0AF2CC76-F30A-4EC3-B794-F71398848CB5}
 		{A6D5A236-F64B-48A3-92D0-1EC9A19A0FF6} = {0AF2CC76-F30A-4EC3-B794-F71398848CB5}
 		{9A3FEE96-426B-4273-8F73-752EB05ED82C} = {0AF2CC76-F30A-4EC3-B794-F71398848CB5}
+		{4EDF3A34-E153-47A9-B40C-CBDFC8F5A139} = {0AF2CC76-F30A-4EC3-B794-F71398848CB5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E59D61FF-8716-46EC-B6E6-C30BCA17F953}

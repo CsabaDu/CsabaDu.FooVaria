@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.SimpleShapes.Enums;
+﻿namespace CsabaDu.FooVaria.Shapes.Enums;
 
 public enum ShapeExtentCode
 {

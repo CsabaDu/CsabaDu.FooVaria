@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.SimpleShapes.Behaviors
+﻿namespace CsabaDu.FooVaria.Shapes.Behaviors
 {
     public interface IHorizontalRotation
     {
@@ -6,7 +6,7 @@
     }
 
     public interface IHorizontalRotation<TSelf> : IHorizontalRotation
-        where TSelf : class, ISimpleShape, IRectangularShape
+        where TSelf : class, IShape, IRectangularShape
     {
         TSelf RotateHorizontally();
     }
