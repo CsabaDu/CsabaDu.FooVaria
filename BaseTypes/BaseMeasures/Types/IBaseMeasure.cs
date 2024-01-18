@@ -19,6 +19,8 @@
         TSelf GetBaseMeasure(string name, ValueType quantity);
         TSelf? GetBaseMeasure(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName);
         TSelf? GetBaseMeasure(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity);
+        TSelf GetBaseMeasure(IBaseMeasure baseMeasure);
+
 
         #region Default implementations
         public bool TryGetBaseMeasure(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName, [NotNullWhen(true)] out TSelf? baseMeasure)

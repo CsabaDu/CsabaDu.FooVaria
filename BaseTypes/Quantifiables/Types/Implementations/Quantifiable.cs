@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Quantifiables.Types.Implementations;
+﻿using System;
+
+namespace CsabaDu.FooVaria.Quantifiables.Types.Implementations;
 
 public abstract class Quantifiable : Measurable, IQuantifiable
 {
@@ -71,6 +73,13 @@ public abstract class Quantifiable : Measurable, IQuantifiable
     {
         return Type.GetTypeCode(typeof(TNum));
 
+    }
+
+    protected static decimal GetDefaultQuantity(object quantity, decimal exchangeRate)
+    {
+        decimal defaultQuantity = Convert.ToDecimal(quantity) * exchangeRate;
+
+        return RoundQuantity(defaultQuantity);
     }
     #endregion
     #endregion

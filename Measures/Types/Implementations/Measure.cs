@@ -3,17 +3,29 @@
     internal abstract class Measure : BaseMeasure<IMeasure>, IMeasure
     {
         #region Constructors
-        private protected Measure(IMeasureFactory factory, Enum measureUnit) : base(factory, measureUnit)
+        private protected Measure(IMeasureFactory factory, Enum measureUnit, ValueType quantity) : base(factory, measureUnit)
         {
+            ValidateQuantity(quantity, nameof(quantity));
+
             Measurement = GetBaseMeasurementFactory().Create(measureUnit);
+            Quantity = quantity;
         }
         #endregion
 
         public IMeasurement Measurement { get; init; }
-
+        public override sealed object Quantity { get; init; }
         public IMeasure Add(IMeasure? other)
         {
             return GetSum(other, SummingMode.Add);
+        }
+
+        public IMeasure ConvertLimiter(ILimiter limiter)
+        {
+            MeasureUnitCode measureUnitCode = NullChecked(limiter, nameof(limiter)).GetLimiterMeasureUnitCode();
+            Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
+            decimal defaultQuantity = limiter.GetLimiterDefaultQuantity();
+
+            return GetBaseMeasure(measureUnit, defaultQuantity);
         }
 
         public IMeasure Divide(decimal divisor)
@@ -32,10 +44,7 @@
 
             if (limiter is not IBaseMeasure baseMeasure)
             {
-                MeasureUnitCode measureUnitCode = limiter.GetLimiterMeasureUnitCode();
-                Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
-                decimal defaultQuantity = limiter.GetLimiterDefaultQuantity();
-                baseMeasure = GetBaseMeasure(measureUnit, defaultQuantity);
+                baseMeasure = ConvertLimiter(limiter);
             }
 
             return FitsIn(baseMeasure, limitMode);
@@ -88,6 +97,11 @@
             #endregion
         }
 
+        public bool? FitsIn(IQuantifiable? comparable, LimitMode? limitMode)
+        {
+            throw new NotImplementedException();
+        }
+
         public override sealed IMeasurement GetBaseMeasurement()
         {
             return Measurement;
@@ -96,6 +110,11 @@
         public override sealed IMeasurementFactory GetBaseMeasurementFactory()
         {
             return GetFactory().MeasurementFactory;
+        }
+
+        public override sealed decimal GetDefaultQuantity()
+        {
+            return GetDefaultQuantity(Quantity, GetExchangeRate());
         }
 
         public override IMeasureFactory GetFactory()
@@ -163,105 +182,6 @@
             #endregion
         }
         #endregion
-
-        //#region Public methods
-        //public IMeasure Add(IMeasure? other)
-        //{
-        //    return GetSum(other, SummingMode.Add);
-        //}
-
-        //public IMeasure Divide(decimal divisor)
-        //{
-        //    if (divisor == 0) throw new ArgumentOutOfRangeException(nameof(divisor), divisor, null);
-
-        //    decimal quantity = decimal.Divide(GetDecimalQuantity(), divisor);
-
-        //    return GetBaseMeasure(quantity);
-        //}
-
-        //public bool? FitsIn(ILimit? limit)
-        //{
-        //    return FitsIn(limit, limit?.LimitMode);
-        //}
-
-        //public bool? FitsIn(IRateComponent? baseMeasure, LimitMode? limitMode)
-        //{
-        //    bool isLimitModeNull = limitMode == null;
-
-        //    if (isRateComponentNull() && isLimitModeNull) return true;
-
-        //    if (baseMeasure?.HasMeasureUnitCode(MeasureUnitCode) != true) return null;
-
-        //    if (isLimitModeNull) return CompareTo(baseMeasure) <= 0;
-
-        //    IRateComponent ceilingBaseMeasure = baseMeasure.Round(RoundingMode.Ceiling);
-        //    baseMeasure = getRoundedBaseMeasure();
-
-        //    if (isRateComponentNull()) return null;
-
-        //    int comparison = CompareTo(baseMeasure);
-
-        //    return Defined(limitMode!.Value, nameof(limitMode)) switch
-        //    {
-        //        LimitMode.BeEqual => comparison == 0 && ceilingBaseMeasure.Equals(baseMeasure),
-
-        //        _ => comparison.FitsIn(limitMode),
-        //    };
-
-        //    #region Local methods
-        //    bool isRateComponentNull()
-        //    {
-        //        return baseMeasure == null;
-        //    }
-
-        //    IRateComponent? getRoundedBaseMeasure()
-        //    {
-        //        return limitMode switch
-        //        {
-        //            LimitMode.BeNotLess or
-        //            LimitMode.BeGreater => ceilingBaseMeasure,
-
-        //            LimitMode.BeNotGreater or
-        //            LimitMode.BeLess or
-        //            LimitMode.BeEqual => baseMeasure!.Round(RoundingMode.Floor),
-
-        //            _ => null,
-        //        };
-        //    }
-        //    #endregion
-        //}
-
-        //public IMeasure Multiply(decimal multiplier)
-        //{
-        //    decimal quantity = decimal.Multiply(GetDecimalQuantity(), multiplier);
-
-        //    return GetRateComponent(quantity);
-        //}
-
-        //public IMeasure Subtract(IMeasure? other)
-        //{
-        //    return GetSum(other, SummingMode.Subtract);
-        //}
-
-        //#region Override methods
-        //#region Sealed methods
-        //public override sealed bool Equals(IRateComponent? other)
-        //{
-        //    return other is IMeasure
-        //        && base.Equals(other);
-        //}
-
-        //public override sealed IMeasureFactory GetFactory()
-        //{
-        //    return (IMeasureFactory)Factory;
-        //}
-        //#endregion
-        //#endregion
-
-        //#region Abstract methods
-        //public abstract IMeasure GetMeasure(IRateComponent baseMeasure);
-        //#endregion
-        //#endregion
     }
 
     internal abstract class Measure<TSelf, TNum> : Measure, IMeasure<TSelf, TNum>
@@ -275,9 +195,9 @@
         #endregion
 
         #region Public methods
-        public override sealed IMeasure Add(IMeasure? other)
+        public TSelf GetBaseMeasure(TNum quantity)
         {
-            return GetSum(this, other, SummingMode.Add);
+            return GetMeasure(Measurement, quantity);
         }
 
         public TSelf? GetDefault(MeasureUnitCode measureUnitCode)
@@ -290,11 +210,6 @@
             return GetDefault(MeasureUnitCode)!;
         }
 
-        public TNum GetDefaultRateComponentQuantity()
-        {
-            return GetDefaultRateComponentQuantity<TNum>();
-        }
-
         public TSelf GetMeasure(string name, TNum quantity)
         {
             return (TSelf)GetFactory().Create(name, quantity);
@@ -302,64 +217,13 @@
 
         public TSelf GetMeasure(IMeasurement measurement, TNum quantity)
         {
-            return (TSelf)GetFactory().Create(measurement, quantity);
-        }
-
-        public TSelf GetNew(TSelf other)
-        {
-            return (TSelf)GetFactory().CreateNew(other);
+            return (TSelf)GetFactory().CreateBaseMeasure(measurement, quantity);
         }
 
         public TNum GetQuantity()
         {
-            return (TNum)Quantity;
+            return (TNum)GetQuantity(GetQuantityTypeCode());
         }
-
-        public TSelf GetRateComponent(TNum quantity)
-        {
-            return GetMeasure(Measurement, quantity);
-        }
-
-        public TSelf GetRateComponent(IRateComponent rateComponent)
-        {
-            if (NullChecked(rateComponent, nameof(rateComponent)) is TSelf other) return GetNew(other);
-
-            return (TSelf)GetRateComponent(rateComponent, GetFactory());
-        }
-
-        #region Override methods
-        #region Sealed methods
-        public override sealed TSelf GetMeasure(IRateComponent rateComponent)
-        {
-            return GetRateComponent(rateComponent);
-        }
-
-        public override sealed TSelf GetRateComponent(ValueType quantity)
-        {
-            return (TSelf)base.GetRateComponent(quantity);
-        }
-
-        public override sealed TSelf GetRateComponent(string name, ValueType quantity)
-        {
-            return (TSelf)base.GetRateComponent(name, quantity);
-        }
-
-        public override sealed TSelf GetRateComponent(IMeasurement measurement, ValueType quantity)
-        {
-            return (TSelf)base.GetRateComponent(measurement, quantity);
-        }
-
-        public override sealed TSelf? GetRateComponent(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
-        {
-            return (TSelf?)base.GetRateComponent(measureUnit, exchangeRate, quantity, customName);
-        }
-
-        public override sealed TSelf? GetRateComponent(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity)
-        {
-            return (TSelf?)base.GetRateComponent(customName, measureUnitCode, exchangeRate, quantity);
-        }
-        #endregion
-        #endregion
         #endregion
     }
 
@@ -389,7 +253,7 @@
         #region Public methods
         public TSelf GetMeasure(TEnum measureUnit, TNum quantity)
         {
-            return (TSelf)GetRateComponent(measureUnit, quantity);
+            return (TSelf)GetBaseMeasure(measureUnit, quantity);
         }
 
         public TSelf GetMeasure(TEnum measureUnit)
@@ -411,13 +275,13 @@
             Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
             decimal quantity = convertMode switch
             {
-                ConvertMode.Multiply => DefaultQuantity * ConvertRatio,
-                ConvertMode.Divide => DefaultQuantity / ConvertRatio,
+                ConvertMode.Multiply => GetDefaultQuantity() * ConvertRatio,
+                ConvertMode.Divide => GetDefaultQuantity() / ConvertRatio,
 
                 _ => throw new InvalidOperationException(null),
             };
 
-            return (TOther)GetRateComponent(measureUnit, quantity);
+            return (TOther)GetBaseMeasure(measureUnit, quantity);
         }
 
         protected void ValidateSpreadQuantity(ValueType? quantity, string paramName)

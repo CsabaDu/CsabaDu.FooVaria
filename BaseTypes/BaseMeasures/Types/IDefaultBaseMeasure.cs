@@ -8,7 +8,6 @@
         where TSelf : class, IBaseMeasure, IDefaultBaseMeasure
         where TNum : struct
     {
-        TSelf GetBaseMeasure(IBaseMeasure baseMeasure);
         TSelf GetBaseMeasure(TNum quantity);
     }
 }

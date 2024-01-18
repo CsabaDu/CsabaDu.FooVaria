@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.BaseMeasures.Types.Implementations
+﻿using System;
+
+namespace CsabaDu.FooVaria.BaseMeasures.Types.Implementations
 {
     public abstract class BaseMeasure : Quantifiable, IBaseMeasure
     {
@@ -291,6 +293,11 @@
         public TSeff? GetBaseMeasure(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity)
         {
             return GetFactory().Create(customName, measureUnitCode, exchangeRate, quantity);
+        }
+
+        public TSeff GetBaseMeasure(IBaseMeasure baseMeasure)
+        {
+            return GetFactory().Create(baseMeasure);
         }
 
         #region Override methods

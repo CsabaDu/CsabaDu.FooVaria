@@ -1,4 +1,5 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
+﻿
+namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
 
 internal sealed class Limit : RateComponent<ILimit, ulong>, ILimit
 {
@@ -102,9 +103,7 @@ internal sealed class Limit : RateComponent<ILimit, ulong>, ILimit
     #region Override methods
     public override decimal GetDefaultQuantity()
     {
-        decimal quantity = Convert.ToDecimal(Quantity);
-
-        return GetDefaultQuantity(quantity);
+        return GetDefaultQuantity(Quantity);
     }
 
     public override ILimitFactory GetFactory()
@@ -115,6 +114,11 @@ internal sealed class Limit : RateComponent<ILimit, ulong>, ILimit
     public override LimitMode? GetLimitMode()
     {
         return LimitMode;
+    }
+
+    public ILimit GetLimit(IBaseMeasure baseMeasure, LimitMode limitMode)
+    {
+        throw new NotImplementedException();
     }
     #endregion
     #endregion

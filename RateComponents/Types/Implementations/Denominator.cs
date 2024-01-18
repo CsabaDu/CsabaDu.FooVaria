@@ -1,4 +1,5 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
+﻿
+namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
 
 internal sealed class Denominator : RateComponent<IDenominator, decimal>, IDenominator
 {
@@ -61,12 +62,17 @@ internal sealed class Denominator : RateComponent<IDenominator, decimal>, IDenom
     #region Override methods
     public override decimal GetDefaultQuantity()
     {
-        return GetDefaultQuantity((decimal)Quantity);
+        return GetDefaultQuantity(Quantity);
     }
 
     public override IDenominatorFactory GetFactory()
     {
         return (IDenominatorFactory)Factory;
+    }
+
+    public IDenominator GetDenominator(IBaseMeasure baseMeasure, ValueType quantity)
+    {
+        throw new NotImplementedException();
     }
     #endregion
     #endregion

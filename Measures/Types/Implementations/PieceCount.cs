@@ -11,12 +11,12 @@ internal sealed class PieceCount : Measure<IPieceCount, long, Pieces>, IPieceCou
     #region Public methods
     public IPieceCount? GetCustomMeasure(Pieces pieces, decimal exchangeRate, long quantity, string customName)
     {
-        return GetRateComponent(pieces, exchangeRate, quantity, customName);
+        return (IPieceCount?)GetBaseMeasure(pieces, exchangeRate, quantity, customName);
     }
 
     public IPieceCount? GetNextCustomMeasure(string customName, decimal exchangeRate, long quantity)
     {
-        return GetRateComponent(customName, MeasureUnitCode, exchangeRate, quantity);
+        return (IPieceCount?)GetBaseMeasure(customName, MeasureUnitCode, exchangeRate, quantity);
     }
     #endregion
 }

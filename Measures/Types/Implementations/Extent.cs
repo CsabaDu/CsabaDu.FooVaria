@@ -18,10 +18,5 @@ internal sealed class Extent : Measure<IExtent, double,ExtentUnit>, IExtent
     {
         return ConvertMeasure<IDistance>(ConvertMode.Divide);
     }
-
-    public bool IsValidShapeComponentOf(IShape baseShape)
-    {
-        return IsValidShapeComponentOf(baseShape, this);
-    }
     #endregion
 }

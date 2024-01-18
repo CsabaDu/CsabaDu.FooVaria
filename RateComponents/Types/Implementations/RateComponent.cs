@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseMeasures.Types;
-
-namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
+﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
 {
     internal abstract class RateComponent : BaseMeasure, IRateComponent
     {
@@ -140,10 +138,7 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
 
         public TNum GetQuantity()
         {
-            ValueType quantity = (ValueType)Quantity;
-            object? rounded = quantity.ToQuantity(typeof(TNum));
-
-            return (TNum)(rounded ?? throw new InvalidOperationException(null));
+            return (TNum)GetQuantity(GetQuantityTypeCode());
         }
 
         public TSelf GetRateComponent(IMeasurement measurement, TNum quantity)
@@ -165,11 +160,34 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
         #endregion
 
         #region Protected methods
-        protected decimal GetDefaultQuantity(decimal quantity)
+        protected decimal GetDefaultQuantity(object quantity)
         {
-            quantity *= GetExchangeRate();
+            return GetDefaultQuantity(quantity, GetExchangeRate());
+        }
 
-            return RoundQuantity(quantity);
+        public TSelf GetBaseMeasure(Enum measureUnit, ValueType quantity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TSelf GetBaseMeasure(string name, ValueType quantity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TSelf? GetBaseMeasure(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TSelf? GetBaseMeasure(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TSelf GetNew(TSelf other)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }
