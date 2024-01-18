@@ -28,21 +28,21 @@ internal abstract class Rate : BaseRate, IRate
     {
         Numerator = NullChecked(numerator, nameof(numerator));
         Denominator = factory.DenominatorFactory.Create(denominatorMeasureUnit, denominatorQuantity);
-        DefaultQuantity = numerator.GetDefaultQuantity() * GetExchangeRate(denominatorMeasureUnit) / Denominator.GetDefaultQuantity();
+        //DefaultQuantity = numerator.GetDefaultQuantity() * GetExchangeRate(denominatorMeasureUnit) / Denominator.GetDefaultQuantity();
     }
 
     private protected Rate(IRateFactory factory, IMeasure numerator, IMeasurement denominatorMeasurement) : base(factory, denominatorMeasurement)
     {
         Numerator = NullChecked(numerator, nameof(numerator));
         Denominator = factory.DenominatorFactory.Create(denominatorMeasurement);
-        DefaultQuantity = numerator.GetDefaultQuantity() * denominatorMeasurement.GetExchangeRate();
+        //DefaultQuantity = numerator.GetDefaultQuantity() * denominatorMeasurement.GetExchangeRate();
     }
 
     private protected Rate(IRateFactory factory, IMeasure numerator, IDenominator denominator) : base(factory, denominator)
     {
         Numerator = NullChecked(numerator, nameof(numerator));
         Denominator = NullChecked(denominator, nameof(denominator));
-        DefaultQuantity = numerator.GetDefaultQuantity() / denominator.GetDefaultQuantity();
+        //DefaultQuantity = numerator.GetDefaultQuantity() / denominator.GetDefaultQuantity();
     }
     #endregion
 
@@ -52,7 +52,7 @@ internal abstract class Rate : BaseRate, IRate
 
     #region Override properties
     #region Sealed properties
-    public override sealed decimal DefaultQuantity { get; init; }
+    //public override sealed decimal DefaultQuantity { get; init; }
     #endregion
     #endregion
 
@@ -188,18 +188,12 @@ internal abstract class Rate : BaseRate, IRate
         return (IRateFactory)Factory;
     }
 
-    public override bool Equals(object? obj)
-    {
-        return obj is IRate other
-            && Equals(other);
-    }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(Numerator, Denominator);
-    }
-
     #region Sealed methods
+    public override sealed decimal GetDefaultQuantity()
+    {
+        return Numerator.GetDefaultQuantity() / Denominator.GetDefaultQuantity();
+    }
+
     public override sealed IRate GetBaseRate(MeasureUnitCode numeratorMeasureUnitCode, decimal defaultQuantity, MeasureUnitCode denominatorMeasureUnitCode)
     {
         Enum numeratorMeasureUnit = numeratorMeasureUnitCode.GetDefaultMeasureUnit();
@@ -260,12 +254,19 @@ internal abstract class Rate : BaseRate, IRate
 
     public bool Equals(IRate? x, IRate? y)
     {
-        throw new NotImplementedException();
+        if (x == null && y == null) return true;
+
+        if (x == null || y == null) return false;
+
+        ILimit? xLimit = x.GetLimit();
+
+        return xLimit?.Equals(xLimit, y.GetLimit()) != false
+            && x.Equals(y);
     }
 
-    public int GetHashCode([DisallowNull] IRate obj)
+    public int GetHashCode([DisallowNull] IRate rate)
     {
-        throw new NotImplementedException();
+        return HashCode.Combine(rate.GetLimit(), rate.GetHashCode());
     }
     #endregion
 }

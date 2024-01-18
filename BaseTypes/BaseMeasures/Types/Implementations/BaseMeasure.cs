@@ -168,7 +168,21 @@ namespace CsabaDu.FooVaria.BaseMeasures.Types.Implementations
 
         public void ValidateQuantifiable(IQuantifiable? quantifiable, string paramName)
         {
-            ValidateQuantity(NullChecked(quantifiable, paramName).GetDefaultQuantity(), paramName);
+            decimal quantity = NullChecked(quantifiable, paramName).GetDefaultQuantity();
+
+            ValidateQuantity(quantity, paramName);
+            ValidateMeasureUnitCode(quantifiable!.MeasureUnitCode, paramName);
+        }
+
+        public void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramName)
+        {
+            Type quantityType = NullChecked(quantity, paramName).GetType();
+
+            ValidateQuantityTypeCode(quantityTypeCode, nameof(quantityTypeCode));
+
+            if (quantityTypeCode == Type.GetTypeCode(quantityType)) return;
+
+            throw ArgumentTypeOutOfRangeException(paramName, quantity!);
         }
 
         public void ValidateQuantityTypeCode(TypeCode quantityTypeCode, string paramName)
@@ -192,6 +206,11 @@ namespace CsabaDu.FooVaria.BaseMeasures.Types.Implementations
         }
 
         #region Sealed methods
+        public override sealed TypeCode GetQuantityTypeCode()
+        {
+            return base.GetQuantityTypeCode();
+        }
+
         #endregion
         #endregion
 
@@ -206,7 +225,6 @@ namespace CsabaDu.FooVaria.BaseMeasures.Types.Implementations
         public abstract IBaseMeasurement GetBaseMeasurement();
         public abstract IBaseMeasurementFactory GetBaseMeasurementFactory();
         public abstract RateComponentCode GetRateComponentCode();
-        public abstract void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramNamme);
         #endregion
         #endregion
 
@@ -222,9 +240,9 @@ namespace CsabaDu.FooVaria.BaseMeasures.Types.Implementations
                 && x.Equals(y);
         }
 
-        public int GetHashCode([DisallowNull] IBaseMeasure baseMeasure)
+        public int GetHashCode([DisallowNull] IBaseMeasure other)
         {
-            return HashCode.Combine(baseMeasure.GetLimitMode(), baseMeasure.GetRateComponentCode(), baseMeasure.GetHashCode());
+            return HashCode.Combine(other.GetLimitMode(), other.GetRateComponentCode(), other.GetHashCode());
         }
 
         #region Static methods

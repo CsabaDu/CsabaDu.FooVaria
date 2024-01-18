@@ -2,7 +2,7 @@
 
 public abstract class BaseRate : Quantifiable, IBaseRate
 {
-    public abstract decimal DefaultQuantity { get; init; }
+    //public abstract decimal DefaultQuantity { get; init; }
     #region Constructors
     protected BaseRate(IBaseRate other) : base(other)
     {
@@ -100,7 +100,7 @@ public abstract class BaseRate : Quantifiable, IBaseRate
     }
 
     #region Override methods
-    public override bool Equals(object? obj)
+    public override sealed bool Equals(object? obj)
     {
         return obj is IBaseRate baseRate && Equals(baseRate);
     }
@@ -110,9 +110,9 @@ public abstract class BaseRate : Quantifiable, IBaseRate
         return (IBaseRateFactory)Factory;
     }
 
-    public override int GetHashCode()
+    public override sealed int GetHashCode()
     {
-        return HashCode.Combine(GetDefaultQuantity(), MeasureUnitCode, GetNumeratorMeasureUnitCode());
+        return HashCode.Combine(MeasureUnitCode, GetNumeratorMeasureUnitCode(), GetDefaultQuantity());
     }
 
     public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()

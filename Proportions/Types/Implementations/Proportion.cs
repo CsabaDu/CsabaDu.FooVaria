@@ -1,7 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseMeasures.Types;
-using CsabaDu.FooVaria.BaseRates.Types;
-using CsabaDu.FooVaria.BaseRates.Types.Implementations;
-using CsabaDu.FooVaria.Quantifiables.Statics;
+﻿using CsabaDu.FooVaria.Measures.Types;
 
 namespace CsabaDu.FooVaria.Proportions.Types.Implementations
 {
@@ -45,12 +42,7 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
 
         #region Properties
         public MeasureUnitCode NumeratorMeasureUnitCode { get; init; }
-
-        #region Override properties
-        #region Sealed properties
-        public override sealed decimal DefaultQuantity { get; init; }
-        #endregion
-        #endregion
+        public  decimal DefaultQuantity { get; init; }
         #endregion
 
         #region Public methods
@@ -131,11 +123,12 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
         {
         }
 
-        public IBaseMeasure Denominate(TDEnum measureUnit)
+        public IMeasure Denominate(TDEnum measureUnit)
         {
             decimal quantity = GetQuantity(measureUnit);
+            IMeasureFactory factory = GetFactory().MeasureFactory;
 
-            return (IBaseMeasure)GetFactory().CreateBaseMeasure(measureUnit, quantity);
+            return factory.Create(measureUnit, quantity);
         }
 
         public IProportion<TDEnum> GetProportion(IBaseMeasure numerator, TDEnum denominatorMeasureUnit)

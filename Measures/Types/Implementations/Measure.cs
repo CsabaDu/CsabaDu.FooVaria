@@ -97,11 +97,6 @@
             #endregion
         }
 
-        public bool? FitsIn(IQuantifiable? comparable, LimitMode? limitMode)
-        {
-            throw new NotImplementedException();
-        }
-
         public override sealed IMeasurement GetBaseMeasurement()
         {
             return Measurement;
@@ -139,14 +134,13 @@
             return GetSum(other, SummingMode.Subtract);
         }
 
-        public override void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramNamme)
-        {
-            throw new NotImplementedException();
-        }
-
         public override void ValidateQuantity(ValueType? quantity, string paramName)
         {
-            throw new NotImplementedException();
+            Type quantityType = NullChecked(quantity, paramName).GetType();
+
+            if (QuantityTypes.GetQuantityTypes().Contains(quantityType)) return;
+
+            throw ArgumentTypeOutOfRangeException(paramName, quantity!);
         }
 
         #region Private methods
@@ -222,7 +216,16 @@
 
         public TNum GetQuantity()
         {
-            return (TNum)GetQuantity(GetQuantityTypeCode());
+            TypeCode quantityTypeCode = GetQuantityTypeCode();
+
+            return (TNum)GetQuantity(quantityTypeCode);
+        }
+
+        public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
+        {
+            TypeCode quantityTypeCode = GetQuantityTypeCode();
+
+            ValidateQuantity(quantity, quantityTypeCode, paramName);
         }
         #endregion
     }

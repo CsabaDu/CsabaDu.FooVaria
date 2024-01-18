@@ -42,20 +42,12 @@ internal sealed class LimitedRate : Rate, ILimitedRate
     #region Public methods
     public bool Equals(ILimitedRate? x, ILimitedRate? y)
     {
-        if (x == null && y == null) return true;
-
-        if (x == null || y == null) return false;
-
-        ILimit xLimit = x.Limit;
-
-        if (!xLimit.Equals(xLimit, y.Limit)) return false;
-
-        return x.Equals(y);
+        return base.Equals(x, y);
     }
 
     public int GetHashCode([DisallowNull] ILimitedRate other)
     {
-        return other.GetHashCode();
+        return base.GetHashCode(other);
     }
 
     public override ILimit? GetLimit()
@@ -165,16 +157,6 @@ internal sealed class LimitedRate : Rate, ILimitedRate
     }
 
     public override object GetQuantity(TypeCode quantityTypeCode)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramNamme)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override decimal GetDefaultQuantity()
     {
         throw new NotImplementedException();
     }

@@ -111,7 +111,7 @@ public sealed class ProportionFactory : IProportionFactory
     public IProportion Create(IBaseRate baseRate)
     {
         MeasureUnitCode denominatorMeasureUnitCode = NullChecked(baseRate, nameof(baseRate)).MeasureUnitCode;
-        decimal defaultQuantity = baseRate.DefaultQuantity;
+        decimal defaultQuantity = baseRate.GetDefaultQuantity();
         MeasureUnitCode numeratorMeasureUnitCode = baseRate.GetNumeratorMeasureUnitCode();
 
         return Create(numeratorMeasureUnitCode, defaultQuantity, denominatorMeasureUnitCode);

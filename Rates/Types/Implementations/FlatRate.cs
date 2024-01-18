@@ -156,15 +156,5 @@ internal sealed class FlatRate : Rate, IFlatRate
     {
         throw new NotImplementedException();
     }
-
-    public override void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramNamme)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override decimal GetDefaultQuantity()
-    {
-        throw new NotImplementedException();
-    }
     #endregion
 }

@@ -5,7 +5,7 @@ global using CsabaDu.FooVaria.Common.Types;
 global using CsabaDu.FooVaria.Measurables.Enums;
 global using CsabaDu.FooVaria.Measures.Types;
 global using CsabaDu.FooVaria.Quantifiables.Behaviors;
-global using CsabaDu.FooVaria.RateComponents.Factories;
+global using CsabaDu.FooVaria.BaseMeasures.Factories;
 global using CsabaDu.FooVaria.Spreads.Behaviors;
 global using CsabaDu.FooVaria.Spreads.Factories;
 global using CsabaDu.FooVaria.Spreads.Statics;
