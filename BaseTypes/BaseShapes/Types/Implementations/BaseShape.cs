@@ -42,7 +42,7 @@ public abstract class BaseShape : BaseSpread, IBaseShape
 
         hashCode.Add(MeasureUnitCode);
 
-        foreach (IBaseShapeComponent item in GetBaseShapeComponents())
+        foreach (IShapeComponent item in GetBaseShapeComponents())
         {
             hashCode.Add(item);
         }
@@ -64,9 +64,9 @@ public abstract class BaseShape : BaseSpread, IBaseShape
     public abstract int CompareTo(IBaseShape? other);
     public abstract bool? FitsIn(IBaseShape? other, LimitMode? limitMode);
     public abstract void ValidateBaseShapeComponent(IQuantifiable baseShapeComponent, string paramName);
-    public abstract IQuantifiable? GetValidBaseShapeComponent(IBaseShapeComponent baseShapeComponent);
-    public abstract IEnumerable<IBaseShapeComponent> GetBaseShapeComponents();
-    public abstract IBaseShape? GetBaseBaseShape(params IBaseShapeComponent[] baseShapeComponents);
+    public abstract IQuantifiable? GetValidBaseShapeComponent(IShapeComponent baseShapeComponent);
+    public abstract IEnumerable<IShapeComponent> GetBaseShapeComponents();
+    public abstract IBaseShape? GetBaseBaseShape(params IShapeComponent[] baseShapeComponents);
     #endregion
     #endregion
 }

@@ -1,4 +1,5 @@
 ﻿global using CsabaDu.FooVaria.BaseMeasurements.Factories;
+global using CsabaDu.FooVaria.BaseMeasurements.Statics;
 global using CsabaDu.FooVaria.BaseMeasurements.Types;
 global using CsabaDu.FooVaria.BaseMeasurements.Types.Implementations;
 global using CsabaDu.FooVaria.Common.Factories;
