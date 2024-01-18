@@ -8,12 +8,11 @@
         decimal GetLimiterDefaultQuantity();
     }
 
-    public interface ILimiter<in TSelf, in TLimitable> : ILimiter, IEqualityComparer<TSelf>
+    public interface ILimiter<in TSelf> : ILimiter, IEqualityComparer<TSelf>
         where TSelf : class, IQuantifiable, ILimiter
-        where TLimitable : class, IQuantifiable, ILimitable
     {
         LimitMode GetLimitMode(TSelf limiter);
-        bool? Includes(TLimitable limitable);
+        bool? Includes(ILimitable limitable);
 
         void ValidateLimitMode(LimitMode limitMode);
     }

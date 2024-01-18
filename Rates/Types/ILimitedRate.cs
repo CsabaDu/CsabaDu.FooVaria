@@ -1,9 +1,6 @@
-﻿using CsabaDu.FooVaria.Quantifiables.Behaviors;
-using CsabaDu.FooVaria.Quantifiables.Types;
+﻿namespace CsabaDu.FooVaria.Rates.Types;
 
-namespace CsabaDu.FooVaria.Rates.Types;
-
-public interface ILimitedRate : IRate, ILimiter<ILimitedRate, IMeasure>, ICommonBase<ILimitedRate>
+public interface ILimitedRate : IRate, ILimiter<ILimitedRate>, ICommonBase<ILimitedRate>
 {
     ILimit Limit { get; init; }
 

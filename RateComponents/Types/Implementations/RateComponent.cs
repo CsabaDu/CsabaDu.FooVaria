@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
 {
-    internal abstract class RateComponent : BaseMeasure, IRateComponent
+    internal abstract class RateComponent : BaseMeasure, IBaseMeasure
     {
         #region Constructors
         private protected RateComponent(IRateComponentFactory factory, IMeasurement measurement) : base(factory, measurement)
@@ -76,7 +76,7 @@
 
         #region Private methods
         #region Static methods
-        //private static decimal GetDefaultQuantity(IRateComponent rateComponent)
+        //private static decimal GetDefaultQuantity(IBaseMeasure rateComponent)
         //{
         //    return RoundQuantity(rateComponent.GetDecimalQuantity() * rateComponent.GetExchangeRate());
         //}
@@ -92,7 +92,7 @@
     }
 
     internal abstract class RateComponent<TSelf, TNum> : RateComponent, IRateComponent<TSelf, TNum>
-        where TSelf : class, IRateComponent, IDefaultBaseMeasure
+        where TSelf : class, IBaseMeasure, IDefaultBaseMeasure
         where TNum : struct
     {
         #region Constructors

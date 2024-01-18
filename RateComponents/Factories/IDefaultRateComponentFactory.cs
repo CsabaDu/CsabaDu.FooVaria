@@ -5,7 +5,7 @@
 //    }
 
 //    public interface IDefaultRateComponentFactory<T> : IDefaultRateComponentFactory, IDefaultMeasurableFactory<T>, IFactory<T>
-//        where T : class, IRateComponent
+//        where T : class, IBaseMeasure
 //    {
 //    }
 //}

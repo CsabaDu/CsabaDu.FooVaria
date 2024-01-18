@@ -1,8 +1,4 @@
-﻿using CsabaDu.FooVaria.Measurables.Enums;
-using CsabaDu.FooVaria.Quantifiables.Enums;
-using CsabaDu.FooVaria.Quantifiables.Types;
-
-namespace CsabaDu.FooVaria.Rates.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Rates.Types.Implementations;
 
 internal sealed class LimitedRate : Rate, ILimitedRate
 {
@@ -40,6 +36,7 @@ internal sealed class LimitedRate : Rate, ILimitedRate
 
     #region Properties
     public ILimit Limit { get ; init; }
+    public LimitMode LimitMode { get => throw new NotImplementedException(); init => throw new NotImplementedException(); }
     #endregion
 
     #region Public methods
@@ -129,9 +126,9 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         return GetFactory().CreateNew(other);
     }
 
-    public bool? Includes(IMeasure measure)
+    public bool? Includes(ILimitable limitable)
     {
-        return Limit.Includes(measure);
+        return Limit.Includes(limitable);
     }
 
     public void ValidateLimitMode(LimitMode limitMode)
@@ -155,6 +152,31 @@ internal sealed class LimitedRate : Rate, ILimitedRate
     public override int GetHashCode()
     {
         return HashCode.Combine(Numerator, Denominator, Limit);
+    }
+
+    public MeasureUnitCode GetLimiterMeasureUnitCode()
+    {
+        return Limit.MeasureUnitCode;
+    }
+
+    public decimal GetLimiterDefaultQuantity()
+    {
+        return Limit.GetDefaultQuantity();
+    }
+
+    public override object GetQuantity(TypeCode quantityTypeCode)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramNamme)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override decimal GetDefaultQuantity()
+    {
+        throw new NotImplementedException();
     }
     #endregion
     #endregion
@@ -266,9 +288,9 @@ internal sealed class LimitedRate : Rate, ILimitedRate
 //        return NullChecked(limitedRate, nameof(limitedRate)).Limit.LimitMode;
 //    }
 
-//    public bool? Includes(IMeasure measure)
+//    public bool? Includes(IMeasure limitable)
 //    {
-//        return Limit.Includes(measure);
+//        return Limit.Includes(limitable);
 //    }
 
 //    public void ValidateLimitMode(LimitMode limitMode)

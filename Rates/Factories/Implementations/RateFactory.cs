@@ -1,5 +1,7 @@
 ﻿
 
+using CsabaDu.FooVaria.BaseMeasurements.Types;
+
 namespace CsabaDu.FooVaria.Rates.Factories.Implementations;
 
 public abstract class RateFactory : IRateFactory
@@ -36,9 +38,9 @@ public abstract class RateFactory : IRateFactory
             throw exception();
         }
 
-        IRate createRateFrom2or3Params()
+        IRate createRateFrom2or3Params() // TODO fölösleges?
         {
-            if (baseMeasures is IRateComponent[] rateComponents) return Create(rateComponents);
+            if (baseMeasures is IBaseMeasure[] rateComponents) return Create(rateComponents);
 
             throw exception();
         }
@@ -50,7 +52,7 @@ public abstract class RateFactory : IRateFactory
         #endregion
     }
 
-    public abstract IRate Create(params IRateComponent[] rateComponents);
+    public abstract IRate Create(params IBaseMeasure[] rateComponents);
     public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement);
     public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit);
     public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitCode denominatorMeasureUnitCode);

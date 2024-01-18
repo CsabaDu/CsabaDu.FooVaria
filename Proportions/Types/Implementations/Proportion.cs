@@ -1,7 +1,7 @@
-﻿using CsabaDu.FooVaria.Measurables.Enums;
-using CsabaDu.FooVaria.Measurables.Statics;
+﻿using CsabaDu.FooVaria.BaseMeasures.Types;
+using CsabaDu.FooVaria.BaseRates.Types;
+using CsabaDu.FooVaria.BaseRates.Types.Implementations;
 using CsabaDu.FooVaria.Quantifiables.Statics;
-using CsabaDu.FooVaria.Quantifiables.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Proportions.Types.Implementations
 {
@@ -64,7 +64,7 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
             return GetFactory().Create(numeratorMeasureUnitCode, defaultQuantity, denominatorMeasureUnitCode);
         }
 
-        public IProportion GetProportion(IRateComponent numerator, IRateComponent denominator)
+        public IProportion GetProportion(IBaseMeasure numerator, IBaseMeasure denominator)
         {
             return GetFactory().Create(numerator, denominator);
         }
@@ -131,14 +131,14 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
         {
         }
 
-        public IRateComponent Denominate(TDEnum measureUnit)
+        public IBaseMeasure Denominate(TDEnum measureUnit)
         {
             decimal quantity = GetQuantity(measureUnit);
 
-            return (IRateComponent)GetFactory().CreateBaseMeasure(measureUnit, quantity);
+            return (IBaseMeasure)GetFactory().CreateBaseMeasure(measureUnit, quantity);
         }
 
-        public IProportion<TDEnum> GetProportion(IRateComponent numerator, TDEnum denominatorMeasureUnit)
+        public IProportion<TDEnum> GetProportion(IBaseMeasure numerator, TDEnum denominatorMeasureUnit)
         {
             return GetFactory().Create(numerator, denominatorMeasureUnit);
         }

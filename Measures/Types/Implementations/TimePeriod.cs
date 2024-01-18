@@ -18,8 +18,8 @@ internal sealed class TimePeriod : Measure<ITimePeriod, double, TimePeriodUnit>,
 
     public TimeSpan ConvertMeasure()
     {
-        object quantity = GetDefaultQuantity().ToQuantity(TypeCode.Int64) ?? throw new InvalidOperationException(null);
-        long ticks = (long)quantity * TimeSpan.TicksPerMinute;
+        object minutes = GetDefaultQuantity().ToQuantity(TypeCode.Int64) ?? throw new InvalidOperationException(null);
+        long ticks = (long)minutes * TimeSpan.TicksPerMinute;
 
         return new TimeSpan(ticks);
     }

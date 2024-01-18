@@ -28,7 +28,7 @@
 //            return FitsIn(limit, limit?.LimitMode);
 //        }
 
-//        public bool? FitsIn(IRateComponent? rateComponent, LimitMode? limitMode)
+//        public bool? FitsIn(IBaseMeasure? rateComponent, LimitMode? limitMode)
 //        {
 //            bool isLimitModeNull = limitMode == null;
 
@@ -38,7 +38,7 @@
 
 //            if (isLimitModeNull) return CompareTo(rateComponent) <= 0;
 
-//            IRateComponent ceilingRateComponent = rateComponent.Round(RoundingMode.Ceiling);
+//            IBaseMeasure ceilingRateComponent = rateComponent.Round(RoundingMode.Ceiling);
 //            rateComponent = getRoundedRateComponent();
 
 //            if (isRateComponentNull()) return null;
@@ -58,7 +58,7 @@
 //                return rateComponent == null;
 //            }
 
-//            IRateComponent? getRoundedRateComponent()
+//            IBaseMeasure? getRoundedRateComponent()
 //            {
 //                return limitMode switch
 //                {
@@ -89,7 +89,7 @@
 
 //        #region Override methods
 //        #region Sealed methods
-//        public override sealed bool Equals(IRateComponent? other)
+//        public override sealed bool Equals(IBaseMeasure? other)
 //        {
 //            return other is IMeasure
 //                && base.Equals(other);
@@ -103,7 +103,7 @@
 //        #endregion
 
 //        #region Abstract methods
-//        public abstract IMeasure GetMeasure(IRateComponent rateComponent);
+//        public abstract IMeasure GetMeasure(IBaseMeasure rateComponent);
 //        #endregion
 //        #endregion
 
@@ -193,7 +193,7 @@
 //            return GetMeasure(Measurement, quantity);
 //        }
 
-//        public T GetBaseMeasure(IRateComponent rateComponent)
+//        public T GetBaseMeasure(IBaseMeasure rateComponent)
 //        {
 //            if (NullChecked(rateComponent, nameof(rateComponent)) is T other) return GetNew(other);
 
@@ -202,7 +202,7 @@
 
 //        #region Override methods
 //        #region Sealed methods
-//        public override sealed T GetMeasure(IRateComponent rateComponent)
+//        public override sealed T GetMeasure(IBaseMeasure rateComponent)
 //        {
 //            return GetBaseMeasure(rateComponent);
 //        }

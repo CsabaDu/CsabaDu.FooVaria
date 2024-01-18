@@ -68,12 +68,12 @@ public sealed class LimitFactory : RateComponentFactory<ILimit, ulong>, ILimitFa
         return GetOrCreateStoredLimit(measurement, quantity, limitMode);
     }
 
-    public ILimit Create(IRateComponent rateComponent, LimitMode limitMode)
+    public ILimit Create(IBaseMeasure baseMeasure, LimitMode limitMode)
     {
-        IMeasurement measurement = NullChecked(rateComponent, nameof(rateComponent)).Measurement;
-        ValueType quantity = (ValueType)rateComponent.Quantity;
+        Enum measureUnit = NullChecked(baseMeasure, nameof(baseMeasure)).GetMeasureUnit();
+        ValueType quantity = (ValueType)baseMeasure.Quantity;
 
-        return GetOrCreateStoredLimit(measurement, quantity, limitMode);
+        return Create(measureUnit, quantity, limitMode);
     }
 
     public ILimit Create(ILimit limit, ValueType quantity)

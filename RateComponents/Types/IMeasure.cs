@@ -1,11 +1,11 @@
 ﻿//namespace CsabaDu.FooVaria.RateComponents.Types
 //{
-//    public interface IMeasure : IRateComponent, ILimitable, ICalculate<IMeasure, decimal>
+//    public interface IMeasure : IBaseMeasure, ILimitable, ICalculate<IMeasure, decimal>
 //    {
-//        IMeasure GetMeasure(IRateComponent rateComponent);
+//        IMeasure GetMeasure(IBaseMeasure rateComponent);
 //    }
 
-//    public interface IMeasure<T, TNum> : IMeasure, IRateComponent<T, TNum>
+//    public interface IMeasure<T, TNum> : IMeasure, IBaseMeasure<T, TNum>
 //        where T : class, IMeasure, IDefaultBaseMeasure
 //        where TNum : struct
 //    {

@@ -48,7 +48,7 @@ internal sealed class Limit : RateComponent<ILimit, ulong>, ILimit
         return GetFactory().Create(measurement, quantity, limitMode);
     }
 
-    public ILimit GetLimit(IRateComponent baseMeasure, LimitMode limitMode)
+    public ILimit GetLimit(IBaseMeasure baseMeasure, LimitMode limitMode)
     {
         return GetFactory().Create(baseMeasure, limitMode);
     }
@@ -88,9 +88,9 @@ internal sealed class Limit : RateComponent<ILimit, ulong>, ILimit
         return NullChecked(limit, nameof(limit)).LimitMode;
     }
 
-    public bool? Includes(IMeasure measure)
+    public bool? Includes(ILimitable limitable)
     {
-        return NullChecked(measure, nameof(measure)).FitsIn(this);
+        return NullChecked(limitable, nameof(limitable)).FitsIn(this);
     }
 
     public void ValidateLimitMode(LimitMode limitMode)
@@ -114,11 +114,6 @@ internal sealed class Limit : RateComponent<ILimit, ulong>, ILimit
     public override LimitMode? GetLimitMode()
     {
         return LimitMode;
-    }
-
-    public ILimit GetLimit(IBaseMeasure baseMeasure, LimitMode limitMode)
-    {
-        throw new NotImplementedException();
     }
     #endregion
     #endregion

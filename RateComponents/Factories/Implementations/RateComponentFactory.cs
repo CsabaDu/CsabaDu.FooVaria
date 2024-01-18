@@ -26,7 +26,7 @@
     }
 
     public abstract class RateComponentFactory<T, TNum> : RateComponentFactory, IRateComponentFactory<T, TNum>
-        where T : class, IRateComponent, IDefaultBaseMeasure
+        where T : class, IBaseMeasure, IDefaultBaseMeasure
         where TNum : struct
     {
         #region Constructors
@@ -115,6 +115,11 @@
         }
 
         public T CreateNew(T other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public T Create(IBaseMeasure baseMeasure)
         {
             throw new NotImplementedException();
         }

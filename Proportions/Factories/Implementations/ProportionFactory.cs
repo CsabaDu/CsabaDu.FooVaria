@@ -60,7 +60,7 @@ public sealed class ProportionFactory : IProportionFactory
         return Create(numeratorMeasureUnit, defaultQuantity, denominatorMeasureUnit);
     }
 
-    public IProportion<TDEnum> Create<TDEnum>(IRateComponent numerator, TDEnum denominatorMeasureUnit)
+    public IProportion<TDEnum> Create<TDEnum>(IBaseMeasure numerator, TDEnum denominatorMeasureUnit)
         where TDEnum : struct, Enum
     {
         Enum numeratorMeasureUnit = NullChecked(numerator, nameof(numerator)).GetMeasureUnit();
@@ -98,7 +98,7 @@ public sealed class ProportionFactory : IProportionFactory
         #endregion
     }
 
-    public IProportion Create(IRateComponent numerator, IRateComponent denominator)
+    public IProportion Create(IBaseMeasure numerator, IBaseMeasure denominator)
     {
         var (numeratorMeasureUnit, quantity) = GetNumeratorComponents(numerator);
         Enum denominatorMeasureUnit = NullChecked(denominator, nameof(denominator)).GetMeasureUnit();
@@ -156,7 +156,7 @@ public sealed class ProportionFactory : IProportionFactory
 
         IProportion createProportionFrom2or3Params()
         {
-            if (baseMeasures is IRateComponent[] rateComponents) return Create(rateComponents[0], rateComponents[1]);
+            if (baseMeasures is IBaseMeasure[] rateComponents) return Create(rateComponents[0], rateComponents[1]);
 
             throw exception();
         }
@@ -198,7 +198,7 @@ public sealed class ProportionFactory : IProportionFactory
     private static (Enum MeasureUnit, decimal Quantity) GetNumeratorComponents(IBaseMeasure numerator)
     {
 
-        Enum nmeasureUnit = NullChecked(numerator, nameof(numerator)) is IRateComponent rateComponent ?
+        Enum nmeasureUnit = NullChecked(numerator, nameof(numerator)) is IBaseMeasure rateComponent ?
             rateComponent.GetMeasureUnit()
             : throw ArgumentTypeOutOfRangeException(nameof(numerator), numerator);
 

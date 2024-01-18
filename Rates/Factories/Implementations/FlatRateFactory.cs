@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Rates.Factories.Implementations;
+﻿using CsabaDu.FooVaria.BaseMeasurements.Types;
+
+namespace CsabaDu.FooVaria.Rates.Factories.Implementations;
 
 public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
 {
@@ -45,7 +47,7 @@ public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
         return new FlatRate(this, rate);
     }
 
-    public override IFlatRate Create(params IRateComponent[] rateComponents)
+    public override IFlatRate Create(params IBaseMeasure[] rateComponents)
     {
         string paramName = nameof(rateComponents);
         int count = rateComponents?.Length ?? 0;

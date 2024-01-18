@@ -48,18 +48,18 @@ public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
         return new LimitedRate(this, rate, limit);
     }
 
-    public override ILimitedRate Create(params IRateComponent[] rateComponents)
+    public override ILimitedRate Create(params IBaseMeasure[] baseMeasures)
     {
-        string paramName = nameof(rateComponents);
-        int count = rateComponents?.Length ?? 0;
+        string paramName = nameof(baseMeasures);
+        int count = baseMeasures?.Length ?? 0;
 
         if (count < 2 || count > 3) throw QuantityArgumentOutOfRangeException(paramName, count);
 
-        IMeasure numerator = GetValidRateParam<IMeasure>(rateComponents![0], paramName);
-        IDenominator denominator = GetValidRateParam<IDenominator>(rateComponents[1], paramName);
-        ILimit limit = count == 3 && rateComponents[2] is IRateComponent rateComponent ?
-            GetValidRateParam<ILimit>(rateComponent, paramName)
-            : (ILimit)LimitFactory.CreateNew(denominator);
+        IMeasure numerator = GetValidRateParam<IMeasure>(baseMeasures![0], paramName);
+        IDenominator denominator = GetValidRateParam<IDenominator>(baseMeasures[1], paramName);
+        ILimit limit = count == 3 && baseMeasures[2] is IBaseMeasure baseMeasure ?
+            GetValidRateParam<ILimit>(baseMeasure, paramName)
+            : LimitFactory.Create(denominator);
 
         return Create(numerator, denominator, limit);
     }
@@ -77,7 +77,7 @@ public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
     {
         IMeasure measure = GetValidRateParam<IMeasure>(numerator, nameof(numerator));
         IDenominator denominator = DenominatorFactory.Create(denominatorMeasureUnit);
-        ILimit limit = (ILimit)LimitFactory.CreateNew(denominator);
+        ILimit limit = LimitFactory.Create(denominator);
 
         return Create(measure, denominator, limit);
     }
@@ -101,7 +101,7 @@ public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
         if (other is ILimitedRate limitedRate) return CreateNew(limitedRate);
 
         IDenominator denominator = NullChecked(other, nameof(other)).Denominator;
-        ILimit limit = (ILimit)LimitFactory.CreateNew(denominator);
+        ILimit limit = LimitFactory.Create(denominator);
 
         return Create(other, limit);
     }

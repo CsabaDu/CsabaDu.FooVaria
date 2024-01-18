@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Quantifiables.Behaviors;
 
-public interface ILimitable/* : IFit<IQuantifiable>*/
+public interface ILimitable
 {
     bool? FitsIn(ILimiter? limiter);
 }
