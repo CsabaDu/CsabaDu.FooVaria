@@ -19,11 +19,6 @@ internal sealed class Area : Measure<IArea, double, AreaUnit>, IArea
         return this;
     }
 
-    public override void ValidateQuantity(ValueType? quantity, string paramName)
-    {
-        ValidateSpreadQuantity(quantity, paramName);
-    }
-
     public void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)
     {
         ValidateSpreadMeasure(paramName, spreadMeasure);

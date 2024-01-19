@@ -1,6 +1,9 @@
-﻿namespace CsabaDu.FooVaria.Shapes.Factories
+﻿using CsabaDu.FooVaria.BaseShapes.Factories;
+using CsabaDu.FooVaria.Measures.Factories;
+
+namespace CsabaDu.FooVaria.Shapes.Factories
 {
-    public interface ISimpleShapeFactory : IShapeFactory
+    public interface IShapeFactory : IBaseShapeFactory
     {
         ISpreadFactory SpreadFactory { get; init; }
         ITangentShapeFactory TangentShapeFactory { get; init; }
@@ -11,7 +14,7 @@
         IExtent CreateShapeExtent(ExtentUnit extentUnit, ValueType quantity);
     }
 
-    public interface ISimpleShapeFactory<T, out TTangent> : ISimpleShapeFactory, IFactory<T>
+    public interface IShapeFactory<T, out TTangent> : IShapeFactory, IFactory<T>
         where T : class, IShape, ITangentShape
         where TTangent : class, IShape, ITangentShape
     {

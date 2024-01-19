@@ -7,11 +7,11 @@ internal abstract class SimpleShape : Shape, IShape
     {
     }
 
-    private protected SimpleShape(ISimpleShapeFactory factory, IBaseShape baseShape) : base(factory, baseShape)
+    private protected SimpleShape(IShapeFactory factory, IBaseShape baseShape) : base(factory, baseShape)
     {
     }
 
-    private protected SimpleShape(ISimpleShapeFactory factory, MeasureUnitCode measureUnitCode, params IExtent[] shapeExtents) : base(factory, measureUnitCode, shapeExtents)
+    private protected SimpleShape(IShapeFactory factory, MeasureUnitCode measureUnitCode, params IExtent[] shapeExtents) : base(factory, measureUnitCode, shapeExtents)
     {
         ValidateShapeExtents(shapeExtents, nameof(shapeExtents));
     }
@@ -142,9 +142,9 @@ internal abstract class SimpleShape : Shape, IShape
     }
 
     #region Override methods
-    public override ISimpleShapeFactory GetFactory()
+    public override IShapeFactory GetFactory()
     {
-        return (ISimpleShapeFactory)Factory;
+        return (IShapeFactory)Factory;
     }
 
     #region Sealed methods

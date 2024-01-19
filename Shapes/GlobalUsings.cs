@@ -19,4 +19,5 @@ global using CsabaDu.FooVaria.Spreads.Types;
 global using System.Diagnostics.CodeAnalysis;
 global using static CsabaDu.FooVaria.Common.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.Measurables.Statics.MeasureUnitTypes;
-global using static CsabaDu.FooVaria.Shapes.Statics.ExceptionMethods;
+global using static CsabaDu.FooVaria.Quantifiables.Statics.ExceptionMethods;
+global using static CsabaDu.FooVaria.Shapes.Statics.ExceptionMethods; // ???

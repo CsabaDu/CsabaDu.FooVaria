@@ -9,14 +9,6 @@
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseMeasures.Types.IBaseMeasure&lt;TSelf&gt;" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="3" Y="5.5" Width="1.75" />
-    <InheritanceLine Type="CsabaDu.FooVaria.BaseMeasures.Types.IBaseMeasure" FixedFromPoint="true">
-      <Path>
-        <Point X="5" Y="4.941" />
-        <Point X="5" Y="5.2" />
-        <Point X="3.875" Y="5.2" />
-        <Point X="3.875" Y="5.5" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA=</HashCode>
       <FileName>Types\IBaseMeasure.cs</FileName>
@@ -24,14 +16,6 @@
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseMeasures.Types.IDefaultBaseMeasure" Collapsed="true">
     <Position X="5.5" Y="5.5" Width="1.75" />
-    <InheritanceLine Type="CsabaDu.FooVaria.BaseMeasures.Types.IBaseMeasure" FixedFromPoint="true">
-      <Path>
-        <Point X="5.5" Y="4.941" />
-        <Point X="5.5" Y="5.2" />
-        <Point X="6.375" Y="5.2" />
-        <Point X="6.375" Y="5.5" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Types\IDefaultBaseMeasure.cs</FileName>
@@ -51,7 +35,7 @@
   <Interface Name="CsabaDu.FooVaria.BaseMeasures.Behaviors.IRound&lt;TSelf&gt;" Collapsed="true">
     <Position X="5.5" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
       <FileName>Behaviors\IRound.cs</FileName>
     </TypeIdentifier>
   </Interface>

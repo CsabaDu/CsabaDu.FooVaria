@@ -14,17 +14,6 @@
         #endregion
 
         #region Public methods
-        public override void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramName)
-        {
-            TypeCode? typeCode = GetQuantityTypeCode(NullChecked(quantity, nameof(quantity)));
-
-            ValidateQuantityTypeCode(quantityTypeCode, paramName);
-
-            if (typeCode == quantityTypeCode) return;
-
-            throw QuantityArgumentOutOfRangeException(quantity);
-        }
-
         #region Override methods
         public override IRateComponentFactory GetFactory()
         {
@@ -150,11 +139,6 @@
         public override IRateComponentFactory<TSelf, TNum> GetFactory()
         {
             return (IRateComponentFactory<TSelf, TNum>)Factory;
-        }
-
-        public override sealed TypeCode GetQuantityTypeCode()
-        {
-            return Quantifiable.GetQuantityTypeCode(this);
         }
         #endregion
         #endregion

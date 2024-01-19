@@ -1,8 +1,8 @@
-﻿using CsabaDu.FooVaria.RateComponents.Factories;
+﻿using CsabaDu.FooVaria.Measures.Factories;
 
 namespace CsabaDu.FooVaria.Shapes.Factories.Implementations;
 
-public abstract class ShapeFactory : ISimpleShapeFactory
+public abstract class ShapeFactory : IShapeFactory
 {
     #region Constructors
     private protected ShapeFactory(ISpreadFactory spreadFactory, ITangentShapeFactory tangentShapeFactory)
@@ -26,9 +26,9 @@ public abstract class ShapeFactory : ISimpleShapeFactory
 
     public IExtent CreateShapeExtent(ExtentUnit extentUnit, ValueType quantity)
     {
-        IRateComponent extent = GetMeasureFactory().Create(extentUnit, quantity);
+        IExtent extent = (IExtent)GetMeasureFactory().Create(extentUnit, quantity);
 
-        if (extent.DefaultQuantity > 0) return (IExtent)extent;
+        if (extent.GetDefaultQuantity() > 0) return (IExtent)extent;
 
         throw QuantityArgumentOutOfRangeException(quantity);
     }
@@ -75,7 +75,7 @@ public abstract class ShapeFactory : ISimpleShapeFactory
 
         IEnumerable<IExtent> shapeExtents = shapeComponents.Cast<IExtent>();
 
-        return shapeExtents.All(x => x.DefaultQuantity > 0) ?
+        return shapeExtents.All(x => x.GetDefaultQuantity() > 0) ?
             shapeExtents
             : null;
     }
@@ -84,7 +84,7 @@ public abstract class ShapeFactory : ISimpleShapeFactory
     {
         if (shapeComponent is not IExtent shapeExtent) return null;
         
-        if (shapeExtent.DefaultQuantity > 0) return shapeExtent;
+        if (shapeExtent.GetDefaultQuantity() > 0) return shapeExtent;
 
         return null;
     }
@@ -98,8 +98,13 @@ public abstract class ShapeFactory : ISimpleShapeFactory
             SideCode.Outer => factory.CreateOuterTangentShape(shape),
             SideCode.Inner => factory.CreateInnerTangentShape(shape),
 
-            _ => throw InvalidSidenCodeEnumArgumentException(sideCode),
+            _ => throw InvalidSideCodeEnumArgumentException(sideCode),
         };
+    }
+
+    public IBaseShape? CreateBaseBaseShape(params IShapeComponent[] baseShapeComponents)
+    {
+        throw new NotImplementedException();
     }
     #endregion
     #endregion

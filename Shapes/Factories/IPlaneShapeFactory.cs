@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Shapes.Factories;
 
-public interface IPlaneShapeFactory : ISimpleShapeFactory, ISurfaceFactory
+public interface IPlaneShapeFactory : IShapeFactory, ISurfaceFactory
 {
     IPlaneShape? CreateProjection(IDryBody dryBody, ShapeExtentCode perpendicular);
 }
