@@ -143,7 +143,7 @@
 //    }
 
 //    internal abstract class Measure<T, TNum> : Measure, IMeasure<T, TNum>
-//        where T : class, IMeasure, IDefaultBaseMeasure
+//        where T : class, IMeasure, IBaseMeasure
 //        where TNum : struct
 //    {
 //        #region Constructors
@@ -237,12 +237,12 @@
 //    }
 
 //    internal abstract class Measure<T, TNum, TEnum> : Measure<T, TNum>, IMeasure<T, TNum, TEnum>
-//        where T : class, IMeasure, IDefaultBaseMeasure, IMeasureUnit
+//        where T : class, IMeasure, IBaseMeasure, IMeasureUnit
 //        where TNum : struct
 //        where TEnum : struct, Enum
 //    {
 //        #region Enums
-//        protected enum ConvertMode
+//        protected enum MeasureOperationMode
 //        {
 //            Multiply,
 //            Divide,
@@ -277,15 +277,15 @@
 //        #endregion
 
 //        #region Protected methods
-//        protected TOther ConvertMeasure<TOther>(ConvertMode convertMode)
+//        protected TOther ConvertMeasure<TOther>(MeasureOperationMode convertMode)
 //            where TOther : IMeasure, IConvertMeasure
 //        {
 //            MeasureUnitCode measureUnitCode = MeasureUnitTypes.GetLimiterMeasureUnitCode(typeof(TOther));
 //            Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
 //            decimal quantity = convertMode switch
 //            {
-//                ConvertMode.Multiply => DefaultQuantity * ConvertRatio,
-//                ConvertMode.Divide => DefaultQuantity / ConvertRatio,
+//                MeasureOperationMode.Multiply => DefaultQuantity * ConvertRatio,
+//                MeasureOperationMode.Divide => DefaultQuantity / ConvertRatio,
 
 //                _ => throw new InvalidOperationException(null),
 //            };

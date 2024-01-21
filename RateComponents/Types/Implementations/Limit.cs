@@ -1,7 +1,7 @@
 ﻿
 namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
 
-internal sealed class Limit : RateComponent<ILimit, ulong>, ILimit
+internal sealed class Limit : RateComponent<ILimit>, ILimit
 {
     #region Constructors
     internal Limit(ILimitFactory factory, IMeasurement measurement, ulong quantity, LimitMode limitMode) : base(factory, measurement)
@@ -26,6 +26,16 @@ internal sealed class Limit : RateComponent<ILimit, ulong>, ILimit
     public bool Equals(ILimit? x, ILimit? y)
     {
         return base.Equals(x, y);
+    }
+
+    public ILimit GetBaseMeasure(ulong quantity)
+    {
+        return GetRateComponent(quantity);
+    }
+
+    public override ILimit GetDefault()
+    {
+        return GetDefault(this);
     }
 
     public int GetHashCode([DisallowNull] ILimit limit)
@@ -86,6 +96,11 @@ internal sealed class Limit : RateComponent<ILimit, ulong>, ILimit
     public LimitMode GetLimitMode(ILimit limit)
     {
         return NullChecked(limit, nameof(limit)).LimitMode;
+    }
+
+    public ulong GetQuantity()
+    {
+        return GetQuantity(this);
     }
 
     public bool? Includes(ILimitable limitable)

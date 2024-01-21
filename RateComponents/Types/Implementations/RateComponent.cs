@@ -1,11 +1,11 @@
 ﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
 {
-    internal abstract class RateComponent : BaseMeasure, IBaseMeasure
+    internal abstract class RateComponent : BaseMeasure, IRateComponent
     {
         #region Constructors
         private protected RateComponent(IRateComponentFactory factory, IMeasurement measurement) : base(factory, measurement)
         {
-            Measurement = factory.MeasurementFactory.CreateNew(measurement);
+            Measurement = GetBaseMeasurementFactory().CreateNew(measurement);
         }
         #endregion
 
@@ -14,6 +14,11 @@
         #endregion
 
         #region Public methods
+        public IMeasurable? GetDefault(MeasureUnitCode measureUnitCode)
+        {
+            return GetFactory().CreateDefault(measureUnitCode);
+        }
+
         #region Override methods
         public override IRateComponentFactory GetFactory()
         {
@@ -52,6 +57,10 @@
         #endregion
 
         #region Abstract methods
+        public object GetDefaultRateComponentQuantity()
+        {
+            return GetFactory().DefaultRateComponentQuantity;
+        }
         #endregion
         #endregion
 
@@ -80,68 +89,24 @@
         #endregion
     }
 
-    internal abstract class RateComponent<TSelf, TNum> : RateComponent, IRateComponent<TSelf, TNum>
-        where TSelf : class, IBaseMeasure, IDefaultBaseMeasure
-        where TNum : struct
+    internal abstract class RateComponent<TSelf> : RateComponent, IRateComponent<TSelf>
+        where TSelf : class, IBaseMeasure
     {
-        #region Constructors
-        //private protected RateComponent(IRateComponentFactory factory, Enum measureUnit, ValueType quantity) : base(factory, measureUnit, quantity)
-        //{
-        //}
-
-        private protected RateComponent(IRateComponentFactory<TSelf, TNum> factory, IMeasurement measurement) : base(factory, measurement)
+        private protected RateComponent(IRateComponentFactory factory, IMeasurement measurement) : base(factory, measurement)
         {
         }
-        #endregion
 
-        #region Public metthods
-        public TSelf GetBaseMeasure(IBaseMeasure baseMeasure)
+        public TSelf GetNew(TSelf other)
         {
-            if (NullChecked(baseMeasure, nameof(baseMeasure)) is TSelf other) return GetNew(other);
-
-            IBaseMeasurement baseMeasurement = baseMeasure.GetBaseMeasurement();
-            ValueType quantity = (ValueType)baseMeasure.Quantity;
-
-            return (TSelf)GetBaseMeasure(baseMeasurement, quantity);
+            return GetFactory().CreateNew(other);
         }
 
-        public TSelf GetBaseMeasure(TNum quantity)
+        public override IRateComponentFactory<TSelf> GetFactory()
         {
-            return GetRateComponent(Measurement, quantity);
+            return (IRateComponentFactory<TSelf>)Factory;
         }
 
-        public TSelf GetDefault()
-        {
-            return GetDefault(MeasureUnitCode)!;
-        }
-
-        public TSelf? GetDefault(MeasureUnitCode measureUnitCode)
-        {
-            return GetFactory().CreateDefault(measureUnitCode);
-        }
-
-        public object GetDefaultRateComponentQuantity()
-        {
-            return GetFactory().DefaultRateComponentQuantity;
-        }
-
-        public TNum GetQuantity()
-        {
-            return (TNum)GetQuantity(GetQuantityTypeCode());
-        }
-
-        public TSelf GetRateComponent(IMeasurement measurement, TNum quantity)
-        {
-            return GetFactory().Create(measurement, quantity);
-        }
-
-        #region Override methods
-        public override IRateComponentFactory<TSelf, TNum> GetFactory()
-        {
-            return (IRateComponentFactory<TSelf, TNum>)Factory;
-        }
-        #endregion
-        #endregion
+        public abstract TSelf GetDefault();
 
         #region Protected methods
         protected decimal GetDefaultQuantity(object quantity)
@@ -149,30 +114,102 @@
             return GetDefaultQuantity(quantity, GetExchangeRate());
         }
 
-        public TSelf GetBaseMeasure(Enum measureUnit, ValueType quantity)
-        {
-            throw new NotImplementedException();
-        }
 
-        public TSelf GetBaseMeasure(string name, ValueType quantity)
+        protected TSelf GetRateComponent(ValueType quantity)
         {
-            throw new NotImplementedException();
-        }
-
-        public TSelf? GetBaseMeasure(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public TSelf? GetBaseMeasure(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public TSelf GetNew(TSelf other)
-        {
-            throw new NotImplementedException();
+            return (TSelf)GetBaseMeasure(Measurement, quantity);
         }
         #endregion
     }
+
+    //internal abstract class RateComponent<TSelf, TNum> : RateComponent, IRateComponent<TSelf, TNum>
+    //    where TSelf : class, IBaseMeasure/*, IDefaultBaseMeasure*/
+    //    where TNum : struct
+    //{
+    //    #region Constructors
+    //    //private protected RateComponent(IRateComponentFactory factory, Enum measureUnit, ValueType quantity) : base(factory, measureUnit, quantity)
+    //    //{
+    //    //}
+
+    //    private protected RateComponent(IRateComponentFactory<TSelf, TNum> factory, IMeasurement measurement) : base(factory, measurement)
+    //    {
+    //    }
+    //    #endregion
+
+    //    #region Public metthods
+    //    public TSelf GetBaseMeasure(IBaseMeasure baseMeasure)
+    //    {
+    //        if (NullChecked(baseMeasure, nameof(baseMeasure)) is TSelf other) return GetNew(other);
+
+    //        IBaseMeasurement baseMeasurement = baseMeasure.GetBaseMeasurement();
+    //        ValueType quantity = (ValueType)baseMeasure.Quantity;
+
+    //        return (TSelf)GetBaseMeasure(baseMeasurement, quantity);
+    //    }
+
+    //    public TSelf GetBaseMeasure(TNum quantity)
+    //    {
+    //        return GetRateComponent(Measurement, quantity);
+    //    }
+
+    //    public TSelf GetDefault()
+    //    {
+    //        return (TSelf)GetDefault(MeasureUnitCode)!;
+    //    }
+
+    //    public object GetDefaultRateComponentQuantity()
+    //    {
+    //        return GetFactory().DefaultRateComponentQuantity;
+    //    }
+
+    //    public TNum GetQuantity()
+    //    {
+    //        return GetQuantity(this);
+    //    }
+
+    //    public TSelf GetRateComponent(IMeasurement measurement, TNum quantity)
+    //    {
+    //        return GetFactory().Create(measurement, quantity);
+    //    }
+
+    //    #region Override methods
+    //    public override IRateComponentFactory<TSelf, TNum> GetFactory()
+    //    {
+    //        return (IRateComponentFactory<TSelf, TNum>)Factory;
+    //    }
+    //    #endregion
+    //    #endregion
+
+    //    #region Protected methods
+    //    protected decimal GetDefaultQuantity(object quantity)
+    //    {
+    //        return GetDefaultQuantity(quantity, GetExchangeRate());
+    //    }
+
+    //    public TSelf GetBaseMeasure(Enum measureUnit, ValueType quantity)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    public TSelf GetBaseMeasure(string name, ValueType quantity)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    public TSelf? GetBaseMeasure(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    public TSelf? GetBaseMeasure(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    public TSelf GetNew(TSelf other)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //    #endregion
+    //}
 }

@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations
+﻿using System;
+using System.Linq;
+
+namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations
 {
     public abstract class RateComponentFactory : IRateComponentFactory
     {
@@ -11,6 +14,7 @@
 
         #region Properties
         public IMeasurementFactory MeasurementFactory { get; init; }
+        public TypeCode QuantityTypeCode => Type.GetTypeCode(DefaultRateComponentQuantity.GetType());
 
         #region Abstract properties
         public abstract object DefaultRateComponentQuantity {  get; }
@@ -21,68 +25,46 @@
         #region Public methods
         #region Abstract methods
         public abstract IBaseMeasure CreateBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity);
-        #endregion
-        #endregion
-    }
-
-    public abstract class RateComponentFactory<T, TNum> : RateComponentFactory, IRateComponentFactory<T, TNum>
-        where T : class, IBaseMeasure, IDefaultBaseMeasure
-        where TNum : struct
-    {
-        #region Constructors
-        //static RateComponentFactory()
-        //{
-        //    DenominatorSet = new();
-        //    LimitSet = new();
-        //}
-
-        private protected RateComponentFactory(IMeasurementFactory measurementFactory) : base(measurementFactory)
-        {
-        }
-        #endregion
-
-        #region Public methods
-        #region Abstract methods
-        public abstract T Create(IMeasurement measurement, TNum quantity);
-        public abstract T? CreateDefault(MeasureUnitCode measureUnitCode);
-        //public abstract T CreateNew(T other);
-
+        public abstract IMeasurable? CreateDefault(MeasureUnitCode measureUnitCode);
         #endregion
         #endregion
 
-        #region Protected methods
-        protected T GetOrCreateRateComponent(IBaseMeasurement baseMeasurement, ValueType quantity)
+
+        protected T GetOrCreateRateComponent<T>(IBaseMeasurement baseMeasurement, ValueType quantity)
+            where T : class, IRateComponent
         {
             string paramName = nameof(baseMeasurement);
 
             if (NullChecked(baseMeasurement, paramName) is IMeasurement measurement)
             {
-                return GetOrCreateStoredRateComponent(measurement, quantity);
+                return GetOrCreateStoredRateComponent<T>(measurement, quantity, QuantityTypeCode);
             }
 
             throw ArgumentTypeOutOfRangeException(paramName, baseMeasurement);
         }
 
-        protected T GetOrCreateStoredRateComponent(IMeasurement measurement, ValueType quantity)
+        protected T GetOrCreateStoredRateComponent<T>(IBaseMeasurement baseMeasurement, ValueType quantity, TypeCode quantityTypeCode)
+            where T : class, IRateComponent
         {
-            TNum convertedQuantity = ConvertQuantity(quantity);
+            _ = NullChecked(baseMeasurement, nameof(baseMeasurement));
 
-            return Create(measurement, convertedQuantity);
+            ValueType convertedQuantity = (ValueType)ConvertQuantity(quantity, quantityTypeCode);
+
+            return (T)CreateBaseMeasure(baseMeasurement, convertedQuantity);
         }
 
-        #region Static methods
-        protected static TNum ConvertQuantity(ValueType quantity)
+        protected static object ConvertQuantity(ValueType quantity, TypeCode quantityTypeCode)
         {
             string paramName = nameof(quantity);
-            object? converted = NullChecked(quantity, paramName).ToQuantity(typeof(TNum));
+            object? converted = NullChecked(quantity, paramName).ToQuantity(quantityTypeCode);
 
-            return converted is TNum convertedQuantity ?
-                convertedQuantity
-                : throw ArgumentTypeOutOfRangeException(paramName, quantity);
+            if (converted != null) return converted;
 
+            throw ArgumentTypeOutOfRangeException(paramName, quantity);
         }
 
-        protected static T? GetStoredRateComponent(T? other, HashSet<T> rateComponentSet)
+        protected static T? GetStoredRateComponent<T>(T? other, HashSet<T> rateComponentSet)
+            where T : class, IRateComponent
         {
             bool exists = rateComponentSet.Contains(NullChecked(other, nameof(other)))
                 || rateComponentSet.Add(other!);
@@ -94,36 +76,21 @@
                 : null;
         }
 
-        public T Create(string name, ValueType quantity)
+    }
+
+    public abstract class RateComponentFactory<T> : RateComponentFactory, IRateComponentFactory<T>
+        where T : class, IBaseMeasure
+    {
+        private protected RateComponentFactory(IMeasurementFactory measurementFactory) : base(measurementFactory)
         {
-            throw new NotImplementedException();
         }
 
-        public T Create(Enum measureUnit, ValueType quantity)
-        {
-            throw new NotImplementedException();
-        }
 
-        public T? Create(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public T? Create(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public T CreateNew(T other)
-        {
-            throw new NotImplementedException();
-        }
-
-        public T Create(IBaseMeasure baseMeasure)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
-        #endregion
+        public abstract T Create(string name, ValueType quantity);
+        public abstract T Create(Enum measureUnit, ValueType quantity);
+        public abstract T? Create(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName);
+        public abstract T? Create(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity);
+        public abstract T Create(IBaseMeasure baseMeasure);
+        public abstract T CreateNew(T other);
     }
 }

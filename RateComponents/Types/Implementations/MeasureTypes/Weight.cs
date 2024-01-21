@@ -18,7 +18,7 @@
 
 //    public IVolume ConvertMeasure()
 //    {
-//        return ConvertMeasure<IVolume>(ConvertMode.Multiply);
+//        return ConvertMeasure<IVolume>(MeasureOperationMode.Multiply);
 //    }
 //    #endregion
 //}

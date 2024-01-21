@@ -13,14 +13,14 @@
         void ValidateQuantifiable(IQuantifiable? quantifiable, string paramName);
     }
 
-    public interface IBaseMeasure<TSelf> : IBaseMeasure, ICommonBase<TSelf> where TSelf : class, IBaseMeasure
+    public interface IBaseMeasure<TSelf> : IBaseMeasure
+        where TSelf : class, IBaseMeasure
     {
         TSelf GetBaseMeasure(Enum measureUnit, ValueType quantity);
         TSelf GetBaseMeasure(string name, ValueType quantity);
         TSelf? GetBaseMeasure(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName);
         TSelf? GetBaseMeasure(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity);
         TSelf GetBaseMeasure(IBaseMeasure baseMeasure);
-
 
         #region Default implementations
         public bool TryGetBaseMeasure(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName, [NotNullWhen(true)] out TSelf? baseMeasure)
@@ -37,6 +37,12 @@
             return baseMeasure != null;
         }
         #endregion
+    }
 
+    public interface IBaseMeasure<TSelf, TNum> : IBaseMeasure, IQuantity<TNum>, ICommonBase<TSelf>
+        where TSelf : class, IBaseMeasure/*, IDefaultBaseMeasure*/
+        where TNum : struct
+    {
+        TSelf GetBaseMeasure(TNum quantity);
     }
 }

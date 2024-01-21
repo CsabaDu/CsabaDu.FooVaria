@@ -1,16 +1,14 @@
 ﻿namespace CsabaDu.FooVaria.RateComponents.Types
 {
-    public interface IRateComponent : IBaseMeasure/*, Behaviors.IBaseMeasureQuantity, IQuantityTypeCode,IDecimalQuantity,*/
-        /*, IRateComponentCode/*, IExchangeRate, IExchange<IBaseMeasure, Enum>, IRound<IBaseMeasure> */
+    public interface IRateComponent : IBaseMeasure, IDefaultMeasurable
     {
         IMeasurement Measurement { get; init; }
+
+        object GetDefaultRateComponentQuantity();
     }
 
-    public interface IRateComponent<TSelf, TNum> : IRateComponent, IDefaultBaseMeasure<TSelf, TNum>, IDefaultMeasurable<TSelf>, IBaseMeasure<TSelf>
-        where TSelf : class, IBaseMeasure, IDefaultBaseMeasure
-        where TNum : struct
+    public interface IRateComponent<TSelf> : IRateComponent, IDefaultMeasurable<TSelf>
+        where TSelf : class, IBaseMeasure
     {
-        object GetDefaultRateComponentQuantity();
-        TSelf GetRateComponent(IMeasurement measurement, TNum quantity);
     }
 }

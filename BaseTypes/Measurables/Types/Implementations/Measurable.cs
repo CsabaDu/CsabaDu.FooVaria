@@ -113,4 +113,9 @@ public abstract class Measurable : CommonBase, IMeasurable
     public abstract Enum GetMeasureUnit();
     #endregion
     #endregion
+
+    protected static TSelf GetDefault<TSelf>(TSelf measurable) where TSelf : class, IMeasurable, IDefaultMeasurable
+    {
+        return (TSelf)measurable.GetDefault(measurable.MeasureUnitCode)!;
+    }
 }

@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
 
-public sealed class DenominatorFactory : RateComponentFactory<IDenominator, decimal>, IDenominatorFactory
+public sealed class DenominatorFactory : RateComponentFactory<IDenominator>, IDenominatorFactory
 {
     #region Constructors
     #region Static constructor
@@ -88,31 +88,24 @@ public sealed class DenominatorFactory : RateComponentFactory<IDenominator, deci
     //}
 
     #region Override methods
-    public override IDenominator Create(IMeasurement measurement, decimal quantity)
-    {
-        IDenominator other = new Denominator(this, measurement, quantity);
-
-        return GetStoredRateComponent(other, DenominatorSet) ?? throw new InvalidOperationException(null);
-    }
-
     public override IBaseMeasure CreateBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity)
     {
-        return GetOrCreateRateComponent(baseMeasurement, quantity);
+        return GetOrCreateRateComponent<IDenominator>(baseMeasurement, quantity);
     }
 
     public override IDenominator? CreateDefault(MeasureUnitCode measureUnitCode)
     {
-        IMeasurement? measurement = MeasurementFactory.CreateDefault(measureUnitCode);
+        IMeasurement? measurement = (IMeasurement?)MeasurementFactory.CreateDefault(measureUnitCode);
 
         if (measurement == null) return null;
 
         return GetOrCreateStoredDenominator(measurement);
     }
 
-    //public IDenominator CreateNew(IDenominator other)
-    //{
-    //    return GetStoredRateComponent(other, DenominatorSet) ?? throw new InvalidOperationException(null);
-    //}
+    public override IDenominator CreateNew(IDenominator other)
+    {
+        return GetStoredRateComponent(other, DenominatorSet) ?? throw new InvalidOperationException(null);
+    }
     #endregion
     #endregion
 
@@ -121,7 +114,32 @@ public sealed class DenominatorFactory : RateComponentFactory<IDenominator, deci
     {
         decimal quantity = (decimal)DefaultRateComponentQuantity;
 
-        return Create(measurement, quantity);
+        return (IDenominator)CreateBaseMeasure(measurement, quantity);
+    }
+
+    public override IDenominator Create(string name, ValueType quantity)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override IDenominator Create(Enum measureUnit, ValueType quantity)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override IDenominator? Create(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override IDenominator? Create(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override IDenominator Create(IBaseMeasure baseMeasure)
+    {
+        throw new NotImplementedException();
     }
     #endregion
 }

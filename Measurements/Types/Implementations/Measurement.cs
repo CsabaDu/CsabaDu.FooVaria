@@ -39,10 +39,10 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
 
     public IMeasurement GetDefault()
     {
-        return GetDefault(MeasureUnitCode)!;
+        return (IMeasurement)GetDefault(MeasureUnitCode)!;
     }
 
-    public IMeasurement? GetDefault(MeasureUnitCode measureUnitCode)
+    public IMeasurable? GetDefault(MeasureUnitCode measureUnitCode)
     {
         return GetFactory().CreateDefault(measureUnitCode);
     }

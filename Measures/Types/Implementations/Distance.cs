@@ -16,7 +16,7 @@ internal sealed class Distance : Measure<IDistance, double, DistanceUnit>, IDist
 
     public IExtent ConvertMeasure()
     {
-        return ConvertMeasure<IExtent>(ConvertMode.Multiply);
+        return ConvertMeasure<IExtent>(MeasureOperationMode.Multiply);
     }
     #endregion
 }

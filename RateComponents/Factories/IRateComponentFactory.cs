@@ -1,15 +1,23 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Factories
+﻿using CsabaDu.FooVaria.Common.Factories;
+using CsabaDu.FooVaria.Measurables.Factories;
+
+namespace CsabaDu.FooVaria.RateComponents.Factories
 {
-    public interface IRateComponentFactory : IBaseMeasureFactory/*<IBaseMeasure, Enum>*//*, IFactory<IBaseMeasure>*/
+    public interface IRateComponentFactory : IBaseMeasureFactory, IDefaultMeasurableFactory
     {
-        object DefaultRateComponentQuantity { get; }
         IMeasurementFactory MeasurementFactory { get; }
+        object DefaultRateComponentQuantity { get; }
+        TypeCode QuantityTypeCode { get; }
     }
 
-    public interface IRateComponentFactory<T, TNum> : IRateComponentFactory, IBaseMeasureFactory<T>, IDefaultBaseMeasureFactory<T>
-        where T : class, IBaseMeasure, IDefaultBaseMeasure
-        where TNum : struct
+    public interface IRateComponentFactory<T> : IRateComponentFactory, IFactory<T>
+        where T : class, IBaseMeasure
     {
-        T Create(IMeasurement measurement, TNum quantity);
     }
+    //public interface IRateComponentFactory<T, TNum> : IRateComponentFactory<T>, IBaseMeasureFactory<T>
+    //    where T : class, IBaseMeasure/*, IDefaultBaseMeasure*/
+    //    where TNum : struct
+    //{
+    //    T Create(IMeasurement measurement, TNum quantity);
+    //}
 }

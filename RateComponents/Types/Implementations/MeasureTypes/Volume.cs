@@ -16,7 +16,7 @@
 
 //    public IWeight ConvertMeasure()
 //    {
-//        return ConvertMeasure<IWeight>(ConvertMode.Divide);
+//        return ConvertMeasure<IWeight>(MeasureOperationMode.Divide);
 //    }
 
 //    public MeasureUnitCode GetLimiterMeasureUnitCode()

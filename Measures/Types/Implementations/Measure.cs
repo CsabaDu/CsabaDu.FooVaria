@@ -2,6 +2,14 @@
 {
     internal abstract class Measure : BaseMeasure<IMeasure>, IMeasure
     {
+        #region Enums
+        protected enum MeasureOperationMode
+        {
+            Multiply,
+            Divide,
+        }
+        #endregion
+
         #region Constructors
         private protected Measure(IMeasureFactory factory, Enum measureUnit, ValueType quantity) : base(factory, measureUnit)
         {
@@ -19,7 +27,7 @@
             return GetSum(other, SummingMode.Add);
         }
 
-        public IMeasure ConvertLimiter(ILimiter limiter)
+        public IMeasure ConvertToLimitable(ILimiter limiter)
         {
             MeasureUnitCode measureUnitCode = NullChecked(limiter, nameof(limiter)).GetLimiterMeasureUnitCode();
             Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
@@ -32,9 +40,7 @@
         {
             if (divisor == 0) throw DecimalArgumentOutOfRangeException(nameof(divisor), divisor);
 
-            decimal quantity = decimal.Divide(GetDecimalQuantity(), divisor);
-
-            return (IMeasure)GetBaseMeasure(quantity);
+            return GetMeasure(divisor, MeasureOperationMode.Divide);
         }
 
         public bool? FitsIn(ILimiter? limiter)
@@ -44,7 +50,7 @@
 
             if (limiter is not IBaseMeasure baseMeasure)
             {
-                baseMeasure = ConvertLimiter(limiter);
+                baseMeasure = ConvertToLimitable(limiter);
             }
 
             return FitsIn(baseMeasure, limitMode);
@@ -52,13 +58,15 @@
 
         public bool? FitsIn(IBaseMeasure? baseMeasure, LimitMode? limitMode)
         {
-            bool isLimitModeNull = limitMode == null;
+            bool limitModeHasValue = limitMode.HasValue;
 
-            if (isRateComponentNull() && isLimitModeNull) return true;
+            if (isRateComponentNull() && !limitModeHasValue) return true;
 
             if (baseMeasure?.HasMeasureUnitCode(MeasureUnitCode) != true) return null;
 
-            if (isLimitModeNull) return CompareTo(baseMeasure) <= 0;
+            if (!limitModeHasValue) return CompareTo(baseMeasure) <= 0;
+
+            _ = Defined(limitMode!.Value, nameof(limitMode));
 
             IBaseMeasure ceilingBaseMeasure = baseMeasure.Round(RoundingMode.Ceiling);
             baseMeasure = getRoundedBaseMeasure();
@@ -67,7 +75,7 @@
 
             int comparison = CompareTo(baseMeasure);
 
-            return Defined(limitMode!.Value, nameof(limitMode)) switch
+            return limitMode switch
             {
                 LimitMode.BeEqual => comparison == 0 && ceilingBaseMeasure.Equals(baseMeasure),
 
@@ -124,9 +132,7 @@
 
         public IMeasure Multiply(decimal multiplier)
         {
-            decimal quantity = decimal.Multiply(GetDecimalQuantity(), multiplier);
-
-            return (IMeasure)GetBaseMeasure(quantity);
+            return GetMeasure(multiplier, MeasureOperationMode.Multiply);
 
         }
         public IMeasure Subtract(IMeasure? other)
@@ -134,7 +140,7 @@
             return GetSum(other, SummingMode.Subtract);
         }
 
-        public override void ValidateQuantity(ValueType? quantity, string paramName)
+        public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
         {
             Type quantityType = NullChecked(quantity, paramName).GetType();
 
@@ -144,6 +150,35 @@
         }
 
         #region Private methods
+        private IMeasure GetMeasure(decimal operand, MeasureOperationMode measureOperationMode)
+        {
+            Enum measureUnit = GetMeasureUnit();
+            decimal quantity = getQuantity();
+
+            return (IMeasure)GetBaseMeasure(quantity).ExchangeTo(measureUnit)!;
+
+            #region Local methods
+            decimal getQuantity()
+            {
+                decimal quantity = GetDecimalQuantity();
+
+                return operand switch
+                {
+                    0 => 0,
+                    1 => quantity,
+
+                    _ => measureOperationMode switch
+                    {
+                        MeasureOperationMode.Multiply => decimal.Multiply(quantity, operand),
+                        MeasureOperationMode.Divide => decimal.Divide(quantity, operand),
+
+                        _ => throw new InvalidOperationException(null),
+                    },
+                };
+            }
+            #endregion
+        }
+
         private IMeasure GetSum(IMeasure? other, SummingMode summingMode)
         {
             if (other == null) return GetNew(this);
@@ -179,7 +214,7 @@
     }
 
     internal abstract class Measure<TSelf, TNum> : Measure, IMeasure<TSelf, TNum>
-        where TSelf : class, IMeasure, IDefaultBaseMeasure
+        where TSelf : class, IMeasure/*, IDefaultBaseMeasure*/
         where TNum : struct
     {
         #region Constructors
@@ -194,16 +229,6 @@
             return GetMeasure(Measurement, quantity);
         }
 
-        public TSelf? GetDefault(MeasureUnitCode measureUnitCode)
-        {
-            return (TSelf?)GetFactory().CreateDefault(measureUnitCode);
-        }
-
-        public TSelf GetDefault()
-        {
-            return GetDefault(MeasureUnitCode)!;
-        }
-
         public TSelf GetMeasure(string name, TNum quantity)
         {
             return (TSelf)GetFactory().Create(name, quantity);
@@ -214,35 +239,23 @@
             return (TSelf)GetFactory().CreateBaseMeasure(measurement, quantity);
         }
 
-        public TNum GetQuantity()
+        public TSelf GetNew(TSelf other)
         {
-            TypeCode quantityTypeCode = GetQuantityTypeCode();
-
-            return (TNum)GetQuantity(quantityTypeCode);
+            return (TSelf)GetFactory().CreateNew(other);
         }
 
-        public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
+        public TNum GetQuantity()
         {
-            TypeCode quantityTypeCode = GetQuantityTypeCode();
-
-            ValidateQuantity(quantity, quantityTypeCode, paramName);
+            return GetQuantity(this);
         }
         #endregion
     }
 
     internal abstract class Measure<TSelf, TNum, TEnum> : Measure<TSelf, TNum>, IMeasure<TSelf, TNum, TEnum>
-        where TSelf : class, IMeasure, IDefaultBaseMeasure, IMeasureUnit
+        where TSelf : class, IMeasure/*, IDefaultBaseMeasure*/, IMeasureUnit
         where TNum : struct
         where TEnum : struct, Enum
     {
-        #region Enums
-        protected enum ConvertMode
-        {
-            Multiply,
-            Divide,
-        }
-        #endregion
-
         #region Constants
         private const decimal ConvertRatio = 1000m;
         #endregion
@@ -271,15 +284,15 @@
         #endregion
 
         #region Protected methods
-        protected TOther ConvertMeasure<TOther>(ConvertMode convertMode)
+        protected TOther ConvertMeasure<TOther>(MeasureOperationMode measureOperationMode)
             where TOther : IMeasure, IConvertMeasure
         {
             MeasureUnitCode measureUnitCode = MeasureUnitTypes.GetMeasureUnitCode(typeof(TOther));
             Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
-            decimal quantity = convertMode switch
+            decimal quantity = measureOperationMode switch
             {
-                ConvertMode.Multiply => GetDefaultQuantity() * ConvertRatio,
-                ConvertMode.Divide => GetDefaultQuantity() / ConvertRatio,
+                MeasureOperationMode.Multiply => GetDefaultQuantity() * ConvertRatio,
+                MeasureOperationMode.Divide => GetDefaultQuantity() / ConvertRatio,
 
                 _ => throw new InvalidOperationException(null),
             };

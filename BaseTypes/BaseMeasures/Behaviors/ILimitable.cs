@@ -3,5 +3,5 @@
 public interface ILimitable<TSelf> : ILimitable
     where TSelf : class, IBaseMeasure, ILimitable
 {
-    TSelf ConvertLimiter(ILimiter limiter);
+    TSelf ConvertToLimitable(ILimiter limiter);
 }

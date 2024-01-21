@@ -64,33 +64,6 @@ public sealed class MeasureFactory : IMeasureFactory
 
     //    return CreateMeasure(measurement, quantity);
     //}
-    #endregion
-
-    #region Private methods
-    private IMeasure CreateMeasure([DisallowNull] Enum measureUnit, ValueType quantity)
-    {
-        return measureUnit switch
-        {
-            AreaUnit areaUnit => new Area(this, areaUnit, quantity),
-            Currency currency => new Cash(this, currency, quantity),
-            DistanceUnit distanceUnit => new Distance(this, distanceUnit, quantity),
-            ExtentUnit extentUnit => new Extent(this, extentUnit, quantity),
-            Pieces pieces => new PieceCount(this, pieces, quantity),
-            TimePeriodUnit timePeriodUnit => new TimePeriod(this, timePeriodUnit, quantity),
-            VolumeUnit volumeUnit => new Volume(this, volumeUnit, quantity),
-            WeightUnit weightUnit => new Weight(this, weightUnit, quantity),
-
-            _ => throw InvalidMeasureUnitEnumArgumentException(measureUnit),
-        };
-    }
-
-    private IMeasure CreateMeasure([DisallowNull] IMeasurement measurement, ValueType quantity)
-    {
-        Enum measureUnit = measurement.GetMeasureUnit();
-
-        return CreateMeasure(measureUnit, quantity);
-    }
-
     public IMeasure Create(string name, ValueType quantity)
     {
         throw new NotImplementedException();
@@ -126,9 +99,31 @@ public sealed class MeasureFactory : IMeasureFactory
         throw new NotImplementedException();
     }
 
-    public IMeasure? CreateDefault(MeasureUnitCode measureUnitCode)
+    #endregion
+
+    #region Private methods
+    private IMeasure CreateMeasure([DisallowNull] Enum measureUnit, ValueType quantity)
     {
-        throw new NotImplementedException();
+        return measureUnit switch
+        {
+            AreaUnit areaUnit => new Area(this, areaUnit, quantity),
+            Currency currency => new Cash(this, currency, quantity),
+            DistanceUnit distanceUnit => new Distance(this, distanceUnit, quantity),
+            ExtentUnit extentUnit => new Extent(this, extentUnit, quantity),
+            Pieces pieces => new PieceCount(this, pieces, quantity),
+            TimePeriodUnit timePeriodUnit => new TimePeriod(this, timePeriodUnit, quantity),
+            VolumeUnit volumeUnit => new Volume(this, volumeUnit, quantity),
+            WeightUnit weightUnit => new Weight(this, weightUnit, quantity),
+
+            _ => throw InvalidMeasureUnitEnumArgumentException(measureUnit),
+        };
+    }
+
+    private IMeasure CreateMeasure([DisallowNull] IMeasurement measurement, ValueType quantity)
+    {
+        Enum measureUnit = measurement.GetMeasureUnit();
+
+        return CreateMeasure(measureUnit, quantity);
     }
     #endregion
 }

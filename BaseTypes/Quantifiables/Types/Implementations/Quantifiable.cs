@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Formats.Asn1;
 
 namespace CsabaDu.FooVaria.Quantifiables.Types.Implementations;
 
@@ -59,6 +60,14 @@ public abstract class Quantifiable : Measurable, IQuantifiable
 
     #region Protected methods
     #region Static methods
+    protected static TNum GetQuantity<TNum>(IQuantity<TNum> quantifiable)
+        where TNum : struct
+    {
+        TypeCode quantityTypeCode = GetQuantityTypeCode(quantifiable);
+
+        return (TNum)quantifiable.GetQuantity(quantityTypeCode);
+    }
+
     protected static TypeCode? GetQuantityTypeCode(ValueType? quantity)
     {
         Type? quantityType = quantity?.GetType();

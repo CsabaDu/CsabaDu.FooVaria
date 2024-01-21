@@ -1,7 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measurables.Factories;
 
-public interface IDefaultMeasurableFactory<out T> : IMeasurableFactory
-    where T : class, IMeasurable
+public interface IDefaultMeasurableFactory : IMeasurableFactory
 {
-    T? CreateDefault(MeasureUnitCode measureUnitCode);
+    IMeasurable? CreateDefault(MeasureUnitCode measureUnitCode);
 }

@@ -16,4 +16,12 @@
         T? Create(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity);
         T Create(IBaseMeasure baseMeasure);
     }
+
+    public interface IBaseMeasureFactory<T, TNum> : IBaseMeasureFactory
+        where T : class, IBaseMeasure
+        where TNum : struct
+    {
+
+    }
+
 }

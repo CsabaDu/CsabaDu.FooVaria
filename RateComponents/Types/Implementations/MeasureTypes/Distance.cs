@@ -16,7 +16,7 @@
 
 //    public IExtent ConvertMeasure()
 //    {
-//        return ConvertMeasure<IExtent>(ConvertMode.Multiply);
+//        return ConvertMeasure<IExtent>(MeasureOperationMode.Multiply);
 //    }
 //    #endregion
 //}

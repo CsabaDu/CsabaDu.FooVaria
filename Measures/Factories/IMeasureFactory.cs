@@ -1,6 +1,9 @@
-﻿namespace CsabaDu.FooVaria.Measures.Factories;
+﻿using CsabaDu.FooVaria.Common.Factories;
 
-public interface IMeasureFactory : IBaseMeasureFactory<IMeasure>, IDefaultBaseMeasureFactory<IMeasure>
+namespace CsabaDu.FooVaria.Measures.Factories;
+
+public interface IMeasureFactory : IBaseMeasureFactory<IMeasure>, IFactory<IMeasure>
 {
     IMeasurementFactory MeasurementFactory { get; init; }
+
 }

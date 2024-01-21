@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
 
-public sealed class LimitFactory : RateComponentFactory<ILimit, ulong>, ILimitFactory
+public sealed class LimitFactory : RateComponentFactory, ILimitFactory
 {
     #region Constructors
     #region Static constructor
@@ -85,36 +85,31 @@ public sealed class LimitFactory : RateComponentFactory<ILimit, ulong>, ILimitFa
     }
 
     #region Override methods
-    public override ILimit Create(IMeasurement measurement, ulong quantity)
-    {
-        return Create(measurement, quantity, default);
-    }
-
     public override IBaseMeasure CreateBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity)
     {
-        return GetOrCreateRateComponent(baseMeasurement, quantity);
+        return GetOrCreateRateComponent<ILimit>(baseMeasurement, quantity);
     }
 
     public override ILimit? CreateDefault(MeasureUnitCode measureUnitCode)
     {
-        IMeasurement? measurement = MeasurementFactory.CreateDefault(measureUnitCode);
+        IMeasurement? measurement = (IMeasurement?)MeasurementFactory.CreateDefault(measureUnitCode);
 
         if (measurement == null) return null;
 
-        return Create(measurement, (ulong)DefaultRateComponentQuantity);
+        return (ILimit?)CreateBaseMeasure(measurement, (ValueType)DefaultRateComponentQuantity);
     }
 
-    //public ILimit CreateNew(ILimit other)
-    //{
-    //    return GetStoredRateComponent(other, LimitSet) ?? throw new InvalidOperationException(null);
-    //}
+    public ILimit CreateNew(ILimit other)
+    {
+        return GetStoredRateComponent(other, LimitSet) ?? throw new InvalidOperationException(null);
+    }
     #endregion
     #endregion
 
     #region Private methods
     private ILimit GetOrCreateStoredLimit(IMeasurement measurement, ValueType quantity, LimitMode limitMode)
     {
-        ulong convertedQuantity = ConvertQuantity(quantity);
+        ulong convertedQuantity = (ulong)ConvertQuantity(quantity, QuantityTypeCode);
 
         return Create(measurement, convertedQuantity, limitMode);
     }

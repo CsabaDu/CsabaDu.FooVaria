@@ -1,12 +1,11 @@
-﻿namespace CsabaDu.FooVaria.BaseMeasures.Factories
-{
-    public interface IDefaultBaseMeasureFactory : IBaseMeasureFactory
-    {
-    }
+﻿//namespace CsabaDu.FooVaria.BaseMeasures.Factories
+//{
+//    //public interface IDefaultBaseMeasureFactory : IDefaultMeasurableFactory
+//    //{
+//    //}
 
-    public interface IDefaultBaseMeasureFactory<T> : IDefaultBaseMeasureFactory, IDefaultMeasurableFactory<T>/*, IFactory<T>*/
-        where T : class, IBaseMeasure
-    {
-    }
-}
+//    //public interface IDefaultBaseMeasureFactory : IDefaultMeasurableFactory
+//    //{
+//    //}
+//}
 

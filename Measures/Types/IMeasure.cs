@@ -5,8 +5,8 @@
         IMeasurement Measurement { get; init; }
     }
 
-    public interface IMeasure<TSelf, TNum> : IMeasure, IDefaultBaseMeasure<TSelf, TNum>
-        where TSelf : class, IMeasure, IDefaultBaseMeasure
+    public interface IMeasure<TSelf, TNum> : IMeasure, IBaseMeasure<TSelf, TNum>
+        where TSelf : class, IMeasure
         where TNum : struct
     {
         TSelf GetMeasure(string name, TNum quantity);
@@ -14,7 +14,7 @@
     }
 
     public interface IMeasure<TSelf, TNum, TEnum> : IMeasure<TSelf, TNum>, IMeasureUnit<TEnum>
-        where TSelf : class, IMeasure, IDefaultBaseMeasure, IMeasureUnit
+        where TSelf : class, IMeasure, IMeasureUnit
         where TNum : struct
         where TEnum : struct, Enum
     {

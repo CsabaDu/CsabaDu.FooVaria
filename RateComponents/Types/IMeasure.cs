@@ -6,7 +6,7 @@
 //    }
 
 //    public interface IMeasure<T, TNum> : IMeasure, IBaseMeasure<T, TNum>
-//        where T : class, IMeasure, IDefaultBaseMeasure
+//        where T : class, IMeasure, IBaseMeasure
 //        where TNum : struct
 //    {
 //        T GetMeasure(string name, TNum quantity);
@@ -14,7 +14,7 @@
 //    }
 
 //    public interface IMeasure<T, TNum, TEnum> : IMeasure<T, TNum>, IMeasureUnit<TEnum>
-//        where T : class, IMeasure, IDefaultBaseMeasure, IMeasureUnit
+//        where T : class, IMeasure, IBaseMeasure, IMeasureUnit
 //        where TNum : struct
 //        where TEnum : struct, Enum
 //    {
