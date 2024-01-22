@@ -16,7 +16,7 @@
             #region Local methods
             (IExtent Height, IVolume Volume) getDryBodyProperties()
             {
-                ValidateShapeComponent(height, nameof(height));
+                //ValidateShapeComponent(height, nameof(height));
 
                 IExtent[] shapeExtents = baseFace.GetShapeExtents().Append(height).ToArray();
 

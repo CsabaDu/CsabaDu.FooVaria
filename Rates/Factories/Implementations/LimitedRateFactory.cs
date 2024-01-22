@@ -59,7 +59,7 @@ public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
         IDenominator denominator = GetValidRateParam<IDenominator>(baseMeasures[1], paramName);
         ILimit limit = count == 3 && baseMeasures[2] is IBaseMeasure baseMeasure ?
             GetValidRateParam<ILimit>(baseMeasure, paramName)
-            : LimitFactory.Create(denominator);
+            : LimitFactory.Create(denominator, default);
 
         return Create(numerator, denominator, limit);
     }
@@ -77,7 +77,7 @@ public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
     {
         IMeasure measure = GetValidRateParam<IMeasure>(numerator, nameof(numerator));
         IDenominator denominator = DenominatorFactory.Create(denominatorMeasureUnit);
-        ILimit limit = LimitFactory.Create(denominator);
+        ILimit limit = LimitFactory.Create(denominator, default);
 
         return Create(measure, denominator, limit);
     }
@@ -85,8 +85,8 @@ public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
     public override ILimitedRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitCode denominatorMeasureUnitCode)
     {
         IMeasure measure = GetValidRateParam<IMeasure>(numerator, nameof(numerator));
-        ILimit limit = LimitFactory.CreateDefault(denominatorMeasureUnitCode)
-            ?? throw InvalidMeasureUnitCodeEnumArgumentException(denominatorMeasureUnitCode, nameof(denominatorMeasureUnitCode));
+        ILimit limit = (ILimit)(LimitFactory.CreateDefault(denominatorMeasureUnitCode)
+            ?? throw InvalidMeasureUnitCodeEnumArgumentException(denominatorMeasureUnitCode, nameof(denominatorMeasureUnitCode)));
 
         return Create(measure, denominatorMeasureUnitCode, limit);
     }
@@ -101,7 +101,7 @@ public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
         if (other is ILimitedRate limitedRate) return CreateNew(limitedRate);
 
         IDenominator denominator = NullChecked(other, nameof(other)).Denominator;
-        ILimit limit = LimitFactory.Create(denominator);
+        ILimit limit = LimitFactory.Create(denominator, default);
 
         return Create(other, limit);
     }

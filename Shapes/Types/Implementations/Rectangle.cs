@@ -94,7 +94,7 @@ internal sealed class Rectangle : PlaneShape, IRectangle
 
     public IRectangle RotateHorizontally()
     {
-        return (IRectangle)GetShape(GetSortedDimensions().ToArray());
+        return (IRectangle)GetBaseShape(GetSortedDimensions().ToArray());
     }
 
     public IRectangle GetRectangle(IExtent length, IExtent width)

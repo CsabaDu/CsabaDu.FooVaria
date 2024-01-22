@@ -7,21 +7,21 @@ internal abstract class Rate : BaseRate, IRate
     {
         Numerator = other.Numerator;
         Denominator = other.Denominator;
-        DefaultQuantity = other.GetDefaultQuantity();
+        //DefaultQuantity = other.GetDefaultQuantity();
     }
 
     protected Rate(IRateFactory factory, IRate rate) : base(factory, rate)
     {
         Numerator = rate.Numerator;
         Denominator = rate.Denominator;
-        DefaultQuantity = rate.GetDefaultQuantity();
+        //DefaultQuantity = rate.GetDefaultQuantity();
     }
 
     private protected Rate(IRateFactory factory, IMeasure numerator, MeasureUnitCode denominatorMeasureUnitCode) : base(factory, denominatorMeasureUnitCode)
     {
         Numerator = NullChecked(numerator, nameof(numerator));
         Denominator = CreateDenominator(denominatorMeasureUnitCode);
-        DefaultQuantity = numerator.GetDefaultQuantity();
+        //DefaultQuantity = numerator.GetDefaultQuantity();
     }
 
     private protected Rate(IRateFactory factory, IMeasure numerator, Enum denominatorMeasureUnit, ValueType denominatorQuantity) : base(factory, denominatorMeasureUnit)
@@ -248,8 +248,8 @@ internal abstract class Rate : BaseRate, IRate
     {
         IDenominatorFactory factory = GetFactory().DenominatorFactory;
 
-        return factory.CreateDefault(denominatorMeasureUnitCode)
-            ?? throw InvalidMeasureUnitCodeEnumArgumentException(denominatorMeasureUnitCode, nameof(denominatorMeasureUnitCode));
+        return (IDenominator)(factory.CreateDefault(denominatorMeasureUnitCode)
+            ?? throw InvalidMeasureUnitCodeEnumArgumentException(denominatorMeasureUnitCode, nameof(denominatorMeasureUnitCode)));
     }
 
     public bool Equals(IRate? x, IRate? y)
@@ -267,6 +267,16 @@ internal abstract class Rate : BaseRate, IRate
     public int GetHashCode([DisallowNull] IRate rate)
     {
         return HashCode.Combine(rate.GetLimit(), rate.GetHashCode());
+    }
+
+    public override object GetQuantity(TypeCode quantityTypeCode)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramNamme)
+    {
+        throw new NotImplementedException();
     }
     #endregion
 }

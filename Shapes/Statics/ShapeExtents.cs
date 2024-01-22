@@ -20,14 +20,14 @@ public static class ShapeExtents
         {
             ValidateMeasureUnit(extentUnit, nameof(extentUnit));
 
-            IRateComponent radius = circle.Radius;
+            IMeasure radius = circle.Radius;
             decimal quantity = radius.GetDefaultQuantity() * 2;
             quantity = IsDefaultMeasureUnit(extentUnit) ?
                 quantity
                 : quantity / GetSpreadMeasureUnitExchangeRate(shape, extentUnit);
 
 
-            return (IExtent)radius.GetRateComponent(extentUnit, quantity);
+            return (IExtent)radius.GetBaseMeasure(extentUnit, quantity);
         }
 
         IExtent getCuboidDiagonal(ICuboid cuboid)
@@ -92,7 +92,8 @@ public static class ShapeExtents
 
     public static IExtent GetInnerTangentRectangleSide(ICircle circle, IExtent tangentRectangleSide, ExtentUnit extentUnit = default)
     {
-        NullChecked(circle, nameof(circle)).ValidateShapeComponent(tangentRectangleSide, nameof(tangentRectangleSide));
+        // Method?
+        //NullChecked(circle, nameof(circle)).ValidateShapeComponent(tangentRectangleSide, nameof(tangentRectangleSide));
         ValidateMeasureUnit(extentUnit, nameof(extentUnit));
 
         decimal sideQuantitySquare = GetDefaultQuantitySquare(tangentRectangleSide);
@@ -116,7 +117,7 @@ public static class ShapeExtents
     #region Private methods
     private static decimal GetDefaultQuantitySquare(IExtent extent)
     {
-        decimal quantity = extent.DefaultQuantity;
+        decimal quantity = extent.GetDefaultQuantity();
 
         return quantity * quantity;
     }
@@ -133,7 +134,7 @@ public static class ShapeExtents
 
     private static decimal GetSpreadMeasureUnitExchangeRate(IShape shape, Enum measureUnit)
     {
-        IRateComponent spreadMeasure = (IRateComponent)shape.GetSpreadMeasure();
+        IMeasure spreadMeasure = (IMeasure)shape.GetSpreadMeasure();
 
         return spreadMeasure.Measurement.GetExchangeRate(measureUnit);
     }
