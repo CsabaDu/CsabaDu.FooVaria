@@ -43,7 +43,7 @@ internal abstract class Shape : BaseShape, IShape
         throw new NotImplementedException();
     }
 
-    public override IBaseShape? GetBaseBaseShape(params IShapeComponent[] baseShapeComponents)
+    public override IBaseShape? GetBaseShape(params IShapeComponent[] baseShapeComponents)
     {
         throw new NotImplementedException();
     }

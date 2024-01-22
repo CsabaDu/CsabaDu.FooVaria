@@ -66,7 +66,7 @@ public abstract class BaseShape : BaseSpread, IBaseShape
     public abstract void ValidateBaseShapeComponent(IQuantifiable baseShapeComponent, string paramName);
     public abstract IQuantifiable? GetValidBaseShapeComponent(IShapeComponent baseShapeComponent);
     public abstract IEnumerable<IShapeComponent> GetShapeComponents();
-    public abstract IBaseShape? GetBaseBaseShape(params IShapeComponent[] baseShapeComponents);
+    public abstract IBaseShape? GetBaseShape(params IShapeComponent[] baseShapeComponents);
     #endregion
     #endregion
 }

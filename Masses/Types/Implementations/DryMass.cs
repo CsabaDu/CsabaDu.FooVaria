@@ -21,7 +21,7 @@ namespace CsabaDu.FooVaria.Masses.Types.Implementations
             #region Local methods
             IDryBody getDryBody()
             {
-                IShape? baseShape = (IShape?)GetBodyFactory().CreateBaseBaseShape(shapeExtents);
+                IShape? baseShape = (IShape?)GetBodyFactory().CreateBaseShape(shapeExtents);
 
                 if (baseShape is IDryBody dryBody) return dryBody;
 

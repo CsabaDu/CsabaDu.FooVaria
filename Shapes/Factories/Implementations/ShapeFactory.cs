@@ -56,11 +56,11 @@ public abstract class ShapeFactory : IShapeFactory
     #endregion
 
     #region Protected methods
-    protected TTangent CreateTangentShape<T, TTangent>(IShapeFactory<T, TTangent> factory, params IShapeComponent[] shapeComponents)
+    protected static TTangent CreateTangentShape<T, TTangent>(IShapeFactory<T, TTangent> factory, params IShapeComponent[] shapeComponents)
     where T : class, IShape, ITangentShape
     where TTangent : class, IShape, ITangentShape
     {
-        return (TTangent)GetTangentShapeFactory().CreateBaseShape(shapeComponents)!;
+        return (TTangent)factory.TangentShapeFactory.CreateBaseShape(shapeComponents)!;
     }
 
     #region Static methods
@@ -100,11 +100,6 @@ public abstract class ShapeFactory : IShapeFactory
 
             _ => throw InvalidSideCodeEnumArgumentException(sideCode),
         };
-    }
-
-    public IBaseShape? CreateBaseBaseShape(params IShapeComponent[] baseShapeComponents)
-    {
-        throw new NotImplementedException();
     }
     #endregion
     #endregion
