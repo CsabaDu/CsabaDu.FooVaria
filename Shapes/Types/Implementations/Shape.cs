@@ -1,17 +1,21 @@
-﻿namespace CsabaDu.FooVaria.Shapes.Types.Implementations;
+﻿using CsabaDu.FooVaria.BaseMeasures.Types;
+using CsabaDu.FooVaria.Common.Types.Implementations;
+using CsabaDu.FooVaria.Quantifiables.Enums;
 
-internal abstract class SimpleShape : Shape, IShape
+namespace CsabaDu.FooVaria.Shapes.Types.Implementations;
+
+internal abstract class Shape : BaseShape, IShape
 {
     #region Constructors
-    private protected SimpleShape(IShape other) : base(other)
+    private protected Shape(IShape other) : base(other)
     {
     }
 
-    private protected SimpleShape(IShapeFactory factory, IBaseShape baseShape) : base(factory, baseShape)
+    private protected Shape(IShapeFactory factory, IBaseShape baseShape) : base(factory, baseShape)
     {
     }
 
-    private protected SimpleShape(IShapeFactory factory, MeasureUnitCode measureUnitCode, params IExtent[] shapeExtents) : base(factory, measureUnitCode, shapeExtents)
+    private protected Shape(IShapeFactory factory, MeasureUnitCode measureUnitCode, params IExtent[] shapeExtents) : base(factory, measureUnitCode, shapeExtents)
     {
         ValidateShapeExtents(shapeExtents, nameof(shapeExtents));
     }
@@ -24,9 +28,29 @@ internal abstract class SimpleShape : Shape, IShape
     #endregion
 
     #region Public methods
-    public override sealed IBaseShape? GetBaseShape(params IShapeComponent[] shapeComponents)
+    //public override sealed IBaseShape? GetBaseShape(params IShapeComponent[] shapeComponents)
+    //{
+    //    return GetFactory().CreateBaseShape(shapeComponents);
+    //}
+
+    public override void ValidateBaseShapeComponent(IQuantifiable baseShapeComponent, string paramName)
     {
-        return GetFactory().CreateBaseShape(shapeComponents);
+        throw new NotImplementedException();
+    }
+
+    public override IQuantifiable? GetValidBaseShapeComponent(IShapeComponent baseShapeComponent)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override IBaseShape? GetBaseBaseShape(params IShapeComponent[] baseShapeComponents)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override ISpreadMeasure GetSpreadMeasure()
+    {
+        throw new NotImplementedException();
     }
 
     public IExtent GetDiagonal(ExtentUnit extentUnit)
@@ -137,7 +161,7 @@ internal abstract class SimpleShape : Shape, IShape
 
         foreach (IExtent item in shapeExtents)
         {
-            ValidateShapeComponent(item, paramName);
+            //ValidateShapeComponent(item, paramName);
         }
     }
 
@@ -202,7 +226,7 @@ internal abstract class SimpleShape : Shape, IShape
         {
             foreach (IExtent item in GetShapeExtents())
             {
-                IRateComponent? exchanged = item.ExchangeTo(extentUnit);
+                IBaseMeasure? exchanged = item.ExchangeTo(extentUnit);
 
                 if (exchanged is IExtent extent)
                 {
@@ -225,9 +249,9 @@ internal abstract class SimpleShape : Shape, IShape
             return (IBulkBody)GetFactory().SpreadFactory.CreateBaseSpread(volume);
         }
 
-        IRateComponent? getExchangedSpreadMeasure(Enum measureUnit)
+        IBaseMeasure? getExchangedSpreadMeasure(Enum measureUnit)
         {
-            IRateComponent spreadMeasure = (IRateComponent)GetSpreadMeasure();
+            IBaseMeasure spreadMeasure = (IBaseMeasure)GetSpreadMeasure();
 
             return spreadMeasure.ExchangeTo(measureUnit);
         }
@@ -277,13 +301,13 @@ internal abstract class SimpleShape : Shape, IShape
         return GetShapeExtents();
     }
 
-    public override sealed IExtent? GetValidShapeComponent(IShapeComponent shapeComponent)
-    {
-        return shapeComponent is IExtent extent 
-            && extent.GetDefaultQuantity() > 0 ?
-            extent
-            : null;
-    }
+    //public override sealed IExtent? GetValidShapeComponent(IShapeComponent shapeComponent)
+    //{
+    //    return shapeComponent is IExtent extent 
+    //        && extent.GetDefaultQuantity() > 0 ?
+    //        extent
+    //        : null;
+    //}
 
     public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
     {
@@ -292,14 +316,14 @@ internal abstract class SimpleShape : Shape, IShape
         ValidateDecimalQuantity((decimal)converted, paramName);
     }
 
-    public override sealed void ValidateShapeComponent(IQuantifiable shapeComponent, string paramName)
-    {
-        decimal defaultQuantity = NullChecked(shapeComponent, paramName).GetDefaultQuantity();
+    //public override sealed void ValidateShapeComponent(IQuantifiable shapeComponent, string paramName)
+    //{
+    //    decimal defaultQuantity = NullChecked(shapeComponent, paramName).GetDefaultQuantity();
 
-        if (shapeComponent is not IExtent) throw ArgumentTypeOutOfRangeException(paramName, shapeComponent);
+    //    if (shapeComponent is not IExtent) throw ArgumentTypeOutOfRangeException(paramName, shapeComponent);
 
-        ValidateDecimalQuantity(defaultQuantity, paramName);
-    }
+    //    ValidateDecimalQuantity(defaultQuantity, paramName);
+    //}
     #endregion
     #endregion
 

@@ -129,22 +129,22 @@ internal sealed class LimitedRate : Rate, ILimitedRate
     }
 
     #region Override methods
-    public override bool Equals(object? obj)
-    {
-        return base.Equals(obj)
-            && obj is ILimitedRate limitedRate
-            && limitedRate.Limit.Equals(Limit);
-    }
+    //public override bool Equals(object? obj)
+    //{
+    //    return base.Equals(obj)
+    //        && obj is ILimitedRate limitedRate
+    //        && limitedRate.Limit.Equals(Limit);
+    //}
 
     public override ILimitedRateFactory GetFactory()
     {
         return (ILimitedRateFactory)Factory;
     }
 
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(Numerator, Denominator, Limit);
-    }
+    //public override int GetHashCode()
+    //{
+    //    return HashCode.Combine(Numerator, Denominator, Limit);
+    //}
 
     public MeasureUnitCode GetLimiterMeasureUnitCode()
     {

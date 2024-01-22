@@ -2,11 +2,11 @@
 {
     public interface IShapeComponents
     {
-        IEnumerable<IShapeComponent> GetBaseShapeComponents();
+        IEnumerable<IShapeComponent> GetShapeComponents();
     }
 
     public interface IShapeComponents<out T> : IShapeComponents where T : class/*, IQuantifiable*/, IShapeComponent // Vissza!
     {
-        IEnumerable<T>? GetBaseShapeComponents(IBaseShape baseBaseShape);
+        IEnumerable<T>? GetShapeComponents(IBaseShape baseBaseShape);
     }
 }

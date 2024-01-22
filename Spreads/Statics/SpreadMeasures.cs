@@ -1,4 +1,4 @@
-﻿using CsabaDu.FooVaria.RateComponents.Factories;
+﻿using CsabaDu.FooVaria.Measures.Factories;
 
 namespace CsabaDu.FooVaria.Spreads.Statics;
 
@@ -23,7 +23,7 @@ public static class SpreadMeasures
             _ => false,
         };
 
-        return isValidShapeExtentCount && shapeExtents!.All(x => x.DefaultQuantity > 0);
+        return isValidShapeExtentCount && shapeExtents!.All(x => x.GetDefaultQuantity() > 0);
 
         #region Local methods
         bool isValidateShapeExtentsCount(int minValue, int maxValue)
@@ -154,7 +154,7 @@ public static class SpreadMeasures
         {
             decimal quantity = item.GetDecimalQuantity();
 
-            if (item.DefaultQuantity <= 0) throw QuantityArgumentOutOfRangeException(paramName, quantity);
+            if (item.GetDefaultQuantity() <= 0) throw QuantityArgumentOutOfRangeException(paramName, quantity);
         }
 
         #region Local methods
@@ -191,7 +191,7 @@ public static class SpreadMeasures
 
     private static decimal GetValidShapeExtentDefaultQuantity(IExtent shapeExtent, string name)
     {
-        decimal quantity = NullChecked(shapeExtent, name).DefaultQuantity;
+        decimal quantity = NullChecked(shapeExtent, name).GetDefaultQuantity();
 
         return quantity > 0 ?
             quantity

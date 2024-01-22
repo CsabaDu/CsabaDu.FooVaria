@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Shapes.Types.Implementations
 {
-    internal abstract class DryBody : SimpleShape, IDryBody
+    internal abstract class DryBody : Shape, IDryBody
     {
         private protected DryBody(IDryBody other) : base(other)
         {

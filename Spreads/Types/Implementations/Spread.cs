@@ -36,7 +36,7 @@
         #region Sealed methods
         public override sealed ISpread? ExchangeTo(Enum measureUnit)
         {
-            IRateComponent? exchanged = (GetSpreadMeasure() as IRateComponent)?.ExchangeTo(measureUnit);
+            IBaseMeasure? exchanged = (GetSpreadMeasure() as IBaseMeasure)?.ExchangeTo(measureUnit);
 
             if (exchanged is not ISpreadMeasure spreadMeasure) return null;
 

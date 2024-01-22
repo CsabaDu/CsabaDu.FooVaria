@@ -155,6 +155,11 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
         {
         }
 
+        public override decimal GetDefaultQuantity()
+        {
+            throw new NotImplementedException();
+        }
+
         public TNEnum GetMeasureUnit(IMeasureUnit<TNEnum>? other)
         {
             if (other == null) return default;
@@ -170,6 +175,16 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
         public decimal GetQuantity(TNEnum numeratorMeasureUnit, TDEnum denominatorMeasureUnit)
         {
             return GetQuantity(denominatorMeasureUnit) / GetExchangeRate(numeratorMeasureUnit);
+        }
+
+        public override object GetQuantity(TypeCode quantityTypeCode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramNamme)
+        {
+            throw new NotImplementedException();
         }
     }
 }

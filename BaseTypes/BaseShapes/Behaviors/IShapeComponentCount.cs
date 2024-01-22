@@ -2,5 +2,5 @@
 
 public interface IShapeComponentCount
 {
-    int GetBaseShapeComponentCount();
+    int GetShapeComponentCount();
 }

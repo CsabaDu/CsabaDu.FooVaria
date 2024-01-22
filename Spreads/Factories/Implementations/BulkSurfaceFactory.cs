@@ -1,5 +1,4 @@
-﻿
-namespace CsabaDu.FooVaria.Spreads.Factories.Implementations;
+﻿namespace CsabaDu.FooVaria.Spreads.Factories.Implementations;
 
 public sealed class BulkSurfaceFactory : SpreadFactory<IBulkSurface, IArea, AreaUnit>, IBulkSurfaceFactory
 {
