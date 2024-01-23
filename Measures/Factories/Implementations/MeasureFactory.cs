@@ -1,9 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseMeasurements.Statics;
-using CsabaDu.FooVaria.BaseMeasurements.Types;
-using CsabaDu.FooVaria.BaseMeasurements.Types.Implementations;
-using CsabaDu.FooVaria.Measures.Types.Implementations;
-
-namespace CsabaDu.FooVaria.Measures.Factories.Implementations;
+﻿namespace CsabaDu.FooVaria.Measures.Factories.Implementations;
 
 public sealed class MeasureFactory : IMeasureFactory
 {
@@ -17,55 +12,10 @@ public sealed class MeasureFactory : IMeasureFactory
     #region Properties
     public IMeasurementFactory MeasurementFactory { get; init; }
 
-    public RateComponentCode RateComponentCode => throw new NotImplementedException();
+    public RateComponentCode RateComponentCode => RateComponentCode.Numerator;
     #endregion
 
     #region Public methods
-    //public override IMeasure Create(Enum measureUnit, ValueType quantity)
-    //{
-    //    return CreateMeasure(NullChecked(measureUnit, nameof(measureUnit)), quantity);
-    //}
-
-    //public override IMeasure Create(IMeasurement measurement, ValueType quantity)
-    //{
-    //    return CreateMeasure(NullChecked(measurement, nameof(measurement)), quantity);
-    //}
-
-    //public override IMeasure? Create(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
-    //{
-    //    IMeasurement? measurement = MeasurementFactory.Create(measureUnit, exchangeRate, customName);
-
-    //    if (measurement == null) return null;
-
-    //    return CreateMeasure(measurement, quantity);
-    //}
-
-    //public override IMeasure? Create(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity)
-    //{
-    //    IMeasurement? measurement = MeasurementFactory.Create(customName, measureUnitCode, exchangeRate);
-
-    //    if (measurement == null) return null;
-
-    //    return CreateMeasure(measurement, quantity);
-    //}
-
-    //public IMeasure CreateNew(IMeasure other)
-    //{
-    //    var (measurement, quantity) = GetBaseMeasureParams(other);
-
-    //    return CreateMeasure(measurement, quantity);
-    //}
-
-    //public IMeasure? CreateDefault(MeasureUnitCode measureUnitCode)
-    //{
-    //    IMeasurement? measurement = MeasurementFactory.CreateDefault(measureUnitCode);
-
-    //    if (measurement == null) return null;
-
-    //    ValueType quantity = (ValueType)DefaultRateComponentQuantity;
-
-    //    return CreateMeasure(measurement, quantity);
-    //}
     public IMeasure Create(string name, ValueType quantity)
     {
         IMeasurement measurement = MeasurementFactory.Create(name);
@@ -75,12 +25,7 @@ public sealed class MeasureFactory : IMeasureFactory
 
     public IMeasure Create(IBaseMeasure baseMeasure)
     {
-        if (baseMeasure is IMeasure other) return CreateNew(other);
-
-        IBaseMeasurement baseMeasurement = NullChecked(baseMeasure, nameof(baseMeasure)).GetBaseMeasurement();
-        ValueType quantity = baseMeasure.GetDecimalQuantity();
-
-        return (IMeasure)CreateBaseMeasure(baseMeasurement, quantity);
+        return CreateMeasure(baseMeasure, nameof(baseMeasure));
     }
 
     public IBaseMeasure CreateBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity)
@@ -92,22 +37,29 @@ public sealed class MeasureFactory : IMeasureFactory
 
     public IMeasure Create(Enum measureUnit, ValueType quantity)
     {
-        throw new NotImplementedException();
+        return CreateMeasure(measureUnit, quantity);
     }
 
     public IMeasure? Create(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
     {
-        throw new NotImplementedException();
+        IMeasurement? measurement = MeasurementFactory.Create(measureUnit, exchangeRate, customName);
+
+        if (measurement == null) return null;
+
+        return CreateMeasure(measurement, quantity);
     }
 
     public IMeasure? Create(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity)
     {
-        throw new NotImplementedException();
-    }
+        IMeasurement? measurement = MeasurementFactory.Create(customName, measureUnitCode, exchangeRate);
 
+        if (measurement == null) return null;
+
+        return CreateMeasure(measurement, quantity);
+    }
     public IMeasure CreateNew(IMeasure other)
     {
-        throw new NotImplementedException();
+        return CreateMeasure(other, nameof(other));
     }
 
     #endregion
@@ -141,9 +93,17 @@ public sealed class MeasureFactory : IMeasureFactory
         }
     }
 
-    private IMeasure CreateMeasure([DisallowNull] IMeasurement measurement, ValueType quantity)
+    private IMeasure CreateMeasure([DisallowNull] IBaseMeasurement baseMeasurement, ValueType quantity)
     {
-        Enum measureUnit = measurement.GetMeasureUnit();
+        Enum measureUnit = baseMeasurement.GetMeasureUnit();
+
+        return CreateMeasure(measureUnit, quantity);
+    }
+
+    private IMeasure CreateMeasure(IBaseMeasure baseMeasure, string paramName)
+    {
+        Enum measureUnit = NullChecked(baseMeasure, paramName).GetMeasureUnit();
+        ValueType quantity = baseMeasure.GetDecimalQuantity();
 
         return CreateMeasure(measureUnit, quantity);
     }

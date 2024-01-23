@@ -184,25 +184,14 @@ public sealed class ProportionFactory : IProportionFactory
         return Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit);
     }
     #endregion
-
-    #region IBaseMeasure
-    public IBaseMeasure CreateBaseMeasure(Enum measureUnit, ValueType quantity)
-    {
-        return MeasureFactory.Create(measureUnit, quantity);
-    }
-    #endregion
     #endregion
 
     #region Private methods
     #region Static methods
     private static (Enum MeasureUnit, decimal Quantity) GetNumeratorComponents(IBaseMeasure numerator)
     {
-
-        Enum nmeasureUnit = NullChecked(numerator, nameof(numerator)) is IBaseMeasure rateComponent ?
-            rateComponent.GetMeasureUnit()
-            : throw ArgumentTypeOutOfRangeException(nameof(numerator), numerator);
-
-        decimal quantity = rateComponent.GetDefaultQuantity() / GetExchangeRate(nmeasureUnit);
+        Enum nmeasureUnit = NullChecked(numerator, nameof(numerator)).GetMeasureUnit();
+        decimal quantity = numerator.GetDefaultQuantity() / GetExchangeRate(nmeasureUnit);
 
         return (nmeasureUnit, quantity);
     }

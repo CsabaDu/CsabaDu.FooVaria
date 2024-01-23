@@ -136,11 +136,6 @@ namespace CsabaDu.FooVaria.Measures.Types.Implementations
             return (IMeasureFactory)Factory;
         }
 
-        public override sealed RateComponentCode GetRateComponentCode()
-        {
-            return RateComponentCode.Numerator;
-        }
-
         public IMeasure Multiply(decimal multiplier)
         {
             return GetMeasure(multiplier, MeasureOperationMode.Multiply);

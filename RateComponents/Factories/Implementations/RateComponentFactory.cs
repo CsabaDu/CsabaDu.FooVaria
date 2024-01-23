@@ -26,6 +26,7 @@
         #endregion
         #endregion
 
+        #region Protected methods
         protected object ConvertQuantity(ValueType quantity)
         {
             string paramName = nameof(quantity);
@@ -40,6 +41,7 @@
             throw ArgumentTypeOutOfRangeException(paramName, quantity);
         }
 
+        #region Static methods
         protected static T? GetStoredRateComponent<T>(T? other, HashSet<T> rateComponentSet)
             where T : class, IRateComponent
         {
@@ -52,21 +54,28 @@
                 stored
                 : null;
         }
-
+        #endregion
+        #endregion
     }
 
     public abstract class RateComponentFactory<T> : RateComponentFactory, IRateComponentFactory<T>
         where T : class, IBaseMeasure
     {
+        #region Constructors
         private protected RateComponentFactory(IMeasurementFactory measurementFactory) : base(measurementFactory)
         {
         }
+        #endregion
 
+        #region Public methods
+        #region Abstract methods
         public abstract T Create(string name, ValueType quantity);
         public abstract T Create(Enum measureUnit, ValueType quantity);
         public abstract T? Create(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName);
         public abstract T? Create(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity);
         public abstract T Create(IBaseMeasure baseMeasure);
         public abstract T CreateNew(T other);
+        #endregion
+        #endregion
     }
 }

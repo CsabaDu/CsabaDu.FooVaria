@@ -135,6 +135,11 @@ namespace CsabaDu.FooVaria.BaseMeasures.Types.Implementations
             return GetValidQuantityTypeCodeOrNull(quantityTypeCode);
         }
 
+        public RateComponentCode GetRateComponentCode()
+        {
+            return GetFactory().RateComponentCode;
+        }
+
         public bool IsExchangeableTo(Enum? context)
         {
             IBaseMeasurement baseMeasurement = GetBaseMeasurement();
@@ -224,7 +229,6 @@ namespace CsabaDu.FooVaria.BaseMeasures.Types.Implementations
         #region Abstract methods
         public abstract IBaseMeasurement GetBaseMeasurement();
         public abstract IBaseMeasurementFactory GetBaseMeasurementFactory();
-        public abstract RateComponentCode GetRateComponentCode();
         #endregion
         #endregion
 

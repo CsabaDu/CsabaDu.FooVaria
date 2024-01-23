@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Measurables.Statics;
-
-namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Measurables.Types.Implementations;
 
 public abstract class Measurable : CommonBase, IMeasurable
 {

@@ -96,21 +96,6 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
 
             throw QuantityArgumentOutOfRangeException(paramName, quantity);
         }
-
-        //public IMeasure Denominate(Enum multiplier) // Validate?
-        //{
-        //    if (NullChecked(multiplier, nameof(multiplier)) is not IMeasure measure)
-        //    {
-        //        throw ArgumentTypeOutOfRangeException(nameof(multiplier), multiplier);
-        //    }
-
-        //    ValidateMeasureUnitCode(measure.MeasureUnitCode, nameof(multiplier));
-
-        //    decimal quantity = measure.GetDefaultQuantity() * DefaultQuantity;
-        //    Enum measureUnit = NumeratorMeasureUnitCode.GetDefaultMeasureUnit();
-
-        //    return (IMeasure)measure.GetBaseMeasure(measureUnit, quantity);
-        //}
         #endregion
         #endregion
         #endregion
