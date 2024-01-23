@@ -1,5 +1,4 @@
-﻿
-namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
 
 internal sealed class Limit : RateComponent<ILimit>, ILimit
 {

@@ -88,9 +88,11 @@ public sealed class DenominatorFactory : RateComponentFactory<IDenominator>, IDe
     //}
 
     #region Override methods
-    public override IBaseMeasure CreateBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity)
+    public override IDenominator CreateBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity)
     {
-        return GetOrCreateRateComponent<IDenominator>(baseMeasurement, quantity);
+        Enum measureUnit = NullChecked(baseMeasurement, nameof(baseMeasurement)).GetMeasureUnit();
+
+        return Create(measureUnit, quantity);
     }
 
     public override IDenominator? CreateDefault(MeasureUnitCode measureUnitCode)
@@ -114,7 +116,14 @@ public sealed class DenominatorFactory : RateComponentFactory<IDenominator>, IDe
     {
         decimal quantity = (decimal)DefaultRateComponentQuantity;
 
-        return (IDenominator)CreateBaseMeasure(measurement, quantity);
+        return GetOrCreateStoredDenominator(measurement, quantity);
+    }
+
+    private IDenominator GetOrCreateStoredDenominator(IMeasurement measurement, ValueType quantity)
+    {
+        ulong convertedQuantity = (ulong)ConvertQuantity(quantity);
+
+        return (IDenominator)CreateBaseMeasure(measurement, convertedQuantity);
     }
 
     public override IDenominator Create(string name, ValueType quantity)

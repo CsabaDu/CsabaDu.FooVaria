@@ -3,7 +3,7 @@
 internal sealed class Extent : Measure<IExtent, double,ExtentUnit>, IExtent
 {
     #region Constructors
-    internal Extent(IMeasureFactory factory, ExtentUnit extentUnit, ValueType quantity) : base(factory, extentUnit, quantity)
+    internal Extent(IMeasureFactory factory, ExtentUnit extentUnit, double quantity) : base(factory, extentUnit, quantity)
     {
     }
     #endregion

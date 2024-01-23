@@ -2,5 +2,4 @@
 
 public interface IShapeComponent
 {
-    //bool IsValidShapeComponentOf(IShape baseShape);
 }

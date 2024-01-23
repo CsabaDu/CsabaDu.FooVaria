@@ -3,7 +3,7 @@
 internal sealed class Distance : Measure<IDistance, double, DistanceUnit>, IDistance
 {
     #region Constructors
-    internal Distance(IMeasureFactory factory, DistanceUnit distanceUnit, ValueType quantity) : base(factory, distanceUnit, quantity)
+    internal Distance(IMeasureFactory factory, DistanceUnit distanceUnit, double quantity) : base(factory, distanceUnit, quantity)
     {
     }
     #endregion

@@ -3,7 +3,7 @@
 internal sealed class Weight : Measure<IWeight, double, WeightUnit>, IWeight
 {
     #region Constructors
-    internal Weight(IMeasureFactory factory, WeightUnit weightUnit, ValueType quantity) : base(factory, weightUnit, quantity)
+    internal Weight(IMeasureFactory factory, WeightUnit weightUnit, double quantity) : base(factory, weightUnit, quantity)
     {
     }
     #endregion

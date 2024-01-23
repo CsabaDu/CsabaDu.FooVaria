@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations
+﻿namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations
 {
     public abstract class RateComponentFactory : IRateComponentFactory
     {
@@ -29,34 +26,14 @@ namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations
         #endregion
         #endregion
 
-
-        protected T GetOrCreateRateComponent<T>(IBaseMeasurement baseMeasurement, ValueType quantity)
-            where T : class, IRateComponent
-        {
-            string paramName = nameof(baseMeasurement);
-
-            if (NullChecked(baseMeasurement, paramName) is IMeasurement measurement)
-            {
-                return GetOrCreateStoredRateComponent<T>(measurement, quantity, QuantityTypeCode);
-            }
-
-            throw ArgumentTypeOutOfRangeException(paramName, baseMeasurement);
-        }
-
-        protected T GetOrCreateStoredRateComponent<T>(IBaseMeasurement baseMeasurement, ValueType quantity, TypeCode quantityTypeCode)
-            where T : class, IRateComponent
-        {
-            _ = NullChecked(baseMeasurement, nameof(baseMeasurement));
-
-            ValueType convertedQuantity = (ValueType)ConvertQuantity(quantity, quantityTypeCode);
-
-            return (T)CreateBaseMeasure(baseMeasurement, convertedQuantity);
-        }
-
-        protected static object ConvertQuantity(ValueType quantity, TypeCode quantityTypeCode)
+        protected object ConvertQuantity(ValueType quantity)
         {
             string paramName = nameof(quantity);
-            object? converted = NullChecked(quantity, paramName).ToQuantity(quantityTypeCode);
+            Type quantityType = NullChecked(quantity, paramName).GetType();
+
+            if (Type.GetTypeCode(quantityType) == QuantityTypeCode) return quantity;
+
+            object? converted = NullChecked(quantity, paramName).ToQuantity(QuantityTypeCode);
 
             if (converted != null) return converted;
 
@@ -84,7 +61,6 @@ namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations
         private protected RateComponentFactory(IMeasurementFactory measurementFactory) : base(measurementFactory)
         {
         }
-
 
         public abstract T Create(string name, ValueType quantity);
         public abstract T Create(Enum measureUnit, ValueType quantity);

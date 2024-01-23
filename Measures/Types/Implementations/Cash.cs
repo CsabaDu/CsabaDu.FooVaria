@@ -3,7 +3,7 @@
 internal sealed class Cash : Measure<ICash, decimal, Currency>, ICash
 {
     #region Constructors
-    internal Cash(IMeasureFactory factory, Currency currency, ValueType quantity) : base(factory, currency, quantity)
+    internal Cash(IMeasureFactory factory, Currency currency, decimal quantity) : base(factory, currency, quantity)
     {
     }
     #endregion

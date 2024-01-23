@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measures.Types.Implementations
+﻿using System.ComponentModel;
+
+namespace CsabaDu.FooVaria.Measures.Types.Implementations
 {
     internal abstract class Measure : BaseMeasure<IMeasure>, IMeasure
     {
@@ -13,11 +15,20 @@
         #region Constructors
         private protected Measure(IMeasureFactory factory, Enum measureUnit, ValueType quantity) : base(factory, measureUnit)
         {
-            ValidateQuantity(quantity, nameof(quantity));
+            try
+            {
+                ValidateQuantity(quantity, GetQuantityTypeCode(), nameof(quantity));
+            }
+            catch (InvalidEnumArgumentException)
+            {
+                throw new InvalidOperationException(null);
+            }
 
             Measurement = GetBaseMeasurementFactory().Create(measureUnit);
             Quantity = quantity;
         }
+
+
         #endregion
 
         public IMeasurement Measurement { get; init; }

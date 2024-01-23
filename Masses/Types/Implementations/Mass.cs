@@ -1,9 +1,4 @@
-﻿using CsabaDu.FooVaria.Measurables.Statics;
-using CsabaDu.FooVaria.Quantifiables.Behaviors;
-using CsabaDu.FooVaria.Quantifiables.Enums;
-using CsabaDu.FooVaria.Quantifiables.Statics;
-
-namespace CsabaDu.FooVaria.Masses.Types.Implementations
+﻿namespace CsabaDu.FooVaria.Masses.Types.Implementations
 {
     internal abstract class Mass : Quantifiable, IMass
     {
@@ -342,6 +337,16 @@ namespace CsabaDu.FooVaria.Masses.Types.Implementations
             IVolume volume = mass.GetVolume();
 
             return volume.ConvertMeasure();
+        }
+
+        public object GetQuantity(TypeCode quantityTypeCode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramName)
+        {
+            throw new NotImplementedException();
         }
         #endregion
         #endregion

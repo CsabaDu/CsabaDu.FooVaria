@@ -85,9 +85,11 @@ public sealed class LimitFactory : RateComponentFactory, ILimitFactory
     }
 
     #region Override methods
-    public override IBaseMeasure CreateBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity)
+    public override ILimit CreateBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity)
     {
-        return GetOrCreateRateComponent<ILimit>(baseMeasurement, quantity);
+        Enum measureUnit = NullChecked(baseMeasurement, nameof(baseMeasurement)).GetMeasureUnit();
+
+        return Create(measureUnit, quantity, default);
     }
 
     public override ILimit? CreateDefault(MeasureUnitCode measureUnitCode)
@@ -96,7 +98,7 @@ public sealed class LimitFactory : RateComponentFactory, ILimitFactory
 
         if (measurement == null) return null;
 
-        return (ILimit?)CreateBaseMeasure(measurement, (ValueType)DefaultRateComponentQuantity);
+        return CreateBaseMeasure(measurement, (ValueType)DefaultRateComponentQuantity);
     }
 
     public ILimit CreateNew(ILimit other)
@@ -109,7 +111,7 @@ public sealed class LimitFactory : RateComponentFactory, ILimitFactory
     #region Private methods
     private ILimit GetOrCreateStoredLimit(IMeasurement measurement, ValueType quantity, LimitMode limitMode)
     {
-        ulong convertedQuantity = (ulong)ConvertQuantity(quantity, QuantityTypeCode);
+        ulong convertedQuantity = (ulong)ConvertQuantity(quantity);
 
         return Create(measurement, convertedQuantity, limitMode);
     }

@@ -117,10 +117,10 @@ internal abstract class Shape : BaseShape, IShape
         return GetDimensions().OrderBy(x => x);
     }
 
-    public bool IsValidShapeComponentOf(IBaseShape baseShape)
-    {
-        return IsValidShapeComponentOf(baseShape, this);
-    }
+    //public bool IsValidShapeComponentOf(IBaseShape baseShape)
+    //{
+    //    return baseShape?.GetShapeComponents() is IEnumerable<IShape>;
+    //}
 
     public bool IsValidShapeExtentCode(ShapeExtentCode shapeExtentCode)
     {

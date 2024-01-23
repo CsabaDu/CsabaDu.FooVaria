@@ -1,4 +1,6 @@
-﻿using CsabaDu.FooVaria.BaseMeasurements.Types;
+﻿using CsabaDu.FooVaria.BaseMeasurements.Statics;
+using CsabaDu.FooVaria.BaseMeasurements.Types;
+using CsabaDu.FooVaria.BaseMeasurements.Types.Implementations;
 using CsabaDu.FooVaria.Measures.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Measures.Factories.Implementations;
@@ -66,17 +68,26 @@ public sealed class MeasureFactory : IMeasureFactory
     //}
     public IMeasure Create(string name, ValueType quantity)
     {
-        throw new NotImplementedException();
+        IMeasurement measurement = MeasurementFactory.Create(name);
+
+        return CreateMeasure(measurement, quantity);
     }
 
     public IMeasure Create(IBaseMeasure baseMeasure)
     {
-        throw new NotImplementedException();
+        if (baseMeasure is IMeasure other) return CreateNew(other);
+
+        IBaseMeasurement baseMeasurement = NullChecked(baseMeasure, nameof(baseMeasure)).GetBaseMeasurement();
+        ValueType quantity = baseMeasure.GetDecimalQuantity();
+
+        return (IMeasure)CreateBaseMeasure(baseMeasurement, quantity);
     }
 
     public IBaseMeasure CreateBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity)
     {
-        throw new NotImplementedException();
+        Enum measureUnit = NullChecked(baseMeasurement, nameof(baseMeasurement)).GetMeasureUnit();
+
+        return CreateMeasure(measureUnit, quantity);
     }
 
     public IMeasure Create(Enum measureUnit, ValueType quantity)
@@ -106,17 +117,28 @@ public sealed class MeasureFactory : IMeasureFactory
     {
         return measureUnit switch
         {
-            AreaUnit areaUnit => new Area(this, areaUnit, quantity),
-            Currency currency => new Cash(this, currency, quantity),
-            DistanceUnit distanceUnit => new Distance(this, distanceUnit, quantity),
-            ExtentUnit extentUnit => new Extent(this, extentUnit, quantity),
-            Pieces pieces => new PieceCount(this, pieces, quantity),
-            TimePeriodUnit timePeriodUnit => new TimePeriod(this, timePeriodUnit, quantity),
-            VolumeUnit volumeUnit => new Volume(this, volumeUnit, quantity),
-            WeightUnit weightUnit => new Weight(this, weightUnit, quantity),
+            AreaUnit areaUnit => new Area(this, areaUnit, (double)convertQuantity()),
+            Currency currency => new Cash(this, currency, (decimal)convertQuantity()),
+            DistanceUnit distanceUnit => new Distance(this, distanceUnit, (double)convertQuantity()),
+            ExtentUnit extentUnit => new Extent(this, extentUnit, (double)convertQuantity()),
+            Pieces pieces => new PieceCount(this, pieces, (long)convertQuantity()),
+            TimePeriodUnit timePeriodUnit => new TimePeriod(this, timePeriodUnit, (double)convertQuantity()),
+            VolumeUnit volumeUnit => new Volume(this, volumeUnit, (double)convertQuantity()),
+            WeightUnit weightUnit => new Weight(this, weightUnit, (double)convertQuantity()),
 
             _ => throw InvalidMeasureUnitEnumArgumentException(measureUnit),
         };
+
+        object convertQuantity()
+        {
+            Type quantityType = NullChecked(quantity, nameof(quantity)).GetType();
+            MeasureUnitCode measureUnitCode = MeasureUnitTypes.GetMeasureUnitCode(measureUnit);
+            TypeCode quantityTypeCode = measureUnitCode.GetQuantityTypeCode();
+
+            if (quantityTypeCode == Type.GetTypeCode(quantityType)) return quantity;
+
+            return quantity.ToQuantity(quantityTypeCode) ?? throw QuantityArgumentOutOfRangeException(quantity);
+        }
     }
 
     private IMeasure CreateMeasure([DisallowNull] IMeasurement measurement, ValueType quantity)

@@ -3,7 +3,7 @@
 internal sealed class Volume : Measure<IVolume, double, VolumeUnit>, IVolume
 {
     #region Constructors
-    internal Volume(IMeasureFactory factory, VolumeUnit volumeUnit, ValueType quantity) : base(factory, volumeUnit, quantity)
+    internal Volume(IMeasureFactory factory, VolumeUnit volumeUnit, double quantity) : base(factory, volumeUnit, quantity)
     {
     }
     #endregion

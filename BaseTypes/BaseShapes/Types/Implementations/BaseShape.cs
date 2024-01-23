@@ -69,4 +69,13 @@ public abstract class BaseShape : BaseSpread, IBaseShape
     public abstract IBaseShape? GetBaseShape(params IShapeComponent[] baseShapeComponents);
     #endregion
     #endregion
+
+    #region Protected methods
+    #region Static methods
+    protected static bool IsValidShapeComponentOf<T>(IBaseShape baseShape, T shapeComponent) where T : class, IQuantifiable, IShapeComponent
+    {
+        return baseShape?.GetShapeComponents() is IEnumerable<T>;
+    }
+    #endregion
+    #endregion
 }

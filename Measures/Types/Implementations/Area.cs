@@ -3,7 +3,7 @@
 internal sealed class Area : Measure<IArea, double, AreaUnit>, IArea
 {
     #region Constructors
-    internal Area(IMeasureFactory factory, AreaUnit areaUnit, ValueType quantity) : base(factory, areaUnit, quantity)
+    internal Area(IMeasureFactory factory, AreaUnit areaUnit, double quantity) : base(factory, areaUnit, quantity)
     {
     }
     #endregion

@@ -3,7 +3,7 @@
 internal sealed class TimePeriod : Measure<ITimePeriod, double, TimePeriodUnit>, ITimePeriod
 {
     #region Constructors
-    internal TimePeriod(IMeasureFactory factory, TimePeriodUnit timePeriodUnit, ValueType quantity) : base(factory, timePeriodUnit, quantity)
+    internal TimePeriod(IMeasureFactory factory, TimePeriodUnit timePeriodUnit, double quantity) : base(factory, timePeriodUnit, quantity)
     {
     }
     #endregion

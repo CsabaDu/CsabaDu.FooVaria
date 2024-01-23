@@ -3,7 +3,7 @@
 internal sealed class PieceCount : Measure<IPieceCount, long, Pieces>, IPieceCount
 {
     #region Constructors
-    internal PieceCount(IMeasureFactory factory, Pieces pieces, ValueType quantity) : base(factory, pieces, quantity)
+    internal PieceCount(IMeasureFactory factory, Pieces pieces, long quantity) : base(factory, pieces, quantity)
     {
     }
     #endregion

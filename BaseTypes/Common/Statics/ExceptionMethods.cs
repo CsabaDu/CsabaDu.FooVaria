@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Common.Statics;
+﻿using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+
+namespace CsabaDu.FooVaria.Common.Statics;
 
 public static class ExceptionMethods
 {
