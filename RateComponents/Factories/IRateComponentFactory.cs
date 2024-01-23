@@ -1,7 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Factories;
-using CsabaDu.FooVaria.Measurables.Factories;
-
-namespace CsabaDu.FooVaria.RateComponents.Factories
+﻿namespace CsabaDu.FooVaria.RateComponents.Factories
 {
     public interface IRateComponentFactory : IBaseMeasureFactory, IDefaultMeasurableFactory
     {

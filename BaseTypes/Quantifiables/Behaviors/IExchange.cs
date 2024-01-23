@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Quantifiables.Behaviors;
+﻿namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
 
 public interface IExchange<TSelf, in TContext> : IProportional<TSelf>, IExchangeable<TContext>
     where TSelf : class, IQuantifiable

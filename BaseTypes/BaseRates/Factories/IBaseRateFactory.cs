@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.BaseRates.Factories;
+﻿namespace CsabaDu.FooVaria.BaseTypes.BaseRates.Factories;
 
 public interface IBaseRateFactory : IQuantifiableFactory/*<IBaseRate, IMeasurable>*/
 {

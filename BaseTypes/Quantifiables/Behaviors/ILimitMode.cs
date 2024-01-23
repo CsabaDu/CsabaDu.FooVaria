@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Quantifiables.Enums;
-
-namespace CsabaDu.FooVaria.Quantifiables.Behaviors;
+﻿namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
 
 public interface ILimitMode
 {

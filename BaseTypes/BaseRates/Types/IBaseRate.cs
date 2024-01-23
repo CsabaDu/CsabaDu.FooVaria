@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.BaseRates.Types;
+﻿namespace CsabaDu.FooVaria.BaseTypes.BaseRates.Types;
 
 public interface IBaseRate : IQuantifiable, IQuantity<decimal>, IProportional<IBaseRate>, IDenominate
 {

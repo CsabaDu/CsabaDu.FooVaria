@@ -1,4 +1,5 @@
-﻿namespace CsabaDu.FooVaria.BaseShapes.Types;
+﻿namespace CsabaDu.FooVaria.BaseTypes.BaseShapes.Types;
+
 public interface IBaseShape : IBaseSpread, IShapeComponentCount, IFit<IBaseShape>, IShapeComponents
 {
     IBaseShape? GetBaseShape(params IShapeComponent[] shapeComponents);

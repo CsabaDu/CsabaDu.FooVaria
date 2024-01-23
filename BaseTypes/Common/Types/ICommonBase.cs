@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Common.Types
+﻿namespace CsabaDu.FooVaria.BaseTypes.Common.Types
 {
     public interface ICommonBase : IRootObject
     {

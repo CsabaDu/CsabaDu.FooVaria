@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseMeasurements.Statics;
-
-namespace CsabaDu.FooVaria.Measurements.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Measurements.Types.Implementations;
 
 internal abstract class Measurement : BaseMeasurement, IMeasurement
 {

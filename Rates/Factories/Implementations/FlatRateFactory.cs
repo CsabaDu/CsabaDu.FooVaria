@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseMeasurements.Types;
-
-namespace CsabaDu.FooVaria.Rates.Factories.Implementations;
+﻿namespace CsabaDu.FooVaria.Rates.Factories.Implementations;
 
 public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
 {

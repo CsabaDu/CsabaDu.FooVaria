@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Factories;
-
-namespace CsabaDu.FooVaria.RateComponents.Factories;
+﻿namespace CsabaDu.FooVaria.RateComponents.Factories;
 
 public interface ILimitFactory : IRateComponentFactory<ILimit>, IBaseMeasureFactory<ILimit, ulong>, IFactory<ILimit>
 {

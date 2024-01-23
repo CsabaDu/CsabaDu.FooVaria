@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Quantifiables.Statics;
+﻿namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Statics;
 
 public static class ExceptionMethods
 {

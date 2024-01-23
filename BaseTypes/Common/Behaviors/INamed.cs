@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Common.Behaviors;
+﻿namespace CsabaDu.FooVaria.BaseTypes.Common.Behaviors;
 
 public interface INamed
 {

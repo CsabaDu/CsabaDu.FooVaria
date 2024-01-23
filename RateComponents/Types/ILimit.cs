@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Common.Types;
-
-namespace CsabaDu.FooVaria.RateComponents.Types;
+﻿namespace CsabaDu.FooVaria.RateComponents.Types;
 
 public interface ILimit : IRateComponent<ILimit>, ILimiter<ILimit>, IBaseMeasure<ILimit, ulong>/*, IDefaultMeasurable<ILimit>*//*, ICommonBase<ILimit>*/
 {

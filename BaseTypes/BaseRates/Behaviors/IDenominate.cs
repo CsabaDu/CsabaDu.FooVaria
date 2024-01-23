@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.BaseRates.Behaviors
+﻿namespace CsabaDu.FooVaria.BaseTypes.BaseRates.Behaviors
 {
     public interface IDenominate
     {

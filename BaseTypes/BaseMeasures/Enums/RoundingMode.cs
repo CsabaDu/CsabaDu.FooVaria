@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.BaseMeasures.Enums;
+﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Enums;
 
 public enum RoundingMode
 {

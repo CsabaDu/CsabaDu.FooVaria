@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.BaseRates.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.BaseTypes.BaseRates.Types.Implementations;
 
 public abstract class BaseRate : Quantifiable, IBaseRate
 {

@@ -1,8 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseMeasures.Types;
-using CsabaDu.FooVaria.Common.Types.Implementations;
-using CsabaDu.FooVaria.Quantifiables.Enums;
-
-namespace CsabaDu.FooVaria.Shapes.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Shapes.Types.Implementations;
 
 internal abstract class Shape : BaseShape, IShape
 {

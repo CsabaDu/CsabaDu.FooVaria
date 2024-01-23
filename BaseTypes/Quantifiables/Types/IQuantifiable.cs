@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Quantifiables.Types;
+﻿namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
 
 public interface IQuantifiable : IMeasurable, IDefaultQuantity
 {

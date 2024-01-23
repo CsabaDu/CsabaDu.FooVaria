@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
-namespace CsabaDu.FooVaria.Common.Statics;
+namespace CsabaDu.FooVaria.BaseTypes.Common.Statics;
 
 public static class ExceptionMethods
 {

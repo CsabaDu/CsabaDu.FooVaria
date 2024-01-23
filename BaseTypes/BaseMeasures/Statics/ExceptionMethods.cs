@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseMeasures.Enums;
-
-namespace CsabaDu.FooVaria.BaseMeasures.Statics;
+﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Statics;
 
 public static class ExceptionMethods
 {

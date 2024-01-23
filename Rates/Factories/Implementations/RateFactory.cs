@@ -1,8 +1,4 @@
-﻿
-
-using CsabaDu.FooVaria.BaseMeasurements.Types;
-
-namespace CsabaDu.FooVaria.Rates.Factories.Implementations;
+﻿namespace CsabaDu.FooVaria.Rates.Factories.Implementations;
 
 public abstract class RateFactory : IRateFactory
 {

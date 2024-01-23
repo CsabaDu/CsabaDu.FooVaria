@@ -1,7 +1,4 @@
-﻿using CsabaDu.FooVaria.Measurables.Enums;
-using CsabaDu.FooVaria.Quantifiables.Enums;
-
-namespace CsabaDu.FooVaria.Common.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.BaseTypes.BaseShapes.Types.Implementations;
 
 public abstract class BaseShape : BaseSpread, IBaseShape
 {

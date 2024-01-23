@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseSpreads.Factories;
-
-namespace CsabaDu.FooVaria.Shapes.Factories
+﻿namespace CsabaDu.FooVaria.Shapes.Factories
 {
     public interface IDryBodyFactory : IShapeFactory, IBodyFactory
     {

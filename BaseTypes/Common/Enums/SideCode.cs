@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Common.Enums;
+﻿namespace CsabaDu.FooVaria.BaseTypes.Common.Enums;
 
 public enum SideCode
 {

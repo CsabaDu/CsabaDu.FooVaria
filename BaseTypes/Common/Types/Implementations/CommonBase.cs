@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Common.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.BaseTypes.Common.Types.Implementations;
 
 public abstract class CommonBase : ICommonBase
 {

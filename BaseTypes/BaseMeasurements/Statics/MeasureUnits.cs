@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.BaseMeasurements.Statics;
+﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Statics;
 
 public static class MeasureUnits
 {

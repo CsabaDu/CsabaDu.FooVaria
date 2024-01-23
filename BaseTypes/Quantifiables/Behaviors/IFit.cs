@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Quantifiables.Behaviors;
+﻿namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
 
 public interface IFit<TSelf> : IComparable<TSelf>, IEquatable<TSelf>
     where TSelf : class, IQuantifiable

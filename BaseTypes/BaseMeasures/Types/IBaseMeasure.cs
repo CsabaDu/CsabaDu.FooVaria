@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.BaseMeasures.Types
+﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types
 {
     public interface IBaseMeasure : IQuantifiable, IExchangeRate, IRateComponentCode, IDecimalQuantity, IQuantityTypeCode, ILimitMode, IExchange<IBaseMeasure, Enum>, IRound<IBaseMeasure>, IEqualityComparer<IBaseMeasure>
     {

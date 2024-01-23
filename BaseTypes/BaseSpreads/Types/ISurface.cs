@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.BaseSpreads.Types;
+﻿namespace CsabaDu.FooVaria.BaseTypes.BaseSpreads.Types;
 
 public interface ISurface : IBaseSpread
 {

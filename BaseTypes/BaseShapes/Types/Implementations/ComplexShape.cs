@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Measurables.Enums;
-
-namespace CsabaDu.FooVaria.BaseShapes.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.BaseTypes.BaseShapes.Types.Implementations;
 
 public abstract class ComplexShape : BaseShape, IComplexShape
 {

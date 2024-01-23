@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.BaseMeasures.Factories
+﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Factories
 {
     public interface IBaseMeasureFactory : IQuantifiableFactory
     {

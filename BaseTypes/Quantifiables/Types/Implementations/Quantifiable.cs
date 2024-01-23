@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Formats.Asn1;
 
-namespace CsabaDu.FooVaria.Quantifiables.Types.Implementations;
+namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.Implementations;
 
 public abstract class Quantifiable : Measurable, IQuantifiable
 {

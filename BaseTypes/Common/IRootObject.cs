@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Common;
+﻿namespace CsabaDu.FooVaria.BaseTypes.Common;
 
 public interface IRootObject
 {

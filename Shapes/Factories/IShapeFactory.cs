@@ -1,7 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseShapes.Factories;
-using CsabaDu.FooVaria.Measures.Factories;
-
-namespace CsabaDu.FooVaria.Shapes.Factories
+﻿namespace CsabaDu.FooVaria.Shapes.Factories
 {
     public interface IShapeFactory : IBaseShapeFactory
     {

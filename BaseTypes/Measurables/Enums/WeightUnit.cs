@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Enums;
+﻿namespace CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
 
 public enum WeightUnit
 {

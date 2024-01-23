@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Common.Validators
+﻿namespace CsabaDu.FooVaria.BaseTypes.Common.Validators
 {
     internal interface IValidate
     {

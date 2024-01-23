@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Measurables.Types
+﻿namespace CsabaDu.FooVaria.BaseTypes.Measurables.Types
 {
     public interface IDefaultMeasurable : IMeasurable
     {
