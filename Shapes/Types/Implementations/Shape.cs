@@ -155,7 +155,7 @@ internal abstract class Shape : BaseShape, IShape
 
         ValidateShapeExtentCount(count, paramName);
 
-        foreach (IExtent item in shapeExtents)
+        foreach (IExtent item in shapeExtents) // TODO
         {
             //ValidateShapeComponent(item, paramName);
         }
