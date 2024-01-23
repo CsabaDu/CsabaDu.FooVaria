@@ -9,7 +9,7 @@ public interface ICustomMeasureUnit
     bool TrySetCustomMeasureUnit(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate);
 
     void SetCustomMeasureUnit(Enum measureUnit, decimal exchangeRate, string customName);
-    void SetOrReplaceCustomMeasureUnit(Enum measureUnit, decimal exchangeRate, string customName);
+    //void SetOrReplaceCustomMeasureUnit(Enum measureUnit, decimal exchangeRate, string customName);
 
     void SetCustomMeasureUnit(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate);
 }

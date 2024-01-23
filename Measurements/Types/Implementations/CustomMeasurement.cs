@@ -74,27 +74,27 @@ internal sealed class CustomMeasurement : Measurement, ICustomMeasurement
         SetCustomMeasureUnit(measureUnit, exchangeRate, customName);
     }
 
-    public void SetOrReplaceCustomMeasureUnit(Enum measureUnit, decimal exchangeRate, string customName)
-    {
-        if (!IsCustomMeasureUnit(NullChecked(measureUnit, nameof(measureUnit)))) throw InvalidMeasureUnitEnumArgumentException(measureUnit);
+    //public void SetOrReplaceCustomMeasureUnit(Enum measureUnit, decimal exchangeRate, string customName)
+    //{
+    //    if (!IsCustomMeasureUnit(NullChecked(measureUnit, nameof(measureUnit)))) throw InvalidMeasureUnitEnumArgumentException(measureUnit);
 
-        if (!exchangeRate.IsValidExchangeRate()) throw DecimalArgumentOutOfRangeException(exchangeRate);
+    //    if (!exchangeRate.IsValidExchangeRate()) throw DecimalArgumentOutOfRangeException(exchangeRate);
 
-        if (!IsValidCustomNameParam(customName)) throw NameArgumentOutOfRangeException(nameof(customName), customName);
+    //    if (!IsValidCustomNameParam(customName)) throw NameArgumentOutOfRangeException(nameof(customName), customName);
 
-        if (TrySetCustomMeasureUnit(measureUnit, exchangeRate, customName)) return;
+    //    if (TrySetCustomMeasureUnit(measureUnit, exchangeRate, customName)) return;
 
-        if (!CustomNameCollection.Remove(measureUnit, out string? removedCustomName)) throw new InvalidOperationException(null);
+    //    if (!CustomNameCollection.Remove(measureUnit, out string? removedCustomName)) throw new InvalidOperationException(null);
 
-        if (!RemoveExchangeRate(measureUnit))
-        {
-            SetCustomName(measureUnit, removedCustomName);
-        }
+    //    if (!RemoveExchangeRate(measureUnit))
+    //    {
+    //        SetCustomName(measureUnit, removedCustomName);
+    //    }
 
-        if (TrySetCustomMeasureUnit(measureUnit, exchangeRate, customName)) return;
+    //    if (TrySetCustomMeasureUnit(measureUnit, exchangeRate, customName)) return;
 
-        SetExchangeRate(measureUnit, GetExchangeRate(measureUnit));
-    }
+    //    SetExchangeRate(measureUnit, GetExchangeRate(measureUnit));
+    //}
 
     public bool TryGetCustomMeasurement(Enum measureUnit, decimal exchangeRate, string customName, [NotNullWhen(true)] out ICustomMeasurement? customMeasurement)
     {
@@ -163,11 +163,9 @@ internal sealed class CustomMeasurement : Measurement, ICustomMeasurement
 
     private static void SetExchangeRate(Enum measureUnit, decimal exchangeRate)
     {
-        exchangeRate.ValidateExchangeRate();
+        if (TrySetExchangeRate(DefinedMeasureUnit(measureUnit, nameof(measureUnit)), exchangeRate)) return;
 
-        if (TrySetExchangeRate(measureUnit, exchangeRate)) return;
-
-        throw InvalidMeasureUnitEnumArgumentException(measureUnit);
+        throw DecimalArgumentOutOfRangeException(nameof(exchangeRate), exchangeRate);
     }
 
     private static bool TrySetExchangeRate(Enum measureUnit, decimal exchangeRate)

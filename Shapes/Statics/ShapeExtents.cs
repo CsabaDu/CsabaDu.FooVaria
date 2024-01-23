@@ -74,7 +74,9 @@ public static class ShapeExtents
 
             decimal getDefaultQuantitySquare()
             {
-                return GetDefaultQuantitySquare(getShapeExtent());
+                IExtent shapeExtent = getShapeExtent();
+
+                return GetDefaultQuantitySquare(shapeExtent);
             }
             #endregion
         }

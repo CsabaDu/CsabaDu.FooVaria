@@ -8,11 +8,11 @@ public static class Extensions
         return exchangeRate > 0;
     }
 
-    public static void ValidateExchangeRate(this decimal exchangeRate)
-    {
-        if (exchangeRate.IsValidExchangeRate()) return;
+    //public static void ValidateExchangeRate(this decimal exchangeRate)
+    //{
+    //    if (exchangeRate.IsValidExchangeRate()) return;
 
-        throw new ArgumentOutOfRangeException(nameof(exchangeRate), exchangeRate, null);
-    }
+    //    throw new ArgumentOutOfRangeException(nameof(exchangeRate), exchangeRate, null);
+    //}
     #endregion
 }

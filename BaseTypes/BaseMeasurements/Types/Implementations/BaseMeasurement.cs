@@ -156,8 +156,10 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
     {
         MeasureUnitTypes.ValidateMeasureUnitCode(measureUnitCode, nameof(measureUnitCode));
 
+        string measureUnitCodeName = Enum.GetName(measureUnitCode)!;
+
         return measureUnitBasedCollection
-            .Where(x => x.Key.GetType().Name.Equals(Enum.GetName(measureUnitCode)))
+            .Where(x => x.Key.GetType().Name == measureUnitCodeName)
             .OrderBy(x => x.Key)
             .ToDictionary(x => x.Key, x => x.Value);
     }

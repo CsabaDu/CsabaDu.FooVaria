@@ -39,6 +39,7 @@ public abstract class Measurable : CommonBase, IMeasurable
 
     #region Properties
     public MeasureUnitCode MeasureUnitCode { get; init; }
+
     #endregion
 
     #region Public methods
@@ -112,8 +113,14 @@ public abstract class Measurable : CommonBase, IMeasurable
     #endregion
     #endregion
 
+    #region Protected methods
+    #region Static methods
     protected static TSelf GetDefault<TSelf>(TSelf measurable) where TSelf : class, IMeasurable, IDefaultMeasurable
     {
-        return (TSelf)measurable.GetDefault(measurable.MeasureUnitCode)!;
+        MeasureUnitCode measureUnitCode = measurable.MeasureUnitCode;
+
+        return (TSelf)measurable.GetDefault(measureUnitCode)!;
     }
+    #endregion
+    #endregion
 }
