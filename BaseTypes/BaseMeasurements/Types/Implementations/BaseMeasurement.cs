@@ -77,7 +77,7 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
     {
         if (context is MeasureUnitCode measureUnitCode) return HasMeasureUnitCode(measureUnitCode);
 
-        return IsValidMeasureUnit(context) && MeasureUnitTypes.HasMeasureUnitCode(MeasureUnitCode, context!);
+        return IsValidMeasureUnit(context) && Measurable.HasMeasureUnitCode(MeasureUnitCode, context!);
     }
 
     public bool IsValidExchangeRate(decimal exchangeRate, Enum measureUnit)
@@ -154,7 +154,7 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
     protected static IDictionary<object, T> GetMeasureUnitBasedCollection<T>(IDictionary<object, T> measureUnitBasedCollection, MeasureUnitCode measureUnitCode)
         where T : notnull
     {
-        MeasureUnitTypes.ValidateMeasureUnitCode(measureUnitCode, nameof(measureUnitCode));
+        ValidateMeasureUnitCodeByDefinition(measureUnitCode, nameof(measureUnitCode));
 
         string measureUnitCodeName = Enum.GetName(measureUnitCode)!;
 

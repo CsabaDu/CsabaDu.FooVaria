@@ -20,7 +20,7 @@ namespace CsabaDu.FooVaria.Spreads.Factories
 
     public interface ISpreadFactory<T, in TSMeasure, in TEnum> : ISpreadFactory<T, TSMeasure>
         where T : class, ISpread
-        where TSMeasure : class, IMeasure, ISpreadMeasure
+        where TSMeasure : class, IMeasure, ISpreadMeasure, ILimitable
         where TEnum : struct, Enum
     {
         T Create(TEnum measureUnit, double quantity);

@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measurements.Types.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
+
+namespace CsabaDu.FooVaria.Measurements.Types.Implementations;
 
 internal abstract class Measurement : BaseMeasurement, IMeasurement
 {
@@ -52,9 +54,9 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
         return GetDefaultName(measureUnit);
     }
 
-    public string GetDefaultName(Enum measureUnit)
+    public new string GetDefaultName(Enum measureUnit)
     {
-        return MeasureUnitTypes.GetDefaultName(measureUnit);
+        return Measurable.GetDefaultName(measureUnit);
     }
 
     public IMeasurement GetMeasurement(Enum measureUnit)
@@ -251,7 +253,7 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
     {
         IDictionary<string, object> measureUnitCollection = validMeasureUnits.ToDictionary
             (
-                x => MeasureUnitTypes.GetDefaultName((Enum)x),
+                x => Measurable.GetDefaultName((Enum)x),
                 x => x
             );
 

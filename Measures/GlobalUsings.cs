@@ -1,5 +1,4 @@
 ﻿global using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types;
-global using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Behaviors;
 global using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Enums;
 global using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Factories;
 global using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types;
@@ -17,6 +16,7 @@ global using CsabaDu.FooVaria.Measures.Behaviors;
 global using CsabaDu.FooVaria.Measures.Factories;
 global using CsabaDu.FooVaria.Measures.Types;
 global using CsabaDu.FooVaria.Measures.Types.Implementations;
+global using System.ComponentModel;
 global using System.Diagnostics.CodeAnalysis;
 global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Statics.ExceptionMethods;

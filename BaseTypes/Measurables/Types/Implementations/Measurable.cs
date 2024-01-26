@@ -11,6 +11,11 @@ public abstract class Measurable : CommonBase, IMeasurable
     #endregion
 
     #region Constructors
+    static Measurable()
+    {
+        MeasureUnitTypeCollection = InitMeasureUnitTypeCollection();
+    }
+
     protected Measurable(IMeasurableFactory factory, MeasureUnitCode measureUnitCode) : base(factory)
     {
         MeasureUnitCode = Defined(measureUnitCode, nameof(measureUnitCode));
@@ -39,6 +44,22 @@ public abstract class Measurable : CommonBase, IMeasurable
 
     #region Properties
     public MeasureUnitCode MeasureUnitCode { get; init; }
+    private static IDictionary<MeasureUnitCode, Type> MeasureUnitTypeCollection { get; }
+
+    private static readonly HashSet<Type> MeasureUnitTypeSet = new()
+    {
+        typeof(AreaUnit),
+        typeof(Currency),
+        typeof(DistanceUnit),
+        typeof(ExtentUnit),
+        typeof(TimePeriodUnit),
+        typeof(Pieces),
+        typeof(VolumeUnit),
+        typeof(WeightUnit),
+    };
+    private static readonly IEnumerable<MeasureUnitCode> MeasureUnitCodes = Enum.GetValues<MeasureUnitCode>();
+    public const string DefaultCustomMeasureUnitDefaultName = "Default";
+
 
     #endregion
 
@@ -55,7 +76,7 @@ public abstract class Measurable : CommonBase, IMeasurable
 
     public Type GetMeasureUnitType()
     {
-        return MeasureUnitTypes.GetMeasureUnitType(MeasureUnitCode);
+        return MeasureUnitTypeCollection[MeasureUnitCode];
     }
 
     public virtual TypeCode GetQuantityTypeCode()
@@ -94,17 +115,17 @@ public abstract class Measurable : CommonBase, IMeasurable
     #region Virtual methods
     public virtual IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
     {
-        return MeasureUnitTypes.GetMeasureUnitCodes();
+        return MeasureUnitCodes;
     }
 
     public virtual void ValidateMeasureUnit(Enum measureUnit, string paramName)
     {
-        MeasureUnitTypes.ValidateMeasureUnit(measureUnit, paramName);
+        ValidateMeasureUnitByDefinition(measureUnit, paramName);
     }
 
     public virtual void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
     {
-        MeasureUnitTypes.ValidateMeasureUnitCode(measureUnitCode, paramName);
+        ValidateMeasureUnitCodeByDefinition(measureUnitCode, paramName);
     }
     #endregion
 
@@ -123,4 +144,215 @@ public abstract class Measurable : CommonBase, IMeasurable
     }
     #endregion
     #endregion
+
+
+    #region Public methods
+    public static Enum GetMeasureUnit(MeasureUnitCode measureUnitCode, int value)
+    {
+        Type measureUnitType = GetMeasureUnitType(measureUnitCode);
+
+        return (Enum)Enum.ToObject(measureUnitType, value);
+    }
+
+    public static Enum? GetDefaultMeasureUnit(MeasureUnitCode measureUnitCode)
+    {
+        if (!Enum.IsDefined(measureUnitCode)) return null;
+
+        return measureUnitCode.GetDefaultMeasureUnit();
+    }
+
+    public static IEnumerable<Enum> GetAllMeasureUnits()
+    {
+        IEnumerable<Enum> allMeasureUnits = MeasureUnitCodes.First().GetAllMeasureUnits();
+
+        for (int i = 1; i < MeasureUnitCodes.Count(); i++)
+        {
+            IEnumerable<Enum> next = MeasureUnitCodes.ElementAt(i).GetAllMeasureUnits();
+            allMeasureUnits = allMeasureUnits.Union(next);
+        }
+
+        return allMeasureUnits;
+    }
+
+    public static IDictionary<MeasureUnitCode, Type> GetMeasureUnitTypeCollection()
+    {
+        return MeasureUnitTypeCollection;
+    }
+
+    public static Enum GetDefaultMeasureUnit(Type measureUnitType)
+    {
+        ValidateMeasureUnitType(measureUnitType);
+
+        return (Enum)Enum.ToObject(measureUnitType, default(int));
+    }
+
+    public static string GetDefaultName(Enum measureUnit)
+    {
+        Type measureUnitType = DefinedMeasureUnit(measureUnit, nameof(measureUnit)).GetType();
+        string measureUnitName = Enum.GetName(measureUnitType, measureUnit)!;
+        string measureUnitTypeName = measureUnitType.Name;
+
+        return measureUnitName + measureUnitTypeName;
+    }
+
+    public static IEnumerable<string> GetDefaultNames(MeasureUnitCode measureUnitCode)
+    {
+        return measureUnitCode.GetAllMeasureUnits().Select(x => GetDefaultName(x));
+    }
+
+    public static IEnumerable<string> GetDefaultNames()
+    {
+        return GetAllMeasureUnits().Select(x => GetDefaultName(x));
+    }
+
+    public static Type GetMeasureUnitType(MeasureUnitCode measureUnitCode)
+    {
+        ValidateMeasureUnitCodeByDefinition(measureUnitCode, nameof(measureUnitCode));
+
+        return MeasureUnitTypeCollection[measureUnitCode];
+    }
+
+    public static MeasureUnitCode GetValidMeasureUnitCode(Enum measureUnit)
+    {
+        ValidateMeasureUnitByDefinition(measureUnit, nameof(measureUnit));
+
+        Type measureUnitType = measureUnit.GetType();
+
+        return GetMeasureUnitTypeCollection().First(x => x.Value == measureUnitType).Key;
+    }
+
+    //public static IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
+    //{
+    //    return Enum.GetValues<MeasureUnitCode>();
+    //}
+
+    public static IEnumerable<Type> GetMeasureUnitTypes()
+    {
+        return MeasureUnitTypeSet;
+    }
+
+    public static MeasureUnitCode GetMeasureUnitCode(Enum measureUnit)
+    {
+        string name = DefinedMeasureUnit(measureUnit, nameof(measureUnit)).GetType().Name;
+
+        return GetMeasureUnitCode(name);
+    }
+
+    public static MeasureUnitCode GetMeasureUnitCode(Type measureUnitType)
+    {
+        string name = NullChecked(measureUnitType, nameof(measureUnitType)).Name;
+
+        return GetMeasureUnitCode(name);
+    }
+
+    public static MeasureUnitCode GetMeasureUnitCode(string name)
+    {
+        return MeasureUnitCodes.First(x => Enum.GetName(x) == name);
+    }
+
+    public static bool HasMeasureUnitCode(MeasureUnitCode measureUnitCode, Enum measureUnit)
+    {
+        return IsDefinedMeasureUnit(measureUnit)
+            && measureUnitCode == GetMeasureUnitCode(measureUnit!);
+    }
+
+
+    public static bool IsDefaultMeasureUnit(Enum measureUnit)
+    {
+        return IsDefinedMeasureUnit(measureUnit)
+            && (int)(object)measureUnit == default;
+    }
+
+    public static bool IsDefinedMeasureUnit(Enum? measureUnit)
+    {
+        if (measureUnit == null) return false;
+
+        Type measureUnitType = measureUnit.GetType();
+
+        return GetMeasureUnitTypes().Contains(measureUnitType)
+            && Enum.IsDefined(measureUnitType, measureUnit);
+    }
+
+    public static bool TryGetMeasureUnitCode(Enum? measureUnit, [NotNullWhen(true)] out MeasureUnitCode? measureUnitCode)
+    {
+        measureUnitCode = default;
+
+        if (!IsDefinedMeasureUnit(measureUnit)) return false;
+
+        measureUnitCode = GetMeasureUnitCode(measureUnit!);
+
+        return true;
+    }
+
+    public static void ValidateMeasureUnitByDefinition(Enum measureUnit, string paramName)
+    {
+        _ = DefinedMeasureUnit(measureUnit, paramName);
+    }
+
+    public static void ValidateMeasureUnit(Enum measureUnit, string measureUnitName, MeasureUnitCode measureUnitCode)
+    {
+        ValidateMeasureUnitByDefinition(measureUnit, measureUnitName);
+        ValidateMeasureUnitCodeByDefinition(measureUnitCode, nameof(measureUnitCode));
+
+        string measureUnitCodeName = Enum.GetName(measureUnitCode)!;
+        string measureUnitTypeName = measureUnit.GetType().Name;
+
+        if (measureUnitTypeName == measureUnitCodeName) return;
+
+        throw InvalidMeasureUnitEnumArgumentException(measureUnit);
+    }
+
+    public static void ValidateMeasureUnitType(Type measureUnitType)
+    {
+        if (MeasureUnitTypeSet.Contains(NullChecked(measureUnitType, nameof(measureUnitType)))) return;
+
+        throw MeasureUnitTypeArgumentOutOfRangeException(measureUnitType);
+    }
+
+    public static void ValidateMeasureUnitType(Type measureUnitType, MeasureUnitCode measureUnitCode)
+    {
+        ValidateMeasureUnitType(measureUnitType);
+        ValidateMeasureUnitCodeByDefinition(measureUnitCode, nameof(measureUnitCode));
+
+        if (measureUnitCode == GetMeasureUnitCode(measureUnitType)) return;
+
+        throw MeasureUnitTypeArgumentOutOfRangeException(measureUnitType);
+    }
+
+    public static void ValidateMeasureUnit(Enum measureUnit, Type measureUnitType)
+    {
+        MeasureUnitCode measureUnitCode = GetMeasureUnitCode(measureUnit);
+
+        if (NullChecked(measureUnitType, nameof(measureUnitType)) == GetMeasureUnitType(measureUnitCode)) return;
+
+        throw InvalidMeasureUnitEnumArgumentException(measureUnit);
+    }
+
+    public static void ValidateMeasureUnitCodeByDefinition(MeasureUnitCode measureUnitCode, string paramName)
+    {
+        if (Enum.IsDefined(measureUnitCode)) return;
+
+        throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
+    }
+    #endregion
+
+    #region Private methods
+    private static IDictionary<MeasureUnitCode, Type> InitMeasureUnitTypeCollection()
+    {
+        return initMeasureUnitTypeCollection().ToDictionary(x => x.Key, x => x.Value);
+
+        #region Local methods
+        IEnumerable<KeyValuePair<MeasureUnitCode, Type>> initMeasureUnitTypeCollection()
+        {
+            foreach (MeasureUnitCode item in MeasureUnitCodes)
+            {
+                Type measureUnitType = MeasureUnitTypeSet.First(x => x.Name == Enum.GetName(item));
+
+                yield return new KeyValuePair<MeasureUnitCode, Type>(item, measureUnitType);
+            }
+        }
+        #endregion
+    }
+    #endregion
+
 }

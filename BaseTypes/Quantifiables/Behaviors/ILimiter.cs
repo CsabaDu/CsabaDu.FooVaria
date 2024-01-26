@@ -11,9 +11,7 @@
     public interface ILimiter<in TSelf> : ILimiter, IEqualityComparer<TSelf>
         where TSelf : class, IQuantifiable, ILimiter
     {
-        LimitMode GetLimitMode(TSelf limiter);
         bool? Includes(ILimitable limitable);
-
-        void ValidateLimitMode(LimitMode limitMode);
+        LimitMode GetLimitMode(TSelf limiter);
     }
 }

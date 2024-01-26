@@ -12,4 +12,4 @@ global using static CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Statics.MeasureU
 global using static CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations.BaseMeasurement;
 global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Statics.ExceptionMethods;
-global using static CsabaDu.FooVaria.BaseTypes.Measurables.Statics.MeasureUnitTypes;
+global using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;

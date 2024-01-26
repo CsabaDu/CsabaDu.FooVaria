@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.BaseRates.Types.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Statics;
+
+namespace CsabaDu.FooVaria.BaseTypes.BaseRates.Types.Implementations;
 
 public abstract class BaseRate : Quantifiable, IBaseRate
 {
@@ -150,25 +152,53 @@ public abstract class BaseRate : Quantifiable, IBaseRate
     #region Protected methods
     protected void ValidateMeasureUnitCodes(IBaseRate other)
     {
-        string paramName = nameof(other);
+        foreach (RateComponentCode item in Enum.GetValues<RateComponentCode>())
+        {
+            MeasureUnitCode? thisItem = this[item];
+            MeasureUnitCode? otherItem = other[item];
 
-        ValidateMeasureUnitCode(other.MeasureUnitCode, paramName);
+            if (thisItem.HasValue
+                && otherItem.HasValue
+                && thisItem != otherItem)
+            {
+                throw InvalidMeasureUnitCodeEnumArgumentException(otherItem.Value, nameof(otherItem));
+            }
+        }
 
-        MeasureUnitCode numeratorMeasureUnitCode = other.GetNumeratorMeasureUnitCode();
+        //string paramName = nameof(other);
 
-        if (numeratorMeasureUnitCode == GetNumeratorMeasureUnitCode()) return;
+        //ValidateMeasureUnitCode(other.MeasureUnitCode, paramName);
 
-        throw InvalidMeasureUnitCodeEnumArgumentException(numeratorMeasureUnitCode, paramName);
+        //MeasureUnitCode numeratorMeasureUnitCode = other.GetNumeratorMeasureUnitCode();
+
+        //if (numeratorMeasureUnitCode == GetNumeratorMeasureUnitCode()) return;
+
+        //throw InvalidMeasureUnitCodeEnumArgumentException(numeratorMeasureUnitCode, paramName);
     }
 
     protected bool IsExchangeableTo(IBaseRate? baseRate)
     {
         return baseRate?.HasMeasureUnitCode(MeasureUnitCode) == true
-            && baseRate.GetNumeratorMeasureUnitCode() == (MeasureUnitCode);
+            && baseRate.GetNumeratorMeasureUnitCode() == GetNumeratorMeasureUnitCode();
     }
 
-    public abstract object GetQuantity(TypeCode quantityTypeCode);
-    public abstract void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramNamme);
+    public object GetQuantity(TypeCode quantityTypeCode)
+    {
+        object? quantity = GetQuantity().ToQuantity(Defined(quantityTypeCode, nameof(quantityTypeCode)));
+
+        if (quantity != null) return quantity;
+        
+        throw new InvalidOperationException(null);
+    }
+
+    public void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramName)
+    {
+        Type quantityType = NullChecked(quantity, paramName).GetType();
+
+        if (Type.GetTypeCode(quantityType) == quantityTypeCode) return;
+
+        throw QuantityArgumentOutOfRangeException(paramName, quantity!);
+    }
     #endregion
 }
 

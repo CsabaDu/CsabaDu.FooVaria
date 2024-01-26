@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace CsabaDu.FooVaria.Measures.Types.Implementations
+﻿namespace CsabaDu.FooVaria.Measures.Types.Implementations
 {
     internal abstract class Measure : BaseMeasure<IMeasure>, IMeasure
     {
@@ -40,11 +38,17 @@ namespace CsabaDu.FooVaria.Measures.Types.Implementations
 
         public IMeasure ConvertToLimitable(ILimiter limiter)
         {
-            MeasureUnitCode measureUnitCode = NullChecked(limiter, nameof(limiter)).GetLimiterMeasureUnitCode();
-            Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
-            decimal defaultQuantity = limiter.GetLimiterDefaultQuantity();
+            string paramName = nameof(limiter);
 
-            return GetBaseMeasure(measureUnit, defaultQuantity);
+            if (NullChecked(limiter, paramName) is IBaseMeasure baseMeasure) return GetBaseMeasure(baseMeasure);
+
+            throw ArgumentTypeOutOfRangeException(paramName, limiter);
+
+            //MeasureUnitCode measureUnitCode = limiter.GetLimiterMeasureUnitCode();
+            //Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
+            //decimal defaultQuantity = limiter.GetLimiterDefaultQuantity();
+
+            //return GetBaseMeasure(measureUnit, defaultQuantity);
         }
 
         public IMeasure Divide(decimal divisor)
@@ -57,12 +61,9 @@ namespace CsabaDu.FooVaria.Measures.Types.Implementations
         public bool? FitsIn(ILimiter? limiter)
         {
             if (limiter == null) return null;
-            LimitMode limitMode = limiter.LimitMode;
 
-            if (limiter is not IBaseMeasure baseMeasure)
-            {
-                baseMeasure = ConvertToLimitable(limiter);
-            }
+            LimitMode limitMode = limiter.LimitMode;
+            IBaseMeasure baseMeasure = ConvertToLimitable(limiter);
 
             return FitsIn(baseMeasure, limitMode);
         }
@@ -80,7 +81,17 @@ namespace CsabaDu.FooVaria.Measures.Types.Implementations
             _ = Defined(limitMode!.Value, nameof(limitMode));
 
             IBaseMeasure ceilingBaseMeasure = baseMeasure.Round(RoundingMode.Ceiling);
-            baseMeasure = getRoundedBaseMeasure();
+            baseMeasure = limitMode switch
+            {
+                LimitMode.BeNotLess or
+                LimitMode.BeGreater => ceilingBaseMeasure,
+
+                LimitMode.BeNotGreater or
+                LimitMode.BeLess or
+                LimitMode.BeEqual => baseMeasure!.Round(RoundingMode.Floor),
+
+                _ => null,
+            };
 
             if (isRateComponentNull()) return null;
 
@@ -88,30 +99,20 @@ namespace CsabaDu.FooVaria.Measures.Types.Implementations
 
             return limitMode switch
             {
-                LimitMode.BeEqual => comparison == 0 && ceilingBaseMeasure.Equals(baseMeasure),
+                LimitMode.BeEqual => areEqual(),
 
                 _ => comparison.FitsIn(limitMode),
             };
 
             #region Local methods
+            bool areEqual()
+            {
+                return comparison == 0 && ceilingBaseMeasure.Equals(baseMeasure);
+            }
+
             bool isRateComponentNull()
             {
                 return baseMeasure == null;
-            }
-
-            IBaseMeasure? getRoundedBaseMeasure()
-            {
-                return limitMode switch
-                {
-                    LimitMode.BeNotLess or
-                    LimitMode.BeGreater => ceilingBaseMeasure,
-
-                    LimitMode.BeNotGreater or
-                    LimitMode.BeLess or
-                    LimitMode.BeEqual => baseMeasure!.Round(RoundingMode.Floor),
-
-                    _ => null,
-                };
             }
             #endregion
         }
@@ -293,7 +294,7 @@ namespace CsabaDu.FooVaria.Measures.Types.Implementations
         protected TOther ConvertMeasure<TOther>(MeasureOperationMode measureOperationMode)
             where TOther : IMeasure, IConvertMeasure
         {
-            MeasureUnitCode measureUnitCode = MeasureUnitTypes.GetMeasureUnitCode(typeof(TOther));
+            MeasureUnitCode measureUnitCode = GetMeasureUnitCode(typeof(TOther));
             Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
             decimal quantity = measureOperationMode switch
             {
@@ -320,7 +321,7 @@ namespace CsabaDu.FooVaria.Measures.Types.Implementations
                 throw ArgumentTypeOutOfRangeException(nameof(spreadMeasure), spreadMeasure!);
             }
 
-            ValidateMeasureUnitCode(measure.MeasureUnitCode, paramName);
+            ValidateMeasureUnitCodeByDefinition(measure.MeasureUnitCode, paramName);
 
             decimal quantity = measure.GetDecimalQuantity();
 

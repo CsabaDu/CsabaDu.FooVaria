@@ -13,7 +13,7 @@ internal sealed class CustomMeasurement : Measurement, ICustomMeasurement
     {
         ValidateCustomMeasureUnitCode(measureUnitCode);
 
-        Type measureUnitType = MeasureUnitTypes.GetMeasureUnitType(measureUnitCode);
+        Type measureUnitType = GetMeasureUnitType(measureUnitCode);
         IEnumerable<Enum> customMeasureUnits = Enum.GetValues(measureUnitType).Cast<Enum>();
 
         return customMeasureUnits.Where(x => !ExchangeRateCollection.ContainsKey(x));

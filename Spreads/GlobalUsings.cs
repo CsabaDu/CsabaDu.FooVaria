@@ -19,3 +19,4 @@ global using CsabaDu.FooVaria.Spreads.Types.Implementations;
 global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.BaseTypes.Quantifiables.Statics.ExceptionMethods;
+global using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;

@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Measures.Factories;
-
-namespace CsabaDu.FooVaria.Spreads.Statics;
+﻿namespace CsabaDu.FooVaria.Spreads.Statics;
 
 public static class SpreadMeasures
 {
@@ -111,7 +109,7 @@ public static class SpreadMeasures
     {
         string paramName = nameof(spreadMeasure);
 
-        MeasureUnitTypes.ValidateMeasureUnitCode(measureUnitCode, nameof(measureUnitCode));
+        ValidateMeasureUnitCodeByDefinition(measureUnitCode, nameof(measureUnitCode));
 
         IMeasure measure = GetValidSpreadMeasure(spreadMeasure);
 

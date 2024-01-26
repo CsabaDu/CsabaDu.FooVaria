@@ -92,11 +92,6 @@ internal sealed class Limit : RateComponent<ILimit>, ILimit
         return GetDefaultQuantity();
     }
 
-    public LimitMode GetLimitMode(ILimit limit)
-    {
-        return NullChecked(limit, nameof(limit)).LimitMode;
-    }
-
     public ulong GetQuantity()
     {
         return GetQuantity(this);
@@ -104,14 +99,9 @@ internal sealed class Limit : RateComponent<ILimit>, ILimit
 
     public bool? Includes(ILimitable limitable)
     {
-        return NullChecked(limitable, nameof(limitable)).FitsIn(this);
-    }
+        if (limitable is not IBaseMeasure) return null;
 
-    public void ValidateLimitMode(LimitMode limitMode)
-    {
-        if (Enum.IsDefined(limitMode)) return;
-        
-        throw InvalidLimitModeEnumArgumentException(limitMode);
+        return limitable.FitsIn(this);
     }
 
     #region Override methods
@@ -128,6 +118,16 @@ internal sealed class Limit : RateComponent<ILimit>, ILimit
     public override LimitMode? GetLimitMode()
     {
         return LimitMode;
+    }
+
+    public void ValidateLimitMode(LimitMode limitMode)
+    {
+        throw new NotImplementedException();
+    }
+
+    public LimitMode GetLimitMode(ILimit limiter)
+    {
+        throw new NotImplementedException();
     }
     #endregion
     #endregion

@@ -23,7 +23,7 @@
 
     public abstract class SpreadFactory<T, TSMeasure> : SpreadFactory, ISpreadFactory<T, TSMeasure>
         where T : class, ISpread
-        where TSMeasure : class, IMeasure, ISpreadMeasure
+        where TSMeasure : class, IMeasure, ISpreadMeasure, ILimitable
     {
         #region Constructors
         private protected SpreadFactory(IMeasureFactory measureFactory) : base(measureFactory)

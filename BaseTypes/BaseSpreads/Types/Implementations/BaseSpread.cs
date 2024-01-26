@@ -81,7 +81,7 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
 
         if (!IsDefinedMeasureUnit(context)) return false;
 
-        measureUnitCode = MeasureUnitTypes.GetMeasureUnitCode(context);
+        measureUnitCode = GetMeasureUnitCode(context);
 
         return hasMeasureUnitCode();
 

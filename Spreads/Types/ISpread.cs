@@ -18,7 +18,7 @@
 
     public interface ISpread<TSelf, TSMeasure, TEnum> : ISpread<TSelf, TSMeasure>, ISpreadMeasure<TSMeasure, TEnum>
         where TSelf : class, ISpread
-        where TSMeasure : class, IMeasure<TSMeasure, double, TEnum>, ISpreadMeasure
+        where TSMeasure : class, IMeasure<TSMeasure, double, TEnum>, ISpreadMeasure, ILimitable
         where TEnum : struct, Enum
     {
         TSelf GetSpread(TEnum measureUnit);

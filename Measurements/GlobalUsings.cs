@@ -17,4 +17,4 @@ global using static CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementa
 global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.Extensions;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Statics.ExceptionMethods;
-global using static CsabaDu.FooVaria.BaseTypes.Measurables.Statics.MeasureUnitTypes;
+global using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;

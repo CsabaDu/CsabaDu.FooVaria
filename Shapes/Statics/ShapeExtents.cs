@@ -18,7 +18,7 @@ public static class ShapeExtents
         #region Local methods
         IExtent getCircleDiagonal(ICircle circle)
         {
-            ValidateMeasureUnit(extentUnit, nameof(extentUnit));
+            ValidateMeasureUnitByDefinition(extentUnit, nameof(extentUnit));
 
             IMeasure radius = circle.Radius;
             decimal quantity = radius.GetDefaultQuantity() * 2;
@@ -50,7 +50,7 @@ public static class ShapeExtents
         IExtent getRectangularShapeDiagonal<T>(T shape)
             where T : class, IShape, IRectangularShape
         {
-            ValidateMeasureUnit(extentUnit, nameof(extentUnit));
+            ValidateMeasureUnitByDefinition(extentUnit, nameof(extentUnit));
 
             IEnumerable<ShapeExtentCode> shapeExtentCodes = shape.GetShapeExtentCodes();
             int i = 0;
@@ -96,7 +96,7 @@ public static class ShapeExtents
     {
         // Method?
         //NullChecked(circle, nameof(circle)).ValidateShapeComponent(tangentRectangleSide, nameof(tangentRectangleSide));
-        ValidateMeasureUnit(extentUnit, nameof(extentUnit));
+        ValidateMeasureUnitByDefinition(extentUnit, nameof(extentUnit));
 
         decimal sideQuantitySquare = GetDefaultQuantitySquare(tangentRectangleSide);
         IExtent diagonal = circle.GetDiagonal();

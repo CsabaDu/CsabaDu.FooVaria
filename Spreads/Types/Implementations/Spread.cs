@@ -26,7 +26,7 @@
 
         public override void ValidateMeasureUnit(Enum measureUnit, string paramName)
         {
-            MeasureUnitCode measureUnitCode = MeasureUnitTypes.GetMeasureUnitCode(measureUnit);
+            MeasureUnitCode measureUnitCode = GetMeasureUnitCode(measureUnit);
 
             if (IsValidMeasureUnitCode(measureUnitCode)) return;
 

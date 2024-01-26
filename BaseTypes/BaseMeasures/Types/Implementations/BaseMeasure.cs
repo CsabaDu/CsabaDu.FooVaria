@@ -25,7 +25,7 @@ namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations
         {
             if (other == null) return 1;
 
-            ValidateMeasureUnitCode(other.MeasureUnitCode, nameof(other));
+            ValidateMeasureUnitCodeByDefinition(other.MeasureUnitCode, nameof(other));
 
             return GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
         }
@@ -176,7 +176,7 @@ namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations
             decimal quantity = NullChecked(quantifiable, paramName).GetDefaultQuantity();
 
             ValidateQuantity(quantity, paramName);
-            ValidateMeasureUnitCode(quantifiable!.MeasureUnitCode, paramName);
+            ValidateMeasureUnitCodeByDefinition(quantifiable!.MeasureUnitCode, paramName);
         }
 
         public void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramName)

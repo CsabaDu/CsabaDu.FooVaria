@@ -106,13 +106,6 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         #endregion
     }
 
-    public LimitMode GetLimitMode(ILimitedRate limitedRate)
-    {
-        ILimit limit = NullChecked(limitedRate, nameof(limitedRate)).Limit;
-
-        return limit.LimitMode;
-    }
-
     public ILimitedRate GetNew(ILimitedRate other)
     {
         return GetFactory().CreateNew(other);
@@ -121,11 +114,6 @@ internal sealed class LimitedRate : Rate, ILimitedRate
     public bool? Includes(ILimitable limitable)
     {
         return Limit.Includes(limitable);
-    }
-
-    public void ValidateLimitMode(LimitMode limitMode)
-    {
-        Limit.ValidateLimitMode(limitMode);
     }
 
     #region Override methods
@@ -156,7 +144,7 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         return Limit.GetDefaultQuantity();
     }
 
-    public override object GetQuantity(TypeCode quantityTypeCode)
+    public LimitMode GetLimitMode(ILimitedRate limiter)
     {
         throw new NotImplementedException();
     }

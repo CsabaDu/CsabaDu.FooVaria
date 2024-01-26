@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measures.Factories.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
+
+namespace CsabaDu.FooVaria.Measures.Factories.Implementations;
 
 public sealed class MeasureFactory : IMeasureFactory
 {
@@ -84,7 +86,7 @@ public sealed class MeasureFactory : IMeasureFactory
         object convertQuantity()
         {
             Type quantityType = NullChecked(quantity, nameof(quantity)).GetType();
-            MeasureUnitCode measureUnitCode = MeasureUnitTypes.GetMeasureUnitCode(measureUnit);
+            MeasureUnitCode measureUnitCode = Measurable.GetMeasureUnitCode(measureUnit);
             TypeCode quantityTypeCode = measureUnitCode.GetQuantityTypeCode();
 
             if (quantityTypeCode == Type.GetTypeCode(quantityType)) return quantity;
