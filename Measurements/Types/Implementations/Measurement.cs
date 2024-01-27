@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
-
-namespace CsabaDu.FooVaria.Measurements.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Measurements.Types.Implementations;
 
 internal abstract class Measurement : BaseMeasurement, IMeasurement
 {
@@ -101,14 +99,14 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
 
     public IDictionary<string, object> GetMeasureUnitCollection()
     {
-        IEnumerable<object> validMeasureUnits = MeasureUnits.GetValidMeasureUnits();
+        IEnumerable<object> validMeasureUnits = GetValidMeasureUnits();
 
         return GetMeasureUnitCollection(validMeasureUnits, CustomNameCollection);
     }
 
     public IEnumerable<object> GetValidMeasureUnits(MeasureUnitCode measureUnitCode)
     {
-        return MeasureUnits.GetValidMeasureUnits().Where(x => x.GetType().Equals(measureUnitCode.GetMeasureUnitType()));
+        return GetValidMeasureUnits().Where(x => x.GetType().Equals(measureUnitCode.GetMeasureUnitType()));
     }
 
     public void RestoreCustomNameCollection() // TODO

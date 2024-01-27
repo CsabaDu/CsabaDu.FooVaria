@@ -1,4 +1,5 @@
 ﻿global using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types;
+global using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;
 global using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types;
 global using CsabaDu.FooVaria.BaseTypes.BaseRates.Behaviors;
 global using CsabaDu.FooVaria.BaseTypes.BaseRates.Factories;
@@ -18,7 +19,7 @@ global using CsabaDu.FooVaria.Proportions.Factories;
 global using CsabaDu.FooVaria.Proportions.Types;
 global using CsabaDu.FooVaria.Proportions.Types.Implementations;
 global using System.Diagnostics.CodeAnalysis;
-global using static CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Statics.MeasureUnits;
+global using static CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations.BaseMeasurement;
 global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.BaseTypes.Quantifiables.Statics.ExceptionMethods;

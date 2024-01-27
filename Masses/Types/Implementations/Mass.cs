@@ -156,7 +156,7 @@
         {
             if (context is MeasureUnitCode measureUnitCode) return hasMeasureUnitCode(measureUnitCode);
 
-            return IsValidMeasureUnit(context) && hasMeasureUnitCode(GetMeasureUnitCode(context!));
+            return BaseMeasurement.IsValidMeasureUnit(context) && hasMeasureUnitCode(GetMeasureUnitCode(context!));
 
             #region Local methods
             bool hasMeasureUnitCode(MeasureUnitCode measureUnitCode)
