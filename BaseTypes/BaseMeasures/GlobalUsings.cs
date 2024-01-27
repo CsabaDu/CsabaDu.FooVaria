@@ -19,4 +19,5 @@ global using System.Diagnostics.CodeAnalysis;
 global using static CsabaDu.FooVaria.BaseTypes.BaseMeasures.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Statics.ExceptionMethods;
-global using static CsabaDu.FooVaria.BaseTypes.Quantifiables.Statics.QuantityTypes;
+global using static CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations.BaseMeasurement;
+global using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;

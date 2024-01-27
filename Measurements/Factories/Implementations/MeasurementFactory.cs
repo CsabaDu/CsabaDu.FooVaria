@@ -1,4 +1,5 @@
-﻿using CsabaDu.FooVaria.Measurements.Types.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
+using CsabaDu.FooVaria.Measurements.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Measurements.Factories.Implementations;
 

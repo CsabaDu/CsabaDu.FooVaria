@@ -22,7 +22,7 @@ public sealed class BulkBodyFactory : SpreadFactory<IBulkBody, IVolume, VolumeUn
 
     public override IBulkBody Create(params IExtent[] shapeExtents)
     {
-        IVolume volume = SpreadMeasures.GetVolume(MeasureFactory, shapeExtents);
+        IVolume volume = GetVolume(MeasureFactory, shapeExtents);
 
         return Create(volume);
     }

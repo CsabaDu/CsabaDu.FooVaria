@@ -36,7 +36,7 @@
         #region Sealed methods
         public override sealed T CreateBaseSpread(ISpreadMeasure spreadMeasure)
         {
-            if (SpreadMeasures.GetValidSpreadMeasure(spreadMeasure) is TSMeasure measure) return Create(measure);
+            if (GetValidSpreadMeasure(spreadMeasure) is TSMeasure measure) return Create(measure);
 
             throw ArgumentTypeOutOfRangeException(nameof(spreadMeasure), spreadMeasure);
         }

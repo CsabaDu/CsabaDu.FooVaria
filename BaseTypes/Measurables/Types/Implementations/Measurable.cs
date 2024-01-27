@@ -10,11 +10,29 @@ public abstract class Measurable : CommonBase, IMeasurable
     }
     #endregion
 
+    #region Constants
+    public const string DefaultCustomMeasureUnitDefaultName = "Default";
+    #endregion
+
     #region Constructors
+    #region Static constructor
     static Measurable()
     {
+        MeasureUnitTypeSet = new HashSet<Type>()
+        {
+            typeof(AreaUnit),
+            typeof(Currency),
+            typeof(DistanceUnit),
+            typeof(ExtentUnit),
+            typeof(TimePeriodUnit),
+            typeof(Pieces),
+            typeof(VolumeUnit),
+            typeof(WeightUnit),
+        };
+        MeasureUnitCodes = Enum.GetValues<MeasureUnitCode>();
         MeasureUnitTypeCollection = InitMeasureUnitTypeCollection();
     }
+    #endregion
 
     protected Measurable(IMeasurableFactory factory, MeasureUnitCode measureUnitCode) : base(factory)
     {
@@ -44,23 +62,12 @@ public abstract class Measurable : CommonBase, IMeasurable
 
     #region Properties
     public MeasureUnitCode MeasureUnitCode { get; init; }
-    private static IDictionary<MeasureUnitCode, Type> MeasureUnitTypeCollection { get; }
 
-    private static readonly HashSet<Type> MeasureUnitTypeSet = new()
-    {
-        typeof(AreaUnit),
-        typeof(Currency),
-        typeof(DistanceUnit),
-        typeof(ExtentUnit),
-        typeof(TimePeriodUnit),
-        typeof(Pieces),
-        typeof(VolumeUnit),
-        typeof(WeightUnit),
-    };
-    private static readonly IEnumerable<MeasureUnitCode> MeasureUnitCodes = Enum.GetValues<MeasureUnitCode>();
-    public const string DefaultCustomMeasureUnitDefaultName = "Default";
-
-
+    #region Static properties
+    public static IDictionary<MeasureUnitCode, Type> MeasureUnitTypeCollection { get; }
+    public static ISet<Type> MeasureUnitTypeSet { get; }
+    public static IEnumerable<MeasureUnitCode> MeasureUnitCodes { get; }
+    #endregion
     #endregion
 
     #region Public methods
@@ -77,11 +84,6 @@ public abstract class Measurable : CommonBase, IMeasurable
     public Type GetMeasureUnitType()
     {
         return MeasureUnitTypeCollection[MeasureUnitCode];
-    }
-
-    public virtual TypeCode GetQuantityTypeCode()
-    {
-        return MeasureUnitCode.GetQuantityTypeCode();
     }
 
     public bool HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
@@ -118,6 +120,11 @@ public abstract class Measurable : CommonBase, IMeasurable
         return MeasureUnitCodes;
     }
 
+    public virtual TypeCode GetQuantityTypeCode()
+    {
+        return MeasureUnitCode.GetQuantityTypeCode();
+    }
+
     public virtual void ValidateMeasureUnit(Enum measureUnit, string paramName)
     {
         ValidateMeasureUnitByDefinition(measureUnit, paramName);
@@ -132,21 +139,8 @@ public abstract class Measurable : CommonBase, IMeasurable
     #region Abstract methods
     public abstract Enum GetMeasureUnit();
     #endregion
-    #endregion
 
-    #region Protected methods
     #region Static methods
-    protected static TSelf GetDefault<TSelf>(TSelf measurable) where TSelf : class, IMeasurable, IDefaultMeasurable
-    {
-        MeasureUnitCode measureUnitCode = measurable.MeasureUnitCode;
-
-        return (TSelf)measurable.GetDefault(measureUnitCode)!;
-    }
-    #endregion
-    #endregion
-
-
-    #region Public methods
     public static Enum GetMeasureUnit(MeasureUnitCode measureUnitCode, int value)
     {
         Type measureUnitType = GetMeasureUnitType(measureUnitCode);
@@ -172,11 +166,6 @@ public abstract class Measurable : CommonBase, IMeasurable
         }
 
         return allMeasureUnits;
-    }
-
-    public static IDictionary<MeasureUnitCode, Type> GetMeasureUnitTypeCollection()
-    {
-        return MeasureUnitTypeCollection;
     }
 
     public static Enum GetDefaultMeasureUnit(Type measureUnitType)
@@ -218,17 +207,7 @@ public abstract class Measurable : CommonBase, IMeasurable
 
         Type measureUnitType = measureUnit.GetType();
 
-        return GetMeasureUnitTypeCollection().First(x => x.Value == measureUnitType).Key;
-    }
-
-    //public static IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
-    //{
-    //    return Enum.GetValues<MeasureUnitCode>();
-    //}
-
-    public static IEnumerable<Type> GetMeasureUnitTypes()
-    {
-        return MeasureUnitTypeSet;
+        return MeasureUnitTypeCollection.First(x => x.Value == measureUnitType).Key;
     }
 
     public static MeasureUnitCode GetMeasureUnitCode(Enum measureUnit)
@@ -256,7 +235,6 @@ public abstract class Measurable : CommonBase, IMeasurable
             && measureUnitCode == GetMeasureUnitCode(measureUnit!);
     }
 
-
     public static bool IsDefaultMeasureUnit(Enum measureUnit)
     {
         return IsDefinedMeasureUnit(measureUnit)
@@ -269,7 +247,7 @@ public abstract class Measurable : CommonBase, IMeasurable
 
         Type measureUnitType = measureUnit.GetType();
 
-        return GetMeasureUnitTypes().Contains(measureUnitType)
+        return MeasureUnitTypeSet.Contains(measureUnitType)
             && Enum.IsDefined(measureUnitType, measureUnit);
     }
 
@@ -335,10 +313,25 @@ public abstract class Measurable : CommonBase, IMeasurable
         throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
     }
     #endregion
+    #endregion
+
+    #region Protected methods
+    #region Static methods
+    protected static TSelf GetDefault<TSelf>(TSelf measurable) where TSelf : class, IMeasurable, IDefaultMeasurable
+    {
+        MeasureUnitCode measureUnitCode = measurable.MeasureUnitCode;
+
+        return (TSelf)measurable.GetDefault(measureUnitCode)!;
+    }
+    #endregion
+    #endregion
 
     #region Private methods
+    #region Static methods
     private static IDictionary<MeasureUnitCode, Type> InitMeasureUnitTypeCollection()
     {
+        if (MeasureUnitCodes.Count() != MeasureUnitTypeSet.Count) throw new InvalidOperationException(null);
+
         return initMeasureUnitTypeCollection().ToDictionary(x => x.Key, x => x.Value);
 
         #region Local methods
@@ -354,5 +347,5 @@ public abstract class Measurable : CommonBase, IMeasurable
         #endregion
     }
     #endregion
-
+    #endregion
 }

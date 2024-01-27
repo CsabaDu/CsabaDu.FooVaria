@@ -24,11 +24,6 @@ internal abstract class Shape : BaseShape, IShape
     #endregion
 
     #region Public methods
-    //public override sealed IBaseShape? GetBaseShape(params IShapeComponent[] shapeComponents)
-    //{
-    //    return GetFactory().CreateBaseShape(shapeComponents);
-    //}
-
     public override void ValidateBaseShapeComponent(IQuantifiable baseShapeComponent, string paramName)
     {
         throw new NotImplementedException();
@@ -51,7 +46,7 @@ internal abstract class Shape : BaseShape, IShape
 
     public IExtent GetDiagonal(ExtentUnit extentUnit)
     {
-        return ShapeExtents.GetDiagonal(this, extentUnit);
+        return GetDiagonal(this, extentUnit);
     }
 
     public IExtent GetDiagonal()
@@ -113,11 +108,6 @@ internal abstract class Shape : BaseShape, IShape
         return GetDimensions().OrderBy(x => x);
     }
 
-    //public bool IsValidShapeComponentOf(IBaseShape baseShape)
-    //{
-    //    return baseShape?.GetShapeComponents() is IEnumerable<IShape>;
-    //}
-
     public bool IsValidShapeExtentCode(ShapeExtentCode shapeExtentCode)
     {
         return GetShapeExtentCodes().Contains(shapeExtentCode);
@@ -125,28 +115,29 @@ internal abstract class Shape : BaseShape, IShape
 
     public bool TryGetShapeExtentCode(IExtent shapeExtent, [NotNullWhen(true)] out ShapeExtentCode? shapeExtentCode)
     {
-        _ = NullChecked(shapeExtent, nameof(shapeExtent));
-
-        for (int i = 0; i < GetShapeComponentCount(); i++)
-        {
-            if (GetShapeExtents().ElementAt(i).Equals(shapeExtent))
-            {
-                shapeExtentCode = GetShapeExtentCodes().ElementAt(i);
-
-                return true;
-            }
-        }
-
         shapeExtentCode = null;
 
-        return false;
+        if (shapeExtent != null || !GetShapeExtents().Contains(shapeExtent)) return false;
+
+        shapeExtentCode = GetShapeExtentCodes().FirstOrDefault(x => this[x] == shapeExtent);
+
+        return true;
     }
 
-    public void ValidateShapeExtentCount(int count, string name)
+    public void ValidateShapeExtent(IExtent? shapeExtent, string paramName)
+    {
+        decimal quantity =  NullChecked(shapeExtent, paramName).GetDecimalQuantity();
+
+        if (quantity > 0) return;
+
+        throw QuantityArgumentOutOfRangeException(paramName, quantity);
+    }
+
+    public void ValidateShapeExtentCount(int count, string paramName)
     {
         if (count == GetShapeComponentCount()) return;
 
-        throw QuantityArgumentOutOfRangeException(name, count);
+        throw QuantityArgumentOutOfRangeException(paramName, count);
     }
 
     public void ValidateShapeExtents(IEnumerable<IExtent> shapeExtents, string paramName)
@@ -155,9 +146,9 @@ internal abstract class Shape : BaseShape, IShape
 
         ValidateShapeExtentCount(count, paramName);
 
-        foreach (IExtent item in shapeExtents) // TODO
+        foreach (IExtent item in shapeExtents)
         {
-            //ValidateShapeComponent(item, paramName);
+            ValidateShapeExtent(item, paramName);
         }
     }
 
@@ -334,6 +325,120 @@ internal abstract class Shape : BaseShape, IShape
         return GetFactory().TangentShapeFactory;
     }
     #endregion
+
+    #region Static methods
+    public static IExtent GetDiagonal(IShape shape, ExtentUnit extentUnit = default)
+    {
+        return NullChecked(shape, nameof(shape)) switch
+        {
+            Circle circle => getCircleDiagonal(circle),
+            Cuboid cuboid => getCuboidDiagonal(cuboid),
+            Cylinder cylinder => getCylinderDiagonal(cylinder),
+            Rectangle rectangle => getRectangleDiagonal(rectangle),
+
+            _ => throw new InvalidOperationException(null)
+        };
+
+        #region Local methods
+        IExtent getCircleDiagonal(ICircle circle)
+        {
+            ValidateMeasureUnitByDefinition(extentUnit, nameof(extentUnit));
+
+            IMeasure radius = circle.Radius;
+            decimal quantity = radius.GetDefaultQuantity() * 2;
+            quantity = IsDefaultMeasureUnit(extentUnit) ?
+                quantity
+                : quantity / GetExchangeRate(extentUnit);
+
+
+            return (IExtent)radius.GetBaseMeasure(extentUnit, quantity);
+        }
+
+        IExtent getCuboidDiagonal(ICuboid cuboid)
+        {
+            return getRectangularShapeDiagonal(cuboid);
+        }
+
+        IExtent getCylinderDiagonal(ICylinder cylinder)
+        {
+            IRectangle verticalProjection = cylinder.GetVerticalProjection();
+
+            return getRectangleDiagonal(verticalProjection);
+        }
+
+        IExtent getRectangleDiagonal(IRectangle rectangle)
+        {
+            return getRectangularShapeDiagonal(rectangle);
+        }
+
+        IExtent getRectangularShapeDiagonal<T>(T shape)
+            where T : class, IShape, IRectangularShape
+        {
+            ValidateMeasureUnitByDefinition(extentUnit, nameof(extentUnit));
+
+            IEnumerable<ShapeExtentCode> shapeExtentCodes = shape.GetShapeExtentCodes();
+            int i = 0;
+            decimal quantitySquares = getDefaultQuantitySquare();
+
+            for (i = 1; i < shapeExtentCodes.Count(); i++)
+            {
+                quantitySquares += getDefaultQuantitySquare();
+            }
+
+            double quantity = GetExchangedQuantitySqrt(shape, extentUnit, quantitySquares);
+            IExtent edge = getShapeExtent();
+
+            return edge.GetMeasure(extentUnit, quantity);
+
+            #region Local methods
+            IExtent getShapeExtent()
+            {
+                return shape.GetShapeExtent(shapeExtentCodes.ElementAt(i));
+            }
+
+            decimal getDefaultQuantitySquare()
+            {
+                IExtent shapeExtent = getShapeExtent();
+
+                return GetDefaultQuantitySquare(shapeExtent);
+            }
+            #endregion
+        }
+        #endregion
+    }
+
+    public static IExtent GetInnerTangentRectangleSide(ICircle circle, ExtentUnit extentUnit = default)
+    {
+        IExtent diagonal = NullChecked(circle, nameof(circle)).GetDiagonal();
+        decimal quantitySquare = GetDefaultQuantitySquare(diagonal) / 2;
+        double quantity = GetExchangedQuantitySqrt(circle, extentUnit, quantitySquare);
+
+        return diagonal.GetMeasure(extentUnit, quantity);
+    }
+
+    public static IExtent GetInnerTangentRectangleSide(ICircle circle, IExtent tangentRectangleSide, ExtentUnit extentUnit = default)
+    {
+        // Method?
+        //NullChecked(circle, nameof(circle)).ValidateShapeComponent(tangentRectangleSide, nameof(tangentRectangleSide));
+        ValidateMeasureUnitByDefinition(extentUnit, nameof(extentUnit));
+
+        decimal sideQuantitySquare = GetDefaultQuantitySquare(tangentRectangleSide);
+        IExtent diagonal = circle.GetDiagonal();
+        double quantity;
+
+        if (tangentRectangleSide.CompareTo(diagonal) <= 0)
+        {
+            quantity = tangentRectangleSide.GetQuantity();
+
+            throw QuantityArgumentOutOfRangeException(nameof(tangentRectangleSide), quantity);
+        }
+
+        decimal quantitySquare = GetDefaultQuantitySquare(diagonal) - sideQuantitySquare;
+        quantity = GetExchangedQuantitySqrt(circle, extentUnit, quantitySquare);
+
+        return diagonal.GetMeasure(extentUnit, quantity);
+    }
+    #endregion
     #endregion
 
     #region Protected methods
@@ -370,6 +475,23 @@ internal abstract class Shape : BaseShape, IShape
         }
 
         return comparison;
+    }
+
+    private static decimal GetDefaultQuantitySquare(IExtent extent)
+    {
+        decimal quantity = extent.GetDefaultQuantity();
+
+        return quantity * quantity;
+    }
+
+    private static double GetExchangedQuantitySqrt(IShape shape, ExtentUnit extentUnit, decimal quantitySquare)
+    {
+        double quantity = decimal.ToDouble(quantitySquare);
+        quantity = Math.Sqrt(quantity);
+
+        return IsDefaultMeasureUnit(extentUnit) ?
+            quantity
+            : quantity / decimal.ToDouble(GetExchangeRate(extentUnit));
     }
 
     private static void ValidateDecimalQuantity(decimal quantity, string name)

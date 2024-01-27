@@ -9,4 +9,4 @@ global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Factories;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
 global using System.ComponentModel;
 global using System.Diagnostics.CodeAnalysis;
-global using static CsabaDu.FooVaria.BaseTypes.Quantifiables.Statics.QuantityTypes;
+global using static CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.Implementations.Quantifiable;

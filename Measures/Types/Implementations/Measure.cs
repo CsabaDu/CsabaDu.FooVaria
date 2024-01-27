@@ -151,7 +151,7 @@
         {
             Type quantityType = NullChecked(quantity, paramName).GetType();
 
-            if (QuantityTypes.GetQuantityTypes().Contains(quantityType)) return;
+            if (QuantityTypeSet.Contains(quantityType)) return;
 
             throw ArgumentTypeOutOfRangeException(paramName, quantity!);
         }

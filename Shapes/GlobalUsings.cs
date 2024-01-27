@@ -18,14 +18,14 @@ global using CsabaDu.FooVaria.Measures.Types;
 global using CsabaDu.FooVaria.Shapes.Behaviors;
 global using CsabaDu.FooVaria.Shapes.Enums;
 global using CsabaDu.FooVaria.Shapes.Factories;
-global using CsabaDu.FooVaria.Shapes.Statics;
 global using CsabaDu.FooVaria.Shapes.Types;
 global using CsabaDu.FooVaria.Shapes.Types.Implementations;
 global using CsabaDu.FooVaria.Spreads.Factories;
 global using CsabaDu.FooVaria.Spreads.Types;
 global using System.Diagnostics.CodeAnalysis;
+global using static CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations.BaseMeasurement;
 global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Statics.ExceptionMethods;
-global using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;
 global using static CsabaDu.FooVaria.BaseTypes.Quantifiables.Statics.ExceptionMethods;
-global using static CsabaDu.FooVaria.Shapes.Statics.ExceptionMethods; // ??
+global using static CsabaDu.FooVaria.Shapes.Statics.ExceptionMethods;
+global using static CsabaDu.FooVaria.Shapes.Types.Implementations.Shape;

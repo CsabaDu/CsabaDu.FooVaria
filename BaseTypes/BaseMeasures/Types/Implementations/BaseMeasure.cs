@@ -39,7 +39,7 @@ namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations
         {
             if (!IsExchangeableTo(measureUnit)) return null;
 
-            decimal exchangeRate = GetExchangeRate(measureUnit);
+            decimal exchangeRate = BaseMeasurement.GetExchangeRate(measureUnit);
 
             if (GetRateComponentCode() == RateComponentCode.Limit && GetDefaultQuantity() % exchangeRate > 0) return null; // ???
 
@@ -76,12 +76,12 @@ namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations
             return baseMeasurement.GetExchangeRate();
         }
 
-        public decimal GetExchangeRate(Enum measureUnit)
-        {
-            IBaseMeasurement baseMeasurement = GetBaseMeasurement();
+        //public decimal GetExchangeRate(Enum measureUnit)
+        //{
+        //    IBaseMeasurement baseMeasurement = GetBaseMeasurement();
 
-            return baseMeasurement.GetExchangeRate(measureUnit);
-        }
+        //    return baseMeasurement.GetExchangeRate(measureUnit);
+        //}
 
         public object GetQuantity(RoundingMode roundingMode)
         {

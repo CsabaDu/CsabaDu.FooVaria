@@ -30,7 +30,7 @@ public static class Extensions
     {
         Type quantityType = quantity.GetType();
 
-        if (!GetQuantityTypes().Contains(quantityType)) return null;
+        if (!QuantityTypeSet.Contains(quantityType)) return null;
 
         TypeCode quantityTypeCode = Type.GetTypeCode(quantityType);
 
@@ -103,7 +103,7 @@ public static class Extensions
     {
         Type quantityType = quantity.GetType();
 
-        return GetQuantityTypes().Contains(quantityType);
+        return QuantityTypeSet.Contains(quantityType);
     }
     #endregion
 

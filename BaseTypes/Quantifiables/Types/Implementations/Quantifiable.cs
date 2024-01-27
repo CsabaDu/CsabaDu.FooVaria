@@ -2,7 +2,26 @@
 
 public abstract class Quantifiable : Measurable, IQuantifiable
 {
+    #region Constants
+    private const int QuantityRoundingDecimals = 8;
+    #endregion
+
     #region Constructors
+    #region Static constructor
+    static Quantifiable()
+    {
+        QuantityTypeSet = new HashSet<Type>()
+        {
+            typeof(int),
+            typeof(uint),
+            typeof(long),
+            typeof(ulong),
+            typeof(double),
+            typeof(decimal),
+        };
+    }
+    #endregion
+
     protected Quantifiable(IQuantifiable other) : base(other)
     {
     }
@@ -26,6 +45,12 @@ public abstract class Quantifiable : Measurable, IQuantifiable
     protected Quantifiable(IQuantifiableFactory factory, MeasureUnitCode measureUnitCode, params IQuantifiable[] quantifiables) : base(factory, measureUnitCode, quantifiables)
     {
     }
+    #endregion
+
+    #region Properties
+    #region Static properties
+    public static ISet<Type> QuantityTypeSet { get; }
+    #endregion
     #endregion
 
     #region Public methods
@@ -53,6 +78,26 @@ public abstract class Quantifiable : Measurable, IQuantifiable
     public abstract decimal GetDefaultQuantity();
     public abstract void ValidateQuantity(ValueType? quantity, string paramName);
     #endregion
+
+    #region Static methods
+    public static decimal RoundQuantity(decimal quantity)
+    {
+        return decimal.Round(quantity, QuantityRoundingDecimals);
+    }
+
+    public static double RoundQuantity(double quantity)
+    {
+        return Math.Round(quantity, QuantityRoundingDecimals);
+    }
+
+    public static IEnumerable<TypeCode> GetQuantityTypeCodes()
+    {
+        foreach (Type item in QuantityTypeSet)
+        {
+            yield return Type.GetTypeCode(item);
+        }
+    }
+    #endregion
     #endregion
 
     #region Protected methods
@@ -69,7 +114,7 @@ public abstract class Quantifiable : Measurable, IQuantifiable
     {
         Type? quantityType = quantity?.GetType();
 
-        return GetQuantityTypes().Any(x => x == quantityType) ?
+        return QuantityTypeSet.Any(x => x == quantityType) ?
             Type.GetTypeCode(quantityType)
             : null;
     }

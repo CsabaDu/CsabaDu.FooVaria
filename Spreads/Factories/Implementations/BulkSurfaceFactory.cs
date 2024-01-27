@@ -22,7 +22,7 @@ public sealed class BulkSurfaceFactory : SpreadFactory<IBulkSurface, IArea, Area
 
     public override IBulkSurface Create(params IExtent[] shapeExtents)
     {
-        IArea area = SpreadMeasures.GetArea(MeasureFactory, shapeExtents);
+        IArea area = GetArea(MeasureFactory, shapeExtents);
 
         return Create(area);
     }

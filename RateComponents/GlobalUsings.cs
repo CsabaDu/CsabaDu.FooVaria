@@ -17,5 +17,4 @@ global using CsabaDu.FooVaria.RateComponents.Types.Implementations;
 global using System.Diagnostics.CodeAnalysis;
 global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.BaseTypes.Quantifiables.Statics.ExceptionMethods;
-global using static CsabaDu.FooVaria.BaseTypes.Quantifiables.Statics.QuantityTypes;
 

@@ -21,14 +21,14 @@ public sealed class CircleFactory : PlaneShapeFactory, ICircleFactory
 
     public IRectangle CreateInnerTangentShape(ICircle circle, IExtent tangentRectangleSide)
     {
-        IExtent otherSide = ShapeExtents.GetInnerTangentRectangleSide(circle, tangentRectangleSide);
+        IExtent otherSide = GetInnerTangentRectangleSide(circle, tangentRectangleSide);
 
         return CreateTangentShape(this, tangentRectangleSide, otherSide);
     }
 
     public IRectangle CreateInnerTangentShape(ICircle circle)
     {
-        IExtent side = ShapeExtents.GetInnerTangentRectangleSide(circle);
+        IExtent side = GetInnerTangentRectangleSide(circle);
 
         return CreateTangentShape(this, side, side);
     }
