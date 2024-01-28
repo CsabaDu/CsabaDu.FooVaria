@@ -26,6 +26,8 @@ global using System.Diagnostics.CodeAnalysis;
 global using static CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations.BaseMeasurement;
 global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Statics.ExceptionMethods;
+global using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;
 global using static CsabaDu.FooVaria.BaseTypes.Quantifiables.Statics.ExceptionMethods;
+global using static CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.Implementations.Quantifiable;
 global using static CsabaDu.FooVaria.Shapes.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.Shapes.Types.Implementations.Shape;

@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Measures.Factories;
-
-namespace CsabaDu.FooVaria.Shapes.Factories.Implementations;
+﻿namespace CsabaDu.FooVaria.Shapes.Factories.Implementations;
 
 public abstract class ShapeFactory : IShapeFactory
 {

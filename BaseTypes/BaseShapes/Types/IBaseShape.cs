@@ -3,9 +3,9 @@
 public interface IBaseShape : IBaseSpread, IShapeComponentCount, IFit<IBaseShape>, IShapeComponents
 {
     IBaseShape? GetBaseShape(params IShapeComponent[] shapeComponents);
-    IQuantifiable? GetValidBaseShapeComponent(IShapeComponent shapeComponent);
+    //IQuantifiable? GetValidShapeComponent(IShapeComponent shapeComponent);
 
-    void ValidateBaseShapeComponent(IQuantifiable shapeComponent, string paramName);
+    void ValidateShapeComponent(IQuantifiable shapeComponent, string paramName);
 }
 
 

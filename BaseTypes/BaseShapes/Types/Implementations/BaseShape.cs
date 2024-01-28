@@ -60,10 +60,10 @@ public abstract class BaseShape : BaseSpread, IBaseShape
     #region Abstract methods
     public abstract int CompareTo(IBaseShape? other);
     public abstract bool? FitsIn(IBaseShape? other, LimitMode? limitMode);
-    public abstract void ValidateBaseShapeComponent(IQuantifiable baseShapeComponent, string paramName);
-    public abstract IQuantifiable? GetValidBaseShapeComponent(IShapeComponent baseShapeComponent);
+    public abstract void ValidateShapeComponent(IQuantifiable shapeComponent, string paramName);
+    public abstract IShapeComponent? GetValidShapeComponent(IQuantifiable? shapeComponent);
     public abstract IEnumerable<IShapeComponent> GetShapeComponents();
-    public abstract IBaseShape? GetBaseShape(params IShapeComponent[] baseShapeComponents);
+    public abstract IBaseShape? GetBaseShape(params IShapeComponent[] shapeComponents);
     #endregion
     #endregion
 

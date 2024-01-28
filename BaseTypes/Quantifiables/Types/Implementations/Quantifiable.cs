@@ -80,6 +80,13 @@ public abstract class Quantifiable : Measurable, IQuantifiable
     #endregion
 
     #region Static methods
+    public static decimal GetDefaultQuantitySquare(IQuantifiable quantifiable)
+    {
+        decimal quantity = NullChecked(quantifiable, nameof(quantifiable)).GetDefaultQuantity();
+
+        return quantity * quantity;
+    }
+
     public static decimal RoundQuantity(decimal quantity)
     {
         return decimal.Round(quantity, QuantityRoundingDecimals);

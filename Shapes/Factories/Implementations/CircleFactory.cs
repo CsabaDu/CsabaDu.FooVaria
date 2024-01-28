@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Shapes.Factories.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
+using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
+
+namespace CsabaDu.FooVaria.Shapes.Factories.Implementations;
 
 public sealed class CircleFactory : PlaneShapeFactory, ICircleFactory
 {
@@ -21,14 +24,25 @@ public sealed class CircleFactory : PlaneShapeFactory, ICircleFactory
 
     public IRectangle CreateInnerTangentShape(ICircle circle, IExtent tangentRectangleSide)
     {
-        IExtent otherSide = GetInnerTangentRectangleSide(circle, tangentRectangleSide);
+        IExtent diagonal = NullChecked(circle, nameof(circle)).GetDiagonal();
+
+        if (tangentRectangleSide.CompareTo(diagonal) <= 0)
+        {
+            throw QuantityArgumentOutOfRangeException(nameof(tangentRectangleSide), tangentRectangleSide.GetQuantity());
+        }
+
+        decimal quantitySquare = GetDefaultQuantitySquare(tangentRectangleSide);
+        quantitySquare = GetDefaultQuantitySquare(diagonal) - quantitySquare;
+        IExtent otherSide = GetInnerTangentRectangleSide(diagonal, quantitySquare);
 
         return CreateTangentShape(this, tangentRectangleSide, otherSide);
     }
 
     public IRectangle CreateInnerTangentShape(ICircle circle)
     {
-        IExtent side = GetInnerTangentRectangleSide(circle);
+        IExtent diagonal = NullChecked(circle, nameof(circle)).GetDiagonal();
+        decimal quantitySquare = GetDefaultQuantitySquare(diagonal) / 2;
+        IExtent side = GetInnerTangentRectangleSide(diagonal, quantitySquare);
 
         return CreateTangentShape(this, side, side);
     }
@@ -52,6 +66,18 @@ public sealed class CircleFactory : PlaneShapeFactory, ICircleFactory
     public override IRectangleFactory GetTangentShapeFactory()
     {
         return (IRectangleFactory)TangentShapeFactory;
+    }
+    #endregion
+    #endregion
+
+    #region Private methods
+    #region Static methods
+    private static IExtent GetInnerTangentRectangleSide(IExtent diagonal, decimal quantitySquare)
+    {
+        double quantity = decimal.ToDouble(quantitySquare);
+        quantity = Math.Sqrt(quantity);
+
+        return diagonal.GetMeasure(default, quantity);
     }
     #endregion
     #endregion
