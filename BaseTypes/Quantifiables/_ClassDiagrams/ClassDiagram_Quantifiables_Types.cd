@@ -1,22 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Interface Name="CsabaDu.FooVaria.Quantifiables.Types.IQuantifiable" Collapsed="true" BaseTypeListCollapsed="true">
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.IQuantifiable" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="0.5" Y="1.75" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
       <FileName>Types\IQuantifiable.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.Measurables.Types.IMeasurable" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="0.5" Y="0.5" Width="1.25" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="CsabaDu.FooVaria.Quantifiables.Behaviors.IDefaultQuantity" Collapsed="true">
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IDefaultQuantity" Collapsed="true">
     <Position X="2" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
       <FileName>Behaviors\IDefaultQuantity.cs</FileName>
     </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Types.IMeasurable" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.25" />
+    <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

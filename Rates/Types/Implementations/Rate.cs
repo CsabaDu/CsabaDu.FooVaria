@@ -89,6 +89,18 @@ internal abstract class Rate : BaseRate, IRate
         return base.Equals(other);
     }
 
+    public bool Equals(IRate? x, IRate? y)
+    {
+        if (x == null && y == null) return true;
+
+        if (x == null || y == null) return false;
+
+        ILimit? xLimit = x.GetLimit();
+
+        return xLimit?.Equals(xLimit, y.GetLimit()) != false
+            && x.Equals(y);
+    }
+
     public IRate? ExchangeTo(IMeasurable context)
     {
         if (context is IMeasurement measurement) return exchangeToMeasurement(measurement);
@@ -130,9 +142,21 @@ internal abstract class Rate : BaseRate, IRate
         #endregion
     }
 
+    public int GetHashCode([DisallowNull] IRate rate)
+    {
+        return HashCode.Combine(rate.GetLimit(), rate.GetHashCode());
+    }
+
     public IRate GetRate(params IBaseMeasure[] rateComponents)
     {
         return GetFactory().Create(rateComponents);
+    }
+
+    public IBaseMeasure GetBaseMeasure(RateComponentCode rateComponentCode)
+    {
+        IBaseMeasure? rateComponent = this[rateComponentCode];
+            
+        return rateComponent ?? throw InvalidRateComponentCodeArgumentException(rateComponentCode);
     }
 
     public IRate GetRate(IBaseRate baseRate)
@@ -151,30 +175,17 @@ internal abstract class Rate : BaseRate, IRate
         #endregion
     }
 
-    public IBaseMeasure GetBaseMeasure(RateComponentCode rateComponentCode)
-    {
-        IBaseMeasure? rateComponent = this[rateComponentCode];
-            
-        return rateComponent ?? throw InvalidRateComponentCodeArgumentException(rateComponentCode);
-    }
-
     public bool IsExchangeableTo(IMeasurable? context)
     {
         return context switch
         {
             BaseRate baseRate => base.IsExchangeableTo(baseRate),
-            BaseMeasure => context is IBaseMeasure && isExchangeable(),
-            BaseMeasurement => isExchangeable(),
+
+            BaseMeasure or
+            BaseMeasurement => context!.HasMeasureUnitCode(MeasureUnitCode),
 
            _ => false,
         };
-
-        #region Local methods
-        bool isExchangeable()
-        {
-            return context!.HasMeasureUnitCode(MeasureUnitCode);
-        }
-        #endregion
     }
 
     public decimal ProportionalTo(IRate other)
@@ -250,23 +261,6 @@ internal abstract class Rate : BaseRate, IRate
 
         return (IDenominator)(factory.CreateDefault(denominatorMeasureUnitCode)
             ?? throw InvalidMeasureUnitCodeEnumArgumentException(denominatorMeasureUnitCode, nameof(denominatorMeasureUnitCode)));
-    }
-
-    public bool Equals(IRate? x, IRate? y)
-    {
-        if (x == null && y == null) return true;
-
-        if (x == null || y == null) return false;
-
-        ILimit? xLimit = x.GetLimit();
-
-        return xLimit?.Equals(xLimit, y.GetLimit()) != false
-            && x.Equals(y);
-    }
-
-    public int GetHashCode([DisallowNull] IRate rate)
-    {
-        return HashCode.Combine(rate.GetLimit(), rate.GetHashCode());
     }
     #endregion
 }

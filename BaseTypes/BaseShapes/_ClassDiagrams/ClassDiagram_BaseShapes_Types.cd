@@ -1,56 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Interface Name="CsabaDu.FooVaria.BaseShapes.Types.IBaseShape" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="2.5" Y="3" Width="1.5" />
-    <InheritanceLine Type="CsabaDu.FooVaria.Quantifiables.Behaviors.IFit&lt;TSelf&gt;" FixedFromPoint="true">
-      <Path>
-        <Point X="4.25" Y="1.062" />
-        <Point X="4.25" Y="2.7" />
-        <Point X="3.25" Y="2.7" />
-        <Point X="3.25" Y="3" />
-      </Path>
-    </InheritanceLine>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseShapes.Types.IBaseShape" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4.75" Y="1.75" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAEAAAAAAAAAIAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
       <FileName>Types\IBaseShape.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseShapes.Types.IComplexShape" Collapsed="true">
-    <Position X="2.5" Y="4.25" Width="1.5" />
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseShapes.Types.IComplexShape" Collapsed="true">
+    <Position X="4.5" Y="3" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Types\IComplexShape.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseSpreads.Types.IBaseSpread" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="2.5" Y="1.75" Width="1.5" />
-    <InheritanceLine Type="CsabaDu.FooVaria.Quantifiables.Behaviors.IFit&lt;TSelf&gt;" FixedFromPoint="true">
-      <Path>
-        <Point X="3.75" Y="1.062" />
-        <Point X="3.75" Y="1.375" />
-        <Point X="3.25" Y="1.375" />
-        <Point X="3.25" Y="1.75" />
-      </Path>
-    </InheritanceLine>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseSpreads.Types.IBaseSpread" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
+    <Position X="4.75" Y="0.5" Width="1.25" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IFit&lt;CsabaDu.FooVaria.BaseTypes.BaseSpreads.Types.IBaseSpread&gt;" IsHidden="true" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseShapes.Behaviors.IShapeComponentCount" Collapsed="true">
-    <Position X="4.5" Y="1.75" Width="2" />
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseShapes.Behaviors.IShapeComponentCount" Collapsed="true">
+    <Position X="2.5" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
       <FileName>Behaviors\IShapeComponentCount.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseShapes.Behaviors.IShapeComponents" Collapsed="true">
-    <Position X="0.5" Y="1.75" Width="1.75" />
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IFit&lt;TSelf&gt;" Collapsed="true">
+    <Position X="6.25" Y="0.5" Width="1.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseShapes.Behaviors.IShapeComponents" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAACAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Behaviors\IShapeComponents.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="CsabaDu.FooVaria.Quantifiables.Behaviors.IFit&lt;TSelf&gt;" Collapsed="true">
-    <Position X="3.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
