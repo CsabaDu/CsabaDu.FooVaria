@@ -110,7 +110,7 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
 
     public ICuboid RotateSpatially()
     {
-        return (ICuboid)GetSimpleShape(GetSortedDimensions().ToArray());
+        return (ICuboid)GetShape(GetSortedDimensions().ToArray());
     }
 
     public ICuboid RotateTo(IDryBody other)

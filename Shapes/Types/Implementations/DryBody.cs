@@ -36,7 +36,7 @@
 
         public IPlaneShape GetBaseFace(ExtentUnit extentUnit)
         {
-            return (IPlaneShape)GetBaseFace().GetSimpleShape(extentUnit);
+            return (IPlaneShape)GetBaseFace().GetShape(extentUnit);
         }
 
         public IBody GetBody()
@@ -97,7 +97,7 @@
 
         private protected DryBody(IDryBodyFactory factory, params IExtent[] shapeExtents) : base(factory, shapeExtents)
         {
-            BaseFace = (TBFace)GetSimpleShape(shapeExtents.SkipLast(1).ToArray());
+            BaseFace = (TBFace)GetShape(shapeExtents.SkipLast(1).ToArray());
         }
 
         private protected DryBody(IDryBodyFactory factory, TBFace baseFace, IExtent height) : base(factory, baseFace, height)

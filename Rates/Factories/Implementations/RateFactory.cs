@@ -2,13 +2,18 @@
 
 public abstract class RateFactory : IRateFactory
 {
-    public IDenominatorFactory DenominatorFactory { get; init; }
-
+    #region Constructors
     private protected RateFactory(IDenominatorFactory denominatorFactory)
     {
         DenominatorFactory = NullChecked(denominatorFactory, nameof(denominatorFactory));
     }
+    #endregion
 
+    #region Properties
+    public IDenominatorFactory DenominatorFactory { get; init; }
+    #endregion
+
+    #region Public methods
     public IBaseMeasure CreateBaseMeasure(Enum measureUnit, ValueType quantity)
     {
         return DenominatorFactory.Create(measureUnit, quantity);
@@ -48,49 +53,24 @@ public abstract class RateFactory : IRateFactory
         #endregion
     }
 
+    #region Abstract methods
     public abstract IRate Create(params IBaseMeasure[] rateComponents);
     public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement);
     public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit);
     public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitCode denominatorMeasureUnitCode);
     public abstract IRate CreateNew(IRate other);
+    #endregion
+    #endregion
 
-    protected static T GetValidRateParam<T>(IMeasurable measurable, string paramName) where T : class, IMeasurable
+    #region Protected methods
+    #region Static methods
+    protected static T GetValidRateParam<T>(IMeasurable measurable, string paramName)
+        where T : class, IMeasurable
     {
         if (measurable is T validRateComponent) return validRateComponent;
 
         throw ArgumentTypeOutOfRangeException(paramName, measurable);
     }
+    #endregion
+    #endregion
 }
-
-//{
-//    #region Constructors
-//    protected RateFactory(IDenominatorFactory denominatorFactory)
-//    {
-//        DenominatorFactory = NullChecked(denominatorFactory, nameof(denominatorFactory));
-//    }
-//    #endregion
-
-//    #region Properties
-//    public IDenominatorFactory DenominatorFactory { get; init; }
-//    #endregion
-
-//    #region Public methods
-//    #region Abstract methods
-//    public abstract IMeasurable CreateNew(IMeasurable other);
-//    public abstract IBaseRate CreateNew(IBaseMeasure numerator, MeasureUnitCode measureUnitCode);
-//    public abstract IBaseRate CreateNew(IBaseMeasure numerator, Enum denominatorMeasureUnit);
-//    public abstract IRate CreateNew(IRate other);
-
-//    public IBaseRate CreateNew(IBaseMeasure numerator, IMeasurable denominator)
-//    {
-//        throw new NotImplementedException();
-//    }
-
-//    //public IBaseRate CreateNew(MeasureUnitCode numeratorMeasureUnitCode, decimal defaultQuantity, MeasureUnitCode denominatorMeasureUnitCode)
-//    //{
-//    //    throw new NotImplementedException();
-//    //}
-//    //public abstract IBaseMeasurable CreateDefault(MeasureUnitCode measureUnitCode);
-//    #endregion
-//    #endregion
-//}

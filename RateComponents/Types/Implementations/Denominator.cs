@@ -1,4 +1,5 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
+﻿
+namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
 
 internal sealed class Denominator : RateComponent<IDenominator>, IDenominator
 {
@@ -92,6 +93,11 @@ internal sealed class Denominator : RateComponent<IDenominator>, IDenominator
     public IDenominator GetBaseMeasure(IBaseMeasure baseMeasure)
     {
         throw new NotImplementedException();
+    }
+
+    public IDenominator ConvertToLimitable(ILimiter limiter)
+    {
+        return ConvertToLimitable(this, limiter);
     }
     #endregion
     #endregion

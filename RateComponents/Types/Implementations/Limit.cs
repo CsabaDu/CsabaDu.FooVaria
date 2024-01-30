@@ -6,10 +6,7 @@ internal sealed class Limit : RateComponent<ILimit>, ILimit
     internal Limit(ILimitFactory factory, IMeasurement measurement, ulong quantity, LimitMode limitMode) : base(factory, measurement)
     {
         Quantity = quantity;
-
-        ValidateLimitMode(limitMode);
-
-        LimitMode = limitMode;
+        LimitMode = Defined(limitMode, nameof(limitMode));
     }
     #endregion
 
@@ -97,11 +94,9 @@ internal sealed class Limit : RateComponent<ILimit>, ILimit
         return GetQuantity(this);
     }
 
-    public bool? Includes(ILimitable limitable)
+    public bool? Includes(IBaseMeasure? limitable)
     {
-        if (limitable is not IBaseMeasure) return null;
-
-        return limitable.FitsIn(this);
+        return limitable?.FitsIn(this) ?? false;
     }
 
     #region Override methods
@@ -120,14 +115,9 @@ internal sealed class Limit : RateComponent<ILimit>, ILimit
         return LimitMode;
     }
 
-    public void ValidateLimitMode(LimitMode limitMode)
+    public LimitMode GetLimitMode(ILimiter limiter)
     {
-        throw new NotImplementedException();
-    }
-
-    public LimitMode GetLimitMode(ILimit limiter)
-    {
-        throw new NotImplementedException();
+        return NullChecked(limiter, nameof(limiter)).LimitMode;
     }
     #endregion
     #endregion

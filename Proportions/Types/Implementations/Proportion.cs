@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Proportions.Types.Implementations
+﻿
+using CsabaDu.FooVaria.BaseTypes.Common.Statics;
+
+namespace CsabaDu.FooVaria.Proportions.Types.Implementations
 {
     internal abstract class Proportion : BaseRate, IProportion
     {
@@ -174,6 +177,11 @@
     {
         internal Proportion(IProportionFactory factory, TNEnum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit) : base(factory, numeratorMeasureUnit, quantity, denominatorMeasureUnit)
         {
+        }
+
+        public IProportion<TNEnum, TDEnum> ConvertToLimitable(ILimiter limiter)
+        {
+            throw new NotImplementedException();
         }
 
         public TNEnum GetMeasureUnit(IMeasureUnit<TNEnum>? other)

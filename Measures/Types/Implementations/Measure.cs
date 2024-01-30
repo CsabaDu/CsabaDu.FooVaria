@@ -31,24 +31,11 @@
 
         public IMeasurement Measurement { get; init; }
         public override sealed object Quantity { get; init; }
+
+
         public IMeasure Add(IMeasure? other)
         {
             return GetSum(other, SummingMode.Add);
-        }
-
-        public IMeasure ConvertToLimitable(ILimiter limiter)
-        {
-            string paramName = nameof(limiter);
-
-            if (NullChecked(limiter, paramName) is IBaseMeasure baseMeasure) return GetBaseMeasure(baseMeasure);
-
-            throw ArgumentTypeOutOfRangeException(paramName, limiter);
-
-            //MeasureUnitCode measureUnitCode = limiter.GetLimiterMeasureUnitCode();
-            //Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
-            //decimal defaultQuantity = limiter.GetLimiterDefaultQuantity();
-
-            //return GetBaseMeasure(measureUnit, defaultQuantity);
         }
 
         public IMeasure Divide(decimal divisor)
@@ -56,65 +43,6 @@
             if (divisor == 0) throw DecimalArgumentOutOfRangeException(nameof(divisor), divisor);
 
             return GetMeasure(divisor, MeasureOperationMode.Divide);
-        }
-
-        public bool? FitsIn(ILimiter? limiter)
-        {
-            if (limiter == null) return null;
-
-            LimitMode limitMode = limiter.LimitMode;
-            IBaseMeasure baseMeasure = ConvertToLimitable(limiter);
-
-            return FitsIn(baseMeasure, limitMode);
-        }
-
-        public bool? FitsIn(IBaseMeasure? baseMeasure, LimitMode? limitMode)
-        {
-            bool limitModeHasValue = limitMode.HasValue;
-
-            if (isRateComponentNull() && !limitModeHasValue) return true;
-
-            if (baseMeasure?.HasMeasureUnitCode(MeasureUnitCode) != true) return null;
-
-            if (!limitModeHasValue) return CompareTo(baseMeasure) <= 0;
-
-            _ = Defined(limitMode!.Value, nameof(limitMode));
-
-            IBaseMeasure ceilingBaseMeasure = baseMeasure.Round(RoundingMode.Ceiling);
-            baseMeasure = limitMode switch
-            {
-                LimitMode.BeNotLess or
-                LimitMode.BeGreater => ceilingBaseMeasure,
-
-                LimitMode.BeNotGreater or
-                LimitMode.BeLess or
-                LimitMode.BeEqual => baseMeasure!.Round(RoundingMode.Floor),
-
-                _ => null,
-            };
-
-            if (isRateComponentNull()) return null;
-
-            int comparison = CompareTo(baseMeasure);
-
-            return limitMode switch
-            {
-                LimitMode.BeEqual => areEqual(),
-
-                _ => comparison.FitsIn(limitMode),
-            };
-
-            #region Local methods
-            bool areEqual()
-            {
-                return comparison == 0 && ceilingBaseMeasure.Equals(baseMeasure);
-            }
-
-            bool isRateComponentNull()
-            {
-                return baseMeasure == null;
-            }
-            #endregion
         }
 
         public override sealed IMeasurement GetBaseMeasurement()

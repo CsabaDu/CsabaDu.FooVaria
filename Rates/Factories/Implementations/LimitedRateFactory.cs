@@ -2,13 +2,18 @@
 
 public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
 {
+    #region Constructors
     public LimitedRateFactory(IDenominatorFactory denominatorFactory, ILimitFactory limitFactory) : base(denominatorFactory)
     {
         LimitFactory = NullChecked(limitFactory, nameof(limitFactory));
     }
+    #endregion
 
+    #region Properties
     public ILimitFactory LimitFactory { get; init; }
+    #endregion
 
+    #region Public methods
     public ILimitedRate Create(IMeasure numerator, string name, ValueType denominatorQuantity, ILimit limit)
     {
         IDenominator denominator = DenominatorFactory.Create(name, denominatorQuantity);
@@ -48,6 +53,12 @@ public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
         return new LimitedRate(this, rate, limit);
     }
 
+    public ILimitedRate CreateNew(ILimitedRate other)
+    {
+        return new LimitedRate(other);
+    }
+
+    #region Override methods
     public override ILimitedRate Create(params IBaseMeasure[] baseMeasures)
     {
         string paramName = nameof(baseMeasures);
@@ -91,11 +102,6 @@ public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
         return Create(measure, denominatorMeasureUnitCode, limit);
     }
 
-    public ILimitedRate CreateNew(ILimitedRate other)
-    {
-        return new LimitedRate(other);
-    }
-
     public override ILimitedRate CreateNew(IRate other)
     {
         if (other is ILimitedRate limitedRate) return CreateNew(limitedRate);
@@ -105,4 +111,6 @@ public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
 
         return Create(other, limit);
     }
+    #endregion
+    #endregion
 }

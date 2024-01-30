@@ -2,10 +2,13 @@
 
 public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
 {
+    #region Constructors
     public FlatRateFactory(IDenominatorFactory denominatorFactory) : base(denominatorFactory)
     {
     }
+    #endregion
 
+    #region Public methods
     public IFlatRate Create(IMeasure numerator, string name, ValueType denominatorQuantity)
     {
         IDenominator denominator = DenominatorFactory.Create(name, denominatorQuantity);
@@ -45,6 +48,12 @@ public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
         return new FlatRate(this, rate);
     }
 
+    public IFlatRate CreateNew(IFlatRate other)
+    {
+        return new FlatRate(other);
+    }
+
+    #region Override methods
     public override IFlatRate Create(params IBaseMeasure[] rateComponents)
     {
         string paramName = nameof(rateComponents);
@@ -81,13 +90,10 @@ public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
         return Create(measure, denominatorMeasureUnitCode);
     }
 
-    public IFlatRate CreateNew(IFlatRate other)
-    {
-        return new FlatRate(other);
-    }
-
     public override IFlatRate CreateNew(IRate other)
     {
         return Create(other);
     }
+    #endregion
+    #endregion
 }

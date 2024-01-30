@@ -58,12 +58,12 @@ internal abstract class Shape : BaseShape, IShape
             : GetShapeExtents();
     }
 
-    public IShape GetSimpleShape(ExtentUnit extentUnit)
+    public IShape GetShape(ExtentUnit extentUnit)
     {
         return (IShape?)ExchangeTo(extentUnit) ?? throw InvalidMeasureUnitEnumArgumentException(extentUnit, nameof(extentUnit));
     }
 
-    public IShape GetSimpleShape(params IExtent[] shapeExtents)
+    public IShape GetShape(params IExtent[] shapeExtents)
     {
         ValidateShapeExtents(shapeExtents, nameof (shapeExtents));
 
@@ -203,7 +203,7 @@ internal abstract class Shape : BaseShape, IShape
 
             if (exchangedShapeExtents.Count() != GetShapeExtents().Count()) return null;
 
-            return GetSimpleShape(exchangedShapeExtents.ToArray());
+            return GetShape(exchangedShapeExtents.ToArray());
         }
 
         IEnumerable<IExtent> getExchangedShapeExtents(ExtentUnit extentUnit)

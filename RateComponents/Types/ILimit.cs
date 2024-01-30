@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.RateComponents.Types;
 
-public interface ILimit : IRateComponent<ILimit>, ILimiter<ILimit>, IBaseMeasure<ILimit, ulong>/*, IDefaultMeasurable<ILimit>*//*, ICommonBase<ILimit>*/
+public interface ILimit : IRateComponent<ILimit>, ILimiter<ILimit, IBaseMeasure>, IBaseMeasure<ILimit, ulong>/*, IDefaultMeasurable<ILimit>*//*, ICommonBase<ILimit>*/
 {
     ILimit GetLimit(string name, ValueType quantity, LimitMode limitMode);
     ILimit? GetLimit(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName, LimitMode limitMode);

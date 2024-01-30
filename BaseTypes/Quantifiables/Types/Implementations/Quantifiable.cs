@@ -139,6 +139,10 @@ public abstract class Quantifiable : Measurable, IQuantifiable
 
         return RoundQuantity(defaultQuantity);
     }
+    //protected static LimitMode GetLimitMode(ILimiter limiter)
+    //{
+    //    return NullChecked(limiter, nameof(limiter)).LimitMode;
+    //}
     #endregion
     #endregion
 }

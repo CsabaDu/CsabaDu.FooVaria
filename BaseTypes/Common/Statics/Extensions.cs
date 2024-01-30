@@ -15,4 +15,10 @@ public static class Extensions
     //    throw new ArgumentOutOfRangeException(nameof(exchangeRate), exchangeRate, null);
     //}
     #endregion
+
+    public static bool IsDefined<T>(this T enumeration)
+        where T : struct, Enum
+    {
+        return Enum.IsDefined(enumeration);
+    }
 }

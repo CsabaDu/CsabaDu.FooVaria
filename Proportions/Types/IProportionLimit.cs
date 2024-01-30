@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Proportions.Types;
 
-public interface IProportionLimit : IProportion, ILimiter<IProportionLimit>, ICommonBase<IProportionLimit>
+public interface IProportionLimit : IProportion, ILimiter<IProportionLimit, IBaseRate>, ICommonBase<IProportionLimit>
 {
     IProportionLimit GetProportionLimit(IBaseRate baseRate, LimitMode limitMode);
     IProportionLimit GetProportionLimit(IBaseMeasure numerator, IBaseMeasure denominator, LimitMode limitMode);
@@ -9,5 +9,4 @@ public interface IProportionLimit : IProportion, ILimiter<IProportionLimit>, ICo
     IProportionLimit GetProportionLimit(MeasureUnitCode numeratorMeasureUnitCode, decimal defaultQuantity, MeasureUnitCode denominatorMeasureUnitCode, LimitMode limitMode);
     IProportionLimit GetProportionLimit(IBaseMeasure numerator, Enum denominatorMeasureUnit, LimitMode limitMode);
     IProportionLimit GetProportionLimit(IBaseMeasure numerator, MeasureUnitCode denominatorMeasureUnitCode, LimitMode limitMode);
-
 }

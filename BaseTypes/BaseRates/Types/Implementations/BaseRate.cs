@@ -1,4 +1,6 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Statics;
+﻿using CsabaDu.FooVaria.BaseTypes.Common.Statics;
+using CsabaDu.FooVaria.BaseTypes.Measurables.Statics;
+using CsabaDu.FooVaria.BaseTypes.Quantifiables.Statics;
 
 namespace CsabaDu.FooVaria.BaseTypes.BaseRates.Types.Implementations;
 
@@ -165,18 +167,18 @@ public abstract class BaseRate : Quantifiable, IBaseRate
             }
         }
 
-        //string paramName = nameof(other);
+        //string paramName = nameof(baseRate);
 
-        //ValidateMeasureUnitCode(other.MeasureUnitCode, paramName);
+        //ValidateMeasureUnitCode(baseRate.MeasureUnitCode, paramName);
 
-        //MeasureUnitCode numeratorMeasureUnitCode = other.GetNumeratorMeasureUnitCode();
+        //MeasureUnitCode numeratorMeasureUnitCode = baseRate.GetNumeratorMeasureUnitCode();
 
         //if (numeratorMeasureUnitCode == GetNumeratorMeasureUnitCode()) return;
 
         //throw InvalidMeasureUnitCodeEnumArgumentException(numeratorMeasureUnitCode, paramName);
     }
 
-    protected bool IsExchangeableTo(IBaseRate? baseRate)
+    public bool IsExchangeableTo(IBaseRate? baseRate)
     {
         return baseRate?.HasMeasureUnitCode(MeasureUnitCode) == true
             && baseRate.GetNumeratorMeasureUnitCode() == GetNumeratorMeasureUnitCode();
@@ -187,7 +189,7 @@ public abstract class BaseRate : Quantifiable, IBaseRate
         object? quantity = GetQuantity().ToQuantity(Defined(quantityTypeCode, nameof(quantityTypeCode)));
 
         if (quantity != null) return quantity;
-        
+
         throw new InvalidOperationException(null);
     }
 
@@ -199,6 +201,48 @@ public abstract class BaseRate : Quantifiable, IBaseRate
 
         throw QuantityArgumentOutOfRangeException(paramName, quantity!);
     }
-    #endregion
-}
 
+    public bool? FitsIn(ILimiter? limiter)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool? FitsIn(IBaseRate? baseRate, LimitMode? limitMode)
+    {
+        bool limitModeHasValue = limitMode.HasValue;
+
+        if (baseRate == null && !limitModeHasValue) return true;
+
+        if (!IsExchangeableTo(baseRate)) return null;
+
+        int comparison = CompareTo(baseRate);
+
+        if (!limitModeHasValue) return comparison <= 0;
+
+        LimitMode limitModeValue = limitMode!.Value;
+
+        if (!limitModeValue.IsDefined()) return null;
+
+        return comparison.FitsIn(limitModeValue);
+    }
+    #endregion
+
+    protected static bool? FitsIn(IBaseRate s, IBaseRate? baseRate, LimitMode? limitMode, Func<bool?> fitsIn)
+    {
+        bool limitModeHasValue = limitMode.HasValue;
+
+        if (baseRate == null && !limitModeHasValue) return true;
+
+        if (!s.IsExchangeableTo(baseRate)) return null;
+
+        if (!limitModeHasValue) return s.CompareTo(baseRate) <= 0;
+
+        LimitMode limitModeValue = limitMode!.Value;
+
+        if (!limitModeValue.IsDefined()) return null;
+
+        int comparison = s.CompareTo(baseRate);
+
+        return comparison.FitsIn(limitMode!.Value);
+    }
+}

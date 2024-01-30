@@ -161,15 +161,15 @@ internal sealed class FlatRate : Rate, IFlatRate
         throw ArgumentTypeOutOfRangeException(paramName, limiter);
     }
 
-    public bool? FitsIn(ILimiter? limiter)
-    {
-        if (limiter == null) return null;
+    //public bool? FitsIn(ILimiter? limiter)
+    //{
+    //    if (limiter == null) return null;
 
-        LimitMode limitMode = limiter.LimitMode;
-        IBaseRate baseRate = ConvertToLimitable(limiter);
+    //    LimitMode limitMode = limiter.LimitMode;
+    //    IBaseRate baseRate = ConvertToLimitable(limiter);
 
-        return FitsIn(baseRate, limitMode);
-    }
+    //    return FitsIn(baseRate, limitMode);
+    //}
 
     public bool? FitsIn(IBaseRate? baseRate, LimitMode? limitMode)
     {

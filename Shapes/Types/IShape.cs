@@ -2,8 +2,8 @@
 {
     public interface IShape : IBaseShape, IShapeExtents, IDimensions, IDiagonal,IShapeComponent, IShapeComponents<IExtent>
     {
-        IShape GetSimpleShape(ExtentUnit measureUnit);
-        IShape GetSimpleShape(params IExtent[] shapeExtents);
+        IShape GetShape(ExtentUnit measureUnit);
+        IShape GetShape(params IExtent[] shapeExtents);
 
         ISpreadFactory GetSpreadFactory();
         ITangentShapeFactory GetTangentShapeFactory();

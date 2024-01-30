@@ -11,10 +11,10 @@ global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Enums;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Statics;
 global using CsabaDu.FooVaria.Measurements.Factories;
 global using CsabaDu.FooVaria.Measurements.Types;
+global using CsabaDu.FooVaria.Measures.Types;
 global using CsabaDu.FooVaria.RateComponents.Factories;
 global using CsabaDu.FooVaria.RateComponents.Types;
 global using CsabaDu.FooVaria.RateComponents.Types.Implementations;
 global using System.Diagnostics.CodeAnalysis;
 global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.BaseTypes.Quantifiables.Statics.ExceptionMethods;
-

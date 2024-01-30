@@ -60,7 +60,7 @@ internal sealed class ProportionLimit : Proportion, IProportionLimit
         return GetNumeratorMeasureUnitCode();
     }
 
-    public LimitMode GetLimitMode(IProportionLimit limiter)
+    public LimitMode GetLimitMode(ILimiter limiter)
     {
         return NullChecked(limiter, nameof(limiter)).LimitMode;
     }
@@ -80,10 +80,8 @@ internal sealed class ProportionLimit : Proportion, IProportionLimit
         return GetFactory().Create(numeratorMeasureUnitCode, defaultQuantity, denominatorMeasureUnitCode, limitMode);
     }
 
-    public bool? Includes(ILimitable limitable)
+    public bool? Includes(IFlatRate limitable)
     {
-        if (limitable is not IBaseRate) return null;
-
         return limitable.FitsIn(this);
     }
 
@@ -125,5 +123,10 @@ internal sealed class ProportionLimit : Proportion, IProportionLimit
     public IProportionLimit GetProportionLimit(Enum numeratorMeasureUnit, ValueType quantity, Enum denominatorMeasureUnit, LimitMode limitMode)
     {
         return GetFactory().Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit, limitMode);
+    }
+
+    public bool? Includes(IBaseRate? limitable)
+    {
+        return limitable?.FitsIn(this) ?? false;
     }
 }

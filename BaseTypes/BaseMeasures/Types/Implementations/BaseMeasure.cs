@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
 
 namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations
 {
@@ -34,6 +35,65 @@ namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations
         {
             return base.Equals(other);
         }
+
+        public bool? FitsIn(ILimiter? limiter)
+        {
+            if (limiter is not IBaseMeasure baseMeasure) return null;
+
+            LimitMode limitMode = limiter.LimitMode;
+
+            return FitsIn(baseMeasure, limitMode);
+    }
+
+        public bool? FitsIn(IBaseMeasure? baseMeasure, LimitMode? limitMode)
+        {
+            bool limitModeHasValue = limitMode.HasValue;
+
+            if (isRateComponentNull() && !limitModeHasValue) return true;
+
+            if (baseMeasure?.HasMeasureUnitCode(MeasureUnitCode) != true) return null;
+
+            if (!limitModeHasValue) return CompareTo(baseMeasure) <= 0;
+
+            _ = Defined(limitMode!.Value, nameof(limitMode));
+
+            IBaseMeasure ceilingBaseMeasure = baseMeasure.Round(RoundingMode.Ceiling);
+            baseMeasure = limitMode switch
+            {
+                LimitMode.BeNotLess or
+                LimitMode.BeGreater => ceilingBaseMeasure,
+
+                LimitMode.BeNotGreater or
+                LimitMode.BeLess or
+                LimitMode.BeEqual => baseMeasure!.Round(RoundingMode.Floor),
+
+                _ => null,
+            };
+
+            if (isRateComponentNull()) return null;
+
+            int comparison = CompareTo(baseMeasure);
+
+            return limitMode switch
+            {
+                LimitMode.BeEqual => areEqual(),
+
+                _ => comparison.FitsIn(limitMode),
+            };
+
+            #region Local methods
+            bool areEqual()
+            {
+                return comparison == 0 && ceilingBaseMeasure.Equals(baseMeasure);
+            }
+
+            bool isRateComponentNull()
+            {
+                return baseMeasure == null;
+            }
+            #endregion
+        }
+
 
         public IBaseMeasure? ExchangeTo(Enum measureUnit) // MeasureUnitCode ??
         {
@@ -75,13 +135,6 @@ namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations
 
             return baseMeasurement.GetExchangeRate();
         }
-
-        //public decimal GetExchangeRate(Enum measureUnit)
-        //{
-        //    IBaseMeasurement baseMeasurement = GetBaseMeasurement();
-
-        //    return baseMeasurement.GetExchangeRate(measureUnit);
-        //}
 
         public object GetQuantity(RoundingMode roundingMode)
         {
@@ -272,6 +325,16 @@ namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations
             }
             #endregion
         }
+
+        protected static TSelf ConvertToLimitable<TSelf>(IBaseMeasure<TSelf> limitable, ILimiter limiter)
+            where TSelf : class, IBaseMeasure
+        {
+            string paramName = nameof(limiter);
+
+            if (NullChecked(limiter, paramName) is IBaseMeasure baseMeasure) return limitable.GetBaseMeasure(baseMeasure);
+
+            throw ArgumentTypeOutOfRangeException(paramName, limiter);
+        }
         #endregion
         #endregion
 
@@ -331,6 +394,11 @@ namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations
         public TSeff GetNew(TSeff other)
         {
             return GetFactory().CreateNew(other);
+        }
+
+        public TSeff ConvertToLimitable(ILimiter limiter)
+        {
+            return ConvertToLimitable(this, limiter);
         }
         #endregion
         #endregion

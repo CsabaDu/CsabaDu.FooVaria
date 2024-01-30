@@ -1,10 +1,9 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types
 {
-    public interface IBaseMeasure : IQuantifiable, IExchangeRate, IRateComponentCode, IDecimalQuantity, IQuantityTypeCode, ILimitMode, IExchange<IBaseMeasure, Enum>, IRound<IBaseMeasure>, IEqualityComparer<IBaseMeasure>
+    public interface IBaseMeasure : IQuantifiable, IExchangeRate, IRateComponentCode, IDecimalQuantity, IQuantityTypeCode, ILimitMode, IExchange<IBaseMeasure, Enum>, IRound<IBaseMeasure>, IEqualityComparer<IBaseMeasure>, IFit<IBaseMeasure>, ILimitable
     {
         object Quantity { get; init; }
 
-        //RateComponentCode GetRateComponentCode();
         IBaseMeasure GetBaseMeasure(ValueType quantity);
         IBaseMeasure GetBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity);
         IBaseMeasurement GetBaseMeasurement();
@@ -13,7 +12,7 @@
         void ValidateQuantifiable(IQuantifiable? quantifiable, string paramName);
     }
 
-    public interface IBaseMeasure<TSelf> : IBaseMeasure
+    public interface IBaseMeasure<TSelf> : IBaseMeasure, ILimitable<TSelf>
         where TSelf : class, IBaseMeasure
     {
         TSelf GetBaseMeasure(Enum measureUnit, ValueType quantity);

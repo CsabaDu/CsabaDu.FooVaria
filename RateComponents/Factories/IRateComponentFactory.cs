@@ -11,10 +11,10 @@
         where T : class, IBaseMeasure
     {
     }
-    //public interface IRateComponentFactory<T, TNum> : IRateComponentFactory<T>, IBaseMeasureFactory<T>
-    //    where T : class, IBaseMeasure/*, IDefaultBaseMeasure*/
+    //public interface IRateComponentFactory<TSelf, TNum> : IRateComponentFactory<TSelf>, IBaseMeasureFactory<TSelf>
+    //    where TSelf : class, IBaseMeasure/*, IDefaultBaseMeasure*/
     //    where TNum : struct
     //{
-    //    T Create(IMeasurement measurement, TNum quantity);
+    //    TSelf Create(IMeasurement measurement, TNum quantity);
     //}
 }
