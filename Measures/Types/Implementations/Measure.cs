@@ -18,10 +18,15 @@
         }
         #endregion
 
+        #region Properties
         public IMeasurement Measurement { get; init; }
+
+        #region Override properties
         public override sealed object Quantity { get; init; }
+        #endregion
+        #endregion
 
-
+        #region Public methods
         public IMeasure Add(IMeasure? other)
         {
             return GetSum(other, SummingMode.Add);
@@ -34,6 +39,24 @@
             return GetMeasure(divisor, MeasureOperationMode.Divide);
         }
 
+        public IMeasure Multiply(decimal multiplier)
+        {
+            return GetMeasure(multiplier, MeasureOperationMode.Multiply);
+
+        }
+
+        public IMeasure Subtract(IMeasure? other)
+        {
+            return GetSum(other, SummingMode.Subtract);
+        }
+
+        #region Override methods
+        public override IMeasureFactory GetFactory()
+        {
+            return (IMeasureFactory)Factory;
+        }
+
+        #region Sealed methods
         public override sealed IMeasurement GetBaseMeasurement()
         {
             return Measurement;
@@ -49,21 +72,6 @@
             return GetDefaultQuantity(Quantity, GetExchangeRate());
         }
 
-        public override IMeasureFactory GetFactory()
-        {
-            return (IMeasureFactory)Factory;
-        }
-
-        public IMeasure Multiply(decimal multiplier)
-        {
-            return GetMeasure(multiplier, MeasureOperationMode.Multiply);
-
-        }
-        public IMeasure Subtract(IMeasure? other)
-        {
-            return GetSum(other, SummingMode.Subtract);
-        }
-
         public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
         {
             Type quantityType = NullChecked(quantity, paramName).GetType();
@@ -72,6 +80,9 @@
 
             throw ArgumentTypeOutOfRangeException(paramName, quantity!);
         }
+        #endregion
+        #endregion
+        #endregion
 
         #region Private methods
         private IMeasure GetMeasure(decimal operand, MeasureOperationMode measureOperationMode)
@@ -152,7 +163,7 @@
     }
 
     internal abstract class Measure<TSelf, TNum> : Measure, IMeasure<TSelf, TNum>
-        where TSelf : class, IMeasure/*, IDefaultBaseMeasure*/
+        where TSelf : class, IMeasure
         where TNum : struct
     {
         #region Constructors
@@ -190,7 +201,7 @@
     }
 
     internal abstract class Measure<TSelf, TNum, TEnum> : Measure<TSelf, TNum>, IMeasure<TSelf, TNum, TEnum>
-        where TSelf : class, IMeasure/*, IDefaultBaseMeasure*/, IMeasureUnit
+        where TSelf : class, IMeasure, IMeasureUnit
         where TNum : struct
         where TEnum : struct, Enum
     {
