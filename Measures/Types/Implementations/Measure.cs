@@ -13,20 +13,9 @@
         #region Constructors
         private protected Measure(IMeasureFactory factory, Enum measureUnit, ValueType quantity) : base(factory, measureUnit)
         {
-            try
-            {
-                ValidateQuantity(quantity, GetQuantityTypeCode(), nameof(quantity));
-            }
-            catch (InvalidEnumArgumentException)
-            {
-                throw new InvalidOperationException(null);
-            }
-
+            Quantity = GetValidMeasureQuantity(quantity);
             Measurement = GetBaseMeasurementFactory().Create(measureUnit);
-            Quantity = quantity;
         }
-
-
         #endregion
 
         public IMeasurement Measurement { get; init; }
@@ -144,6 +133,20 @@
                 return GetBaseMeasure(measureUnit, quantity);
             }
             #endregion
+        }
+
+        private object GetValidMeasureQuantity(ValueType quantity)
+        {
+            try
+            {
+                ValidateQuantity(quantity, GetQuantityTypeCode(), nameof(quantity));
+            }
+            catch (InvalidEnumArgumentException)
+            {
+                throw new InvalidOperationException(null);
+            }
+
+            return quantity;
         }
         #endregion
     }

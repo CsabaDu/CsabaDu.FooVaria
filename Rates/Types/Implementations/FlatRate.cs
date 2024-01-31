@@ -151,44 +151,5 @@ internal sealed class FlatRate : Rate, IFlatRate
         }
         #endregion
     }
-
-    public IFlatRate ConvertToLimitable(ILimiter limiter)
-    {
-        string paramName = nameof(limiter);
-
-        if (NullChecked(limiter, paramName) is IBaseRate baseRate) return (IFlatRate)GetRate(baseRate);
-
-        throw ArgumentTypeOutOfRangeException(paramName, limiter);
-    }
-
-    //public bool? FitsIn(ILimiter? limiter)
-    //{
-    //    if (limiter == null) return null;
-
-    //    LimitMode limitMode = limiter.LimitMode;
-    //    IBaseRate baseRate = ConvertToLimitable(limiter);
-
-    //    return FitsIn(baseRate, limitMode);
-    //}
-
-    public bool? FitsIn(IBaseRate? baseRate, LimitMode? limitMode)
-    {
-        bool limitModeHasValue = limitMode.HasValue;
-
-        if (baseRate == null && !limitModeHasValue) return true;
-
-        if (!IsExchangeableTo(baseRate)) return null;
-
-        if (!limitModeHasValue) return CompareTo(baseRate) <= 0;
-
-        _ = Defined(limitMode!.Value, nameof(limitMode));
-
-        MeasureUnitCode measureUnitCode = baseRate!.GetNumeratorMeasureUnitCode();
-        Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
-        ValueType quantity = baseRate.GetDefaultQuantity();
-        IBaseMeasure baseMeasure = Numerator.GetBaseMeasure(measureUnit, quantity);
-
-        return Numerator.FitsIn(baseMeasure, limitMode);
-    }
     #endregion
 }

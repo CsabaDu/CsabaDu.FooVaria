@@ -1,5 +1,4 @@
-﻿
-namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
 
 internal sealed class Denominator : RateComponent<IDenominator>, IDenominator
 {
@@ -57,42 +56,42 @@ internal sealed class Denominator : RateComponent<IDenominator>, IDenominator
 
     public IDenominator GetDenominator(IMeasurement measurement, decimal quantity)
     {
-        return (IDenominator)GetFactory().CreateBaseMeasure(measurement, quantity);
+        return (IDenominator)GetBaseMeasure(measurement, quantity);
     }
 
     public IDenominator GetBaseMeasure(decimal quantity)
     {
-        throw new NotImplementedException();
+        return (IDenominator)GetBaseMeasure((ValueType)quantity);
     }
 
     public decimal GetQuantity()
     {
-        throw new NotImplementedException();
+        return (decimal)Quantity;
     }
 
     public IDenominator GetBaseMeasure(Enum measureUnit, ValueType quantity)
     {
-        throw new NotImplementedException();
+        return GetFactory().Create(measureUnit, quantity);
     }
 
     public IDenominator GetBaseMeasure(string name, ValueType quantity)
     {
-        throw new NotImplementedException();
+        return GetFactory().Create(name, quantity);
     }
 
     public IDenominator? GetBaseMeasure(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
     {
-        throw new NotImplementedException();
+        return GetFactory().Create(measureUnit, exchangeRate, quantity, customName);
     }
 
     public IDenominator? GetBaseMeasure(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity)
     {
-        throw new NotImplementedException();
+        return GetFactory().Create(customName, measureUnitCode, exchangeRate, quantity);
     }
 
     public IDenominator GetBaseMeasure(IBaseMeasure baseMeasure)
     {
-        throw new NotImplementedException();
+        return GetFactory().Create(baseMeasure);
     }
 
     public IDenominator ConvertToLimitable(ILimiter limiter)

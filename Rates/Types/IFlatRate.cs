@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Rates.Types;
 
-public interface IFlatRate : IRate, ICalculate<IFlatRate, decimal>, ILimitable<IFlatRate>, ICommonBase<IFlatRate>
+public interface IFlatRate : IRate, ICalculate<IFlatRate, decimal>, ICommonBase<IFlatRate>
 {
     IFlatRate GetFlatRate(IMeasure numerator, string name, ValueType quantity);
     IFlatRate GetFlatRate(IMeasure numerator, string name);
