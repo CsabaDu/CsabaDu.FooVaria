@@ -15,7 +15,7 @@ internal sealed class BulkBody : Spread<IBulkBody, IVolume, VolumeUnit>, IBulkBo
     #region Public methods
     public IBody GetBody()
     {
-        return this;
+        return GetNew(this);
     }
 
     public IBulkBody GetBulkBody(IExtent radius, IExtent height)

@@ -14,7 +14,6 @@ namespace CsabaDu.FooVaria.Spreads.Factories
         where TSMeasure : class, IMeasure, ISpreadMeasure
     {
         T Create(TSMeasure spreadMeasure);
-
         T? Create(IBaseSpread baseSpread);
     }
 

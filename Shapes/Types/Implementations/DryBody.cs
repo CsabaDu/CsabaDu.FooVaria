@@ -10,17 +10,20 @@
 
         private protected DryBody(IDryBodyFactory factory, IPlaneShape baseFace, IExtent height) : base(factory, baseFace)
         {
-            Height = getDryBodyProperties().Height;
-            Volume = getDryBodyProperties().Volume;
+            var (validHeight, volume) = getDryBodyValidParams();
+
+            Height = validHeight;
+            Volume = volume;
 
             #region Local methods
-            (IExtent Height, IVolume Volume) getDryBodyProperties()
+            (IExtent, IVolume) getDryBodyValidParams()
             {
-                //ValidateShapeComponent(height, nameof(height));
+                ValidateShapeExtent(height, nameof(height));
 
                 IExtent[] shapeExtents = baseFace.GetShapeExtents().Append(height).ToArray();
+                IVolume volume = (IVolume)GetSpreadMeasure(shapeExtents);
 
-                return (height, (IVolume)GetSpreadMeasure(shapeExtents));
+                return (height, volume);
             }
             #endregion
         }

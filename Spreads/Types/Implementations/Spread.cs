@@ -217,7 +217,7 @@
 
             foreach (IExtent item in shapeExtents!)
             {
-                decimal quantity = item.GetDecimalQuantity();
+                double quantity = item.GetQuantity();
 
                 if (item.GetDefaultQuantity() <= 0) throw QuantityArgumentOutOfRangeException(paramName, quantity);
             }
@@ -227,7 +227,7 @@
             {
                 if (count >= minValue && count <= maxValue) return;
 
-                throw new ArgumentOutOfRangeException(paramName, count, null);
+                throw CountArgumentOutOfRangeException(count, paramName);
             }
             #endregion
         }
