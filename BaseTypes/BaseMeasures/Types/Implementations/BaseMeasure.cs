@@ -1,7 +1,4 @@
-﻿
-using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
-
-namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations
+﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations
 {
     public abstract class BaseMeasure : Quantifiable, IBaseMeasure
     {
@@ -176,6 +173,8 @@ namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations
 
         public object GetQuantity(TypeCode quantityTypeCode)
         {
+            ValidateQuantityTypeCode(quantityTypeCode, nameof(quantityTypeCode));
+
             ValueType quantity = (ValueType)Quantity;
 
             return quantity.ToQuantity(quantityTypeCode) ?? throw new InvalidOperationException(null);
@@ -232,7 +231,7 @@ namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations
             ValidateMeasureUnitCodeByDefinition(quantifiable!.MeasureUnitCode, paramName);
         }
 
-        public void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramName)
+        public static void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramName)
         {
             Type quantityType = NullChecked(quantity, paramName).GetType();
 
@@ -243,7 +242,7 @@ namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations
             throw ArgumentTypeOutOfRangeException(paramName, quantity!);
         }
 
-        public void ValidateQuantityTypeCode(TypeCode quantityTypeCode, string paramName)
+        public static void ValidateQuantityTypeCode(TypeCode quantityTypeCode, string paramName)
         {
             if (GetValidQuantityTypeCodeOrNull(quantityTypeCode) != null) return;
 

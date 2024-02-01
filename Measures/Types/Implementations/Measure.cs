@@ -238,10 +238,11 @@
         {
             MeasureUnitCode measureUnitCode = GetMeasureUnitCode(typeof(TOther));
             Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
-            decimal quantity = measureOperationMode switch
+            decimal quantity = GetDefaultQuantity();
+            quantity = measureOperationMode switch
             {
-                MeasureOperationMode.Multiply => GetDefaultQuantity() * ConvertRatio,
-                MeasureOperationMode.Divide => GetDefaultQuantity() / ConvertRatio,
+                MeasureOperationMode.Multiply => quantity * ConvertRatio,
+                MeasureOperationMode.Divide => quantity / ConvertRatio,
 
                 _ => throw new InvalidOperationException(null),
             };

@@ -50,7 +50,7 @@ internal sealed class BulkMass : Mass, IBulkMass
         return (IBulkMassFactory)Factory;
     }
 
-    public override IMass GetMass(IWeight weight, IBody body)
+    public override IBulkMass GetMass(IWeight weight, IBody body)
     {
         return GetBulkMass(weight, body);
     }

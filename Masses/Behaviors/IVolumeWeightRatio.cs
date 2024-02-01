@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Masses.Behaviors;
+﻿using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Enums;
+
+namespace CsabaDu.FooVaria.Masses.Behaviors;
 
 public interface IVolumeWeightRatio : IVolumeWeight
 {
@@ -6,4 +8,5 @@ public interface IVolumeWeightRatio : IVolumeWeight
     MeasureUnitCode GetMeasureUnitCode(decimal ratio);
     double GetQuantity(decimal ratio);
     decimal GetDefaultQuantity(decimal ratio);
+    IWeight GetChargeableWeight(decimal ratio, WeightUnit weightUnit, RoundingMode roundingMode);
 }

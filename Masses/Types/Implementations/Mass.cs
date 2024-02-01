@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Masses.Types.Implementations
+﻿using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Enums;
+
+namespace CsabaDu.FooVaria.Masses.Types.Implementations
 {
     internal abstract class Mass : Quantifiable, IMass
     {
@@ -195,8 +197,7 @@
         #region Override methods
         public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
         {
-            yield return MeasureUnitCode.WeightUnit;
-            yield return MeasureUnitCode.VolumeUnit;
+            return MeasureUnitCodes.Where(x => this[x] != null);
         }
 
         public override IMassFactory GetFactory()
@@ -341,12 +342,18 @@
 
         public object GetQuantity(TypeCode quantityTypeCode)
         {
-            throw new NotImplementedException();
+            object? quantity = GetDefaultQuantity().ToQuantity(quantityTypeCode);
+
+            return quantity ?? throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode, nameof(quantityTypeCode));
         }
 
-        public void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramName)
+        public IWeight GetChargeableWeight(decimal ratio, WeightUnit weightUnit, RoundingMode roundingMode)
         {
-            throw new NotImplementedException();
+            ValidateMeasureUnit(weightUnit, nameof(weightUnit));
+
+            return (IWeight)GetVolumeWeight(ratio)
+                .ExchangeTo(weightUnit)!
+                .Round(roundingMode);
         }
         #endregion
         #endregion

@@ -193,14 +193,14 @@ public abstract class BaseRate : Quantifiable, IBaseRate
         throw new InvalidOperationException(null);
     }
 
-    public void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramName)
-    {
-        Type quantityType = NullChecked(quantity, paramName).GetType();
+    //public void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramName)
+    //{
+    //    Type quantityType = NullChecked(quantity, paramName).GetType();
 
-        if (Type.GetTypeCode(quantityType) == quantityTypeCode) return;
+    //    if (Type.GetTypeCode(quantityType) == quantityTypeCode) return;
 
-        throw QuantityArgumentOutOfRangeException(paramName, quantity!);
-    }
+    //    throw QuantityArgumentOutOfRangeException(paramName, quantity!);
+    //}
 
     public bool? FitsIn(ILimiter? limiter)
     {

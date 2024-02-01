@@ -4,7 +4,7 @@
     {
         object GetQuantity(TypeCode quantityTypeCode);
 
-        void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramName);
+        //void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramName);
     }
 
     public interface IQuantity<out TNum> : IQuantity

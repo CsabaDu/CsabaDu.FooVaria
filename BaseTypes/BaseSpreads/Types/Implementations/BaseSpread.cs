@@ -166,10 +166,10 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
         throw new NotImplementedException();
     }
 
-    public void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramNamme)
-    {
-        throw new NotImplementedException();
-    }
+    //public void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramNamme)
+    //{
+    //    throw new NotImplementedException();
+    //}
     #endregion
     #endregion
 }
