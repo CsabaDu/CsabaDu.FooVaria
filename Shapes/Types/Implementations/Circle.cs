@@ -58,7 +58,7 @@ internal sealed class Circle : PlaneShape, ICircle
         return Radius.GetMeasure(extentUnit);
     }
 
-    public IShape GetTangentShape(SideCode sideCode)
+    public IBaseShape GetTangentShape(SideCode sideCode)
     {
         return GetFactory().CreateTangentShape(this, sideCode);
     }

@@ -264,7 +264,7 @@ internal abstract class Shape : BaseShape, IShape
 
         if (shape.GetShapeComponentCount() != GetShapeComponentCount())
         {
-            shape = (shape as ITangentShape)!.GetTangentShape(sideCode);
+            shape = (IShape)(shape as ITangentShape)!.GetTangentShape(sideCode);
         }
 
         return Compare(this, shape)?.FitsIn(limitMode);

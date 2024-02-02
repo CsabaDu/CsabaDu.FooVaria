@@ -77,7 +77,7 @@ internal sealed class Rectangle : PlaneShape, IRectangle
         return GetFactory().CreateNew(other);
     }
 
-    public IShape GetTangentShape(SideCode sideCode)
+    public IBaseShape GetTangentShape(SideCode sideCode)
     {
         return GetFactory().CreateTangentShape(this, sideCode);
     }

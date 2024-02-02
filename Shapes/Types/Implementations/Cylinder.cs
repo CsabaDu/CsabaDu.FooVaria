@@ -59,7 +59,7 @@ internal sealed class Cylinder : DryBody<ICylinder, ICircle>, ICylinder
         return GetRadius().GetMeasure(extentUnit);
     }
 
-    public IShape GetTangentShape(SideCode sideCode)
+    public IBaseShape GetTangentShape(SideCode sideCode)
     {
         return GetFactory().CreateTangentShape(this, sideCode);
     }
