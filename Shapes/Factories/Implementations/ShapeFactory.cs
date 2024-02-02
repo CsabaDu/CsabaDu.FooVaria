@@ -3,7 +3,7 @@
 public abstract class ShapeFactory : IShapeFactory
 {
     #region Constructors
-    private protected ShapeFactory(ISpreadFactory spreadFactory, ITangentShapeFactory tangentShapeFactory)
+    protected ShapeFactory(ISpreadFactory spreadFactory, ITangentShapeFactory tangentShapeFactory)
     {
         SpreadFactory = NullChecked(spreadFactory, nameof(spreadFactory));
         TangentShapeFactory = NullChecked(tangentShapeFactory, nameof(tangentShapeFactory));

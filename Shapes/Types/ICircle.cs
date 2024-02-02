@@ -1,9 +1,9 @@
-﻿namespace CsabaDu.FooVaria.Shapes.Types
-{
-    public interface ICircle : IPlaneShape, ICircularShape<ICircle, IRectangle>, ICommonBase<ICircle>
-    {
-        IExtent Radius { get; init; }
+﻿//namespace CsabaDu.FooVaria.Shapes.Types
+//{
+//    public interface ICircle : IPlaneShape, ICircularShape<ICircle, IRectangle>, ICommonBase<ICircle>
+//    {
+//        IExtent Radius { get; init; }
 
-        ICircle GetCircle(IExtent radius);
-    }
-}
+//        ICircle GetCircle(IExtent radius);
+//    }
+//}

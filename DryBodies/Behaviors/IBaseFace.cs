@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Shapes.Behaviors;
+﻿namespace CsabaDu.FooVaria.DryBodies.Behaviors;
 
 public interface IBaseFace
 {

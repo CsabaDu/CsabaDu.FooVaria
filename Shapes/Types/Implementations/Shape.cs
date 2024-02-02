@@ -1,17 +1,17 @@
 ﻿namespace CsabaDu.FooVaria.Shapes.Types.Implementations;
 
-internal abstract class Shape : BaseShape, IShape
+public abstract class Shape : BaseShape, IShape
 {
     #region Constructors
-    private protected Shape(IShape other) : base(other)
+    protected Shape(IShape other) : base(other)
     {
     }
 
-    private protected Shape(IShapeFactory factory, IBaseShape baseShape) : base(factory, baseShape)
+    protected Shape(IShapeFactory factory, IBaseShape baseShape) : base(factory, baseShape)
     {
     }
 
-    private protected Shape(IShapeFactory factory, MeasureUnitCode measureUnitCode, params IExtent[] shapeExtents) : base(factory, measureUnitCode, shapeExtents)
+    protected Shape(IShapeFactory factory, MeasureUnitCode measureUnitCode, params IExtent[] shapeExtents) : base(factory, measureUnitCode, shapeExtents)
     {
         ValidateShapeExtents(shapeExtents, nameof(shapeExtents));
     }
@@ -39,11 +39,6 @@ internal abstract class Shape : BaseShape, IShape
     public override sealed IBaseShape? GetBaseShape(params IShapeComponent[] shapeComponents)
     {
         return GetFactory().CreateBaseShape(shapeComponents);
-    }
-
-    public IExtent GetDiagonal(ExtentUnit extentUnit)
-    {
-        return GetDiagonal(this, extentUnit);
     }
 
     public IExtent GetDiagonal()
@@ -311,48 +306,61 @@ internal abstract class Shape : BaseShape, IShape
     #endregion
 
     #region Static methods
-    public static IExtent GetCircleDiagonal(ICircle circle, ExtentUnit extentUnit = default)
+
+    //public static IExtent GetDiagonal(IShape shape, ExtentUnit extentUnit = default)
+    //{
+    //    return NullChecked(shape, nameof(shape)) switch
+    //    {
+    //        Circle circle => GetCircleDiagonal(circle, extentUnit),
+    //        Cuboid cuboid => GetCuboidDiagonal(cuboid, extentUnit),
+    //        Cylinder cylinder => GetCylinderDiagonal(cylinder, extentUnit),
+    //        Rectangle rectangle => GetRectangleDiagonal(rectangle, extentUnit),
+
+    //        _ => throw new InvalidOperationException(null)
+    //    };
+    //}
+    public static IExtent GetRectangularShapeDiagonal<T>(T shape, ExtentUnit extentUnit = default)
+        where T : class, IShape, IRectangularShape
     {
         ValidateMeasureUnitByDefinition(extentUnit, nameof(extentUnit));
 
-        IMeasure radius = circle.Radius;
-        decimal quantity = radius.GetDefaultQuantity() * 2;
-        quantity = IsDefaultMeasureUnit(extentUnit) ?
-            quantity
-            : quantity / GetExchangeRate(extentUnit);
+        IEnumerable<ShapeExtentCode> shapeExtentCodes = shape.GetShapeExtentCodes();
+        int i = 0;
+        decimal quantitySquares = getDefaultQuantitySquare();
 
-        return (IExtent)radius.GetBaseMeasure(extentUnit, quantity);
-    }
-
-    public static IExtent GetCuboidDiagonal(ICuboid cuboid, ExtentUnit extentUnit = default)
-    {
-        return GetRectangularShapeDiagonal(cuboid, extentUnit);
-    }
-
-    public static IExtent GetCylinderDiagonal(ICylinder cylinder, ExtentUnit extentUnit = default)
-    {
-        IRectangle verticalProjection = cylinder.GetVerticalProjection();
-
-        return GetRectangleDiagonal(verticalProjection, extentUnit);
-    }
-
-    public static IExtent GetRectangleDiagonal(IRectangle rectangle, ExtentUnit extentUnit = default)
-    {
-        return GetRectangularShapeDiagonal(rectangle, extentUnit);
-    }
-
-    public static IExtent GetDiagonal(IShape shape, ExtentUnit extentUnit = default)
-    {
-        return NullChecked(shape, nameof(shape)) switch
+        for (i = 1; i < shapeExtentCodes.Count(); i++)
         {
-            Circle circle => GetCircleDiagonal(circle, extentUnit),
-            Cuboid cuboid => GetCuboidDiagonal(cuboid, extentUnit),
-            Cylinder cylinder => GetCylinderDiagonal(cylinder, extentUnit),
-            Rectangle rectangle => GetRectangleDiagonal(rectangle, extentUnit),
+            quantitySquares += getDefaultQuantitySquare();
+        }
 
-            _ => throw new InvalidOperationException(null)
-        };
+        double quantity = decimal.ToDouble(quantitySquares);
+        quantity = Math.Sqrt(quantity);
+        if (!IsDefaultMeasureUnit(extentUnit))
+        {
+            quantity /= decimal.ToDouble(GetExchangeRate(extentUnit));
+        }
+        IExtent edge = getShapeExtent();
+
+        return edge.GetMeasure(extentUnit, quantity);
+
+        #region Local methods
+        IExtent getShapeExtent()
+        {
+            return shape.GetShapeExtent(shapeExtentCodes.ElementAt(i));
+        }
+
+        decimal getDefaultQuantitySquare()
+        {
+            IExtent shapeExtent = getShapeExtent();
+
+            return GetDefaultQuantitySquare(shapeExtent);
+        }
+        #endregion
     }
+
+    #region Abstract methods
+    public abstract IExtent GetDiagonal(ExtentUnit extentUnit);
+    #endregion
     #endregion
     #endregion
 
@@ -390,45 +398,6 @@ internal abstract class Shape : BaseShape, IShape
         }
 
         return comparison;
-    }
-
-    private static IExtent GetRectangularShapeDiagonal<T>(T shape, ExtentUnit extentUnit = default)
-        where T : class, IShape, IRectangularShape
-    {
-        ValidateMeasureUnitByDefinition(extentUnit, nameof(extentUnit));
-
-        IEnumerable<ShapeExtentCode> shapeExtentCodes = shape.GetShapeExtentCodes();
-        int i = 0;
-        decimal quantitySquares = getDefaultQuantitySquare();
-
-        for (i = 1; i < shapeExtentCodes.Count(); i++)
-        {
-            quantitySquares += getDefaultQuantitySquare();
-        }
-
-        double quantity = decimal.ToDouble(quantitySquares);
-        quantity = Math.Sqrt(quantity);
-        if (!IsDefaultMeasureUnit(extentUnit))
-        {
-            quantity /= decimal.ToDouble(GetExchangeRate(extentUnit));
-        }
-        IExtent edge = getShapeExtent();
-
-        return edge.GetMeasure(extentUnit, quantity);
-
-        #region Local methods
-        IExtent getShapeExtent()
-        {
-            return shape.GetShapeExtent(shapeExtentCodes.ElementAt(i));
-        }
-
-        decimal getDefaultQuantitySquare()
-        {
-            IExtent shapeExtent = getShapeExtent();
-
-            return GetDefaultQuantitySquare(shapeExtent);
-        }
-        #endregion
     }
     #endregion
     #endregion
