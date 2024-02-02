@@ -302,5 +302,9 @@
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity" IsHidden="true" />
     <TypeIdentifier />
   </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Common.Types.ICommonBase&lt;TSelf&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.25" Y="0.5" Width="1.75" />
+    <TypeIdentifier />
+  </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
