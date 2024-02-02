@@ -1,5 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
-using CsabaDu.FooVaria.Measurements.Types.Implementations;
+﻿using CsabaDu.FooVaria.Measurements.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Measurements.Factories.Implementations;
 
@@ -129,7 +128,6 @@ public sealed class MeasurementFactory : IMeasurementFactory
 
     private static IMeasurement? GetStoredMeasurementOrNull(string name)
     {
-        string? nameToLower = name?.ToLower();
         Enum? measureUnit = getMeasureUnit(out bool success);
 
         return GetStoredMeasurementOrNull(measureUnit!, success);
@@ -137,17 +135,17 @@ public sealed class MeasurementFactory : IMeasurementFactory
         #region Local methods
         object? getMeasureUnitByStoredName()
         {
-            return GetNameCollection().FirstOrDefault(x => x.Value.ToLower() == nameToLower).Key;
+            return GetNameCollection().FirstOrDefault(x => NameEquals(x.Value, name)).Key;
         }
 
         object? getMeasureUnitByDefaultName()
         {
-            return GetNameCollection().Keys.FirstOrDefault(x => getDefaultNameToLower(x) == nameToLower);
+            return GetNameCollection().Keys.FirstOrDefault(x => NameEquals(getDefaultName(x), name));
         }
 
-        static string getDefaultNameToLower(object measureUnit)
+        string getDefaultName(object measureUnit)
         {
-            return GetDefaultName((Enum)measureUnit).ToLower();
+            return GetDefaultName((Enum)measureUnit);
         }
 
         Enum? getMeasureUnit(out bool success)

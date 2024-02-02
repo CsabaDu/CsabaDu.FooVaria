@@ -238,7 +238,7 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
         #region Local methods
         bool doesNotContainCustomName(IEnumerable<string> names)
         {
-            return !names.Any(x => x.ToLower() == customName.ToLower());
+            return !names.Any(x => NameEquals(x, customName));
         }
         #endregion
     }

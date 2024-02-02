@@ -342,9 +342,9 @@ namespace CsabaDu.FooVaria.Masses.Types.Implementations
 
         public object GetQuantity(TypeCode quantityTypeCode)
         {
-            object? quantity = GetDefaultQuantity().ToQuantity(quantityTypeCode);
+            object? quantity = GetQuantity().ToQuantity(quantityTypeCode);
 
-            return quantity ?? throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode, nameof(quantityTypeCode));
+            return quantity ?? throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
         }
 
         public IWeight GetChargeableWeight(decimal ratio, WeightUnit weightUnit, RoundingMode roundingMode)

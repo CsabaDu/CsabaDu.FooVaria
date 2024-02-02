@@ -54,15 +54,6 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
         return GetMeasureUnitBasedCollection(ConstantExchangeRateCollection, measureUnitCode);
     }
 
-    //public decimal GetExchangeRate(Enum measureUnit)
-    //{
-    //    decimal exchangeRate = ExchangeRateCollection.FirstOrDefault(x => x.Key.Equals(measureUnit)).Value;
-
-    //    if (exchangeRate != default) return exchangeRate;
-
-    //    throw InvalidMeasureUnitEnumArgumentException(measureUnit);
-    //}
-
     public IDictionary<object, decimal> GetExchangeRateCollection(MeasureUnitCode measureUnitCode)
     {
         return GetMeasureUnitBasedCollection(ExchangeRateCollection, measureUnitCode);
@@ -191,6 +182,10 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
         return GetValidMeasureUnits().Contains(measureUnit);
     }
 
+    public static bool NameEquals(string name, string otherName)
+    {
+        return string.Equals(name, otherName, StringComparison.OrdinalIgnoreCase);
+    }
     #endregion
     #endregion
 

@@ -31,9 +31,7 @@ public sealed class LimitFactory : RateComponentFactory, ILimitFactory
     #region Public methods
     public ILimit Create(IMeasurement measurement, ulong quantity, LimitMode limitMode)
     {
-        ILimit other = new Limit(this, measurement, quantity, limitMode);
-
-        return GetStoredRateComponent(other, LimitSet) ?? throw new InvalidOperationException(null);
+        return GetOrCreateStoredLimit(measurement, quantity, limitMode);
     }
 
     public ILimit Create(string name, ValueType quantity, LimitMode limitMode)
@@ -45,9 +43,7 @@ public sealed class LimitFactory : RateComponentFactory, ILimitFactory
 
     public ILimit Create(Enum measureUnit, ValueType quantity, LimitMode limitMode)
     {
-        IMeasurement measurement = MeasurementFactory.Create(measureUnit);
-
-        return GetOrCreateStoredLimit(measurement, quantity, limitMode);
+        return GetOrCreateStoredLimit(measureUnit, quantity, limitMode);
     }
 
     public ILimit? Create(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName, LimitMode limitMode)
@@ -73,7 +69,7 @@ public sealed class LimitFactory : RateComponentFactory, ILimitFactory
         Enum measureUnit = NullChecked(baseMeasure, nameof(baseMeasure)).GetMeasureUnit();
         ValueType quantity = (ValueType)baseMeasure.Quantity;
 
-        return Create(measureUnit, quantity, limitMode);
+        return GetOrCreateStoredLimit(measureUnit, quantity, limitMode);
     }
 
     public ILimit Create(ILimit limit, ValueType quantity)
@@ -82,6 +78,11 @@ public sealed class LimitFactory : RateComponentFactory, ILimitFactory
         LimitMode limitMode = limit.LimitMode;
 
         return GetOrCreateStoredLimit(measurement, quantity, limitMode);
+    }
+
+    public ILimit CreateNew(ILimit other)
+    {
+        return GetStoredRateComponent(other, LimitSet) ?? throw new InvalidOperationException(null);
     }
 
     #region Override methods
@@ -100,11 +101,6 @@ public sealed class LimitFactory : RateComponentFactory, ILimitFactory
 
         return CreateBaseMeasure(measurement, (ValueType)DefaultRateComponentQuantity);
     }
-
-    public ILimit CreateNew(ILimit other)
-    {
-        return GetStoredRateComponent(other, LimitSet) ?? throw new InvalidOperationException(null);
-    }
     #endregion
     #endregion
 
@@ -113,7 +109,16 @@ public sealed class LimitFactory : RateComponentFactory, ILimitFactory
     {
         ulong convertedQuantity = (ulong)ConvertQuantity(quantity);
 
-        return Create(measurement, convertedQuantity, limitMode);
+        ILimit limit = new Limit(this, measurement, convertedQuantity, limitMode);
+
+        return CreateNew(limit);
+    }
+
+    private ILimit GetOrCreateStoredLimit(Enum measureUnit, ValueType quantity, LimitMode limitMode)
+    {
+        IMeasurement measurement = MeasurementFactory.Create(measureUnit);
+
+        return GetOrCreateStoredLimit(measurement, quantity, limitMode);
     }
     #endregion
 }

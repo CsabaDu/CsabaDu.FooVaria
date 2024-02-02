@@ -91,18 +91,14 @@
             #endregion
         }
 
-
         public IBaseMeasure? ExchangeTo(Enum measureUnit) // MeasureUnitCode ??
         {
             if (!IsExchangeableTo(measureUnit)) return null;
 
-            decimal exchangeRate = BaseMeasurement.GetExchangeRate(measureUnit);
-
-            if (GetRateComponentCode() == RateComponentCode.Limit && GetDefaultQuantity() % exchangeRate > 0) return null; // ???
-
             IBaseMeasurementFactory factory = GetBaseMeasurementFactory();
             IBaseMeasurement baseMeasurement = factory.CreateBaseMeasurement(measureUnit)!;
-            decimal quantity = GetDefaultQuantity() / exchangeRate;
+            decimal quantity = GetDefaultQuantity();
+            quantity /= BaseMeasurement.GetExchangeRate(measureUnit);
 
             return GetBaseMeasure(baseMeasurement, quantity);
         }
@@ -173,11 +169,9 @@
 
         public object GetQuantity(TypeCode quantityTypeCode)
         {
-            ValidateQuantityTypeCode(quantityTypeCode, nameof(quantityTypeCode));
-
             ValueType quantity = (ValueType)Quantity;
 
-            return quantity.ToQuantity(quantityTypeCode) ?? throw new InvalidOperationException(null);
+            return quantity.ToQuantity(quantityTypeCode) ?? throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
         }
 
         public TypeCode? GetQuantityTypeCode(object quantity)

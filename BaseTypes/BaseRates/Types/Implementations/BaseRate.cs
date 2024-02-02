@@ -204,7 +204,9 @@ public abstract class BaseRate : Quantifiable, IBaseRate
 
     public bool? FitsIn(ILimiter? limiter)
     {
-        throw new NotImplementedException();
+        if (limiter is not IBaseRate baseRate) return null;
+
+        return FitsIn(baseRate, limiter!.LimitMode);
     }
 
     public bool? FitsIn(IBaseRate? baseRate, LimitMode? limitMode)

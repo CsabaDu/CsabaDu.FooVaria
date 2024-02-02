@@ -48,9 +48,7 @@
             bool exists = rateComponentSet.Contains(NullChecked(other, nameof(other)))
                 || rateComponentSet.Add(other!);
 
-            if (!exists) return null;
-
-            return rateComponentSet.TryGetValue(other!, out T? stored) ?
+            return exists && rateComponentSet.TryGetValue(other!, out T? stored) ?
                 stored
                 : null;
         }

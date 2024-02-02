@@ -36,12 +36,6 @@ public sealed class DenominatorFactory : RateComponentFactory<IDenominator>, IDe
         return GetOrCreateStoredDenominator(measurement);
     }
 
-    //public IDenominator Create(string name, ValueType quantity)
-    //{
-    //    IMeasurement measurement = MeasurementFactory.Create(name);
-
-    //    return GetOrCreateStoredRateComponent(measurement, quantity);
-    //}
 
     public IDenominator Create(string name)
     {
@@ -59,40 +53,55 @@ public sealed class DenominatorFactory : RateComponentFactory<IDenominator>, IDe
     {
         Enum measureUnit = NullChecked(baseMeasure, nameof(baseMeasure)).GetMeasureUnit();
 
-        return Create(measureUnit, quantity);
+        return GetOrCreateStoredDenominator(measureUnit, quantity);
     }
 
-    //public IDenominator Create(Enum measureUnit, ValueType quantity)
-    //{
-    //    IMeasurement measurement = MeasurementFactory.Create(measureUnit);
-
-    //    return GetOrCreateStoredRateComponent(measurement, quantity);
-    //}
-
-    //public IDenominator? Create(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
-    //{
-    //    IMeasurement? measurement = MeasurementFactory.Create(measureUnit, exchangeRate, customName);
-
-    //    if (measurement == null) return null;
-
-    //    return GetOrCreateStoredRateComponent(measurement, quantity);
-    //}
-
-    //public IDenominator? Create(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity)
-    //{
-    //    IMeasurement? measurement = MeasurementFactory.Create(customName, measureUnitCode, exchangeRate);
-
-    //    if (measurement == null) return null;
-
-    //    return GetOrCreateStoredRateComponent(measurement, quantity);
-    //}
-
     #region Override methods
+    public override IDenominator Create(string name, ValueType quantity)
+    {
+        IMeasurement measurement = MeasurementFactory.Create(name);
+
+        return GetOrCreateStoredDenominator(measurement, quantity);
+    }
+
+    public override IDenominator Create(Enum measureUnit, ValueType quantity)
+    {
+        return GetOrCreateStoredDenominator(measureUnit, quantity);
+    }
+
+    public override IDenominator? Create(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
+    {
+        IMeasurement? measurement = MeasurementFactory.Create(measureUnit, exchangeRate, customName);
+
+        if (measurement == null) return null;
+
+        return GetOrCreateStoredDenominator(measurement, quantity);
+    }
+
+    public override IDenominator? Create(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity)
+    {
+        IMeasurement? measurement = MeasurementFactory.Create(customName, measureUnitCode, exchangeRate);
+
+        if (measurement == null) return null;
+
+        return GetOrCreateStoredDenominator(measurement, quantity);
+    }
+
+    public override IDenominator Create(IBaseMeasure baseMeasure)
+    {
+        if (NullChecked(baseMeasure, nameof(baseMeasure)) is IDenominator denominator) return CreateNew(denominator);
+
+        Enum measureUnit = baseMeasure.GetMeasureUnit();
+        ValueType quantity = baseMeasure.GetDecimalQuantity();
+
+        return GetOrCreateStoredDenominator(measureUnit, quantity);
+    }
+
     public override IDenominator CreateBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity)
     {
         Enum measureUnit = NullChecked(baseMeasurement, nameof(baseMeasurement)).GetMeasureUnit();
 
-        return Create(measureUnit, quantity);
+        return GetOrCreateStoredDenominator(measureUnit, quantity);
     }
 
     public override IDenominator? CreateDefault(MeasureUnitCode measureUnitCode)
@@ -112,6 +121,15 @@ public sealed class DenominatorFactory : RateComponentFactory<IDenominator>, IDe
     #endregion
 
     #region Private methods
+    private IDenominator GetOrCreateStoredDenominator(IMeasurement measurement, ValueType quantity)
+    {
+        decimal convertedQuantity = (decimal)ConvertQuantity(quantity);
+
+        IDenominator denominator = new Denominator(this, measurement, convertedQuantity);
+
+        return CreateNew(denominator);
+    }
+
     private IDenominator GetOrCreateStoredDenominator(IMeasurement measurement)
     {
         decimal quantity = (decimal)DefaultRateComponentQuantity;
@@ -119,36 +137,11 @@ public sealed class DenominatorFactory : RateComponentFactory<IDenominator>, IDe
         return GetOrCreateStoredDenominator(measurement, quantity);
     }
 
-    private IDenominator GetOrCreateStoredDenominator(IMeasurement measurement, ValueType quantity)
+    private IDenominator GetOrCreateStoredDenominator(Enum measureUnit, ValueType quantity)
     {
-        ulong convertedQuantity = (ulong)ConvertQuantity(quantity);
+        IMeasurement measurement = MeasurementFactory.Create(measureUnit);
 
-        return (IDenominator)CreateBaseMeasure(measurement, convertedQuantity);
-    }
-
-    public override IDenominator Create(string name, ValueType quantity)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override IDenominator Create(Enum measureUnit, ValueType quantity)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override IDenominator? Create(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override IDenominator? Create(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override IDenominator Create(IBaseMeasure baseMeasure)
-    {
-        throw new NotImplementedException();
+        return GetOrCreateStoredDenominator(measurement, quantity);
     }
     #endregion
 }

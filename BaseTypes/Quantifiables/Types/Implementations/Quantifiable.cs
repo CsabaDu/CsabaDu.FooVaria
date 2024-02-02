@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Statics;
+
+namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.Implementations;
 
 public abstract class Quantifiable : Measurable, IQuantifiable
 {
@@ -139,10 +141,15 @@ public abstract class Quantifiable : Measurable, IQuantifiable
 
         return RoundQuantity(defaultQuantity);
     }
-    //protected static LimitMode GetLimitMode(ILimiter limiter)
-    //{
-    //    return NullChecked(limiter, nameof(limiter)).LimitMode;
-    //}
+
+    protected static object GetQuantity<T, TNum>(T quantifiable, TypeCode quantityTypeCode)
+        where T : class, IQuantifiable, IQuantity<TNum>
+        where TNum : struct
+    {
+        ValueType quantity = (ValueType)(object)quantifiable.GetQuantity();
+
+        return quantity.ToQuantity(quantityTypeCode) ?? throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
+    }
     #endregion
     #endregion
 }

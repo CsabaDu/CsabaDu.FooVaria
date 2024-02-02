@@ -100,11 +100,6 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
         return GetDefaultQuantity() / other.GetDefaultQuantity();
     }
 
-    public void ValidateQuantifiable(IQuantifiable? quantifiable, string paramName)
-    {
-        throw new NotImplementedException();
-    }
-
     public void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)
     {
         IBaseMeasure baseMeasure = NullChecked(spreadMeasure, paramName).GetSpreadMeasure() as IBaseMeasure ?? throw new InvalidOperationException(null);
@@ -156,20 +151,10 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
         return baseSpread.GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
     }
 
-    public object GetQuantity(RoundingMode roundingMode)
-    {
-        throw new NotImplementedException();
-    }
-
     public object GetQuantity(TypeCode quantityTypeCode)
     {
-        throw new NotImplementedException();
+        return GetQuantity<IBaseSpread, double>(this, quantityTypeCode);
     }
-
-    //public void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramNamme)
-    //{
-    //    throw new NotImplementedException();
-    //}
     #endregion
     #endregion
 }
