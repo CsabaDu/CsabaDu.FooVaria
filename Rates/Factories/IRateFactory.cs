@@ -4,5 +4,5 @@ public interface IRateFactory : IBaseRateFactory, IFactory<IRate>
 {
     IDenominatorFactory DenominatorFactory { get; init; }
 
-    IRate Create(params IRateComponent[] rateComponents);
+    IRate Create(params IBaseMeasure[] rateComponents);
 }

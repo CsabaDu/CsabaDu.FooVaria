@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.IBaseMeasurement" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.5" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\IBaseMeasurement.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Behaviors.IConstantExchangeRates" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Behaviors\IConstantExchangeRates.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Behaviors.IExchangeRateCollection" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAECAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Behaviors\IExchangeRateCollection.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IProportional&lt;T&gt;" Collapsed="true">
+    <Position X="8.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Types.IMeasurable" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
+    <Position X="2.75" Y="1.5" Width="1.25" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IMeasureUnit" IsHidden="true" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IMeasureUnit" Collapsed="true">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IMeasureUnit&lt;TEnum&gt;" Collapsed="true">
+    <Position X="4.25" Y="1.5" Width="2" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IExchangeable&lt;TContext&gt;" Collapsed="true">
+    <Position X="6.5" Y="1.5" Width="2" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Common.Behaviors.INamed" Collapsed="true">
+    <Position X="10.5" Y="1.5" Width="1.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CsabaDu.FooVaria.DryBodies.Types.Implementations.Cuboid" Collapsed="true">
+    <Position X="2.5" Y="9.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AACBAYAAAAIAAAAADAAAACCAAIQQEBRAAAAAAEAABAA=</HashCode>
+      <FileName>Types\Implementations\Cuboid.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.DryBodies.Types.Implementations.Cylinder" Collapsed="true">
+    <Position X="0.5" Y="9.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAABYAAAAIAAAAACAAAACCAAIAQAARAAAAAAAgABAA=</HashCode>
+      <FileName>Types\Implementations\Cylinder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.DryBodies.Types.Implementations.DryBody" Collapsed="true">
+    <Position X="1.75" Y="6.5" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAARAABAIAAAAAAAAFAADAAAAAEAAAAgIAAAAAAAA=</HashCode>
+      <FileName>Types\Implementations\DryBody.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.DryBodies.Types.Implementations.DryBody&lt;TSelf, TBFace&gt;" Collapsed="true">
+    <Position X="1.5" Y="7.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAFAACAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Types\Implementations\DryBody.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Shapes.Types.Implementations.Shape" Collapsed="true">
+    <Position X="1.75" Y="5.25" Width="1.25" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

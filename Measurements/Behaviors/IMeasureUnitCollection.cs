@@ -6,11 +6,11 @@ public interface IMeasureUnitCollection
     string GetDefaultName();
     string GetDefaultName(Enum measureUnit);
 
-    bool TryGetMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, [NotNullWhen(true)] out Enum? measureUnit);
+    bool TryGetMeasureUnit(MeasureUnitCode measureUnitCode, decimal exchangeRate, [NotNullWhen(true)] out Enum? measureUnit);
     bool TryGetMeasureUnit(string name, [NotNullWhen(true)] out Enum? measureUnit);
 
-    IDictionary<string, object> GetMeasureUnitCollection(MeasureUnitTypeCode measureUnitTypeCode);
+    IDictionary<string, object> GetMeasureUnitCollection(MeasureUnitCode measureUnitCode);
     IDictionary<string, object> GetMeasureUnitCollection();
-    IEnumerable<object> GetValidMeasureUnits(MeasureUnitTypeCode measureUnitTypeCode);
+    IEnumerable<object> GetValidMeasureUnits(MeasureUnitCode measureUnitCode);
 
 }

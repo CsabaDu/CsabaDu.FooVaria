@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Interface Name="CsabaDu.FooVaria.Measures.Types.IArea" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="11" Width="1.25" />
+    <InheritanceLine Type="CsabaDu.FooVaria.Measures.Types.IMeasure&lt;TSelf, TNum, TEnum&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="10.17" Y="7.191" />
+        <Point X="10.17" Y="11.346" />
+        <Point X="8.75" Y="11.346" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ISpreadMeasure" FixedFromPoint="true">
+      <Path>
+        <Point X="3.875" Y="10.191" />
+        <Point X="3.875" Y="11.346" />
+        <Point X="7.5" Y="11.346" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\IArea.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Measures.Types.ICash" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="11.75" Width="1.25" />
+    <InheritanceLine Type="CsabaDu.FooVaria.Measures.Types.IMeasure&lt;TSelf, TNum, TEnum&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="10.285" Y="7.191" />
+        <Point X="10.285" Y="12.096" />
+        <Point X="8.75" Y="12.096" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="CsabaDu.FooVaria.Measures.Behaviors.ICustomMeasure&lt;TSelf, TNum, TEnum&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="2.25" Y="11.691" />
+        <Point X="2.25" Y="12.096" />
+        <Point X="7.5" Y="12.096" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\ICash.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Measures.Types.IDistance" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="8.75" Width="1.25" />
+    <InheritanceLine Type="CsabaDu.FooVaria.Measures.Types.IMeasure&lt;TSelf, TNum, TEnum&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="9.83" Y="7.191" />
+        <Point X="9.83" Y="9.096" />
+        <Point X="8.75" Y="9.096" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="CsabaDu.FooVaria.Measures.Behaviors.IConvertMeasure&lt;TSelf, TOther&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="6.25" Y="7.191" />
+        <Point X="6.25" Y="9.096" />
+        <Point X="7.5" Y="9.096" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\IDistance.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Measures.Types.IExtent" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="7.25" Width="1.25" />
+    <InheritanceLine Type="CsabaDu.FooVaria.Measures.Types.IMeasure&lt;TSelf, TNum, TEnum&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="9.603" Y="7.191" />
+        <Point X="9.603" Y="7.596" />
+        <Point X="8.75" Y="7.596" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="CsabaDu.FooVaria.Measures.Behaviors.IConvertMeasure&lt;TSelf, TOther&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="6.5" Y="7.191" />
+        <Point X="6.5" Y="7.596" />
+        <Point X="7.5" Y="7.596" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\IExtent.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Measures.Types.IMeasure" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Types\IMeasure.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Measures.Types.IMeasure&lt;TSelf, TNum&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9" Y="4.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\IMeasure.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Measures.Types.IMeasure&lt;TSelf, TNum, TEnum&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.75" Y="6.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\IMeasure.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Measures.Types.IPieceCount" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="12.5" Width="1.25" />
+    <InheritanceLine Type="CsabaDu.FooVaria.Measures.Types.IMeasure&lt;TSelf, TNum, TEnum&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="10.397" Y="7.191" />
+        <Point X="10.397" Y="12.846" />
+        <Point X="8.75" Y="12.846" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="CsabaDu.FooVaria.Measures.Behaviors.ICustomMeasure&lt;TSelf, TNum, TEnum&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="1.75" Y="11.691" />
+        <Point X="1.75" Y="12.846" />
+        <Point X="7.5" Y="12.846" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\IPieceCount.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Measures.Types.ITimePeriod" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="9.5" Width="1.25" />
+    <InheritanceLine Type="CsabaDu.FooVaria.Measures.Types.IMeasure&lt;TSelf, TNum, TEnum&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="9.943" Y="7.191" />
+        <Point X="9.943" Y="9.846" />
+        <Point X="8.75" Y="9.846" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="CsabaDu.FooVaria.Measures.Behaviors.IConvertMeasure&lt;TSelf, TOther&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="6.125" Y="7.191" />
+        <Point X="6.125" Y="9.846" />
+        <Point X="7.5" Y="9.846" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\ITimePeriod.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Measures.Types.IVolume" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="10.25" Width="1.25" />
+    <InheritanceLine Type="CsabaDu.FooVaria.Measures.Types.IMeasure&lt;TSelf, TNum, TEnum&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="10.057" Y="7.191" />
+        <Point X="10.057" Y="10.596" />
+        <Point X="8.75" Y="10.596" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ISpreadMeasure" FixedFromPoint="true">
+      <Path>
+        <Point X="4.375" Y="10.191" />
+        <Point X="4.375" Y="10.596" />
+        <Point X="7.5" Y="10.596" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="CsabaDu.FooVaria.Measures.Behaviors.IConvertMeasure&lt;TSelf, TOther&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="6" Y="7.191" />
+        <Point X="6" Y="10.596" />
+        <Point X="7.5" Y="10.596" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\IVolume.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Measures.Types.IWeight" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="8" Width="1.25" />
+    <InheritanceLine Type="CsabaDu.FooVaria.Measures.Types.IMeasure&lt;TSelf, TNum, TEnum&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="9.715" Y="7.191" />
+        <Point X="9.715" Y="8.346" />
+        <Point X="8.75" Y="8.346" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="CsabaDu.FooVaria.Measures.Behaviors.IConvertMeasure&lt;TSelf, TOther&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="6.375" Y="7.191" />
+        <Point X="6.375" Y="8.346" />
+        <Point X="7.5" Y="8.346" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\IWeight.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Measures.Behaviors.IConvertMeasure" Collapsed="true">
+    <Position X="5.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Behaviors\IConvertMeasure.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Measures.Behaviors.IConvertMeasure&lt;TSelf, TOther&gt;" Collapsed="true">
+    <Position X="5" Y="6.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Behaviors\IConvertMeasure.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Measures.Behaviors.ICustomMeasure" Collapsed="true">
+    <Position X="1.25" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Behaviors\ICustomMeasure.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Measures.Behaviors.ICustomMeasure&lt;TSelf, TNum, TEnum&gt;" Collapsed="true">
+    <Position X="0.5" Y="11" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Behaviors\ICustomMeasure.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IShapeComponent" Collapsed="true">
+    <Position X="7.25" Y="5.5" Width="1.75" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ISpreadMeasure" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
+    <Position X="3.25" Y="9.5" Width="1.75" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity" IsHidden="true" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity" Collapsed="true">
+    <Position X="3.5" Y="7.25" Width="1.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity&lt;TNum&gt;" Collapsed="true">
+    <Position X="3.25" Y="8.25" Width="1.75" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IMeasureUnit" Collapsed="true">
+    <Position X="6.75" Y="3" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IMeasureUnit&lt;TEnum&gt;" Collapsed="true">
+    <Position X="6.5" Y="4" Width="2" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.IBaseMeasure&lt;TSelf&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
+    <Position X="9" Y="1.75" Width="2" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.IBaseMeasure" FixedFromPoint="true">
+      <Path>
+        <Point X="10" Y="1.191" />
+        <Point X="10" Y="1.75" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IMeasureUnit" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity" IsHidden="true" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.IBaseMeasure&lt;TSelf, TNum&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
+    <Position X="11" Y="3" Width="2.25" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.IBaseMeasure" FixedFromPoint="true">
+      <Path>
+        <Point X="10.5" Y="1.191" />
+        <Point X="10.5" Y="1.491" />
+        <Point X="12.125" Y="1.491" />
+        <Point X="12.125" Y="3" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IMeasureUnit" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity&lt;TNum&gt;" IsHidden="true" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ICalculate" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ICalculate&lt;TSelf, TOperand&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6" Y="1.75" Width="2.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ISum&lt;TSelf&gt;" Collapsed="true">
+    <Position X="8" Y="0.5" Width="1.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IMultiply&lt;TSelf, TOperand&gt;" Collapsed="true">
+    <Position X="1.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IDivide&lt;TSelf, TOperand&gt;" Collapsed="true">
+    <Position X="4.25" Y="0.5" Width="2" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.IBaseMeasure" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IMeasureUnit" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity" IsHidden="true" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

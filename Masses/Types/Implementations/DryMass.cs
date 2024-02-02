@@ -95,12 +95,12 @@
             return (IDryMassFactory)Factory;
         }
 
-        public override IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
+        public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
         {
-            return base.GetMeasureUnitTypeCodes().Append(MeasureUnitTypeCode.ExtentUnit);
+            return base.GetMeasureUnitCodes().Append(MeasureUnitCode.ExtentUnit);
         }
 
-        public override IMass GetMass(IWeight weight, IBody body)
+        public override IDryMass GetMass(IWeight weight, IBody body)
         {
             string paramName = nameof(body);
 

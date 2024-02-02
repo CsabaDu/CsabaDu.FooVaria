@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Interface Name="CsabaDu.FooVaria.DryBodies.Types.ICuboid" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4.75" Y="4.25" Width="1.5" />
+    <InheritanceLine Type="CsabaDu.FooVaria.DryBodies.Types.IDryBody&lt;TSelf, TBFace&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="4.625" Y="3.691" />
+        <Point X="4.625" Y="3.95" />
+        <Point X="5.5" Y="3.95" />
+        <Point X="5.5" Y="4.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\ICuboid.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.DryBodies.Types.ICylinder" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.5" Y="4.25" Width="1.5" />
+    <InheritanceLine Type="CsabaDu.FooVaria.DryBodies.Types.IDryBody&lt;TSelf, TBFace&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="4.125" Y="3.691" />
+        <Point X="4.125" Y="3.95" />
+        <Point X="3.25" Y="3.95" />
+        <Point X="3.25" Y="4.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\ICylinder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.DryBodies.Types.IDryBody" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3.75" Y="1.75" Width="1.25" />
+    <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Types.IShape" FixedFromPoint="true">
+      <Path>
+        <Point X="4.375" Y="1.191" />
+        <Point X="4.375" Y="1.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAIAAAAAAAAEAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Types\IDryBody.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.DryBodies.Types.IDryBody&lt;TSelf, TBFace&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3.25" Y="3" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Types\IDryBody.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Shapes.Types.IShape" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3.75" Y="0.5" Width="1.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Shapes.Types.ICircularShape&lt;TSelf, TTangent&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="3" Width="2.5" />
+    <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Types.IShape" IsHidden="true" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Shapes.Types.IRectangularShape&lt;TSelf, TTangent&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="3" Width="2.75" />
+    <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Types.IShape" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Behaviors.IHorizontalRotation" IsHidden="true" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Shapes.Behaviors.IHorizontalRotation" Collapsed="true">
+    <Position X="9" Y="2" Width="1.75" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Shapes.Behaviors.IHorizontalRotation&lt;TSelf&gt;" Collapsed="true">
+    <Position X="8.75" Y="3" Width="2.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.DryBodies.Behaviors.ISpatialRotation" Collapsed="true">
+    <Position X="11.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Behaviors\ISpatialRotation.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.DryBodies.Behaviors.ISpatialRotation&lt;TSelf&gt;" Collapsed="true">
+    <Position X="11.25" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Behaviors\ISpatialRotation.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Common.Types.ICommonBase&lt;TSelf&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="1.75" Width="1.75" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Shapes.Behaviors.IHeight" Collapsed="true">
+    <Position X="6.75" Y="0.5" Width="1.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseSpreads.Types.IBody" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="0.5" Width="1.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.DryBodies.Behaviors.IProjection" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Behaviors\IProjection.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

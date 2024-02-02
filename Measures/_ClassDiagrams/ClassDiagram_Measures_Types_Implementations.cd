@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CsabaDu.FooVaria.Measures.Types.Implementations.Area" Collapsed="true">
+    <Position X="8" Y="9.75" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAABAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\Implementations\Area.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Measures.Types.Implementations.Cash" Collapsed="true">
+    <Position X="9.5" Y="9.75" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\Implementations\Cash.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Measures.Types.Implementations.Distance" Collapsed="true">
+    <Position X="3.5" Y="9.75" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Types\Implementations\Distance.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Measures.Types.Implementations.Extent" Collapsed="true">
+    <Position X="0.5" Y="9.75" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Types\Implementations\Extent.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Measures.Types.Implementations.Measure" Collapsed="true">
+    <Position X="5.5" Y="5.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAgQAAAAAAAAADAACCAAAAAABAAAIQhAAAAAA=</HashCode>
+      <FileName>Types\Implementations\Measure.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Measures.Types.Implementations.Measure&lt;TSelf, TNum&gt;" Collapsed="true">
+    <Position X="5.5" Y="7" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAgAACAAAAAAAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\Implementations\Measure.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Measures.Types.Implementations.Measure&lt;TSelf, TNum, TEnum&gt;" Collapsed="true">
+    <Position X="5.25" Y="8.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAgAAAAAAAAAAAAAAAAAQAAAAACCAAEAA=</HashCode>
+      <FileName>Types\Implementations\Measure.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Measures.Types.Implementations.PieceCount" Collapsed="true">
+    <Position X="11" Y="9.75" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\Implementations\PieceCount.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Measures.Types.Implementations.TimePeriod" Collapsed="true">
+    <Position X="5" Y="9.75" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Types\Implementations\TimePeriod.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Measures.Types.Implementations.Volume" Collapsed="true">
+    <Position X="6.5" Y="9.75" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAgAABAAAAAAAAAAAAEAAAAAAAACAAAAA=</HashCode>
+      <FileName>Types\Implementations\Volume.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Measures.Types.Implementations.Weight" Collapsed="true">
+    <Position X="2" Y="9.75" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Types\Implementations\Weight.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations.BaseMeasure&lt;TSeff&gt;" Collapsed="true">
+    <Position X="5.5" Y="4.5" Width="1.75" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

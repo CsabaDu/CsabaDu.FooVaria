@@ -4,14 +4,14 @@ namespace CsabaDu.FooVaria.Shapes.Statics
 {
     public static class ExceptionMethods
     {
-        public static InvalidEnumArgumentException InvalidShapeExtentTypeCodeEnumArgumentException(ShapeExtentTypeCode shapeExtentTypeCode)
+        public static InvalidEnumArgumentException InvalidShapeExtentCodeEnumArgumentException(ShapeExtentCode shapeExtentCode)
         {
-            return InvalidShapeExtentTypeCodeEnumArgumentException(shapeExtentTypeCode, nameof(shapeExtentTypeCode));
+            return InvalidShapeExtentCodeEnumArgumentException(shapeExtentCode, nameof(shapeExtentCode));
         }
 
-        public static InvalidEnumArgumentException InvalidShapeExtentTypeCodeEnumArgumentException(ShapeExtentTypeCode shapeExtentTypeCode, string paramName)
+        public static InvalidEnumArgumentException InvalidShapeExtentCodeEnumArgumentException(ShapeExtentCode shapeExtentCode, string paramName)
         {
-            return new InvalidEnumArgumentException(paramName, (int)shapeExtentTypeCode, shapeExtentTypeCode.GetType());
+            return new InvalidEnumArgumentException(paramName, (int)shapeExtentCode, shapeExtentCode.GetType());
         }
 
     }

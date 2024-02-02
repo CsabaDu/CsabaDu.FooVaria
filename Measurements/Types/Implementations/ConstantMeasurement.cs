@@ -9,9 +9,9 @@ internal sealed class ConstantMeasurement : Measurement, IConstantMeasurement
     #endregion
 
     #region Public methods
-    public override IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
+    public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
     {
-        return base.GetMeasureUnitTypeCodes().Where(x => !x.IsCustomMeasureUnitTypeCode());
+        return base.GetMeasureUnitCodes().Where(x => !x.IsCustomMeasureUnitCode());
     }
     #endregion
 }

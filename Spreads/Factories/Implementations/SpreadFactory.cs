@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.RateComponents.Factories;
-
-namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
+﻿namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
 {
     public abstract class SpreadFactory : ISpreadFactory
     {
@@ -25,7 +23,7 @@ namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
 
     public abstract class SpreadFactory<T, TSMeasure> : SpreadFactory, ISpreadFactory<T, TSMeasure>
         where T : class, ISpread
-        where TSMeasure : class, IMeasure, ISpreadMeasure
+        where TSMeasure : class, IMeasure, ISpreadMeasure, ILimitable
     {
         #region Constructors
         private protected SpreadFactory(IMeasureFactory measureFactory) : base(measureFactory)
@@ -38,7 +36,7 @@ namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
         #region Sealed methods
         public override sealed T CreateBaseSpread(ISpreadMeasure spreadMeasure)
         {
-            if (SpreadMeasures.GetValidSpreadMeasure(spreadMeasure) is TSMeasure measure) return Create(measure);
+            if (GetValidSpreadMeasure(spreadMeasure) is TSMeasure measure) return Create(measure);
 
             throw ArgumentTypeOutOfRangeException(nameof(spreadMeasure), spreadMeasure);
         }

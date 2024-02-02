@@ -2,10 +2,13 @@
 
 public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
 {
+    #region Constructors
     public FlatRateFactory(IDenominatorFactory denominatorFactory) : base(denominatorFactory)
     {
     }
+    #endregion
 
+    #region Public methods
     public IFlatRate Create(IMeasure numerator, string name, ValueType denominatorQuantity)
     {
         IDenominator denominator = DenominatorFactory.Create(name, denominatorQuantity);
@@ -25,9 +28,9 @@ public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
         return new FlatRate(this, numerator, denominatorMeasureUnit, denominatorQuantity);
     }
 
-    public IFlatRate Create(IMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
+    public IFlatRate Create(IMeasure numerator, MeasureUnitCode denominatorMeasureUnitCode)
     {
-        return new FlatRate(this, numerator, denominatorMeasureUnitTypeCode);
+        return new FlatRate(this, numerator, denominatorMeasureUnitCode);
     }
 
     public IFlatRate Create(IMeasure numerator, IMeasurement denominatorMeasurement)
@@ -45,7 +48,13 @@ public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
         return new FlatRate(this, rate);
     }
 
-    public override IFlatRate Create(params IRateComponent[] rateComponents)
+    public IFlatRate CreateNew(IFlatRate other)
+    {
+        return new FlatRate(other);
+    }
+
+    #region Override methods
+    public override IFlatRate Create(params IBaseMeasure[] rateComponents)
     {
         string paramName = nameof(rateComponents);
         int count = rateComponents?.Length ?? 0;
@@ -74,20 +83,17 @@ public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
         return Create(measure, denominator);
     }
 
-    public override IFlatRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
+    public override IFlatRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitCode denominatorMeasureUnitCode)
     {
         IMeasure measure = GetValidRateParam<IMeasure>(numerator, nameof(numerator));
 
-        return Create(measure, denominatorMeasureUnitTypeCode);
-    }
-
-    public IFlatRate CreateNew(IFlatRate other)
-    {
-        return new FlatRate(other);
+        return Create(measure, denominatorMeasureUnitCode);
     }
 
     public override IFlatRate CreateNew(IRate other)
     {
         return Create(other);
     }
+    #endregion
+    #endregion
 }

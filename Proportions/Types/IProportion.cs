@@ -2,26 +2,26 @@
 {
     public interface IProportion : IBaseRate
     {
-        MeasureUnitTypeCode NumeratorMeasureUnitTypeCode { get; init; }
-        //MeasureUnitTypeCode? this[RateComponentCode rateComponentCode] { get; }
+        MeasureUnitCode NumeratorMeasureUnitCode { get; init; }
+        decimal DefaultQuantity { get; init; }
 
         IProportion GetProportion(IBaseRate baseRate);
-        IProportion GetProportion(IRateComponent numerator, IRateComponent denominator);
     }
 
-    public interface IProportion<TDEnum> : IProportion, IDenominate<IRateComponent, TDEnum>
+    public interface IProportion<TDEnum> : IProportion, IDenominate<IMeasure, TDEnum>
         where TDEnum : struct, Enum
     {
-        IProportion<TDEnum> GetProportion(IRateComponent numerator, TDEnum denominatorMeasureUnit);
-        IProportion<TDEnum> GetProportion(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal numeratorDefaultQuantity, TDEnum denominatorMeasureUnit);
+        IProportion GetProportion(IBaseMeasure numerator, IBaseMeasure denominator);
+        IProportion<TDEnum> GetProportion(IBaseMeasure numerator, TDEnum denominatorMeasureUnit);
         decimal GetQuantity(TDEnum denominatorMeasureUnit);
     }
 
-    public interface IProportion<TNEnum, TDEnum> : IProportion<TDEnum>, IMeasureUnit<TNEnum>
+    public interface IProportion<TNEnum, TDEnum> : IProportion<TDEnum>, IMeasureUnit<TNEnum>, ILimitable<IProportion<TNEnum, TDEnum>>
         where TNEnum : struct, Enum
         where TDEnum : struct, Enum
     {
         IProportion<TNEnum, TDEnum> GetProportion(TNEnum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit);
         decimal GetQuantity(TNEnum numeratorMeasureUnit, TDEnum denominatorMeasureUnit);
+        decimal GetQuantity(TNEnum numeratorMeasureUnit);
     }
 }

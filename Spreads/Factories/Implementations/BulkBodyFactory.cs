@@ -1,5 +1,4 @@
-﻿
-namespace CsabaDu.FooVaria.Spreads.Factories.Implementations;
+﻿namespace CsabaDu.FooVaria.Spreads.Factories.Implementations;
 
 public sealed class BulkBodyFactory : SpreadFactory<IBulkBody, IVolume, VolumeUnit>, IBulkBodyFactory
 {
@@ -23,7 +22,7 @@ public sealed class BulkBodyFactory : SpreadFactory<IBulkBody, IVolume, VolumeUn
 
     public override IBulkBody Create(params IExtent[] shapeExtents)
     {
-        IVolume volume = SpreadMeasures.GetVolume(MeasureFactory, shapeExtents);
+        IVolume volume = GetVolume(MeasureFactory, shapeExtents);
 
         return Create(volume);
     }

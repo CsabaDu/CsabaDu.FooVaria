@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Masses.Types.Implementations
+﻿using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Enums;
+
+namespace CsabaDu.FooVaria.Masses.Types.Implementations
 {
     internal abstract class Mass : Quantifiable, IMass
     {
@@ -23,7 +25,7 @@
             #endregion
         }
 
-        private protected Mass(IMassFactory factory, IWeight weight, IPlaneShape baseFace, IExtent height) : base(factory, MeasureUnitTypeCode.WeightUnit, baseFace, height)
+        private protected Mass(IMassFactory factory, IWeight weight, IPlaneShape baseFace, IExtent height) : base(factory, MeasureUnitCode.WeightUnit, baseFace, height)
         {
             validateParams();
 
@@ -39,7 +41,7 @@
             #endregion
         }
 
-        private protected Mass(IMassFactory factory, IWeight weight, params IExtent[] shapeExtents) : base(factory, MeasureUnitTypeCode.WeightUnit, shapeExtents)
+        private protected Mass(IMassFactory factory, IWeight weight, params IExtent[] shapeExtents) : base(factory, MeasureUnitCode.WeightUnit, shapeExtents)
         {
             validateParams();
 
@@ -60,10 +62,10 @@
 
         #region Properties
         public IWeight Weight { get; init; }
-        public IMeasure? this[MeasureUnitTypeCode measureUnitTypeCode] => measureUnitTypeCode switch
+        public IMeasure? this[MeasureUnitCode measureUnitCode] => measureUnitCode switch
         {
-            MeasureUnitTypeCode.VolumeUnit => GetVolume(),
-            MeasureUnitTypeCode.WeightUnit => Weight,
+            MeasureUnitCode.VolumeUnit => GetVolume(),
+            MeasureUnitCode.WeightUnit => Weight,
 
             _ => null,
         };
@@ -93,7 +95,7 @@
 
         public decimal GetDefaultQuantity(decimal ratio)
         {
-            return GetVolumeWeight(ratio).DefaultQuantity;
+            return GetVolumeWeight(ratio).GetDefaultQuantity();
         }
 
         public IProportion<WeightUnit, VolumeUnit> GetDensity()
@@ -101,18 +103,18 @@
             return GetFactory().CreateDensity(this);
         }
 
-        public MeasureUnitTypeCode GetMeasureUnitTypeCode()
+        public MeasureUnitCode GetMeasureUnitCode()
         {
-            bool isVolumeWeightGreater = GetDensity().DefaultQuantity < 1;
+            bool isVolumeWeightGreater = GetDensity().GetDefaultQuantity() < 1;
 
-            return GetMeasureUnitTypeCode(isVolumeWeightGreater);
+            return GetMeasureUnitCode(isVolumeWeightGreater);
         }
 
-        public MeasureUnitTypeCode GetMeasureUnitTypeCode(decimal ratio)
+        public MeasureUnitCode GetMeasureUnitCode(decimal ratio)
         {
             bool isVolumeWeightGreater = GetVolumeWeight(ratio).CompareTo(Weight) < 0;
 
-            return GetMeasureUnitTypeCode(isVolumeWeightGreater);
+            return GetMeasureUnitCode(isVolumeWeightGreater);
         }
 
         public double GetQuantity()
@@ -154,14 +156,14 @@
 
         public bool IsExchangeableTo(Enum? context)
         {
-            if (context is MeasureUnitTypeCode measureUnitTypeCode) return hasMeasureUnitTypeCode(measureUnitTypeCode);
+            if (context is MeasureUnitCode measureUnitCode) return hasMeasureUnitCode(measureUnitCode);
 
-            return IsValidMeasureUnit(context) && hasMeasureUnitTypeCode(MeasureUnitTypes.GetMeasureUnitTypeCode(context!));
+            return BaseMeasurement.IsValidMeasureUnit(context) && hasMeasureUnitCode(GetMeasureUnitCode(context!));
 
             #region Local methods
-            bool hasMeasureUnitTypeCode(MeasureUnitTypeCode measureUnitTypeCode)
+            bool hasMeasureUnitCode(MeasureUnitCode measureUnitCode)
             {
-                return GetMeasureUnitTypeCodes().Contains(measureUnitTypeCode);
+                return GetMeasureUnitCodes().Contains(measureUnitCode);
             }
             #endregion
         }
@@ -193,10 +195,9 @@
         }
 
         #region Override methods
-        public override IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
+        public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
         {
-            yield return MeasureUnitTypeCode.WeightUnit;
-            yield return MeasureUnitTypeCode.VolumeUnit;
+            return MeasureUnitCodes.Where(x => this[x] != null);
         }
 
         public override IMassFactory GetFactory()
@@ -217,7 +218,7 @@
 
         public override sealed decimal GetDefaultQuantity()
         {
-            return GetVolumeWeight().DefaultQuantity;
+            return GetVolumeWeight().GetDefaultQuantity();
         }
 
         public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
@@ -283,9 +284,9 @@
 
             IMass? exchangeMassToWeightUnit(WeightUnit weightUnit)
             {
-                IRateComponent? rateComponent = Weight.ExchangeTo(weightUnit);
+                IBaseMeasure? baseMeasure = Weight.ExchangeTo(weightUnit);
 
-                if (rateComponent is not IWeight weight) return null;
+                if (baseMeasure is not IWeight weight) return null;
 
                 return GetMass(weight, GetBody());
             }
@@ -324,11 +325,11 @@
                 : Weight;
         }
 
-        private MeasureUnitTypeCode GetMeasureUnitTypeCode(bool isVolumeWeightGreater)
+        private MeasureUnitCode GetMeasureUnitCode(bool isVolumeWeightGreater)
         {
             return isVolumeWeightGreater ?
-                GetBody().MeasureUnitTypeCode
-                : Weight.MeasureUnitTypeCode;
+                GetBody().MeasureUnitCode
+                : Weight.MeasureUnitCode;
         }
 
         #region Static methods
@@ -337,6 +338,22 @@
             IVolume volume = mass.GetVolume();
 
             return volume.ConvertMeasure();
+        }
+
+        public object GetQuantity(TypeCode quantityTypeCode)
+        {
+            object? quantity = GetQuantity().ToQuantity(quantityTypeCode);
+
+            return quantity ?? throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
+        }
+
+        public IWeight GetChargeableWeight(decimal ratio, WeightUnit weightUnit, RoundingMode roundingMode)
+        {
+            ValidateMeasureUnit(weightUnit, nameof(weightUnit));
+
+            return (IWeight)GetVolumeWeight(ratio)
+                .ExchangeTo(weightUnit)!
+                .Round(roundingMode);
         }
         #endregion
         #endregion

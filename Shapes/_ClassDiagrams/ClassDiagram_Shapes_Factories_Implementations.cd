@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="CsabaDu.FooVaria.Shapes.Factories.Implementations.ShapeFactory" Collapsed="true">
+  <Class Name="CsabaDu.FooVaria.BaseShapes.Factories.Implementations.ShapeFactory" Collapsed="true">
     <Position X="3.25" Y="0.5" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAABAAAQAAIAQAAAAAAAAARQAQAAAAAAAEAIAAI=</HashCode>
@@ -8,7 +8,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="CsabaDu.FooVaria.Shapes.Factories.Implementations.CylinderFactory" Collapsed="true">
+  <Class Name="CsabaDu.FooVaria.BaseShapes.Factories.Implementations.CylinderFactory" Collapsed="true">
     <Position X="5.5" Y="5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAQAAAA0AAAAAQAkAAQAAAAAAIAAA=</HashCode>
@@ -16,7 +16,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="CsabaDu.FooVaria.Shapes.Factories.Implementations.CuboidFactory" Collapsed="true">
+  <Class Name="CsabaDu.FooVaria.BaseShapes.Factories.Implementations.CuboidFactory" Collapsed="true">
     <Position X="3" Y="5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAQAAAA0AAAAAQAkAAQAAAAAAIAAE=</HashCode>
@@ -24,7 +24,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="CsabaDu.FooVaria.Shapes.Factories.Implementations.DryBodyFactory" Collapsed="true">
+  <Class Name="CsabaDu.FooVaria.BaseShapes.Factories.Implementations.DryBodyFactory" Collapsed="true">
     <Position X="4.75" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAgAAAIAAAAAAAAAAgAAAABAAEAAAAAAAAAAAAA=</HashCode>
@@ -32,7 +32,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="CsabaDu.FooVaria.Shapes.Factories.Implementations.DryBodyFactory&lt;T, TBFace&gt;" Collapsed="true">
+  <Class Name="CsabaDu.FooVaria.BaseShapes.Factories.Implementations.DryBodyFactory&lt;T, TBFace&gt;" Collapsed="true">
     <Position X="4.5" Y="3.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAIAAA=</HashCode>
@@ -40,7 +40,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="CsabaDu.FooVaria.Shapes.Factories.Implementations.CircleFactory" Collapsed="true">
+  <Class Name="CsabaDu.FooVaria.BaseShapes.Factories.Implementations.CircleFactory" Collapsed="true">
     <Position X="2.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAQAAAAgAAAAAQAkAAQAAAAAAIAAA=</HashCode>
@@ -48,7 +48,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="CsabaDu.FooVaria.Shapes.Factories.Implementations.RectangleFactory" Collapsed="true">
+  <Class Name="CsabaDu.FooVaria.BaseShapes.Factories.Implementations.RectangleFactory" Collapsed="true">
     <Position X="0.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAQAAAAgAAAAAQAkAAQAAAAAgIAAA=</HashCode>
@@ -56,7 +56,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="CsabaDu.FooVaria.Shapes.Factories.Implementations.PlaneShapeFactory" Collapsed="true">
+  <Class Name="CsabaDu.FooVaria.BaseShapes.Factories.Implementations.PlaneShapeFactory" Collapsed="true">
     <Position X="1.25" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAAAAAAAE=</HashCode>

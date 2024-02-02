@@ -1,6 +1,4 @@
-﻿
-
-namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations
+﻿namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations
 {
     public abstract class RateComponentFactory : IRateComponentFactory
     {
@@ -13,65 +11,53 @@ namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations
 
         #region Properties
         public IMeasurementFactory MeasurementFactory { get; init; }
-        public virtual object DefaultRateComponentQuantity => default(int);
+        public TypeCode QuantityTypeCode => Type.GetTypeCode(DefaultRateComponentQuantity.GetType());
+
+        #region Abstract properties
+        public abstract object DefaultRateComponentQuantity {  get; }
         public abstract RateComponentCode RateComponentCode { get; }
+        #endregion
         #endregion
 
         #region Public methods
-        public IRateComponent Create(Enum measureUnit, decimal defaultQuantity)
-        {
-            if (NullChecked(measureUnit, nameof(measureUnit)) is not MeasureUnitTypeCode measureUnitTypeCode) return Create(measureUnit, defaultQuantity);
-
-            return Create(measureUnitTypeCode.GetDefaultMeasureUnit(), defaultQuantity);
-        }
-
-        public IRateComponent CreateNew(IRateComponent other)
-        {
-            var (measurement, quantity) = GetRateComponentParams(other);
-            Enum measureUnit = measurement.GetMeasureUnit();
-
-            return Create(measureUnit, quantity);
-        }
-
         #region Abstract methods
-        public abstract IRateComponent Create(Enum measureUnit, ValueType quantity);
+        public abstract IBaseMeasure CreateBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity);
+        public abstract IMeasurable? CreateDefault(MeasureUnitCode measureUnitCode);
         #endregion
         #endregion
 
         #region Protected methods
+        protected object ConvertQuantity(ValueType quantity)
+        {
+            string paramName = nameof(quantity);
+            Type quantityType = NullChecked(quantity, paramName).GetType();
+
+            if (Type.GetTypeCode(quantityType) == QuantityTypeCode) return quantity;
+
+            object? converted = NullChecked(quantity, paramName).ToQuantity(QuantityTypeCode);
+
+            if (converted != null) return converted;
+
+            throw ArgumentTypeOutOfRangeException(paramName, quantity);
+        }
+
         #region Static methods
-        protected static (IMeasurement Measurement, ValueType Quantity) GetRateComponentParams(IRateComponent rateComponent)
+        protected static T? GetStoredRateComponent<T>(T? other, HashSet<T> rateComponentSet)
+            where T : class, IRateComponent
         {
-            IMeasurement measurement = NullChecked(rateComponent, nameof(rateComponent)).Measurement;
-            ValueType quantity = (ValueType)rateComponent.Quantity;
+            bool exists = rateComponentSet.Contains(NullChecked(other, nameof(other)))
+                || rateComponentSet.Add(other!);
 
-            return (measurement, quantity);
-        }
-
-        protected static T GetStored<T>([DisallowNull] T rateComponent, HashSet<T> set)
-        {
-            bool exists = set.Contains(rateComponent) || set.Add(rateComponent);
-
-            if (exists
-                && set.TryGetValue(rateComponent, out T? stored)
-                && stored != null)
-            {
-                return stored;
-            }
-
-            throw new InvalidOperationException(null);
-        }
-
-        public IBaseMeasure CreateBaseMeasure(Enum measureUnit, ValueType quantity)
-        {
-            return Create(measureUnit, quantity);
+            return exists && rateComponentSet.TryGetValue(other!, out T? stored) ?
+                stored
+                : null;
         }
         #endregion
         #endregion
     }
 
     public abstract class RateComponentFactory<T> : RateComponentFactory, IRateComponentFactory<T>
-        where T : class, IRateComponent
+        where T : class, IBaseMeasure
     {
         #region Constructors
         private protected RateComponentFactory(IMeasurementFactory measurementFactory) : base(measurementFactory)
@@ -80,17 +66,13 @@ namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations
         #endregion
 
         #region Public methods
-        public T Create(string name, ValueType quantity)
-        {
-            IMeasurement measurement = MeasurementFactory.Create(name);
-
-            return Create(measurement, quantity);
-        }
-
         #region Abstract methods
-        public abstract T Create(IMeasurement measurement, ValueType quantity);
+        public abstract T Create(string name, ValueType quantity);
+        public abstract T Create(Enum measureUnit, ValueType quantity);
         public abstract T? Create(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName);
-        public abstract T? Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity);
+        public abstract T? Create(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity);
+        public abstract T Create(IBaseMeasure baseMeasure);
+        public abstract T CreateNew(T other);
         #endregion
         #endregion
     }

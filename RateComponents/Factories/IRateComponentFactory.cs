@@ -1,20 +1,20 @@
 ﻿namespace CsabaDu.FooVaria.RateComponents.Factories
 {
-    public interface IRateComponentFactory : IBaseMeasureFactory/*<IRateComponent, Enum>*/, IFactory<IRateComponent>
+    public interface IRateComponentFactory : IBaseMeasureFactory, IDefaultMeasurableFactory
     {
-        IMeasurementFactory MeasurementFactory { get; init; }
-        RateComponentCode RateComponentCode { get; }    
+        IMeasurementFactory MeasurementFactory { get; }
         object DefaultRateComponentQuantity { get; }
-
-        IRateComponent Create(Enum measureUnit, ValueType quantity);
+        TypeCode QuantityTypeCode { get; }
     }
 
-    public interface IRateComponentFactory<T> : IRateComponentFactory
-        where T : class, IRateComponent
+    public interface IRateComponentFactory<T> : IRateComponentFactory, IFactory<T>
+        where T : class, IBaseMeasure
     {
-        T Create(string name, ValueType quantity);
-        T Create(IMeasurement measurement, ValueType quantity);
-        T? Create(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName);
-        T? Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity);
     }
+    //public interface IRateComponentFactory<TSelf, TNum> : IRateComponentFactory<TSelf>, IBaseMeasureFactory<TSelf>
+    //    where TSelf : class, IBaseMeasure/*, IDefaultBaseMeasure*/
+    //    where TNum : struct
+    //{
+    //    TSelf Create(IMeasurement measurement, TNum quantity);
+    //}
 }

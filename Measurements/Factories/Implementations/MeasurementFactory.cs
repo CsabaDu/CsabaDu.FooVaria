@@ -25,19 +25,19 @@ public sealed class MeasurementFactory : IMeasurementFactory
         return GetStoredMeasurement(measureUnit);
     }
 
-    public IMeasurement? Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate)
+    public IMeasurement? Create(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate)
     {
-        IMeasurement? measurement = CreateDefault(measureUnitTypeCode);
+        IMeasurement? measurement = (IMeasurement?)CreateDefault(measureUnitCode);
 
         if (measurement == null) return null;
 
-        bool success = measurement.TryGetMeasureUnit(measureUnitTypeCode, exchangeRate, out Enum? measureUnit)
+        bool success = measurement.TryGetMeasureUnit(measureUnitCode, exchangeRate, out Enum? measureUnit)
             && measurement.TrySetCustomName(measureUnit, customName);
 
         if (success) return GetStoredMeasurement(measureUnit!);
 
         success = measurement is ICustomMeasurement customMeasurement
-            && customMeasurement.TrySetCustomMeasureUnit(customName, measureUnitTypeCode, exchangeRate);
+            && customMeasurement.TrySetCustomMeasureUnit(customName, measureUnitCode, exchangeRate);
         measureUnit = measurement.GetMeasureUnit(customName);
         success = success
             && measureUnit != null;
@@ -56,9 +56,9 @@ public sealed class MeasurementFactory : IMeasurementFactory
 
         if (success) return GetStoredMeasurement(measureUnit);
 
-        if (!TryGetMeasureUnitTypeCode(measureUnit, out MeasureUnitTypeCode? measureUnitTypeCode)) return null;
+        if (!TryGetMeasureUnitCode(measureUnit, out MeasureUnitCode? measureUnitCode)) return null;
 
-        measurement = CreateDefault(measureUnitTypeCode.Value);
+        measurement = (IMeasurement?)CreateDefault(measureUnitCode.Value);
         success = measurement is ICustomMeasurement customMeasurement
             && customMeasurement.TrySetCustomMeasureUnit(measureUnit, exchangeRate, customName);
 
@@ -83,18 +83,18 @@ public sealed class MeasurementFactory : IMeasurementFactory
     {
         return context switch
         {
-            MeasureUnitTypeCode measureUnitTypeCode => CreateDefault(measureUnitTypeCode),
-            Enum measureUnit => GetStoredMeasurementOrNull(measureUnit, true),
             string name => GetStoredMeasurementOrNull(name),
+            MeasureUnitCode measureUnitCode => (IMeasurement?)CreateDefault(measureUnitCode),
+            Enum measureUnit => GetStoredMeasurementOrNull(measureUnit, true),
             BaseMeasurement baseMeasurement => Create(baseMeasurement),
 
             _ => null,
         };
     }
 
-    public IMeasurement? CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
+    public IMeasurable? CreateDefault(MeasureUnitCode measureUnitCode)
     {
-        Enum? measureUnit = GetDefaultMeasureUnit(measureUnitTypeCode);
+        Enum? measureUnit = GetDefaultMeasureUnit(measureUnitCode);
 
         bool success = measureUnit != null;
 
@@ -116,7 +116,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
         Enum measureUnit = (Enum)obj;
         MeasurementFactory factory = new();
 
-        return GetMeasureUnitTypeCode(measureUnit).IsCustomMeasureUnitTypeCode() ?
+        return GetMeasureUnitCode(measureUnit).IsCustomMeasureUnitCode() ?
             new CustomMeasurement(factory, measureUnit)
             : new ConstantMeasurement(factory, measureUnit);
     }
@@ -128,7 +128,6 @@ public sealed class MeasurementFactory : IMeasurementFactory
 
     private static IMeasurement? GetStoredMeasurementOrNull(string name)
     {
-        string? nameToLower = name?.ToLower();
         Enum? measureUnit = getMeasureUnit(out bool success);
 
         return GetStoredMeasurementOrNull(measureUnit!, success);
@@ -136,17 +135,17 @@ public sealed class MeasurementFactory : IMeasurementFactory
         #region Local methods
         object? getMeasureUnitByStoredName()
         {
-            return GetNameCollection().FirstOrDefault(x => x.Value.ToLower() == nameToLower).Key;
+            return GetNameCollection().FirstOrDefault(x => NameEquals(x.Value, name)).Key;
         }
 
         object? getMeasureUnitByDefaultName()
         {
-            return GetNameCollection().Keys.FirstOrDefault(x => getDefaultNameToLower(x) == nameToLower);
+            return GetNameCollection().Keys.FirstOrDefault(x => NameEquals(getDefaultName(x), name));
         }
 
-        static string getDefaultNameToLower(object measureUnit)
+        string getDefaultName(object measureUnit)
         {
-            return GetDefaultName((Enum)measureUnit).ToLower();
+            return GetDefaultName((Enum)measureUnit);
         }
 
         Enum? getMeasureUnit(out bool success)

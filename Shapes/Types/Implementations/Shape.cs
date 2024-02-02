@@ -1,17 +1,17 @@
 ﻿namespace CsabaDu.FooVaria.Shapes.Types.Implementations;
 
-internal abstract class Shape : BaseShape, IShape
+public abstract class Shape : BaseShape, IShape
 {
     #region Constructors
-    private protected Shape(IShape other) : base(other)
+    protected Shape(IShape other) : base(other)
     {
     }
 
-    private protected Shape(IShapeFactory factory, IBaseShape baseShape) : base(factory, baseShape)
+    protected Shape(IShapeFactory factory, IBaseShape baseShape) : base(factory, baseShape)
     {
     }
 
-    private protected Shape(IShapeFactory factory, MeasureUnitTypeCode measureUnitTypeCode, params IExtent[] shapeExtents) : base(factory, measureUnitTypeCode, shapeExtents)
+    protected Shape(IShapeFactory factory, MeasureUnitCode measureUnitCode, params IExtent[] shapeExtents) : base(factory, measureUnitCode, shapeExtents)
     {
         ValidateShapeExtents(shapeExtents, nameof(shapeExtents));
     }
@@ -19,19 +19,26 @@ internal abstract class Shape : BaseShape, IShape
 
     #region Properties
     #region Abstract properties
-    public abstract IExtent? this[ShapeExtentTypeCode shapeExtentTypeCode] { get; }
+    public abstract IExtent? this[ShapeExtentCode shapeExtentCode] { get; }
     #endregion
     #endregion
 
     #region Public methods
+    public override void ValidateShapeComponent(IQuantifiable shapeComponent, string paramName)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override IShapeComponent? GetValidShapeComponent(IQuantifiable? shapeComponent)
+    {
+        if (shapeComponent == null) return null;
+
+        throw new NotImplementedException();
+    }
+
     public override sealed IBaseShape? GetBaseShape(params IShapeComponent[] shapeComponents)
     {
         return GetFactory().CreateBaseShape(shapeComponents);
-    }
-
-    public IExtent GetDiagonal(ExtentUnit extentUnit)
-    {
-        return ShapeExtents.GetDiagonal(this, extentUnit);
     }
 
     public IExtent GetDiagonal()
@@ -70,22 +77,22 @@ internal abstract class Shape : BaseShape, IShape
         return null;
     }
 
-    public IExtent GetShapeExtent(ShapeExtentTypeCode shapeExtentTypeCode)
+    public IExtent GetShapeExtent(ShapeExtentCode shapeExtentCode)
     {
-        return this[shapeExtentTypeCode] ?? throw InvalidShapeExtentTypeCodeEnumArgumentException(shapeExtentTypeCode);
+        return this[shapeExtentCode] ?? throw InvalidShapeExtentCodeEnumArgumentException(shapeExtentCode);
     }
 
     public IEnumerable<IExtent> GetShapeExtents()
     {
-        foreach (ShapeExtentTypeCode item in GetShapeExtentTypeCodes())
+        foreach (ShapeExtentCode item in GetShapeExtentCodes())
         {
             yield return this[item]!;
         }
     }
 
-    public IEnumerable<ShapeExtentTypeCode> GetShapeExtentTypeCodes()
+    public IEnumerable<ShapeExtentCode> GetShapeExtentCodes()
     {
-        return Enum.GetValues<ShapeExtentTypeCode>().Where(x => this[x] != null);
+        return Enum.GetValues<ShapeExtentCode>().Where(x => this[x] != null);
     }
 
     public IEnumerable<IExtent> GetSortedDimensions()
@@ -93,40 +100,36 @@ internal abstract class Shape : BaseShape, IShape
         return GetDimensions().OrderBy(x => x);
     }
 
-    public bool IsValidShapeComponentOf(IBaseShape baseShape)
+    public bool IsValidShapeExtentCode(ShapeExtentCode shapeExtentCode)
     {
-        return IsValidShapeComponentOf(baseShape, this);
+        return GetShapeExtentCodes().Contains(shapeExtentCode);
     }
 
-    public bool IsValidShapeExtentTypeCode(ShapeExtentTypeCode shapeExtentTypeCode)
+    public bool TryGetShapeExtentCode(IExtent shapeExtent, [NotNullWhen(true)] out ShapeExtentCode? shapeExtentCode)
     {
-        return GetShapeExtentTypeCodes().Contains(shapeExtentTypeCode);
+        shapeExtentCode = null;
+
+        if (shapeExtent != null || !GetShapeExtents().Contains(shapeExtent)) return false;
+
+        shapeExtentCode = GetShapeExtentCodes().FirstOrDefault(x => this[x] == shapeExtent);
+
+        return true;
     }
 
-    public bool TryGetShapeExtentTypeCode(IExtent shapeExtent, [NotNullWhen(true)] out ShapeExtentTypeCode? shapeExtentTypeCode)
+    public void ValidateShapeExtent(IExtent? shapeExtent, string paramName)
     {
-        _ = NullChecked(shapeExtent, nameof(shapeExtent));
+        decimal quantity =  NullChecked(shapeExtent, paramName).GetDecimalQuantity();
 
-        for (int i = 0; i < GetShapeComponentCount(); i++)
-        {
-            if (GetShapeExtents().ElementAt(i).Equals(shapeExtent))
-            {
-                shapeExtentTypeCode = GetShapeExtentTypeCodes().ElementAt(i);
+        if (quantity > 0) return;
 
-                return true;
-            }
-        }
-
-        shapeExtentTypeCode = null;
-
-        return false;
+        throw QuantityArgumentOutOfRangeException(paramName, quantity);
     }
 
-    public void ValidateShapeExtentCount(int count, string name)
+    public void ValidateShapeExtentCount(int count, string paramName)
     {
         if (count == GetShapeComponentCount()) return;
 
-        throw QuantityArgumentOutOfRangeException(name, count);
+        throw QuantityArgumentOutOfRangeException(paramName, count);
     }
 
     public void ValidateShapeExtents(IEnumerable<IExtent> shapeExtents, string paramName)
@@ -137,7 +140,7 @@ internal abstract class Shape : BaseShape, IShape
 
         foreach (IExtent item in shapeExtents)
         {
-            ValidateShapeComponent(item, paramName);
+            ValidateShapeExtent(item, paramName);
         }
     }
 
@@ -164,7 +167,7 @@ internal abstract class Shape : BaseShape, IShape
             throw ArgumentTypeOutOfRangeException(paramName, other);
         }
 
-        ValidateMeasureUnitTypeCode(shape.MeasureUnitTypeCode, paramName);
+        ValidateMeasureUnitCode(shape.MeasureUnitCode, paramName);
 
         return Compare(this, shape) ?? throw new ArgumentOutOfRangeException(paramName);
     }
@@ -202,7 +205,7 @@ internal abstract class Shape : BaseShape, IShape
         {
             foreach (IExtent item in GetShapeExtents())
             {
-                IRateComponent? exchanged = item.ExchangeTo(extentUnit);
+                IBaseMeasure? exchanged = item.ExchangeTo(extentUnit);
 
                 if (exchanged is IExtent extent)
                 {
@@ -225,9 +228,9 @@ internal abstract class Shape : BaseShape, IShape
             return (IBulkBody)GetFactory().SpreadFactory.CreateBaseSpread(volume);
         }
 
-        IRateComponent? getExchangedSpreadMeasure(Enum measureUnit)
+        IBaseMeasure? getExchangedSpreadMeasure(Enum measureUnit)
         {
-            IRateComponent spreadMeasure = (IRateComponent)GetSpreadMeasure();
+            IBaseMeasure spreadMeasure = (IBaseMeasure)GetSpreadMeasure();
 
             return spreadMeasure.ExchangeTo(measureUnit);
         }
@@ -246,7 +249,7 @@ internal abstract class Shape : BaseShape, IShape
             return null;
         }
 
-        if (!shape.IsExchangeableTo(MeasureUnitTypeCode)) return null;
+        if (!shape.IsExchangeableTo(MeasureUnitCode)) return null;
 
         limitMode ??= LimitMode.BeNotGreater;
 
@@ -256,7 +259,7 @@ internal abstract class Shape : BaseShape, IShape
 
         if (shape.GetShapeComponentCount() != GetShapeComponentCount())
         {
-            shape = (shape as ITangentShape)!.GetTangentShape(sideCode);
+            shape = (IShape)(shape as ITangentShape)!.GetTangentShape(sideCode);
         }
 
         return Compare(this, shape)?.FitsIn(limitMode);
@@ -267,38 +270,25 @@ internal abstract class Shape : BaseShape, IShape
         return GetFactory().SpreadFactory.CreateBaseSpread(spreadMeasure);
     }
 
-    public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
+    public override sealed IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
     {
-        return base.GetMeasureUnitTypeCodes();
+        return base.GetMeasureUnitCodes();
     }
 
     public override sealed IEnumerable<IShapeComponent> GetShapeComponents()
     {
-        return GetShapeComponents();
-    }
-
-    public override sealed IExtent? GetValidShapeComponent(IShapeComponent shapeComponent)
-    {
-        return shapeComponent is IExtent extent 
-            && extent.DefaultQuantity > 0 ?
-            extent
-            : null;
+        return GetShapeExtents();
     }
 
     public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
     {
-        object? converted = NullChecked(quantity, paramName).ToQuantity(TypeCode.Decimal) ?? throw ArgumentTypeOutOfRangeException(paramName, quantity!);
+        object converted = NullChecked(quantity, paramName)
+            .ToQuantity(TypeCode.Decimal)
+            ?? throw ArgumentTypeOutOfRangeException(paramName, quantity!);
 
-        ValidateDecimalQuantity((decimal)converted, paramName);
-    }
+        if ((decimal)converted > 0) return;
 
-    public override sealed void ValidateShapeComponent(IQuantifiable shapeComponent, string paramName)
-    {
-        decimal defaultQuantity = NullChecked(shapeComponent, paramName).GetDefaultQuantity();
-
-        if (shapeComponent is not IExtent) throw ArgumentTypeOutOfRangeException(paramName, shapeComponent);
-
-        ValidateDecimalQuantity(defaultQuantity, paramName);
+        throw QuantityArgumentOutOfRangeException(paramName, quantity);
     }
     #endregion
     #endregion
@@ -313,6 +303,64 @@ internal abstract class Shape : BaseShape, IShape
     {
         return GetFactory().TangentShapeFactory;
     }
+    #endregion
+
+    #region Static methods
+
+    //public static IExtent GetDiagonal(IShape shape, ExtentUnit extentUnit = default)
+    //{
+    //    return NullChecked(shape, nameof(shape)) switch
+    //    {
+    //        Circle circle => GetCircleDiagonal(circle, extentUnit),
+    //        Cuboid cuboid => GetCuboidDiagonal(cuboid, extentUnit),
+    //        Cylinder cylinder => GetCylinderDiagonal(cylinder, extentUnit),
+    //        Rectangle rectangle => GetRectangleDiagonal(rectangle, extentUnit),
+
+    //        _ => throw new InvalidOperationException(null)
+    //    };
+    //}
+    public static IExtent GetRectangularShapeDiagonal<T>(T shape, ExtentUnit extentUnit = default)
+        where T : class, IShape, IRectangularShape
+    {
+        ValidateMeasureUnitByDefinition(extentUnit, nameof(extentUnit));
+
+        IEnumerable<ShapeExtentCode> shapeExtentCodes = shape.GetShapeExtentCodes();
+        int i = 0;
+        decimal quantitySquares = getDefaultQuantitySquare();
+
+        for (i = 1; i < shapeExtentCodes.Count(); i++)
+        {
+            quantitySquares += getDefaultQuantitySquare();
+        }
+
+        double quantity = decimal.ToDouble(quantitySquares);
+        quantity = Math.Sqrt(quantity);
+        if (!IsDefaultMeasureUnit(extentUnit))
+        {
+            quantity /= decimal.ToDouble(GetExchangeRate(extentUnit));
+        }
+        IExtent edge = getShapeExtent();
+
+        return edge.GetMeasure(extentUnit, quantity);
+
+        #region Local methods
+        IExtent getShapeExtent()
+        {
+            return shape.GetShapeExtent(shapeExtentCodes.ElementAt(i));
+        }
+
+        decimal getDefaultQuantitySquare()
+        {
+            IExtent shapeExtent = getShapeExtent();
+
+            return GetDefaultQuantitySquare(shapeExtent);
+        }
+        #endregion
+    }
+
+    #region Abstract methods
+    public abstract IExtent GetDiagonal(ExtentUnit extentUnit);
+    #endregion
     #endregion
     #endregion
 
@@ -331,7 +379,7 @@ internal abstract class Shape : BaseShape, IShape
 
         int comparison = 0;
 
-        foreach (ShapeExtentTypeCode item in shape.GetShapeExtentTypeCodes())
+        foreach (ShapeExtentCode item in shape.GetShapeExtentCodes())
         {
             int recentComparison = shape[item]!.CompareTo(other[item]);
 
@@ -350,13 +398,6 @@ internal abstract class Shape : BaseShape, IShape
         }
 
         return comparison;
-    }
-
-    private static void ValidateDecimalQuantity(decimal quantity, string name)
-    {
-        if (quantity > 0) return;
-
-        throw QuantityArgumentOutOfRangeException(name, quantity);
     }
     #endregion
     #endregion

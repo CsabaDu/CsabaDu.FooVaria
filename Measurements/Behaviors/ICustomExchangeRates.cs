@@ -2,6 +2,6 @@
 
 public interface ICustomMExchangeRates
 {
-    void InitializeCustomExchangeRates(MeasureUnitTypeCode measureUnitTypeCode, IDictionary<string, decimal> customExchangeRateCollection);
+    void InitializeCustomExchangeRates(MeasureUnitCode measureUnitCode, IDictionary<string, decimal> customExchangeRateCollection);
 
 }

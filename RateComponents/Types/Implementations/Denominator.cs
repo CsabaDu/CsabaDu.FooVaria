@@ -1,14 +1,28 @@
 ﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
 
-internal sealed class Denominator : RateComponent<IDenominator, decimal>, IDenominator
+internal sealed class Denominator : RateComponent<IDenominator>, IDenominator
 {
     #region Constructors
-    internal Denominator(IDenominatorFactory factory, IMeasurement measurement, ValueType quantity) : base(factory, measurement, quantity)
+    internal Denominator(IDenominatorFactory factory, IMeasurement measurement, decimal quantity) : base(factory, measurement)
     {
+        Quantity = quantity > 0 ?
+            quantity
+            : throw QuantityArgumentOutOfRangeException(quantity);
     }
     #endregion
 
+    #region Properties
+    #region Override properties
+    public override object Quantity { get; init; }
+    #endregion
+    #endregion
+
     #region Public methods
+    public override IDenominator GetDefault()
+    {
+        return GetDefault(this);
+    }
+
     public IDenominator GetDenominator(Enum measureUnit)
     {
         return GetFactory().Create(measureUnit);
@@ -24,21 +38,15 @@ internal sealed class Denominator : RateComponent<IDenominator, decimal>, IDenom
         return GetFactory().Create(measurement);
     }
 
-    public IDenominator GetDenominator(IRateComponent rateComponent, ValueType quantity)
+    public IDenominator GetDenominator(IBaseMeasure baseMeasure, ValueType quantity)
     {
-        return GetFactory().Create(rateComponent, quantity);
+        return GetFactory().Create(baseMeasure, quantity);
     }
 
     #region Override methods
-    public override bool Equals(IRateComponent? other)
+    public override decimal GetDefaultQuantity()
     {
-        return other is IDenominator
-            && base.Equals(other);
-    }
-
-    public override IDenominator? GetDefault(MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        return GetFactory().CreateDefault(measureUnitTypeCode);
+        return GetDefaultQuantity(Quantity);
     }
 
     public override IDenominatorFactory GetFactory()
@@ -46,11 +54,49 @@ internal sealed class Denominator : RateComponent<IDenominator, decimal>, IDenom
         return (IDenominatorFactory)Factory;
     }
 
-    public override IDenominator GetRateComponent(IRateComponent rateComponent)
+    public IDenominator GetDenominator(IMeasurement measurement, decimal quantity)
     {
-        if (rateComponent is IDenominator other) return GetNew(other);
+        return (IDenominator)GetBaseMeasure(measurement, quantity);
+    }
 
-        return (IDenominator)GetRateComponent(rateComponent, GetFactory());
+    public IDenominator GetBaseMeasure(decimal quantity)
+    {
+        return (IDenominator)GetBaseMeasure((ValueType)quantity);
+    }
+
+    public decimal GetQuantity()
+    {
+        return (decimal)Quantity;
+    }
+
+    public IDenominator GetBaseMeasure(Enum measureUnit, ValueType quantity)
+    {
+        return GetFactory().Create(measureUnit, quantity);
+    }
+
+    public IDenominator GetBaseMeasure(string name, ValueType quantity)
+    {
+        return GetFactory().Create(name, quantity);
+    }
+
+    public IDenominator? GetBaseMeasure(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
+    {
+        return GetFactory().Create(measureUnit, exchangeRate, quantity, customName);
+    }
+
+    public IDenominator? GetBaseMeasure(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity)
+    {
+        return GetFactory().Create(customName, measureUnitCode, exchangeRate, quantity);
+    }
+
+    public IDenominator GetBaseMeasure(IBaseMeasure baseMeasure)
+    {
+        return GetFactory().Create(baseMeasure);
+    }
+
+    public IDenominator ConvertToLimitable(ILimiter limiter)
+    {
+        return ConvertToLimitable(this, limiter);
     }
     #endregion
     #endregion

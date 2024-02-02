@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Measures\Measures.csproj" />
+    <ProjectReference Include="..\PlaneShapes\PlaneShapes.csproj" />
+    <ProjectReference Include="..\Shapes\Shapes.csproj" />
+  </ItemGroup>
+
+</Project>

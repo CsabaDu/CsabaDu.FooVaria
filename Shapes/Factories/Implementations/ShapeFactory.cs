@@ -1,11 +1,9 @@
-﻿using CsabaDu.FooVaria.RateComponents.Factories;
-
-namespace CsabaDu.FooVaria.Shapes.Factories.Implementations;
+﻿namespace CsabaDu.FooVaria.Shapes.Factories.Implementations;
 
 public abstract class ShapeFactory : IShapeFactory
 {
     #region Constructors
-    private protected ShapeFactory(ISpreadFactory spreadFactory, ITangentShapeFactory tangentShapeFactory)
+    protected ShapeFactory(ISpreadFactory spreadFactory, ITangentShapeFactory tangentShapeFactory)
     {
         SpreadFactory = NullChecked(spreadFactory, nameof(spreadFactory));
         TangentShapeFactory = NullChecked(tangentShapeFactory, nameof(tangentShapeFactory));
@@ -26,9 +24,9 @@ public abstract class ShapeFactory : IShapeFactory
 
     public IExtent CreateShapeExtent(ExtentUnit extentUnit, ValueType quantity)
     {
-        IRateComponent extent = GetMeasureFactory().Create(extentUnit, quantity);
+        IExtent extent = (IExtent)GetMeasureFactory().Create(extentUnit, quantity);
 
-        if (extent.DefaultQuantity > 0) return (IExtent)extent;
+        if (extent.GetDefaultQuantity() > 0) return (IExtent)extent;
 
         throw QuantityArgumentOutOfRangeException(quantity);
     }
@@ -56,11 +54,11 @@ public abstract class ShapeFactory : IShapeFactory
     #endregion
 
     #region Protected methods
-    protected TTangent CreateTangentShape<T, TTangent>(IShapeFactory<T, TTangent> factory, params IShapeComponent[] shapeComponents)
+    protected static TTangent CreateTangentShape<T, TTangent>(IShapeFactory<T, TTangent> factory, params IShapeComponent[] shapeComponents)
     where T : class, IShape, ITangentShape
     where TTangent : class, IShape, ITangentShape
     {
-        return (TTangent)GetTangentShapeFactory().CreateBaseShape(shapeComponents)!;
+        return (TTangent)factory.TangentShapeFactory.CreateBaseShape(shapeComponents)!;
     }
 
     #region Static methods
@@ -75,7 +73,7 @@ public abstract class ShapeFactory : IShapeFactory
 
         IEnumerable<IExtent> shapeExtents = shapeComponents.Cast<IExtent>();
 
-        return shapeExtents.All(x => x.DefaultQuantity > 0) ?
+        return shapeExtents.All(x => x.GetDefaultQuantity() > 0) ?
             shapeExtents
             : null;
     }
@@ -84,7 +82,7 @@ public abstract class ShapeFactory : IShapeFactory
     {
         if (shapeComponent is not IExtent shapeExtent) return null;
         
-        if (shapeExtent.DefaultQuantity > 0) return shapeExtent;
+        if (shapeExtent.GetDefaultQuantity() > 0) return shapeExtent;
 
         return null;
     }
@@ -98,7 +96,7 @@ public abstract class ShapeFactory : IShapeFactory
             SideCode.Outer => factory.CreateOuterTangentShape(shape),
             SideCode.Inner => factory.CreateInnerTangentShape(shape),
 
-            _ => throw InvalidSidenCodeEnumArgumentException(sideCode),
+            _ => throw InvalidSideCodeEnumArgumentException(sideCode),
         };
     }
     #endregion

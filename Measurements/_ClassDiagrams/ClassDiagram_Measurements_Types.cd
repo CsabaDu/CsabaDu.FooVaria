@@ -1,41 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Interface Name="CsabaDu.FooVaria.Measurements.Behaviors.ICustomMeasureUnit" Collapsed="true">
-    <Position X="6.25" Y="4.25" Width="1.75" />
+    <Position X="5.75" Y="1.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAABEAAAAAAABAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAABAEAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Behaviors\ICustomMeasureUnit.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurements.Behaviors.ICustomNameCollection" Collapsed="true">
-    <Position X="7.75" Y="2.5" Width="2" />
+    <Position X="7.25" Y="0.5" Width="2" />
     <TypeIdentifier>
       <HashCode>IAAAEAgAAAAAAAAAAAAAAAAIAAAIAAAAAAAAAAAAAgA=</HashCode>
       <FileName>Behaviors\ICustomNameCollection.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurements.Behaviors.IMeasureUnitCollection" Collapsed="true">
-    <Position X="5.5" Y="2.5" Width="2" />
+    <Position X="5" Y="0.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAACAgAAAAAAAAAAAAAAAAAAAAACAAACAAAAAE=</HashCode>
       <FileName>Behaviors\IMeasureUnitCollection.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.Measurements.Types.IMeasurement" Collapsed="true">
-    <Position X="1.5" Y="3.75" Width="2.25" />
+  <Interface Name="CsabaDu.FooVaria.Measurements.Types.IMeasurement" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="1.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAAAAAAAAAAIQAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Types\IMeasurement.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurements.Types.IConstantMeasurement" Collapsed="true">
-    <Position X="0.5" Y="5.5" Width="2" />
+    <Position X="0.5" Y="3" Width="2" />
     <InheritanceLine Type="CsabaDu.FooVaria.Measurements.Types.IMeasurement" FixedFromPoint="true">
       <Path>
-        <Point X="2.375" Y="4.829" />
-        <Point X="2.375" Y="5.125" />
-        <Point X="1.5" Y="5.125" />
-        <Point X="1.5" Y="5.5" />
+        <Point X="2.25" Y="2.441" />
+        <Point X="2.25" Y="2.7" />
+        <Point X="1.5" Y="2.7" />
+        <Point X="1.5" Y="3" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -43,14 +43,14 @@
       <FileName>Types\IConstantMeasurement.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.Measurements.Types.ICustomMeasurement" Collapsed="true">
-    <Position X="2.75" Y="5.5" Width="2.25" />
+  <Interface Name="CsabaDu.FooVaria.Measurements.Types.ICustomMeasurement" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.75" Y="3" Width="1.75" />
     <InheritanceLine Type="CsabaDu.FooVaria.Measurements.Types.IMeasurement" FixedFromPoint="true">
       <Path>
-        <Point X="2.875" Y="4.829" />
-        <Point X="2.875" Y="5.125" />
-        <Point X="3.875" Y="5.125" />
-        <Point X="3.875" Y="5.5" />
+        <Point X="2.75" Y="2.441" />
+        <Point X="2.75" Y="2.7" />
+        <Point X="3.625" Y="2.7" />
+        <Point X="3.625" Y="3" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -58,26 +58,26 @@
       <FileName>Types\ICustomMeasurement.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.Measurements.Behaviors.ICustomMeasureUnitTypeCode" Collapsed="true">
-    <Position X="8.25" Y="4.25" Width="2.5" />
+  <Interface Name="CsabaDu.FooVaria.Measurements.Behaviors.ICustomMeasureUnitCode" Collapsed="true">
+    <Position X="7.75" Y="1.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
-      <FileName>Behaviors\ICustomMeasureUnitTypeCode.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Behaviors\ICustomMeasureUnitCode.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.Common.Types.IDefaultMeasurable&lt;TSelf&gt;" Collapsed="true">
-    <Position X="0.5" Y="1.5" Width="2.25" />
-    <TypeIdentifier />
-  </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurements.Behaviors.ICustomMExchangeRates" Collapsed="true">
-    <Position X="4" Y="4.25" Width="2" />
+    <Position X="3.5" Y="1.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
       <FileName>Behaviors\ICustomExchangeRates.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.Common.Types.IBaseMeasurement" Collapsed="true">
-    <Position X="3" Y="0.5" Width="2.25" />
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Types.IDefaultMeasurable&lt;TSelf&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.IBaseMeasurement" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.75" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />

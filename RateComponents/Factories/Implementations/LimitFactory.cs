@@ -1,44 +1,35 @@
-﻿using CsabaDu.FooVaria.RateComponents.Types.Implementations;
-
-namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
+﻿namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
 
 public sealed class LimitFactory : RateComponentFactory, ILimitFactory
 {
     #region Constructors
+    #region Static constructor
+    static LimitFactory()
+    {
+        LimitSet = new();
+    }
+    #endregion
+
     public LimitFactory(IMeasurementFactory measurementFactory) : base(measurementFactory)
     {
     }
     #endregion
 
     #region Properties
+    #region Override properties
     public override RateComponentCode RateComponentCode => RateComponentCode.Limit;
+    public override object DefaultRateComponentQuantity => default(ulong);
+    #endregion
 
     #region Private properties
     #region Static properties
-    private static HashSet<ILimit> LimitSet { get; set; } = new();
+    private static HashSet<ILimit> LimitSet { get; set; }
     #endregion
     #endregion
     #endregion
 
     #region Public methods
-    public ILimit? CreateDefault(MeasureUnitTypeCode measureUnitTypeCode)
-    {
-        IMeasurement? measurement = MeasurementFactory.CreateDefault(measureUnitTypeCode);
-
-        if (measurement == null) return null;
-
-        ValueType quantity = (ulong)DefaultRateComponentQuantity;
-        LimitMode limitMode = default;
-
-        return GetOrCreateStoredLimit(measurement, quantity, limitMode);
-    }
-
-    public ILimit CreateNew(ILimit limit)
-    {
-        return GetStoredLimit(NullChecked(limit, nameof(limit)));
-    }
-
-    public ILimit Create(IMeasurement measurement, ValueType quantity, LimitMode limitMode)
+    public ILimit Create(IMeasurement measurement, ulong quantity, LimitMode limitMode)
     {
         return GetOrCreateStoredLimit(measurement, quantity, limitMode);
     }
@@ -52,50 +43,7 @@ public sealed class LimitFactory : RateComponentFactory, ILimitFactory
 
     public ILimit Create(Enum measureUnit, ValueType quantity, LimitMode limitMode)
     {
-        IMeasurement measurement = MeasurementFactory.Create(measureUnit);
-
-        return GetOrCreateStoredLimit(measurement, quantity, limitMode);
-    }
-
-    public ILimit? Create(Enum measureUnit, decimal exchangeRate, string customName, ValueType quantity, LimitMode limitMode)
-    {
-        IMeasurement? measurement = MeasurementFactory.Create(measureUnit, exchangeRate, customName);
-
-        if (measurement == null) return null;
-
-        return GetOrCreateStoredLimit(measurement, quantity, limitMode);
-    }
-
-    public ILimit? Create(string customName, MeasureUnitTypeCode measureUnitTypeCode, decimal exchangeRate, ValueType quantity, LimitMode limitMode)
-    {
-        IMeasurement? measurement = MeasurementFactory.Create(customName, measureUnitTypeCode, exchangeRate);
-
-        if (measurement == null) return null;
-
-        return GetOrCreateStoredLimit(measurement, quantity, limitMode);
-    }
-
-    public ILimit Create(IRateComponent rateComponent, LimitMode limitMode)
-    {
-        var (measurement, quantity) = GetRateComponentParams(rateComponent);
-
-        return GetOrCreateStoredLimit(measurement, quantity, limitMode);
-    }
-
-    public ILimit Create(ILimit limit, ValueType quantity)
-    {
-        IMeasurement measurement = NullChecked(limit, nameof(limit)).Measurement;
-        LimitMode limitMode = limit.LimitMode;
-
-        return GetOrCreateStoredLimit(measurement, quantity, limitMode);
-    }
-
-    public override ILimit Create(Enum measureUnit, ValueType quantity)
-    {
-        IMeasurement measurement = MeasurementFactory.Create(measureUnit);
-        LimitMode limitMode = default;
-
-        return GetOrCreateStoredLimit(measurement, quantity, limitMode);
+        return GetOrCreateStoredLimit(measureUnit, quantity, limitMode);
     }
 
     public ILimit? Create(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName, LimitMode limitMode)
@@ -106,21 +54,71 @@ public sealed class LimitFactory : RateComponentFactory, ILimitFactory
 
         return GetOrCreateStoredLimit(measurement, quantity, limitMode);
     }
+
+    public ILimit? Create(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity, LimitMode limitMode)
+    {
+        IMeasurement? measurement = MeasurementFactory.Create(customName, measureUnitCode, exchangeRate);
+
+        if (measurement == null) return null;
+
+        return GetOrCreateStoredLimit(measurement, quantity, limitMode);
+    }
+
+    public ILimit Create(IBaseMeasure baseMeasure, LimitMode limitMode)
+    {
+        Enum measureUnit = NullChecked(baseMeasure, nameof(baseMeasure)).GetMeasureUnit();
+        ValueType quantity = (ValueType)baseMeasure.Quantity;
+
+        return GetOrCreateStoredLimit(measureUnit, quantity, limitMode);
+    }
+
+    public ILimit Create(ILimit limit, ValueType quantity)
+    {
+        IMeasurement measurement = NullChecked(limit, nameof(limit)).Measurement;
+        LimitMode limitMode = limit.LimitMode;
+
+        return GetOrCreateStoredLimit(measurement, quantity, limitMode);
+    }
+
+    public ILimit CreateNew(ILimit other)
+    {
+        return GetStoredRateComponent(other, LimitSet) ?? throw new InvalidOperationException(null);
+    }
+
+    #region Override methods
+    public override ILimit CreateBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity)
+    {
+        Enum measureUnit = NullChecked(baseMeasurement, nameof(baseMeasurement)).GetMeasureUnit();
+
+        return Create(measureUnit, quantity, default);
+    }
+
+    public override ILimit? CreateDefault(MeasureUnitCode measureUnitCode)
+    {
+        IMeasurement? measurement = (IMeasurement?)MeasurementFactory.CreateDefault(measureUnitCode);
+
+        if (measurement == null) return null;
+
+        return CreateBaseMeasure(measurement, (ValueType)DefaultRateComponentQuantity);
+    }
+    #endregion
     #endregion
 
     #region Private methods
     private ILimit GetOrCreateStoredLimit(IMeasurement measurement, ValueType quantity, LimitMode limitMode)
     {
-        ILimit limit = new Limit(this, measurement, quantity, limitMode);
+        ulong convertedQuantity = (ulong)ConvertQuantity(quantity);
 
-        return GetStoredLimit(limit);
+        ILimit limit = new Limit(this, measurement, convertedQuantity, limitMode);
+
+        return CreateNew(limit);
     }
 
-    #region Static methods
-    private static ILimit GetStoredLimit([DisallowNull] ILimit limit)
+    private ILimit GetOrCreateStoredLimit(Enum measureUnit, ValueType quantity, LimitMode limitMode)
     {
-        return GetStored(limit, LimitSet);
+        IMeasurement measurement = MeasurementFactory.Create(measureUnit);
+
+        return GetOrCreateStoredLimit(measurement, quantity, limitMode);
     }
-    #endregion
     #endregion
 }

@@ -1,120 +1,120 @@
-﻿namespace CsabaDu.FooVaria.Proportions.Types.Implementations
+﻿
+using CsabaDu.FooVaria.BaseTypes.Common.Statics;
+
+namespace CsabaDu.FooVaria.Proportions.Types.Implementations
 {
     internal abstract class Proportion : BaseRate, IProportion
     {
         #region Constructors
-        private protected Proportion(IProportionFactory factory, Enum numeratorMeasureUnit, ValueType quantity, Enum denominatorMeasureUnit) : base(factory, denominatorMeasureUnit)
+        private protected Proportion(IBaseRateFactory factory, MeasureUnitCode numeratorMeasureUnitCode, decimal defaultQuantity, MeasureUnitCode denominatorMeasureUnitCode) : base(factory, denominatorMeasureUnitCode)
         {
-            validateMeasureUnits();
+            NumeratorMeasureUnitCode = Defined(numeratorMeasureUnitCode, nameof(numeratorMeasureUnitCode));
+            DefaultQuantity = GetValidDecimalQuantity(defaultQuantity, nameof(defaultQuantity));
+        }
 
-            NumeratorMeasureUnitTypeCode = MeasureUnitTypes.GetMeasureUnitTypeCode(numeratorMeasureUnit);
+        private protected Proportion(IBaseRateFactory factory, Enum numeratorMeasureUnit, ValueType quantity, Enum denominatorMeasureUnit) : base(factory, denominatorMeasureUnit)
+        {
+            NumeratorMeasureUnitCode = getValidMeasureUnitCode();
             DefaultQuantity = getValidDefaultQuantity();
 
             #region Local methods
-            void validateMeasureUnits()
+            MeasureUnitCode getValidMeasureUnitCode()
             {
-                validateMeasureUnit(numeratorMeasureUnit, nameof(numeratorMeasureUnit));
-                validateMeasureUnit(denominatorMeasureUnit, nameof(denominatorMeasureUnit));
-            }
+                string paramName = nameof(numeratorMeasureUnit);
 
-            void validateMeasureUnit(Enum measureUnit, string paramName)
-            {
-                if (IsValidMeasureUnit(measureUnit)) return;
-
-                throw InvalidMeasureUnitEnumArgumentException(measureUnit, paramName);
+                return IsValidMeasureUnit(NullChecked(numeratorMeasureUnit, paramName)) ?
+                    GetMeasureUnitCode(numeratorMeasureUnit)
+                    : throw InvalidMeasureUnitEnumArgumentException(numeratorMeasureUnit, paramName);
             }
 
             decimal getValidDefaultQuantity()
             {
-                string paramName = nameof(quantity);
-                object? converted = NullChecked(quantity, paramName).ToQuantity(TypeCode.Decimal);
-                decimal defaultQuantity = (decimal)(converted ?? throw ArgumentTypeOutOfRangeException(paramName, quantity));
-
-                if (defaultQuantity > 0) return defaultQuantity * GetExchangeRate(numeratorMeasureUnit) / GetExchangeRate(denominatorMeasureUnit);
-
-                throw QuantityArgumentOutOfRangeException(paramName, quantity);
+                return GetValidDecimalQuantity(quantity, nameof(quantity))
+                    * GetExchangeRate(numeratorMeasureUnit)
+                    / GetExchangeRate(denominatorMeasureUnit);
             }
             #endregion
         }
+
+        private protected Proportion(IBaseRateFactory factory, IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement) : base(factory, denominatorMeasurement)
+        {
+            NumeratorMeasureUnitCode = NullChecked(numerator, nameof(numerator)).MeasureUnitCode;
+            DefaultQuantity = numerator.GetDefaultQuantity() / denominatorMeasurement.GetExchangeRate();
+
+        }
+
+        private protected Proportion(IBaseRateFactory factory, IBaseMeasure numerator, IBaseMeasure denominator) : base(factory, denominator)
+        {
+            NumeratorMeasureUnitCode = NullChecked(numerator, nameof(numerator)).MeasureUnitCode;
+            DefaultQuantity = numerator.GetDefaultQuantity() / denominator.GetDefaultQuantity();
+        }
+
+        private protected Proportion(IBaseRateFactory factory, IBaseRate baseRate) : base(factory, baseRate)
+        {
+            NumeratorMeasureUnitCode = baseRate.GetNumeratorMeasureUnitCode();
+            DefaultQuantity = baseRate.GetDefaultQuantity();
+        }
+
+        private protected Proportion(IProportion other) : base(other)
+        {
+            NumeratorMeasureUnitCode = other.NumeratorMeasureUnitCode;
+            DefaultQuantity = other.DefaultQuantity;
+        }
+
         #endregion
 
         #region Properties
-        public MeasureUnitTypeCode NumeratorMeasureUnitTypeCode { get; init; }
-
-        #region Override properties
-        #region Sealed properties
-        public override sealed decimal DefaultQuantity { get; init; }
-        #endregion
-        #endregion
+        public MeasureUnitCode NumeratorMeasureUnitCode { get; init; }
+        public  decimal DefaultQuantity { get; init; }
         #endregion
 
         #region Public methods
-        public IProportion GetProportion(IBaseRate baseRate)
-        {
-            return GetFactory().Create(baseRate);
-        }
-
-        public IProportion GetProportion(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
-        {
-            return GetFactory().Create(numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode);
-        }
-
-        public IProportion GetProportion(IRateComponent numerator, IRateComponent denominator)
-        {
-            return GetFactory().Create(numerator, denominator);
-        }
-
         #region Override methods
         #region Sealed methods
-        public override sealed IProportion GetBaseRate(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
+        public override sealed decimal GetDefaultQuantity()
         {
-            return GetFactory().Create(numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode);
-        }
-
-        public override sealed IProportionFactory GetFactory()
-        {
-            return (IProportionFactory)Factory;
+            return DefaultQuantity;
         }
 
         public override sealed Enum GetMeasureUnit()
         {
-            return NumeratorMeasureUnitTypeCode.GetDefaultMeasureUnit();
+            return NumeratorMeasureUnitCode.GetDefaultMeasureUnit();
         }
 
-        public override sealed IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
+        public override sealed IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
         {
-            return base.GetMeasureUnitTypeCodes();
+            return base.GetMeasureUnitCodes();
         }
 
-        public override sealed MeasureUnitTypeCode GetNumeratorMeasureUnitTypeCode()
+        public override sealed MeasureUnitCode GetNumeratorMeasureUnitCode()
         {
-            return NumeratorMeasureUnitTypeCode;
+            return NumeratorMeasureUnitCode;
         }
 
         public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
         {
-            object converted = NullChecked(quantity, paramName).ToQuantity(TypeCode.Decimal) ?? throw ArgumentTypeOutOfRangeException(paramName, quantity!);
+            _ = GetValidDecimalQuantity(quantity, paramName);
+        }
+        #endregion
+        #endregion
 
-            if ((decimal)converted > 0) return;
+        #region Abstract methods
+        public abstract IProportion GetProportion(IBaseRate baseRate);
+        #endregion
+        #endregion
+
+        #region Private methods
+        #region Static methods
+        private static decimal GetValidDecimalQuantity(ValueType? quantity, string paramName)
+        {
+            decimal converted = (decimal)(NullChecked(quantity, paramName)
+                .ToQuantity(TypeCode.Decimal)
+                ?? throw ArgumentTypeOutOfRangeException(paramName, quantity!));
+
+            if (converted > 0) return converted;
 
             throw QuantityArgumentOutOfRangeException(paramName, quantity);
         }
-
-        public IMeasure Multiply(Enum multiplier) // Validate?
-        {
-            if (NullChecked(multiplier, nameof(multiplier)) is not IMeasure measure)
-            {
-                throw ArgumentTypeOutOfRangeException(nameof(multiplier), multiplier);
-            }
-
-            ValidateMeasureUnitTypeCode(measure.MeasureUnitTypeCode, nameof(multiplier));
-
-            decimal quantity = measure.DefaultQuantity * DefaultQuantity;
-            Enum measureUnit = NumeratorMeasureUnitTypeCode.GetDefaultMeasureUnit();
-
-            return (IMeasure)measure.GetRateComponent(measureUnit, quantity);
-        }
-        #endregion
         #endregion
         #endregion
     }
@@ -126,27 +126,49 @@
         {
         }
 
-        public IRateComponent Denominate(TDEnum measureUnit)
+        public IMeasure Denominate(TDEnum measureUnit)
         {
             decimal quantity = GetQuantity(measureUnit);
+            IMeasureFactory factory = GetFactory().MeasureFactory;
 
-            return (IRateComponent)GetFactory().CreateBaseMeasure(measureUnit, quantity);
+            return factory.Create(measureUnit, quantity);
         }
 
-        public IProportion<TDEnum> GetProportion(IRateComponent numerator, TDEnum denominatorMeasureUnit)
+        public IProportion GetProportion(IBaseMeasure numerator, IBaseMeasure denominator)
+        {
+            return GetFactory().Create(numerator, denominator);
+        }
+
+        public override sealed IProportion GetProportion(IBaseRate baseRate)
+        {
+            return GetFactory().Create(baseRate);
+        }
+
+        public IProportion<TDEnum> GetProportion(IBaseMeasure numerator, TDEnum denominatorMeasureUnit)
         {
             return GetFactory().Create(numerator, denominatorMeasureUnit);
         }
 
-        public IProportion<TDEnum> GetProportion(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal numeratorDefaultQuantity, TDEnum denominatorMeasureUnit)
-        {
-            return GetFactory().Create(numeratorMeasureUnitTypeCode, numeratorDefaultQuantity, denominatorMeasureUnit);
-        }
+        //public IProportion<TDEnum> GetProportion(MeasureUnitCode numeratorMeasureUnitCode, decimal numeratorDefaultQuantity, TDEnum denominatorMeasureUnit)
+        //{
+        //    return GetFactory().Create(numeratorMeasureUnitCode, numeratorDefaultQuantity, denominatorMeasureUnit);
+        //}
 
         public decimal GetQuantity(TDEnum denominatorMeasureUnit)
         {
             return DefaultQuantity / GetExchangeRate(denominatorMeasureUnit);
         }
+
+        public override sealed IBaseRate GetBaseRate(MeasureUnitCode numeratorMeasureUnitCode, decimal defaultQuantity, MeasureUnitCode denominatorMeasureUnitCode)
+        {
+            return GetFactory().Create(numeratorMeasureUnitCode, defaultQuantity, denominatorMeasureUnitCode);
+        }
+
+        public override sealed IProportionFactory GetFactory()
+        {
+            return (IProportionFactory)Factory;
+        }
+
     }
 
     internal sealed class Proportion<TNEnum, TDEnum> : Proportion<TDEnum>, IProportion<TNEnum, TDEnum>
@@ -155,6 +177,11 @@
     {
         internal Proportion(IProportionFactory factory, TNEnum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit) : base(factory, numeratorMeasureUnit, quantity, denominatorMeasureUnit)
         {
+        }
+
+        public IProportion<TNEnum, TDEnum> ConvertToLimitable(ILimiter limiter)
+        {
+            throw new NotImplementedException();
         }
 
         public TNEnum GetMeasureUnit(IMeasureUnit<TNEnum>? other)
@@ -171,7 +198,12 @@
 
         public decimal GetQuantity(TNEnum numeratorMeasureUnit, TDEnum denominatorMeasureUnit)
         {
-            return GetQuantity(denominatorMeasureUnit) / GetExchangeRate(numeratorMeasureUnit);
+            return GetQuantity(denominatorMeasureUnit) * GetExchangeRate(numeratorMeasureUnit);
+        }
+
+        public decimal GetQuantity(TNEnum numeratorMeasureUnit)
+        {
+            return DefaultQuantity * GetExchangeRate(numeratorMeasureUnit);
         }
     }
 }

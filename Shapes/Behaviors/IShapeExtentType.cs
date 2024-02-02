@@ -1,12 +1,10 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace CsabaDu.FooVaria.Shapes.Behaviors;
+﻿namespace CsabaDu.FooVaria.Shapes.Behaviors;
 
 public interface IShapeExtentType
 {
-    bool TryGetShapeExtentTypeCode(IExtent shapeExtent, [NotNullWhen(true)] out ShapeExtentTypeCode? shapeExtentTypeCode);
-    IEnumerable<ShapeExtentTypeCode> GetShapeExtentTypeCodes();
-    bool IsValidShapeExtentTypeCode(ShapeExtentTypeCode shapeExtentTypeCode);
+    bool TryGetShapeExtentCode(IExtent shapeExtent, [NotNullWhen(true)] out ShapeExtentCode? shapeExtentCode);
+    IEnumerable<ShapeExtentCode> GetShapeExtentCodes();
+    bool IsValidShapeExtentCode(ShapeExtentCode shapeExtentCode);
 
-    //void ValidateShapeExtentTypeCode(ShapeExtentTypeCode shapeExtentTypeCode, string paramName);
+    //void ValidateShapeExtentCode(ShapeExtentCode shapeExtentCode, string paramName);
 }

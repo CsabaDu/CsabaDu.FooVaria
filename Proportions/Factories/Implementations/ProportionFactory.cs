@@ -52,19 +52,19 @@ public sealed class ProportionFactory : IProportionFactory
         #endregion
     }
 
-    public IProportion<TDEnum> Create<TDEnum>(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, TDEnum denominatorMeasureUnit)
+    public IProportion<TDEnum> Create<TDEnum>(MeasureUnitCode numeratorMeasureUnitCode, decimal defaultQuantity, TDEnum denominatorMeasureUnit)
         where TDEnum : struct, Enum
     {
-        Enum numeratorMeasureUnit = numeratorMeasureUnitTypeCode.GetDefaultMeasureUnit();
+        Enum numeratorMeasureUnit = numeratorMeasureUnitCode.GetDefaultMeasureUnit();
 
         return Create(numeratorMeasureUnit, defaultQuantity, denominatorMeasureUnit);
     }
 
-    public IProportion<TDEnum> Create<TDEnum>(IRateComponent numerator, TDEnum denominatorMeasureUnit)
+    public IProportion<TDEnum> Create<TDEnum>(IBaseMeasure numerator, TDEnum denominatorMeasureUnit)
         where TDEnum : struct, Enum
     {
         Enum numeratorMeasureUnit = NullChecked(numerator, nameof(numerator)).GetMeasureUnit();
-        decimal quantity = numerator.DefaultQuantity / GetExchangeRate(numeratorMeasureUnit);
+        decimal quantity = numerator.GetDefaultQuantity() / GetExchangeRate(numeratorMeasureUnit);
 
         return Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit);
     }
@@ -98,29 +98,29 @@ public sealed class ProportionFactory : IProportionFactory
         #endregion
     }
 
-    public IProportion Create(IRateComponent numerator, IRateComponent denominator)
+    public IProportion Create(IBaseMeasure numerator, IBaseMeasure denominator)
     {
         var (numeratorMeasureUnit, quantity) = GetNumeratorComponents(numerator);
         Enum denominatorMeasureUnit = NullChecked(denominator, nameof(denominator)).GetMeasureUnit();
         quantity *= GetExchangeRate(denominatorMeasureUnit);
-        quantity /= denominator!.DefaultQuantity;
+        quantity /= denominator!.GetDefaultQuantity();
 
         return Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit);
     }
 
     public IProportion Create(IBaseRate baseRate)
     {
-        MeasureUnitTypeCode denominatorMeasureUnitTypeCode = NullChecked(baseRate, nameof(baseRate)).MeasureUnitTypeCode;
-        decimal defaultQuantity = baseRate.DefaultQuantity;
-        MeasureUnitTypeCode numeratorMeasureUnitTypeCode = baseRate.GetNumeratorMeasureUnitTypeCode();
+        MeasureUnitCode denominatorMeasureUnitCode = NullChecked(baseRate, nameof(baseRate)).MeasureUnitCode;
+        decimal defaultQuantity = baseRate.GetDefaultQuantity();
+        MeasureUnitCode numeratorMeasureUnitCode = baseRate.GetNumeratorMeasureUnitCode();
 
-        return Create(numeratorMeasureUnitTypeCode, defaultQuantity, denominatorMeasureUnitTypeCode);
+        return Create(numeratorMeasureUnitCode, defaultQuantity, denominatorMeasureUnitCode);
     }
 
-    public IProportion Create(MeasureUnitTypeCode numeratorMeasureUnitTypeCode, decimal defaultQuantity, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
+    public IProportion Create(MeasureUnitCode numeratorMeasureUnitCode, decimal defaultQuantity, MeasureUnitCode denominatorMeasureUnitCode)
     {
-        Enum numeratorMeasureUnit = numeratorMeasureUnitTypeCode.GetDefaultMeasureUnit();
-        Enum denominatorMeasureUnit = denominatorMeasureUnitTypeCode.GetDefaultMeasureUnit();
+        Enum numeratorMeasureUnit = numeratorMeasureUnitCode.GetDefaultMeasureUnit();
+        Enum denominatorMeasureUnit = denominatorMeasureUnitCode.GetDefaultMeasureUnit();
 
         return Create(numeratorMeasureUnit, defaultQuantity, denominatorMeasureUnit);
     }
@@ -156,7 +156,7 @@ public sealed class ProportionFactory : IProportionFactory
 
         IProportion createProportionFrom2or3Params()
         {
-            if (baseMeasures is IRateComponent[] rateComponents) return Create(rateComponents[0], rateComponents[1]);
+            if (baseMeasures is IBaseMeasure[] rateComponents) return Create(rateComponents[0], rateComponents[1]);
 
             throw exception();
         }
@@ -168,10 +168,10 @@ public sealed class ProportionFactory : IProportionFactory
         #endregion
     }
 
-    public IBaseRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitTypeCode denominatorMeasureUnitTypeCode)
+    public IBaseRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitCode denominatorMeasureUnitCode)
     {
         var (numeratorMeasureUnit, quantity) = GetNumeratorComponents(numerator);
-        Enum denominatorMeasureUnit = denominatorMeasureUnitTypeCode.GetDefaultMeasureUnit();
+        Enum denominatorMeasureUnit = denominatorMeasureUnitCode.GetDefaultMeasureUnit();
 
         return Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit);
     }
@@ -184,25 +184,14 @@ public sealed class ProportionFactory : IProportionFactory
         return Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit);
     }
     #endregion
-
-    #region IBaseMeasure
-    public IBaseMeasure CreateBaseMeasure(Enum measureUnit, ValueType quantity)
-    {
-        return MeasureFactory.CreateBaseMeasure(measureUnit, quantity);
-    }
-    #endregion
     #endregion
 
     #region Private methods
     #region Static methods
     private static (Enum MeasureUnit, decimal Quantity) GetNumeratorComponents(IBaseMeasure numerator)
     {
-
-        Enum nmeasureUnit = NullChecked(numerator, nameof(numerator)) is IRateComponent rateComponent ?
-            rateComponent.GetMeasureUnit()
-            : throw ArgumentTypeOutOfRangeException(nameof(numerator), numerator);
-
-        decimal quantity = rateComponent.DefaultQuantity / GetExchangeRate(nmeasureUnit);
+        Enum nmeasureUnit = NullChecked(numerator, nameof(numerator)).GetMeasureUnit();
+        decimal quantity = numerator.GetDefaultQuantity() / GetExchangeRate(nmeasureUnit);
 
         return (nmeasureUnit, quantity);
     }

@@ -1,0 +1,14 @@
+﻿global using CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors;
+global using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
+global using CsabaDu.FooVaria.BaseTypes.Measurables.Factories;
+global using CsabaDu.FooVaria.BaseTypes.Measurables.Types;
+global using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
+global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
+global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Enums;
+global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Factories;
+global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
+global using System.ComponentModel;
+global using System.Diagnostics.CodeAnalysis;
+global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.ExceptionMethods;
+global using static CsabaDu.FooVaria.BaseTypes.Measurables.Statics.ExceptionMethods;
+global using static CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.Implementations.Quantifiable;
