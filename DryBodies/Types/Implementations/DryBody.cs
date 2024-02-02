@@ -124,5 +124,7 @@
         {
             return BaseFace;
         }
+
+        public abstract TSelf GetNew(TSelf other);
     }
 }

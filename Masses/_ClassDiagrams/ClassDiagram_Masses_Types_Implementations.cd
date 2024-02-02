@@ -9,7 +9,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.Masses.Types.Implementations.DryMass" Collapsed="true">
-    <Position X="2.5" Y="4.5" Width="1.25" />
+    <Position X="2" Y="4.5" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAEABAAAIAAACAAAAAAACCAAAAAAIAQAACAIAAAAAA=</HashCode>
       <FileName>Types\Implementations\DryMass.cs</FileName>
@@ -17,7 +17,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.Masses.Types.Implementations.Mass" Collapsed="true">
-    <Position X="1.5" Y="3" Width="1.25" />
+    <Position X="1.25" Y="3" Width="1.25" />
     <TypeIdentifier>
       <HashCode>QAAAABCAAIACgCQDiAAAAACAACgAWIBQAAKAKAABABQ=</HashCode>
       <FileName>Types\Implementations\Mass.cs</FileName>
@@ -25,7 +25,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.Implementations.Quantifiable" Collapsed="true">
-    <Position X="1.5" Y="1.75" Width="1.25" />
+    <Position X="1.25" Y="1.75" Width="1.25" />
     <TypeIdentifier />
     <Lollipop Position="0.2" />
   </Class>

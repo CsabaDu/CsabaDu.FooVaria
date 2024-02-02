@@ -76,7 +76,7 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
         return GetFactory().CreateOuterTangentShape(this);
     }
 
-    public ICuboid GetNew(ICuboid other)
+    public override ICuboid GetNew(ICuboid other)
     {
         return GetFactory().CreateNew(other);
     }

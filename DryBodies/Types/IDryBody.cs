@@ -9,7 +9,7 @@
         IPlaneShapeFactory GetBaseFaceFactory();
     }
 
-    public interface IDryBody<out TSelf, TBFace> : IDryBody
+    public interface IDryBody<TSelf, TBFace> : IDryBody, ICommonBase<TSelf>
         where TSelf : class, IDryBody, ITangentShape
         where TBFace : IPlaneShape, ITangentShape
     {

@@ -35,7 +35,6 @@
                 2 => createPlaneSapeFrom2Params(),
 
                 _ => null,
-
             };
 
             #region Local methods

@@ -44,7 +44,7 @@ internal sealed class Cylinder : DryBody<ICylinder, ICircle>, ICylinder
         return GetFactory().CreateOuterTangentShape(this);
     }
 
-    public ICylinder GetNew(ICylinder other)
+    public override ICylinder GetNew(ICylinder other)
     {
         return GetFactory().CreateNew(other);
     }
