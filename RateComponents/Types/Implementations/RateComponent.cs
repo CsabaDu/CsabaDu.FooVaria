@@ -91,11 +91,6 @@
         {
         }
 
-        public override IRateComponentFactory<TSelf> GetFactory()
-        {
-            return (IRateComponentFactory<TSelf>)Factory;
-        }
-
         public abstract TSelf GetDefault();
 
         #region Protected methods
