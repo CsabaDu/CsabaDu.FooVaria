@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BaseMeasures\BaseMeasures.csproj" />
-    <ProjectReference Include="..\Quantifiables\Quantifiables.csproj" />
   </ItemGroup>
 
 </Project>

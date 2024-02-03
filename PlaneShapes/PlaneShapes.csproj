@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Measures\Measures.csproj" />
     <ProjectReference Include="..\Shapes\Shapes.csproj" />
   </ItemGroup>
 
