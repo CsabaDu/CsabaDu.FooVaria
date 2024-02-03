@@ -91,11 +91,6 @@
         {
         }
 
-        public TSelf GetNew(TSelf other)
-        {
-            return GetFactory().CreateNew(other);
-        }
-
         public override IRateComponentFactory<TSelf> GetFactory()
         {
             return (IRateComponentFactory<TSelf>)Factory;

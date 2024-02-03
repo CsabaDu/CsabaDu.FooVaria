@@ -89,6 +89,11 @@ internal sealed class Limit : RateComponent<ILimit>, ILimit
         return GetDefaultQuantity();
     }
 
+    public ILimit GetNew(ILimit other)
+    {
+        return GetFactory().CreateNew(other);
+    }
+
     public ulong GetQuantity()
     {
         return GetQuantity(this);

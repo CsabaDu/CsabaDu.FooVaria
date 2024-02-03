@@ -43,6 +43,11 @@ internal sealed class Denominator : RateComponent<IDenominator>, IDenominator
         return GetFactory().Create(baseMeasure, quantity);
     }
 
+    public IDenominator GetNew(IDenominator other)
+    {
+        return GetFactory().CreateNew(other);
+    }
+
     #region Override methods
     public override decimal GetDefaultQuantity()
     {
