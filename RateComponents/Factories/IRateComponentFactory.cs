@@ -7,14 +7,8 @@
         TypeCode QuantityTypeCode { get; }
     }
 
-    public interface IRateComponentFactory<T> : IRateComponentFactory, IFactory<T>
+    public interface IRateComponentFactory<T> : IRateComponentFactory
         where T : class, IBaseMeasure
     {
     }
-    //public interface IRateComponentFactory<TSelf, TNum> : IRateComponentFactory<TSelf>, IBaseMeasureFactory<TSelf>
-    //    where TSelf : class, IBaseMeasure/*, IDefaultBaseMeasure*/
-    //    where TNum : struct
-    //{
-    //    TSelf Create(IMeasurement measurement, TNum quantity);
-    //}
 }

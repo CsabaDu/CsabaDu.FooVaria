@@ -242,11 +242,11 @@
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IMeasureUnit" Collapsed="true">
-    <Position X="6.75" Y="3" Width="1.5" />
+    <Position X="7" Y="3.25" Width="1.5" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IMeasureUnit&lt;TEnum&gt;" Collapsed="true">
-    <Position X="6.5" Y="4" Width="2" />
+    <Position X="6.75" Y="4.25" Width="2" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.IBaseMeasure&lt;TSelf&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">

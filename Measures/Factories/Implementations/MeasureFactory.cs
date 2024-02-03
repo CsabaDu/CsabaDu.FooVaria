@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
-
-namespace CsabaDu.FooVaria.Measures.Factories.Implementations;
+﻿namespace CsabaDu.FooVaria.Measures.Factories.Implementations;
 
 public sealed class MeasureFactory : IMeasureFactory
 {
@@ -95,7 +93,7 @@ public sealed class MeasureFactory : IMeasureFactory
         }
     }
 
-    private IMeasure CreateMeasure([DisallowNull] IBaseMeasurement baseMeasurement, ValueType quantity)
+    private IMeasure CreateMeasure(IBaseMeasurement baseMeasurement, ValueType quantity)
     {
         Enum measureUnit = baseMeasurement.GetMeasureUnit();
 
