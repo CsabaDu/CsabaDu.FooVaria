@@ -88,26 +88,26 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Common.Types.ICommonBase&lt;TSelf&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="5.25" Y="1.75" Width="1.75" />
+    <Position X="1.75" Y="1.75" Width="1.75" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Shapes.Behaviors.IHeight" Collapsed="true">
-    <Position X="6.75" Y="0.5" Width="1.25" />
+    <Position X="0.75" Y="0.5" Width="1.25" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseSpreads.Types.IBody" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="5.25" Y="0.5" Width="1.25" />
+    <Position X="2.25" Y="0.5" Width="1.25" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.DryBodies.Behaviors.IProjection" Collapsed="true">
-    <Position X="0.75" Y="0.5" Width="1.25" />
+    <Position X="6.75" Y="0.5" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Behaviors\IProjection.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.DryBodies.Behaviors.IBaseFace" Collapsed="true">
-    <Position X="2.25" Y="0.5" Width="1.25" />
+    <Position X="5.25" Y="0.5" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
       <FileName>Behaviors\IBaseFace.cs</FileName>
