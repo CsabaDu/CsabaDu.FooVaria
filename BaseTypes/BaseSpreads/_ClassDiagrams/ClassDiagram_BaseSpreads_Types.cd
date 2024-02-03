@@ -8,13 +8,13 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseSpreads.Types.IBody" Collapsed="true">
-    <Position X="3.25" Y="5.25" Width="1.25" />
+    <Position X="3.5" Y="5.25" Width="1.25" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.BaseSpreads.Types.IBaseSpread" FixedFromPoint="true">
       <Path>
         <Point X="3.375" Y="4.691" />
         <Point X="3.375" Y="4.95" />
-        <Point X="3.875" Y="4.95" />
-        <Point X="3.875" Y="5.25" />
+        <Point X="4.125" Y="4.95" />
+        <Point X="4.125" Y="5.25" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -23,13 +23,13 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseSpreads.Types.ISurface" Collapsed="true">
-    <Position X="1.75" Y="5.25" Width="1.25" />
+    <Position X="1.5" Y="5.25" Width="1.25" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.BaseSpreads.Types.IBaseSpread" FixedFromPoint="true">
       <Path>
         <Point X="2.875" Y="4.691" />
         <Point X="2.875" Y="4.95" />
-        <Point X="2.375" Y="4.95" />
-        <Point X="2.375" Y="5.25" />
+        <Point X="2.125" Y="4.95" />
+        <Point X="2.125" Y="5.25" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>

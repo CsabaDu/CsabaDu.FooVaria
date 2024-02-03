@@ -8,7 +8,7 @@
   <Class Name="CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable" Collapsed="true">
     <Position X="0.5" Y="1.75" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAgAAIAAAASAAgAAAAACCAAEAQIAgAAACCCAAAAA=</HashCode>
+      <HashCode>CAACAiAAIEgEASABgQAAAACCgAEAQIBgAAACGCAAAgA=</HashCode>
       <FileName>Types\Implementations\Measurable.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />

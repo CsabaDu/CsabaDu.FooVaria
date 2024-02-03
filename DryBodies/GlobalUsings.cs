@@ -1,4 +1,5 @@
-﻿global using CsabaDu.FooVaria.BaseTypes.BaseShapes.Types;
+﻿global using CsabaDu.FooVaria.BaseShapes.Factories;
+global using CsabaDu.FooVaria.BaseTypes.BaseShapes.Types;
 global using CsabaDu.FooVaria.BaseTypes.BaseSpreads.Factories;
 global using CsabaDu.FooVaria.BaseTypes.BaseSpreads.Types;
 global using CsabaDu.FooVaria.BaseTypes.Common.Enums;
