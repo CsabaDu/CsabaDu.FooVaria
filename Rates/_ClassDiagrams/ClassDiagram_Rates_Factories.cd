@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Interface Name="CsabaDu.FooVaria.Rates.Factories.IFlatRateFactory" Collapsed="true">
-    <Position X="0.5" Y="5.25" Width="1.5" />
+  <Interface Name="CsabaDu.FooVaria.Rates.Factories.IFlatRateFactory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.Rates.Factories.IRateFactory" FixedFromPoint="true">
       <Path>
-        <Point X="1.875" Y="4.57" />
-        <Point X="1.875" Y="4.875" />
-        <Point X="1.25" Y="4.875" />
-        <Point X="1.25" Y="5.25" />
+        <Point X="2" Y="2.57" />
+        <Point X="2" Y="2.945" />
+        <Point X="1.25" Y="2.945" />
+        <Point X="1.25" Y="4.75" />
       </Path>
     </InheritanceLine>
-    <InheritanceLine Type="CsabaDu.FooVaria.Common.Factories.IFactory&lt;T&gt;" FixedFromPoint="true">
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Common.Factories.IFactory&lt;T&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="1.125" Y="1.32" />
-        <Point X="1.125" Y="4.875" />
-        <Point X="1.25" Y="4.875" />
-        <Point X="1.25" Y="5.25" />
+        <Point X="1.875" Y="3.941" />
+        <Point X="1.875" Y="4.375" />
+        <Point X="1.25" Y="4.375" />
+        <Point X="1.25" Y="4.75" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -23,24 +23,22 @@
       <FileName>Factories\IFlatRateFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.Rates.Factories.ILimitedRateFactory" Collapsed="true">
-    <Position X="2.25" Y="5.25" Width="1.75" />
+  <Interface Name="CsabaDu.FooVaria.Rates.Factories.ILimitedRateFactory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="4.75" Width="1.75" />
     <InheritanceLine Type="CsabaDu.FooVaria.Rates.Factories.IRateFactory" FixedFromPoint="true">
       <Path>
-        <Point X="2.375" Y="4.57" />
-        <Point X="2.375" Y="4.875" />
-        <Point X="3.125" Y="4.875" />
-        <Point X="3.125" Y="5.25" />
+        <Point X="2.5" Y="2.57" />
+        <Point X="2.5" Y="2.945" />
+        <Point X="3.125" Y="2.945" />
+        <Point X="3.125" Y="4.75" />
       </Path>
     </InheritanceLine>
-    <InheritanceLine Type="CsabaDu.FooVaria.Common.Factories.IFactory&lt;T&gt;" FixedFromPoint="true">
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Common.Factories.IFactory&lt;T&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="1.625" Y="1.32" />
-        <Point X="1.625" Y="1.75" />
-        <Point X="3.5" Y="1.75" />
-        <Point X="3.5" Y="4.875" />
-        <Point X="3.125" Y="4.875" />
-        <Point X="3.125" Y="5.25" />
+        <Point X="2.375" Y="3.941" />
+        <Point X="2.375" Y="4.375" />
+        <Point X="3.125" Y="4.375" />
+        <Point X="3.125" Y="4.75" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -48,19 +46,20 @@
       <FileName>Factories\ILimitedRateFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.Rates.Factories.IRateFactory" Collapsed="true">
-    <Position X="1.5" Y="3.75" Width="1.25" />
+  <Interface Name="CsabaDu.FooVaria.Rates.Factories.IRateFactory" Collapsed="true" HideInheritanceLine="true">
+    <Position X="1.5" Y="1.75" Width="1.5" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Common.Factories.IFactory&lt;CsabaDu.FooVaria.Rates.Types.IRate&gt;" IsHidden="true" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\IRateFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.Common.Factories.IBaseRateFactory" Collapsed="true">
-    <Position X="1.75" Y="2" Width="1.5" />
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseRates.Factories.IBaseRateFactory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="1.5" Y="0.5" Width="1.5" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.Common.Factories.IFactory&lt;T&gt;" Collapsed="true">
-    <Position X="0.75" Y="0.5" Width="1.25" />
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Common.Factories.IFactory&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="1.5" Y="3.25" Width="1.25" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />
