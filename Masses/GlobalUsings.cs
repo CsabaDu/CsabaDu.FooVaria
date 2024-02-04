@@ -1,4 +1,5 @@
 ﻿global using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;
+global using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Enums;
 global using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types;
 global using CsabaDu.FooVaria.BaseTypes.BaseShapes.Types;
 global using CsabaDu.FooVaria.BaseTypes.BaseSpreads.Factories;
@@ -8,7 +9,6 @@ global using CsabaDu.FooVaria.BaseTypes.Common.Types;
 global using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Enums;
-global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Factories;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Statics;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.Implementations;

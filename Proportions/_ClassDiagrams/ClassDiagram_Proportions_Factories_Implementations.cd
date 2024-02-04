@@ -3,8 +3,16 @@
   <Class Name="CsabaDu.FooVaria.Proportions.Factories.Implementations.ProportionFactory" Collapsed="true">
     <Position X="0.5" Y="0.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>KAAAAAAAAAAABAEAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <HashCode>KAAAAAAAAAAABAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\Implementations\ProportionFactory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Proportions.Factories.Implementations.ProportionLimitFactory" Collapsed="true">
+    <Position X="2.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAAAAgAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Factories\Implementations\ProportionLimitFactory.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>

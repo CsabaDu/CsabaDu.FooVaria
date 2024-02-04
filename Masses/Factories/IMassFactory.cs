@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Masses.Factories;
 
-public interface IMassFactory : IQuantifiableFactory, IBaseSpreadFactory
+public interface IMassFactory : IBodyFactory
 {
     IBodyFactory BodyFactory { get; init; }
     IProportionFactory ProportionFactory { get; init; }

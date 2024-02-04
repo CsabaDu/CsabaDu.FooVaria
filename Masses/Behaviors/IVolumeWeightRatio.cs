@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Enums;
-
-namespace CsabaDu.FooVaria.Masses.Behaviors;
+﻿namespace CsabaDu.FooVaria.Masses.Behaviors;
 
 public interface IVolumeWeightRatio : IVolumeWeight
 {

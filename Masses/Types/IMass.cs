@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Masses.Types;
 
-public interface IMass : IQuantifiable, IBody, IDensity, IVolumeWeightRatio
+public interface IMass : IBody, IDensity, IVolumeWeightRatio
 {
     IWeight Weight { get; init; }
     IMeasure? this[MeasureUnitCode measureUnitCode] { get; }

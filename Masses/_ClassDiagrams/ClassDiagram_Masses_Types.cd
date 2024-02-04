@@ -54,7 +54,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Masses.Behaviors.IDensity" Collapsed="true">
-    <Position X="5.5" Y="1.5" Width="1.25" />
+    <Position X="0.5" Y="1.5" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
       <FileName>Behaviors\IDensity.cs</FileName>
@@ -74,13 +74,8 @@
       <FileName>Behaviors\IVolumeWeightRatio.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.IQuantifiable" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="2" Y="1.5" Width="1.25" />
-    <TypeIdentifier />
-  </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseSpreads.Types.IBody" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
-    <Position X="0.5" Y="1.5" Width="1.25" />
-    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.IQuantifiable" IsHidden="true" />
+    <Position X="2" Y="1.5" Width="1.25" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Common.Types.ICommonBase&lt;TSelf&gt;" Collapsed="true" BaseTypeListCollapsed="true">
