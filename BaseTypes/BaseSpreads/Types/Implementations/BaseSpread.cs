@@ -2,7 +2,6 @@
 
 public abstract class BaseSpread : Quantifiable, IBaseSpread
 {
-    public decimal DefaultQuantity { get; init; }
     #region Constructors
     protected BaseSpread(IBaseSpread other) : base(other)
     {
@@ -25,20 +24,24 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
     }
     #endregion
 
+    #region Properties
+    public decimal DefaultQuantity { get; init; }
+    #endregion
+
     #region Public methods
-    public int CompareTo(IBaseSpread? other)
+    public virtual int CompareTo(IBaseSpread? other)
     {
         if (other == null) return 1;
 
         return Compare(this, other) ?? throw ArgumentTypeOutOfRangeException(nameof(other), other);
     }
 
-    public bool Equals(IBaseSpread? other)
+    public virtual bool Equals(IBaseSpread? other)
     {
         return base.Equals(other);
     }
 
-    public bool? FitsIn(IBaseSpread? baseSpread, LimitMode? limitMode)
+    public virtual bool? FitsIn(IBaseSpread? baseSpread, LimitMode? limitMode)
     {
         if (baseSpread == null && limitMode == null) return true;
 
@@ -53,27 +56,27 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
         return comparison.Value.FitsIn(limitMode);
     }
 
-    public override sealed decimal GetDefaultQuantity()
+    public override decimal GetDefaultQuantity()
     {
         return (GetSpreadMeasure() as IBaseMeasure ?? throw new InvalidOperationException(null)).GetDefaultQuantity();
     }
 
-    public override sealed Enum GetMeasureUnit()
+    public override Enum GetMeasureUnit()
     {
         return (GetSpreadMeasure() as IMeasurable)!.GetMeasureUnit();
     }
 
-    public MeasureUnitCode GetMeasureUnitCode()
+    public virtual MeasureUnitCode GetMeasureUnitCode()
     {
         return MeasureUnitCode;
     }
 
-    public double GetQuantity()
+    public virtual double GetQuantity()
     {
         return GetSpreadMeasure().GetQuantity();
     }
 
-    public bool IsExchangeableTo(Enum? context)
+    public virtual bool IsExchangeableTo(Enum? context)
     {
         if (context == null) return false;
 
@@ -93,7 +96,7 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
         #endregion
     }
 
-    public decimal ProportionalTo(IBaseSpread other)
+    public virtual decimal ProportionalTo(IBaseSpread other)
     {
         ValidateSpreadMeasure(other, nameof(other));
 
@@ -102,17 +105,15 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
 
     public void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)
     {
-        IBaseMeasure baseMeasure = NullChecked(spreadMeasure, paramName).GetSpreadMeasure() as IBaseMeasure ?? throw new InvalidOperationException(null);
+        IBaseMeasure? baseMeasure = NullChecked(spreadMeasure, paramName).GetSpreadMeasure() as IBaseMeasure;
 
-        MeasureUnitCode measureUnitCode = baseMeasure.MeasureUnitCode;
+        MeasureUnitCode measureUnitCode = baseMeasure?.MeasureUnitCode ?? throw new InvalidOperationException(null);
 
-        if (measureUnitCode != MeasureUnitCode) throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
+        if (!HasMeasureUnitCode(measureUnitCode)) throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
 
         decimal quantity = baseMeasure.GetDefaultQuantity();
 
-        if (quantity > 0) return;
-
-        throw QuantityArgumentOutOfRangeException(paramName, quantity);
+        ValidateQuantity(quantity, paramName);
     }
 
     #region Override methods
@@ -136,7 +137,14 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
     #endregion
 
     #region Abstract methods
-    public abstract IBaseSpread? ExchangeTo(Enum measureUnit);
+    public virtual IBaseSpread? ExchangeTo(Enum measureUnit)
+    {
+        IBaseMeasure? exchanged = (GetSpreadMeasure() as IBaseMeasure)?.ExchangeTo(measureUnit);
+
+        if (exchanged is not ISpreadMeasure spreadMeasure) return null;
+
+        return GetBaseSpread(spreadMeasure);
+    }
     public abstract IBaseSpread GetBaseSpread(ISpreadMeasure spreadMeasure);
     public abstract ISpreadMeasure GetSpreadMeasure();
     #endregion

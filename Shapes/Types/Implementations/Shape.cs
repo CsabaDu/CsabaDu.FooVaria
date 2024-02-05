@@ -180,28 +180,16 @@ public abstract class Shape : BaseShape, IShape
 
     public override sealed IBaseSpread? ExchangeTo(Enum measureUnit)
     {
-        if (measureUnit == null) return null;
+        if (measureUnit is not ExtentUnit extentUnit) return base.ExchangeTo(measureUnit);
 
-        return measureUnit switch
-        {
-            AreaUnit areaUnit => exchangeToAreaUnit(areaUnit),
-            ExtentUnit extentUnit => exchangeToExtentUnit(extentUnit),
-            VolumeUnit volumeUnit => exchangeToVolumeUnit(volumeUnit),
+        IEnumerable<IExtent> exchangedShapeExtents = getExchangedShapeExtents();
 
-            _ => null,
-        };
+        if (exchangedShapeExtents.Count() != GetShapeExtents().Count()) return null;
+
+        return GetShape(exchangedShapeExtents.ToArray());
 
         #region Local methods
-        IShape? exchangeToExtentUnit(ExtentUnit extentUnit)
-        {
-            IEnumerable<IExtent> exchangedShapeExtents = getExchangedShapeExtents(extentUnit);
-
-            if (exchangedShapeExtents.Count() != GetShapeExtents().Count()) return null;
-
-            return GetShape(exchangedShapeExtents.ToArray());
-        }
-
-        IEnumerable<IExtent> getExchangedShapeExtents(ExtentUnit extentUnit)
+        IEnumerable<IExtent> getExchangedShapeExtents()
         {
             foreach (IExtent item in GetShapeExtents())
             {
@@ -212,27 +200,6 @@ public abstract class Shape : BaseShape, IShape
                     yield return extent;
                 }
             }
-        }
-
-        IBulkSurface? exchangeToAreaUnit(AreaUnit areaUnit)
-        {
-            if (getExchangedSpreadMeasure(areaUnit) is not IArea area) return null;
-
-            return (IBulkSurface)GetFactory().SpreadFactory.CreateBaseSpread(area);
-        }
-
-        IBulkBody? exchangeToVolumeUnit(VolumeUnit volumeUnit)
-        {
-            if (getExchangedSpreadMeasure(volumeUnit) is not IVolume volume) return null;
-
-            return (IBulkBody)GetFactory().SpreadFactory.CreateBaseSpread(volume);
-        }
-
-        IBaseMeasure? getExchangedSpreadMeasure(Enum measureUnit)
-        {
-            IBaseMeasure spreadMeasure = (IBaseMeasure)GetSpreadMeasure();
-
-            return spreadMeasure.ExchangeTo(measureUnit);
         }
         #endregion
     }

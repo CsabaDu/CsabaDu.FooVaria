@@ -41,13 +41,9 @@
         }
 
         #region Sealed methods
-        public override sealed ISpread? ExchangeTo(Enum measureUnit)
+        public override sealed IBaseSpread? ExchangeTo(Enum measureUnit)
         {
-            IBaseMeasure? exchanged = (GetSpreadMeasure() as IBaseMeasure)?.ExchangeTo(measureUnit);
-
-            if (exchanged is not ISpreadMeasure spreadMeasure) return null;
-
-            return (ISpread)GetFactory().CreateBaseSpread(spreadMeasure);
+            return base.ExchangeTo(measureUnit);
         }
 
         public override sealed void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
