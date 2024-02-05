@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Interface Name="CsabaDu.FooVaria.PlaneShapes.Factories.ICircleFactory" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="3" Y="3.25" Width="1.25" />
+    <Position X="3" Y="3" Width="1.25" />
     <InheritanceLine Type="CsabaDu.FooVaria.PlaneShapes.Factories.IPlaneShapeFactory" FixedFromPoint="true">
       <Path>
-        <Point X="4.125" Y="2.57" />
-        <Point X="4.125" Y="2.875" />
-        <Point X="3.625" Y="2.875" />
-        <Point X="3.625" Y="3.25" />
+        <Point X="4.125" Y="2.441" />
+        <Point X="4.125" Y="2.7" />
+        <Point X="3.625" Y="2.7" />
+        <Point X="3.625" Y="3" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -15,7 +15,7 @@
       <FileName>Factories\ICircleFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.PlaneShapes.Factories.IPlaneShapeFactory" Collapsed="true">
+  <Interface Name="CsabaDu.FooVaria.PlaneShapes.Factories.IPlaneShapeFactory" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="3.5" Y="1.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -23,13 +23,13 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.PlaneShapes.Factories.IRectangleFactory" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="4.5" Y="3.25" Width="1.5" />
+    <Position X="4.5" Y="3" Width="1.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.PlaneShapes.Factories.IPlaneShapeFactory" FixedFromPoint="true">
       <Path>
-        <Point X="4.625" Y="2.57" />
-        <Point X="4.625" Y="2.875" />
-        <Point X="5.25" Y="2.875" />
-        <Point X="5.25" Y="3.25" />
+        <Point X="4.625" Y="2.441" />
+        <Point X="4.625" Y="2.7" />
+        <Point X="5.25" Y="2.7" />
+        <Point X="5.25" Y="3" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -49,6 +49,10 @@
   <Interface Name="CsabaDu.FooVaria.Shapes.Factories.IRectangularShapeFactory&lt;T, TTangent&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
     <Position X="5.5" Y="1.75" Width="3" />
     <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Factories.IShapeFactory" IsHidden="true" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseSpreads.Factories.ISurfaceFactory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2" Y="0.5" Width="1.5" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />

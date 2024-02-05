@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Interface Name="CsabaDu.FooVaria.DryBodies.Factories.ICuboidFactory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4.75" Y="4.25" Width="1.5" />
+    <InheritanceLine Type="CsabaDu.FooVaria.DryBodies.Factories.IDryBodyFactory&lt;T, TBFace&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="4.875" Y="3.691" />
+        <Point X="4.875" Y="3.95" />
+        <Point X="5.5" Y="3.95" />
+        <Point X="5.5" Y="4.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAUAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Factories\ICuboidFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.DryBodies.Factories.ICylinderFactory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.75" Y="4.25" Width="1.5" />
+    <InheritanceLine Type="CsabaDu.FooVaria.DryBodies.Factories.IDryBodyFactory&lt;T, TBFace&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="4.375" Y="3.691" />
+        <Point X="4.375" Y="3.95" />
+        <Point X="3.5" Y="3.95" />
+        <Point X="3.5" Y="4.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAUAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Factories\ICylinderFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.DryBodies.Factories.IDryBodyFactory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3.75" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAIAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAE=</HashCode>
+      <FileName>Factories\IDryBodyFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.DryBodies.Factories.IDryBodyFactory&lt;T, TBFace&gt;" Collapsed="true">
+    <Position X="3.5" Y="3" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Factories\IDryBodyFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseSpreads.Factories.IBodyFactory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.5" Y="0.5" Width="1.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Shapes.Factories.IShapeFactory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="0.5" Width="1.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Shapes.Factories.ICircularShapeFactory&lt;T, TTangent&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="3" Width="2.75" />
+    <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Factories.IShapeFactory" IsHidden="true" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Shapes.Factories.IRectangularShapeFactory&lt;T, TTangent&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
+    <Position X="6" Y="3" Width="3" />
+    <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Factories.IShapeFactory" IsHidden="true" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
