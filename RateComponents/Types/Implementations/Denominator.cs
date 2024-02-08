@@ -59,6 +59,11 @@ internal sealed class Denominator : RateComponent<IDenominator>, IDenominator
         return (IDenominatorFactory)Factory;
     }
 
+    public override void ValidateQuantity(ValueType? quantity, string paramName)
+    {
+        ValidateQuantity(this, quantity, paramName);
+    }
+
     public IDenominator GetDenominator(IMeasurement measurement, decimal quantity)
     {
         return (IDenominator)GetBaseMeasure(measurement, quantity);

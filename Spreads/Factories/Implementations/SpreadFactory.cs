@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
+﻿
+using CsabaDu.FooVaria.BaseTypes.Measurables.Statics;
+
+namespace CsabaDu.FooVaria.Spreads.Factories.Implementations
 {
     public abstract class SpreadFactory : ISpreadFactory
     {
@@ -14,6 +17,15 @@
         #endregion
 
         #region Public methods
+        public IBaseSpread CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
+        {
+            if (!measureUnitCode.IsSpreadMeasureUnitCode()) throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode);
+
+            IMeasure measure = MeasureFactory.Create(measureUnitCode, defaultQuantity);
+
+            return CreateBaseSpread((ISpreadMeasure)measure);
+        }
+
         #region Abstract methods
         public abstract IBaseSpread CreateBaseSpread(ISpreadMeasure spreadMeasure);
         public abstract ISpread Create(params IExtent[] shapeExtents);

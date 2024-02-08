@@ -44,8 +44,9 @@ internal abstract class Rate : BaseRate, IRate
     public IMeasure Numerator { get; init; }
     public IDenominator Denominator { get; init; }
 
-    #region New properties
-    public new IBaseMeasure? this[RateComponentCode rateComponentCode] => rateComponentCode switch
+    #region Override properties
+    #region Sealed roperties
+    public override sealed IBaseMeasure? this[RateComponentCode rateComponentCode] => rateComponentCode switch
     {
         RateComponentCode.Numerator => Numerator,
         RateComponentCode.Denominator => Denominator,
@@ -53,6 +54,7 @@ internal abstract class Rate : BaseRate, IRate
 
         _ => null,
     };
+    #endregion
     #endregion
     #endregion
 
@@ -98,7 +100,7 @@ internal abstract class Rate : BaseRate, IRate
             || xLimit?.Equals(xLimit, yLimit) == true;
     }
 
-    public IRate? ExchangeTo(IMeasurable context)
+    public IRate? ExchangeTo(IMeasurable? context)
     {
         if (context is IMeasurement measurement) return exchangeToMeasurement(measurement);
 
@@ -159,19 +161,16 @@ internal abstract class Rate : BaseRate, IRate
     public IRate GetRate(IBaseRate baseRate)
     {
         decimal defaultQuantity = NullChecked(baseRate, nameof(baseRate)).GetDefaultQuantity();
-        MeasureUnitCode numeratorMeasureUnitCode = getMeasureUnitCode(RateComponentCode.Numerator);
-        MeasureUnitCode denominatorMeasureUnitCode = getMeasureUnitCode(RateComponentCode.Denominator);
+        MeasureUnitCode numeratorMeasureUnitCode = GetMeasureUnitCode(RateComponentCode.Numerator);
+        MeasureUnitCode denominatorMeasureUnitCode = GetMeasureUnitCode(RateComponentCode.Denominator);
 
         return GetBaseRate(numeratorMeasureUnitCode, defaultQuantity, denominatorMeasureUnitCode);
-
-        #region Local methods
-        MeasureUnitCode getMeasureUnitCode(RateComponentCode rateComponentCode)
-        {
-            return baseRate[rateComponentCode]!.Value;
-        }
-        #endregion
     }
 
+    public override sealed MeasureUnitCode GetMeasureUnitCode(RateComponentCode rateComponentCode)
+    {
+        return GetBaseMeasure(rateComponentCode).MeasureUnitCode;
+    }
     public bool IsExchangeableTo(IMeasurable? context)
     {
         return context switch
@@ -185,7 +184,7 @@ internal abstract class Rate : BaseRate, IRate
         };
     }
 
-    public decimal ProportionalTo(IRate other)
+    public decimal ProportionalTo(IRate? other)
     {
         return base.ProportionalTo(other);
     }
@@ -232,16 +231,6 @@ internal abstract class Rate : BaseRate, IRate
     public override sealed MeasureUnitCode GetNumeratorMeasureUnitCode()
     {
         return Numerator.MeasureUnitCode;
-    }
-
-    public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
-    {
-        decimal decimalQuantity = (decimal)(NullChecked(quantity, paramName).ToQuantity(TypeCode.Decimal)
-            ?? throw ArgumentTypeOutOfRangeException(paramName, quantity!));
-
-        if (decimalQuantity > 0) return;
-
-        throw QuantityArgumentOutOfRangeException(paramName, quantity);
     }
     #endregion
     #endregion

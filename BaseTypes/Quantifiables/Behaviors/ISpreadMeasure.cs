@@ -3,7 +3,7 @@
 public interface ISpreadMeasure : IQuantity<double>
 {
     ISpreadMeasure GetSpreadMeasure();
-    MeasureUnitCode GetMeasureUnitCode();
+    MeasureUnitCode GetSpreadMeasureUnitCode();
 
     void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName);
 }

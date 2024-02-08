@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Shapes.Types.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types;
+
+namespace CsabaDu.FooVaria.Shapes.Types.Implementations;
 
 public abstract class Shape : BaseShape, IShape
 {
@@ -178,9 +180,18 @@ public abstract class Shape : BaseShape, IShape
             && base.Equals(shape);
     }
 
-    public override sealed IBaseSpread? ExchangeTo(Enum measureUnit)
+    public override sealed IBaseSpread? ExchangeTo(Enum? context)
     {
-        if (measureUnit is not ExtentUnit extentUnit) return base.ExchangeTo(measureUnit);
+        if (context is not ExtentUnit extentUnit)
+        {
+            if (context is not MeasureUnitCode measureUnitCode
+                || measureUnitCode != MeasureUnitCode.ExtentUnit)
+            {
+                return base.ExchangeTo(context);
+            }
+
+            extentUnit = (ExtentUnit)GetDefaultMeasureUnit(measureUnitCode)!;
+        }
 
         IEnumerable<IExtent> exchangedShapeExtents = getExchangedShapeExtents();
 
@@ -191,13 +202,13 @@ public abstract class Shape : BaseShape, IShape
         #region Local methods
         IEnumerable<IExtent> getExchangedShapeExtents()
         {
-            foreach (IExtent item in GetShapeExtents())
+            foreach (IBaseMeasure item in GetShapeExtents())
             {
                 IBaseMeasure? exchanged = item.ExchangeTo(extentUnit);
 
-                if (exchanged is IExtent extent)
+                if (exchanged is IExtent shapeExtent)
                 {
-                    yield return extent;
+                    yield return shapeExtent;
                 }
             }
         }

@@ -1,6 +1,8 @@
-﻿namespace CsabaDu.FooVaria.Masses.Types.Implementations
+﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.Implementations;
+
+namespace CsabaDu.FooVaria.Masses.Types.Implementations
 {
-    internal abstract class Mass : BaseSpread, IMass
+    internal abstract class Mass : Quantifiable, IMass
     {
         #region Constructors
         private protected Mass(IMass other) : base(other)
@@ -60,6 +62,7 @@
 
         #region Properties
         public IWeight Weight { get; init; }
+        public abstract IBody Body { get; init; }
         public IMeasure? this[MeasureUnitCode measureUnitCode] => measureUnitCode switch
         {
             MeasureUnitCode.VolumeUnit => GetVolume(),
@@ -136,31 +139,56 @@
         }
 
         #region Override methods
-        public override bool Equals(IBaseSpread? other)
+        public virtual bool Equals(IMass? other)
         {
             return base.Equals(other)
                 && other is IMass mass
                 && Weight.Equals(mass.Weight);
         }
 
-        public override IBaseSpread? ExchangeTo(Enum measureUnit)
+        public virtual IMass? ExchangeTo(Enum? measureUnit)
         {
-            if (measureUnit is not WeightUnit weightUnit) return base.ExchangeTo(measureUnit);
+            if (measureUnit == null) return null;
 
-            IBaseMeasure? exchanged = Weight.ExchangeTo(weightUnit);
+            MeasureUnitCode measureUnitCode = GetMeasureUnitCode(measureUnit);
 
-            if (exchanged is not IWeight weight) return null;
+            if (!GetMeasureUnitCodes().Contains(measureUnitCode)) return null;
 
-            return GetMass(weight, GetBody());
+            return measureUnitCode switch
+            {
+                MeasureUnitCode.VolumeUnit => exchangeVolume(),
+                MeasureUnitCode.WeightUnit => exchangeWeight(),
+
+                _ => null,
+            };
+
+            IMass? exchangeVolume()
+            {
+                IBaseSpread? exchanged = Body.ExchangeTo(measureUnit);
+
+                if (exchanged is not IBody body) return null;
+
+                return GetMass(Weight, body);
+            }
+
+            IMass? exchangeWeight()
+            {
+                IBaseMeasure? exchanged = Weight.ExchangeTo(measureUnit);
+
+                if (exchanged is not IWeight weight) return null;
+
+                return GetMass(weight, Body);
+            }
         }
 
-        public override bool? FitsIn(IBaseSpread? baseSpread, LimitMode? limitMode)
+        public virtual bool? FitsIn(IMass? other, LimitMode? limitMode)
         {
-            bool? bodyFitsIn = GetBody().FitsIn(baseSpread, limitMode);
+            if (other == null || limitMode == null) return true;
 
-            if (baseSpread is not IMass mass) return bodyFitsIn;
+            if (other == null) return null;
 
-            bool? weightFitsIn = Weight.FitsIn(mass.Weight, limitMode);
+            bool? bodyFitsIn = Body.FitsIn(other.Body, limitMode);
+            bool? weightFitsIn = Weight.FitsIn(other.Weight, limitMode);
 
             return BothFitIn(bodyFitsIn, weightFitsIn);
         }
@@ -176,18 +204,9 @@
         }
 
         #region Sealed methods
-        public override sealed int CompareTo(IBaseSpread? baseSpread)
+        public int CompareTo(IMass? mass)
         {
-            int bodyComparison = base.CompareTo(baseSpread);
-
-            if (baseSpread is not IMass mass) return bodyComparison;
-
-            return GetVolumeWeight().CompareTo(mass.GetVolumeWeight());
-        }
-
-        public override sealed IBaseSpread GetBaseSpread(ISpreadMeasure spreadMeasure)
-        {
-            return GetFactory().CreateBaseSpread(spreadMeasure);
+            return GetDefaultQuantity().CompareTo(mass?.GetDefaultQuantity());
         }
 
         public override sealed decimal GetDefaultQuantity()
@@ -197,7 +216,7 @@
 
         public override sealed int GetHashCode()
         {
-            return HashCode.Combine(Weight, GetBody());
+            return HashCode.Combine(Weight, Body);
         }
 
         public override sealed Enum GetMeasureUnit()
@@ -205,24 +224,24 @@
             return Weight.GetMeasureUnit();
         }
 
-        public override sealed MeasureUnitCode GetMeasureUnitCode()
+        public MeasureUnitCode GetSpreadMeasureUnitCode()
         {
             bool isVolumeWeightGreater = GetDensity().GetDefaultQuantity() < 1;
 
             return GetMeasureUnitCode(isVolumeWeightGreater);
         }
 
-        public override sealed double GetQuantity()
+        public double GetQuantity()
         {
             return GetVolumeWeight().GetQuantity();
         }
 
-        public override sealed ISpreadMeasure GetSpreadMeasure()
+        public ISpreadMeasure GetSpreadMeasure()
         {
-            return GetBody().GetSpreadMeasure();
+            return Body.GetSpreadMeasure();
         }
 
-        public override sealed bool IsExchangeableTo(Enum? context)
+        public bool IsExchangeableTo(Enum? context)
         {
             if (context is MeasureUnitCode measureUnitCode) return hasMeasureUnitCode(measureUnitCode);
 
@@ -236,23 +255,48 @@
             #endregion
         }
 
-        public override sealed decimal ProportionalTo(IBaseSpread baseSpread)
+        public decimal ProportionalTo(IMass? mass)
         {
-            if (baseSpread is not IMass mass) return base.ProportionalTo(baseSpread);
+            return GetDefaultQuantity() / NullChecked(mass, nameof(mass)).GetVolumeWeight().GetDefaultQuantity();
+        }
 
-            return GetVolumeWeight().ProportionalTo(mass.GetVolumeWeight());
+        public void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)
+        {
+            Body.ValidateSpreadMeasure(spreadMeasure, paramName);
+        }
+
+        public object GetQuantity(TypeCode quantityTypeCode)
+        {
+            object? quantity = GetQuantity().ToQuantity(quantityTypeCode);
+
+            return quantity ?? throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
+        }
+
+        public sealed override TypeCode GetQuantityTypeCode()
+        {
+            return base.GetQuantityTypeCode();
+        }
+
+        public override sealed void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
+        {
+            ValidateMeasureUnitCode(this, measureUnitCode, paramName);
         }
 
         public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
         {
-            object? obj = NullChecked(quantity, nameof(quantity)).ToQuantity(TypeCode.Decimal);
-
-            if (obj is not decimal validQuantity) throw ArgumentTypeOutOfRangeException(paramName, quantity!);
-
-            if (validQuantity > 0) return;
-
-            throw QuantityArgumentOutOfRangeException(paramName, quantity!);
+            ValidateQuantity(this, quantity, paramName);
         }
+
+        public override void ValidateQuantity(IQuantifiable? quantifiable, string paramName)
+        {
+            if (NullChecked(quantifiable, nameof(quantifiable)) is IMass mass)
+            {
+                double quantity = GetQuantity();
+
+                TypeCode typeCode = GetQuantityTypeCode();
+            }
+        }
+
         #endregion
         #endregion
 
@@ -264,20 +308,19 @@
         #endregion
 
         #region Abstract methods
-        public abstract IBody GetBody();
         public abstract IMass GetMass(IWeight weight, IBody body);
         #endregion
         #endregion
 
         #region Protected methods
         #region Static methods
-        protected static bool? BothFitIn(bool? firstFitsIn, bool? secondFitsIn)
+        protected static bool? BothFitIn(bool? bodyFitsIn, bool? weightFitsIn)
         {
-            if (firstFitsIn == null || secondFitsIn == null) return null;
+            if (bodyFitsIn == null || weightFitsIn == null) return null;
 
-            if (firstFitsIn != secondFitsIn) return false;
+            if (bodyFitsIn != weightFitsIn) return false;
 
-            return firstFitsIn;
+            return bodyFitsIn;
         }
         #endregion
         #endregion
@@ -293,7 +336,7 @@
         private MeasureUnitCode GetMeasureUnitCode(bool isVolumeWeightGreater)
         {
             return isVolumeWeightGreater ?
-                GetBody().MeasureUnitCode
+                Body.MeasureUnitCode
                 : Weight.MeasureUnitCode;
         }
 

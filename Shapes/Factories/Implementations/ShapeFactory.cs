@@ -21,6 +21,10 @@ public abstract class ShapeFactory : IShapeFactory
         return SpreadFactory.CreateBaseSpread(spreadMeasure);
     }
 
+    public IBaseSpread CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
+    {
+        return SpreadFactory.CreateQuantifiable(measureUnitCode, defaultQuantity);
+    }
 
     public IExtent CreateShapeExtent(ExtentUnit extentUnit, ValueType quantity)
     {

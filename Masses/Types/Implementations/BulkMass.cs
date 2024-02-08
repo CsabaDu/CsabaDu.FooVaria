@@ -1,24 +1,28 @@
-﻿namespace CsabaDu.FooVaria.Masses.Types.Implementations;
+﻿
+namespace CsabaDu.FooVaria.Masses.Types.Implementations;
 
 internal sealed class BulkMass : Mass, IBulkMass
 {
+    public override IBody Body { get => throw new NotImplementedException(); init => throw new NotImplementedException(); }
     #region Constructors
     public BulkMass(IBulkMass other) : base(other)
     {
-        BulkBody = other.BulkBody;
+        Body = other.Body;
     }
 
     public BulkMass(IBulkMassFactory factory, IWeight weight, IBody body) : base(factory, weight, body)
     {
-        BulkBody = GetBodyFactory().Create(NullChecked(body, nameof(body)))!;
+        Body = GetBodyFactory().Create(NullChecked(body, nameof(body)))!;
     }
     #endregion
 
-    #region Properties
-    public IBulkBody BulkBody { get; init; }
-    #endregion
-
     #region Public methods
+
+    public IBulkBody GetBulkBody()
+    {
+        return (IBulkBody)Body;
+    }
+
     public IBulkMass GetBulkMass(IWeight weight, IVolume volume)
     {
         return GetFactory().Create(weight, volume);
@@ -35,11 +39,6 @@ internal sealed class BulkMass : Mass, IBulkMass
     }
 
     #region Override methods
-    public override IBulkBody GetBody()
-    {
-        return BulkBody;
-    }
-
     public override IBulkBodyFactory GetBodyFactory()
     {
         return (IBulkBodyFactory)base.GetBodyFactory();

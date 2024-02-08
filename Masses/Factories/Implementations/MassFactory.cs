@@ -28,10 +28,5 @@ public abstract class MassFactory : IMassFactory
         return BodyFactory;
     }
 
-    public IBaseSpread CreateBaseSpread(ISpreadMeasure spreadMeasure)
-    {
-        return BodyFactory.CreateBaseSpread(spreadMeasure);
-    }
-
     public abstract IMass Create(IWeight weight, IBody body);
 }

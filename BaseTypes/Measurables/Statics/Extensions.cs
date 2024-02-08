@@ -64,5 +64,11 @@ public static class Extensions
 
         return name == DefaultCustomMeasureUnitDefaultName;
     }
+
+    public static bool IsSpreadMeasureUnitCode(this MeasureUnitCode measureUnitCode)
+    {
+        return measureUnitCode == MeasureUnitCode.AreaUnit
+            || measureUnitCode == MeasureUnitCode.VolumeUnit;
+    }
     #endregion
 }

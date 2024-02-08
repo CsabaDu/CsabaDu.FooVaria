@@ -3,7 +3,7 @@
   <Interface Name="CsabaDu.FooVaria.Masses.Types.IMass" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="2" Y="2.75" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAACAAIAAAAAACAAAAAAAACAACAAQAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAACAAIAAAAAACAABAAAAACAACAAQAAAAAAAAAAA=</HashCode>
       <FileName>Types\IMass.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -26,7 +26,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
       <FileName>Types\IDryMass.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -49,7 +49,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
       <FileName>Types\IBulkMass.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -74,12 +74,12 @@
       <FileName>Behaviors\IVolumeWeightRatio.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseSpreads.Types.IBody" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
-    <Position X="2" Y="1.5" Width="1.25" />
-    <TypeIdentifier />
-  </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Common.Types.ICommonBase&lt;TSelf&gt;" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="1.75" Y="4" Width="1.75" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.IQuantifiable" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2" Y="1.5" Width="1.25" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />

@@ -96,7 +96,7 @@ internal sealed class Limit : RateComponent<ILimit>, ILimit
 
     public ulong GetQuantity()
     {
-        return GetQuantity(this);
+        return (ulong)Quantity;
     }
 
     public bool? Includes(IBaseMeasure? limitable)

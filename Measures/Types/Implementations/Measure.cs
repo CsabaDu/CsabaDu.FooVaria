@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Measures.Types.Implementations
+﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
+using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
+
+namespace CsabaDu.FooVaria.Measures.Types.Implementations
 {
     internal abstract class Measure : BaseMeasure<IMeasure>, IMeasure
     {
@@ -74,11 +77,7 @@
 
         public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
         {
-            Type quantityType = NullChecked(quantity, paramName).GetType();
-
-            if (QuantityTypeSet.Contains(quantityType)) return;
-
-            throw ArgumentTypeOutOfRangeException(paramName, quantity!);
+            base.ValidateQuantity(quantity, paramName);
         }
         #endregion
         #endregion
@@ -116,7 +115,7 @@
 
         private IMeasure GetSum(IMeasure? other, SummingMode summingMode)
         {
-            if (other == null) return GetNew(this);
+            if (other == null) return GetBaseMeasure(this);
 
             if (other.IsExchangeableTo(MeasureUnitCode)) return getMeasure();
 
@@ -195,7 +194,7 @@
 
         public TNum GetQuantity()
         {
-            return GetQuantity(this);
+            return (TNum)Quantity;
         }
         #endregion
     }

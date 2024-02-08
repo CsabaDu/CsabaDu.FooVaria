@@ -62,11 +62,24 @@ public sealed class MeasureFactory : IMeasureFactory
         return CreateMeasure(other, nameof(other));
     }
 
+    public IBaseMeasure CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
+    {
+        return CreateMeasure(measureUnitCode, defaultQuantity);
+    }
     #endregion
 
     #region Private methods
     private IMeasure CreateMeasure([DisallowNull] Enum measureUnit, ValueType quantity)
     {
+        if (measureUnit is MeasureUnitCode measureUnitCode)
+        {
+            measureUnit = measureUnitCode.GetDefaultMeasureUnit();
+        }
+        else
+        {
+            measureUnitCode = GetMeasureUnitCode(measureUnit);
+        }
+
         return measureUnit switch
         {
             AreaUnit areaUnit => new Area(this, areaUnit, (double)convertQuantity()),
@@ -83,13 +96,9 @@ public sealed class MeasureFactory : IMeasureFactory
 
         object convertQuantity()
         {
-            Type quantityType = NullChecked(quantity, nameof(quantity)).GetType();
-            MeasureUnitCode measureUnitCode = Measurable.GetMeasureUnitCode(measureUnit);
             TypeCode quantityTypeCode = measureUnitCode.GetQuantityTypeCode();
 
-            if (quantityTypeCode == Type.GetTypeCode(quantityType)) return quantity;
-
-            return quantity.ToQuantity(quantityTypeCode) ?? throw QuantityArgumentOutOfRangeException(quantity);
+            return ConvertQuantity(quantity, nameof(quantity), quantityTypeCode);
         }
     }
 

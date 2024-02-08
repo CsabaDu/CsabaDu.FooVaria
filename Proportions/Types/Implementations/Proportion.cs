@@ -1,7 +1,4 @@
-﻿
-using CsabaDu.FooVaria.BaseTypes.Common.Statics;
-
-namespace CsabaDu.FooVaria.Proportions.Types.Implementations
+﻿namespace CsabaDu.FooVaria.Proportions.Types.Implementations
 {
     internal abstract class Proportion : BaseRate, IProportion
     {
@@ -66,6 +63,8 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
         #region Properties
         public MeasureUnitCode NumeratorMeasureUnitCode { get; init; }
         public  decimal DefaultQuantity { get; init; }
+
+        public override sealed Enum? this[RateComponentCode rateComponentCode] => (Enum?)base[rateComponentCode];
         #endregion
 
         #region Public methods
@@ -90,11 +89,6 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
         {
             return NumeratorMeasureUnitCode;
         }
-
-        public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
-        {
-            _ = GetValidDecimalQuantity(quantity, paramName);
-        }
         #endregion
         #endregion
 
@@ -107,9 +101,7 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
         #region Static methods
         private static decimal GetValidDecimalQuantity(ValueType? quantity, string paramName)
         {
-            decimal converted = (decimal)(NullChecked(quantity, paramName)
-                .ToQuantity(TypeCode.Decimal)
-                ?? throw ArgumentTypeOutOfRangeException(paramName, quantity!));
+            decimal converted = (decimal)ConvertQuantity(quantity, paramName, TypeCode.Decimal);
 
             if (converted > 0) return converted;
 
@@ -148,11 +140,6 @@ namespace CsabaDu.FooVaria.Proportions.Types.Implementations
         {
             return GetFactory().Create(numerator, denominatorMeasureUnit);
         }
-
-        //public IProportion<TDEnum> GetProportion(MeasureUnitCode numeratorMeasureUnitCode, decimal numeratorDefaultQuantity, TDEnum denominatorMeasureUnit)
-        //{
-        //    return GetFactory().Create(numeratorMeasureUnitCode, numeratorDefaultQuantity, denominatorMeasureUnit);
-        //}
 
         public decimal GetQuantity(TDEnum denominatorMeasureUnit)
         {

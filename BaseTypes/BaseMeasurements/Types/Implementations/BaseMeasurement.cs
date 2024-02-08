@@ -76,11 +76,11 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
         return exchangeRate == GetExchangeRate(measureUnit);
     }
 
-    public decimal ProportionalTo(IBaseMeasurement other)
+    public decimal ProportionalTo(IBaseMeasurement? other)
     {
         MeasureUnitCode measureUnitCode = NullChecked(other, nameof(other)).MeasureUnitCode;
 
-        if (HasMeasureUnitCode(measureUnitCode)) return GetExchangeRate() / other.GetExchangeRate();
+        if (HasMeasureUnitCode(measureUnitCode)) return GetExchangeRate() / other!.GetExchangeRate();
 
         throw new ArgumentOutOfRangeException(nameof(other), measureUnitCode, null);
     }

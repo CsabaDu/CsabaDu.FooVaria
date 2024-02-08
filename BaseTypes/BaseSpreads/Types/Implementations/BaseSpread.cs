@@ -1,6 +1,8 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.BaseSpreads.Types.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
 
-public abstract class BaseSpread : Quantifiable, IBaseSpread
+namespace CsabaDu.FooVaria.BaseTypes.BaseSpreads.Types.Implementations;
+
+public abstract class BaseSpread : Quantifiable<IBaseSpread>, IBaseSpread
 {
     #region Constructors
     protected BaseSpread(IBaseSpread other) : base(other)
@@ -29,80 +31,6 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
     #endregion
 
     #region Public methods
-    public virtual int CompareTo(IBaseSpread? other)
-    {
-        if (other == null) return 1;
-
-        return Compare(this, other) ?? throw ArgumentTypeOutOfRangeException(nameof(other), other);
-    }
-
-    public virtual bool Equals(IBaseSpread? other)
-    {
-        return base.Equals(other);
-    }
-
-    public virtual bool? FitsIn(IBaseSpread? baseSpread, LimitMode? limitMode)
-    {
-        if (baseSpread == null && limitMode == null) return true;
-
-        if (baseSpread == null) return null;
-
-        int? comparison = Compare(this, baseSpread);
-
-        if (comparison == null) return null;
-
-        limitMode ??= LimitMode.BeNotGreater;
-
-        return comparison.Value.FitsIn(limitMode);
-    }
-
-    public override decimal GetDefaultQuantity()
-    {
-        return (GetSpreadMeasure() as IBaseMeasure ?? throw new InvalidOperationException(null)).GetDefaultQuantity();
-    }
-
-    public override Enum GetMeasureUnit()
-    {
-        return (GetSpreadMeasure() as IMeasurable)!.GetMeasureUnit();
-    }
-
-    public virtual MeasureUnitCode GetMeasureUnitCode()
-    {
-        return MeasureUnitCode;
-    }
-
-    public virtual double GetQuantity()
-    {
-        return GetSpreadMeasure().GetQuantity();
-    }
-
-    public virtual bool IsExchangeableTo(Enum? context)
-    {
-        if (context == null) return false;
-
-        if (context is MeasureUnitCode measureUnitCode) return hasMeasureUnitCode();
-
-        if (!IsDefinedMeasureUnit(context)) return false;
-
-        measureUnitCode = GetMeasureUnitCode(context);
-
-        return hasMeasureUnitCode();
-
-        #region Local methods
-        bool hasMeasureUnitCode()
-        {
-            return HasMeasureUnitCode(measureUnitCode);
-        }
-        #endregion
-    }
-
-    public virtual decimal ProportionalTo(IBaseSpread other)
-    {
-        ValidateSpreadMeasure(other, nameof(other));
-
-        return GetDefaultQuantity() / other.GetDefaultQuantity();
-    }
-
     public void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)
     {
         IBaseMeasure? baseMeasure = NullChecked(spreadMeasure, paramName).GetSpreadMeasure() as IBaseMeasure;
@@ -116,10 +44,60 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
         ValidateQuantity(quantity, paramName);
     }
 
+    #region Virtual methods
+
+    public override IBaseSpread? ExchangeTo(Enum? context)
+    {
+        IBaseMeasure? exchanged = (GetSpreadMeasure() as IBaseMeasure)?.ExchangeTo(context);
+
+        if (exchanged is not ISpreadMeasure spreadMeasure) return null;
+
+        return GetBaseSpread(spreadMeasure);
+    }
+
+    public override bool? FitsIn(IBaseSpread? other, LimitMode? limitMode)
+    {
+        if (other == null && limitMode == null) return true;
+
+        if (other == null) return null;
+
+        int? comparison = Compare(this, other);
+
+        if (comparison == null) return null;
+
+        return comparison.Value.FitsIn(limitMode ?? LimitMode.BeNotGreater);
+    }
+
+    public virtual MeasureUnitCode GetSpreadMeasureUnitCode()
+    {
+        return MeasureUnitCode;
+    }
+
+    public virtual double GetQuantity()
+    {
+        return GetSpreadMeasure().GetQuantity();
+    }
+
+    public object GetQuantity(TypeCode quantityTypeCode)
+    {
+        return GetQuantity<IBaseSpread, double>(this, quantityTypeCode);
+    }
+    #endregion
+
     #region Override methods
+    public override sealed decimal GetDefaultQuantity()
+    {
+        return (GetSpreadMeasure() as IQuantifiable)!.GetDefaultQuantity();
+    }
+
     public override IBaseSpreadFactory GetFactory()
     {
         return (IBaseSpreadFactory)Factory;
+    }
+
+    public override Enum GetMeasureUnit()
+    {
+        return (GetSpreadMeasure() as IMeasurable)!.GetMeasureUnit();
     }
 
     public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
@@ -128,23 +106,20 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
         yield return MeasureUnitCode.VolumeUnit;
     }
 
-    #region Sealed methods
-    public override sealed TypeCode GetQuantityTypeCode()
+    public override sealed void ValidateQuantity(IQuantifiable? quantifiable, string paramName)
     {
-        return GetQuantityTypeCode(this);
+        if (NullChecked(quantifiable, paramName) is IBaseSpread baseSpread)
+        {
+            ValidateQuantity(baseSpread.GetQuantity(), paramName);
+        }
+
+        throw ArgumentTypeOutOfRangeException(paramName, quantifiable!);
     }
+    #region Sealed methods
     #endregion
     #endregion
 
     #region Abstract methods
-    public virtual IBaseSpread? ExchangeTo(Enum measureUnit)
-    {
-        IBaseMeasure? exchanged = (GetSpreadMeasure() as IBaseMeasure)?.ExchangeTo(measureUnit);
-
-        if (exchanged is not ISpreadMeasure spreadMeasure) return null;
-
-        return GetBaseSpread(spreadMeasure);
-    }
     public abstract IBaseSpread GetBaseSpread(ISpreadMeasure spreadMeasure);
     public abstract ISpreadMeasure GetSpreadMeasure();
     #endregion
@@ -157,11 +132,6 @@ public abstract class BaseSpread : Quantifiable, IBaseSpread
         if (other?.HasMeasureUnitCode(baseSpread.MeasureUnitCode) != true) return null;
 
         return baseSpread.GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
-    }
-
-    public object GetQuantity(TypeCode quantityTypeCode)
-    {
-        return GetQuantity<IBaseSpread, double>(this, quantityTypeCode);
     }
     #endregion
     #endregion

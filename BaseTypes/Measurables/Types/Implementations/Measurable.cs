@@ -100,7 +100,7 @@ public abstract class Measurable : CommonBase, IMeasurable
     public override bool Equals(object? obj)
     {
         return obj is IMeasurable other
-            && MeasureUnitCode.Equals(other?.MeasureUnitCode);
+            && MeasureUnitCode.Equals(other.MeasureUnitCode);
     }
 
     public override IMeasurableFactory GetFactory()
@@ -127,12 +127,25 @@ public abstract class Measurable : CommonBase, IMeasurable
 
     public virtual void ValidateMeasureUnit(Enum measureUnit, string paramName)
     {
-        ValidateMeasureUnitByDefinition(measureUnit, paramName);
+        MeasureUnitCode measureUnitCode = GetMeasureUnitCode(NullChecked(measureUnit, paramName));
+
+        if (HasMeasureUnitCode(measureUnitCode)) return;
+
+        throw InvalidMeasureUnitEnumArgumentException(measureUnit, paramName);
+    }
+
+    public void ValidateMeasureUnitCode(IMeasurable? measurable, string paramName)
+    {
+        MeasureUnitCode measureUnitCode = NullChecked(measurable, paramName).MeasureUnitCode;
+
+        ValidateMeasureUnitCode(measureUnitCode, paramName);
     }
 
     public virtual void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
     {
-        ValidateMeasureUnitCodeByDefinition(measureUnitCode, paramName);
+        if (HasMeasureUnitCode(measureUnitCode)) return;
+
+        throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
     }
     #endregion
 

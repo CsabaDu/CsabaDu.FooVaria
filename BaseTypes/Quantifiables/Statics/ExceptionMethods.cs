@@ -22,6 +22,16 @@ public static class ExceptionMethods
     {
         return new InvalidEnumArgumentException(paramName, (int)rateComponentCode, rateComponentCode.GetType());
     }
+
+    public static InvalidEnumArgumentException InvalidRoundingModeEnumArgumentException(RoundingMode roundingMode)
+    {
+        return InvalidRoundingModeEnumArgumentException(roundingMode, nameof(roundingMode));
+    }
+
+    public static InvalidEnumArgumentException InvalidRoundingModeEnumArgumentException(RoundingMode roundingMode, string paramName)
+    {
+        return new InvalidEnumArgumentException(paramName, (int)roundingMode, roundingMode.GetType());
+    }
     #endregion
 
     #region ArgumentOutOfRangeException

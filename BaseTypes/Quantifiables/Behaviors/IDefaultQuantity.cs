@@ -1,6 +1,6 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
+﻿//namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
 
-public interface IDefaultQuantity
-{
-    decimal GetDefaultQuantity();
-}
+//public interface IDefaultQuantity
+//{
+//    decimal GetDefaultQuantity();
+//}

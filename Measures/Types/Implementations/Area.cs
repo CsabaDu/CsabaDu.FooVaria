@@ -9,7 +9,7 @@ internal sealed class Area : Measure<IArea, double, AreaUnit>, IArea
     #endregion
 
     #region Public methods
-    public MeasureUnitCode GetMeasureUnitCode()
+    public MeasureUnitCode GetSpreadMeasureUnitCode()
     {
         return MeasureUnitCode;
     }

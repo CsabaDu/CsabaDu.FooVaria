@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations
 {
-    public abstract class BaseMeasure : Quantifiable, IBaseMeasure
+    public abstract class BaseMeasure : Quantifiable<IBaseMeasure>, IBaseMeasure
     {
         #region Constructors
         protected BaseMeasure(IBaseMeasureFactory factory, Enum measureUnit) : base(factory, measureUnit)
@@ -19,19 +19,17 @@
         #endregion
 
         #region Public methods
-        public int CompareTo(IBaseMeasure? other)
+        public bool Equals(IBaseMeasure? x, IBaseMeasure? y)
         {
-            if (other == null) return 1;
+            if (x == null && y == null) return true;
 
-            ValidateMeasureUnitCodeByDefinition(other.MeasureUnitCode, nameof(other));
-
-            return GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
+            return x != null
+                && y != null
+                && x.GetLimitMode() == y.GetLimitMode()
+                && x.GetRateComponentCode() == y.GetRateComponentCode()
+                && x.Equals(y);
         }
 
-        public bool Equals(IBaseMeasure? other)
-        {
-            return base.Equals(other);
-        }
 
         public bool? FitsIn(ILimiter? limiter)
         {
@@ -40,67 +38,6 @@
             LimitMode limitMode = limiter.LimitMode;
 
             return FitsIn(baseMeasure, limitMode);
-    }
-
-        public bool? FitsIn(IBaseMeasure? baseMeasure, LimitMode? limitMode)
-        {
-            bool limitModeHasValue = limitMode.HasValue;
-
-            if (isRateComponentNull() && !limitModeHasValue) return true;
-
-            if (baseMeasure?.HasMeasureUnitCode(MeasureUnitCode) != true) return null;
-
-            if (!limitModeHasValue) return CompareTo(baseMeasure) <= 0;
-
-            _ = Defined(limitMode!.Value, nameof(limitMode));
-
-            IBaseMeasure ceilingBaseMeasure = baseMeasure.Round(RoundingMode.Ceiling);
-            baseMeasure = limitMode switch
-            {
-                LimitMode.BeNotLess or
-                LimitMode.BeGreater => ceilingBaseMeasure,
-
-                LimitMode.BeNotGreater or
-                LimitMode.BeLess or
-                LimitMode.BeEqual => baseMeasure!.Round(RoundingMode.Floor),
-
-                _ => null,
-            };
-
-            if (isRateComponentNull()) return null;
-
-            int comparison = CompareTo(baseMeasure);
-
-            return limitMode switch
-            {
-                LimitMode.BeEqual => areEqual(),
-
-                _ => comparison.FitsIn(limitMode),
-            };
-
-            #region Local methods
-            bool areEqual()
-            {
-                return comparison == 0 && ceilingBaseMeasure.Equals(baseMeasure);
-            }
-
-            bool isRateComponentNull()
-            {
-                return baseMeasure == null;
-            }
-            #endregion
-        }
-
-        public IBaseMeasure? ExchangeTo(Enum measureUnit) // MeasureUnitCode ??
-        {
-            if (!IsExchangeableTo(measureUnit)) return null;
-
-            IBaseMeasurementFactory factory = GetBaseMeasurementFactory();
-            IBaseMeasurement baseMeasurement = factory.CreateBaseMeasurement(measureUnit)!;
-            decimal quantity = GetDefaultQuantity();
-            quantity /= BaseMeasurement.GetExchangeRate(measureUnit);
-
-            return GetBaseMeasure(baseMeasurement, quantity);
         }
 
         public IBaseMeasure GetBaseMeasure(ValueType quantity)
@@ -129,42 +66,14 @@
             return baseMeasurement.GetExchangeRate();
         }
 
+        public int GetHashCode([DisallowNull] IBaseMeasure other)
+        {
+            return HashCode.Combine(other.GetLimitMode(), other.GetRateComponentCode(), other.GetHashCode());
+        }
+
         public object GetQuantity(RoundingMode roundingMode)
         {
-            decimal quantity = roundDecimalQuantity();
-
-            return quantity.ToQuantity(GetQuantityTypeCode()) ?? throw new InvalidOperationException(null);
-
-            #region Local methods
-            decimal roundDecimalQuantity()
-            {
-                quantity = GetDecimalQuantity();
-
-                return roundingMode switch
-                {
-                    RoundingMode.General => decimal.Round(quantity),
-                    RoundingMode.Ceiling => decimal.Ceiling(quantity),
-                    RoundingMode.Floor => decimal.Floor(quantity),
-                    RoundingMode.Half => getHalfQuantity(),
-
-                    _ => throw InvalidRoundingModeEnumArgumentException(roundingMode),
-                };
-            }
-
-            decimal getHalfQuantity()
-            {
-                decimal halfQuantity = decimal.Floor(quantity);
-                decimal half = 0.5m;
-
-                if (quantity == halfQuantity) return quantity;
-
-                halfQuantity += half;
-
-                if (quantity <= halfQuantity) return halfQuantity;
-
-                return halfQuantity + half;
-            }
-            #endregion
+            return GetDecimalQuantity().Round(roundingMode);
         }
 
         public object GetQuantity(TypeCode quantityTypeCode)
@@ -186,22 +95,6 @@
             return GetFactory().RateComponentCode;
         }
 
-        public bool IsExchangeableTo(Enum? context)
-        {
-            IBaseMeasurement baseMeasurement = GetBaseMeasurement();
-
-            return baseMeasurement.IsExchangeableTo(context);
-        }
-
-        public decimal ProportionalTo(IBaseMeasure baseMeasure)
-        {
-            MeasureUnitCode measureUnitCode = NullChecked(baseMeasure, nameof(baseMeasure)).MeasureUnitCode;
-
-            if (IsExchangeableTo(measureUnitCode)) return GetDefaultQuantity() / baseMeasure.GetDefaultQuantity();
-
-            throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, nameof(baseMeasure));
-        }
-
         public IBaseMeasure Round(RoundingMode roundingMode)
         {
             ValueType quantity = (ValueType)GetQuantity(roundingMode);
@@ -217,14 +110,113 @@
             baseMeasurement.ValidateExchangeRate(exchangeRate, paramName);
         }
 
-        public void ValidateQuantifiable(IQuantifiable? quantifiable, string paramName)
+        #region Override methods
+        public override IBaseMeasureFactory GetFactory()
         {
-            decimal quantity = NullChecked(quantifiable, paramName).GetDefaultQuantity();
-
-            ValidateQuantity(quantity, paramName);
-            ValidateMeasureUnitCodeByDefinition(quantifiable!.MeasureUnitCode, paramName);
+            return (IBaseMeasureFactory)Factory;
         }
 
+        public override Enum GetMeasureUnit()
+        {
+            IBaseMeasurement baseMeasurement = GetBaseMeasurement();
+
+            return baseMeasurement.GetMeasureUnit();
+        }
+
+        #region Sealed methods
+        public override sealed IBaseMeasure? ExchangeTo(Enum? context)
+        {
+            if (!IsExchangeableTo(context)) return null;
+
+            if (!IsValidMeasureUnit(context))
+            {
+                if (context is not MeasureUnitCode measureUnitCode) return null;
+
+                context = GetDefaultMeasureUnit(measureUnitCode);
+            }
+
+            IBaseMeasurementFactory factory = GetBaseMeasurementFactory();
+            IBaseMeasurement baseMeasurement = factory.CreateBaseMeasurement(context!)!;
+            decimal quantity = GetDefaultQuantity();
+            quantity /= BaseMeasurement.GetExchangeRate(context!);
+
+            return GetBaseMeasure(baseMeasurement, quantity);
+        }
+
+        public override sealed bool? FitsIn(IBaseMeasure? other, LimitMode? limitMode)
+        {
+            bool limitModeHasValue = limitMode.HasValue;
+
+            if (isbaseMeasureNull() && !limitModeHasValue) return true;
+
+            if (other?.HasMeasureUnitCode(MeasureUnitCode) != true) return null;
+
+            if (!limitModeHasValue) return CompareTo(other) <= 0;
+
+            _ = Defined(limitMode!.Value, nameof(limitMode));
+
+            IBaseMeasure ceilingBaseMeasure = other.Round(RoundingMode.Ceiling);
+            other = limitMode switch
+            {
+                LimitMode.BeNotLess or
+                LimitMode.BeGreater => ceilingBaseMeasure,
+
+                LimitMode.BeNotGreater or
+                LimitMode.BeLess or
+                LimitMode.BeEqual => other!.Round(RoundingMode.Floor),
+
+                _ => null,
+            };
+
+            if (isbaseMeasureNull()) return null;
+
+            int comparison = CompareTo(other);
+
+            if (limitMode == LimitMode.BeEqual) return areEqual();
+
+            return comparison.FitsIn(limitMode);
+
+            #region Local methods
+            bool areEqual()
+            {
+                return comparison == 0 && ceilingBaseMeasure.Equals(other);
+            }
+
+            bool isbaseMeasureNull()
+            {
+                return other == null;
+            }
+            #endregion
+        }
+
+        public override sealed void ValidateQuantity(IQuantifiable? quantifiable, string paramName)
+        {
+            if (NullChecked(quantifiable, paramName) is IBaseMeasure baseMeasure)
+            {
+                ValueType quantity = (ValueType)baseMeasure.Quantity;
+
+                ValidateQuantity(quantity, paramName);
+            }
+
+            throw ArgumentTypeOutOfRangeException(paramName, quantifiable!);
+        }
+
+        #endregion
+        #endregion
+
+        #region Virtual methods
+        public virtual LimitMode? GetLimitMode()
+        {
+            return null;
+        }
+        #endregion
+
+        #region Abstract methods
+        public abstract IBaseMeasurement GetBaseMeasurement();
+        public abstract IBaseMeasurementFactory GetBaseMeasurementFactory();
+        #endregion
+
+        #region Static methods
         public static void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramName)
         {
             Type quantityType = NullChecked(quantity, paramName).GetType();
@@ -242,59 +234,10 @@
 
             throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode, paramName);
         }
-
-        #region Override methods
-        public override IBaseMeasureFactory GetFactory()
-        {
-            return (IBaseMeasureFactory)Factory;
-        }
-
-        public override Enum GetMeasureUnit()
-        {
-            IBaseMeasurement baseMeasurement = GetBaseMeasurement();
-
-            return baseMeasurement.GetMeasureUnit();
-        }
-
-        #region Sealed methods
-        public override sealed TypeCode GetQuantityTypeCode()
-        {
-            return base.GetQuantityTypeCode();
-        }
-
-        #endregion
-        #endregion
-
-        #region Virtual methods
-        public virtual LimitMode? GetLimitMode()
-        {
-            return null;
-        }
-        #endregion
-
-        #region Abstract methods
-        public abstract IBaseMeasurement GetBaseMeasurement();
-        public abstract IBaseMeasurementFactory GetBaseMeasurementFactory();
         #endregion
         #endregion
 
         #region Protected methods
-        public bool Equals(IBaseMeasure? x, IBaseMeasure? y)
-        {
-            if (x == null && y == null) return true;
-
-            if (x == null || y == null) return false;
-
-            return x.GetLimitMode() == y.GetLimitMode()
-                && x.GetRateComponentCode() == y.GetRateComponentCode()
-                && x.Equals(y);
-        }
-
-        public int GetHashCode([DisallowNull] IBaseMeasure other)
-        {
-            return HashCode.Combine(other.GetLimitMode(), other.GetRateComponentCode(), other.GetHashCode());
-        }
-
         #region Static methods
         protected static object? GetValidQuantityOrNull(IBaseMeasure baseMeasure, object? quantity)
         {
@@ -382,11 +325,6 @@
         public override IBaseMeasureFactory<TSeff> GetFactory()
         {
             return (IBaseMeasureFactory<TSeff>)Factory;
-        }
-
-        public TSeff GetNew(TSeff other)
-        {
-            return GetFactory().CreateNew(other);
         }
 
         public TSeff ConvertToLimitable(ILimiter limiter)

@@ -41,16 +41,24 @@
         }
 
         #region Sealed methods
-        public override sealed IBaseSpread? ExchangeTo(Enum measureUnit)
+        public override sealed IBaseSpread? ExchangeTo(Enum? context)
         {
-            return base.ExchangeTo(measureUnit);
+            return base.ExchangeTo(context);
         }
 
-        public override sealed void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
+        public override sealed bool? FitsIn(IBaseSpread? other, LimitMode? limitMode)
         {
-            if (IsValidMeasureUnitCode(measureUnitCode)) return;
+            return base.FitsIn(other, limitMode);
+        }
 
-            throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
+        public override sealed MeasureUnitCode GetSpreadMeasureUnitCode()
+        {
+            return base.GetSpreadMeasureUnitCode();
+        }
+
+        public override sealed double GetQuantity()
+        {
+            return base.GetQuantity();
         }
 
         public override sealed void ValidateQuantity(ValueType? quantity, string paramName)

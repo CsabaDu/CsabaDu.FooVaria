@@ -4,7 +4,6 @@ public interface IRate : IBaseRate, IExchange<IRate, IMeasurable>, IDenominate<I
 {
     IDenominator Denominator { get; init; }
     IMeasure Numerator { get; init; }
-    new IBaseMeasure? this[RateComponentCode rateComponentCode] { get; }
 
     ILimit? GetLimit();
     IRate GetRate(params IBaseMeasure[] baseMeasures);

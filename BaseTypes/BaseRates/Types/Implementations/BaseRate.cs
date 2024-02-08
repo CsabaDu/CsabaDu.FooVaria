@@ -1,12 +1,7 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Common.Statics;
-using CsabaDu.FooVaria.BaseTypes.Measurables.Statics;
-using CsabaDu.FooVaria.BaseTypes.Quantifiables.Statics;
-
-namespace CsabaDu.FooVaria.BaseTypes.BaseRates.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.BaseTypes.BaseRates.Types.Implementations;
 
 public abstract class BaseRate : Quantifiable, IBaseRate
 {
-    //public abstract decimal DefaultQuantity { get; init; }
     #region Constructors
     protected BaseRate(IBaseRate other) : base(other)
     {
@@ -34,7 +29,7 @@ public abstract class BaseRate : Quantifiable, IBaseRate
     #endregion
 
     #region Properties
-    public MeasureUnitCode? this[RateComponentCode rateComponentCode] => rateComponentCode switch
+    public virtual object? this[RateComponentCode rateComponentCode] => rateComponentCode switch
     {
         RateComponentCode.Numerator => GetNumeratorMeasureUnitCode(),
         RateComponentCode.Denominator => GetDenominatorMeasureUnitCode(),
@@ -48,21 +43,43 @@ public abstract class BaseRate : Quantifiable, IBaseRate
     {
         if (other == null) return 1;
 
-        ValidateMeasureUnitCodes(other!);
+        ValidateMeasureUnitCodes(other);
 
         return GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
     }
 
     public bool Equals(IBaseRate? other)
     {
-        return IsExchangeableTo(other)
-            && other!.GetDefaultQuantity() == GetDefaultQuantity();
+        return base.Equals(other)
+            && other.GetNumeratorMeasureUnitCode() == GetNumeratorMeasureUnitCode();
     }
 
-    public IBaseRate GetBaseRate(IBaseMeasure numerator, IBaseMeasure denominator)
+    public bool? FitsIn(ILimiter? limiter)
     {
-        return GetFactory().CreateBaseRate(numerator, denominator);
+        if (limiter is not IBaseRate baseRate) return null;
+
+        return FitsIn(baseRate, limiter!.LimitMode);
     }
+
+    public bool? FitsIn(IBaseRate? other, LimitMode? limitMode)
+    {
+        if (other == null && !limitMode.HasValue) return true;
+
+        if (!IsExchangeableTo(other)) return null;
+
+        int comparison = CompareTo(other);
+
+        LimitMode limitModeValue = limitMode ?? LimitMode.BeNotGreater;
+
+        if (!limitModeValue.IsDefined()) return null;
+
+        return comparison.FitsIn(limitModeValue);
+    }
+
+    //public IBaseRate GetBaseRate(IBaseMeasure numerator, IBaseMeasure denominator)
+    //{
+    //    return GetFactory().CreateBaseRate(numerator, denominator);
+    //}
 
     public IBaseRate GetBaseRate(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement)
     {
@@ -94,96 +111,6 @@ public abstract class BaseRate : Quantifiable, IBaseRate
         return GetDefaultQuantity();
     }
 
-    public decimal ProportionalTo(IBaseRate other)
-    {
-        decimal defaultQuantity = NullChecked(other, nameof(other)).GetDefaultQuantity();
-
-        ValidateMeasureUnitCodes(other!);
-
-        return Math.Abs(GetDefaultQuantity() / defaultQuantity);
-    }
-
-    #region Override methods
-    public override sealed bool Equals(object? obj)
-    {
-        return obj is IBaseRate baseRate && Equals(baseRate);
-    }
-
-    public override IBaseRateFactory GetFactory()
-    {
-        return (IBaseRateFactory)Factory;
-    }
-
-    public override sealed int GetHashCode()
-    {
-        return HashCode.Combine(MeasureUnitCode, GetNumeratorMeasureUnitCode(), GetDefaultQuantity());
-    }
-
-    public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
-    {
-        yield return GetNumeratorMeasureUnitCode();
-        yield return MeasureUnitCode;
-    }
-
-    #region Sealed methods
-    public override sealed void ValidateMeasureUnit(Enum measureUnit, string paramName)
-    {
-        base.ValidateMeasureUnit(measureUnit, paramName);
-    }
-
-    public override sealed TypeCode GetQuantityTypeCode()
-    {
-        return GetQuantityTypeCode(this);
-    }
-
-    public override sealed void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
-    {
-        if (GetMeasureUnitCodes().Contains(measureUnitCode)) return;
-
-        throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
-    }
-    #endregion
-    #endregion
-
-    #region Abstract methods
-    public abstract IBaseRate GetBaseRate(MeasureUnitCode numeratorMeasureUnitCode, decimal defaultQuantity, MeasureUnitCode denominatorMeasureUnitCode);
-    public abstract MeasureUnitCode GetNumeratorMeasureUnitCode();
-    #endregion
-    #endregion
-
-    #region Protected methods
-    protected void ValidateMeasureUnitCodes(IBaseRate other)
-    {
-        foreach (RateComponentCode item in Enum.GetValues<RateComponentCode>())
-        {
-            MeasureUnitCode? thisItem = this[item];
-            MeasureUnitCode? otherItem = other[item];
-
-            if (thisItem.HasValue
-                && otherItem.HasValue
-                && thisItem != otherItem)
-            {
-                throw InvalidMeasureUnitCodeEnumArgumentException(otherItem.Value, nameof(otherItem));
-            }
-        }
-
-        //string paramName = nameof(baseRate);
-
-        //ValidateMeasureUnitCode(baseRate.MeasureUnitCode, paramName);
-
-        //MeasureUnitCode numeratorMeasureUnitCode = baseRate.GetNumeratorMeasureUnitCode();
-
-        //if (numeratorMeasureUnitCode == GetNumeratorMeasureUnitCode()) return;
-
-        //throw InvalidMeasureUnitCodeEnumArgumentException(numeratorMeasureUnitCode, paramName);
-    }
-
-    public bool IsExchangeableTo(IBaseRate? baseRate)
-    {
-        return baseRate?.HasMeasureUnitCode(MeasureUnitCode) == true
-            && baseRate.GetNumeratorMeasureUnitCode() == GetNumeratorMeasureUnitCode();
-    }
-
     public object GetQuantity(TypeCode quantityTypeCode)
     {
         object? quantity = GetQuantity().ToQuantity(Defined(quantityTypeCode, nameof(quantityTypeCode)));
@@ -193,58 +120,115 @@ public abstract class BaseRate : Quantifiable, IBaseRate
         throw new InvalidOperationException(null);
     }
 
-    //public void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramName)
-    //{
-    //    Type quantityType = NullChecked(quantity, paramName).GetType();
-
-    //    if (Type.GetTypeCode(quantityType) == quantityTypeCode) return;
-
-    //    throw QuantityArgumentOutOfRangeException(paramName, quantity!);
-    //}
-
-    public bool? FitsIn(ILimiter? limiter)
+    public bool IsExchangeableTo(IBaseRate? baseRate)
     {
-        if (limiter is not IBaseRate baseRate) return null;
-
-        return FitsIn(baseRate, limiter!.LimitMode);
+        return baseRate != null
+            && baseRate.HasMeasureUnitCode(MeasureUnitCode)
+            && baseRate.GetNumeratorMeasureUnitCode() == GetNumeratorMeasureUnitCode();
     }
 
-    public bool? FitsIn(IBaseRate? baseRate, LimitMode? limitMode)
+    public decimal ProportionalTo(IBaseRate? other)
     {
-        bool limitModeHasValue = limitMode.HasValue;
+        decimal defaultQuantity = NullChecked(other, nameof(other)).GetDefaultQuantity();
 
-        if (baseRate == null && !limitModeHasValue) return true;
+        ValidateMeasureUnitCodes(other!);
 
-        if (!IsExchangeableTo(baseRate)) return null;
+        return Math.Abs(GetDefaultQuantity() / defaultQuantity);
+    }
 
-        int comparison = CompareTo(baseRate);
+    #region Override methods
+    public override IBaseRateFactory GetFactory()
+    {
+        return (IBaseRateFactory)Factory;
+    }
 
-        if (!limitModeHasValue) return comparison <= 0;
 
-        LimitMode limitModeValue = limitMode!.Value;
+    public override void ValidateQuantity(IQuantifiable? quantifiable, string paramName)
+    {
+        throw new NotImplementedException();
+    }
 
-        if (!limitModeValue.IsDefined()) return null;
+    public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
+    {
+        yield return GetNumeratorMeasureUnitCode();
+        yield return MeasureUnitCode;
+    }
 
-        return comparison.FitsIn(limitModeValue);
+    #region Sealed methods
+    public override sealed bool Equals(object? obj)
+    {
+        return obj is IBaseRate baseRate && Equals(baseRate);
+    }
+
+    public override sealed int GetHashCode()
+    {
+        return HashCode.Combine(MeasureUnitCode, GetNumeratorMeasureUnitCode(), GetDefaultQuantity());
+    }
+
+    public override sealed TypeCode GetQuantityTypeCode()
+    {
+        return GetQuantityTypeCode(this);
+    }
+
+    public override sealed void ValidateMeasureUnit(Enum measureUnit, string paramName)
+    {
+        base.ValidateMeasureUnit(measureUnit, paramName);
+    }
+
+    public override sealed void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
+    {
+        ValidateMeasureUnitCode(this, measureUnitCode, paramName);
+    }
+
+    public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
+    {
+        ValidateQuantity(this, quantity, paramName);
+    }
+    #endregion
+    #endregion
+
+    #region Virtual methods
+    public virtual MeasureUnitCode GetMeasureUnitCode(RateComponentCode rateComponentCode)
+    {
+        if (this[rateComponentCode] is MeasureUnitCode measureUnitCode) return measureUnitCode;
+
+        throw InvalidRateComponentCodeArgumentException(rateComponentCode);
     }
     #endregion
 
-    protected static bool? FitsIn(IBaseRate s, IBaseRate? baseRate, LimitMode? limitMode, Func<bool?> fitsIn)
+    #region Abstract methods
+    public abstract IBaseRate GetBaseRate(MeasureUnitCode numeratorMeasureUnitCode, decimal defaultQuantity, MeasureUnitCode denominatorMeasureUnitCode);
+    public abstract MeasureUnitCode GetNumeratorMeasureUnitCode();
+    #endregion
+
+    #region Static methods
+    public static IEnumerable<RateComponentCode> GetRateComponentCodes()
     {
-        bool limitModeHasValue = limitMode.HasValue;
-
-        if (baseRate == null && !limitModeHasValue) return true;
-
-        if (!s.IsExchangeableTo(baseRate)) return null;
-
-        if (!limitModeHasValue) return s.CompareTo(baseRate) <= 0;
-
-        LimitMode limitModeValue = limitMode!.Value;
-
-        if (!limitModeValue.IsDefined()) return null;
-
-        int comparison = s.CompareTo(baseRate);
-
-        return comparison.FitsIn(limitMode!.Value);
+        return Enum.GetValues<RateComponentCode>();
     }
+    #endregion
+    #endregion
+
+    #region Protected methods
+    protected void ValidateMeasureUnitCodes(IBaseRate other)
+    {
+        string paramName = nameof(other);
+
+        foreach (RateComponentCode item in Enum.GetValues<RateComponentCode>())
+        {
+            if (this[item] is MeasureUnitCode measureUnitCode)
+            {
+                if (other[item] is not MeasureUnitCode otherMeasureUnitCode)
+                {
+                    throw ArgumentTypeOutOfRangeException(paramName, other);
+                }
+
+                if (measureUnitCode != otherMeasureUnitCode)
+                {
+                    throw InvalidMeasureUnitCodeEnumArgumentException(otherMeasureUnitCode, paramName);
+                }
+            }
+        }
+    }
+    #endregion
 }

@@ -30,11 +30,6 @@
             return Measurement;
         }
 
-        public override void ValidateQuantity(ValueType? quantity, string paramName) // TODO
-        {
-            ValidateQuantity(quantity, GetQuantityTypeCode(), paramName);
-        }
-
         #region Sealed methods
         public override sealed IMeasurementFactory GetBaseMeasurementFactory()
         {
@@ -71,7 +66,7 @@
         #region Static methods
         //private static decimal GetDefaultQuantity(IBaseMeasure rateComponent)
         //{
-        //    return RoundQuantity(rateComponent.GetDecimalQuantity() * rateComponent.GetExchangeRate());
+        //    return Round(rateComponent.GetDecimalQuantity() * rateComponent.GetExchangeRate());
         //}
 
         private static TypeCode? GetValidQuantityTypeCodeOrNull(TypeCode quantityTypeCode)

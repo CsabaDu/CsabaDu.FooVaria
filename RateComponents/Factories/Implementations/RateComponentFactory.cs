@@ -20,6 +20,13 @@ public abstract class RateComponentFactory : IRateComponentFactory
     #endregion
 
     #region Public methods
+    public IBaseMeasure CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
+    {
+        IBaseMeasurement baseMeasurement = MeasurementFactory.CreateBaseMeasurement(Defined(measureUnitCode, nameof(measureUnitCode)))!;
+
+        return CreateBaseMeasure(baseMeasurement, defaultQuantity);
+    }
+
     #region Abstract methods
     public abstract IBaseMeasure CreateBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity);
     public abstract IMeasurable? CreateDefault(MeasureUnitCode measureUnitCode);
@@ -29,16 +36,7 @@ public abstract class RateComponentFactory : IRateComponentFactory
     #region Protected methods
     protected object ConvertQuantity(ValueType quantity)
     {
-        string paramName = nameof(quantity);
-        Type quantityType = NullChecked(quantity, paramName).GetType();
-
-        if (Type.GetTypeCode(quantityType) == QuantityTypeCode) return quantity;
-
-        object? converted = NullChecked(quantity, paramName).ToQuantity(QuantityTypeCode);
-
-        if (converted != null) return converted;
-
-        throw ArgumentTypeOutOfRangeException(paramName, quantity);
+        return Quantifiable.ConvertQuantity(quantity, nameof(quantity), QuantityTypeCode);
     }
 
     #region Static methods

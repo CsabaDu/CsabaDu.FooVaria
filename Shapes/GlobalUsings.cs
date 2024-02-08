@@ -1,5 +1,4 @@
 ﻿global using CsabaDu.FooVaria.BaseShapes.Factories;
-global using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types;
 global using CsabaDu.FooVaria.BaseTypes.BaseShapes.Behaviors;
 global using CsabaDu.FooVaria.BaseTypes.BaseShapes.Factories;
 global using CsabaDu.FooVaria.BaseTypes.BaseShapes.Types;
@@ -19,7 +18,6 @@ global using CsabaDu.FooVaria.Shapes.Enums;
 global using CsabaDu.FooVaria.Shapes.Factories;
 global using CsabaDu.FooVaria.Shapes.Types;
 global using CsabaDu.FooVaria.Spreads.Factories;
-global using CsabaDu.FooVaria.Spreads.Types;
 global using System.Diagnostics.CodeAnalysis;
 global using static CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations.BaseMeasurement;
 global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.ExceptionMethods;

@@ -2,6 +2,10 @@
 
 public static class Extensions
 {
+    #region Constants
+    private const int DoublePrecisionDecimals = 8;
+    #endregion
+
     #region System.Int32
     public static bool? FitsIn(this int comparison, LimitMode? limitMode)
     {
@@ -18,7 +22,78 @@ public static class Extensions
     }
     #endregion
 
+    #region System.Decimal
+    public static decimal Round(this decimal quantity, RoundingMode roundingMode)
+    {
+        return roundingMode switch
+        {
+            RoundingMode.General => decimal.Round(quantity),
+            RoundingMode.Ceiling => decimal.Ceiling(quantity),
+            RoundingMode.Floor => decimal.Floor(quantity),
+            RoundingMode.Half => getHalfQuantity(),
+            RoundingMode.DoublePrecision => decimal.Round(quantity, DoublePrecisionDecimals),
+
+            _ => throw InvalidRoundingModeEnumArgumentException(roundingMode),
+        };
+
+        #region Local methods
+        decimal getHalfQuantity()
+        {
+            decimal rounded = decimal.Floor(quantity);
+
+            if (quantity == rounded) return rounded;
+
+            const decimal half = 0.5m;
+            rounded += half;
+
+            if (quantity <= rounded) return rounded;
+
+            return rounded + half;
+        }
+        #endregion
+    }
+    #endregion
+
+    #region System.Double
+    public static double Round(this double quantity, RoundingMode roundingMode)
+    {
+        return roundingMode switch
+        {
+            RoundingMode.General => Math.Round(quantity),
+            RoundingMode.Ceiling => Math.Ceiling(quantity),
+            RoundingMode.Floor => Math.Floor(quantity),
+            RoundingMode.Half => getHalfQuantity(),
+            RoundingMode.DoublePrecision => Math.Round(quantity, DoublePrecisionDecimals),
+
+            _ => throw InvalidRoundingModeEnumArgumentException(roundingMode),
+        };
+
+        #region Local methods
+        double getHalfQuantity()
+        {
+            double rounded = Math.Floor(quantity);
+
+            if (quantity == rounded) return rounded;
+
+            const double half = 0.5;
+            rounded += half;
+
+            if (quantity <= rounded) return rounded;
+
+            return rounded + half;
+        }
+        #endregion
+    }
+    #endregion
+
     #region System.ValueType
+    public static TypeCode? GetQuantityTypeCode(this ValueType quantity)
+    {
+        return quantity.IsValidTypeQuantity() ?
+            Type.GetTypeCode(quantity.GetType())
+            : null;
+    }
+
     public static object? ToQuantity(this ValueType quantity, Type conversionType)
     {
         TypeCode conversionTypeCode = Type.GetTypeCode(conversionType);
@@ -28,11 +103,9 @@ public static class Extensions
 
     public static object? ToQuantity(this ValueType quantity, TypeCode conversionTypeCode)
     {
-        Type quantityType = quantity.GetType();
+        TypeCode? quantityTypeCode = quantity.GetQuantityTypeCode();
 
-        if (!QuantityTypeSet.Contains(quantityType)) return null;
-
-        TypeCode quantityTypeCode = Type.GetTypeCode(quantityType);
+        if (quantityTypeCode == null) return null;
 
         if (quantityTypeCode == conversionTypeCode) return getRoundedQuantity();
 
@@ -40,12 +113,10 @@ public static class Extensions
         {
             return conversionTypeCode switch
             {
-                TypeCode.Int32 or
-                TypeCode.Int64 => getIntQuantity(),
-
+                TypeCode.Int32 => Convert.ToInt32(quantity),
+                TypeCode.Int64 => Convert.ToInt64(quantity),
                 TypeCode.UInt32 or
-                TypeCode.UInt64 => getUIntQuantityOrNull(),
-
+                TypeCode.UInt64 => getRoundedUIntQuantityOrNull(),
                 TypeCode.Double or
                 TypeCode.Decimal => getRoundedQuantity(),
 
@@ -62,18 +133,7 @@ public static class Extensions
         }
 
         #region Local methods
-        object? getIntQuantity()
-        {
-            return conversionTypeCode switch
-            {
-                TypeCode.Int32 => Convert.ToInt32(quantity),
-                TypeCode.Int64 => Convert.ToInt64(quantity),
-
-                _ => null,
-            };
-        }
-
-        object? getUIntQuantityOrNull()
+        object? getRoundedUIntQuantityOrNull()
         {
             if (Convert.ToDouble(quantity) < 0) return null;
 
@@ -90,8 +150,8 @@ public static class Extensions
         {
             return conversionTypeCode switch
             {
-                TypeCode.Double => RoundQuantity(Convert.ToDouble(quantity)),
-                TypeCode.Decimal => RoundQuantity(Convert.ToDecimal(quantity)),
+                TypeCode.Double => Convert.ToDouble(quantity).Round(RoundingMode.DoublePrecision),
+                TypeCode.Decimal => Convert.ToDecimal(quantity).Round(RoundingMode.DoublePrecision),
 
                 _ => quantity,
             };
@@ -101,73 +161,7 @@ public static class Extensions
 
     public static bool IsValidTypeQuantity(this ValueType quantity)
     {
-        Type quantityType = quantity.GetType();
-
-        return QuantityTypeSet.Contains(quantityType);
+        return QuantityTypeSet.Contains(quantity.GetType());
     }
     #endregion
-
-    //#region CsabaDu.FooVaria.Common.Enums.MeasureUnitCode
-    //public static TypeCode GetQuantityTypeCode(this MeasureUnitCode measureUnitCode)
-    //{
-    //    return measureUnitCode switch
-    //    {
-    //        MeasureUnitCode.Currency => TypeCode.Decimal,
-
-    //        MeasureUnitCode.Pieces => TypeCode.Int64,
-
-    //        MeasureUnitCode.AreaUnit or
-    //        MeasureUnitCode.DistanceUnit or
-    //        MeasureUnitCode.ExtentUnit or
-    //        MeasureUnitCode.TimePeriodUnit or
-    //        MeasureUnitCode.VolumeUnit or
-    //        MeasureUnitCode.WeightUnit => TypeCode.Double,
-
-    //        _ => throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode),
-    //    };
-    //}
-
-    //public static string GetName(this MeasureUnitCode measureUnitCode)
-    //{
-    //    return Enum.GetName(Defined(measureUnitCode, nameof(measureUnitCode)))!;
-    //}
-
-    //public static IEnumerable<string> GetMeasureUnitDefaultNames(this MeasureUnitCode measureUnitCode)
-    //{
-    //    Type measureUnitType = measureUnitCode.GetMeasureUnitType();
-
-    //    return Enum.GetNames(measureUnitType);
-    //}
-
-    //public static Type GetMeasureUnitType(this MeasureUnitCode measureUnitCode)
-    //{
-    //    return MeasureUnitTypes.GetMeasureUnitType(measureUnitCode);
-    //}
-
-    //public static IEnumerable<Enum> GetAllMeasureUnits(this MeasureUnitCode measureUnitCode)
-    //{
-    //    Type measureUnitType = measureUnitCode.GetMeasureUnitType();
-
-    //    foreach (Enum item in Enum.GetValues(measureUnitType))
-    //    {
-    //        yield return item;
-    //    }
-    //}
-
-    //public static Enum GetDefaultMeasureUnit(this MeasureUnitCode measureUnitCode)
-    //{
-    //    return measureUnitCode.GetAllMeasureUnits().First();
-    //}
-
-    //public static bool IsCustomMeasureUnitCode(this MeasureUnitCode measureUnitCode)
-    //{
-    //    if (!Enum.IsDefined(measureUnitCode)) return false;
-
-    //    Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
-    //    Type measureUnitType = measureUnit.GetType();
-    //    string name = Enum.GetName(measureUnitType, measureUnit)!;
-
-    //    return name == DefaultCustomMeasureUnitDefaultName;
-    //}
-    //#endregion
 }
