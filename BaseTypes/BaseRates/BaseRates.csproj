@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BaseMeasurements\BaseMeasurements.csproj" />
     <ProjectReference Include="..\BaseMeasures\BaseMeasures.csproj" />
   </ItemGroup>
 

@@ -1,0 +1,12 @@
+#title: ProjectsInheritance
+[Common]<:-[Measurables]<:-[BaseMeasurements]<:-[Measurements]
+[Measurables]<:-[Quantifiables]<:-[BaseMeasures]<:-[Measures]
+[Quantifiables]<:-[BaseSpreads]<:-[Spreads]
+[Quantifiables]<:-[Masses]
+[BaseSpreads]<:-[BaseShapes]<:-[Shapes]<:-[PlaneShapes]
+[Shapes]<:-[DryBodies]
+[BaseMeasures]<:-[RateComponents]
+[Quantifiables]<:-[BaseRates]<:-[Rates]
+[BaseRates]<:-[Proportions]
+[BaseShapes]<:-[ComplexShapes]<:-[Sections]
+[ComplexShapes]<:-[ComplexDryBodies]

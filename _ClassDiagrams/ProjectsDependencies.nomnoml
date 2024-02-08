@@ -1,0 +1,12 @@
+#title: ProjectsDependencies
+[Common]<--[Measurables]<--[BaseMeasurements]
+[Measurables]<--[Quantifiables]<--[BaseMeasures]
+[Quantifiables]<--[BaseSpreads]<--[BaseShapes]<--[Shapes]
+[BaseSpreads]<--[Spreads]<--[Shapes]<--[PlaneShapes]
+[BaseMeasurements]<--[BaseMeasures]<--[BaseRates]<--[Measures]
+[BaseMeasurements]<--[Measurements]<--[Measures]<--[Spreads]
+[Measures]<--[RateComponents]<--[Rates]<--[Proportions]
+[PlaneShapes]<--[DryBodies]<--[Masses]
+[Proportions]<--[Masses]
+[BaseShapes]<--[ComplexShapes]<--[Sections]
+[DryBodies]<--[Sections]<--[ComplexDryBodies]
