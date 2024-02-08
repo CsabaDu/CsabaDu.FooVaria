@@ -6,5 +6,5 @@ public enum RoundingMode
     Ceiling,
     Floor,
     Half,
-    DoublePrecision, // TODO
+    DoublePrecision,
 }

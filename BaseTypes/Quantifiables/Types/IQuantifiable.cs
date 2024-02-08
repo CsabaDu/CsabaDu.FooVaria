@@ -12,7 +12,6 @@
     {
         TSelf GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity);
 
-        //void ValidateQuantity(TSelf other, string paramName);
         void ValidateQuantifiable(IQuantifiable? quantifiable, string paramName);
     }
 }

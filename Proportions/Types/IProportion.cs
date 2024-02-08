@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CsabaDu.FooVaria.Proportions.Types
+﻿namespace CsabaDu.FooVaria.Proportions.Types
 {
     public interface IProportion : IBaseRate, ILimitable<IProportion>
     {

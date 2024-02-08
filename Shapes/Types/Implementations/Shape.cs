@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types;
-
-namespace CsabaDu.FooVaria.Shapes.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Shapes.Types.Implementations;
 
 public abstract class Shape : BaseShape, IShape
 {

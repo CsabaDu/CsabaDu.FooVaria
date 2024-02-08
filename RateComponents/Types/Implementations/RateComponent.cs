@@ -82,11 +82,17 @@
     internal abstract class RateComponent<TSelf> : RateComponent, IRateComponent<TSelf>
         where TSelf : class, IBaseMeasure
     {
+        #region Constructors
         private protected RateComponent(IRateComponentFactory factory, IMeasurement measurement) : base(factory, measurement)
         {
         }
+        #endregion
 
+        #region Public methods
+        #region Abstract methods
         public abstract TSelf GetDefault();
+        #endregion
+        #endregion
 
         #region Protected methods
         protected decimal GetDefaultQuantity(object quantity)

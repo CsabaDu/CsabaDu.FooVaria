@@ -1,4 +1,5 @@
 ﻿global using CsabaDu.FooVaria.BaseShapes.Factories;
+global using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types;
 global using CsabaDu.FooVaria.BaseTypes.BaseShapes.Behaviors;
 global using CsabaDu.FooVaria.BaseTypes.BaseShapes.Factories;
 global using CsabaDu.FooVaria.BaseTypes.BaseShapes.Types;
