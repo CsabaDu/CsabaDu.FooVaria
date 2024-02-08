@@ -1,6 +1,8 @@
-﻿namespace CsabaDu.FooVaria.Proportions.Types
+﻿using System;
+
+namespace CsabaDu.FooVaria.Proportions.Types
 {
-    public interface IProportion : IBaseRate
+    public interface IProportion : IBaseRate, ILimitable<IProportion>
     {
         MeasureUnitCode NumeratorMeasureUnitCode { get; init; }
         decimal DefaultQuantity { get; init; }
@@ -16,7 +18,7 @@
         decimal GetQuantity(TDEnum denominatorMeasureUnit);
     }
 
-    public interface IProportion<TNEnum, TDEnum> : IProportion<TDEnum>, IMeasureUnit<TNEnum>, ILimitable<IProportion<TNEnum, TDEnum>>
+    public interface IProportion<TNEnum, TDEnum> : IProportion<TDEnum>, IMeasureUnit<TNEnum>
         where TNEnum : struct, Enum
         where TDEnum : struct, Enum
     {

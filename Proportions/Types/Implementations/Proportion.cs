@@ -68,6 +68,15 @@
         #endregion
 
         #region Public methods
+        public IProportion ConvertToLimitable(ILimiter limiter)
+        {
+            string paramName = nameof(limiter);
+
+            if (NullChecked(limiter, paramName) is IBaseRate baseRate) return GetProportion(baseRate);
+
+            throw ArgumentTypeOutOfRangeException(paramName, limiter);
+        }
+
         #region Override methods
         #region Sealed methods
         public override sealed decimal GetDefaultQuantity()
@@ -114,10 +123,13 @@
     internal abstract class Proportion<TDEnum> : Proportion, IProportion<TDEnum>
         where TDEnum : struct, Enum
     {
+        #region Constructors
         private protected Proportion(IProportionFactory factory, Enum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit) : base(factory, numeratorMeasureUnit, quantity, denominatorMeasureUnit)
         {
         }
+        #endregion
 
+        #region Public methods
         public IMeasure Denominate(TDEnum measureUnit)
         {
             decimal quantity = GetQuantity(measureUnit);
@@ -131,11 +143,6 @@
             return GetFactory().Create(numerator, denominator);
         }
 
-        public override sealed IProportion GetProportion(IBaseRate baseRate)
-        {
-            return GetFactory().Create(baseRate);
-        }
-
         public IProportion<TDEnum> GetProportion(IBaseMeasure numerator, TDEnum denominatorMeasureUnit)
         {
             return GetFactory().Create(numerator, denominatorMeasureUnit);
@@ -144,6 +151,13 @@
         public decimal GetQuantity(TDEnum denominatorMeasureUnit)
         {
             return DefaultQuantity / GetExchangeRate(denominatorMeasureUnit);
+        }
+
+        #region Override methods
+        #region Sealed methods
+        public override sealed IProportion GetProportion(IBaseRate baseRate)
+        {
+            return GetFactory().Create(baseRate);
         }
 
         public override sealed IBaseRate GetBaseRate(MeasureUnitCode numeratorMeasureUnitCode, decimal defaultQuantity, MeasureUnitCode denominatorMeasureUnitCode)
@@ -155,22 +169,22 @@
         {
             return (IProportionFactory)Factory;
         }
-
+        #endregion
+        #endregion
+        #endregion
     }
 
     internal sealed class Proportion<TNEnum, TDEnum> : Proportion<TDEnum>, IProportion<TNEnum, TDEnum>
         where TNEnum : struct, Enum
         where TDEnum : struct, Enum
     {
+        #region Constructors
         internal Proportion(IProportionFactory factory, TNEnum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit) : base(factory, numeratorMeasureUnit, quantity, denominatorMeasureUnit)
         {
         }
+        #endregion
 
-        public IProportion<TNEnum, TDEnum> ConvertToLimitable(ILimiter limiter)
-        {
-            throw new NotImplementedException();
-        }
-
+        #region Public methods
         public TNEnum GetMeasureUnit(IMeasureUnit<TNEnum>? other)
         {
             if (other == null) return default;
@@ -192,5 +206,6 @@
         {
             return DefaultQuantity * GetExchangeRate(numeratorMeasureUnit);
         }
+        #endregion
     }
 }
