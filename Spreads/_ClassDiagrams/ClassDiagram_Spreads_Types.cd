@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Interface Name="CsabaDu.FooVaria.Spreads.Types.IBulkBody" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="6.5" Y="8.25" Width="1.25" />
+    <Position X="6.25" Y="8.25" Width="1.25" />
     <InheritanceLine Type="CsabaDu.FooVaria.Spreads.Types.ISpread&lt;TSelf, TSMeasure, TEnum&gt;" FixedFromPoint="true">
       <Path>
         <Point X="6.375" Y="7.441" />
         <Point X="6.375" Y="7.875" />
-        <Point X="7.125" Y="7.875" />
-        <Point X="7.125" Y="8.25" />
+        <Point X="6.875" Y="7.875" />
+        <Point X="6.875" Y="8.25" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -16,13 +16,13 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Spreads.Types.IBulkSurface" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="4.5" Y="8.25" Width="1.25" />
+    <Position X="4.75" Y="8.25" Width="1.25" />
     <InheritanceLine Type="CsabaDu.FooVaria.Spreads.Types.ISpread&lt;TSelf, TSMeasure, TEnum&gt;" FixedFromPoint="true">
       <Path>
         <Point X="5.875" Y="7.441" />
         <Point X="5.875" Y="7.875" />
-        <Point X="5.125" Y="7.875" />
-        <Point X="5.125" Y="8.25" />
+        <Point X="5.375" Y="7.875" />
+        <Point X="5.375" Y="8.25" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>

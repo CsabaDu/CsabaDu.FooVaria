@@ -21,8 +21,8 @@
       <FileName>Behaviors\IExchangeRateCollection.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IProportional&lt;T&gt;" Collapsed="true">
-    <Position X="8.75" Y="1.5" Width="1.5" />
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IProportional&lt;TSelf&gt;" Collapsed="true">
+    <Position X="8.75" Y="1.5" Width="1.75" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Types.IMeasurable" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
@@ -43,7 +43,7 @@
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Common.Behaviors.INamed" Collapsed="true">
-    <Position X="10.5" Y="1.5" Width="1.25" />
+    <Position X="10.75" Y="1.5" Width="1.25" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />

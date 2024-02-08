@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Interface Name="CsabaDu.FooVaria.Spreads.Factories.IBulkBodyFactory" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="3.25" Y="7" Width="1.5" />
+    <Position X="3.25" Y="6.5" Width="1.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.Spreads.Factories.ISpreadFactory&lt;T, TSMeasure, TEnum&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="3.25" Y="6.191" />
-        <Point X="3.25" Y="6.625" />
-        <Point X="4" Y="6.625" />
-        <Point X="4" Y="7" />
+        <Point X="3.25" Y="5.941" />
+        <Point X="3.25" Y="6.2" />
+        <Point X="4" Y="6.2" />
+        <Point X="4" Y="6.5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -16,13 +16,13 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Spreads.Factories.IBulkSurfaceFactory" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="1" Y="7" Width="1.75" />
+    <Position X="1.25" Y="6.5" Width="1.75" />
     <InheritanceLine Type="CsabaDu.FooVaria.Spreads.Factories.ISpreadFactory&lt;T, TSMeasure, TEnum&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="2.75" Y="6.191" />
-        <Point X="2.75" Y="6.625" />
-        <Point X="1.875" Y="6.625" />
-        <Point X="1.875" Y="7" />
+        <Point X="2.75" Y="5.941" />
+        <Point X="2.75" Y="6.2" />
+        <Point X="2.125" Y="6.2" />
+        <Point X="2.125" Y="6.5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -38,14 +38,14 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Spreads.Factories.ISpreadFactory&lt;T, TSMeasure&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="1.75" Y="4.25" Width="2.5" />
+    <Position X="1.75" Y="4" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\ISpreadFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Spreads.Factories.ISpreadFactory&lt;T, TSMeasure, TEnum&gt;" Collapsed="true">
-    <Position X="1.5" Y="5.5" Width="3" />
+    <Position X="1.5" Y="5.25" Width="3" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\ISpreadFactory.cs</FileName>
@@ -79,7 +79,7 @@
     </InheritanceLine>
     <TypeIdentifier />
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Common.Factories.IFactory&lt;T&gt;" Collapsed="true">
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Common.Factories.IFactory&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="1.5" Y="2.75" Width="1.25" />
     <TypeIdentifier />
   </Interface>

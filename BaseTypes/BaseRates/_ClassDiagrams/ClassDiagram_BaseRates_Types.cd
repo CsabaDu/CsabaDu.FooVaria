@@ -3,7 +3,7 @@
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseRates.Types.IBaseRate" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="2" Y="2.75" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAACAAIA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAABCAAAAAAAAAAAAAAAAAAAAACAAIA=</HashCode>
       <FileName>Types\IBaseRate.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -26,20 +26,20 @@
     <Position X="3.5" Y="1.5" Width="1.75" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IProportional&lt;T&gt;" Collapsed="true">
-    <Position X="5.5" Y="1.5" Width="1.5" />
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IProportional&lt;TSelf&gt;" Collapsed="true">
+    <Position X="5.5" Y="1.5" Width="1.75" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IFit&lt;TSelf&gt;" Collapsed="true">
-    <Position X="7.25" Y="1.5" Width="1.25" />
+    <Position X="7.5" Y="1.5" Width="1.25" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IExchangeable&lt;TContext&gt;" Collapsed="true">
-    <Position X="8.75" Y="1.5" Width="2" />
+    <Position X="9" Y="1.5" Width="2" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ILimitable" Collapsed="true">
-    <Position X="11" Y="1.5" Width="1.25" />
+    <Position X="11.25" Y="1.5" Width="1.25" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />

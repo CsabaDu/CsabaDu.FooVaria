@@ -16,13 +16,13 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.DryBodies.Factories.ICylinderFactory" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="2.75" Y="4.25" Width="1.5" />
+    <Position X="3" Y="4.25" Width="1.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.DryBodies.Factories.IDryBodyFactory&lt;T, TBFace&gt;" FixedFromPoint="true">
       <Path>
         <Point X="4.375" Y="3.691" />
         <Point X="4.375" Y="3.95" />
-        <Point X="3.5" Y="3.95" />
-        <Point X="3.5" Y="4.25" />
+        <Point X="3.75" Y="3.95" />
+        <Point X="3.75" Y="4.25" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>

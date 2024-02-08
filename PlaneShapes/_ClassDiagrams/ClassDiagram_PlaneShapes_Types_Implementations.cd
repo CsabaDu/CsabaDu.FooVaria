@@ -9,7 +9,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.PlaneShapes.Types.Implementations.PlaneShape" Collapsed="true">
-    <Position X="1.25" Y="6.5" Width="1.25" />
+    <Position X="1.25" Y="6.75" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAABAEAAAAAQAAQAAAAA=</HashCode>
       <FileName>Types\Implementations\PlaneShape.cs</FileName>
@@ -25,7 +25,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.Shapes.Types.Implementations.Shape" Collapsed="true">
-    <Position X="1.25" Y="5.25" Width="1.25" />
+    <Position X="1.25" Y="5.5" Width="1.25" />
     <TypeIdentifier />
     <Lollipop Position="0.2" />
   </Class>

@@ -1,23 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations.BaseMeasure" Collapsed="true">
-    <Position X="0.75" Y="3" Width="1.25" />
+    <Position X="0.5" Y="3.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>QgACAwAAAAhCCAQAoAAAAACCgAAGQIAAAAKArAIAAAA=</HashCode>
+      <HashCode>QgACAwAAAAhCCAAAoAAAAACCAAAGAIAAAAKArAIAAAA=</HashCode>
       <FileName>Types\Implementations\BaseMeasure.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations.BaseMeasure&lt;TSeff&gt;" Collapsed="true">
-    <Position X="0.5" Y="4.25" Width="1.75" />
+    <Position X="0.5" Y="5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAQAAAAAACAAAAAAAACCAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAQAAAAAACAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Types\Implementations\BaseMeasure.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.Implementations.Quantifiable" Collapsed="true">
-    <Position X="0.75" Y="1.75" Width="1.25" />
+  <Class Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.Implementations.Quantifiable&lt;TSelf&gt;" Collapsed="true">
+    <Position X="0.75" Y="2.5" Width="1.5" />
     <TypeIdentifier />
     <Lollipop Position="0.2" />
   </Class>

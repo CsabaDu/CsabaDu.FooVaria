@@ -69,7 +69,7 @@
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseSpreads.Types.ISurface" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="5.25" Y="0.5" Width="1.25" />
+    <Position X="2.25" Y="0.5" Width="1.25" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Shapes.Behaviors.IHorizontalRotation" Collapsed="true">

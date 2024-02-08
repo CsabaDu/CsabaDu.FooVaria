@@ -17,7 +17,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.DryBodies.Types.Implementations.DryBody" Collapsed="true">
-    <Position X="1.75" Y="6.5" Width="1.25" />
+    <Position X="1.75" Y="6.75" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAARAABAIAAAAAAAAFAADAAAAAEAAAAgIAAAAAAAA=</HashCode>
       <FileName>Types\Implementations\DryBody.cs</FileName>
@@ -25,15 +25,15 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.DryBodies.Types.Implementations.DryBody&lt;TSelf, TBFace&gt;" Collapsed="true">
-    <Position X="1.5" Y="7.75" Width="1.75" />
+    <Position X="1.5" Y="8" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAFAACAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAFACCAAAAAAAAAAAAAABAAAAA=</HashCode>
       <FileName>Types\Implementations\DryBody.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.Shapes.Types.Implementations.Shape" Collapsed="true">
-    <Position X="1.75" Y="5.25" Width="1.25" />
+    <Position X="1.75" Y="5.5" Width="1.25" />
     <TypeIdentifier />
     <Lollipop Position="0.2" />
   </Class>

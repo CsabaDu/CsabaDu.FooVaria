@@ -19,7 +19,7 @@
   <Class Name="CsabaDu.FooVaria.Spreads.Factories.Implementations.SpreadFactory" Collapsed="true">
     <Position X="2.75" Y="0.5" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAEAAAAA=</HashCode>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAEIAAAA=</HashCode>
       <FileName>Factories\Implementations\SpreadFactory.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
