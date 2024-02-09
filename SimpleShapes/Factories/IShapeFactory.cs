@@ -2,11 +2,11 @@
 {
     public interface ISimpleShapeFactory : IShapeFactory
     {
-        ISpreadFactory SpreadFactory { get; init; }
+        IBulkSpreadFactory BulkSpreadFactory { get; init; }
         ITangentShapeFactory TangentShapeFactory { get; init; }
 
         IMeasureFactory GetMeasureFactory();
-        ISpreadFactory GetSpreadFactory();
+        IBulkSpreadFactory GetBulkSpreadFactory();
         ITangentShapeFactory GetTangentShapeFactory();
         IExtent CreateShapeExtent(ExtentUnit extentUnit, ValueType quantity);
     }

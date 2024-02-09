@@ -11,11 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Measurables", "BaseTypes\Me
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quantifiables", "BaseTypes\Quantifiables\Quantifiables.csproj", "{9F8A045B-68D3-4681-9776-6A326E659ACF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseShapes", "BaseTypes\Shapes\Shapes.csproj", "{A6D5A236-F64B-48A3-92D0-1EC9A19A0FF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shapes", "BaseTypes\Shapes\Shapes.csproj", "{A6D5A236-F64B-48A3-92D0-1EC9A19A0FF6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RateComponents", "RateComponents\RateComponents.csproj", "{1D382C47-2CD3-486B-A4D4-94A9BAAA1194}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spreads", "Spreads\Spreads.csproj", "{90449B9B-F322-4063-89D5-A5E8E98A33A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BulkSpreads", "BulkSpreads\BulkSpreads.csproj", "{90449B9B-F322-4063-89D5-A5E8E98A33A9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Measures", "Measures\Measures.csproj", "{709E0E62-3759-4299-A56F-A89B8A66569C}"
 EndProject
@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rates", "Rates\Rates.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Masses", "Masses\Masses.csproj", "{734D60B1-08AC-47D4-B9EA-AE7BE1AEB64B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseSpreads", "BaseTypes\BaseSpreads\BaseSpreads.csproj", "{9A3FEE96-426B-4273-8F73-752EB05ED82C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spreads", "BaseTypes\Spreads\Spreads.csproj", "{9A3FEE96-426B-4273-8F73-752EB05ED82C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseMeasures", "BaseTypes\BaseMeasures\BaseMeasures.csproj", "{4EDF3A34-E153-47A9-B40C-CBDFC8F5A139}"
 EndProject

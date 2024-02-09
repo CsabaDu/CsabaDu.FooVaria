@@ -22,9 +22,9 @@
       <FileName>Types\IComplexShape.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseSpreads.Types.IBaseSpread" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Spreads.Types.ISpread" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
     <Position X="3" Y="1.5" Width="1.25" />
-    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IFit&lt;CsabaDu.FooVaria.BaseTypes.BaseSpreads.Types.IBaseSpread&gt;" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IFit&lt;CsabaDu.FooVaria.BaseTypes.Spreads.Types.ISpread&gt;" IsHidden="true" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IFit&lt;TSelf&gt;" Collapsed="true">

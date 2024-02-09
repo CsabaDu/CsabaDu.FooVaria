@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BaseSpreads\BaseSpreads.csproj" />
+    <ProjectReference Include="..\Spreads\Spreads.csproj" />
   </ItemGroup>
 
 </Project>

@@ -178,7 +178,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
             && base.Equals(simpleShape);
     }
 
-    public override sealed IBaseSpread? ExchangeTo(Enum? context)
+    public override sealed ISpread? ExchangeTo(Enum? context)
     {
         if (context is not ExtentUnit extentUnit)
         {
@@ -241,9 +241,9 @@ public abstract class SimpleShape : Shape, ISimpleShape
         return Compare(this, simpleShape)?.FitsIn(limitMode);
     }
 
-    public override sealed IBaseSpread GetBaseSpread(ISpreadMeasure spreadMeasure)
+    public override sealed ISpread GetSpread(ISpreadMeasure spreadMeasure)
     {
-        return GetFactory().SpreadFactory.CreateBaseSpread(spreadMeasure);
+        return GetFactory().BulkSpreadFactory.CreateSpread(spreadMeasure);
     }
 
     public override sealed IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
@@ -270,9 +270,9 @@ public abstract class SimpleShape : Shape, ISimpleShape
     #endregion
 
     #region Virtual methods
-    public virtual ISpreadFactory GetSpreadFactory()
+    public virtual IBulkSpreadFactory GetBulkSpreadFactory()
     {
-        return GetFactory().SpreadFactory;
+        return GetFactory().BulkSpreadFactory;
     }
 
     public virtual ITangentShapeFactory GetTangentShapeFactory()
@@ -343,7 +343,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
     #region Protected methods
     protected ISpreadMeasure GetSpreadMeasure(IExtent[] shapeExtents)
     {
-        return GetSpreadFactory().Create(shapeExtents).GetSpreadMeasure();
+        return GetBulkSpreadFactory().Create(shapeExtents).GetSpreadMeasure();
     }
     #endregion
 

@@ -237,9 +237,9 @@
             return (TOther)GetBaseMeasure(measureUnit, quantity);
         }
 
-        protected void ValidateSpreadQuantity(ValueType? quantity, string paramName)
+        protected void ValidateBulkSpreadQuantity(ValueType? quantity, string paramName)
         {
-            if (GetValidQuantityOrNull(this, NullChecked(quantity, paramName)) is double spreadQuantity && spreadQuantity > 0) return;
+            if (GetValidQuantityOrNull(this, NullChecked(quantity, paramName)) is double bulkSpreadQuantity && bulkSpreadQuantity > 0) return;
 
             throw QuantityArgumentOutOfRangeException(paramName, quantity);
         }

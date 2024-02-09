@@ -10,7 +10,7 @@ public abstract class ComplexShape : Shape, IComplexShape
     {
     }
 
-    protected ComplexShape(IBaseSpreadFactory factory, MeasureUnitCode measureUnitCode, params IQuantifiable[] shapeComponents) : base(factory, measureUnitCode, shapeComponents)
+    protected ComplexShape(ISpreadFactory factory, MeasureUnitCode measureUnitCode, params IQuantifiable[] shapeComponents) : base(factory, measureUnitCode, shapeComponents)
     {
     }
 }

@@ -5,7 +5,7 @@
         ISimpleShape GetSimpleShape(ExtentUnit measureUnit);
         ISimpleShape GetSimpleShape(params IExtent[] shapeExtents);
 
-        ISpreadFactory GetSpreadFactory();
+        IBulkSpreadFactory GetBulkSpreadFactory();
         ITangentShapeFactory GetTangentShapeFactory();
     }
 

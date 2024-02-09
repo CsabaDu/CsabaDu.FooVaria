@@ -3,7 +3,7 @@
     public abstract class PlaneShapeFactory : SimpleShapeFactory, IPlaneShapeFactory
     {
         #region Constructors
-        private protected PlaneShapeFactory(IBulkSurfaceFactory spreadFactory, ITangentShapeFactory tangentShapeFactory) : base(spreadFactory, tangentShapeFactory)
+        private protected PlaneShapeFactory(IBulkSurfaceFactory bulkSpreadFactory, ITangentShapeFactory tangentShapeFactory) : base(bulkSpreadFactory, tangentShapeFactory)
         {
         }
         #endregion
@@ -11,9 +11,9 @@
         #region Public methods
         #region Override methods
         #region Sealed methods
-        public override sealed IBulkSurfaceFactory GetSpreadFactory()
+        public override sealed IBulkSurfaceFactory GetBulkSpreadFactory()
         {
-            return (IBulkSurfaceFactory)SpreadFactory;
+            return (IBulkSurfaceFactory)BulkSpreadFactory;
         }
         #endregion
         #endregion

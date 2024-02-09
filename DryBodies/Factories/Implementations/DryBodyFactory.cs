@@ -3,7 +3,7 @@
     public abstract class DryBodyFactory : SimpleShapeFactory, IDryBodyFactory
     {
         #region Constructors
-        private protected DryBodyFactory(IBulkBodyFactory spreadFactory, ITangentShapeFactory tangentShapeFactory, IPlaneShapeFactory baseFaceFactory) : base(spreadFactory, tangentShapeFactory)
+        private protected DryBodyFactory(IBulkBodyFactory bulkSpreadFactory, ITangentShapeFactory tangentShapeFactory, IPlaneShapeFactory baseFaceFactory) : base(bulkSpreadFactory, tangentShapeFactory)
         {
             BaseFaceFactory = NullChecked(baseFaceFactory, nameof(baseFaceFactory));
         }
@@ -68,9 +68,9 @@
 
         #region Override methods
         #region Sealed methods
-        public override sealed IBulkBodyFactory GetSpreadFactory()
+        public override sealed IBulkBodyFactory GetBulkSpreadFactory()
         {
-            return (IBulkBodyFactory)SpreadFactory;
+            return (IBulkBodyFactory)BulkSpreadFactory;
         }
         #endregion
         #endregion
@@ -151,7 +151,7 @@
         where TBFace : class, IPlaneShape, ITangentShape
     {
         #region Constructors
-        public DryBodyFactory(IBulkBodyFactory spreadFactory, ITangentShapeFactory tangentShapeFactory, IPlaneShapeFactory baseFaceFactory) : base(spreadFactory, tangentShapeFactory, baseFaceFactory)
+        public DryBodyFactory(IBulkBodyFactory bulkSpreadFactory, ITangentShapeFactory tangentShapeFactory, IPlaneShapeFactory baseFaceFactory) : base(bulkSpreadFactory, tangentShapeFactory, baseFaceFactory)
         {
         }
         #endregion

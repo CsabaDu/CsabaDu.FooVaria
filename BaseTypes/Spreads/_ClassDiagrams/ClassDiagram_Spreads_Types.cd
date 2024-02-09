@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Spreads.Types.ISpread" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="1.25" Y="4" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Types\ISpread.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Spreads.Types.IBody" Collapsed="true">
+    <Position X="2" Y="5.25" Width="1.25" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Spreads.Types.ISpread" FixedFromPoint="true">
+      <Path>
+        <Point X="2.125" Y="4.691" />
+        <Point X="2.125" Y="4.95" />
+        <Point X="2.625" Y="4.95" />
+        <Point X="2.625" Y="5.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\IBody.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Spreads.Types.ISurface" Collapsed="true">
+    <Position X="0.5" Y="5.25" Width="1.25" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Spreads.Types.ISpread" FixedFromPoint="true">
+      <Path>
+        <Point X="1.625" Y="4.691" />
+        <Point X="1.625" Y="4.95" />
+        <Point X="1.125" Y="4.95" />
+        <Point X="1.125" Y="5.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Types\ISurface.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ISpreadMeasure" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
+    <Position X="3" Y="2.75" Width="1.75" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity" IsHidden="true" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity" Collapsed="true">
+    <Position X="3.25" Y="0.5" Width="1.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity&lt;TNum&gt;" Collapsed="true">
+    <Position X="3" Y="1.5" Width="1.75" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.IQuantifiable&lt;TSelf&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="1" Y="2.75" Width="1.75" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

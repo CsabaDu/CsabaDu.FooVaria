@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.Shapes.Types.Implementations;
 
-public abstract class Shape : BaseSpread, IShape
+public abstract class Shape : Spread, IShape
 {
     #region Constructors
     protected Shape(IShape other) : base(other)
@@ -11,7 +11,7 @@ public abstract class Shape : BaseSpread, IShape
     {
     }
 
-    protected Shape(IBaseSpreadFactory factory, MeasureUnitCode measureUnitCode, params IQuantifiable[] shapeComponents) : base(factory, measureUnitCode, shapeComponents)
+    protected Shape(ISpreadFactory factory, MeasureUnitCode measureUnitCode, params IQuantifiable[] shapeComponents) : base(factory, measureUnitCode, shapeComponents)
     {
     }
     #endregion

@@ -3,7 +3,7 @@
 public sealed class CuboidFactory : DryBodyFactory<ICuboid, IRectangle>, ICuboidFactory
 {
     #region Constructors
-    public CuboidFactory(IBulkBodyFactory spreadFactory, ICylinderFactory tangentShapeFactory, IRectangleFactory baseFaceFactory) : base(spreadFactory, tangentShapeFactory, baseFaceFactory)
+    public CuboidFactory(IBulkBodyFactory bulkSpreadFactory, ICylinderFactory tangentShapeFactory, IRectangleFactory baseFaceFactory) : base(bulkSpreadFactory, tangentShapeFactory, baseFaceFactory)
     {
     }
     #endregion

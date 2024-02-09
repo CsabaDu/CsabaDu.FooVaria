@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BaseTypes\Shapes\Shapes.csproj" />
-    <ProjectReference Include="..\Spreads\Spreads.csproj" />
+    <ProjectReference Include="..\BulkSpreads\BulkSpreads.csproj" />
   </ItemGroup>
 
 	<ItemGroup>

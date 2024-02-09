@@ -5,7 +5,7 @@ namespace CsabaDu.FooVaria.PlaneShapes.Factories.Implementations;
 public sealed class CircleFactory : PlaneShapeFactory, ICircleFactory
 {
     #region Constructors
-    public CircleFactory(IBulkSurfaceFactory spreadFactory, IRectangleFactory tangentShapeFactory) : base(spreadFactory, tangentShapeFactory)
+    public CircleFactory(IBulkSurfaceFactory bulkSpreadFactory, IRectangleFactory tangentShapeFactory) : base(bulkSpreadFactory, tangentShapeFactory)
     {
     }
     #endregion

@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.Shapes.Types;
 
-public interface IShape : IBaseSpread, IFit<IShape>, IShapeComponents/*, IShapeComponentCount*/
+public interface IShape : ISpread, IFit<IShape>, IShapeComponents/*, IShapeComponentCount*/
 {
     IShape? GetShape(params IShapeComponent[] shapeComponents);
 

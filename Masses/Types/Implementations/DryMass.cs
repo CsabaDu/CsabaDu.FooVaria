@@ -72,7 +72,7 @@ internal sealed class DryMass : Mass, IDryMass
     {
         if (context is not ExtentUnit extentUnit) return base.ExchangeTo(context);
 
-        IBaseSpread? exchanged = (Body as ISimpleShape)!.ExchangeTo(extentUnit);
+        ISpread? exchanged = (Body as ISimpleShape)!.ExchangeTo(extentUnit);
 
         return exchanged is IDryBody dyBody ?
             GetDryMass(Weight, dyBody)

@@ -5,7 +5,7 @@ namespace CsabaDu.FooVaria.DryBodies.Factories.Implementations;
 public sealed class CylinderFactory : DryBodyFactory<ICylinder, ICircle>, ICylinderFactory
 {
     #region Constructors
-    public CylinderFactory(IBulkBodyFactory spreadFactory, ICuboidFactory tangentShapeFactory, ICircleFactory baseFaceFactory) : base(spreadFactory, tangentShapeFactory, baseFaceFactory)
+    public CylinderFactory(IBulkBodyFactory bulkSpreadFactory, ICuboidFactory tangentShapeFactory, ICircleFactory baseFaceFactory) : base(bulkSpreadFactory, tangentShapeFactory, baseFaceFactory)
     {
     }
     #endregion

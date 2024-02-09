@@ -3,7 +3,7 @@
 public sealed class RectangleFactory : PlaneShapeFactory, IRectangleFactory
 {
     #region Constructors
-    public RectangleFactory(IBulkSurfaceFactory spreadFactory, ICircleFactory tangentShapeFactory) : base(spreadFactory, tangentShapeFactory)
+    public RectangleFactory(IBulkSurfaceFactory bulkSpreadFactory, ICircleFactory tangentShapeFactory) : base(bulkSpreadFactory, tangentShapeFactory)
     {
     }
     #endregion

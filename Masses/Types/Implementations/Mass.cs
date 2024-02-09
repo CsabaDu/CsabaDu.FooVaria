@@ -164,7 +164,7 @@ namespace CsabaDu.FooVaria.Masses.Types.Implementations
 
             IMass? exchangeVolume()
             {
-                IBaseSpread? exchanged = Body.ExchangeTo(measureUnit);
+                ISpread? exchanged = Body.ExchangeTo(measureUnit);
 
                 if (exchanged is not IBody body) return null;
 

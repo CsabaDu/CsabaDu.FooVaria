@@ -44,7 +44,7 @@
       <FileName>Factories\IDryBodyFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseSpreads.Factories.IBodyFactory" Collapsed="true" BaseTypeListCollapsed="true">
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Spreads.Factories.IBodyFactory" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="2.25" Y="0.5" Width="1.25" />
     <TypeIdentifier />
   </Interface>

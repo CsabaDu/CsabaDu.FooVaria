@@ -3,27 +3,27 @@
 public abstract class SimpleShapeFactory : ISimpleShapeFactory
 {
     #region Constructors
-    protected SimpleShapeFactory(ISpreadFactory spreadFactory, ITangentShapeFactory tangentShapeFactory)
+    protected SimpleShapeFactory(IBulkSpreadFactory bulkSpreadFactory, ITangentShapeFactory tangentShapeFactory)
     {
-        SpreadFactory = NullChecked(spreadFactory, nameof(spreadFactory));
+        BulkSpreadFactory = NullChecked(bulkSpreadFactory, nameof(bulkSpreadFactory));
         TangentShapeFactory = NullChecked(tangentShapeFactory, nameof(tangentShapeFactory));
     }
     #endregion
 
     #region Properties
-    public ISpreadFactory SpreadFactory { get; init; }
+    public IBulkSpreadFactory BulkSpreadFactory { get; init; }
     public ITangentShapeFactory TangentShapeFactory { get; init; }
     #endregion
 
     #region Public methods
-    public IBaseSpread CreateBaseSpread(ISpreadMeasure spreadMeasure)
+    public ISpread CreateSpread(ISpreadMeasure spreadMeasure)
     {
-        return SpreadFactory.CreateBaseSpread(spreadMeasure);
+        return BulkSpreadFactory.CreateSpread(spreadMeasure);
     }
 
-    public IBaseSpread CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
+    public ISpread CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
     {
-        return SpreadFactory.CreateQuantifiable(measureUnitCode, defaultQuantity);
+        return BulkSpreadFactory.CreateQuantifiable(measureUnitCode, defaultQuantity);
     }
 
     public IExtent CreateShapeExtent(ExtentUnit extentUnit, ValueType quantity)
@@ -37,13 +37,13 @@ public abstract class SimpleShapeFactory : ISimpleShapeFactory
 
     public IMeasureFactory GetMeasureFactory()
     {
-        return SpreadFactory.MeasureFactory;
+        return BulkSpreadFactory.MeasureFactory;
     }
 
     #region Virtual methods
-    public virtual ISpreadFactory GetSpreadFactory()
+    public virtual IBulkSpreadFactory GetBulkSpreadFactory()
     {
-        return SpreadFactory;
+        return BulkSpreadFactory;
     }
 
     public virtual ITangentShapeFactory GetTangentShapeFactory()
