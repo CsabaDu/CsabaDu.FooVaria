@@ -3,11 +3,11 @@
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Shapes.Types.IShape" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="3" Y="2.75" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAABAAAAAAAAAA=</HashCode>
       <FileName>Types\IShape.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Shapes.Types.IComplexSimpleShape" Collapsed="true">
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Shapes.Types.IComplexShape" Collapsed="true">
     <Position X="4" Y="4" Width="1.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Shapes.Types.IShape" FixedFromPoint="true">
       <Path>
@@ -19,20 +19,13 @@
     </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Types\IComplexSimpleShape.cs</FileName>
+      <FileName>Types\IComplexShape.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseSpreads.Types.IBaseSpread" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
     <Position X="3" Y="1.5" Width="1.25" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IFit&lt;CsabaDu.FooVaria.BaseTypes.BaseSpreads.Types.IBaseSpread&gt;" IsHidden="true" />
     <TypeIdentifier />
-  </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Shapes.Behaviors.ISimpleShapeComponentCount" Collapsed="true">
-    <Position X="0.75" Y="0.5" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
-      <FileName>Behaviors\ISimpleShapeComponentCount.cs</FileName>
-    </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IFit&lt;TSelf&gt;" Collapsed="true">
     <Position X="4.5" Y="1.5" Width="1.25" />
@@ -41,7 +34,7 @@
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Shapes.Behaviors.IShapeComponents" Collapsed="true">
     <Position X="0.75" Y="1.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAACAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
       <FileName>Behaviors\IShapeComponents.cs</FileName>
     </TypeIdentifier>
   </Interface>

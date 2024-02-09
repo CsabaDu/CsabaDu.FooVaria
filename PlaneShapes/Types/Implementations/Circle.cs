@@ -18,9 +18,9 @@ internal sealed class Circle : PlaneShape, ICircle
     public IExtent Radius { get; init; }
 
     #region Override properties
-    public override IExtent? this[SimpleShapeExtentCode simpleShapeExtentCode] => simpleShapeExtentCode switch
+    public override IExtent? this[ShapeExtentCode simpleShapeExtentCode] => simpleShapeExtentCode switch
     {
-        SimpleShapeExtentCode.Radius => Radius,
+        ShapeExtentCode.Radius => Radius,
 
         _ => null,
     };

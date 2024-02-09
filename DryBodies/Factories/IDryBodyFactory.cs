@@ -8,7 +8,7 @@ namespace CsabaDu.FooVaria.DryBodies.Factories
         IPlaneShapeFactory BaseFaceFactory { get; init; }
 
         IDryBody Create(IPlaneShape baseFace, IExtent height);
-        IPlaneShape? CreateProjection(IDryBody dryBody, SimpleShapeExtentCode perpendicular);
+        IPlaneShape? CreateProjection(IDryBody dryBody, ShapeExtentCode perpendicular);
 
         IPlaneShapeFactory GetBaseFaceFactory();
     }

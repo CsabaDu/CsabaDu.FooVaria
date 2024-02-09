@@ -1,25 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Shapes.Factories.IShapeFactory" Collapsed="true">
-    <Position X="3" Y="1.75" Width="1.75" />
+    <Position X="3" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Factories\IShapeFactory.cs</FileName>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Factories\IBaseShapeFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Shapes.Factories.IComplexSimpleShapeFactory" Collapsed="true">
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Shapes.Factories.IComplexShapeFactory" Collapsed="true">
     <Position X="4.25" Y="3.25" Width="2" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Shapes.Factories.IShapeFactory" FixedFromPoint="true">
       <Path>
-        <Point X="4.125" Y="2.441" />
-        <Point X="4.125" Y="2.875" />
+        <Point X="4" Y="2.441" />
+        <Point X="4" Y="2.875" />
         <Point X="5.25" Y="2.875" />
         <Point X="5.25" Y="3.25" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Factories\IComplexSimpleShapeFactory.cs</FileName>
+      <FileName>Factories\IComplexShapeFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Shapes.Factories.ICircularShapeFactory" Collapsed="true">
@@ -56,8 +56,8 @@
     <Position X="1.75" Y="3.25" Width="1.75" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Shapes.Factories.IShapeFactory" FixedFromPoint="true">
       <Path>
-        <Point X="3.625" Y="2.441" />
-        <Point X="3.625" Y="2.875" />
+        <Point X="3.5" Y="2.441" />
+        <Point X="3.5" Y="2.875" />
         <Point X="2.625" Y="2.875" />
         <Point X="2.625" Y="3.25" />
       </Path>
@@ -68,7 +68,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseSpreads.Factories.IBaseSpreadFactory" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="3" Y="0.5" Width="1.75" />
+    <Position X="2.75" Y="0.5" Width="2" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />

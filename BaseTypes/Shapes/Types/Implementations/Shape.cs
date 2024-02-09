@@ -17,7 +17,7 @@ public abstract class Shape : BaseSpread, IShape
     #endregion
 
     #region Public methods
-    public int GetSimpleShapeComponentCount()
+    public int GetShapeComponentCount()
     {
         return GetShapeComponents().Count();
     }
@@ -39,7 +39,7 @@ public abstract class Shape : BaseSpread, IShape
 
         hashCode.Add(MeasureUnitCode);
 
-        foreach (ISimpleShapeComponent item in GetShapeComponents())
+        foreach (IShapeComponent item in GetShapeComponents())
         {
             hashCode.Add(item);
         }
@@ -60,16 +60,16 @@ public abstract class Shape : BaseSpread, IShape
     #region Abstract methods
     public abstract int CompareTo(IShape? other);
     public abstract bool? FitsIn(IShape? other, LimitMode? limitMode);
-    public abstract void ValidateSimpleShapeComponent(IQuantifiable simpleShapeComponent, string paramName);
-    public abstract ISimpleShapeComponent? GetValidSimpleShapeComponent(IQuantifiable? simpleShapeComponent);
-    public abstract IEnumerable<ISimpleShapeComponent> GetShapeComponents();
-    public abstract IShape? GetShape(params ISimpleShapeComponent[] shapeComponents);
+    public abstract void ValidateShapeComponent(IQuantifiable simpleShapeComponent, string paramName);
+    public abstract IShapeComponent? GetValidShapeComponent(IQuantifiable? simpleShapeComponent);
+    public abstract IEnumerable<IShapeComponent> GetShapeComponents();
+    public abstract IShape? GetShape(params IShapeComponent[] shapeComponents);
     #endregion
     #endregion
 
     #region Protected methods
     #region Static methods
-    protected static bool IsValidSimpleShapeComponentOf<T>(IShape shape, T simpleShapeComponent) where T : class, IQuantifiable, ISimpleShapeComponent
+    protected static bool IsValidShapeComponentOf<T>(IShape shape, T simpleShapeComponent) where T : class, IQuantifiable, IShapeComponent
     {
         return shape?.GetShapeComponents() is IEnumerable<T>;
     }

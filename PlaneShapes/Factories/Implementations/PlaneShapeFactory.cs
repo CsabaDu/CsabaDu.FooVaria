@@ -21,13 +21,13 @@
 
         #region Protected methods
         #region Static methods
-        protected static IPlaneShape? CreatePlaneShape(IRectangleFactory rectangleFactory, params ISimpleShapeComponent[] shapeComponents)
+        protected static IPlaneShape? CreatePlaneShape(IRectangleFactory rectangleFactory, params IShapeComponent[] shapeComponents)
         {
             int count = GetShapeComponentsCount(shapeComponents);
 
             if (count == 0) return null;
 
-            ISimpleShapeComponent firstItem = shapeComponents[0];
+            IShapeComponent firstItem = shapeComponents[0];
 
             return count switch
             {

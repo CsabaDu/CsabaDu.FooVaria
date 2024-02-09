@@ -18,11 +18,11 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
 
     #region Properties
     #region Override properties
-    public override IExtent? this[SimpleShapeExtentCode simpleShapeExtentCode] => simpleShapeExtentCode switch
+    public override IExtent? this[ShapeExtentCode simpleShapeExtentCode] => simpleShapeExtentCode switch
     {
-        SimpleShapeExtentCode.Length => GetLength(),
-        SimpleShapeExtentCode.Width => GetWidth(),
-        SimpleShapeExtentCode.Height => Height,
+        ShapeExtentCode.Length => GetLength(),
+        ShapeExtentCode.Width => GetWidth(),
+        ShapeExtentCode.Height => Height,
 
         _ => null,
     };
@@ -30,7 +30,7 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
     #endregion
 
     #region Public methods
-    public IExtent GetComparedSimpleShapeExtent(ComparisonCode? comparisonCode)
+    public IExtent GetComparedShapeExtent(ComparisonCode? comparisonCode)
     {
         IEnumerable<IExtent> shapeExtents = GetSortedDimensions();
 
@@ -124,20 +124,20 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
 
         var (longest, shortest) = getComparedShapeExtents(cuboid);
 
-        if (!cuboid.TryGetSimpleShapeExtentCode(longest, out SimpleShapeExtentCode? longestCode)
-            || !cuboid.TryGetSimpleShapeExtentCode(shortest, out SimpleShapeExtentCode? shortestCode))
+        if (!cuboid.TryGetShapeExtentCode(longest, out ShapeExtentCode? longestCode)
+            || !cuboid.TryGetShapeExtentCode(shortest, out ShapeExtentCode? shortestCode))
         {
             throw exception();
         }
 
         (longest, shortest) = getComparedShapeExtents(this);
-        IExtent medium = GetComparedSimpleShapeExtent(null);
+        IExtent medium = GetComparedShapeExtent(null);
 
         return longestCode!.Value switch
         {
-            SimpleShapeExtentCode.Length => rotateToLength(),
-            SimpleShapeExtentCode.Width => rotateToWidth(),
-            SimpleShapeExtentCode.Height => rotateToHeight(),
+            ShapeExtentCode.Length => rotateToLength(),
+            ShapeExtentCode.Width => rotateToWidth(),
+            ShapeExtentCode.Height => rotateToHeight(),
 
             _ => throw exception(),
         };
@@ -145,8 +145,8 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
         #region Local methods
         (IExtent, IExtent) getComparedShapeExtents(ICuboid cuboid)
         {
-            IExtent longest = cuboid.GetComparedSimpleShapeExtent(ComparisonCode.Greater);
-            IExtent shortest = cuboid.GetComparedSimpleShapeExtent(ComparisonCode.Less);
+            IExtent longest = cuboid.GetComparedShapeExtent(ComparisonCode.Greater);
+            IExtent shortest = cuboid.GetComparedShapeExtent(ComparisonCode.Less);
 
             return (longest, shortest);
         }
@@ -155,8 +155,8 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
         {
             return shortestCode!.Value switch
             {
-                SimpleShapeExtentCode.Width => GetCuboid(longest, shortest, medium),
-                SimpleShapeExtentCode.Height => GetCuboid(longest, medium, shortest),
+                ShapeExtentCode.Width => GetCuboid(longest, shortest, medium),
+                ShapeExtentCode.Height => GetCuboid(longest, medium, shortest),
 
                 _ => throw exception(),
             };
@@ -166,8 +166,8 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
         {
             return shortestCode!.Value switch
             {
-                SimpleShapeExtentCode.Length => GetCuboid(shortest, longest, medium),
-                SimpleShapeExtentCode.Height => GetCuboid(medium, longest, shortest),
+                ShapeExtentCode.Length => GetCuboid(shortest, longest, medium),
+                ShapeExtentCode.Height => GetCuboid(medium, longest, shortest),
 
                 _ => throw exception(),
             };
@@ -177,8 +177,8 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
         {
             return shortestCode!.Value switch
             {
-                SimpleShapeExtentCode.Length => RotateSpatially(),
-                SimpleShapeExtentCode.Width => GetCuboid(medium, shortest, longest),
+                ShapeExtentCode.Length => RotateSpatially(),
+                ShapeExtentCode.Width => GetCuboid(medium, shortest, longest),
 
                 _ => throw exception(),
             };
@@ -197,7 +197,7 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
         return (IRectangleFactory)base.GetBaseFaceFactory();
     }
 
-    public override IPlaneShape GetProjection(SimpleShapeExtentCode perpendicular)
+    public override IPlaneShape GetProjection(ShapeExtentCode perpendicular)
     {
         return GetFactory().CreateProjection(this, perpendicular)!;
     }

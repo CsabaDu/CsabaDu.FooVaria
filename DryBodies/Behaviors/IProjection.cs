@@ -2,5 +2,5 @@
 
 public interface IProjection
 {
-    IPlaneShape GetProjection(SimpleShapeExtentCode perpendicular);
+    IPlaneShape GetProjection(ShapeExtentCode perpendicular);
 }

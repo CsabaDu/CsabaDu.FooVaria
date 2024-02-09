@@ -2,5 +2,5 @@
 
 public interface IShapeFactory : IBaseSpreadFactory
 {
-    IShape? CreateShape(params ISimpleShapeComponent[] shapeComponents);
+    IShape? CreateShape(params IShapeComponent[] shapeComponents);
 }

@@ -73,7 +73,7 @@ public sealed class CylinderFactory : DryBodyFactory<ICylinder, ICircle>, ICylin
         return GetTangentShapeFactory().Create(baseFace, height);
     }
 
-    public override IDryBody? CreateShape(params ISimpleShapeComponent[] shapeComponents)
+    public override IDryBody? CreateShape(params IShapeComponent[] shapeComponents)
     {
         return CreateDryBody(GetTangentShapeFactory(), this, shapeComponents);
     }

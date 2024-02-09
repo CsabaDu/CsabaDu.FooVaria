@@ -57,7 +57,7 @@ public sealed class CircleFactory : PlaneShapeFactory, ICircleFactory
     }
 
     #region Override methods
-    public override IPlaneShape? CreateShape(params ISimpleShapeComponent[] shapeComponents)
+    public override IPlaneShape? CreateShape(params IShapeComponent[] shapeComponents)
     {
         return CreatePlaneShape(GetTangentShapeFactory(), shapeComponents);
     }

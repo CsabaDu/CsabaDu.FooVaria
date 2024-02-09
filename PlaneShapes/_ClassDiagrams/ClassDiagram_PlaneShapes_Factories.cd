@@ -38,7 +38,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.SimpleShapes.Factories.ISimpleShapeFactory" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="3.75" Y="0.5" Width="1.25" />
+    <Position X="3.5" Y="0.5" Width="1.75" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.SimpleShapes.Factories.ICircularShapeFactory&lt;T, TTangent&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
@@ -52,7 +52,7 @@
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseSpreads.Factories.ISurfaceFactory" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="2" Y="0.5" Width="1.5" />
+    <Position X="1.75" Y="0.5" Width="1.5" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />

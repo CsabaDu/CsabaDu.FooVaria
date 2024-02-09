@@ -1,11 +1,11 @@
 ﻿namespace CsabaDu.FooVaria.SimpleShapes.Behaviors;
 
-public interface IShapeExtents : ISimpleShapeExtentType, ISimpleShapeExtent
+public interface IShapeExtents : IShapeExtentType, IShapeExtent
 {
-    IExtent? this[SimpleShapeExtentCode simpleShapeExtentCode] { get; }
+    IExtent? this[ShapeExtentCode simpleShapeExtentCode] { get; }
 
     IEnumerable<IExtent> GetShapeExtents();
 
-    void ValidateSimpleShapeExtentCount(int count, string paramName);
+    void ValidateShapeExtentCount(int count, string paramName);
     void ValidateShapeExtents(IEnumerable<IExtent> shapeExtents, string paramName);
 }

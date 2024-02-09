@@ -1,10 +1,10 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.Shapes.Types;
 
-public interface IShape : IBaseSpread, IFit<IShape>, IShapeComponents/*, ISimpleShapeComponentCount*/
+public interface IShape : IBaseSpread, IFit<IShape>, IShapeComponents/*, IShapeComponentCount*/
 {
-    IShape? GetShape(params ISimpleShapeComponent[] shapeComponents);
+    IShape? GetShape(params IShapeComponent[] shapeComponents);
 
-    void ValidateSimpleShapeComponent(IQuantifiable simpleShapeComponent, string paramName);
+    void ValidateShapeComponent(IQuantifiable simpleShapeComponent, string paramName);
 }
 
 

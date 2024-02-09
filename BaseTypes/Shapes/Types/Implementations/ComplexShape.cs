@@ -1,16 +1,16 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.Shapes.Types.Implementations;
 
-public abstract class ComplexSimpleShape : Shape, IComplexSimpleShape
+public abstract class ComplexShape : Shape, IComplexShape
 {
-    protected ComplexSimpleShape(IShape other) : base(other)
+    protected ComplexShape(IShape other) : base(other)
     {
     }
 
-    protected ComplexSimpleShape(IShapeFactory factory, IShape shape) : base(factory, shape)
+    protected ComplexShape(IShapeFactory factory, IShape shape) : base(factory, shape)
     {
     }
 
-    protected ComplexSimpleShape(IBaseSpreadFactory factory, MeasureUnitCode measureUnitCode, params IQuantifiable[] shapeComponents) : base(factory, measureUnitCode, shapeComponents)
+    protected ComplexShape(IBaseSpreadFactory factory, MeasureUnitCode measureUnitCode, params IQuantifiable[] shapeComponents) : base(factory, measureUnitCode, shapeComponents)
     {
     }
 }

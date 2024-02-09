@@ -2,7 +2,7 @@
 {
     public interface IHorizontalRotation
     {
-        IExtent GetComparedSimpleShapeExtent(ComparisonCode? comparisonCode);
+        IExtent GetComparedShapeExtent(ComparisonCode? comparisonCode);
     }
 
     public interface IHorizontalRotation<TSelf> : IHorizontalRotation

@@ -8,7 +8,7 @@
         IMeasureFactory GetMeasureFactory();
         ISpreadFactory GetSpreadFactory();
         ITangentShapeFactory GetTangentShapeFactory();
-        IExtent CreateSimpleShapeExtent(ExtentUnit extentUnit, ValueType quantity);
+        IExtent CreateShapeExtent(ExtentUnit extentUnit, ValueType quantity);
     }
 
     public interface ISimpleShapeFactory<T, out TTangent> : ISimpleShapeFactory, IFactory<T>

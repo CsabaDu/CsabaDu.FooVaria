@@ -4,12 +4,12 @@ namespace CsabaDu.FooVaria.SimpleShapes.Statics
 {
     public static class ExceptionMethods
     {
-        public static InvalidEnumArgumentException InvalidSimpleShapeExtentCodeEnumArgumentException(SimpleShapeExtentCode simpleShapeExtentCode)
+        public static InvalidEnumArgumentException InvalidShapeExtentCodeEnumArgumentException(ShapeExtentCode simpleShapeExtentCode)
         {
-            return InvalidSimpleShapeExtentCodeEnumArgumentException(simpleShapeExtentCode, nameof(simpleShapeExtentCode));
+            return InvalidShapeExtentCodeEnumArgumentException(simpleShapeExtentCode, nameof(simpleShapeExtentCode));
         }
 
-        public static InvalidEnumArgumentException InvalidSimpleShapeExtentCodeEnumArgumentException(SimpleShapeExtentCode simpleShapeExtentCode, string paramName)
+        public static InvalidEnumArgumentException InvalidShapeExtentCodeEnumArgumentException(ShapeExtentCode simpleShapeExtentCode, string paramName)
         {
             return new InvalidEnumArgumentException(paramName, (int)simpleShapeExtentCode, simpleShapeExtentCode.GetType());
         }

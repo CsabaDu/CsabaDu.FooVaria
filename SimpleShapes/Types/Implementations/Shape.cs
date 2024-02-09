@@ -19,24 +19,24 @@ public abstract class SimpleShape : Shape, ISimpleShape
 
     #region Properties
     #region Abstract properties
-    public abstract IExtent? this[SimpleShapeExtentCode simpleShapeExtentCode] { get; }
+    public abstract IExtent? this[ShapeExtentCode simpleShapeExtentCode] { get; }
     #endregion
     #endregion
 
     #region Public methods
-    public override void ValidateSimpleShapeComponent(IQuantifiable simpleShapeComponent, string paramName)
+    public override void ValidateShapeComponent(IQuantifiable simpleShapeComponent, string paramName)
     {
         throw new NotImplementedException();
     }
 
-    public override ISimpleShapeComponent? GetValidSimpleShapeComponent(IQuantifiable? simpleShapeComponent)
+    public override IShapeComponent? GetValidShapeComponent(IQuantifiable? simpleShapeComponent)
     {
         if (simpleShapeComponent == null) return null;
 
         throw new NotImplementedException();
     }
 
-    public override sealed IShape? GetShape(params ISimpleShapeComponent[] shapeComponents)
+    public override sealed IShape? GetShape(params IShapeComponent[] shapeComponents)
     {
         return GetFactory().CreateShape(shapeComponents);
     }
@@ -69,7 +69,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
     {
         if (shape is ISimpleShape simpleShape) return simpleShape.GetShapeExtents();
 
-        if (shape is IComplexSimpleShape complexSimpleShape)
+        if (shape is IComplexShape complexSimpleShape)
         {
             throw new NotImplementedException();
         }
@@ -77,22 +77,22 @@ public abstract class SimpleShape : Shape, ISimpleShape
         return null;
     }
 
-    public IExtent GetSimpleShapeExtent(SimpleShapeExtentCode simpleShapeExtentCode)
+    public IExtent GetShapeExtent(ShapeExtentCode simpleShapeExtentCode)
     {
-        return this[simpleShapeExtentCode] ?? throw InvalidSimpleShapeExtentCodeEnumArgumentException(simpleShapeExtentCode);
+        return this[simpleShapeExtentCode] ?? throw InvalidShapeExtentCodeEnumArgumentException(simpleShapeExtentCode);
     }
 
     public IEnumerable<IExtent> GetShapeExtents()
     {
-        foreach (SimpleShapeExtentCode item in GetSimpleShapeExtentCodes())
+        foreach (ShapeExtentCode item in GetShapeExtentCodes())
         {
             yield return this[item]!;
         }
     }
 
-    public IEnumerable<SimpleShapeExtentCode> GetSimpleShapeExtentCodes()
+    public IEnumerable<ShapeExtentCode> GetShapeExtentCodes()
     {
-        return Enum.GetValues<SimpleShapeExtentCode>().Where(x => this[x] != null);
+        return Enum.GetValues<ShapeExtentCode>().Where(x => this[x] != null);
     }
 
     public IEnumerable<IExtent> GetSortedDimensions()
@@ -100,23 +100,23 @@ public abstract class SimpleShape : Shape, ISimpleShape
         return GetDimensions().OrderBy(x => x);
     }
 
-    public bool IsValidSimpleShapeExtentCode(SimpleShapeExtentCode simpleShapeExtentCode)
+    public bool IsValidShapeExtentCode(ShapeExtentCode simpleShapeExtentCode)
     {
-        return GetSimpleShapeExtentCodes().Contains(simpleShapeExtentCode);
+        return GetShapeExtentCodes().Contains(simpleShapeExtentCode);
     }
 
-    public bool TryGetSimpleShapeExtentCode(IExtent simpleShapeExtent, [NotNullWhen(true)] out SimpleShapeExtentCode? simpleShapeExtentCode)
+    public bool TryGetShapeExtentCode(IExtent simpleShapeExtent, [NotNullWhen(true)] out ShapeExtentCode? simpleShapeExtentCode)
     {
         simpleShapeExtentCode = null;
 
         if (simpleShapeExtent != null || !GetShapeExtents().Contains(simpleShapeExtent)) return false;
 
-        simpleShapeExtentCode = GetSimpleShapeExtentCodes().FirstOrDefault(x => this[x] == simpleShapeExtent);
+        simpleShapeExtentCode = GetShapeExtentCodes().FirstOrDefault(x => this[x] == simpleShapeExtent);
 
         return true;
     }
 
-    public void ValidateSimpleShapeExtent(IExtent? simpleShapeExtent, string paramName)
+    public void ValidateShapeExtent(IExtent? simpleShapeExtent, string paramName)
     {
         decimal quantity =  NullChecked(simpleShapeExtent, paramName).GetDecimalQuantity();
 
@@ -125,9 +125,9 @@ public abstract class SimpleShape : Shape, ISimpleShape
         throw QuantityArgumentOutOfRangeException(paramName, quantity);
     }
 
-    public void ValidateSimpleShapeExtentCount(int count, string paramName)
+    public void ValidateShapeExtentCount(int count, string paramName)
     {
-        if (count == GetSimpleShapeComponentCount()) return;
+        if (count == GetShapeComponentCount()) return;
 
         throw QuantityArgumentOutOfRangeException(paramName, count);
     }
@@ -136,11 +136,11 @@ public abstract class SimpleShape : Shape, ISimpleShape
     {
         int count = NullChecked(shapeExtents, paramName).Count();
 
-        ValidateSimpleShapeExtentCount(count, paramName);
+        ValidateShapeExtentCount(count, paramName);
 
         foreach (IExtent item in shapeExtents)
         {
-            ValidateSimpleShapeExtent(item, paramName);
+            ValidateShapeExtent(item, paramName);
         }
     }
 
@@ -159,7 +159,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
 
         if (other is not ISimpleShape simpleShape)
         {
-            if (other is IComplexSimpleShape complexSimpleShape)
+            if (other is IComplexShape complexSimpleShape)
             {
                 throw new NotImplementedException();
             }
@@ -217,7 +217,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
     {
         if (other is not ISimpleShape simpleShape)
         {
-            if (other is IComplexSimpleShape complexSimpleShape)
+            if (other is IComplexShape complexSimpleShape)
             {
                 throw new NotImplementedException();
             }
@@ -233,7 +233,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
             SideCode.Outer
             : SideCode.Inner;
 
-        if (simpleShape.GetSimpleShapeComponentCount() != GetSimpleShapeComponentCount())
+        if (simpleShape.GetShapeComponentCount() != GetShapeComponentCount())
         {
             simpleShape = (ISimpleShape)(simpleShape as ITangentShape)!.GetTangentShape(sideCode);
         }
@@ -251,7 +251,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
         return base.GetMeasureUnitCodes();
     }
 
-    public override sealed IEnumerable<ISimpleShapeComponent> GetShapeComponents()
+    public override sealed IEnumerable<IShapeComponent> GetShapeComponents()
     {
         return GetShapeExtents();
     }
@@ -300,7 +300,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
     {
         ValidateMeasureUnitByDefinition(extentUnit, nameof(extentUnit));
 
-        IEnumerable<SimpleShapeExtentCode> simpleShapeExtentCodes = simpleShape.GetSimpleShapeExtentCodes();
+        IEnumerable<ShapeExtentCode> simpleShapeExtentCodes = simpleShape.GetShapeExtentCodes();
         int i = 0;
         decimal quantitySquares = getDefaultQuantitySquare();
 
@@ -315,19 +315,19 @@ public abstract class SimpleShape : Shape, ISimpleShape
         {
             quantity /= decimal.ToDouble(GetExchangeRate(extentUnit));
         }
-        IExtent edge = getSimpleShapeExtent();
+        IExtent edge = getShapeExtent();
 
         return edge.GetMeasure(extentUnit, quantity);
 
         #region Local methods
-        IExtent getSimpleShapeExtent()
+        IExtent getShapeExtent()
         {
-            return simpleShape.GetSimpleShapeExtent(simpleShapeExtentCodes.ElementAt(i));
+            return simpleShape.GetShapeExtent(simpleShapeExtentCodes.ElementAt(i));
         }
 
         decimal getDefaultQuantitySquare()
         {
-            IExtent simpleShapeExtent = getSimpleShapeExtent();
+            IExtent simpleShapeExtent = getShapeExtent();
 
             return GetDefaultQuantitySquare(simpleShapeExtent);
         }
@@ -355,7 +355,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
 
         int comparison = 0;
 
-        foreach (SimpleShapeExtentCode item in simpleShape.GetSimpleShapeExtentCodes())
+        foreach (ShapeExtentCode item in simpleShape.GetShapeExtentCodes())
         {
             int recentComparison = simpleShape[item]!.CompareTo(other[item]);
 

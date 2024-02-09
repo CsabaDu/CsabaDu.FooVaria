@@ -23,10 +23,10 @@ internal sealed class Rectangle : PlaneShape, IRectangle
     public IExtent Width { get; init; }
 
     #region Override properties
-    public override IExtent? this[SimpleShapeExtentCode simpleShapeExtentCode] => simpleShapeExtentCode switch
+    public override IExtent? this[ShapeExtentCode simpleShapeExtentCode] => simpleShapeExtentCode switch
     {
-        SimpleShapeExtentCode.Length => Length,
-        SimpleShapeExtentCode.Width => Width,
+        ShapeExtentCode.Length => Length,
+        ShapeExtentCode.Width => Width,
 
         _ => null,
     };
@@ -34,7 +34,7 @@ internal sealed class Rectangle : PlaneShape, IRectangle
     #endregion
 
     #region Public methods
-    public IExtent GetComparedSimpleShapeExtent(ComparisonCode? comparisonCode)
+    public IExtent GetComparedShapeExtent(ComparisonCode? comparisonCode)
     {
         _ = NullChecked(comparisonCode, nameof(comparisonCode));
 

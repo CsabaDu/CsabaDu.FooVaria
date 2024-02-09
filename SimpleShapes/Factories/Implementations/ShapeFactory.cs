@@ -26,7 +26,7 @@ public abstract class SimpleShapeFactory : ISimpleShapeFactory
         return SpreadFactory.CreateQuantifiable(measureUnitCode, defaultQuantity);
     }
 
-    public IExtent CreateSimpleShapeExtent(ExtentUnit extentUnit, ValueType quantity)
+    public IExtent CreateShapeExtent(ExtentUnit extentUnit, ValueType quantity)
     {
         IExtent extent = (IExtent)GetMeasureFactory().Create(extentUnit, quantity);
 
@@ -53,12 +53,12 @@ public abstract class SimpleShapeFactory : ISimpleShapeFactory
     #endregion
 
     #region Abstract methods
-    public abstract IShape? CreateShape(params ISimpleShapeComponent[] shapeComponents);
+    public abstract IShape? CreateShape(params IShapeComponent[] shapeComponents);
     #endregion
     #endregion
 
     #region Protected methods
-    protected static TTangent CreateTangentShape<T, TTangent>(ISimpleShapeFactory<T, TTangent> factory, params ISimpleShapeComponent[] shapeComponents)
+    protected static TTangent CreateTangentShape<T, TTangent>(ISimpleShapeFactory<T, TTangent> factory, params IShapeComponent[] shapeComponents)
     where T : class, ISimpleShape, ITangentShape
     where TTangent : class, ISimpleShape, ITangentShape
     {
@@ -66,12 +66,12 @@ public abstract class SimpleShapeFactory : ISimpleShapeFactory
     }
 
     #region Static methods
-    protected static int GetShapeComponentsCount(ISimpleShapeComponent[] shapeComponents)
+    protected static int GetShapeComponentsCount(IShapeComponent[] shapeComponents)
     {
         return shapeComponents?.Length ?? 0;
     }
 
-    protected static IEnumerable<IExtent>? GetShapeExtents(ISimpleShapeComponent[] shapeComponents)
+    protected static IEnumerable<IExtent>? GetShapeExtents(IShapeComponent[] shapeComponents)
     {
         if (shapeComponents.Any(x => x is not IExtent)) return null;
 
@@ -82,7 +82,7 @@ public abstract class SimpleShapeFactory : ISimpleShapeFactory
             : null;
     }
 
-    protected static IExtent? GetSimpleShapeExtent(ISimpleShapeComponent simpleShapeComponent)
+    protected static IExtent? GetShapeExtent(IShapeComponent simpleShapeComponent)
     {
         if (simpleShapeComponent is not IExtent simpleShapeExtent) return null;
         

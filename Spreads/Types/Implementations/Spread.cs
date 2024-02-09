@@ -3,10 +3,10 @@
     internal abstract class Spread : BaseSpread, ISpread
     {
         #region Constants
-        public const int CircleSimpleShapeExtentCount = 1;
-        public const int RectangleSimpleShapeExtentCount = 2;
-        public const int CylinderSimpleShapeExtentCount = 2;
-        public const int CuboidSimpleShapeExtentCount = 3;
+        public const int CircleShapeExtentCount = 1;
+        public const int RectangleShapeExtentCount = 2;
+        public const int CylinderShapeExtentCount = 2;
+        public const int CuboidShapeExtentCount = 3;
         #endregion
 
         #region Constructors
@@ -84,15 +84,15 @@
         public static bool AreValidShapeExtents(MeasureUnitCode measureUnitCode, params IExtent[] shapeExtents)
         {
             int count = shapeExtents?.Length ?? 0;
-            bool isValidSimpleShapeExtentCount = measureUnitCode switch
+            bool isValidShapeExtentCount = measureUnitCode switch
             {
-                MeasureUnitCode.AreaUnit => isValidateShapeExtentsCount(CircleSimpleShapeExtentCount, RectangleSimpleShapeExtentCount),
-                MeasureUnitCode.VolumeUnit => isValidateShapeExtentsCount(CylinderSimpleShapeExtentCount, CuboidSimpleShapeExtentCount),
+                MeasureUnitCode.AreaUnit => isValidateShapeExtentsCount(CircleShapeExtentCount, RectangleShapeExtentCount),
+                MeasureUnitCode.VolumeUnit => isValidateShapeExtentsCount(CylinderShapeExtentCount, CuboidShapeExtentCount),
 
                 _ => false,
             };
 
-            return isValidSimpleShapeExtentCount && shapeExtents!.All(x => x.GetDefaultQuantity() > 0);
+            return isValidShapeExtentCount && shapeExtents!.All(x => x.GetDefaultQuantity() > 0);
 
             #region Local methods
             bool isValidateShapeExtentsCount(int minValue, int maxValue)
@@ -209,10 +209,10 @@
             switch (measureUnitCode)
             {
                 case MeasureUnitCode.AreaUnit:
-                    validateShapeExtentsCount(CircleSimpleShapeExtentCount, RectangleSimpleShapeExtentCount);
+                    validateShapeExtentsCount(CircleShapeExtentCount, RectangleShapeExtentCount);
                     break;
                 case MeasureUnitCode.VolumeUnit:
-                    validateShapeExtentsCount(CylinderSimpleShapeExtentCount, CuboidSimpleShapeExtentCount);
+                    validateShapeExtentsCount(CylinderShapeExtentCount, CuboidShapeExtentCount);
                     break;
 
                 default:
@@ -247,7 +247,7 @@
 
         private static decimal GetCircleAreaDefaultQuantity(IExtent radius)
         {
-            decimal quantity = GetValidSimpleShapeExtentDefaultQuantity(radius, nameof(radius));
+            decimal quantity = GetValidShapeExtentDefaultQuantity(radius, nameof(radius));
             quantity *= quantity;
 
             return quantity * Convert.ToDecimal(Math.PI);
@@ -255,12 +255,12 @@
 
         private static decimal GetRectangleAreaDefaultQuantity(IExtent length, IExtent width)
         {
-            decimal quantity = GetValidSimpleShapeExtentDefaultQuantity(length, nameof(length));
+            decimal quantity = GetValidShapeExtentDefaultQuantity(length, nameof(length));
 
-            return quantity * GetValidSimpleShapeExtentDefaultQuantity(width, nameof(width));
+            return quantity * GetValidShapeExtentDefaultQuantity(width, nameof(width));
         }
 
-        private static decimal GetValidSimpleShapeExtentDefaultQuantity(IExtent simpleShapeExtent, string name)
+        private static decimal GetValidShapeExtentDefaultQuantity(IExtent simpleShapeExtent, string name)
         {
             decimal quantity = NullChecked(simpleShapeExtent, name).GetDefaultQuantity();
 
@@ -271,7 +271,7 @@
 
         private static IVolume GetVolume(IMeasureFactory factory, decimal quantity, IExtent height)
         {
-            quantity *= GetValidSimpleShapeExtentDefaultQuantity(height, nameof(height));
+            quantity *= GetValidShapeExtentDefaultQuantity(height, nameof(height));
 
             return (IVolume)factory.Create(default(VolumeUnit), quantity);
         }

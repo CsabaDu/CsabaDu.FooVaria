@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.SimpleShapes.Enums;
 
-public enum SimpleShapeExtentCode
+public enum ShapeExtentCode
 {
     Radius,
     Length,

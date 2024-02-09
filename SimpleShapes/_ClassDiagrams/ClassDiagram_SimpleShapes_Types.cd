@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Interface Name="CsabaDu.FooVaria.SimpleShapes.Types.ICircularShape&lt;TSelf, TTangent&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="2.25" Y="6.5" Width="2.5" />
+    <Position X="2" Y="6.5" Width="2.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.SimpleShapes.Types.ISimpleShape&lt;TTangent&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="5.125" Y="5.941" />
-        <Point X="5.125" Y="6.2" />
-        <Point X="3.5" Y="6.2" />
-        <Point X="3.5" Y="6.5" />
+        <Point X="5" Y="5.941" />
+        <Point X="5" Y="6.2" />
+        <Point X="3.25" Y="6.2" />
+        <Point X="3.25" Y="6.5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -19,8 +19,8 @@
     <Position X="6" Y="6.5" Width="2.75" />
     <InheritanceLine Type="CsabaDu.FooVaria.SimpleShapes.Types.ISimpleShape&lt;TTangent&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="5.625" Y="5.941" />
-        <Point X="5.625" Y="6.2" />
+        <Point X="5.5" Y="5.941" />
+        <Point X="5.5" Y="6.2" />
         <Point X="7.375" Y="6.2" />
         <Point X="7.375" Y="6.5" />
       </Path>
@@ -31,29 +31,29 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.SimpleShapes.Types.ISimpleShape" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="4.75" Y="4" Width="1.25" />
+    <Position X="4.5" Y="4" Width="1.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Shapes.Types.IShape" FixedFromPoint="true">
       <Path>
-        <Point X="5.375" Y="2.441" />
-        <Point X="5.375" Y="4" />
+        <Point X="5.25" Y="2.441" />
+        <Point X="5.25" Y="4" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA=</HashCode>
-      <FileName>Types\ISimpleShape.cs</FileName>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\IShape.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.SimpleShapes.Types.ISimpleShape&lt;TTangent&gt;" Collapsed="true">
-    <Position X="4.5" Y="5.25" Width="1.75" />
+    <Position X="4.25" Y="5.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAABAAAAAAAAAAAA=</HashCode>
-      <FileName>Types\ISimpleShape.cs</FileName>
+      <FileName>Types\IShape.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Shapes.Types.IShape" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
-    <Position X="4.75" Y="1.75" Width="1.25" />
+    <Position X="4.5" Y="1.75" Width="1.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Shapes.Behaviors.IShapeComponents" IsHidden="true" />
-    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Shapes.Behaviors.ISimpleShapeComponentCount" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Shapes.Behaviors.IShapeComponentCount" IsHidden="true" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Shapes.Behaviors.IShapeComponents" Collapsed="true">
@@ -62,51 +62,36 @@
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Shapes.Behaviors.IShapeComponents&lt;T&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
     <Position X="1" Y="2.75" Width="2" />
-    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Shapes.Behaviors.ISimpleShapeComponentCount" IsHidden="true" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Shapes.Behaviors.ISimpleShapeComponentCount" Collapsed="true">
-    <Position X="1" Y="0.5" Width="2" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Shapes.Behaviors.IShapeComponentCount" IsHidden="true" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.SimpleShapes.Behaviors.IDimensions" Collapsed="true">
-    <Position X="5.75" Y="2.75" Width="1.25" />
+    <Position X="5.5" Y="2.75" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
       <FileName>Behaviors\IDimensions.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.SimpleShapes.Behaviors.IDiagonal" Collapsed="true">
-    <Position X="9" Y="2.75" Width="1.25" />
+    <Position X="8.75" Y="2.75" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
       <FileName>Behaviors\IDiagonal.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.SimpleShapes.Behaviors.IShapeExtents" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="7.25" Y="2.75" Width="1.5" />
+    <Position X="7" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAAAAAAAAACAAAAAAAAAAAAQAAAAAAAAAAQAA=</HashCode>
       <FileName>Behaviors\IShapeExtents.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.SimpleShapes.Behaviors.ISimpleShapeExtent" Collapsed="true">
-    <Position X="8.25" Y="1.5" Width="1.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAACAAA=</HashCode>
-      <FileName>Behaviors\ISimpleShapeExtent.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="CsabaDu.FooVaria.SimpleShapes.Behaviors.ISimpleShapeExtentType" Collapsed="true">
-    <Position X="6.5" Y="1.5" Width="1.5" />
+  <Interface Name="CsabaDu.FooVaria.SimpleShapes.Behaviors.IShapeExtentType" Collapsed="true">
+    <Position X="6.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
-      <FileName>Behaviors\ISimpleShapeExtentType.cs</FileName>
+      <FileName>Behaviors\IShapeExtentType.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ISimpleShapeComponent" Collapsed="true">
-    <Position X="3.25" Y="2.75" Width="1.75" />
-    <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.SimpleShapes.Behaviors.ILength" Collapsed="true">
     <Position X="8.5" Y="5.25" Width="1.25" />
@@ -123,7 +108,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.SimpleShapes.Behaviors.IRadius" Collapsed="true">
-    <Position X="1.25" Y="5.25" Width="1.25" />
+    <Position X="1" Y="5.25" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
       <FileName>Behaviors\IRadius.cs</FileName>
@@ -133,21 +118,29 @@
     <Position X="6.5" Y="5.25" Width="1.75" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Shapes.Types.IShape" IsHidden="true" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Shapes.Behaviors.IShapeComponents" IsHidden="true" />
-    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Shapes.Behaviors.ISimpleShapeComponentCount" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Shapes.Behaviors.IShapeComponentCount" IsHidden="true" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Shapes.Types.ICircularShape" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
-    <Position X="2.75" Y="5.25" Width="1.5" />
+    <Position X="2.5" Y="5.25" Width="1.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Shapes.Types.IShape" IsHidden="true" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Shapes.Behaviors.IShapeComponents" IsHidden="true" />
-    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Shapes.Behaviors.ISimpleShapeComponentCount" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Shapes.Behaviors.IShapeComponentCount" IsHidden="true" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.SimpleShapes.Behaviors.IHorizontalRotation" Collapsed="true">
-    <Position X="11.5" Y="5.25" Width="1.75" />
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Shapes.Behaviors.IShapeComponentCount" Collapsed="true">
+    <Position X="1" Y="0.5" Width="2" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IShapeComponent" Collapsed="true">
+    <Position X="3.25" Y="2.75" Width="1.75" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.SimpleShapes.Behaviors.IShapeExtent" Collapsed="true">
+    <Position X="8" Y="1.5" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Behaviors\IHorizontalRotation.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAACAAA=</HashCode>
+      <FileName>Behaviors\IShapeExtent.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

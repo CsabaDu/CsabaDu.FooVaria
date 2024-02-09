@@ -1,23 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="CsabaDu.FooVaria.BaseTypes.Shapes.Types.Implementations.Shape" Collapsed="true">
-    <Position X="0.5" Y="4.5" Width="1.25" />
+    <Position X="0.75" Y="4.5" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>QAAAAABAAAAAACSAgIAAAACAAAAAQIAAAgCAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAiQAgIAAAACgCAAAAIAABACAABAAAAA=</HashCode>
       <FileName>Types\Implementations\Shape.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="CsabaDu.FooVaria.BaseTypes.Shapes.Types.Implementations.ComplexSimpleShape" Collapsed="true">
-    <Position X="0.5" Y="5.75" Width="1.25" />
+  <Class Name="CsabaDu.FooVaria.BaseTypes.Shapes.Types.Implementations.ComplexShape" Collapsed="true">
+    <Position X="0.75" Y="5.75" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Types\Implementations\ComplexSimpleShape.cs</FileName>
+      <FileName>Types\Implementations\ComplexShape.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.BaseTypes.BaseSpreads.Types.Implementations.BaseSpread" Collapsed="true">
-    <Position X="0.5" Y="3.25" Width="1.25" />
+    <Position X="0.5" Y="3.25" Width="1.75" />
     <TypeIdentifier />
     <Lollipop Position="0.2" />
   </Class>

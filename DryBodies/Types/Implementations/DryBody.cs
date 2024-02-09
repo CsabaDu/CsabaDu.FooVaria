@@ -18,7 +18,7 @@
             #region Local methods
             (IExtent, IVolume) getDryBodyValidParams()
             {
-                ValidateSimpleShapeExtent(height, nameof(height));
+                ValidateShapeExtent(height, nameof(height));
 
                 IExtent[] shapeExtents = baseFace.GetShapeExtents().Append(height).ToArray();
                 IVolume volume = (IVolume)GetSpreadMeasure(shapeExtents);
@@ -63,9 +63,9 @@
 
         public void ValidateBaseFace(IPlaneShape planeShape, string paramName)
         {
-            int baseFaceSimpleShapeExtentCout = GetSimpleShapeComponentCount() - 1;
+            int baseFaceShapeExtentCout = GetShapeComponentCount() - 1;
 
-            if (NullChecked(planeShape, paramName).GetSimpleShapeComponentCount() == baseFaceSimpleShapeExtentCout) return;
+            if (NullChecked(planeShape, paramName).GetShapeComponentCount() == baseFaceShapeExtentCout) return;
 
             throw ArgumentTypeOutOfRangeException(paramName, planeShape);
         }
@@ -86,7 +86,7 @@
         }
 
         public abstract IPlaneShape GetBaseFace();
-        public abstract IPlaneShape GetProjection(SimpleShapeExtentCode perpendicular);
+        public abstract IPlaneShape GetProjection(ShapeExtentCode perpendicular);
     }
 
     internal abstract class DryBody<TSelf, TBFace> : DryBody, IDryBody<TSelf, TBFace>

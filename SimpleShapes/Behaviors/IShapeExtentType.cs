@@ -1,10 +1,10 @@
 ﻿namespace CsabaDu.FooVaria.SimpleShapes.Behaviors;
 
-public interface ISimpleShapeExtentType
+public interface IShapeExtentType
 {
-    bool TryGetSimpleShapeExtentCode(IExtent simpleShapeExtent, [NotNullWhen(true)] out SimpleShapeExtentCode? simpleShapeExtentCode);
-    IEnumerable<SimpleShapeExtentCode> GetSimpleShapeExtentCodes();
-    bool IsValidSimpleShapeExtentCode(SimpleShapeExtentCode simpleShapeExtentCode);
+    bool TryGetShapeExtentCode(IExtent simpleShapeExtent, [NotNullWhen(true)] out ShapeExtentCode? simpleShapeExtentCode);
+    IEnumerable<ShapeExtentCode> GetShapeExtentCodes();
+    bool IsValidShapeExtentCode(ShapeExtentCode simpleShapeExtentCode);
 
-    //void ValidateSimpleShapeExtentCode(SimpleShapeExtentCode simpleShapeExtentCode, string paramName);
+    //void ValidateShapeExtentCode(ShapeExtentCode simpleShapeExtentCode, string paramName);
 }

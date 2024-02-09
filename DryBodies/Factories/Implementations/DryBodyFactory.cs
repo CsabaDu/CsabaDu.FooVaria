@@ -14,16 +14,16 @@
         #endregion
 
         #region Public methods
-        public IPlaneShape? CreateProjection(IDryBody dryBody, SimpleShapeExtentCode perpendicular)
+        public IPlaneShape? CreateProjection(IDryBody dryBody, ShapeExtentCode perpendicular)
         {
-            if (dryBody?.IsValidSimpleShapeExtentCode(perpendicular) != true) return null;
+            if (dryBody?.IsValidShapeExtentCode(perpendicular) != true) return null;
 
             return perpendicular switch
             {
-                SimpleShapeExtentCode.Radius => createCylinderVerticalProjection(),
-                SimpleShapeExtentCode.Length => createCuboidVerticalProjection(),
-                SimpleShapeExtentCode.Width => createCuboidVerticalProjection(),
-                SimpleShapeExtentCode.Height => createHorizontalProjection(),
+                ShapeExtentCode.Radius => createCylinderVerticalProjection(),
+                ShapeExtentCode.Length => createCuboidVerticalProjection(),
+                ShapeExtentCode.Width => createCuboidVerticalProjection(),
+                ShapeExtentCode.Height => createHorizontalProjection(),
 
                 _ => null,
             };
@@ -39,11 +39,11 @@
 
             IRectangle createCuboidVerticalProjection()
             {
-                perpendicular = perpendicular == SimpleShapeExtentCode.Length ?
-                    SimpleShapeExtentCode.Width
-                    : SimpleShapeExtentCode.Length;
+                perpendicular = perpendicular == ShapeExtentCode.Length ?
+                    ShapeExtentCode.Width
+                    : ShapeExtentCode.Length;
 
-                IExtent horizontal = dryBody.GetSimpleShapeExtent(perpendicular);
+                IExtent horizontal = dryBody.GetShapeExtent(perpendicular);
                 ICuboidFactory factory = (ICuboidFactory)dryBody.GetFactory();
 
                 return createRectangle(factory, horizontal);
@@ -88,13 +88,13 @@
         #endregion
 
         #region Protected methods
-        protected IDryBody? CreateDryBody(ICuboidFactory cuboidFactory, ICylinderFactory cylinderFactory, ISimpleShapeComponent[] shapeComponents)
+        protected IDryBody? CreateDryBody(ICuboidFactory cuboidFactory, ICylinderFactory cylinderFactory, IShapeComponent[] shapeComponents)
         {
             int count = GetShapeComponentsCount(shapeComponents);
 
             if (count == 0) return null;
 
-            ISimpleShapeComponent firstItem = shapeComponents[0];
+            IShapeComponent firstItem = shapeComponents[0];
 
             return count switch
             {
@@ -117,7 +117,7 @@
 
             IDryBody? createDryBodyFrom2Params()
             {
-                if (GetSimpleShapeExtent(shapeComponents[1]) is not IExtent height) return null;
+                if (GetShapeExtent(shapeComponents[1]) is not IExtent height) return null;
 
                 if (firstItem is IPlaneShape planeShape) return Create(planeShape, height);
 
