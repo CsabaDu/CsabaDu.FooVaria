@@ -2,6 +2,7 @@
 
 public sealed class ProportionLimitFactory : IProportionLimitFactory
 {
+    #region Public methods
     public IProportionLimit Create(IBaseRate baseRate, LimitMode limitMode)
     {
         return new ProportionLimit(this, baseRate, limitMode);
@@ -71,4 +72,5 @@ public sealed class ProportionLimitFactory : IProportionLimitFactory
     {
         return new ProportionLimit(other);
     }
+    #endregion
 }

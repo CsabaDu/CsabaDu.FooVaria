@@ -1,13 +1,8 @@
 ﻿namespace CsabaDu.FooVaria.Measures.Types.Implementations;
 
-internal sealed class Volume : Measure<IVolume, double, VolumeUnit>, IVolume
+internal sealed class Volume(IMeasureFactory factory, VolumeUnit volumeUnit, double quantity)
+    : Measure<IVolume, double, VolumeUnit>(factory, volumeUnit, quantity), IVolume
 {
-    #region Constructors
-    internal Volume(IMeasureFactory factory, VolumeUnit volumeUnit, double quantity) : base(factory, volumeUnit, quantity)
-    {
-    }
-    #endregion
-
     #region Public methods
     public IVolume ConvertFrom(IWeight weight)
     {

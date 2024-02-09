@@ -1,13 +1,8 @@
 ﻿namespace CsabaDu.FooVaria.Measures.Types.Implementations;
 
-internal sealed class TimePeriod : Measure<ITimePeriod, double, TimePeriodUnit>, ITimePeriod
+internal sealed class TimePeriod(IMeasureFactory factory, TimePeriodUnit timePeriodUnit, double quantity)
+    : Measure<ITimePeriod, double, TimePeriodUnit>(factory, timePeriodUnit, quantity), ITimePeriod
 {
-    #region Constructors
-    internal TimePeriod(IMeasureFactory factory, TimePeriodUnit timePeriodUnit, double quantity) : base(factory, timePeriodUnit, quantity)
-    {
-    }
-    #endregion
-
     #region Public methods
     public ITimePeriod ConvertFrom(TimeSpan timeSpan)
     {

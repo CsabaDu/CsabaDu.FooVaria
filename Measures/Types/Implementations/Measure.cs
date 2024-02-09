@@ -1,9 +1,7 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
-using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
-
-namespace CsabaDu.FooVaria.Measures.Types.Implementations
+﻿namespace CsabaDu.FooVaria.Measures.Types.Implementations
 {
-    internal abstract class Measure : BaseMeasure<IMeasure>, IMeasure
+    internal abstract class Measure
+        : BaseMeasure<IMeasure>, IMeasure
     {
         #region Enums
         protected enum MeasureOperationMode
@@ -161,16 +159,11 @@ namespace CsabaDu.FooVaria.Measures.Types.Implementations
         #endregion
     }
 
-    internal abstract class Measure<TSelf, TNum> : Measure, IMeasure<TSelf, TNum>
+    internal abstract class Measure<TSelf, TNum>(IMeasureFactory factory, Enum measureUnit, ValueType quantity)
+        : Measure(factory, measureUnit, quantity), IMeasure<TSelf, TNum>
         where TSelf : class, IMeasure
         where TNum : struct
     {
-        #region Constructors
-        private protected Measure(IMeasureFactory factory, Enum measureUnit, ValueType quantity) : base(factory, measureUnit, quantity)
-        {
-        }
-        #endregion
-
         #region Public methods
         public TSelf GetBaseMeasure(TNum quantity)
         {
@@ -199,19 +192,14 @@ namespace CsabaDu.FooVaria.Measures.Types.Implementations
         #endregion
     }
 
-    internal abstract class Measure<TSelf, TNum, TEnum> : Measure<TSelf, TNum>, IMeasure<TSelf, TNum, TEnum>
+    internal abstract class Measure<TSelf, TNum, TEnum>(IMeasureFactory factory, TEnum measureUnit, ValueType quantity)
+        : Measure<TSelf, TNum>(factory, measureUnit, quantity), IMeasure<TSelf, TNum, TEnum>
         where TSelf : class, IMeasure, IMeasureUnit
         where TNum : struct
         where TEnum : struct, Enum
     {
         #region Constants
         private const decimal ConvertRatio = 1000m;
-        #endregion
-
-        #region Constructors
-        private protected Measure(IMeasureFactory factory, TEnum measureUnit, ValueType quantity) : base(factory, measureUnit, quantity)
-        {
-        }
         #endregion
 
         #region Public methods

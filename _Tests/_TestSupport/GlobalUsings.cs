@@ -1,13 +1,3 @@
-﻿global using CsabaDu.FooVaria.Common;
-global using CsabaDu.FooVaria.Common.Enums;
-global using CsabaDu.FooVaria.Common.Factories;
-global using CsabaDu.FooVaria.Common.Statics;
-global using CsabaDu.FooVaria.Common.Types;
-global using CsabaDu.FooVaria.Common.Types.Implementations;
-global using CsabaDu.FooVaria.Measurables.Factories;
-global using CsabaDu.FooVaria.Measurables.Types;
-global using CsabaDu.FooVaria.Measurables.Types.Implementations;
-global using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Factories;
-global using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Types;
-global using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Measurables.Factories;
-global using CsabaDu.FooVaria.Tests.TestSupport.Fakes.Measurables.Types;
+﻿global using CsabaDu.FooVaria.BaseTypes.Common.Factories;
+global using CsabaDu.FooVaria.BaseTypes.Common.Types;
+global using CsabaDu.FooVaria.BaseTypes.Common.Types.Implementations;

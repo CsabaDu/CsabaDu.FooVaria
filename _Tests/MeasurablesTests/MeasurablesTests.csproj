@@ -17,9 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Common.csproj" />
-    <ProjectReference Include="..\..\Measurables\Measurables.csproj" />
-    <ProjectReference Include="..\_TestSupport\TestSupport.csproj" />
+	  <ProjectReference Include="..\..\BaseTypes\Common\Common.csproj" />
+	  <ProjectReference Include="..\_TestSupport\TestSupport.csproj" />
   </ItemGroup>
 
   <ItemGroup>

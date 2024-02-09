@@ -1,13 +1,8 @@
 ﻿namespace CsabaDu.FooVaria.Measures.Types.Implementations;
 
-internal sealed class Weight : Measure<IWeight, double, WeightUnit>, IWeight
+internal sealed class Weight(IMeasureFactory factory, WeightUnit weightUnit, double quantity)
+    : Measure<IWeight, double, WeightUnit>(factory, weightUnit, quantity), IWeight
 {
-    #region Constructors
-    internal Weight(IMeasureFactory factory, WeightUnit weightUnit, double quantity) : base(factory, weightUnit, quantity)
-    {
-    }
-    #endregion
-
     #region Public methods
     public IWeight ConvertFrom(IVolume volume)
     {

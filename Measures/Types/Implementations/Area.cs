@@ -1,13 +1,8 @@
 ﻿namespace CsabaDu.FooVaria.Measures.Types.Implementations;
 
-internal sealed class Area : Measure<IArea, double, AreaUnit>, IArea
+internal sealed class Area(IMeasureFactory factory, AreaUnit areaUnit, double quantity)
+    : Measure<IArea, double, AreaUnit>(factory, areaUnit, quantity), IArea
 {
-    #region Constructors
-    internal Area(IMeasureFactory factory, AreaUnit areaUnit, double quantity) : base(factory, areaUnit, quantity)
-    {
-    }
-    #endregion
-
     #region Public methods
     public MeasureUnitCode GetSpreadMeasureUnitCode()
     {

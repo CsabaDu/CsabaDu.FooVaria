@@ -1,13 +1,8 @@
 ﻿namespace CsabaDu.FooVaria.Measures.Types.Implementations;
 
-internal sealed class Distance : Measure<IDistance, double, DistanceUnit>, IDistance
+internal sealed class Distance(IMeasureFactory factory, DistanceUnit distanceUnit, double quantity)
+    : Measure<IDistance, double, DistanceUnit>(factory, distanceUnit, quantity), IDistance
 {
-    #region Constructors
-    internal Distance(IMeasureFactory factory, DistanceUnit distanceUnit, double quantity) : base(factory, distanceUnit, quantity)
-    {
-    }
-    #endregion
-
     #region Public methods
     public IDistance ConvertFrom(IExtent extent)
     {

@@ -1,13 +1,8 @@
 ﻿namespace CsabaDu.FooVaria.Measures.Types.Implementations;
 
-internal sealed class Cash : Measure<ICash, decimal, Currency>, ICash
+internal sealed class Cash(IMeasureFactory factory, Currency currency, decimal quantity)
+    : Measure<ICash, decimal, Currency>(factory, currency, quantity), ICash
 {
-    #region Constructors
-    internal Cash(IMeasureFactory factory, Currency currency, decimal quantity) : base(factory, currency, quantity)
-    {
-    }
-    #endregion
-
     #region Public methods
     public ICash? GetCustomMeasure(Currency currency, decimal exchangeRate, decimal quantity, string customName)
     {

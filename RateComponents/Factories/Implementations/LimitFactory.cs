@@ -1,6 +1,7 @@
 ﻿namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
 
-public sealed class LimitFactory(IMeasurementFactory measurementFactory) : RateComponentFactory(measurementFactory), ILimitFactory
+public sealed class LimitFactory(IMeasurementFactory measurementFactory)
+    : RateComponentFactory(measurementFactory), ILimitFactory
 {
     #region Constructors
     #region Static constructor

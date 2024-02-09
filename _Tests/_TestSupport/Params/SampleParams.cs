@@ -1,9 +1,9 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
+﻿//namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
 
-public static class SampleParams
-{
-    public static readonly int MeasureUnitTypeCodeCount = Enum.GetNames(typeof(MeasureUnitTypeCode)).Length;
-    public static readonly MeasureUnitTypeCode NotDefinedMeasureUnitTypeCode = (MeasureUnitTypeCode)MeasureUnitTypeCodeCount;
+//public static class SampleParams
+//{
+//    public static readonly int MeasureUnitTypeCodeCount = Enum.GetNames(typeof(MeasureUnitTypeCode)).Length;
+//    public static readonly MeasureUnitTypeCode NotDefinedMeasureUnitTypeCode = (MeasureUnitTypeCode)MeasureUnitTypeCodeCount;
 
-    public const LimitMode DefaultLimitMode = default;
-}
+//    public const LimitMode DefaultLimitMode = default;
+//}

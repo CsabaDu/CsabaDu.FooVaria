@@ -1,5 +1,5 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Factories;
+﻿//namespace CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Factories;
 
-internal sealed class BaseMeasurableFactoryImplementation : IBaseMeasurableFactory
-{
-}
+//internal sealed class BaseMeasurableFactoryImplementation : IBaseMeasurableFactory
+//{
+//}
