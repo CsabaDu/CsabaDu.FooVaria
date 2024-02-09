@@ -1,17 +1,9 @@
 ﻿namespace CsabaDu.FooVaria.Measures.Factories.Implementations;
 
-public sealed class MeasureFactory : IMeasureFactory
+public sealed class MeasureFactory(IMeasurementFactory measurementFactory) : IMeasureFactory
 {
-    #region Constructors
-    public MeasureFactory(IMeasurementFactory measurementFactory)
-    {
-        MeasurementFactory = NullChecked(measurementFactory, nameof(measurementFactory));
-    }
-    #endregion
-
     #region Properties
-    public IMeasurementFactory MeasurementFactory { get; init; }
-
+    public IMeasurementFactory MeasurementFactory { get; init; } = NullChecked(measurementFactory, nameof(measurementFactory));
     public RateComponentCode RateComponentCode => RateComponentCode.Numerator;
     #endregion
 

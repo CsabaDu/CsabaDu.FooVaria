@@ -1,13 +1,7 @@
 ﻿namespace CsabaDu.FooVaria.Measurements.Types.Implementations;
 
-internal sealed class CustomMeasurement : Measurement, ICustomMeasurement
+internal sealed class CustomMeasurement(IMeasurementFactory factory, Enum measureUnit) : Measurement(factory, measureUnit), ICustomMeasurement
 {
-    #region Constructors
-    internal CustomMeasurement(IMeasurementFactory factory, Enum measureUnit) : base(factory, measureUnit)
-    {
-    }
-    #endregion
-
     #region Public methods
     public IEnumerable<Enum> GetNotUsedCustomMeasureUnits(MeasureUnitCode measureUnitCode)
     {
@@ -73,28 +67,6 @@ internal sealed class CustomMeasurement : Measurement, ICustomMeasurement
 
         SetCustomMeasureUnit(measureUnit, exchangeRate, customName);
     }
-
-    //public void SetOrReplaceCustomMeasureUnit(Enum measureUnit, decimal exchangeRate, string customName)
-    //{
-    //    if (!IsCustomMeasureUnit(NullChecked(measureUnit, nameof(measureUnit)))) throw InvalidMeasureUnitEnumArgumentException(measureUnit);
-
-    //    if (!exchangeRate.IsValidExchangeRate()) throw DecimalArgumentOutOfRangeException(exchangeRate);
-
-    //    if (!IsValidCustomNameParam(customName)) throw NameArgumentOutOfRangeException(nameof(customName), customName);
-
-    //    if (TrySetCustomMeasureUnit(measureUnit, exchangeRate, customName)) return;
-
-    //    if (!CustomNameCollection.Remove(measureUnit, out string? removedCustomName)) throw new InvalidOperationException(null);
-
-    //    if (!RemoveExchangeRate(measureUnit))
-    //    {
-    //        SetCustomName(measureUnit, removedCustomName);
-    //    }
-
-    //    if (TrySetCustomMeasureUnit(measureUnit, exchangeRate, customName)) return;
-
-    //    SetExchangeRate(measureUnit, GetExchangeRate(measureUnit));
-    //}
 
     public bool TryGetCustomMeasurement(Enum measureUnit, decimal exchangeRate, string customName, [NotNullWhen(true)] out ICustomMeasurement? customMeasurement)
     {

@@ -15,7 +15,7 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
     public decimal ExchangeRate { get; init; }
 
     #region Static prpperties
-    public static IDictionary<object, string> CustomNameCollection { get; protected set; } = new Dictionary<object, string>();
+    public static Dictionary<object, string> CustomNameCollection { get; protected set; } = [];
     #endregion
     #endregion
 

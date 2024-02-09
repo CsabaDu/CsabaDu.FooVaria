@@ -2,10 +2,6 @@
 
 public sealed class ProportionLimitFactory : IProportionLimitFactory
 {
-    public ProportionLimitFactory(/*IProportionFactory proportionFactory*/)
-    {
-    }
-
     public IProportionLimit Create(IBaseRate baseRate, LimitMode limitMode)
     {
         return new ProportionLimit(this, baseRate, limitMode);

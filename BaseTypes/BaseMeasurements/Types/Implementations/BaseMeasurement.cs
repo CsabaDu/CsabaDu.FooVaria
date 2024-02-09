@@ -3,10 +3,6 @@
 public abstract class BaseMeasurement : Measurable, IBaseMeasurement
 {
     #region Constructors
-    protected BaseMeasurement(IBaseMeasurementFactory factory, Enum measureUnit) : base(factory, measureUnit)
-    {
-    }
-
     #region Static constructor
     static BaseMeasurement()
     {
@@ -14,12 +10,16 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
         ExchangeRateCollection = new Dictionary<object, decimal>(ConstantExchangeRateCollection);
     }
     #endregion
+
+    protected BaseMeasurement(IBaseMeasurementFactory factory, Enum measureUnit) : base(factory, measureUnit)
+    {
+    }
     #endregion
 
     #region Properties
     #region Static properties
-    public static IDictionary<object, decimal> ExchangeRateCollection { get; protected set; }
-    public static IDictionary<object, decimal> ConstantExchangeRateCollection { get; }
+    public static Dictionary<object, decimal> ConstantExchangeRateCollection { get; }
+    public static Dictionary<object, decimal> ExchangeRateCollection { get; protected set; }
     #endregion
     #endregion
 
@@ -208,7 +208,7 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
 
     #region Private methods
     #region Static methods
-    private static IDictionary<object, decimal> InitConstantExchangeRateCollection()
+    private static Dictionary<object, decimal> InitConstantExchangeRateCollection()
     {
         return initConstantExchangeRates<AreaUnit>(100, 10000, 1000000)
             .Union(initConstantExchangeRates<Currency>())

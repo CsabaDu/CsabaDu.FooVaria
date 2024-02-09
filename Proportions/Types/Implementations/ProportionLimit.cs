@@ -2,6 +2,7 @@
 
 internal sealed class ProportionLimit : Proportion, IProportionLimit
 {
+    #region Constructors
     internal ProportionLimit(IProportionLimitFactory factory, MeasureUnitCode numeratorMeasureUnitCode, decimal defaultQuantity, MeasureUnitCode denominatorMeasureUnitCode, LimitMode limitMode) : base(factory, numeratorMeasureUnitCode, defaultQuantity, denominatorMeasureUnitCode)
     {
         LimitMode = Defined(limitMode, nameof(limitMode));
@@ -31,9 +32,13 @@ internal sealed class ProportionLimit : Proportion, IProportionLimit
     {
         LimitMode = other.LimitMode;
     }
+    #endregion
 
+    #region Properties
     public LimitMode LimitMode { get; init; }
+    #endregion
 
+    #region Public methods
     public bool Equals(IProportionLimit? x, IProportionLimit? y)
     {
         if (x == null && y == null) return true;
@@ -80,26 +85,10 @@ internal sealed class ProportionLimit : Proportion, IProportionLimit
         return GetFactory().Create(numeratorMeasureUnitCode, defaultQuantity, denominatorMeasureUnitCode, limitMode);
     }
 
-    public bool? Includes(IFlatRate limitable)
-    {
-        return limitable.FitsIn(this);
-    }
-
     public override IProportionLimitFactory GetFactory()
     {
         return (IProportionLimitFactory)Factory;
     }
-
-    public override IProportionLimit GetProportion(IBaseRate baseRate)
-    {
-        return GetFactory().Create(baseRate, default);
-    }
-
-    public override IProportionLimit GetBaseRate(MeasureUnitCode numeratorMeasureUnitCode, decimal defaultQuantity, MeasureUnitCode denominatorMeasureUnitCode)
-    {
-        return GetFactory().Create(numeratorMeasureUnitCode, defaultQuantity, denominatorMeasureUnitCode, default);
-    }
-
     public IProportionLimit GetProportionLimit(IBaseMeasure numerator, Enum denominatorMeasureUnit, LimitMode limitMode)
     {
         return GetFactory().Create(numerator, denominatorMeasureUnit, limitMode);
@@ -129,4 +118,17 @@ internal sealed class ProportionLimit : Proportion, IProportionLimit
     {
         return limitable?.FitsIn(this) ?? false;
     }
+
+    #region Override methods
+    public override IProportionLimit GetProportion(IBaseRate baseRate)
+    {
+        return GetFactory().Create(baseRate, default);
+    }
+
+    public override IProportionLimit GetBaseRate(MeasureUnitCode numeratorMeasureUnitCode, decimal defaultQuantity, MeasureUnitCode denominatorMeasureUnitCode)
+    {
+        return GetFactory().Create(numeratorMeasureUnitCode, defaultQuantity, denominatorMeasureUnitCode, default);
+    }
+    #endregion
+    #endregion
 }

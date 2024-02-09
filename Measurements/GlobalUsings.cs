@@ -11,6 +11,7 @@ global using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
 global using CsabaDu.FooVaria.Measurements.Behaviors;
 global using CsabaDu.FooVaria.Measurements.Factories;
 global using CsabaDu.FooVaria.Measurements.Types;
+global using CsabaDu.FooVaria.Measurements.Types.Implementations;
 global using System.Diagnostics.CodeAnalysis;
 global using static CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations.BaseMeasurement;
 global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.ExceptionMethods;

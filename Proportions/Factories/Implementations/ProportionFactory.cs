@@ -1,16 +1,9 @@
 ﻿namespace CsabaDu.FooVaria.Proportions.Factories.Implementations;
 
-public sealed class ProportionFactory : IProportionFactory
+public sealed class ProportionFactory(IMeasureFactory measureFactory) : IProportionFactory
 {
-    #region Constructors
-    public ProportionFactory(IMeasureFactory measureFactory)
-    {
-        MeasureFactory = NullChecked(measureFactory, nameof(measureFactory));
-    }
-    #endregion
-
     #region Properties
-    public IMeasureFactory MeasureFactory { get; init; }
+    public IMeasureFactory MeasureFactory { get; init; } = NullChecked(measureFactory, nameof(measureFactory));
     #endregion
 
     #region Public methods

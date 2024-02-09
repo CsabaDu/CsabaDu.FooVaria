@@ -1,17 +1,15 @@
-﻿using CsabaDu.FooVaria.Measurements.Types.Implementations;
-
-namespace CsabaDu.FooVaria.Measurements.Factories.Implementations;
+﻿namespace CsabaDu.FooVaria.Measurements.Factories.Implementations;
 
 public sealed class MeasurementFactory : IMeasurementFactory
 {
     #region Properties
     #region Private properties
     #region Static properties
-    private static IDictionary<object, IMeasurement> MeasurementCollection
+    private static Dictionary<object, IMeasurement> MeasurementCollection
         => ExchangeRateCollection.Keys.ToDictionary
         (
             x => x,
-            x => CreateMeasurement(x)
+            CreateMeasurement
         );
     #endregion
     #endregion
@@ -47,6 +45,10 @@ public sealed class MeasurementFactory : IMeasurementFactory
 
     public IMeasurement? Create(Enum measureUnit, decimal exchangeRate, string customName)
     {
+        if (measureUnit == null) return null;
+
+        measureUnit = GetOrConvertToMeasureUnit(measureUnit);
+
         if (!IsDefinedMeasureUnit(measureUnit)) return null;
 
         bool success = MeasurementCollection.TryGetValue(measureUnit, out IMeasurement? measurement)
@@ -67,6 +69,8 @@ public sealed class MeasurementFactory : IMeasurementFactory
 
     public IMeasurement Create(Enum measureUnit)
     {
+        measureUnit = GetOrConvertToMeasureUnit(measureUnit);
+
         if (IsValidMeasureUnit(NullChecked(measureUnit, nameof(measureUnit)))) return GetStoredMeasurement(measureUnit);
 
         throw InvalidMeasureUnitEnumArgumentException(measureUnit);
@@ -114,6 +118,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
     private static IMeasurement CreateMeasurement(object obj)
     {
         Enum measureUnit = (Enum)obj;
+
         MeasurementFactory factory = new();
 
         return GetMeasureUnitCode(measureUnit).IsCustomMeasureUnitCode() ?
@@ -171,13 +176,24 @@ public sealed class MeasurementFactory : IMeasurementFactory
             : null;
     }
 
-    private static IDictionary<object, string> GetNameCollection()
+    private static Dictionary<object, string> GetNameCollection()
     {
         return MeasurementCollection.ToDictionary
             (
                 x => x.Key,
                 x => x.Value.GetName()
             );
+    }
+
+    private static Enum GetOrConvertToMeasureUnit(Enum measureUnit)
+    {
+        if (measureUnit is MeasureUnitCode measureUnitCode
+            && measureUnitCode.IsDefined())
+        {
+            measureUnit = measureUnitCode.GetDefaultMeasureUnit();
+        }
+
+        return measureUnit;
     }
     #endregion
     #endregion

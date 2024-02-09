@@ -1,18 +1,15 @@
 ﻿namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
 
-public sealed class DenominatorFactory : RateComponentFactory, IDenominatorFactory
+public sealed class DenominatorFactory(IMeasurementFactory measurementFactory) : RateComponentFactory(measurementFactory), IDenominatorFactory
 {
     #region Constructors
     #region Static constructor
     static DenominatorFactory()
     {
-        DenominatorSet = new();
+        DenominatorSet = [];
     }
-    #endregion
 
-    public DenominatorFactory(IMeasurementFactory measurementFactory) : base(measurementFactory)
-    {
-    }
+    #endregion
     #endregion
 
     #region Properties
