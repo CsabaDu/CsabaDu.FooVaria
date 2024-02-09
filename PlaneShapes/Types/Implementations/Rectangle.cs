@@ -23,10 +23,10 @@ internal sealed class Rectangle : PlaneShape, IRectangle
     public IExtent Width { get; init; }
 
     #region Override properties
-    public override IExtent? this[ShapeExtentCode shapeExtentCode] => shapeExtentCode switch
+    public override IExtent? this[SimpleShapeExtentCode simpleShapeExtentCode] => simpleShapeExtentCode switch
     {
-        ShapeExtentCode.Length => Length,
-        ShapeExtentCode.Width => Width,
+        SimpleShapeExtentCode.Length => Length,
+        SimpleShapeExtentCode.Width => Width,
 
         _ => null,
     };
@@ -34,7 +34,7 @@ internal sealed class Rectangle : PlaneShape, IRectangle
     #endregion
 
     #region Public methods
-    public IExtent GetComparedShapeExtent(ComparisonCode? comparisonCode)
+    public IExtent GetComparedSimpleShapeExtent(ComparisonCode? comparisonCode)
     {
         _ = NullChecked(comparisonCode, nameof(comparisonCode));
 
@@ -79,7 +79,7 @@ internal sealed class Rectangle : PlaneShape, IRectangle
         return GetFactory().CreateNew(other);
     }
 
-    public IBaseShape GetTangentShape(SideCode sideCode)
+    public IShape GetTangentShape(SideCode sideCode)
     {
         return GetFactory().CreateTangentShape(this, sideCode);
     }
@@ -96,7 +96,7 @@ internal sealed class Rectangle : PlaneShape, IRectangle
 
     public IRectangle RotateHorizontally()
     {
-        return (IRectangle)GetBaseShape(GetSortedDimensions().ToArray())!;
+        return (IRectangle)GetShape(GetSortedDimensions().ToArray())!;
     }
 
     public IRectangle GetRectangle(IExtent length, IExtent width)

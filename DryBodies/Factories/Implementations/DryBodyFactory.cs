@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.DryBodies.Factories.Implementations
 {
-    public abstract class DryBodyFactory : ShapeFactory, IDryBodyFactory
+    public abstract class DryBodyFactory : SimpleShapeFactory, IDryBodyFactory
     {
         #region Constructors
         private protected DryBodyFactory(IBulkBodyFactory spreadFactory, ITangentShapeFactory tangentShapeFactory, IPlaneShapeFactory baseFaceFactory) : base(spreadFactory, tangentShapeFactory)
@@ -14,16 +14,16 @@
         #endregion
 
         #region Public methods
-        public IPlaneShape? CreateProjection(IDryBody dryBody, ShapeExtentCode perpendicular)
+        public IPlaneShape? CreateProjection(IDryBody dryBody, SimpleShapeExtentCode perpendicular)
         {
-            if (dryBody?.IsValidShapeExtentCode(perpendicular) != true) return null;
+            if (dryBody?.IsValidSimpleShapeExtentCode(perpendicular) != true) return null;
 
             return perpendicular switch
             {
-                ShapeExtentCode.Radius => createCylinderVerticalProjection(),
-                ShapeExtentCode.Length => createCuboidVerticalProjection(),
-                ShapeExtentCode.Width => createCuboidVerticalProjection(),
-                ShapeExtentCode.Height => createHorizontalProjection(),
+                SimpleShapeExtentCode.Radius => createCylinderVerticalProjection(),
+                SimpleShapeExtentCode.Length => createCuboidVerticalProjection(),
+                SimpleShapeExtentCode.Width => createCuboidVerticalProjection(),
+                SimpleShapeExtentCode.Height => createHorizontalProjection(),
 
                 _ => null,
             };
@@ -39,11 +39,11 @@
 
             IRectangle createCuboidVerticalProjection()
             {
-                perpendicular = perpendicular == ShapeExtentCode.Length ?
-                    ShapeExtentCode.Width
-                    : ShapeExtentCode.Length;
+                perpendicular = perpendicular == SimpleShapeExtentCode.Length ?
+                    SimpleShapeExtentCode.Width
+                    : SimpleShapeExtentCode.Length;
 
-                IExtent horizontal = dryBody.GetShapeExtent(perpendicular);
+                IExtent horizontal = dryBody.GetSimpleShapeExtent(perpendicular);
                 ICuboidFactory factory = (ICuboidFactory)dryBody.GetFactory();
 
                 return createRectangle(factory, horizontal);
@@ -61,7 +61,7 @@
                 IEnumerable<IExtent> shapeExtents = dryBody.GetShapeExtents().SkipLast(1);
                 IPlaneShapeFactory factory = dryBody.GetBaseFaceFactory();
 
-                return (IPlaneShape)factory.CreateBaseShape(shapeExtents.ToArray())!;
+                return (IPlaneShape)factory.CreateShape(shapeExtents.ToArray())!;
             }
             #endregion
         }
@@ -88,13 +88,13 @@
         #endregion
 
         #region Protected methods
-        protected IDryBody? CreateDryBody(ICuboidFactory cuboidFactory, ICylinderFactory cylinderFactory, IShapeComponent[] shapeComponents)
+        protected IDryBody? CreateDryBody(ICuboidFactory cuboidFactory, ICylinderFactory cylinderFactory, ISimpleShapeComponent[] shapeComponents)
         {
             int count = GetShapeComponentsCount(shapeComponents);
 
             if (count == 0) return null;
 
-            IShapeComponent firstItem = shapeComponents[0];
+            ISimpleShapeComponent firstItem = shapeComponents[0];
 
             return count switch
             {
@@ -117,7 +117,7 @@
 
             IDryBody? createDryBodyFrom2Params()
             {
-                if (GetShapeExtent(shapeComponents[1]) is not IExtent height) return null;
+                if (GetSimpleShapeExtent(shapeComponents[1]) is not IExtent height) return null;
 
                 if (firstItem is IPlaneShape planeShape) return Create(planeShape, height);
 
@@ -163,7 +163,7 @@
         #endregion
 
         #region Protected methods
-        protected TTangent CreateTangentShape<TTangent>(IShapeFactory<T, TTangent> factory, IPlaneShape baseFace, T dryBody)
+        protected TTangent CreateTangentShape<TTangent>(ISimpleShapeFactory<T, TTangent> factory, IPlaneShape baseFace, T dryBody)
             where TTangent : class, IDryBody, ITangentShape
         {
             IDryBodyFactory tangentShapeFactory = (GetTangentShapeFactory() as IDryBodyFactory)!;

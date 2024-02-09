@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.PlaneShapes.Factories.Implementations
 {
-    public abstract class PlaneShapeFactory : ShapeFactory, IPlaneShapeFactory
+    public abstract class PlaneShapeFactory : SimpleShapeFactory, IPlaneShapeFactory
     {
         #region Constructors
         private protected PlaneShapeFactory(IBulkSurfaceFactory spreadFactory, ITangentShapeFactory tangentShapeFactory) : base(spreadFactory, tangentShapeFactory)
@@ -21,13 +21,13 @@
 
         #region Protected methods
         #region Static methods
-        protected static IPlaneShape? CreatePlaneShape(IRectangleFactory rectangleFactory, params IShapeComponent[] shapeComponents)
+        protected static IPlaneShape? CreatePlaneShape(IRectangleFactory rectangleFactory, params ISimpleShapeComponent[] shapeComponents)
         {
             int count = GetShapeComponentsCount(shapeComponents);
 
             if (count == 0) return null;
 
-            IShapeComponent firstItem = shapeComponents[0];
+            ISimpleShapeComponent firstItem = shapeComponents[0];
 
             return count switch
             {

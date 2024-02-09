@@ -3,12 +3,12 @@ using CsabaDu.FooVaria.PlaneShapes.Factories;
 
 namespace CsabaDu.FooVaria.DryBodies.Factories
 {
-    public interface IDryBodyFactory : IShapeFactory, IBodyFactory
+    public interface IDryBodyFactory : ISimpleShapeFactory, IBodyFactory
     {
         IPlaneShapeFactory BaseFaceFactory { get; init; }
 
         IDryBody Create(IPlaneShape baseFace, IExtent height);
-        IPlaneShape? CreateProjection(IDryBody dryBody, ShapeExtentCode perpendicular);
+        IPlaneShape? CreateProjection(IDryBody dryBody, SimpleShapeExtentCode perpendicular);
 
         IPlaneShapeFactory GetBaseFaceFactory();
     }

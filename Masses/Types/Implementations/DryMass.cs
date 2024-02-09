@@ -20,9 +20,9 @@ internal sealed class DryMass : Mass, IDryMass
         #region Local methods
         IDryBody getDryBody()
         {
-            IBaseShape? baseShape = GetBodyFactory().CreateBaseShape(shapeExtents);
+            IShape? shape = GetBodyFactory().CreateShape(shapeExtents);
 
-            if (baseShape is IDryBody dryBody) return dryBody;
+            if (shape is IDryBody dryBody) return dryBody;
 
             throw CountArgumentOutOfRangeException(shapeExtents.Length, nameof(shapeExtents));
         }
@@ -72,7 +72,7 @@ internal sealed class DryMass : Mass, IDryMass
     {
         if (context is not ExtentUnit extentUnit) return base.ExchangeTo(context);
 
-        IBaseSpread? exchanged = (Body as IShape)!.ExchangeTo(extentUnit);
+        IBaseSpread? exchanged = (Body as ISimpleShape)!.ExchangeTo(extentUnit);
 
         return exchanged is IDryBody dyBody ?
             GetDryMass(Weight, dyBody)

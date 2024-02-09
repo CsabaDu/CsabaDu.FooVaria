@@ -18,9 +18,9 @@ internal sealed class Circle : PlaneShape, ICircle
     public IExtent Radius { get; init; }
 
     #region Override properties
-    public override IExtent? this[ShapeExtentCode shapeExtentCode] => shapeExtentCode switch
+    public override IExtent? this[SimpleShapeExtentCode simpleShapeExtentCode] => simpleShapeExtentCode switch
     {
-        ShapeExtentCode.Radius => Radius,
+        SimpleShapeExtentCode.Radius => Radius,
 
         _ => null,
     };
@@ -58,7 +58,7 @@ internal sealed class Circle : PlaneShape, ICircle
         return Radius.GetMeasure(extentUnit);
     }
 
-    public IBaseShape GetTangentShape(SideCode sideCode)
+    public IShape GetTangentShape(SideCode sideCode)
     {
         return GetFactory().CreateTangentShape(this, sideCode);
     }

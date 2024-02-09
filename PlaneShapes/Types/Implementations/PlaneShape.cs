@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.PlaneShapes.Types.Implementations;
 
-internal abstract class PlaneShape : Shape, IPlaneShape
+internal abstract class PlaneShape : SimpleShape, IPlaneShape
 {
     #region Constructor
     private protected PlaneShape(IPlaneShape other) : base(other)

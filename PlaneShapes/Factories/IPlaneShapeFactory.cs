@@ -1,5 +1,5 @@
 ﻿namespace CsabaDu.FooVaria.PlaneShapes.Factories;
 
-public interface IPlaneShapeFactory : IShapeFactory, ISurfaceFactory
+public interface IPlaneShapeFactory : ISimpleShapeFactory, ISurfaceFactory
 {
 }

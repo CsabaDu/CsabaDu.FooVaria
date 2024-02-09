@@ -9,7 +9,7 @@ public sealed class RectangleFactory : PlaneShapeFactory, IRectangleFactory
     #endregion
 
     #region Public methods
-    public override IPlaneShape? CreateBaseShape(params IShapeComponent[] shapeComponents)
+    public override IPlaneShape? CreateShape(params ISimpleShapeComponent[] shapeComponents)
     {
         return CreatePlaneShape(this, shapeComponents);
     }
@@ -26,7 +26,7 @@ public sealed class RectangleFactory : PlaneShapeFactory, IRectangleFactory
 
     public ICircle CreateInnerTangentShape(IRectangle rectangle, ComparisonCode comparisonCode)
     {
-        IExtent diagonal = NullChecked(rectangle, nameof(rectangle)).GetComparedShapeExtent(comparisonCode);
+        IExtent diagonal = NullChecked(rectangle, nameof(rectangle)).GetComparedSimpleShapeExtent(comparisonCode);
 
         return CreateTangentShape(this, GetRadius(diagonal));
     }

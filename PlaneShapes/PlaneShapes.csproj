@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shapes\Shapes.csproj" />
+    <ProjectReference Include="..\SimpleShapes\SimpleShapes.csproj" />
   </ItemGroup>
 
 </Project>

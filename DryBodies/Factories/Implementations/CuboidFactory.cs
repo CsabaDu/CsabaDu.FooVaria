@@ -52,7 +52,7 @@ public sealed class CuboidFactory : DryBodyFactory<ICuboid, IRectangle>, ICuboid
 
     public IRectangle CreateVerticalProjection(ICuboid cuboid, ComparisonCode comparisonCode)
     {
-        IExtent horizontal = NullChecked(cuboid, nameof(cuboid)).BaseFace.GetComparedShapeExtent(comparisonCode);
+        IExtent horizontal = NullChecked(cuboid, nameof(cuboid)).BaseFace.GetComparedSimpleShapeExtent(comparisonCode);
         IRectangleFactory factory = GetBaseFaceFactory();
 
         return CreateVerticalProjection(factory, horizontal, cuboid);
@@ -73,7 +73,7 @@ public sealed class CuboidFactory : DryBodyFactory<ICuboid, IRectangle>, ICuboid
         return GetTangentShapeFactory().Create(baseFace, height);
     }
 
-    public override IDryBody? CreateBaseShape(params IShapeComponent[] shapeComponents)
+    public override IDryBody? CreateShape(params ISimpleShapeComponent[] shapeComponents)
     {
         return CreateDryBody(this, GetTangentShapeFactory(), shapeComponents);
     }

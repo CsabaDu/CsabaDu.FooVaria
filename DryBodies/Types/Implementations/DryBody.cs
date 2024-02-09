@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
 {
-    internal abstract class DryBody : Shape, IDryBody
+    internal abstract class DryBody : SimpleShape, IDryBody
     {
         private protected DryBody(IDryBody other) : base(other)
         {
@@ -18,7 +18,7 @@
             #region Local methods
             (IExtent, IVolume) getDryBodyValidParams()
             {
-                ValidateShapeExtent(height, nameof(height));
+                ValidateSimpleShapeExtent(height, nameof(height));
 
                 IExtent[] shapeExtents = baseFace.GetShapeExtents().Append(height).ToArray();
                 IVolume volume = (IVolume)GetSpreadMeasure(shapeExtents);
@@ -39,7 +39,7 @@
 
         public IPlaneShape GetBaseFace(ExtentUnit extentUnit)
         {
-            return (IPlaneShape)GetBaseFace().GetShape(extentUnit);
+            return (IPlaneShape)GetBaseFace().GetSimpleShape(extentUnit);
         }
 
         public IBody GetBody()
@@ -63,9 +63,9 @@
 
         public void ValidateBaseFace(IPlaneShape planeShape, string paramName)
         {
-            int baseFaceShapeExtentCout = GetShapeComponentCount() - 1;
+            int baseFaceSimpleShapeExtentCout = GetSimpleShapeComponentCount() - 1;
 
-            if (NullChecked(planeShape, paramName).GetShapeComponentCount() == baseFaceShapeExtentCout) return;
+            if (NullChecked(planeShape, paramName).GetSimpleShapeComponentCount() == baseFaceSimpleShapeExtentCout) return;
 
             throw ArgumentTypeOutOfRangeException(paramName, planeShape);
         }
@@ -86,7 +86,7 @@
         }
 
         public abstract IPlaneShape GetBaseFace();
-        public abstract IPlaneShape GetProjection(ShapeExtentCode perpendicular);
+        public abstract IPlaneShape GetProjection(SimpleShapeExtentCode perpendicular);
     }
 
     internal abstract class DryBody<TSelf, TBFace> : DryBody, IDryBody<TSelf, TBFace>
@@ -100,7 +100,7 @@
 
         private protected DryBody(IDryBodyFactory factory, params IExtent[] shapeExtents) : base(factory, shapeExtents)
         {
-            BaseFace = (TBFace)GetShape(shapeExtents.SkipLast(1).ToArray());
+            BaseFace = (TBFace)GetSimpleShape(shapeExtents.SkipLast(1).ToArray());
         }
 
         private protected DryBody(IDryBodyFactory factory, TBFace baseFace, IExtent height) : base(factory, baseFace, height)

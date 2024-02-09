@@ -48,18 +48,18 @@
     <Position X="2.5" Y="0.5" Width="1.25" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.Shapes.Factories.IShapeFactory" Collapsed="true" BaseTypeListCollapsed="true">
+  <Interface Name="CsabaDu.FooVaria.SimpleShapes.Factories.ISimpleShapeFactory" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="4" Y="0.5" Width="1.25" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.Shapes.Factories.ICircularShapeFactory&lt;T, TTangent&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
+  <Interface Name="CsabaDu.FooVaria.SimpleShapes.Factories.ICircularShapeFactory&lt;T, TTangent&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
     <Position X="0.5" Y="3" Width="2.75" />
-    <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Factories.IShapeFactory" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.SimpleShapes.Factories.ISimpleShapeFactory" IsHidden="true" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.Shapes.Factories.IRectangularShapeFactory&lt;T, TTangent&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
+  <Interface Name="CsabaDu.FooVaria.SimpleShapes.Factories.IRectangularShapeFactory&lt;T, TTangent&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
     <Position X="6" Y="3" Width="3" />
-    <InheritanceLine Type="CsabaDu.FooVaria.Shapes.Factories.IShapeFactory" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.SimpleShapes.Factories.ISimpleShapeFactory" IsHidden="true" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />

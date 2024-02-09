@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.DryBodies.Types
 {
-    public interface IDryBody : IBaseFace, IHeight, IShape, IBody, IProjection
+    public interface IDryBody : IBaseFace, IHeight, ISimpleShape, IBody, IProjection
     {
         IVolume Volume { get; init; }
         IExtent Height { get; init; }

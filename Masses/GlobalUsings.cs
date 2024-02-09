@@ -1,6 +1,6 @@
 ﻿global using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;
 global using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types;
-global using CsabaDu.FooVaria.BaseTypes.BaseShapes.Types;
+global using CsabaDu.FooVaria.BaseTypes.Shapes.Types;
 global using CsabaDu.FooVaria.BaseTypes.BaseSpreads.Factories;
 global using CsabaDu.FooVaria.BaseTypes.BaseSpreads.Types;
 global using CsabaDu.FooVaria.BaseTypes.Common.Factories;
@@ -22,7 +22,7 @@ global using CsabaDu.FooVaria.Measures.Types;
 global using CsabaDu.FooVaria.PlaneShapes.Types;
 global using CsabaDu.FooVaria.Proportions.Factories;
 global using CsabaDu.FooVaria.Proportions.Types;
-global using CsabaDu.FooVaria.Shapes.Types;
+global using CsabaDu.FooVaria.SimpleShapes.Types;
 global using CsabaDu.FooVaria.Spreads.Factories;
 global using CsabaDu.FooVaria.Spreads.Types;
 global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.ExceptionMethods;
