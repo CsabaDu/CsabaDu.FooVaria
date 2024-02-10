@@ -50,13 +50,11 @@
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity&lt;TNum&gt;" Collapsed="true">
-    <Position X="15.25" Y="1.75" Width="1.75" />
+    <Position X="14.5" Y="3" Width="1.75" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity" FixedFromPoint="true">
       <Path>
         <Point X="15.375" Y="1.062" />
-        <Point X="15.375" Y="1.375" />
-        <Point X="16.125" Y="1.375" />
-        <Point X="16.125" Y="1.75" />
+        <Point X="15.375" Y="3" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier />
