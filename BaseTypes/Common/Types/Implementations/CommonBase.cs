@@ -1,6 +1,4 @@
-﻿using System.Collections;
-
-namespace CsabaDu.FooVaria.BaseTypes.Common.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.BaseTypes.Common.Types.Implementations;
 
 public abstract class CommonBase : ICommonBase
 {
