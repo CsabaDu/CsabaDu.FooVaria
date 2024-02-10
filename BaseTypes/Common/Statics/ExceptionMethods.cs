@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.Common.Statics;
+﻿using System.Collections;
+
+namespace CsabaDu.FooVaria.BaseTypes.Common.Statics;
 
 public static class ExceptionMethods
 {
@@ -158,7 +160,20 @@ public static class ExceptionMethods
     #region ArgumentNullException
     public static T NullChecked<T>(T? param, string? paramName)
     {
-        return param ?? throw new ArgumentNullException(paramName);
+        if (param == null
+            || param is IEnumerable enumerable
+            && areAllElementsNull())
+        {
+            throw new ArgumentNullException(paramName);
+        }
+
+        return param;
+
+        bool areAllElementsNull()
+        {
+            return enumerable.GetEnumerator() == null
+                || enumerable.Cast<object>().All(x => x == null);
+        }
     }
     #endregion
 

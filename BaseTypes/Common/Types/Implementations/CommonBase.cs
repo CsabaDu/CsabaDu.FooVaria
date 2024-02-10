@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.Common.Types.Implementations;
+﻿using System.Collections;
+
+namespace CsabaDu.FooVaria.BaseTypes.Common.Types.Implementations;
 
 public abstract class CommonBase : ICommonBase
 {
@@ -8,7 +10,7 @@ public abstract class CommonBase : ICommonBase
         Factory = NullChecked(factory, nameof(factory));
     }
 
-    protected CommonBase(IFactory factory, params ICommonBase[] commonBases)
+    protected CommonBase(IFactory factory, object? commonBases)
     {
         Factory = NullChecked(factory, nameof(factory));
 

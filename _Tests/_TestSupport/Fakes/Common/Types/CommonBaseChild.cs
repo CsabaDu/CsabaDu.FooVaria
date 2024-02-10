@@ -10,7 +10,7 @@
         {
         }
 
-        public CommonBaseChild(IFactory factory, ICommonBase commonBase) : base(factory, commonBase)
+        public CommonBaseChild(IFactory factory, ICommonBase[] commonBases) : base(factory, commonBases)
         {
         }
     }
