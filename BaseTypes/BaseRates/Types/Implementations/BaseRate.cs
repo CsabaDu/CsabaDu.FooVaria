@@ -142,10 +142,9 @@ public abstract class BaseRate : Quantifiable, IBaseRate
         return (IBaseRateFactory)Factory;
     }
 
-
-    public override void ValidateQuantity(IQuantifiable? quantifiable, string paramName)
+    public override sealed void ValidateQuantity(IQuantifiable? quantifiable, string paramName)
     {
-        throw new NotImplementedException();
+        base.ValidateQuantity(quantifiable, paramName);
     }
 
     public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()

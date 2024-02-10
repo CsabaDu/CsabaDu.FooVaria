@@ -4,7 +4,7 @@ public interface IShape : ISpread, IFit<IShape>, IShapeComponents/*, IShapeCompo
 {
     IShape? GetShape(params IShapeComponent[] shapeComponents);
 
-    void ValidateShapeComponent(IQuantifiable simpleShapeComponent, string paramName);
+    void ValidateShapeComponent(IQuantifiable? shapeComponent, string paramName);
 }
 
 

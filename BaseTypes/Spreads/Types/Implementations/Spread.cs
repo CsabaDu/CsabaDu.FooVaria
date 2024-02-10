@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
-
-namespace CsabaDu.FooVaria.BaseTypes.Spreads.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.BaseTypes.Spreads.Types.Implementations;
 
 public abstract class Spread : Quantifiable<ISpread>, ISpread
 {

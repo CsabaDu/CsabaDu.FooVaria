@@ -1,9 +1,7 @@
-﻿
-namespace CsabaDu.FooVaria.Masses.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Masses.Types.Implementations;
 
 internal sealed class BulkMass : Mass, IBulkMass
 {
-    public override IBody Body { get => throw new NotImplementedException(); init => throw new NotImplementedException(); }
     #region Constructors
     public BulkMass(IBulkMass other) : base(other)
     {
@@ -16,8 +14,11 @@ internal sealed class BulkMass : Mass, IBulkMass
     }
     #endregion
 
-    #region Public methods
+    #region Properties
+    public override IBody Body { get; init; }
+    #endregion
 
+    #region Public methods
     public IBulkBody GetBulkBody()
     {
         return (IBulkBody)Body;

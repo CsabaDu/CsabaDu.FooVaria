@@ -22,6 +22,13 @@ public abstract class Shape : Spread, IShape
         return GetShapeComponents().Count();
     }
 
+    public void ValidateShapeComponent(IQuantifiable? shapeComponent, string paramName)
+    {
+        if (GetValidShapeComponent(NullChecked(shapeComponent, paramName)) != null) return;
+
+        throw ArgumentTypeOutOfRangeException(paramName, shapeComponent!);
+    }
+
     #region Override methods
     public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
     {
@@ -60,8 +67,7 @@ public abstract class Shape : Spread, IShape
     #region Abstract methods
     public abstract int CompareTo(IShape? other);
     public abstract bool? FitsIn(IShape? other, LimitMode? limitMode);
-    public abstract void ValidateShapeComponent(IQuantifiable simpleShapeComponent, string paramName);
-    public abstract IShapeComponent? GetValidShapeComponent(IQuantifiable? simpleShapeComponent);
+    public abstract IShapeComponent? GetValidShapeComponent(IQuantifiable? shapeComponent);
     public abstract IEnumerable<IShapeComponent> GetShapeComponents();
     public abstract IShape? GetShape(params IShapeComponent[] shapeComponents);
     #endregion
@@ -69,7 +75,7 @@ public abstract class Shape : Spread, IShape
 
     #region Protected methods
     #region Static methods
-    protected static bool IsValidShapeComponentOf<T>(IShape shape, T simpleShapeComponent) where T : class, IQuantifiable, IShapeComponent
+    protected static bool IsValidShapeComponentOf<T>(IShape shape, T shapeComponent) where T : class, IQuantifiable, IShapeComponent
     {
         return shape?.GetShapeComponents() is IEnumerable<T>;
     }

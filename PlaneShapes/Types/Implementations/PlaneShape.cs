@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.PlaneShapes.Types.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
+using System.Numerics;
+
+namespace CsabaDu.FooVaria.PlaneShapes.Types.Implementations;
 
 internal abstract class PlaneShape : SimpleShape, IPlaneShape
 {
@@ -31,6 +34,13 @@ internal abstract class PlaneShape : SimpleShape, IPlaneShape
     }
 
     #region Sealed methods
+    public override sealed IShapeComponent? GetValidShapeComponent(IQuantifiable? shapeComponent)
+    {
+        if (shapeComponent is not IExtent extent) return null;
+
+        return extent;
+    }
+
     public override sealed IBulkSurfaceFactory GetBulkSpreadFactory()
     {
         return (IBulkSurfaceFactory)base.GetBulkSpreadFactory();

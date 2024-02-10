@@ -9,3 +9,4 @@ global using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Enums;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
+global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.ExceptionMethods;

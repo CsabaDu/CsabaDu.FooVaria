@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
+﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
+
+namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
 {
     internal abstract class DryBody : SimpleShape, IDryBody
     {
@@ -83,6 +85,13 @@
         public virtual IPlaneShapeFactory GetBaseFaceFactory()
         {
             return GetFactory().BaseFaceFactory;
+        }
+
+        public override sealed IShapeComponent? GetValidShapeComponent(IQuantifiable? shapeComponent)
+        {
+            if (shapeComponent is not IExtent or IPlaneShape) return null;
+
+            return (IShapeComponent)shapeComponent;
         }
 
         public abstract IPlaneShape GetBaseFace();

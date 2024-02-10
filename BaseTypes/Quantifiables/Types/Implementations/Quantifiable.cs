@@ -76,7 +76,24 @@
             _ = ConvertQuantity(quantity, paramName, GetQuantityTypeCode());
         }
 
-        public abstract void ValidateQuantity(IQuantifiable? quantifiable, string paramName);
+        public virtual void ValidateQuantity(IQuantifiable? quantifiable, string paramName)
+        {
+            ValidateQuantity(this, quantifiable, paramName);
+
+            #region Local methods
+            static void ValidateQuantity<T>(T current, IQuantifiable? quantifiable, string paramName)
+                where T : class, IQuantifiable
+            {
+                if (quantifiable is not T currentType) throw ArgumentTypeOutOfRangeException(paramName, quantifiable!);
+
+                decimal quantity = currentType.GetDefaultQuantity();
+
+                if (quantity > 0) return;
+
+                throw QuantityArgumentOutOfRangeException(paramName, quantity);
+            }
+            #endregion
+        }
         #endregion
 
         #region Static methods

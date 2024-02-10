@@ -24,18 +24,6 @@ public abstract class SimpleShape : Shape, ISimpleShape
     #endregion
 
     #region Public methods
-    public override void ValidateShapeComponent(IQuantifiable simpleShapeComponent, string paramName)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override IShapeComponent? GetValidShapeComponent(IQuantifiable? simpleShapeComponent)
-    {
-        if (simpleShapeComponent == null) return null;
-
-        throw new NotImplementedException();
-    }
-
     public override sealed IShape? GetShape(params IShapeComponent[] shapeComponents)
     {
         return GetFactory().CreateShape(shapeComponents);

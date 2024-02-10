@@ -82,9 +82,9 @@ public abstract class SimpleShapeFactory : ISimpleShapeFactory
             : null;
     }
 
-    protected static IExtent? GetShapeExtent(IShapeComponent simpleShapeComponent)
+    protected static IExtent? GetShapeExtent(IShapeComponent shapeComponent)
     {
-        if (simpleShapeComponent is not IExtent simpleShapeExtent) return null;
+        if (shapeComponent is not IExtent simpleShapeExtent) return null;
         
         if (simpleShapeExtent.GetDefaultQuantity() > 0) return simpleShapeExtent;
 

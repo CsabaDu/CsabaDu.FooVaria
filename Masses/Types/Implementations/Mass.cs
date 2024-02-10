@@ -287,14 +287,9 @@ namespace CsabaDu.FooVaria.Masses.Types.Implementations
             ValidateQuantity(this, quantity, paramName);
         }
 
-        public override void ValidateQuantity(IQuantifiable? quantifiable, string paramName)
+        public override sealed void ValidateQuantity(IQuantifiable? quantifiable, string paramName)
         {
-            if (NullChecked(quantifiable, nameof(quantifiable)) is IMass mass)
-            {
-                double quantity = GetQuantity();
-
-                TypeCode typeCode = GetQuantityTypeCode();
-            }
+            base.ValidateQuantity(quantifiable, paramName);
         }
 
         #endregion
