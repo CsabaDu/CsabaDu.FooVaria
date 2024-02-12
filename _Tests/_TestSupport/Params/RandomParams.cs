@@ -1,23 +1,13 @@
 ﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
 
-public static class RandomParams
+public class RandomParams
 {
     #region Private fields
     private static readonly Random Random = Random.Shared;
-    private static T GetRandomItem<T>(T[] items)
-    {
-        return Random.GetItems(items, 1)[0];
-    }
-
-    private static T GetRandomItem<T>(IEnumerable<T> items)
-    {
-        return GetRandomItem(items.ToArray());
-    }
-
     #endregion
 
     #region Public methods
-    public static MeasureUnitCode GetRandomMeasureUnitCode(MeasureUnitCode? excludedMeasureUnitCode = null)
+    public MeasureUnitCode GetRandomMeasureUnitCode(MeasureUnitCode? excludedMeasureUnitCode = null)
     {
         MeasureUnitCode randomMeasureUnitCode = getRandomMeasureUnitCode();
 
@@ -29,14 +19,14 @@ public static class RandomParams
         return randomMeasureUnitCode;
 
         #region Local methods
-        MeasureUnitCode getRandomMeasureUnitCode()
+        static MeasureUnitCode getRandomMeasureUnitCode()
         {
-            return GetRandomItem(Measurable.MeasureUnitCodes);
+            return GetRandomItem(MeasureUnitCodes);
         }
         #endregion
     }
 
-    public static Enum GetRandomMeasureUnit(MeasureUnitCode? measureUnitTypeCode = null, Enum excludedMeasureUnit = null)
+    public Enum GetRandomMeasureUnit(MeasureUnitCode? measureUnitTypeCode = null, Enum excludedMeasureUnit = null)
     {
         measureUnitTypeCode ??= GetRandomMeasureUnitCode();
         Enum randomMeasureUnit = getRandomMeasureUnit();
@@ -56,14 +46,26 @@ public static class RandomParams
         #endregion
     }
 
-    //public Enum GetRandomNotDefinedMeasureUnit()
-    //{
-    //    MeasureUnitCode measureUnitCode = GetRandomMeasureUnitCode();
-    //    int count = MeasureUnitTypes.GetDefaultNames(measureUnitCode).Count();
-    //    Type measureUnitType = MeasureUnitTypes.GetMeasureUnitType(measureUnitCode);
+    public Enum GetRandomNotDefinedMeasureUnit()
+    {
+        MeasureUnitCode measureUnitCode = GetRandomMeasureUnitCode();
 
-    //    return (Enum)Enum.ToObject(measureUnitType, count);
-    //}
+        return GetNotDefinedMeasureUnit(measureUnitCode);
+    }
+
+    #region Private methods
+    #region Static methods
+    private static T GetRandomItem<T>(T[] items)
+    {
+        return Random.GetItems(items, 1)[0];
+    }
+
+    private static T GetRandomItem<T>(IEnumerable<T> items)
+    {
+        return GetRandomItem(items.ToArray());
+    }
+    #endregion
+    #endregion
 
     //public Enum GetRandomValidMeasureUnit(Enum excludedMeasureUnit = null)
     //{
