@@ -4,5 +4,5 @@ public interface IMeasurable : ICommonBase, IDefaultMeasureUnit, IMeasureUnitTyp
 {
     MeasureUnitCode MeasureUnitCode { get; init; }
 
-    void ValidateMeasureUnitCode(IMeasurable? measurable, string paramName);
+    void ValidateMeasureUnitCode(IMeasurable? measurable, [DisallowNull] string paramName);
 }

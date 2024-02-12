@@ -7,5 +7,5 @@ public interface IMeasureUnitType
     bool HasMeasureUnitCode(MeasureUnitCode measureUnitCode);
     bool IsValidMeasureUnitCode(MeasureUnitCode measureUnitCode);
 
-    void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName);
+    void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, [DisallowNull] string paramName);
 }

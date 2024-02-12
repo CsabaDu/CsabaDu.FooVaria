@@ -138,24 +138,24 @@ public abstract class Measurable : CommonBase, IMeasurable
     public virtual void ValidateMeasureUnit(Enum? measureUnit, string paramName)
     {
         Type enumType = NullChecked(measureUnit, paramName).GetType();
+        MeasureUnitCode measureUnitCode = MeasureUnitTypeCollection.FirstOrDefault(x => x.Value == enumType).Key;
+        bool isValidMesiuteUnit = MeasureUnitTypeSet.Contains(enumType)
+            && Enum.IsDefined(enumType, measureUnit!)
+            && HasMeasureUnitCode(measureUnitCode);
 
-        if (!Enum.IsDefined(enumType, measureUnit!)) throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName);
-
-        KeyValuePair<MeasureUnitCode, Type> keyValuePair = MeasureUnitTypeCollection.FirstOrDefault(x => x.Value == enumType);
-
-        if (HasMeasureUnitCode(keyValuePair.Key)) return;
+        if (isValidMesiuteUnit) return;
 
         throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName);
     }
 
-    public void ValidateMeasureUnitCode(IMeasurable? measurable, string paramName)
+    public void ValidateMeasureUnitCode(IMeasurable? measurable, [DisallowNull] string paramName)
     {
         MeasureUnitCode measureUnitCode = NullChecked(measurable, paramName).MeasureUnitCode;
 
         ValidateMeasureUnitCode(measureUnitCode, paramName);
     }
 
-    public virtual void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
+    public virtual void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, [DisallowNull] string paramName)
     {
         if (HasMeasureUnitCode(measureUnitCode)) return;
 
