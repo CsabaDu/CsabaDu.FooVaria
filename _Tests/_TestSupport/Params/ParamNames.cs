@@ -2,13 +2,19 @@
 
 public static class ParamNames
 {
-    public const string baseMeasurable = "baseMeasurable";
-    public const string commonBase = "commonBase";
-    public const string commonBases = "commonBases";
-    public const string factory = "factory";
-    public const string fooVariaObject = "fooVariaObject";
-    public const string measurable = "measurable";
-    public const string measureUnit = "measureUnit";
-    public const string measureUnitCode = "measureUnitCode";
-    public const string other = "other";
+    public const string commonBase = nameof(commonBase);
+    public const string factory = nameof(factory);
+    public const string measurable = nameof(measurable);
+    public const string measureUnit = nameof(measureUnit);
+    public const string measureUnitCode = nameof(measureUnitCode);
+    public const string other = nameof(other);
+    public const string paramName = nameof(paramName);
+
+    public static IEnumerable<string> GetParamNames()
+    {
+        Type type = typeof(ParamNames);
+        FieldInfo[] fieldInfos = type.GetFields();
+
+        return fieldInfos.Select(x => x.Name);
+    }
 }

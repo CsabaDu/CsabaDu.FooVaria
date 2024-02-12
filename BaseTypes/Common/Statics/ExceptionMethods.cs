@@ -175,7 +175,7 @@ public static class ExceptionMethods
     #endregion
 
     #region ArgumentOutOfRangeException
-    public static T TypeChecked<T>(T param, [DisallowNull] string paramName, [DisallowNull] Type type)
+    public static T TypeChecked<T>(T? param, [DisallowNull] string paramName, [DisallowNull] Type type)
     {
         Type paramType = typeof(T);
 

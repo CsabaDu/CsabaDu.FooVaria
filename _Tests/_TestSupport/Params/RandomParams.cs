@@ -53,6 +53,11 @@ public class RandomParams
         return GetNotDefinedMeasureUnit(measureUnitCode);
     }
 
+    public string GetRandomParamName()
+    {
+        return GetRandomItem(ParamNames.GetParamNames());
+    }
+
     #region Private methods
     #region Static methods
     private static T GetRandomItem<T>(T[] items)

@@ -115,10 +115,10 @@ internal class DynamicDataSources
 
         public override object[] ToObjectArray()
         {
-            return new object[]
-            {
+            return
+            [
                 IsTrue,
-            };
+            ];
         }
     }
 
@@ -155,20 +155,20 @@ internal class DynamicDataSources
     #endregion
     #endregion
 
-    //    #region bool, MeasureUnitCode
-    //    protected class Bool_MeasureUnitCode_args : Bool_arg
-    //    {
-    //        internal MeasureUnitCode MeasureUnitCode { get; init; }
+    #region bool, MeasureUnitCode
+    protected class Bool_MeasureUnitCode_args : Bool_arg
+    {
+        internal MeasureUnitCode MeasureUnitCode { get; init; }
 
-    //        public override object[] ToObjectArray()
-    //        {
-    //            return new object[]
-    //            {
-    //                IsTrue,
-    //                MeasureUnitCode,
-    //            };
-    //        }
-    //    }
+        public override object[] ToObjectArray()
+        {
+            return
+            [
+                IsTrue,
+                MeasureUnitCode,
+            ];
+        }
+    }
 
     //    #region bool, MeasureUnitCode, Enum
     //    protected class Bool_MeasureUnitCode_Enum_args : Bool_MeasureUnitCode_args
@@ -222,7 +222,7 @@ internal class DynamicDataSources
     //    }
     //    #endregion
     //    #endregion
-    //    #endregion
+    #endregion
 
     //    #region bool, Enum
     //    protected class Bool_Enum_args : Bool_arg
@@ -478,6 +478,29 @@ internal class DynamicDataSources
             {
                 IsTrue = isTrue,
                 Object = obj,
+                MeasureUnitCode = measureUnitCode,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> GetBoolMeasureUnitCodeArgsArrayList()
+    {
+        measureUnitCode = NotDefinedMeasureUnitCode;
+        isTrue = false;
+        yield return toObjectArray();
+
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
+        isTrue = true;
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            return new Bool_MeasureUnitCode_args
+            {
+                IsTrue = isTrue,
                 MeasureUnitCode = measureUnitCode,
             }
             .ToObjectArray();
@@ -767,29 +790,6 @@ internal class DynamicDataSources
     //            {
     //                MeasureUnitCode = measureUnitCode,
     //                Measurable = measurable,
-    //            }
-    //            .ToObjectArray();
-    //        }
-    //        #endregion
-    //    }
-
-    //    internal IEnumerable<object[]> GetBoolMeasureUnitCodeArgsArrayList()
-    //    {
-    //        measureUnitCode = SampleParams.NotDefinedMeasureUnitCode;
-    //        isTrue = false;
-    //        yield return toObjectArray();
-
-    //        measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
-    //        isTrue = true;
-    //        yield return toObjectArray();
-
-    //        #region toObjectArray method
-    //        object[] toObjectArray()
-    //        {
-    //            return new Bool_MeasureUnitCode_args
-    //            {
-    //                IsTrue = isTrue,
-    //                MeasureUnitCode = measureUnitCode,
     //            }
     //            .ToObjectArray();
     //        }

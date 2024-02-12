@@ -135,13 +135,15 @@ public abstract class Measurable : CommonBase, IMeasurable
         return MeasureUnitCode.GetQuantityTypeCode();
     }
 
-    public virtual void ValidateMeasureUnit(Enum measureUnit, string paramName)
+    public virtual void ValidateMeasureUnit(Enum? measureUnit, string paramName)
     {
-        MeasureUnitCode measureUnitCode = GetDefinedMeasureUnitCode(NullChecked(measureUnit, paramName));
+        Type enumType = NullChecked(measureUnit, paramName).GetType();
+        KeyValuePair<MeasureUnitCode, Type>? keyValuePair = MeasureUnitTypeCollection.FirstOrDefault(x => x.Value == enumType);
+        MeasureUnitCode measureUnitCode = (keyValuePair ?? throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName)).Key;
 
         if (HasMeasureUnitCode(measureUnitCode)) return;
 
-        throw InvalidMeasureUnitEnumArgumentException(measureUnit, paramName);
+        throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName);
     }
 
     public void ValidateMeasureUnitCode(IMeasurable? measurable, string paramName)
