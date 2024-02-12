@@ -1,5 +1,3 @@
-using System.ComponentModel;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.MeasurablesTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
