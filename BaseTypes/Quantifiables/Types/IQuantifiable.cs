@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Types
 {
-    public interface IQuantifiable : IMeasurable, IDefaultQuantity/*, IProportional<IQuantifiable>, IExchangeable<Enum>*/
+    public interface IQuantifiable : IMeasurable, IDefaultQuantity
     {
         void ValidateQuantity(ValueType? quantity, string paramName);
         void ValidateQuantity(IQuantifiable? quantifiable, string paramName);

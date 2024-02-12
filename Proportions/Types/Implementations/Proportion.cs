@@ -20,7 +20,7 @@
                 string paramName = nameof(numeratorMeasureUnit);
 
                 return IsValidMeasureUnit(NullChecked(numeratorMeasureUnit, paramName)) ?
-                    GetMeasureUnitCode(numeratorMeasureUnit)
+                    GetDefinedMeasureUnitCode(numeratorMeasureUnit)
                     : throw InvalidMeasureUnitEnumArgumentException(numeratorMeasureUnit, paramName);
             }
 

@@ -6,15 +6,15 @@
         #region Static constructor
         static Quantifiable()
         {
-            QuantityTypeSet = new HashSet<Type>()
-            {
+            QuantityTypeSet =
+            [
                 typeof(int),
                 typeof(uint),
                 typeof(long),
                 typeof(ulong),
                 typeof(double),
                 typeof(decimal),
-            };
+            ];
         }
         #endregion
 
@@ -38,14 +38,15 @@
         {
         }
 
-        protected Quantifiable(IQuantifiableFactory factory, MeasureUnitCode measureUnitCode, params IQuantifiable[] quantifiables) : base(factory, measureUnitCode, quantifiables)
+        protected Quantifiable(IQuantifiableFactory factory, MeasureUnitCode measureUnitCode, params IShapeComponent[] shapeComponents) : base(factory, measureUnitCode)
         {
+            _ = NullChecked(shapeComponents, nameof(shapeComponents));
         }
         #endregion
 
         #region Properties
         #region Static properties
-        public static ISet<Type> QuantityTypeSet { get; }
+        public static HashSet<Type> QuantityTypeSet { get; }
         #endregion
         #endregion
 
@@ -69,8 +70,7 @@
         }
         #endregion
 
-        #region Abstract methods
-        public abstract decimal GetDefaultQuantity();
+        #region Virtual methods
         public virtual void ValidateQuantity(ValueType? quantity, string paramName)
         {
             _ = ConvertQuantity(quantity, paramName, GetQuantityTypeCode());
@@ -78,22 +78,14 @@
 
         public virtual void ValidateQuantity(IQuantifiable? quantifiable, string paramName)
         {
-            ValidateQuantity(this, quantifiable, paramName);
+            decimal quantity = TypeChecked(quantifiable, paramName, GetType())!.GetDefaultQuantity();
 
-            #region Local methods
-            static void ValidateQuantity<T>(T current, IQuantifiable? quantifiable, string paramName)
-                where T : class, IQuantifiable
-            {
-                if (quantifiable is not T currentType) throw ArgumentTypeOutOfRangeException(paramName, quantifiable!);
-
-                decimal quantity = currentType.GetDefaultQuantity();
-
-                if (quantity > 0) return;
-
-                throw QuantityArgumentOutOfRangeException(paramName, quantity);
-            }
-            #endregion
+            ValidateQuantity(this, quantity, paramName);
         }
+        #endregion
+
+        #region Abstract methods
+        public abstract decimal GetDefaultQuantity();
         #endregion
 
         #region Static methods
@@ -123,15 +115,6 @@
 
         #region Protected methods
         #region Static methods
-        //protected static TNum GetQuantity<TNum>(IQuantity<TNum> quantifiable)
-        //    where TNum : struct
-        //{
-        //    TypeCode quantityTypeCode = GetQuantityTypeCode(quantifiable);
-
-        //    return (TNum)quantifiable.GetQuantity(quantityTypeCode);
-        //}
-
-
         protected static TypeCode GetQuantityTypeCode<TNum>(IQuantity<TNum> quantifiable)
             where TNum : struct
         {
@@ -177,6 +160,7 @@
     public abstract class Quantifiable<TSelf> : Quantifiable, IQuantifiable<TSelf>
         where TSelf : class, IQuantifiable
     {
+        #region Constructors
         protected Quantifiable(TSelf other) : base(other)
         {
         }
@@ -197,10 +181,12 @@
         {
         }
 
-        protected Quantifiable(IQuantifiableFactory<TSelf> factory, MeasureUnitCode measureUnitCode, params IQuantifiable[] quantifiables) : base(factory, measureUnitCode, quantifiables)
+        protected Quantifiable(IQuantifiableFactory<TSelf> factory, MeasureUnitCode measureUnitCode, params IShapeComponent[] shapeComponents) : base(factory, measureUnitCode, shapeComponents)
         {
         }
+        #endregion
 
+        #region Public methods
         public int CompareTo(TSelf? other)
         {
             if (other == null) return 1;
@@ -220,11 +206,6 @@
             return GetFactory().CreateQuantifiable(measureUnitCode, defaultQuantity);
         }
 
-        public override sealed TypeCode GetQuantityTypeCode()
-        {
-            return base.GetQuantityTypeCode();
-        }
-
         public bool IsExchangeableTo(Enum? context)
         {
             if (context == null) return false;
@@ -233,7 +214,7 @@
             {
                 if (!IsDefinedMeasureUnit(context)) return false;
 
-                measureUnitCode = GetMeasureUnitCode(context);
+                measureUnitCode = GetDefinedMeasureUnitCode(context);
             }
 
             return HasMeasureUnitCode(measureUnitCode);
@@ -258,19 +239,29 @@
             ValidateQuantity(quantifiable, paramName);
         }
 
+        #region Override methods
         public override IQuantifiableFactory<TSelf> GetFactory()
         {
             return (IQuantifiableFactory<TSelf>)Factory;
+        }
+
+        #region Sealed methods
+        public override sealed TypeCode GetQuantityTypeCode()
+        {
+            return base.GetQuantityTypeCode();
         }
 
         public override sealed void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
         {
             base.ValidateMeasureUnitCode(measureUnitCode, paramName);
         }
+        #endregion
+        #endregion
 
         #region Abstract methods
         public abstract TSelf? ExchangeTo(Enum? context);
         public abstract bool? FitsIn(TSelf? other, LimitMode? limitMode);
+        #endregion
         #endregion
     }
 }

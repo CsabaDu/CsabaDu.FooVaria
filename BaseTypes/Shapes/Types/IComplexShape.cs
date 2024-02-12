@@ -3,6 +3,3 @@
 public interface IComplexShape : IShape
 {
 }
-
-
-// Visszaállítani

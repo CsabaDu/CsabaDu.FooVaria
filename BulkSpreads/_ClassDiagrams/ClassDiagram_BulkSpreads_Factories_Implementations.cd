@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="CsabaDu.FooVaria.BulkSpreads.Factories.Implementations.BulkBodyFactory" Collapsed="true">
-    <Position X="3.5" Y="4" Width="3" />
+    <Position X="3.75" Y="4" Width="3" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\Implementations\BulkBodyFactory.cs</FileName>
@@ -9,7 +9,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.BulkSpreads.Factories.Implementations.BulkSurfaceFactory" Collapsed="true">
-    <Position X="0.5" Y="4" Width="2.75" />
+    <Position X="0.5" Y="4" Width="3" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\Implementations\BulkSurfaceFactory.cs</FileName>

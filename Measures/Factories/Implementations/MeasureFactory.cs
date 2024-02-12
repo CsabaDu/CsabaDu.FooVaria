@@ -69,7 +69,7 @@ public sealed class MeasureFactory(IMeasurementFactory measurementFactory) : IMe
         }
         else
         {
-            measureUnitCode = GetMeasureUnitCode(measureUnit);
+            measureUnitCode = GetDefinedMeasureUnitCode(measureUnit);
         }
 
         return measureUnit switch

@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Fakes.Common.Types
+﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Fakes.BaseTypes.Types
 {
     internal sealed class CommonBaseChild : CommonBase
     {
@@ -7,10 +7,6 @@
         }
 
         public CommonBaseChild(ICommonBase other) : base(other)
-        {
-        }
-
-        public CommonBaseChild(IFactory factory, ICommonBase[] commonBases) : base(factory, commonBases)
         {
         }
     }

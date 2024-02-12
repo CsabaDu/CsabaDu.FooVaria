@@ -170,7 +170,7 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
     {
         if (!IsDefinedMeasureUnit(measureUnit)) return false;
 
-        MeasureUnitCode measureUnitCode = GetMeasureUnitCode(measureUnit);
+        MeasureUnitCode measureUnitCode = GetDefinedMeasureUnitCode(measureUnit);
 
         return measureUnitCode.IsCustomMeasureUnitCode();
     }

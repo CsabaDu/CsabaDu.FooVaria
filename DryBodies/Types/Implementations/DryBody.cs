@@ -1,9 +1,8 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
-
-namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
+﻿namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
 {
     internal abstract class DryBody : SimpleShape, IDryBody
     {
+        #region Constructors
         private protected DryBody(IDryBody other) : base(other)
         {
             Height = other.Height;
@@ -35,10 +34,14 @@ namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
             Height = shapeExtents.Last();
             Volume = (IVolume)GetSpreadMeasure(shapeExtents);
         }
+        #endregion
 
+        #region Properties
         public IVolume Volume { get; init; }
         public IExtent Height { get; init; }
+        #endregion
 
+        #region Public methods
         public IPlaneShape GetBaseFace(ExtentUnit extentUnit)
         {
             return (IPlaneShape)GetBaseFace().GetSimpleShape(extentUnit);
@@ -72,19 +75,16 @@ namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
             throw ArgumentTypeOutOfRangeException(paramName, planeShape);
         }
 
-        public override sealed IVolume GetSpreadMeasure()
-        {
-            return Volume;
-        }
-
+        #region Override methods
         public override IDryBodyFactory GetFactory()
         {
             return (IDryBodyFactory)Factory;
         }
 
-        public virtual IPlaneShapeFactory GetBaseFaceFactory()
+        #region Sealed methods
+        public override sealed IVolume GetSpreadMeasure()
         {
-            return GetFactory().BaseFaceFactory;
+            return Volume;
         }
 
         public override sealed IShapeComponent? GetValidShapeComponent(IQuantifiable? shapeComponent)
@@ -93,15 +93,28 @@ namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
 
             return (IShapeComponent)shapeComponent;
         }
+        #endregion
+        #endregion
 
+        #region Virtual methods
+        public virtual IPlaneShapeFactory GetBaseFaceFactory()
+        {
+            return GetFactory().BaseFaceFactory;
+        }
+        #endregion
+
+        #region Abstract methods
         public abstract IPlaneShape GetBaseFace();
         public abstract IPlaneShape GetProjection(ShapeExtentCode perpendicular);
+        #endregion
+        #endregion
     }
 
     internal abstract class DryBody<TSelf, TBFace> : DryBody, IDryBody<TSelf, TBFace>
         where TSelf : class, IDryBody, ITangentShape
         where TBFace : IPlaneShape, ITangentShape
     {
+        #region Constructors
         private protected DryBody(TSelf other) : base(other)
         {
             BaseFace = (TBFace)other.GetBaseFace();
@@ -116,24 +129,35 @@ namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
         {
             BaseFace = baseFace;
         }
+        #endregion
 
+        #region Properties
         public TBFace BaseFace { get; init; }
+        #endregion
 
+        #region Public methods
         public TSelf GetDryBody(TBFace baseFace, IExtent height)
         {
             return GetFactory().Create(baseFace, height);
         }
 
+        #region Override methods
         public override IDryBodyFactory<TSelf, TBFace> GetFactory()
         {
             return (IDryBodyFactory<TSelf, TBFace>)Factory;
         }
 
+        #region Sealed methods
         public override sealed IPlaneShape GetBaseFace()
         {
             return BaseFace;
         }
+        #endregion
+        #endregion
 
+        #region Abstract methods
         public abstract TSelf GetNew(TSelf other);
+        #endregion
+        #endregion
     }
 }

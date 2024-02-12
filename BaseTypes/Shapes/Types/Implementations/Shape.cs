@@ -11,7 +11,7 @@ public abstract class Shape : Spread, IShape
     {
     }
 
-    protected Shape(ISpreadFactory factory, MeasureUnitCode measureUnitCode, params IQuantifiable[] shapeComponents) : base(factory, measureUnitCode, shapeComponents)
+    protected Shape(ISpreadFactory factory, MeasureUnitCode measureUnitCode, params IShapeComponent[] shapeComponents) : base(factory, measureUnitCode, shapeComponents)
     {
     }
     #endregion

@@ -33,7 +33,7 @@
 
         public override void ValidateMeasureUnit(Enum measureUnit, string paramName)
         {
-            MeasureUnitCode measureUnitCode = GetMeasureUnitCode(measureUnit);
+            MeasureUnitCode measureUnitCode = GetDefinedMeasureUnitCode(measureUnit);
 
             if (IsValidMeasureUnitCode(measureUnitCode)) return;
 

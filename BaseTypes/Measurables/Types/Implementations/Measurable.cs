@@ -18,8 +18,8 @@ public abstract class Measurable : CommonBase, IMeasurable
     #region Static constructor
     static Measurable()
     {
-        MeasureUnitTypeSet = new HashSet<Type>()
-        {
+        MeasureUnitTypeSet =
+        [
             typeof(AreaUnit),
             typeof(Currency),
             typeof(DistanceUnit),
@@ -28,9 +28,24 @@ public abstract class Measurable : CommonBase, IMeasurable
             typeof(Pieces),
             typeof(VolumeUnit),
             typeof(WeightUnit),
-        };
+        ];
+
         MeasureUnitCodes = Enum.GetValues<MeasureUnitCode>();
-        MeasureUnitTypeCollection = InitMeasureUnitTypeCollection();
+
+        if (MeasureUnitCodes.Length != MeasureUnitTypeSet.Count) throw new InvalidOperationException(null);
+
+        MeasureUnitTypeCollection = MeasureUnitCodes.ToDictionary
+            (
+                x => x,
+                getMeasureUnitType
+            );
+
+        #region Local methods
+        static Type getMeasureUnitType(MeasureUnitCode measureUnitCode)
+        {
+            return MeasureUnitTypeSet.First(x => x.Name == Enum.GetName(measureUnitCode));
+        }
+        #endregion
     }
     #endregion
 
@@ -41,17 +56,12 @@ public abstract class Measurable : CommonBase, IMeasurable
 
     protected Measurable(IMeasurableFactory factory, Enum measureUnit) : base(factory)
     {
-        MeasureUnitCode = GetValidMeasureUnitCode(measureUnit);
+        MeasureUnitCode = GetDefinedMeasureUnitCode(measureUnit);
     }
 
-    protected Measurable(IMeasurableFactory factory, IMeasurable measurable) : base(factory, measurable)
+    protected Measurable(IMeasurableFactory factory, IMeasurable measurable) : base(factory)
     {
-        MeasureUnitCode = measurable.MeasureUnitCode;
-    }
-
-    protected Measurable(IMeasurableFactory factory, MeasureUnitCode measureUnitCode, params IMeasurable[] measurables) : base(factory, measurables)
-    {
-        MeasureUnitCode = Defined(measureUnitCode, nameof(measureUnitCode));
+        MeasureUnitCode = NullChecked(measurable, nameof(measurable)).MeasureUnitCode;
     }
 
     protected Measurable(IMeasurable other) : base(other)
@@ -64,9 +74,9 @@ public abstract class Measurable : CommonBase, IMeasurable
     public MeasureUnitCode MeasureUnitCode { get; init; }
 
     #region Static properties
-    public static IDictionary<MeasureUnitCode, Type> MeasureUnitTypeCollection { get; }
-    public static ISet<Type> MeasureUnitTypeSet { get; }
-    public static IEnumerable<MeasureUnitCode> MeasureUnitCodes { get; }
+    public static Dictionary<MeasureUnitCode, Type> MeasureUnitTypeCollection { get; }
+    public static HashSet<Type> MeasureUnitTypeSet { get; }
+    public static MeasureUnitCode[] MeasureUnitCodes { get; }
     #endregion
     #endregion
 
@@ -127,7 +137,7 @@ public abstract class Measurable : CommonBase, IMeasurable
 
     public virtual void ValidateMeasureUnit(Enum measureUnit, string paramName)
     {
-        MeasureUnitCode measureUnitCode = GetMeasureUnitCode(NullChecked(measureUnit, paramName));
+        MeasureUnitCode measureUnitCode = GetDefinedMeasureUnitCode(NullChecked(measureUnit, paramName));
 
         if (HasMeasureUnitCode(measureUnitCode)) return;
 
@@ -214,16 +224,7 @@ public abstract class Measurable : CommonBase, IMeasurable
         return MeasureUnitTypeCollection[measureUnitCode];
     }
 
-    public static MeasureUnitCode GetValidMeasureUnitCode(Enum measureUnit)
-    {
-        ValidateMeasureUnitByDefinition(measureUnit, nameof(measureUnit));
-
-        Type measureUnitType = measureUnit.GetType();
-
-        return MeasureUnitTypeCollection.First(x => x.Value == measureUnitType).Key;
-    }
-
-    public static MeasureUnitCode GetMeasureUnitCode(Enum measureUnit)
+    public static MeasureUnitCode GetDefinedMeasureUnitCode(Enum measureUnit)
     {
         string name = DefinedMeasureUnit(measureUnit, nameof(measureUnit)).GetType().Name;
 
@@ -242,10 +243,17 @@ public abstract class Measurable : CommonBase, IMeasurable
         return MeasureUnitCodes.First(x => Enum.GetName(x) == name);
     }
 
+    public static MeasureUnitCode GetMeasureUnitCode(Enum measureUnit)
+    {
+        if (measureUnit is not MeasureUnitCode measureUnitCode) return GetDefinedMeasureUnitCode(measureUnit);
+
+        return Defined(measureUnitCode, nameof(measureUnit));
+    }
+
     public static bool HasMeasureUnitCode(MeasureUnitCode measureUnitCode, Enum measureUnit)
     {
         return IsDefinedMeasureUnit(measureUnit)
-            && measureUnitCode == GetMeasureUnitCode(measureUnit!);
+            && measureUnitCode == GetDefinedMeasureUnitCode(measureUnit!);
     }
 
     public static bool IsDefaultMeasureUnit(Enum measureUnit)
@@ -270,7 +278,7 @@ public abstract class Measurable : CommonBase, IMeasurable
 
         if (!IsDefinedMeasureUnit(measureUnit)) return false;
 
-        measureUnitCode = GetMeasureUnitCode(measureUnit!);
+        measureUnitCode = GetDefinedMeasureUnitCode(measureUnit!);
 
         return true;
     }
@@ -312,7 +320,7 @@ public abstract class Measurable : CommonBase, IMeasurable
 
     public static void ValidateMeasureUnit(Enum measureUnit, Type measureUnitType)
     {
-        MeasureUnitCode measureUnitCode = GetMeasureUnitCode(measureUnit);
+        MeasureUnitCode measureUnitCode = GetDefinedMeasureUnitCode(measureUnit);
 
         if (NullChecked(measureUnitType, nameof(measureUnitType)) == GetMeasureUnitType(measureUnitCode)) return;
 
@@ -335,29 +343,6 @@ public abstract class Measurable : CommonBase, IMeasurable
         MeasureUnitCode measureUnitCode = measurable.MeasureUnitCode;
 
         return (TSelf)measurable.GetDefault(measureUnitCode)!;
-    }
-    #endregion
-    #endregion
-
-    #region Private methods
-    #region Static methods
-    private static IDictionary<MeasureUnitCode, Type> InitMeasureUnitTypeCollection()
-    {
-        if (MeasureUnitCodes.Count() != MeasureUnitTypeSet.Count) throw new InvalidOperationException(null);
-
-        return initMeasureUnitTypeCollection().ToDictionary(x => x.Key, x => x.Value);
-
-        #region Local methods
-        IEnumerable<KeyValuePair<MeasureUnitCode, Type>> initMeasureUnitTypeCollection()
-        {
-            foreach (MeasureUnitCode item in MeasureUnitCodes)
-            {
-                Type measureUnitType = MeasureUnitTypeSet.First(x => x.Name == Enum.GetName(item));
-
-                yield return new KeyValuePair<MeasureUnitCode, Type>(item, measureUnitType);
-            }
-        }
-        #endregion
     }
     #endregion
     #endregion

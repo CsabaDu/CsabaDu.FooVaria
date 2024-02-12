@@ -8,13 +8,6 @@ public abstract class CommonBase : ICommonBase
         Factory = NullChecked(factory, nameof(factory));
     }
 
-    protected CommonBase(IFactory factory, object? commonBases)
-    {
-        Factory = NullChecked(factory, nameof(factory));
-
-        _ = NullChecked(commonBases, nameof(commonBases));
-    }
-
     protected CommonBase(ICommonBase other)
     {
         Factory = NullChecked(other, nameof(other)).Factory;

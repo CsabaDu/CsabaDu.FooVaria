@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Spreads.Factories.ISpreadFactory" Collapsed="true">
-    <Position X="1" Y="1.75" Width="2" />
+    <Position X="1.25" Y="1.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
       <FileName>Factories\ISpreadFactory.cs</FileName>
@@ -11,8 +11,8 @@
     <Position X="2.25" Y="3" Width="1.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Spreads.Factories.ISpreadFactory" FixedFromPoint="true">
       <Path>
-        <Point X="2.25" Y="2.441" />
-        <Point X="2.25" Y="2.7" />
+        <Point X="2.5" Y="2.441" />
+        <Point X="2.5" Y="2.7" />
         <Point X="3" Y="2.7" />
         <Point X="3" Y="3" />
       </Path>
@@ -26,8 +26,8 @@
     <Position X="0.5" Y="3" Width="1.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Spreads.Factories.ISpreadFactory" FixedFromPoint="true">
       <Path>
-        <Point X="1.75" Y="2.441" />
-        <Point X="1.75" Y="2.7" />
+        <Point X="2" Y="2.441" />
+        <Point X="2" Y="2.7" />
         <Point X="1.25" Y="2.7" />
         <Point X="1.25" Y="3" />
       </Path>
@@ -38,7 +38,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Factories.IQuantifiableFactory&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="1" Y="0.5" Width="2" />
+    <Position X="1.25" Y="0.5" Width="2" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />

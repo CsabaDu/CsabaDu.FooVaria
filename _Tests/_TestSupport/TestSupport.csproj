@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\BaseTypes\Common\Common.csproj" />
+    <ProjectReference Include="..\..\BaseTypes\Measurables\Measurables.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -160,31 +160,28 @@ public static class ExceptionMethods
     #region ArgumentNullException
     public static T NullChecked<T>(T? param, string? paramName)
     {
-        if (param == null
-            || param is IEnumerable enumerable
-            && areAllElementsNull())
+        if (param == null) throw new ArgumentNullException(paramName);
+
+        if (param is not IEnumerable enumerable) return param;
+
+        if (enumerable.GetEnumerator() == null
+            || enumerable.Cast<object>().All(x => x == null))
         {
             throw new ArgumentNullException(paramName);
         }
 
         return param;
-
-        bool areAllElementsNull()
-        {
-            return enumerable.GetEnumerator() == null
-                || enumerable.Cast<object>().All(x => x == null);
-        }
     }
     #endregion
 
     #region ArgumentOutOfRangeException
-    public static T TypeChecked<T>(T param, string paramName, [DisallowNull] Type type)
+    public static T TypeChecked<T>(T param, [DisallowNull] string paramName, [DisallowNull] Type type)
     {
-        Type paramType = NullChecked(param, paramName)!.GetType();
+        Type paramType = typeof(T);
 
-        if (paramType == type) return param;
+        if (paramType == type) return NullChecked(param, paramName);
 
-        throw new ArgumentOutOfRangeException(paramName, paramType, null);
+        throw ArgumentTypeOutOfRangeException(paramName, paramType);
     }
     #endregion
 

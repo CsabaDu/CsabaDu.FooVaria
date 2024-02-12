@@ -121,7 +121,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
 
         MeasurementFactory factory = new();
 
-        return GetMeasureUnitCode(measureUnit).IsCustomMeasureUnitCode() ?
+        return GetDefinedMeasureUnitCode(measureUnit).IsCustomMeasureUnitCode() ?
             new CustomMeasurement(factory, measureUnit)
             : new ConstantMeasurement(factory, measureUnit);
     }

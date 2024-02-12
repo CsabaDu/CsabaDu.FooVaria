@@ -6,6 +6,3 @@ public interface IShape : ISpread, IFit<IShape>, IShapeComponents/*, IShapeCompo
 
     void ValidateShapeComponent(IQuantifiable? shapeComponent, string paramName);
 }
-
-
-// Visszaállítani

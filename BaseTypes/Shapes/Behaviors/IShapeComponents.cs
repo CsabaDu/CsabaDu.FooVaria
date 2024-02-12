@@ -7,7 +7,7 @@
 
     }
 
-    public interface IShapeComponents<out T> : IShapeComponents where T : class/*, IQuantifiable*/, IShapeComponent // Vissza!
+    public interface IShapeComponents<out T> : IShapeComponents where T : class, IQuantifiable, IShapeComponent
     {
         IEnumerable<T>? GetShapeComponents(IShape shape);
     }

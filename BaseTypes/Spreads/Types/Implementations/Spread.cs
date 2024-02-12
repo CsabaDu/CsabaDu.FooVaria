@@ -11,7 +11,7 @@ public abstract class Spread : Quantifiable<ISpread>, ISpread
     {
     }
 
-    protected Spread(ISpreadFactory factory, MeasureUnitCode measureUnitCode, params IQuantifiable[] quantifiables) : base(factory, measureUnitCode, quantifiables)
+    protected Spread(ISpreadFactory factory, MeasureUnitCode measureUnitCode, params IShapeComponent[] shapeComponents) : base(factory, measureUnitCode, shapeComponents)
     {
     }
 
