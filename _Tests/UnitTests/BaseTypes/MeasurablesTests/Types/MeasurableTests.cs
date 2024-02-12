@@ -228,7 +228,6 @@ public sealed class MeasurableTests
     }
     #endregion
     #endregion
-    #endregion
 
     #region Equals
     #region Equals(object?)
@@ -295,6 +294,7 @@ public sealed class MeasurableTests
         // Assert
         Assert.IsTrue(expected.SequenceEqual(actual));
     }
+    #endregion
     #endregion
     #endregion
 
