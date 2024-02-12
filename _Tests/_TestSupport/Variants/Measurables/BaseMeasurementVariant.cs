@@ -2,24 +2,24 @@
 //{
 //    internal class BaseMeasurementVariant
 //    {
-//        internal IDictionary<object, decimal> GetConstantExchangeRateCollection(MeasureUnitTypeCode measureUnitTypeCode)
+//        internal IDictionary<object, decimal> GetConstantExchangeRateCollection(MeasureUnitCode measureUnitCode)
 //        {
-//            return GetMeasureUnitBasedCollection(BaseMeasurement.ConstantExchangeRateCollection, measureUnitTypeCode);
+//            return GetMeasureUnitBasedCollection(BaseMeasurement.ConstantExchangeRateCollection, measureUnitCode);
 //        }
 
-//        internal IDictionary<object, string> GetCustomNameCollection(MeasureUnitTypeCode measureUnitTypeCode)
+//        internal IDictionary<object, string> GetCustomNameCollection(MeasureUnitCode measureUnitCode)
 //        {
-//            return GetMeasureUnitBasedCollection(BaseMeasurement.CustomNameCollection, measureUnitTypeCode);
+//            return GetMeasureUnitBasedCollection(BaseMeasurement.CustomNameCollection, measureUnitCode);
 //        }
 
-//        internal IDictionary<object, decimal> GetExchangeRateCollection(MeasureUnitTypeCode measureUnitTypeCode)
+//        internal IDictionary<object, decimal> GetExchangeRateCollection(MeasureUnitCode measureUnitCode)
 //        {
-//            return GetMeasureUnitBasedCollection(BaseMeasurement.ExchangeRateCollection, measureUnitTypeCode);
+//            return GetMeasureUnitBasedCollection(BaseMeasurement.ExchangeRateCollection, measureUnitCode);
 //        }
 
-//        private static IDictionary<object, T> GetMeasureUnitBasedCollection<T>(IDictionary<object, T> measureUnitBasedCollection, MeasureUnitTypeCode measureUnitTypeCode) where T : notnull
+//        private static IDictionary<object, T> GetMeasureUnitBasedCollection<T>(IDictionary<object, T> measureUnitBasedCollection, MeasureUnitCode measureUnitCode) where T : notnull
 //        {
-//            _ = ExceptionMethods.Defined(measureUnitTypeCode, nameof(measureUnitTypeCode));
+//            _ = ExceptionMethods.Defined(measureUnitCode, nameof(measureUnitCode));
 
 //            return getMeasureUnitBasedList()
 //                .OrderBy(x => x.Key)
@@ -30,7 +30,7 @@
 //            {
 //                foreach (KeyValuePair<object, T> item in measureUnitBasedCollection)
 //                {
-//                    if (item.Key.GetType().Equals(MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode)))
+//                    if (item.Key.GetType().Equals(MeasureUnitTypes.GetMeasureUnitType(measureUnitCode)))
 //                    {
 //                        yield return item;
 //                    }

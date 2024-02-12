@@ -9,6 +9,6 @@ public static class ParamNames
     public const string fooVariaObject = "fooVariaObject";
     public const string measurable = "measurable";
     public const string measureUnit = "measureUnit";
-    public const string measureUnitTypeCode = "measureUnitTypeCode";
+    public const string measureUnitCode = "measureUnitCode";
     public const string other = "other";
 }

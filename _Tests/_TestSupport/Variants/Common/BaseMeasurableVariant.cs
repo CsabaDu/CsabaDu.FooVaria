@@ -3,18 +3,18 @@
 //public class BaseMeasurableVariant
 //{
 //    #region Public methods
-//    internal Enum GetDefaultMeasureUnit(MeasureUnitTypeCode measureUnitTypeCode)
+//    internal Enum GetDefaultMeasureUnit(MeasureUnitCode measureUnitCode)
 //    {
-//        Type measureUnitType = MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode)!;
+//        Type measureUnitType = MeasureUnitTypes.GetMeasureUnitType(measureUnitCode)!;
 
 //        return MeasureUnitTypes.GetDefaultMeasureUnit(measureUnitType);
 //    }
 
-//    internal IEnumerable<string> GetDefaultNames(MeasureUnitTypeCode? measureUnitTypeCode)
+//    internal IEnumerable<string> GetDefaultNames(MeasureUnitCode? measureUnitCode)
 //    {
-//        if (measureUnitTypeCode.HasValue) return getDefaultNames(measureUnitTypeCode.Value);
+//        if (measureUnitCode.HasValue) return getDefaultNames(measureUnitCode.Value);
 
-//        IEnumerable<MeasureUnitTypeCode> measureUnitTypeCodes = MeasureUnitTypes.GetMeasureUnitTypeCodes();
+//        IEnumerable<MeasureUnitCode> measureUnitTypeCodes = MeasureUnitTypes.GetMeasureUnitCodes();
 //        IEnumerable<string> defaultNames = getDefaultNames(measureUnitTypeCodes.First());
 
 //        for (int i = 1; i < measureUnitTypeCodes.Count(); i++)
@@ -26,9 +26,9 @@
 //        return defaultNames;
 
 //        #region Local methods
-//        static IEnumerable<string> getDefaultNames(MeasureUnitTypeCode measureUnitTypeCode)
+//        static IEnumerable<string> getDefaultNames(MeasureUnitCode measureUnitCode)
 //        {
-//            Type measureUnitType = MeasureUnitTypes.GetMeasureUnitType(measureUnitTypeCode);
+//            Type measureUnitType = MeasureUnitTypes.GetMeasureUnitType(measureUnitCode);
 
 //            foreach (string item in Enum.GetNames(measureUnitType))
 //            {
@@ -38,25 +38,25 @@
 //        #endregion
 //    }
 
-//    internal Type GetMeasureUnitType(MeasureUnitTypeCode measureUnitTypeCode)
+//    internal Type GetMeasureUnitType(MeasureUnitCode measureUnitCode)
 //    {
-//        Enum measureUnit = MeasureUnitTypes.GetDefaultMeasureUnit(measureUnitTypeCode);
+//        Enum measureUnit = MeasureUnitTypes.GetDefaultMeasureUnit(measureUnitCode);
 
 //        return measureUnit.GetType();
 //    }
 
-//    //internal MeasureUnitTypeCode GetMeasureUnitTypeCode(Enum measureUnit)
+//    //internal MeasureUnitCode GetMeasureUnitCode(Enum measureUnit)
 //    //{
 //    //    Type measureUnitType = measureUnit.GetType();
 
 //    //    string measureUnitTypeName = measureUnitType.Name;
 
-//    //    return (MeasureUnitTypeCode)Enum.Parse(typeof(MeasureUnitTypeCode), measureUnitTypeName);
+//    //    return (MeasureUnitCode)Enum.Parse(typeof(MeasureUnitCode), measureUnitTypeName);
 //    //}
 
-//    //internal IEnumerable<MeasureUnitTypeCode> GetMeasureUnitTypeCodes()
+//    //internal IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
 //    //{
-//    //    return Enum.GetValues<MeasureUnitTypeCode>();
+//    //    return Enum.GetValues<MeasureUnitCode>();
 //    //}
 //    #endregion
 //}

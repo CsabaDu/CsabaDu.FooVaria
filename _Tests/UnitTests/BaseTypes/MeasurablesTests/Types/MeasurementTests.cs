@@ -17,14 +17,14 @@
 //        public void InitializeMeasurableTests()
 //        {
 //            measureUnit = RandomParams.GetRandomValidMeasureUnit();
-//            factory = new MeasurementFactory();
-//            measurement = factory.Create(measureUnit);
+//            factoryObject = new MeasurementFactory();
+//            measurement = factoryObject.Create(measureUnit);
 //        }
 //        #endregion
 
 //        #region Private fields
 //        private IMeasurement measurement;
-//        private IMeasurementFactory factory;
+//        private IMeasurementFactory factoryObject;
 //        private Enum measureUnit;
 
 //        #region Readonly fields
@@ -41,13 +41,13 @@
 //        #region Measurement(IMeasurementFactory, Enum)
 //        [TestMethod, TestCategory("UnitTest")]
 //        [DynamicData(nameof(GetMeasurementFactoryNameArgsArrayList), DynamicDataSourceType.Method)]
-//        public void Measurement_nullArgs_IMeasurementFactory_Enum_throws_ArgumentNullException(string paramName, IMeasurementFactory factory)
+//        public void Measurement_nullArgs_IMeasurementFactory_Enum_throws_ArgumentNullException(string paramName, IMeasurementFactory factoryObject)
 //        {
 //            // Arrange
 //            measureUnit = null;
 
 //            // Act
-//            void attempt() => _ = new Measurement(factory, measureUnit);
+//            void attempt() => _ = new Measurement(factoryObject, measureUnit);
 
 //            // Assert
 //            var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
@@ -60,7 +60,7 @@
 //        {
 //            // Arrange
 //            // Act
-//            void attempt() => _ = new Measurement(factory, measureUnit);
+//            void attempt() => _ = new Measurement(factoryObject, measureUnit);
 
 //            // Assert
 //            var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
@@ -75,7 +75,7 @@
 //            decimal exchangeRate = BaseMeasurement.ExchangeRateCollection.FirstOrDefault(x => x.Key.Equals(measureUnit)).Value;
 
 //            // Act
-//            var actual = new Measurement(factory, measureUnit);
+//            var actual = new Measurement(factoryObject, measureUnit);
 
 //            // Assert
 //            Assert.IsInstanceOfType(actual, typeof(IMeasurement));
@@ -104,7 +104,7 @@
 //        //{
 //        //    // Arrange
 //        //    measureUnit = RandomParams.GetRandomValidMeasureUnit();
-//        //    baseMeasurement = new BaseMeasurementChild(factory, measureUnit);
+//        //    baseMeasurement = new BaseMeasurementChild(factoryObject, measureUnit);
 //        //    name = Guid.NewGuid().ToString();
 //        //    baseMeasurement.SetCustomName(measureUnit, name);
 
