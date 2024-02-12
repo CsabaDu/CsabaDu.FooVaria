@@ -254,20 +254,20 @@ internal class DynamicDataSources
         }
     }
 
-    //    #region Enum, MeasureUnitCode
-    //    protected class Enum_MeasureUnitCode_args : Enum_arg
-    //    {
-    //        internal MeasureUnitCode MeasureUnitCode { get; init; }
+    #region Enum, MeasureUnitCode
+    protected class Enum_MeasureUnitCode_args : Enum_arg
+    {
+        internal MeasureUnitCode MeasureUnitCode { get; init; }
 
-    //        public override object[] ToObjectArray()
-    //        {
-    //            return new object[]
-    //            {
-    //                MeasureUnit,
-    //                MeasureUnitCode,
-    //            };
-    //        }
-    //    }
+        public override object[] ToObjectArray()
+        {
+            return
+            [
+                    MeasureUnit,
+                    MeasureUnitCode,
+            ];
+        }
+    }
 
     //    #region Enum, MeasureUnitCode, string
     //    protected class Enum_MeasureUnitCode_String_args : Enum_MeasureUnitCode_args
@@ -508,6 +508,36 @@ internal class DynamicDataSources
         #endregion
     }
 
+    internal IEnumerable<object[]> GetMeasurableValidateMeasureUnitInvalidArgsArrayList()
+    {
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
+        measureUnit = measureUnitCode;
+        yield return toObjectArray();
+
+        measureUnit = GetNotDefinedMeasureUnit(measureUnitCode);
+        yield return toObjectArray();
+
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode(measureUnitCode));
+        yield return toObjectArray();
+
+        measureUnit = RandomParams.GetRandomMeasureUnit();
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode(measureUnit));
+        yield return toObjectArray();
+
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            return new Enum_MeasureUnitCode_args
+            {
+                MeasureUnit = measureUnit,
+                MeasureUnitCode = measureUnitCode,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+    }
+    #endregion
     //    internal IEnumerable<object[]> GetInvalidBaseMeasurementEnumMeasureUnitArgArrayList()
     //    {
     //        foreach (object[] item in GetInvalidEnumMeasureUnitArgArrayList())
@@ -790,32 +820,6 @@ internal class DynamicDataSources
     //            {
     //                MeasureUnitCode = measureUnitCode,
     //                Measurable = measurable,
-    //            }
-    //            .ToObjectArray();
-    //        }
-    //        #endregion
-    //    }
-
-    //    internal IEnumerable<object[]> GetMeasurableValidateMeasureUnitInvalidArgsArrayList()
-    //    {
-    //        measureUnit = SampleParams.DefaultLimitMode;
-    //        measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
-    //        yield return toObjectArray();
-
-    //        measureUnit = RandomParams.GetRandomNotDefinedMeasureUnit();
-    //        yield return toObjectArray();
-
-    //        measureUnit = RandomParams.GetRandomMeasureUnit();
-    //        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(MeasureUnitTypes.GetMeasureUnitCode(measureUnit));
-    //        yield return toObjectArray();
-
-    //        #region toObjectArray method
-    //        object[] toObjectArray()
-    //        {
-    //            return new Enum_MeasureUnitCode_args
-    //            {
-    //                MeasureUnit = measureUnit,
-    //                MeasureUnitCode = measureUnitCode,
     //            }
     //            .ToObjectArray();
     //        }

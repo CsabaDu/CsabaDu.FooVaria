@@ -1,4 +1,6 @@
-﻿global using CsabaDu.FooVaria.BaseTypes.Common.Factories;
+﻿global using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Factories;
+global using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;
+global using CsabaDu.FooVaria.BaseTypes.Common.Factories;
 global using CsabaDu.FooVaria.BaseTypes.Common.Types;
 global using CsabaDu.FooVaria.BaseTypes.Common.Types.Implementations;
 global using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
@@ -8,7 +10,6 @@ global using CsabaDu.FooVaria.BaseTypes.Measurables.Types;
 global using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
 global using CsabaDu.FooVaria.Tests.TestSupport.Fakes.BaseTypes.Factories;
 global using CsabaDu.FooVaria.Tests.TestSupport.Fakes.BaseTypes.Types;
+global using System.Reflection;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;
 global using static CsabaDu.FooVaria.Tests.TestSupport.Params.SampleParams;
-global using System.Reflection;
-

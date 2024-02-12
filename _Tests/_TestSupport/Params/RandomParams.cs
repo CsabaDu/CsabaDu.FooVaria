@@ -46,12 +46,13 @@ public class RandomParams
         #endregion
     }
 
-    public Enum GetRandomNotDefinedMeasureUnit()
+    public Enum GetRandomNotDefinedMeasureUnit(MeasureUnitCode? excludedMeasureUnitCode = null)
     {
-        MeasureUnitCode measureUnitCode = GetRandomMeasureUnitCode();
+        MeasureUnitCode measureUnitCode = GetRandomMeasureUnitCode(excludedMeasureUnitCode);
 
         return GetNotDefinedMeasureUnit(measureUnitCode);
     }
+
 
     public string GetRandomParamName()
     {

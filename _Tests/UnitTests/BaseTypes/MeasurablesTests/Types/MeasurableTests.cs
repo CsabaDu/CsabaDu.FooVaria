@@ -312,7 +312,7 @@ public sealed class MeasurableTests
     #endregion
     #endregion
 
-    //    #region ValidateMeasureUnit
+    #region ValidateMeasureUnit
     #region ValidateMeasureUnit(Enum, string)
     [TestMethod, TestCategory("UnitTest")]
     public void ValidateMeasureUnit_nullArg_Enum_throws_ArgumentNullException()
@@ -329,46 +329,46 @@ public sealed class MeasurableTests
         Assert.AreEqual(paramName, ex.ParamName);
     }
 
-    //[TestMethod, TestCategory("UnitTest")]
-    //[DynamicData(nameof(GetMeasurableValidateMeasureUnitInvalidArgsArrayList), DynamicDataSourceType.Method)]
-    //public void ValidateMeasureUnit_invalidArg_Enum_throws_InvalidEnumArgumentException(Enum measureUnit, MeasureUnitCode measureUnitCode)
-    //{
-    //    // Arrange
-    //    measurableObject = new MeasurableChild(factoryObject, measureUnitCode);
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetMeasurableValidateMeasureUnitInvalidArgsArrayList), DynamicDataSourceType.Method)]
+    public void ValidateMeasureUnit_invalidArg_Enum_throws_InvalidEnumArgumentException(Enum measureUnit, MeasureUnitCode measureUnitCode)
+    {
+        // Arrange
+        measurableObject = new MeasurableChild(factoryObject, measureUnitCode);
+        paramName = RandomParams.GetRandomParamName();
 
-    //    // Act
-    //    void attempt() => measurableObject.ValidateMeasureUnit(measureUnit,);
+        // Act
+        void attempt() => measurableObject.ValidateMeasureUnit(measureUnit, paramName);
 
-    //    // Assert
-    //    var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
-    //    Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
-    //}
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(paramName, ex.ParamName);
+    }
 
-    //[TestMethod, TestCategory("UnitTest")]
-    //public void ValidateMeasureUnit_validArg_Enum_returns()
-    //{
-    //    // Arrange
-    //    measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
-    //    measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
-    //    measurableObject = new MeasurableChild(factoryObject, measureUnitCode);
-    //    bool returned;
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateMeasureUnit_validArg_Enum_returns()
+    {
+        // Arrange
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
+        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
+        measurableObject = new MeasurableChild(factoryObject, measureUnitCode);
+        bool returned = true;
 
-    //    // Act
-    //    try
-    //    {
-    //        measurableObject.ValidateMeasureUnit(measureUnit);
-    //        returned = true;
-    //    }
-    //    catch
-    //    {
-    //        returned = false;
-    //    }
+        // Act
+        try
+        {
+            measurableObject.ValidateMeasureUnit(measureUnit, string.Empty);
+        }
+        catch
+        {
+            returned = false;
+        }
 
-    //    // Assert
-    //    Assert.IsTrue(returned);
-    //}
+        // Assert
+        Assert.IsTrue(returned);
+    }
     #endregion
-//#endregion
+    #endregion
 
     //    #region ValidateMeasureUnitCode
     //    #region ValidateMeasureUnitCode(MeasureUnitCode)
@@ -427,6 +427,11 @@ public sealed class MeasurableTests
         return DynamicDataSources.GetBoolMeasureUnitCodeArgsArrayList();
     }
 
+    private static IEnumerable<object[]> GetMeasurableValidateMeasureUnitInvalidArgsArrayList()
+    {
+        return DynamicDataSources.GetMeasurableValidateMeasureUnitInvalidArgsArrayList();
+    }
+
     //    private static IEnumerable<object[]> GetMeasurableValidateInvalidArgArrayList()
     //    {
     //        return DynamicDataSources.GetMeasurableValidateInvalidArgArrayList();
@@ -435,11 +440,6 @@ public sealed class MeasurableTests
     //    private static IEnumerable<object[]> GetMeasurableValidateValidArgArrayList()
     //    {
     //        return DynamicDataSources.GetMeasurableValidateValidArgArrayList();
-    //    }
-
-    //    private static IEnumerable<object[]> GetMeasurableValidateMeasureUnitInvalidArgsArrayList()
-    //    {
-    //        return DynamicDataSources.GetMeasurableValidateMeasureUnitInvalidArgsArrayList();
     //    }
 
     //    private static IEnumerable<object[]> GetMeasurableValidateMeasureUnitCodeArgsArrayList()

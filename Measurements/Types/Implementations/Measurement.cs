@@ -109,10 +109,10 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
         return GetValidMeasureUnits().Where(x => x.GetType().Equals(measureUnitCode.GetMeasureUnitType()));
     }
 
-    public void RestoreCustomNameCollection() // TODO
-    {
-        CustomNameCollection.Clear();
-    }
+    //public void RestoreCustomNameCollection() // TODO
+    //{
+    //    CustomNameCollection.Clear();
+    //}
 
     public void SetCustomName(Enum measureUnit, string customName)
     {
@@ -217,11 +217,11 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
         return GetCustomName() ?? GetDefaultName();
     }
 
-    public override sealed void RestoreConstantExchangeRates() // TODO
-    {
-        RestoreCustomNameCollection();
-        ExchangeRateCollection = new Dictionary<object, decimal>(ConstantExchangeRateCollection);
-    }
+    //public override sealed void RestoreConstantExchangeRates() // TODO
+    //{
+    //    RestoreCustomNameCollection();
+    //    ExchangeRateCollection = new Dictionary<object, decimal>(ConstantExchangeRateCollection);
+    //}
     #endregion
     #endregion
     #endregion

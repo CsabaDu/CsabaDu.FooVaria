@@ -138,10 +138,12 @@ public abstract class Measurable : CommonBase, IMeasurable
     public virtual void ValidateMeasureUnit(Enum? measureUnit, string paramName)
     {
         Type enumType = NullChecked(measureUnit, paramName).GetType();
-        KeyValuePair<MeasureUnitCode, Type>? keyValuePair = MeasureUnitTypeCollection.FirstOrDefault(x => x.Value == enumType);
-        MeasureUnitCode measureUnitCode = (keyValuePair ?? throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName)).Key;
 
-        if (HasMeasureUnitCode(measureUnitCode)) return;
+        if (!Enum.IsDefined(enumType, measureUnit!)) throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName);
+
+        KeyValuePair<MeasureUnitCode, Type> keyValuePair = MeasureUnitTypeCollection.FirstOrDefault(x => x.Value == enumType);
+
+        if (HasMeasureUnitCode(keyValuePair.Key)) return;
 
         throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName);
     }

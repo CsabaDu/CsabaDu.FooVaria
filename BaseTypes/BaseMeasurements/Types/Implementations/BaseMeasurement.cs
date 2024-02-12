@@ -64,6 +64,11 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
         return GetExchangeRateCollection(MeasureUnitCode);
     }
 
+    public Enum GetMeasureUnit(IMeasureUnit<Enum>? other)
+    {
+        return (other ?? this).GetMeasureUnit();
+    }
+
     public bool IsExchangeableTo(Enum? context)
     {
         if (context is MeasureUnitCode measureUnitCode) return HasMeasureUnitCode(measureUnitCode);
@@ -131,12 +136,8 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
     #region Abstract methods
     public abstract decimal GetExchangeRate();
     public abstract decimal GetExchangeRate(string name);
-    public Enum GetMeasureUnit(IMeasureUnit<Enum>? other)
-    {
-        return (other ?? this).GetMeasureUnit();
-    }
     public abstract string GetName();
-    public abstract void RestoreConstantExchangeRates();
+    //public abstract void RestoreConstantExchangeRates();
     #endregion
 
     #region Static methods

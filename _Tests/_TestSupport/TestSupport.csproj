@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BaseTypes\Common\Common.csproj" />
-    <ProjectReference Include="..\..\BaseTypes\Measurables\Measurables.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>CommonTests</_Parameter1>
     </AssemblyAttribute>
@@ -21,6 +16,10 @@
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>MeasurablesTests</_Parameter1>
     </AssemblyAttribute>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\BaseTypes\BaseMeasurements\BaseMeasurements.csproj" />
   </ItemGroup>
 
 </Project>

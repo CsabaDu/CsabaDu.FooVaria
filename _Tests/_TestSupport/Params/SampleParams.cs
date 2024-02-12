@@ -7,8 +7,8 @@ public static class SampleParams
 
     public static Enum GetNotDefinedMeasureUnit(MeasureUnitCode measureUnitCode)
     {
-        int count = GetDefaultNames(measureUnitCode).Count();
         Type measureUnitType = GetMeasureUnitType(measureUnitCode);
+        int count = Enum.GetNames(measureUnitType).Length;
 
         return (Enum)Enum.ToObject(measureUnitType, count);
     }
