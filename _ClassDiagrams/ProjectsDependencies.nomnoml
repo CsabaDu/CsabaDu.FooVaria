@@ -1,6 +1,6 @@
 #title: ProjectsDependencies
 #.base: fill=orange dashed bold italic
-#.abstract: fill=yellow dashed bold italic
+#.abstract: fill=yellow bold italic
 #.concrete: fill=lime bold
 
 [<base>Common]

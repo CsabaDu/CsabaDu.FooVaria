@@ -2,7 +2,7 @@
 		<title >ProjectsInheritance</title>
 	<desc >#title: ProjectsInheritance
 	#.base: fill=orange dashed bold italic
-	#.abstract: fill=yellow dashed bold italic
+	#.abstract: fill=yellow bold italic
 	#.concrete: fill=lime bold
 	
 	[&lt;base&gt;Common]
@@ -176,7 +176,7 @@
 							</g>
 						</g>
 					<g data-name="SimpleShapes">
-							<g fill="yellow" stroke="#33322E" stroke-dasharray="6 6" data-name="SimpleShapes">
+							<g fill="yellow" stroke="#33322E" data-name="SimpleShapes">
 								<rect x="397.0" y="355.0" height="31.0" width="125.0" data-name="SimpleShapes"></rect>
 							</g>
 						<g transform="translate(397, 355)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="italic" data-name="SimpleShapes">
@@ -187,7 +187,7 @@
 							</g>
 						</g>
 					<g data-name="ComplexShapes">
-							<g fill="yellow" stroke="#33322E" stroke-dasharray="6 6" data-name="ComplexShapes">
+							<g fill="yellow" stroke="#33322E" data-name="ComplexShapes">
 								<rect x="673.8" y="355.0" height="31.0" width="140.0" data-name="ComplexShapes"></rect>
 							</g>
 						<g transform="translate(673.75, 355)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="italic" data-name="ComplexShapes">
