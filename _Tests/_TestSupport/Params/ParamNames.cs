@@ -13,8 +13,8 @@ public static class ParamNames
     public static IEnumerable<string> GetParamNames()
     {
         Type type = typeof(ParamNames);
-        FieldInfo[] fieldInfos = type.GetFields();
+        FieldInfo[] fields = type.GetFields();
 
-        return fieldInfos.Select(x => x.Name);
+        return fields.Select(x => x.Name);
     }
 }

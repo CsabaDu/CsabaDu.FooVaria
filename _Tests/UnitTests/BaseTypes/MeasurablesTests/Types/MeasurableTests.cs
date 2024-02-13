@@ -1,4 +1,5 @@
 using CsabaDu.FooVaria.BaseTypes.Measurables.Statics;
+using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.MeasurablesTests.Types;
 
@@ -19,6 +20,7 @@ public sealed class MeasurableTests
         factoryObject = new MeasurableFactoryClass();
         measurableObject = new MeasurableChild(factoryObject, measureUnitCode);
         paramName = RandomParams.GetRandomParamName();
+        measureUnitType = MeasureUnitTypeSet.First(x => x.Name == Enum.GetName(measureUnitCode));
     }
     #endregion
 
@@ -28,6 +30,7 @@ public sealed class MeasurableTests
     private MeasurableFactoryClass factoryObject;
     private Enum measureUnit;
     private string paramName;
+    Type measureUnitType;
 
     #region Readonly fields
     private readonly RandomParams RandomParams = new();
@@ -255,10 +258,45 @@ public sealed class MeasurableTests
     public void GetDefaultMeasureUnit_returns_expected()
     {
         // Arrange
-        Enum expected = measureUnitCode.GetDefaultMeasureUnit();
+        Enum expected = (Enum)Enum.ToObject(measureUnitType, 0);
 
         // Act
         var actual = measurableObject.GetDefaultMeasureUnit();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region GetDefaultMeasureUnitNames
+    #region GetDefaultMeasureUnitNames()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetDefaultMeasureUnitNames_returns_expected()
+    {
+        // Arrange
+        string measureUnitCodeName = Enum.GetName(measureUnitCode);
+        IEnumerable<string> expected = Enum.GetNames(measureUnitType).Select(x => x + measureUnitCodeName);
+
+        // Act
+        var actual = measurableObject.GetDefaultMeasureUnitNames();
+
+        // Assert
+        Assert.IsTrue(expected.SequenceEqual(actual));
+    }
+    #endregion
+    #endregion
+
+    #region GetMeasureUnitType
+    #region GetMeasureUnitType()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetMeasureUnitType_returns_expected()
+    {
+        // Arrange
+        Type expected = MeasureUnitTypeSet.First(x => x.Name == Enum.GetName(measureUnitCode));
+
+        // Act
+        var actual = measurableObject.GetMeasureUnitType();
 
         // Assert
         Assert.AreEqual(expected, actual);
