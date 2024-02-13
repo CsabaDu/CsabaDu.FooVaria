@@ -1,4 +1,32 @@
 #title: ProjectsInheritance
+#.base: fill=orange dashed bold italic
+#.abstract: fill=yellow dashed bold italic
+#.concrete: fill=lime bold
+
+[<base>Common]
+[<base>Measurables]
+[<base>BaseMeasurements]
+[<base>Quantifiables]
+[<base>BaseMeasures]
+[<base>Spreads]
+[<base>Shapes]
+[<base>BaseRates]
+
+[<abstract>SimpleShapes]
+[<abstract>ComplexShapes]
+
+[<concrete>Measurements]
+[<concrete>Measures]
+[<concrete>RateComponents]
+[<concrete>Rates]
+[<concrete>Proportions]
+[<concrete>BulkSpreads]
+[<concrete>PlaneShapes]
+[<concrete>DryBodies]
+[<concrete>Masses]
+[<concrete>Sections]
+[<concrete>ComplexDryBodies]
+
 [Common]<:-[Measurables]<:-[BaseMeasurements]<:-[Measurements]
 [Measurables]<:-[Quantifiables]<:-[BaseMeasures]<:-[RateComponents]
 [Quantifiables]<:-[Spreads]<:-[BulkSpreads]

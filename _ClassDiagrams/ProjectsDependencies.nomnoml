@@ -1,4 +1,30 @@
 #title: ProjectsDependencies
+#.base: fill=orange dashed bold italic
+#.abstract: fill=yellow dashed bold italic
+#.concrete: fill=lime bold
+
+[<base>Common]
+[<base>Measurables]
+[<base>BaseMeasurements]
+[<base>Quantifiables]
+[<base>BaseMeasures]
+[<base>Spreads]
+[<base>Shapes]
+[<concrete>Measurements]
+[<concrete>Measures]
+[<base>BaseRates]
+[<concrete>RateComponents]
+[<concrete>Rates]
+[<concrete>Proportions]
+[<concrete>BulkSpreads]
+[<abstract>SimpleShapes]
+[<concrete>PlaneShapes]
+[<concrete>DryBodies]
+[<concrete>Masses]
+[<abstract>ComplexShapes]
+[<concrete>Sections]
+[<concrete>ComplexDryBodies]
+
 [Common]<--[Measurables]
 [Measurables]<--[BaseMeasurements]
 [Quantifiables]-->[Measurables]
