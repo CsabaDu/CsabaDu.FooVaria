@@ -124,11 +124,11 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
         return base.GetQuantityTypeCode();
     }
 
-    public override sealed void ValidateMeasureUnit(Enum measureUnit, string paramName)
+    public override sealed void ValidateMeasureUnit(Enum? measureUnit, string paramName)
     {
-        if (ExchangeRateCollection.ContainsKey(measureUnit)) return;
+        if (ExchangeRateCollection.ContainsKey(NullChecked(measureUnit, paramName))) return;
 
-        throw InvalidMeasureUnitEnumArgumentException(measureUnit, paramName);
+        throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName);
     }
     #endregion
     #endregion
@@ -234,7 +234,7 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
                 T[] measureUnits = Enum.GetValues<T>();
                 int measureUnitCount = measureUnits.Length;
 
-                if (measureUnitCount == 0 || measureUnitCount != exchangeRateCount + 1) throw new InvalidOperationException(null);
+                if (measureUnitCount != exchangeRateCount + 1) throw new InvalidOperationException(null);
 
                 int i = 0;
 

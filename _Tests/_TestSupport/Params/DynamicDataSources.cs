@@ -4,17 +4,10 @@ internal class DynamicDataSources
 {
     #region Private fields
     private bool isTrue;
-    //    private IRootObject rootObject;
     private MeasureUnitCode measureUnitCode;
     private Enum measureUnit;
     private object obj;
-    //    private string name;
-    //    private IFactory factory;
-    //    private IBaseMeasurable baseMeasurable;
-    //    private ICommonBase commonBase;
     private IMeasurable measurable;
-    //    private IDictionary<object, string> nameCollection;
-    //    //private IBaseMeasurement baseMeasurement;
 
     #region Readonly fileds
     private readonly RandomParams RandomParams = new();
@@ -27,85 +20,6 @@ internal class DynamicDataSources
     {
         public abstract object[] ToObjectArray();
     }
-    #endregion
-
-    #region IFooVariaObject
-    //    protected class IFooVariaObject_arg : ObjectArray
-    //    {
-    //        internal IFooVariaObject FooVariaObject { get; init; }
-
-    //        public override object[] ToObjectArray()
-    //        {
-    //            return new object[]
-    //            {
-    //                FooVariaObject,
-    //            };
-    //        }
-    //    }
-
-    //    #region IFooVariaObject, string
-    //    protected class IFooVariaObject_string_args : IFooVariaObject_arg
-    //    {
-    //        internal string Name { get; init; }
-
-    //        public override object[] ToObjectArray()
-    //        {
-    //            return new object[]
-    //            {
-    //                FooVariaObject,
-    //                Name,
-    //            };
-    //        }
-    //    }
-
-    //    #region IFooVariaObject, string, MeasureUnitCode
-    //    protected class IFooVariaObject_string_MeasureUnitCode_args : IFooVariaObject_string_args
-    //    {
-    //        internal MeasureUnitCode MeasureUnitCode { get; init; }
-
-    //        public override object[] ToObjectArray()
-    //        {
-    //            return new object[]
-    //            {
-    //                FooVariaObject,
-    //                Name,
-    //                MeasureUnitCode,
-    //            };
-    //        }
-    //    }
-    //    #endregion
-    //    #endregion
-    #endregion
-
-    #region string
-    //    protected class String_arg : ObjectArray
-    //    {
-    //        internal string Name { get; init; }
-
-    //        public override object[] ToObjectArray()
-    //        {
-    //            return new object[]
-    //            {
-    //                Name,
-    //            };
-    //        }
-    //    }
-
-    //    #region string, IMeasurementFactory
-    //    protected class String_IMeasurementFactory_args : String_arg
-    //    {
-    //        internal IMeasurementFactory Factory { get; init; }
-
-    //        public override object[] ToObjectArray()
-    //        {
-    //            return new object[]
-    //            {
-    //                Name,
-    //                Factory,
-    //            };
-    //        }
-    //    }
-    //    #endregion
     #endregion
 
     #region bool
@@ -305,6 +219,37 @@ internal class DynamicDataSources
     #endregion
     #endregion
 
+    #region string
+    //    protected class String_arg : ObjectArray
+    //    {
+    //        internal string Name { get; init; }
+
+    //        public override object[] ToObjectArray()
+    //        {
+    //            return new object[]
+    //            {
+    //                Name,
+    //            };
+    //        }
+    //    }
+
+    //    #region string, IMeasurementFactory
+    //    protected class String_IMeasurementFactory_args : String_arg
+    //    {
+    //        internal IMeasurementFactory Factory { get; init; }
+
+    //        public override object[] ToObjectArray()
+    //        {
+    //            return new object[]
+    //            {
+    //                Name,
+    //                Factory,
+    //            };
+    //        }
+    //    }
+    //    #endregion
+    #endregion
+
     #region MeasureUnitCode
     protected class MeasureUnitCode_arg : ObjectArray
     {
@@ -314,7 +259,7 @@ internal class DynamicDataSources
         {
             return
             [
-                    MeasureUnitCode,
+                MeasureUnitCode,
             ];
         }
     }
@@ -328,108 +273,12 @@ internal class DynamicDataSources
         {
             return
             [
-                    MeasureUnitCode,
-                    Measurable,
+                MeasureUnitCode,
+                Measurable,
             ];
         }
     }
-    //    #endregion
-
-    //    #region MeasureUnitCode, IDictionary<object, string>
-    //    protected class MeasureUnitCode_DictionaryObjectString_args : MeasureUnitCode_arg
-    //    {
-    //        internal IDictionary<object, string> NameCollection { get; init; }
-
-    //        public override object[] ToObjectArray()
-    //        {
-    //            return new object[]
-    //            {
-    //                MeasureUnitCode,
-    //                NameCollection,
-    //            };
-    //        }
-    //    }
-    //    #endregion
     #endregion
-
-    //    #region MeasureUnitCode, IFooVariaObject
-    //    protected class MeasureUnitCode_IFooVariaObject_args : MeasureUnitCode_arg
-    //    {
-    //        internal IFooVariaObject FooVariaObject { get; init; }
-
-    //        public override object[] ToObjectArray()
-    //        {
-    //            return new object[]
-    //            {
-    //                MeasureUnitCode,
-    //                FooVariaObject,
-    //            };
-    //        }
-    //    }
-    //    #endregion
-
-    //    #region MeasureUnitCode, ICommonBase
-    //    protected class MeasureUnitCode_ICommonBase_args : MeasureUnitCode_arg
-    //    {
-    //        internal ICommonBase CommonBase { get; init; }
-
-    //        public override object[] ToObjectArray()
-    //        {
-    //            return new object[]
-    //            {
-    //                MeasureUnitCode,
-    //                CommonBase,
-    //            };
-    //        }
-    //    }
-    //    #endregion
-
-    //    #region MeasureUnitCode, IBaseMeasurable
-    //    protected class MeasureUnitCode_IBaseMeasurable_args : MeasureUnitCode_arg
-    //    {
-    //        internal IBaseMeasurable BaseMeasurable { get; init; }
-
-    //        public override object[] ToObjectArray()
-    //        {
-    //            return new object[]
-    //            {
-    //                MeasureUnitCode,
-    //                BaseMeasurable,
-    //            };
-    //        }
-    //    }
-    //    #endregion
-    #endregion
-
-    #region IDictionary<object, string>
-    //    protected class DictionaryObjectString_arg : ObjectArray
-    //    {
-    //        internal IDictionary<object, string> NameCollection { get; init; }
-
-    //        public override object[] ToObjectArray()
-    //        {
-    //            return new object[]
-    //            {
-    //                NameCollection,
-    //            };
-    //        }
-    //    }
-
-    //    #region IDictionary<object, string>, MeasureUnitCode
-    //    protected class DictionaryObjectString_MeasureUnitCode_args : DictionaryObjectString_arg
-    //    {
-    //        internal MeasureUnitCode MeasureUnitCode { get; init; }
-
-    //        public override object[] ToObjectArray()
-    //        {
-    //            return new object[]
-    //            {
-    //                NameCollection,
-    //                MeasureUnitCode,
-    //            };
-    //        }
-    //    }
-
     #endregion
     #endregion
 
@@ -512,21 +361,22 @@ internal class DynamicDataSources
 
     internal IEnumerable<object[]> GetMeasurableValidateMeasureUnitInvalidArgsArrayList()
     {
+        // Not MeasureUnit type enum
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
         measureUnit = measureUnitCode;
         yield return toObjectArray();
 
+        // Valid type not defined measureUnit
         measureUnit = GetNotDefinedMeasureUnit(measureUnitCode);
         yield return toObjectArray();
 
-        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode(measureUnitCode));
+        // Invalid type not defined measureUnit
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
         yield return toObjectArray();
 
-        measureUnit = RandomParams.GetRandomMeasureUnit(RandomParams.GetRandomMeasureUnitCode(measureUnitCode));
-        yield return toObjectArray();
-
-        measureUnit = RandomParams.GetRandomMeasureUnit();
-        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode(measureUnit));
+        // Invalid type defined measureUnit
+        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
         yield return toObjectArray();
 
         #region toObjectArray method

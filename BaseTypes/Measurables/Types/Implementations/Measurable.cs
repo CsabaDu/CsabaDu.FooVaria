@@ -106,6 +106,13 @@ public abstract class Measurable : CommonBase, IMeasurable
         return GetMeasureUnitCodes().Contains(measureUnitCode);
     }
 
+    public void ValidateMeasureUnitCode(IMeasurable? measurable, [DisallowNull] string paramName)
+    {
+        MeasureUnitCode measureUnitCode = NullChecked(measurable, paramName).MeasureUnitCode;
+
+        ValidateMeasureUnitCode(measureUnitCode, paramName);
+    }
+
     #region Override methods
     public override bool Equals(object? obj)
     {
@@ -146,13 +153,6 @@ public abstract class Measurable : CommonBase, IMeasurable
         if (isValidMesiuteUnit) return;
 
         throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName);
-    }
-
-    public void ValidateMeasureUnitCode(IMeasurable? measurable, [DisallowNull] string paramName)
-    {
-        MeasureUnitCode measureUnitCode = NullChecked(measurable, paramName).MeasureUnitCode;
-
-        ValidateMeasureUnitCode(measureUnitCode, paramName);
     }
 
     public virtual void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, [DisallowNull] string paramName)

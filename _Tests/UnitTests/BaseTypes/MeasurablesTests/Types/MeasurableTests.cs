@@ -1,3 +1,5 @@
+using CsabaDu.FooVaria.BaseTypes.Measurables.Statics;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.MeasurablesTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
@@ -247,6 +249,23 @@ public sealed class MeasurableTests
     #endregion
     #endregion
 
+    #region GetDefaultMeasureUnit
+    #region GetDefaultMeasureUnit()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetDefaultMeasureUnit_returns_expected()
+    {
+        // Arrange
+        Enum expected = measureUnitCode.GetDefaultMeasureUnit();
+
+        // Act
+        var actual = measurableObject.GetDefaultMeasureUnit();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
     #region GetFactory
     #region GetFactory()
     [TestMethod, TestCategory("UnitTest")]
@@ -456,7 +475,6 @@ public sealed class MeasurableTests
     }
     #endregion
     #endregion
-
     #endregion
 
     #region ArrayList methods
