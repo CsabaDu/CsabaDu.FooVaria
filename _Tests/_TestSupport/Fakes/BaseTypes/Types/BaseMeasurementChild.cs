@@ -1,13 +1,7 @@
-﻿using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Factories;
+﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Fakes.BaseTypes.Types;
 
-namespace CsabaDu.FooVaria.Tests.TestSupport.Fakes.BaseTypes.Types;
-
-internal sealed class BaseMeasurementChild : BaseMeasurement
+internal sealed class BaseMeasurementChild(IBaseMeasurementFactory factory, Enum measureUnit) : BaseMeasurement(factory, measureUnit)
 {
-    public BaseMeasurementChild(IBaseMeasurementFactory factory, Enum measureUnit) : base(factory, measureUnit)
-    {
-    }
-
     public override decimal GetExchangeRate()
     {
         throw new NotImplementedException();

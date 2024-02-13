@@ -1,19 +1,15 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;
 
-public abstract class BaseMeasurement : Measurable, IBaseMeasurement
+public abstract class BaseMeasurement(IBaseMeasurementFactory factory, Enum measureUnit) : Measurable(factory, measureUnit), IBaseMeasurement
 {
     #region Constructors
     #region Static constructor
     static BaseMeasurement()
     {
         ConstantExchangeRateCollection = InitConstantExchangeRateCollection();
-        ExchangeRateCollection = new Dictionary<object, decimal>(ConstantExchangeRateCollection);
+        ExchangeRateCollection = new(ConstantExchangeRateCollection);
     }
     #endregion
-
-    protected BaseMeasurement(IBaseMeasurementFactory factory, Enum measureUnit) : base(factory, measureUnit)
-    {
-    }
     #endregion
 
     #region Properties

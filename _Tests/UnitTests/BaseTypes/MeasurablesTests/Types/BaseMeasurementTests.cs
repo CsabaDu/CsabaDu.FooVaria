@@ -18,7 +18,7 @@
 //        {
 //            measureUnit = RandomParams.GetRandomValidMeasureUnit();
 //            measureUnitCode = MeasureUnitTypes.GetMeasureUnitCode(measureUnit);
-//            factoryObject = new BaseMeasurementFactoryChild();
+//            factoryObject = new BaseMeasurementFactoryClass();
 //            baseMeasurement = new BaseMeasurementChild(factoryObject, measureUnit);
 //            baseMeasurement.RestoreConstantExchangeRates();
 //        }

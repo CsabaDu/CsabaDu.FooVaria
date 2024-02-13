@@ -1,18 +1,10 @@
 ﻿namespace CsabaDu.FooVaria.Measurements.Types.Implementations;
 
-internal abstract class Measurement : BaseMeasurement, IMeasurement
+internal abstract class Measurement(IMeasurementFactory factory, Enum measureUnit) : BaseMeasurement(factory, measureUnit), IMeasurement
 {
-    #region Constructors
-    private protected Measurement(IMeasurementFactory factory, Enum measureUnit) : base(factory, measureUnit)
-    {
-        ExchangeRate = GetExchangeRate(measureUnit);
-        MeasureUnit = measureUnit;
-    }
-    #endregion
-
     #region Properties
-    public object MeasureUnit { get; init; }
-    public decimal ExchangeRate { get; init; }
+    public object MeasureUnit { get; init; } = measureUnit;
+    public decimal ExchangeRate { get; init; } = GetExchangeRate(measureUnit);
 
     #region Static properties
     public static Dictionary<object, string> CustomNameCollection { get; protected set; } = [];
@@ -226,6 +218,16 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
     #endregion
     #endregion
 
+    #region Internal methods
+    #region Static methods
+    internal static void RestoreConstantExchangeRates()
+    {
+        CustomNameCollection.Clear();
+        ExchangeRateCollection = new(ConstantExchangeRateCollection);
+    }
+    #endregion
+    #endregion
+
     #region Protected methods
     #region Static methods
     protected static bool IsValidCustomNameParam(string? customName)
@@ -251,7 +253,7 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
     {
         IDictionary<string, object> measureUnitCollection = validMeasureUnits.ToDictionary
             (
-                x => Measurable.GetDefaultName((Enum)x),
+                getDefaultName,
                 x => x
             );
 
@@ -261,6 +263,13 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
         }
 
         return measureUnitCollection;
+
+        #region Local methods
+        static string getDefaultName(object measureUnit)
+        {
+            return Measurable.GetDefaultName((Enum)measureUnit);
+        }
+        #endregion
     }
     #endregion
     #endregion

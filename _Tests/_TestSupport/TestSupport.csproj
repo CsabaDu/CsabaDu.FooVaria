@@ -17,9 +17,15 @@
       <_Parameter1>MeasurablesTests</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
-  
+
   <ItemGroup>
-    <ProjectReference Include="..\..\BaseTypes\BaseMeasurements\BaseMeasurements.csproj" />
+  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+  	  <_Parameter1>BaseMeasurementsTests</_Parameter1>
+  	</AssemblyAttribute>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Measurements\Measurements.csproj" />
   </ItemGroup>
 
 </Project>

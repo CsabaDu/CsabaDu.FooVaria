@@ -8,6 +8,7 @@ global using CsabaDu.FooVaria.BaseTypes.Measurables.Factories;
 global using CsabaDu.FooVaria.BaseTypes.Measurables.Statics;
 global using CsabaDu.FooVaria.BaseTypes.Measurables.Types;
 global using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
+global using CsabaDu.FooVaria.Measurements.Types.Implementations;
 global using CsabaDu.FooVaria.Tests.TestSupport.Fakes.BaseTypes.Factories;
 global using CsabaDu.FooVaria.Tests.TestSupport.Fakes.BaseTypes.Types;
 global using System.Reflection;

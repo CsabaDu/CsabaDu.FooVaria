@@ -358,27 +358,27 @@ internal class DynamicDataSources
         #endregion
     }
 
-    //    internal IEnumerable<object[]> GetInvalidBaseMeasurementEnumMeasureUnitArgArrayList()
-    //    {
-    //        foreach (object[] item in GetInvalidEnumMeasureUnitArgArrayList())
-    //        {
-    //            yield return item;
-    //        }
+    internal IEnumerable<object[]> GetMeasurementInvalidEnumMeasureUnitArgArrayList()
+    {
+        foreach (object[] item in GetInvalidEnumMeasureUnitArgArrayList())
+        {
+            yield return item;
+        }
 
-    //        measureUnit = RandomParams.GetRandomNotUsedCustomMeasureUnit();
-    //        yield return toObjectArray();
+        measureUnit = RandomParams.GetRandomNotUsedCustomMeasureUnit();
+        yield return toObjectArray();
 
-    //        #region toObjectArray method
-    //        object[] toObjectArray()
-    //        {
-    //            return new Enum_arg
-    //            {
-    //                MeasureUnit = measureUnit,
-    //            }
-    //            .ToObjectArray();
-    //        }
-    //        #endregion
-    //    }
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            return new Enum_arg
+            {
+                MeasureUnit = measureUnit,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+    }
 
 
     //    internal IEnumerable<object[]> GetInvalidGetCustomNameArgArrayList()
@@ -605,7 +605,7 @@ internal class DynamicDataSources
     //        rootObject = new MeasurableChild((IMeasurableFactory)rootObject, measureUnitCode);
     //        yield return toObjectArray();
 
-    //        rootObject = new BaseMeasurementFactoryChild();
+    //        rootObject = new BaseMeasurementFactoryClass();
     //        yield return toObjectArray();
 
     //        rootObject = new BaseMeasurementChild((IBaseMeasurementFactory)rootObject, measureUnit);

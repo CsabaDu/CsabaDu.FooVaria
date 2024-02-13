@@ -1,10 +1,14 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
+﻿using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Behaviors;
+
+namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
 
 public class RandomParams
 {
     #region Private fields
     private static readonly Random Random = Random.Shared;
+    private static readonly IEnumerable<MeasureUnitCode> CustomMeasureUnitCodes = MeasureUnitCodes.Where(IsDefaultMeasureUnitNameDefault);
     #endregion
+
 
     #region Public methods
     public MeasureUnitCode GetRandomMeasureUnitCode(MeasureUnitCode? excludedMeasureUnitCode = null)
@@ -53,14 +57,55 @@ public class RandomParams
         return GetNotDefinedMeasureUnit(measureUnitCode);
     }
 
+    public Enum GetRandomValidMeasureUnit(Enum excludedMeasureUnit = null)
+    {
+        object randomMeasureUnit = getRandomValidMeasureUnit();
+
+        while (randomMeasureUnit.Equals(excludedMeasureUnit))
+        {
+            randomMeasureUnit = getRandomValidMeasureUnit();
+        }
+
+        return (Enum)randomMeasureUnit;
+
+        #region Local methods
+        object getRandomValidMeasureUnit()
+        {
+            return GetRandomItem(BaseMeasurement.ExchangeRateCollection.Keys);
+        }
+        #endregion
+    }
 
     public string GetRandomParamName()
     {
         return GetRandomItem(ParamNames.GetParamNames());
     }
 
+    public Enum GetRandomNotUsedCustomMeasureUnit()
+    {
+        MeasureUnitCode customMeasureUnitCode = GetRandomItem(CustomMeasureUnitCodes);
+
+        Enum measureUnit = GetRandomMeasureUnit(customMeasureUnitCode);
+
+        while (BaseMeasurement.ExchangeRateCollection.ContainsKey(measureUnit))
+        {
+            measureUnit = GetRandomMeasureUnit(customMeasureUnitCode);
+        }
+
+        return measureUnit;
+    }
+
     #region Private methods
     #region Static methods
+    private static bool IsDefaultMeasureUnitNameDefault(MeasureUnitCode measureUnitCode)
+    {
+        Type measureUnitType = measureUnitCode.GetMeasureUnitType();
+        object defaultMeasureUnit = measureUnitCode.GetDefaultMeasureUnit();
+        string defaultMeasureUnitDefaultName = Enum.GetName(measureUnitType, defaultMeasureUnit);
+
+        return defaultMeasureUnitDefaultName == DefaultCustomMeasureUnitDefaultName;
+    }
+
     private static T GetRandomItem<T>(T[] items)
     {
         return Random.GetItems(items, 1)[0];
@@ -104,15 +149,15 @@ public class RandomParams
     //    return MeasureUnitTypes.GetDefaultMeasureUnit(measurementUnitTypeCode.Value);
     //}
 
-    //public Enum GetRandomNotDefaultConstantMeasureUnit(MeasureUnitCode? measureUnitCode = null, Enum excludedMeasureUnit = null)
+    //public Enum GetRandomNotDefaultConstantMeasureUnit(MeasureUnitCode? customMeasureUnitCode = null, Enum excludedMeasureUnit = null)
     //{
-    //    if (!measureUnitCode.HasValue)
+    //    if (!customMeasureUnitCode.HasValue)
     //    {
-    //        measureUnitCode = GetRandomMeasureUnitCode();
+    //        customMeasureUnitCode = GetRandomMeasureUnitCode();
     //    }
 
     //    IEnumerable<object> constantMeasureUnits = GetConstantMeasureUnits()
-    //        .Where(x => x.GetType().Equals(measureUnitCode.Value.GetMeasureUnitType()))
+    //        .Where(x => x.GetType().Equals(customMeasureUnitCode.Value.GetMeasureUnitType()))
     //        .Where(x => (int)x > 0)
     //        .Where(x => !x.Equals(excludedMeasureUnit));
 
@@ -121,11 +166,11 @@ public class RandomParams
     //    return (Enum)constantMeasureUnits.ElementAt(randomindex);
     //}
 
-    //public Type GetRandomMeasureUnitType(out MeasureUnitCode measureUnitCode)
+    //public Type GetRandomMeasureUnitType(out MeasureUnitCode customMeasureUnitCode)
     //{
-    //    measureUnitCode = GetRandomMeasureUnitCode();
+    //    customMeasureUnitCode = GetRandomMeasureUnitCode();
 
-    //    return MeasureUnitTypes.GetMeasureUnitType(measureUnitCode);
+    //    return MeasureUnitTypes.GetMeasureUnitType(customMeasureUnitCode);
     //}
 
     //public IMeasurableFactory GetRandomMeasurableFactory()
@@ -144,14 +189,14 @@ public class RandomParams
     //    };
     //}
 
-    //public Enum GetRandomNotUsedCustomMeasureUnit(MeasureUnitCode? measureUnitCode = null)
+    //public Enum GetRandomNotUsedCustomMeasureUnit(MeasureUnitCode? customMeasureUnitCode = null)
     //{
     //    int randomIndex;
 
-    //    if (!measureUnitCode.HasValue)
+    //    if (!customMeasureUnitCode.HasValue)
     //    {
     //        randomIndex = Random.Next(2);
-    //        measureUnitCode = randomIndex switch
+    //        customMeasureUnitCode = randomIndex switch
     //        {
     //            0 => MeasureUnitCode.Currency,
     //            1 => MeasureUnitCode.Pieces,
@@ -160,18 +205,18 @@ public class RandomParams
     //        };
     //    }
 
-    //    object measureUnit;
+    //    object randomMeasureUnit;
 
     //    do
     //    {
-    //        Type measureUnitType = MeasureUnitTypes.GetMeasureUnitType(measureUnitCode.Value);
+    //        Type measureUnitType = MeasureUnitTypes.GetMeasureUnitType(customMeasureUnitCode.Value);
     //        randomIndex = Random.Next(1, 1000);
 
-    //        measureUnit = Enum.ToObject(measureUnitType, randomIndex);
+    //        randomMeasureUnit = Enum.ToObject(measureUnitType, randomIndex);
     //    }
-    //    while (GetValidMeasureUnits().Contains(measureUnit));
+    //    while (GetValidMeasureUnits().Contains(randomMeasureUnit));
 
-    //    return (Enum)measureUnit;
+    //    return (Enum)randomMeasureUnit;
     //}
 
     //public IBaseMeasureFactory GetRandomBaseMeasureFactory(IMeasurementFactory measurementFactory)
@@ -234,19 +279,19 @@ public class RandomParams
     //    #endregion
     //}
 
-    //private IBaseMeasure GetDefaultBaseMeasure(IBaseMeasureFactory baseMeasureFactory, MeasureUnitCode measureUnitCode)
+    //private IBaseMeasure GetDefaultBaseMeasure(IBaseMeasureFactory baseMeasureFactory, MeasureUnitCode customMeasureUnitCode)
     //{
     //    return baseMeasureFactory switch
     //    {
-    //        DenominatorFactory denominatorFactory => denominatorFactory.CreateDefault(measureUnitCode),
-    //        MeasureFactory measureFactory => measureFactory.CreateDefault(measureUnitCode),
-    //        LimitFactory limitFactory => limitFactory.CreateDefault(measureUnitCode),
+    //        DenominatorFactory denominatorFactory => denominatorFactory.CreateDefault(customMeasureUnitCode),
+    //        MeasureFactory measureFactory => measureFactory.CreateDefault(customMeasureUnitCode),
+    //        LimitFactory limitFactory => limitFactory.CreateDefault(customMeasureUnitCode),
 
     //        _ => throw new InvalidOperationException(null),
     //    };
     //}
 
-    //public IMeasurable GetRandomDefaultMeasurable(MeasureUnitCode measureUnitCode, IMeasurable excludedMeasurable = null)
+    //public IMeasurable GetRandomDefaultMeasurable(MeasureUnitCode customMeasureUnitCode, IMeasurable excludedMeasurable = null)
     //{
     //    IMeasurableFactory measurableFactory = GetRandomMeasurableFactory();
     //    IMeasurable randomDefaultMeasurable = getDefaultMeasurable();
@@ -265,9 +310,9 @@ public class RandomParams
     //    {
     //        return measurableFactory switch
     //        {
-    //            MeasurementFactory measurementFactory => measurementFactory.CreateDefault(measureUnitCode),
-    //            BaseMeasureFactory baseMeasureFactory => GetDefaultBaseMeasure(baseMeasureFactory, measureUnitCode),
-    //            RateFactory rateFactory => GetDefaultRate(rateFactory, measureUnitCode),
+    //            MeasurementFactory measurementFactory => measurementFactory.CreateDefault(customMeasureUnitCode),
+    //            BaseMeasureFactory baseMeasureFactory => GetDefaultBaseMeasure(baseMeasureFactory, customMeasureUnitCode),
+    //            RateFactory rateFactory => GetDefaultRate(rateFactory, customMeasureUnitCode),
 
     //            _ => throw new InvalidOperationException(null),
     //        };
