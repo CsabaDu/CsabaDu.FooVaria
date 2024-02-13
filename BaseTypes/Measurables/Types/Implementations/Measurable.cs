@@ -172,7 +172,7 @@ public abstract class Measurable : CommonBase, IMeasurable
     {
         Type measureUnitType = GetMeasureUnitType(measureUnitCode);
 
-        return (Enum)Enum.ToObject(measureUnitType, value);
+        return DefinedMeasureUnit((Enum)Enum.ToObject(measureUnitType, value), nameof(value));
     }
 
     public static Enum? GetDefaultMeasureUnit(MeasureUnitCode measureUnitCode)
@@ -186,7 +186,7 @@ public abstract class Measurable : CommonBase, IMeasurable
     {
         IEnumerable<Enum> allMeasureUnits = MeasureUnitCodes.First().GetAllMeasureUnits();
 
-        for (int i = 1; i < MeasureUnitCodes.Count(); i++)
+        for (int i = 1; i < MeasureUnitCodes.Length; i++)
         {
             IEnumerable<Enum> next = MeasureUnitCodes.ElementAt(i).GetAllMeasureUnits();
             allMeasureUnits = allMeasureUnits.Union(next);

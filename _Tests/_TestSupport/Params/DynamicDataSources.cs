@@ -7,9 +7,9 @@ internal class DynamicDataSources
     private MeasureUnitCode measureUnitCode;
     private Enum measureUnit;
     private object obj;
-    private IMeasurable measurable;
+    private IFactory factory;
 
-    #region Readonly fileds
+    #region Readonly fields
     private readonly RandomParams RandomParams = new();
     #endregion
     #endregion
@@ -83,75 +83,7 @@ internal class DynamicDataSources
             ];
         }
     }
-
-    //    #region bool, MeasureUnitCode, Enum
-    //    protected class Bool_MeasureUnitCode_Enum_args : Bool_MeasureUnitCode_args
-    //    {
-    //        internal Enum MeasureUnit { get; init; }
-
-    //        public override object[] ToObjectArray()
-    //        {
-    //            return new object[]
-    //            {
-    //                IsTrue,
-    //                MeasureUnitCode,
-    //                MeasureUnit,
-    //            };
-    //        }
-    //    }
-    //    #endregion
-
-    //    #region bool, MeasureUnitCode, IBaseMeasurable
-    //    protected class Bool_MeasureUnitCode_IBaseMeasurable_args : Bool_MeasureUnitCode_args
-    //    {
-    //        internal IBaseMeasurable BaseMeasurable { get; init; }
-
-    //        public override object[] ToObjectArray()
-    //        {
-    //            return new object[]
-    //            {
-    //                IsTrue,
-    //                MeasureUnitCode,
-    //                BaseMeasurable,
-    //            };
-    //        }
-
-    //    }
-
-    //    #region bool, MeasureUnitCode, IBaseMeasurable, Enum
-    //    protected class Bool_MeasureUnitCode_IBaseMeasurable_Enum_args : Bool_MeasureUnitCode_IBaseMeasurable_args
-    //    {
-    //        internal Enum MeasureUnit { get; init; }
-
-    //        public override object[] ToObjectArray()
-    //        {
-    //            return new object[]
-    //            {
-    //                IsTrue,
-    //                MeasureUnitCode,
-    //                BaseMeasurable,
-    //                MeasureUnit,
-    //            };
-    //        }
-    //    }
-    //    #endregion
-    //    #endregion
     #endregion
-
-    //    #region bool, Enum
-    //    protected class Bool_Enum_args : Bool_arg
-    //    {
-    //        internal Enum MeasureUnit { get; init; }
-
-    //        public override object[] ToObjectArray()
-    //        {
-    //            return new object[]
-    //            {
-    //                IsTrue,
-    //                MeasureUnit,
-    //            };
-    //        }
-    //    }
     #endregion
 
     #region Enum
@@ -219,37 +151,6 @@ internal class DynamicDataSources
     #endregion
     #endregion
 
-    #region string
-    //    protected class String_arg : ObjectArray
-    //    {
-    //        internal string Name { get; init; }
-
-    //        public override object[] ToObjectArray()
-    //        {
-    //            return new object[]
-    //            {
-    //                Name,
-    //            };
-    //        }
-    //    }
-
-    //    #region string, IMeasurementFactory
-    //    protected class String_IMeasurementFactory_args : String_arg
-    //    {
-    //        internal IMeasurementFactory Factory { get; init; }
-
-    //        public override object[] ToObjectArray()
-    //        {
-    //            return new object[]
-    //            {
-    //                Name,
-    //                Factory,
-    //            };
-    //        }
-    //    }
-    //    #endregion
-    #endregion
-
     #region MeasureUnitCode
     protected class MeasureUnitCode_arg : ObjectArray
     {
@@ -278,6 +179,23 @@ internal class DynamicDataSources
             ];
         }
     }
+
+    #region MeasureUnitCode, IMeasurable, bool
+    protected class MeasureUnitCode_IMeasurable_bool_args : MeasureUnitCode_IMeasurable_args
+    {
+        internal bool IsTrue { get; init; }
+
+        public override object[] ToObjectArray()
+        {
+            return
+            [
+                MeasureUnitCode,
+                Measurable,
+                IsTrue,
+            ];
+        }
+    }
+    #endregion
     #endregion
     #endregion
     #endregion
@@ -314,12 +232,12 @@ internal class DynamicDataSources
         yield return toObjectArray();
 
         isTrue = true;
-        IMeasurableFactory factory = new MeasurableFactoryClass();
-        obj = new MeasurableChild(factory, measureUnitCode);
+        factory = new MeasurableFactoryClass();
+        obj = new MeasurableChild((IMeasurableFactory)factory, measureUnitCode);
         yield return toObjectArray();
 
         isTrue = false;
-        obj = new MeasurableChild(factory, RandomParams.GetRandomMeasureUnitCode(measureUnitCode));
+        obj = new MeasurableChild((IMeasurableFactory)factory, RandomParams.GetRandomMeasureUnitCode(measureUnitCode));
         yield return toObjectArray();
 
         #region toObjectArray method
@@ -336,7 +254,7 @@ internal class DynamicDataSources
         #endregion
     }
 
-    internal IEnumerable<object[]> GetBoolMeasureUnitCodeArgsArrayList()
+    internal IEnumerable<object[]> GetIsValidMeasureUnitCodeArgsArrayList()
     {
         measureUnitCode = NotDefinedMeasureUnitCode;
         isTrue = false;
@@ -353,6 +271,32 @@ internal class DynamicDataSources
             {
                 IsTrue = isTrue,
                 MeasureUnitCode = measureUnitCode,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> GetHasMeasureUnitCodeArgsArrayList()
+    {
+        factory = new MeasurableFactoryClass();
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
+        obj = new MeasurableChild((IMeasurableFactory)factory, measureUnitCode);
+        isTrue = true;
+        yield return toObjectArray();
+
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
+        isTrue = false;
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            return new MeasureUnitCode_IMeasurable_bool_args
+            {
+                MeasureUnitCode = measureUnitCode,
+                Measurable = (IMeasurable)obj,
+                IsTrue = isTrue,
             }
             .ToObjectArray();
         }
@@ -395,7 +339,7 @@ internal class DynamicDataSources
     internal IEnumerable<object[]> GetMeasurableValidateMeasureUnitCodeArgsArrayList()
     {
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
-        measurable = new MeasurableChild(new MeasurableFactoryClass(), RandomParams.GetRandomMeasureUnitCode(measureUnitCode));
+        obj = new MeasurableChild(new MeasurableFactoryClass(), RandomParams.GetRandomMeasureUnitCode(measureUnitCode));
         yield return toObjectArray();
 
         measureUnitCode = NotDefinedMeasureUnitCode;
@@ -407,7 +351,7 @@ internal class DynamicDataSources
             return new MeasureUnitCode_IMeasurable_args
             {
                 MeasureUnitCode = measureUnitCode,
-                Measurable = measurable,
+                Measurable = (IMeasurable)obj,
             }
             .ToObjectArray();
         }
