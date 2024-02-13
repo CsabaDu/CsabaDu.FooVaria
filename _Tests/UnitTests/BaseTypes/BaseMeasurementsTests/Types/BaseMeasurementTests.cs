@@ -97,6 +97,13 @@ public sealed class BaseMeasurementTests
     }
     #endregion
     #endregion
+
+    #region CompareTo
+    #region CompareTo(IBaseMeasurement?)
+
+    #endregion
+    #endregion
+
     #endregion
 
     #region DynamicDataSources

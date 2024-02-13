@@ -3,7 +3,6 @@
 public interface IMeasurement : IBaseMeasurement, IMeasureUnitCollection, ICustomNameCollection, IDefaultMeasurable<IMeasurement>
 {
     object MeasureUnit { get; init; }
-    decimal ExchangeRate { get; init; }
 
     IMeasurement GetMeasurement(Enum measureUnit);
     IMeasurement GetMeasurement(IMeasurement other);

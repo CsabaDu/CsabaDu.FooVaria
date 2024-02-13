@@ -10,5 +10,4 @@ public interface ICustomNameCollection
     void SetCustomName(Enum measureUnit, string customName);
     void SetOrReplaceCustomName(string customName);
     void ValidateCustomName(string? customName);
-    //void RestoreCustomNameCollection();
 }

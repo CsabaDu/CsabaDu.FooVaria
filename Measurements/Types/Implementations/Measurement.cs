@@ -4,7 +4,6 @@ internal abstract class Measurement(IMeasurementFactory factory, Enum measureUni
 {
     #region Properties
     public object MeasureUnit { get; init; } = measureUnit;
-    public decimal ExchangeRate { get; init; } = GetExchangeRate(measureUnit);
 
     #region Static properties
     public static Dictionary<object, string> CustomNameCollection { get; protected set; } = [];
@@ -78,7 +77,8 @@ internal abstract class Measurement(IMeasurementFactory factory, Enum measureUni
     {
         name ??= string.Empty;
 
-        return (Enum)GetMeasureUnitCollection().FirstOrDefault(x => x.Key == name).Value;
+        return (Enum)CustomNameCollection.FirstOrDefault(x => x.Value == name).Key
+            ?? (Enum)GetMeasureUnitCollection().FirstOrDefault(x => x.Key == name).Value;
     }
 
     public IDictionary<string, object> GetMeasureUnitCollection(MeasureUnitCode measureUnitCode)
@@ -100,11 +100,6 @@ internal abstract class Measurement(IMeasurementFactory factory, Enum measureUni
     {
         return GetValidMeasureUnits().Where(x => x.GetType().Equals(measureUnitCode.GetMeasureUnitType()));
     }
-
-    //public void RestoreCustomNameCollection() // TODO
-    //{
-    //    CustomNameCollection.Clear();
-    //}
 
     public void SetCustomName(Enum measureUnit, string customName)
     {
@@ -180,11 +175,6 @@ internal abstract class Measurement(IMeasurementFactory factory, Enum measureUni
 
     #region Override methods
     #region Sealed methods
-    public override sealed decimal GetExchangeRate()
-    {
-        return ExchangeRate;
-    }
-
     public override sealed decimal GetExchangeRate(string name)
     {
         Enum? measureUnit = GetMeasureUnit(NullChecked(name, nameof(name)));
@@ -249,9 +239,9 @@ internal abstract class Measurement(IMeasurementFactory factory, Enum measureUni
 
     #region Private methods
     #region Static methods
-    private static IDictionary<string, object> GetMeasureUnitCollection(IEnumerable<object> validMeasureUnits, IDictionary<object, string> customNameCollection)
+    private static Dictionary<string, object> GetMeasureUnitCollection(IEnumerable<object> validMeasureUnits, IDictionary<object, string> customNameCollection)
     {
-        IDictionary<string, object> measureUnitCollection = validMeasureUnits.ToDictionary
+        Dictionary<string, object> measureUnitCollection = validMeasureUnits.ToDictionary
             (
                 getDefaultName,
                 x => x

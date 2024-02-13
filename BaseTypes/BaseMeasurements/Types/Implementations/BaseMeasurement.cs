@@ -50,6 +50,13 @@ public abstract class BaseMeasurement(IBaseMeasurementFactory factory, Enum meas
         return GetMeasureUnitBasedCollection(ConstantExchangeRateCollection, measureUnitCode);
     }
 
+    public decimal GetExchangeRate()
+    {
+        Enum measureUnit = GetMeasureUnit();
+
+        return GetExchangeRate(measureUnit);
+    }
+
     public IDictionary<object, decimal> GetExchangeRateCollection(MeasureUnitCode measureUnitCode)
     {
         return GetMeasureUnitBasedCollection(ExchangeRateCollection, measureUnitCode);
@@ -130,10 +137,8 @@ public abstract class BaseMeasurement(IBaseMeasurementFactory factory, Enum meas
     #endregion
 
     #region Abstract methods
-    public abstract decimal GetExchangeRate();
     public abstract decimal GetExchangeRate(string name);
     public abstract string GetName();
-    //public abstract void RestoreConstantExchangeRates();
     #endregion
 
     #region Static methods
