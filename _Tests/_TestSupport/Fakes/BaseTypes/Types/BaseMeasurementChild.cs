@@ -2,11 +2,6 @@
 
 internal sealed class BaseMeasurementChild(IBaseMeasurementFactory factory, Enum measureUnit) : BaseMeasurement(factory, measureUnit)
 {
-    public override decimal GetExchangeRate(string name)
-    {
-        throw new NotImplementedException();
-    }
-
     public override Enum GetMeasureUnit()
     {
         throw new NotImplementedException();

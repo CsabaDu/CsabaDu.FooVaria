@@ -169,7 +169,7 @@ public abstract class BaseRate : Quantifiable, IBaseRate
         return GetQuantityTypeCode(this);
     }
 
-    public override sealed void ValidateMeasureUnit(Enum measureUnit, string paramName)
+    public override sealed void ValidateMeasureUnit(Enum? measureUnit, string paramName)
     {
         base.ValidateMeasureUnit(measureUnit, paramName);
     }

@@ -84,11 +84,6 @@ internal sealed class ProportionLimit : Proportion, IProportionLimit
     {
         return GetFactory().Create(numeratorMeasureUnitCode, defaultQuantity, denominatorMeasureUnitCode, limitMode);
     }
-
-    public override IProportionLimitFactory GetFactory()
-    {
-        return (IProportionLimitFactory)Factory;
-    }
     public IProportionLimit GetProportionLimit(IBaseMeasure numerator, Enum denominatorMeasureUnit, LimitMode limitMode)
     {
         return GetFactory().Create(numerator, denominatorMeasureUnit, limitMode);
@@ -116,10 +111,15 @@ internal sealed class ProportionLimit : Proportion, IProportionLimit
 
     public bool? Includes(IBaseRate? limitable)
     {
-        return limitable?.FitsIn(this) ?? false;
+        return limitable?.FitsIn(this);
     }
 
     #region Override methods
+    public override IProportionLimitFactory GetFactory()
+    {
+        return (IProportionLimitFactory)Factory;
+    }
+
     public override IProportionLimit GetProportion(IBaseRate baseRate)
     {
         return GetFactory().Create(baseRate, default);

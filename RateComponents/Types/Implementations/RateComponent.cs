@@ -36,9 +36,9 @@
             return GetFactory().MeasurementFactory;
         }
 
-        public override sealed void ValidateMeasureUnit(Enum measureUnit, string paramName)
+        public override sealed void ValidateMeasureUnit(Enum? measureUnit, string paramName)
         {
-            Measurement.ValidateMeasureUnit(measureUnit, paramName);
+            Measurement.ValidateMeasureUnit(measureUnit!, paramName);
         }
         #endregion
         #endregion
@@ -60,22 +60,6 @@
         {
             return (TNum)GetFactory().DefaultRateComponentQuantity;
         }
-        #endregion
-
-        #region Private methods
-        #region Static methods
-        //private static decimal GetDefaultQuantity(IBaseMeasure rateComponent)
-        //{
-        //    return Round(rateComponent.GetDecimalQuantity() * rateComponent.GetExchangeRate());
-        //}
-
-        private static TypeCode? GetValidQuantityTypeCodeOrNull(TypeCode quantityTypeCode)
-        {
-            if (GetQuantityTypeCodes().Contains(quantityTypeCode)) return quantityTypeCode;
-
-            return null;
-        }
-        #endregion
         #endregion
     }
 
