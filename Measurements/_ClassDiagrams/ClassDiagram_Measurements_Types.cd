@@ -3,28 +3,28 @@
   <Interface Name="CsabaDu.FooVaria.Measurements.Behaviors.ICustomMeasureUnit" Collapsed="true">
     <Position X="5.75" Y="1.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAEAAAAAAABAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Behaviors\ICustomMeasureUnit.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurements.Behaviors.ICustomNameCollection" Collapsed="true">
     <Position X="7.25" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>IAAAEAgAAAAAAAAAAAAAAAAIAAAIAAAAAAAAAAAAAgA=</HashCode>
+      <HashCode>IAAAEAgAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAgA=</HashCode>
       <FileName>Behaviors\ICustomNameCollection.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurements.Behaviors.IMeasureUnitCollection" Collapsed="true">
     <Position X="5" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAACAgAAAAAAAAAAAAAAAAAAAAACAAACAAAAAE=</HashCode>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Behaviors\IMeasureUnitCollection.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurements.Types.IMeasurement" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="1.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAAAAAAAAIQAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <HashCode>IAAAAAAAAAAAAAAQAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Types\IMeasurement.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -56,13 +56,6 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Types\ICustomMeasurement.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="CsabaDu.FooVaria.Measurements.Behaviors.ICustomMeasureUnitCode" Collapsed="true">
-    <Position X="7.75" Y="1.75" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
-      <FileName>Behaviors\ICustomMeasureUnitCode.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Measurements.Behaviors.ICustomMExchangeRates" Collapsed="true">
