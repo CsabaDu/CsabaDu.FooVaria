@@ -37,18 +37,18 @@
       <FileName>Factories\IRectangleFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.SimpleShapes.Factories.ISimpleShapeFactory" Collapsed="true" BaseTypeListCollapsed="true">
+  <Interface Name="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories.ISimpleShapeFactory" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="3.5" Y="0.5" Width="1.75" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.SimpleShapes.Factories.ICircularShapeFactory&lt;T, TTangent&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
+  <Interface Name="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories.ICircularShapeFactory&lt;T, TTangent&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
     <Position X="0.5" Y="1.75" Width="2.75" />
-    <InheritanceLine Type="CsabaDu.FooVaria.SimpleShapes.Factories.ISimpleShapeFactory" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories.ISimpleShapeFactory" IsHidden="true" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.SimpleShapes.Factories.IRectangularShapeFactory&lt;T, TTangent&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
+  <Interface Name="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories.IRectangularShapeFactory&lt;T, TTangent&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
     <Position X="5.5" Y="1.75" Width="3" />
-    <InheritanceLine Type="CsabaDu.FooVaria.SimpleShapes.Factories.ISimpleShapeFactory" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories.ISimpleShapeFactory" IsHidden="true" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Spreads.Factories.ISurfaceFactory" Collapsed="true" BaseTypeListCollapsed="true">

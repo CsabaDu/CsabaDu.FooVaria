@@ -32,7 +32,7 @@
   </Interface>
   <Interface Name="CsabaDu.FooVaria.DryBodies.Types.IDryBody" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="3.75" Y="1.75" Width="1.25" />
-    <InheritanceLine Type="CsabaDu.FooVaria.SimpleShapes.Types.ISimpleShape" FixedFromPoint="true">
+    <InheritanceLine Type="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types.ISimpleShape" FixedFromPoint="true">
       <Path>
         <Point X="4.375" Y="1.191" />
         <Point X="4.375" Y="1.75" />
@@ -50,26 +50,26 @@
       <FileName>Types\IDryBody.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.SimpleShapes.Types.ISimpleShape" Collapsed="true" BaseTypeListCollapsed="true">
+  <Interface Name="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types.ISimpleShape" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="3.75" Y="0.5" Width="1.25" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.SimpleShapes.Types.ICircularShape&lt;TSelf, TTangent&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
+  <Interface Name="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types.ICircularShape&lt;TSelf, TTangent&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
     <Position X="0.5" Y="3" Width="2.5" />
-    <InheritanceLine Type="CsabaDu.FooVaria.SimpleShapes.Types.ISimpleShape" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types.ISimpleShape" IsHidden="true" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.SimpleShapes.Types.IRectangularShape&lt;TSelf, TTangent&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
+  <Interface Name="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types.IRectangularShape&lt;TSelf, TTangent&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
     <Position X="5.75" Y="3" Width="2.75" />
-    <InheritanceLine Type="CsabaDu.FooVaria.SimpleShapes.Types.ISimpleShape" IsHidden="true" />
-    <InheritanceLine Type="CsabaDu.FooVaria.SimpleShapes.Behaviors.IHorizontalRotation" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types.ISimpleShape" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Behaviors.IHorizontalRotation" IsHidden="true" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.SimpleShapes.Behaviors.IHorizontalRotation" Collapsed="true">
+  <Interface Name="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Behaviors.IHorizontalRotation" Collapsed="true">
     <Position X="9" Y="2" Width="1.75" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.SimpleShapes.Behaviors.IHorizontalRotation&lt;TSelf&gt;" Collapsed="true">
+  <Interface Name="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Behaviors.IHorizontalRotation&lt;TSelf&gt;" Collapsed="true">
     <Position X="8.75" Y="3" Width="2.25" />
     <TypeIdentifier />
   </Interface>
@@ -91,7 +91,7 @@
     <Position X="1.75" Y="1.75" Width="1.75" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.SimpleShapes.Behaviors.IHeight" Collapsed="true">
+  <Interface Name="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Behaviors.IHeight" Collapsed="true">
     <Position X="0.75" Y="0.5" Width="1.25" />
     <TypeIdentifier />
   </Interface>

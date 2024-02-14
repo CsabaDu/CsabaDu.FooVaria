@@ -25,6 +25,6 @@ global using CsabaDu.FooVaria.Measures.Types;
 global using CsabaDu.FooVaria.PlaneShapes.Types;
 global using CsabaDu.FooVaria.Proportions.Factories;
 global using CsabaDu.FooVaria.Proportions.Types;
-global using CsabaDu.FooVaria.SimpleShapes.Types;
+global using CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types;
 global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Statics.ExceptionMethods;

@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Interface Name="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories.ISimpleShapeFactory" Collapsed="true">
+    <Position X="3" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAIAAAAAAAAAAARQAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Factories\IShapeFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories.ISimpleShapeFactory&lt;T, TTangent&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.5" Y="3" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAQAAAAAAIAAA=</HashCode>
+      <FileName>Factories\IShapeFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories.ICircularShapeFactory&lt;T, TTangent&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.75" Y="4.25" Width="2.75" />
+    <InheritanceLine Type="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories.ISimpleShapeFactory&lt;T, TTangent&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="3.625" Y="3.691" />
+        <Point X="3.625" Y="3.95" />
+        <Point X="2.125" Y="3.95" />
+        <Point X="2.125" Y="4.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Factories\ICircularShapeFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories.IRectangularShapeFactory&lt;T, TTangent&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3.75" Y="4.25" Width="3" />
+    <InheritanceLine Type="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories.ISimpleShapeFactory&lt;T, TTangent&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="4.125" Y="3.691" />
+        <Point X="4.125" Y="3.95" />
+        <Point X="5.25" Y="3.95" />
+        <Point X="5.25" Y="4.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Factories\IRectangularShapeFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Shapes.Factories.IShapeFactory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3.25" Y="0.5" Width="1.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Shapes.Factories.ICircularShapeFactory" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="3" Width="1.75" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Shapes.Factories.IShapeFactory" IsHidden="true" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.Shapes.Factories.IRectangularShapeFactory" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
+    <Position X="5.5" Y="3" Width="2" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Shapes.Factories.IShapeFactory" IsHidden="true" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Common.Factories.IFactory&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="1.25" Y="1.75" Width="1.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

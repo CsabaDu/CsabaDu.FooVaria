@@ -24,7 +24,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="CsabaDu.FooVaria.SimpleShapes.Types.Implementations.SimpleShape" Collapsed="true">
+  <Class Name="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types.Implementations.SimpleShape" Collapsed="true">
     <Position X="1.25" Y="5.5" Width="1.25" />
     <TypeIdentifier />
     <Lollipop Position="0.2" />
