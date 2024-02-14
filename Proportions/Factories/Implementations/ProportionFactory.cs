@@ -118,6 +118,11 @@ public sealed class ProportionFactory(IMeasureFactory measureFactory) : IProport
         return Create(numeratorMeasureUnit, defaultQuantity, denominatorMeasureUnit);
     }
 
+    public IBaseRate CreateBaseRate(IBaseRate baseRate)
+    {
+        return Create(baseRate);
+    }
+
     public IBaseRate CreateBaseRate(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement)
     {
         var (numeratorMeasureUnit, quantity) = GetNumeratorComponents(numerator);

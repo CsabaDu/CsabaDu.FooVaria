@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Rates.Types.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors;
+
+namespace CsabaDu.FooVaria.Rates.Types.Implementations;
 
 internal abstract class Rate : BaseRate, IRate
 {
@@ -63,7 +65,6 @@ internal abstract class Rate : BaseRate, IRate
     {
         return base.CompareTo(other);
     }
-
     public IMeasure Denominate(IBaseMeasure denominator)
     {
         string paramName = nameof(denominator);

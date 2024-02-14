@@ -27,19 +27,23 @@
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IProportional&lt;TSelf&gt;" Collapsed="true">
-    <Position X="5.5" Y="1.5" Width="1.75" />
+    <Position X="7.25" Y="1.5" Width="1.75" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IFit&lt;TSelf&gt;" Collapsed="true">
-    <Position X="7.5" Y="1.5" Width="1.25" />
+    <Position X="9.25" Y="1.5" Width="1.25" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IExchangeable&lt;TContext&gt;" Collapsed="true">
-    <Position X="9" Y="1.5" Width="2" />
+    <Position X="10.75" Y="1.5" Width="2" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ILimitable" Collapsed="true">
-    <Position X="11.25" Y="1.5" Width="1.25" />
+    <Position X="5.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ILimitable&lt;TSelf&gt;" Collapsed="true">
+    <Position X="5.5" Y="1.5" Width="1.5" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />

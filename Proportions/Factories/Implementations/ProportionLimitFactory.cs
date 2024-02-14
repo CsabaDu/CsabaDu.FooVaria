@@ -68,6 +68,13 @@ public sealed class ProportionLimitFactory : IProportionLimitFactory
         return Create(baseMeasures[0], baseMeasures[1], default);
     }
 
+    public IBaseRate CreateBaseRate(IBaseRate baseRate)
+    {
+        if (baseRate is IProportionLimit other) return CreateNew(other);
+
+        return Create(baseRate, default);
+    }
+
     public IProportionLimit CreateNew(IProportionLimit other)
     {
         return new ProportionLimit(other);

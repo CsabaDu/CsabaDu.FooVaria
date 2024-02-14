@@ -58,6 +58,17 @@ public abstract class RateFactory : IRateFactory
     public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement);
     public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit);
     public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitCode denominatorMeasureUnitCode);
+    public IBaseRate CreateBaseRate(IBaseRate baseRate)
+    {
+        if (baseRate is IRate other) return CreateNew(other);
+
+        decimal defaultQuantity = NullChecked(baseRate, nameof(baseRate)).GetDefaultQuantity();
+        MeasureUnitCode numeratorMeasureUnitCode = baseRate.GetNumeratorMeasureUnitCode();
+        IBaseMeasure numerator = CreateBaseMeasure(numeratorMeasureUnitCode, defaultQuantity);
+        MeasureUnitCode denominatorMeasureUnitCode = baseRate.MeasureUnitCode;
+
+        return CreateBaseRate(numerator, denominatorMeasureUnitCode);
+    }
     public abstract IRate CreateNew(IRate other);
     #endregion
     #endregion
@@ -71,6 +82,7 @@ public abstract class RateFactory : IRateFactory
 
         throw ArgumentTypeOutOfRangeException(paramName, measurable);
     }
+
     #endregion
     #endregion
 }

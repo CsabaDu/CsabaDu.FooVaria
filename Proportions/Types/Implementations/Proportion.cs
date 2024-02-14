@@ -68,15 +68,6 @@
         #endregion
 
         #region Public methods
-        public IProportion ConvertToLimitable(ILimiter limiter)
-        {
-            string paramName = nameof(limiter);
-
-            if (NullChecked(limiter, paramName) is IBaseRate baseRate) return GetProportion(baseRate);
-
-            throw ArgumentTypeOutOfRangeException(paramName, limiter);
-        }
-
         #region Override methods
         #region Sealed methods
         public override sealed decimal GetDefaultQuantity()

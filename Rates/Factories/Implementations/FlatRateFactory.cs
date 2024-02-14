@@ -1,13 +1,8 @@
-﻿namespace CsabaDu.FooVaria.Rates.Factories.Implementations;
+﻿
+namespace CsabaDu.FooVaria.Rates.Factories.Implementations;
 
-public sealed class FlatRateFactory : RateFactory, IFlatRateFactory
+public sealed class FlatRateFactory(IDenominatorFactory denominatorFactory) : RateFactory(denominatorFactory), IFlatRateFactory
 {
-    #region Constructors
-    public FlatRateFactory(IDenominatorFactory denominatorFactory) : base(denominatorFactory)
-    {
-    }
-    #endregion
-
     #region Public methods
     public IFlatRate Create(IMeasure numerator, string name, ValueType denominatorQuantity)
     {

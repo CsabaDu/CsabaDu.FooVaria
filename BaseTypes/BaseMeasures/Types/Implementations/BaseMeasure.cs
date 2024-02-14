@@ -286,15 +286,9 @@
         #endregion
     }
 
-    public abstract class BaseMeasure<TSeff> : BaseMeasure, IBaseMeasure<TSeff>
+    public abstract class BaseMeasure<TSeff>(IBaseMeasureFactory<TSeff> factory, Enum measureUnit) : BaseMeasure(factory, measureUnit), IBaseMeasure<TSeff>
         where TSeff : class, IBaseMeasure
     {
-        #region Constructors
-        protected BaseMeasure(IBaseMeasureFactory<TSeff> factory, Enum measureUnit) : base(factory, measureUnit)
-        {
-        }
-        #endregion
-
         #region Public methods
         public TSeff GetBaseMeasure(Enum measureUnit, ValueType quantity)
         {

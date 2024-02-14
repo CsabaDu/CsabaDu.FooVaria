@@ -48,6 +48,15 @@ public abstract class BaseRate : Quantifiable, IBaseRate
         return GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
     }
 
+    public IBaseRate ConvertToLimitable(ILimiter limiter)
+    {
+        string paramName = nameof(limiter);
+
+        if (NullChecked(limiter, paramName) is IBaseRate baseRate) return GetBaseRate(baseRate);
+
+        throw ArgumentTypeOutOfRangeException(paramName, limiter);
+    }
+
     public bool Equals(IBaseRate? other)
     {
         return base.Equals(other)
@@ -74,6 +83,11 @@ public abstract class BaseRate : Quantifiable, IBaseRate
         if (!limitModeValue.IsDefined()) return null;
 
         return comparison.FitsIn(limitModeValue);
+    }
+
+    public IBaseRate GetBaseRate(IBaseRate baseRate)
+    {
+        return GetFactory().CreateBaseRate(baseRate);
     }
 
     //public IBaseRate GetBaseRate(IBaseMeasure numerator, IBaseMeasure denominator)
@@ -198,6 +212,7 @@ public abstract class BaseRate : Quantifiable, IBaseRate
     #region Abstract methods
     public abstract IBaseRate GetBaseRate(MeasureUnitCode numeratorMeasureUnitCode, decimal defaultQuantity, MeasureUnitCode denominatorMeasureUnitCode);
     public abstract MeasureUnitCode GetNumeratorMeasureUnitCode();
+
     #endregion
 
     #region Static methods

@@ -1,16 +1,9 @@
 ﻿namespace CsabaDu.FooVaria.Rates.Factories.Implementations;
 
-public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
+public sealed class LimitedRateFactory(IDenominatorFactory denominatorFactory, ILimitFactory limitFactory) : RateFactory(denominatorFactory), ILimitedRateFactory
 {
-    #region Constructors
-    public LimitedRateFactory(IDenominatorFactory denominatorFactory, ILimitFactory limitFactory) : base(denominatorFactory)
-    {
-        LimitFactory = NullChecked(limitFactory, nameof(limitFactory));
-    }
-    #endregion
-
     #region Properties
-    public ILimitFactory LimitFactory { get; init; }
+    public ILimitFactory LimitFactory { get; init; } = NullChecked(limitFactory, nameof(limitFactory));
     #endregion
 
     #region Public methods
@@ -79,7 +72,7 @@ public sealed class LimitedRateFactory : RateFactory, ILimitedRateFactory
     {
         IMeasure measure = GetValidRateParam<IMeasure>(numerator, nameof(numerator));
         IMeasurement measurement = GetValidRateParam<IMeasurement>(denominatorMeasurement, nameof(denominatorMeasurement));
-        ILimit limit = LimitFactory.Create(measurement, default(ulong), default);
+        ILimit limit = LimitFactory.Create(measurement, default, default);
 
         return Create(measure, measurement, limit);
     }
