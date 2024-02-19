@@ -12,11 +12,14 @@
 [BaseMeasurements|
 	[<base>BaseMeasurement]
 ]
+[BaseQuantifiables|
+	[<base>BaseQuantifiable]
+]
 [Quantifiables|
-	[<base>Quantifiable]<:-[<abstract>Quantifiable<TSelf>]
+	[<base>Quantifiable]
 ]
 [BaseMeasures|
-	[<base>BaseMeasure]<:-[<abstract>BaseMeasures<TSelf>]
+	[<base>BaseMeasure]
 ]
 [Spreads|
 	[<base>Spread]
@@ -27,14 +30,15 @@
 [BaseRates|
 	[<base>BaseRate]
 ]
-
+[SimpleRates|
+	[<abstract>SimpleRate]
+]
 [SimpleShapes|
 	[<abstract>SimpleShape]
 ]
 [ComplexShapes|
 	[<abstract>ComplexShape]
 ]
-
 [Measurements|
 	[<abstract>Measurement]<:-[<concrete>ConstantMeasurement]
     [Measurement]<:-[<concrete>CustomMeasurement]
@@ -60,10 +64,15 @@
 	[<abstract>Rate]<:-[<concrete>FlatRate]
 	[Rate]<:-[<concrete>LimitedRate]
 ]
+[SimpleRates|
+	[<abstract>SimpleRate]
+]
 [Proportions|
 	[<abstract>Proportion]<:-[<abstract>Proportion<TDEnum>]
 	[Proportion<TDEnum>]<:-[<concrete>Proportion<TNEnum, TDEnum>]
-    [Proportion]<:-[<concrete>ProportionLimit]
+]
+[ProportionLimits|
+    [<concrete>ProportionLimit]
 ]
 [BulkSpreads|
 	[<abstract>BulkSpread]<:-[<abstract>BulkSpread<TSelf, TSMeasure>]
@@ -93,13 +102,15 @@
 ]
 
 [Common]<:-[Measurables]<:-[BaseMeasurements]<:-[Measurements]
-[Measurables]<:-[Quantifiables]<:-[BaseMeasures]<:-[RateComponents]
-[Quantifiables]<:-[Spreads]<:-[BulkSpreads]
-[Quantifiables]<:-[BaseRates]<:-[Rates]
-[Quantifiables]<:-[Masses]
+[Measurables]<:-[BaseQuantifiables]<:-[Quantifiables]<:-[BaseMeasures]<:-[RateComponents]
 [Spreads]<:-[Shapes]<:-[SimpleShapes]<:-[PlaneShapes]
+[Quantifiables]<:-[Spreads]<:-[BulkSpreads]
+[BaseQuantifiables]<:-[BaseRates]
+[BaseRates]<:-[Rates]
 [SimpleShapes]<:-[DryBodies]
 [BaseMeasures]<:-[Measures]
-[BaseRates]<:-[Proportions]
+[BaseRates]<:-[SimpleRates]<:-[ProportionLimits]
+[SimpleRates]<:-[Proportions]
 [Shapes]<:-[ComplexShapes]<:-[Sections]
 [ComplexShapes]<:-[ComplexDryBodies]
+[BaseQuantifiables]<:-[Masses]
