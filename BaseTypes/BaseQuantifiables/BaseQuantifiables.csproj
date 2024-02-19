@@ -10,8 +10,4 @@
     <ProjectReference Include="..\Measurables\Measurables.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="_ClassDiagrams\" />
-  </ItemGroup>
-
 </Project>
