@@ -1,11 +1,11 @@
 ﻿namespace CsabaDu.FooVaria.Proportions.Types
 {
-    public interface IProportion : IBaseRate/*, ILimitable<IProportion>*/
+    public interface IProportion : ISimpleRate/*, ILimitable<IProportion>*/
     {
-        MeasureUnitCode NumeratorMeasureUnitCode { get; init; }
-        decimal DefaultQuantity { get; init; }
+        //MeasureUnitCode NumeratorCode { get; init; }
+        //decimal DefaultQuantity { get; init; }
 
-        IProportion GetProportion(IBaseRate baseRate);
+        //IProportion GetProportion(IBaseRate baseRate);
     }
 
     public interface IProportion<TDEnum> : IProportion, IDenominate<IMeasure, TDEnum>

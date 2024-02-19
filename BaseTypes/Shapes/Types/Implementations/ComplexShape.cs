@@ -6,11 +6,11 @@ public abstract class ComplexShape : Shape, IComplexShape
     {
     }
 
-    protected ComplexShape(IShapeFactory factory, IShape shape) : base(factory, shape)
+    protected ComplexShape(IShapeFactory factory, IShape shape) : base(factory)
     {
     }
 
-    protected ComplexShape(ISpreadFactory factory, MeasureUnitCode measureUnitCode, params IShapeComponent[] shapeComponents) : base(factory, measureUnitCode, shapeComponents)
+    protected ComplexShape(IShapeFactory factory, MeasureUnitCode measureUnitCode, params IShapeComponent[] shapeComponents) : base(factory)
     {
     }
 }

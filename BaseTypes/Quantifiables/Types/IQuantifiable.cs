@@ -1,17 +1,19 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Types
+﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
+
+namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Types
 {
-    public interface IQuantifiable : IMeasurable, IDefaultQuantity
+    //public interface IBaseQuantifiable : IMeasurable, IDefaultQuantity
+    //{
+    //    void ValidateQuantity(ValueType? quantity, string paramName);
+    //    void ValidateQuantity(IBaseQuantifiable? baseQuantifiable, string paramName);
+    //}
+
+    public interface IQuantifiable : IBaseQuantifiable, IExchange<IQuantifiable, Enum>, IFit<IQuantifiable>, IRound<IQuantifiable>
     {
-        void ValidateQuantity(ValueType? quantity, string paramName);
-        void ValidateQuantity(IQuantifiable? quantifiable, string paramName);
+        //MeasureUnitCode MeasureUnitCode { get; init; }
 
-    }
+        IQuantifiable GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity);
 
-    public interface IQuantifiable<TSelf> : IQuantifiable, IExchange<TSelf, Enum>, IFit<TSelf>
-        where TSelf : class, IQuantifiable
-    {
-        TSelf GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity);
-
-        void ValidateQuantifiable(IQuantifiable? quantifiable, string paramName);
+        void ValidateQuantifiable(IBaseQuantifiable? baseQuantifiable, string paramName);
     }
 }

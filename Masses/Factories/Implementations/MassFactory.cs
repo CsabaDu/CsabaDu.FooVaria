@@ -18,10 +18,6 @@ public abstract class MassFactory : IMassFactory
 
         return (IProportion<WeightUnit, VolumeUnit>)ProportionFactory.Create(weight, volume);
     }
-    public IMeasureFactory GetMeasureFactory()
-    {
-        return ProportionFactory.MeasureFactory;
-    }
 
     public virtual IBodyFactory GetBodyFactory()
     {
@@ -29,4 +25,5 @@ public abstract class MassFactory : IMassFactory
     }
 
     public abstract IMass Create(IWeight weight, IBody body);
+    public abstract IMeasureFactory GetMeasureFactory();
 }

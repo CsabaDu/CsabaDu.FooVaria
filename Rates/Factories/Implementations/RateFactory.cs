@@ -57,17 +57,17 @@ public abstract class RateFactory : IRateFactory
     public abstract IRate Create(params IBaseMeasure[] rateComponents);
     public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement);
     public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit);
-    public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitCode denominatorMeasureUnitCode);
+    public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitCode denominatorCode);
     public IBaseRate CreateBaseRate(IBaseRate baseRate)
     {
         if (baseRate is IRate other) return CreateNew(other);
 
         decimal defaultQuantity = NullChecked(baseRate, nameof(baseRate)).GetDefaultQuantity();
-        MeasureUnitCode numeratorMeasureUnitCode = baseRate.GetNumeratorMeasureUnitCode();
-        IBaseMeasure numerator = CreateBaseMeasure(numeratorMeasureUnitCode, defaultQuantity);
-        MeasureUnitCode denominatorMeasureUnitCode = baseRate.MeasureUnitCode;
+        MeasureUnitCode numeratorCode = baseRate.GetNumeratorCode();
+        IBaseMeasure numerator = CreateBaseMeasure(numeratorCode, defaultQuantity);
+        MeasureUnitCode denominatorCode = baseRate.GetMeasureUnitCode();
 
-        return CreateBaseRate(numerator, denominatorMeasureUnitCode);
+        return CreateBaseRate(numerator, denominatorCode);
     }
     public abstract IRate CreateNew(IRate other);
     #endregion

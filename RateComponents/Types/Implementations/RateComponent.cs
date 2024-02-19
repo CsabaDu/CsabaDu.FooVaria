@@ -3,7 +3,7 @@
     internal abstract class RateComponent : BaseMeasure, IRateComponent
     {
         #region Constructors
-        private protected RateComponent(IRateComponentFactory factory, IMeasurement measurement) : base(factory, measurement)
+        private protected RateComponent(IRateComponentFactory factory, IMeasurement measurement) : base(factory)
         {
             Measurement = GetBaseMeasurementFactory().CreateNew(measurement);
         }
@@ -63,15 +63,9 @@
         #endregion
     }
 
-    internal abstract class RateComponent<TSelf> : RateComponent, IRateComponent<TSelf>
+    internal abstract class RateComponent<TSelf>(IRateComponentFactory factory, IMeasurement measurement) : RateComponent(factory, measurement), IRateComponent<TSelf>
         where TSelf : class, IBaseMeasure
     {
-        #region Constructors
-        private protected RateComponent(IRateComponentFactory factory, IMeasurement measurement) : base(factory, measurement)
-        {
-        }
-        #endregion
-
         #region Public methods
         #region Abstract methods
         public abstract TSelf GetDefault();

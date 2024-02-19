@@ -6,7 +6,7 @@ internal sealed class Area(IMeasureFactory factory, AreaUnit areaUnit, double qu
     #region Public methods
     public MeasureUnitCode GetSpreadMeasureUnitCode()
     {
-        return MeasureUnitCode;
+        return GetMeasureUnitCode();
     }
 
     public ISpreadMeasure GetSpreadMeasure()

@@ -41,7 +41,7 @@ internal sealed class Limit : RateComponent<ILimit>, ILimit
 
     public MeasureUnitCode GetLimiterMeasureUnitCode()
     {
-        return MeasureUnitCode;
+        return GetMeasureUnitCode();
     }
 
     public ILimit? GetLimit(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName, LimitMode limitMode)
@@ -118,11 +118,6 @@ internal sealed class Limit : RateComponent<ILimit>, ILimit
     public override LimitMode? GetLimitMode()
     {
         return LimitMode;
-    }
-
-    public LimitMode GetLimitMode(ILimiter limiter)
-    {
-        return NullChecked(limiter, nameof(limiter)).LimitMode;
     }
     #endregion
     #endregion

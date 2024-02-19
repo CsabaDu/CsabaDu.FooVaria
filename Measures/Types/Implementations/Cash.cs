@@ -11,7 +11,7 @@ internal sealed class Cash(IMeasureFactory factory, Currency currency, decimal q
 
     public ICash? GetNextCustomMeasure(string customName, decimal exchangeRate, decimal quantity)
     {
-        return (ICash?)GetBaseMeasure(customName, MeasureUnitCode, exchangeRate, quantity);
+        return (ICash?)GetBaseMeasure(customName, GetMeasureUnitCode(), exchangeRate, quantity);
     }
     #endregion
 }

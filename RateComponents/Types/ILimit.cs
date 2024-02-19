@@ -2,6 +2,8 @@
 
 public interface ILimit : IRateComponent<ILimit>, ILimiter<ILimit, IBaseMeasure>, IBaseMeasure<ILimit, ulong>/*, IDefaultMeasurable<ILimit>*//*, ICommonBase<ILimit>*/
 {
+    LimitMode LimitMode { get; init; }
+
     ILimit GetLimit(string name, ValueType quantity, LimitMode limitMode);
     ILimit? GetLimit(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName, LimitMode limitMode);
     ILimit GetLimit(Enum measureUnit, ValueType quantity, LimitMode limitMode);

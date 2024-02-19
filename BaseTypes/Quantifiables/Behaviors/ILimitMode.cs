@@ -1,7 +1,6 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
+﻿//namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
 
-public interface ILimitMode
-{
-    LimitMode? GetLimitMode();
-}
-
+//public interface ILimitMode
+//{
+//    LimitMode? GetLimitMode();
+//}

@@ -1,21 +1,23 @@
-﻿namespace CsabaDu.FooVaria.Masses.Types.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
+
+namespace CsabaDu.FooVaria.Masses.Types.Implementations;
 
 internal sealed class DryMass : Mass, IDryMass
 {
     #region Constructors
     internal DryMass(IDryMass other) : base(other)
     {
-        Body = other.Body;
+        DryBody = other.DryBody;
     }
 
-    internal DryMass(IDryMassFactory factory, IWeight weight, IDryBody dryBody) : base(factory, weight, dryBody)
+    internal DryMass(IDryMassFactory factory, IWeight weight, IDryBody dryBody) : base(factory, weight)
     {
-        Body = dryBody;
+        DryBody = NullChecked(dryBody, nameof(dryBody));
     }
 
-    internal DryMass(IDryMassFactory factory, IWeight weight, params IExtent[] shapeExtents) : base(factory, weight, shapeExtents)
+    internal DryMass(IDryMassFactory factory, IWeight weight, params IExtent[] shapeExtents) : base(factory, weight)
     {
-        Body = getDryBody();
+        DryBody = getDryBody();
 
         #region Local methods
         IDryBody getDryBody()
@@ -29,14 +31,14 @@ internal sealed class DryMass : Mass, IDryMass
         #endregion
     }
 
-    internal DryMass(IDryMassFactory factory, IWeight weight, IPlaneShape baseFace, IExtent height) : base(factory, weight, baseFace, height)
+    internal DryMass(IDryMassFactory factory, IWeight weight, IPlaneShape baseFace, IExtent height) : base(factory, weight)
     {
-        Body = GetBodyFactory().Create(baseFace, height);
+        DryBody = GetBodyFactory().Create(baseFace, height);
     }
     #endregion
 
     #region Properties
-    public override IBody Body { get; init; }
+    public IDryBody DryBody { get; init; }
     #endregion
 
     #region Public methods
@@ -64,15 +66,15 @@ internal sealed class DryMass : Mass, IDryMass
     public override bool Equals(IMass? other)
     {
         return base.Equals(other)
-            && other.Body is IDryBody dryBody
-            && (Body as IDryBody)!.Equals(dryBody);
+            && other.GetBody() is IDryBody dryBody
+            && DryBody.Equals(dryBody);
     }
 
     public override IMass? ExchangeTo(Enum? context)
     {
         if (context is not ExtentUnit extentUnit) return base.ExchangeTo(context);
 
-        ISpread? exchanged = (Body as ISimpleShape)!.ExchangeTo(extentUnit);
+        IQuantifiable? exchanged = (DryBody as ISimpleShape)!.ExchangeTo(extentUnit);
 
         return exchanged is IDryBody dyBody ?
             GetDryMass(Weight, dyBody)
@@ -85,7 +87,7 @@ internal sealed class DryMass : Mass, IDryMass
 
         if (other is not IDryMass dryMass) return baseFitsIn;
 
-        bool? dryBodyFitsIn = GetDryBody().FitsIn(dryMass.GetDryBody(), limitMode);
+        bool? dryBodyFitsIn = DryBody.FitsIn(dryMass.DryBody, limitMode);
 
         return BothFitIn(baseFitsIn, dryBodyFitsIn);
     }
@@ -114,9 +116,9 @@ internal sealed class DryMass : Mass, IDryMass
         throw ArgumentTypeOutOfRangeException(paramName, body);
     }
 
-    public IDryBody GetDryBody()
+    public override IDryBody GetBody()
     {
-        return (IDryBody)Body;
+        return DryBody;
     }
     #endregion
     #endregion

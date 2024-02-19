@@ -14,7 +14,7 @@
     }
 
     public interface IMeasure<TSelf, TNum, TEnum> : IMeasure<TSelf, TNum>, IMeasureUnit<TEnum>
-        where TSelf : class, IMeasure, IMeasureUnit
+        where TSelf : class, IMeasure
         where TNum : struct
         where TEnum : struct, Enum
     {

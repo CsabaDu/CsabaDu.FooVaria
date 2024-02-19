@@ -1,5 +1,7 @@
 ﻿
 using CsabaDu.FooVaria.BaseTypes.Measurables.Statics;
+using CsabaDu.FooVaria.BaseTypes.Quantifiables.Factories;
+using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
 
 namespace CsabaDu.FooVaria.BulkSpreads.Factories.Implementations
 {
@@ -17,7 +19,7 @@ namespace CsabaDu.FooVaria.BulkSpreads.Factories.Implementations
         #endregion
 
         #region Public methods
-        public ISpread CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
+        public IQuantifiable CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
         {
             if (!measureUnitCode.IsSpreadMeasureUnitCode()) throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode);
 

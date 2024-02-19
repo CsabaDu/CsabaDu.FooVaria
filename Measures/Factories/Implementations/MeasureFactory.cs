@@ -54,7 +54,7 @@ public sealed class MeasureFactory(IMeasurementFactory measurementFactory) : IMe
         return CreateMeasure(other, nameof(other));
     }
 
-    public IBaseMeasure CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
+    public IQuantifiable CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
     {
         return CreateMeasure(measureUnitCode, defaultQuantity);
     }

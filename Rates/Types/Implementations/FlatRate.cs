@@ -11,7 +11,7 @@ internal sealed class FlatRate : Rate, IFlatRate
     {
     }
 
-    internal FlatRate(IFlatRateFactory factory, IMeasure numerator, MeasureUnitCode denominatorMeasureUnitCode) : base(factory, numerator, denominatorMeasureUnitCode)
+    internal FlatRate(IFlatRateFactory factory, IMeasure numerator, MeasureUnitCode denominatorCode) : base(factory, numerator, denominatorCode)
     {
     }
 
@@ -61,9 +61,9 @@ internal sealed class FlatRate : Rate, IFlatRate
         return GetFactory().Create(numerator, denominatorMeasurement);
     }
 
-    public IFlatRate GetFlatRate(IMeasure numerator, MeasureUnitCode denominatorMeasureUnitCode)
+    public IFlatRate GetFlatRate(IMeasure numerator, MeasureUnitCode denominatorCode)
     {
-        return GetFactory().Create(numerator, denominatorMeasureUnitCode);
+        return GetFactory().Create(numerator, denominatorCode);
     }
 
     public IFlatRate GetFlatRate(IMeasure numerator, IDenominator denominator)
@@ -131,7 +131,7 @@ internal sealed class FlatRate : Rate, IFlatRate
 
         if (!other.TryExchangeTo(Denominator, out IRate? exchanged))
         {
-            throw InvalidMeasureUnitCodeEnumArgumentException(other!.MeasureUnitCode, nameof(other));
+            throw InvalidMeasureUnitCodeEnumArgumentException(other!.GetMeasureUnitCode(), nameof(other));
         }
 
         IMeasure numerator = getNumeratorSum(summingMode);

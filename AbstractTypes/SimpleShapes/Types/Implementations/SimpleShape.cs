@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
+
+namespace CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types.Implementations;
 
 public abstract class SimpleShape : Shape, ISimpleShape
 {
@@ -7,11 +9,11 @@ public abstract class SimpleShape : Shape, ISimpleShape
     {
     }
 
-    protected SimpleShape(ISimpleShapeFactory factory, IShape shape) : base(factory, shape)
+    protected SimpleShape(ISimpleShapeFactory factory, IShape shape) : base(factory)
     {
     }
 
-    protected SimpleShape(ISimpleShapeFactory factory, MeasureUnitCode measureUnitCode, params IExtent[] shapeExtents) : base(factory, measureUnitCode, shapeExtents)
+    protected SimpleShape(ISimpleShapeFactory factory, MeasureUnitCode measureUnitCode, params IExtent[] shapeExtents) : base(factory)
     {
         ValidateShapeExtents(shapeExtents, nameof(shapeExtents));
     }
@@ -155,7 +157,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
             throw ArgumentTypeOutOfRangeException(paramName, other);
         }
 
-        ValidateMeasureUnitCode(simpleShape.MeasureUnitCode, paramName);
+        ValidateMeasureUnitCode(simpleShape.GetMeasureUnitCode(), paramName);
 
         return Compare(this, simpleShape) ?? throw new ArgumentOutOfRangeException(paramName);
     }
@@ -190,7 +192,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
         {
             foreach (IBaseMeasure item in GetShapeExtents())
             {
-                IBaseMeasure? exchanged = item.ExchangeTo(extentUnit);
+                IQuantifiable? exchanged = item.ExchangeTo(extentUnit);
 
                 if (exchanged is IExtent simpleShapeExtent)
                 {
@@ -213,7 +215,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
             return null;
         }
 
-        if (!simpleShape.IsExchangeableTo(MeasureUnitCode)) return null;
+        if (!simpleShape.IsExchangeableTo(GetMeasureUnitCode())) return null;
 
         limitMode ??= LimitMode.BeNotGreater;
 

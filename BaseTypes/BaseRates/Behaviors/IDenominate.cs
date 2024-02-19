@@ -2,7 +2,7 @@
 {
     public interface IDenominate
     {
-        MeasureUnitCode GetDenominatorMeasureUnitCode();
+        MeasureUnitCode GetDenominatorCode();
     }
 
     public interface IDenominate<out TNumerator, in TDenominator> : IDenominate

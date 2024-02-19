@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Measures.Factories;
-
-namespace CsabaDu.FooVaria.BulkSpreads.Factories
+﻿namespace CsabaDu.FooVaria.BulkSpreads.Factories
 {
     public interface IBulkSpreadFactory : ISpreadFactory
     {

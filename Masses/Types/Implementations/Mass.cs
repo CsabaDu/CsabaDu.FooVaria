@@ -1,6 +1,8 @@
-﻿namespace CsabaDu.FooVaria.Masses.Types.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
 
-internal abstract class Mass : Quantifiable, IMass
+namespace CsabaDu.FooVaria.Masses.Types.Implementations;
+
+internal abstract class Mass : BaseQuantifiable, IMass
 {
     #region Constants
     private const MeasureUnitCode WeightMeasureUnitCode = MeasureUnitCode.WeightUnit;
@@ -12,59 +14,53 @@ internal abstract class Mass : Quantifiable, IMass
         Weight = other.Weight;
     }
 
-    private protected Mass(IMassFactory factory, IWeight weight, IBody body) : base(factory, weight)
+    private protected Mass(IMassFactory factory, IWeight weight) : base(factory)
     {
-        validateParams();
+        ValidateMassComponent(weight, nameof(weight));
 
         Weight = weight;
 
-        #region Local methods
-        void validateParams()
-        {
-            ValidateMassComponent(weight, nameof(weight));
-            ValidateMassComponent(body, nameof(body));
-        }
-        #endregion
+        //ValidateMassComponent(body, nameof(body));
     }
 
-    private protected Mass(IMassFactory factory, IWeight weight, IPlaneShape baseFace, IExtent height) : base(factory, WeightMeasureUnitCode, baseFace, height)
-    {
-        validateParams();
+    //private protected Mass(IMassFactory factory, IWeight weight, IPlaneShape baseFace, IExtent height) : base(factory)
+    //{
+    //    validateParams();
 
-        Weight = weight;
+    //    Weight = weight;
 
-        #region Local methods
-        void validateParams()
-        {
-            ValidateMassComponent(weight, nameof(weight));
-            _ = NullChecked(baseFace, nameof(baseFace));
-            ValidateMassComponent(height, nameof(height));
-        }
-        #endregion
-    }
+    //    #region Local methods
+    //    void validateParams()
+    //    {
+    //        ValidateMassComponent(weight, nameof(weight));
+    //        _ = NullChecked(baseFace, nameof(baseFace));
+    //        ValidateMassComponent(height, nameof(height));
+    //    }
+    //    #endregion
+    //}
 
-    private protected Mass(IMassFactory factory, IWeight weight, params IExtent[] shapeExtents) : base(factory, WeightMeasureUnitCode, shapeExtents)
-    {
-        validateParams();
+    //private protected Mass(IMassFactory factory, IWeight weight, params IExtent[] shapeExtents) : base(factory)
+    //{
+    //    validateParams();
 
-        Weight = weight;
+    //    Weight = weight;
 
-        #region Local methods
-        void validateParams()
-        {
-            ValidateMassComponent(weight, nameof(weight));
-            foreach (IExtent item in NullChecked(shapeExtents, nameof(shapeExtents)))
-            {
-                ValidateMassComponent(item, nameof(shapeExtents));
-            }
-        }
-        #endregion
-    }
+    //    #region Local methods
+    //    void validateParams()
+    //    {
+    //        ValidateMassComponent(weight, nameof(weight));
+    //        foreach (IExtent item in NullChecked(shapeExtents, nameof(shapeExtents)))
+    //        {
+    //            ValidateMassComponent(item, nameof(shapeExtents));
+    //        }
+    //    }
+    //    #endregion
+    //}
     #endregion
 
     #region Properties
     public IWeight Weight { get; init; }
-    public abstract IBody Body { get; init; }
+    public abstract IBody GetBody();
     public IMeasure? this[MeasureUnitCode measureUnitCode] => measureUnitCode switch
     {
         MeasureUnitCode.VolumeUnit => GetVolume(),
@@ -99,16 +95,21 @@ internal abstract class Mass : Quantifiable, IMass
         return GetFactory().CreateDensity(this);
     }
 
+    public override MeasureUnitCode GetMeasureUnitCode()
+    {
+        return Weight.GetMeasureUnitCode();
+    }
+
     public MeasureUnitCode GetMeasureUnitCode(decimal ratio)
     {
-        bool isVolumeWeightGreater = GetVolumeWeight(ratio).CompareTo(Weight) < 0;
+        IWeight volumeWeight = GetVolumeWeight(ratio);
 
-        return GetMeasureUnitCode(isVolumeWeightGreater);
+        return GetMeasureUnitCode(volumeWeight);
     }
 
     public double GetQuantity()
     {
-        return GetVolumeWeight().GetQuantity();
+        return Weight.GetQuantity();
     }
 
     public object GetQuantity(TypeCode quantityTypeCode)
@@ -125,12 +126,12 @@ internal abstract class Mass : Quantifiable, IMass
 
     public ISpreadMeasure GetSpreadMeasure()
     {
-        return Body.GetSpreadMeasure();
+        return GetBody().GetSpreadMeasure();
     }
 
     public MeasureUnitCode GetSpreadMeasureUnitCode()
     {
-        return Body.GetSpreadMeasureUnitCode();
+        return GetBody().GetSpreadMeasureUnitCode();
     }
 
     public IVolume GetVolume()
@@ -176,10 +177,10 @@ internal abstract class Mass : Quantifiable, IMass
 
     public void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)
     {
-        Body.ValidateSpreadMeasure(spreadMeasure, paramName);
+        GetBody().ValidateSpreadMeasure(spreadMeasure, paramName);
     }
 
-    public void ValidateMassComponent(IQuantifiable? massComponent, string paramName)
+    public void ValidateMassComponent(IBaseQuantifiable? massComponent, string paramName)
     {
         if (NullChecked(massComponent, paramName) is not IExtent or IWeight or IVolume or IBody)
         {
@@ -210,7 +211,7 @@ internal abstract class Mass : Quantifiable, IMass
 
     public override sealed int GetHashCode()
     {
-        return HashCode.Combine(Weight, Body);
+        return HashCode.Combine(Weight, GetBody());
     }
 
     public override sealed Enum GetMeasureUnit()
@@ -230,12 +231,12 @@ internal abstract class Mass : Quantifiable, IMass
 
     public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
     {
-        ValidateQuantity(this, quantity, paramName);
+        ValidatePositiveQuantity(quantity, paramName);
     }
 
-    public override sealed void ValidateQuantity(IQuantifiable? quantifiable, string paramName)
+    public override sealed void ValidateQuantity(IBaseQuantifiable? baseQuantifiable, string paramName)
     {
-        base.ValidateQuantity(quantifiable, paramName);
+        base.ValidateQuantity(baseQuantifiable, paramName);
     }
     #endregion
     #endregion
@@ -266,7 +267,7 @@ internal abstract class Mass : Quantifiable, IMass
 
         IMass? exchangeVolume()
         {
-            ISpread? exchanged = Body.ExchangeTo(measureUnit);
+            IQuantifiable? exchanged = GetBody().ExchangeTo(measureUnit);
 
             if (exchanged is not IBody body) return null;
 
@@ -275,11 +276,11 @@ internal abstract class Mass : Quantifiable, IMass
 
         IMass? exchangeWeight()
         {
-            IBaseMeasure? exchanged = Weight.ExchangeTo(measureUnit);
+            IQuantifiable? exchanged = Weight.ExchangeTo(measureUnit);
 
             if (exchanged is not IWeight weight) return null;
 
-            return GetMass(weight, Body);
+            return GetMass(weight, GetBody());
         }
     }
 
@@ -289,7 +290,7 @@ internal abstract class Mass : Quantifiable, IMass
 
         if (other == null) return null;
 
-        bool? bodyFitsIn = Body.FitsIn(other.Body, limitMode);
+        bool? bodyFitsIn = GetBody().FitsIn(other.GetBody(), limitMode);
         bool? weightFitsIn = Weight.FitsIn(other.Weight, limitMode);
 
         return BothFitIn(bodyFitsIn, weightFitsIn);
@@ -322,16 +323,21 @@ internal abstract class Mass : Quantifiable, IMass
     #region Private methods
     private IWeight GetGreaterWeight(IWeight volumeWeight)
     {
-        return volumeWeight.CompareTo(Weight) < 0 ?
-            (IWeight)volumeWeight.ExchangeTo(GetMeasureUnit())!
-            : Weight;
+        if (IsWeightNotLess(volumeWeight)) return Weight;
+
+        return (IWeight)volumeWeight.ExchangeTo(GetMeasureUnit())!;
     }
 
-    private MeasureUnitCode GetMeasureUnitCode(bool isVolumeWeightGreater)
+    private MeasureUnitCode GetMeasureUnitCode(IWeight volumeWeight)
     {
-        return isVolumeWeightGreater ?
-            Body.MeasureUnitCode
-            : Weight.MeasureUnitCode;
+        return IsWeightNotLess(volumeWeight) ?
+            Weight.GetMeasureUnitCode()
+            : GetBody().GetMeasureUnitCode();
+    }
+
+    private bool IsWeightNotLess(IWeight volumeWeight)
+    {
+        return volumeWeight.CompareTo(Weight) >= 0;
     }
 
     #region Static methods

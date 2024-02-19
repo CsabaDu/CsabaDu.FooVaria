@@ -1,9 +1,9 @@
 ﻿namespace CsabaDu.FooVaria.Proportions.Types.Implementations;
 
-internal sealed class ProportionLimit : Proportion, IProportionLimit
+internal sealed class ProportionLimit : SimpleRate, IProportionLimit
 {
     #region Constructors
-    internal ProportionLimit(IProportionLimitFactory factory, MeasureUnitCode numeratorMeasureUnitCode, decimal defaultQuantity, MeasureUnitCode denominatorMeasureUnitCode, LimitMode limitMode) : base(factory, numeratorMeasureUnitCode, defaultQuantity, denominatorMeasureUnitCode)
+    internal ProportionLimit(IProportionLimitFactory factory, MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode, LimitMode limitMode) : base(factory, numeratorCode, defaultQuantity, denominatorCode)
     {
         LimitMode = Defined(limitMode, nameof(limitMode));
     }
@@ -13,15 +13,15 @@ internal sealed class ProportionLimit : Proportion, IProportionLimit
         LimitMode = Defined(limitMode, nameof(limitMode));
     }
 
-    internal ProportionLimit(IProportionLimitFactory factory, IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement, LimitMode limitMode) : base(factory, numerator, denominatorMeasurement)
-    {
-        LimitMode = Defined(limitMode, nameof(limitMode));
-    }
+    //internal ProportionLimit(IProportionLimitFactory factory, IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement, LimitMode limitMode) : base(factory, numerator, denominatorMeasurement)
+    //{
+    //    LimitMode = Defined(limitMode, nameof(limitMode));
+    //}
 
-    internal ProportionLimit(IProportionLimitFactory factory, IBaseMeasure numerator, IBaseMeasure denominator, LimitMode limitMode) : base(factory, numerator, denominator)
-    {
-        LimitMode = Defined(limitMode, nameof(limitMode));
-    }
+    //internal ProportionLimit(IProportionLimitFactory factory, IBaseMeasure numerator, IBaseMeasure denominator, LimitMode limitMode) : base(factory, numerator, denominator)
+    //{
+    //    LimitMode = Defined(limitMode, nameof(limitMode));
+    //}
 
     internal ProportionLimit(IProportionLimitFactory factory, IBaseRate baseRate, LimitMode limitMode) : base(factory, baseRate)
     {
@@ -30,7 +30,7 @@ internal sealed class ProportionLimit : Proportion, IProportionLimit
 
     internal ProportionLimit(IProportionLimit other) : base(other)
     {
-        LimitMode = other.LimitMode;
+        LimitMode = other.GetLimitMode()!.Value;
     }
     #endregion
 
@@ -45,14 +45,14 @@ internal sealed class ProportionLimit : Proportion, IProportionLimit
 
         if (x == null || y == null) return false;
 
-        if (x.LimitMode != y.LimitMode) return false;
+        if (x.GetLimitMode()!.Value != y.GetLimitMode()!.Value) return false;
 
         return x.Equals(y);
     }
 
     public int GetHashCode([DisallowNull] IProportionLimit proportionLimit)
     {
-        return HashCode.Combine(proportionLimit.LimitMode, proportionLimit.GetHashCode());
+        return HashCode.Combine(proportionLimit.GetLimitMode()!.Value, proportionLimit.GetHashCode());
     }
 
     public decimal GetLimiterDefaultQuantity()
@@ -62,12 +62,7 @@ internal sealed class ProportionLimit : Proportion, IProportionLimit
 
     public MeasureUnitCode GetLimiterMeasureUnitCode()
     {
-        return GetNumeratorMeasureUnitCode();
-    }
-
-    public LimitMode GetLimitMode(ILimiter limiter)
-    {
-        return NullChecked(limiter, nameof(limiter)).LimitMode;
+        return GetNumeratorCode();
     }
 
     public IProportionLimit GetProportionLimit(IBaseRate baseRate, LimitMode limitMode)
@@ -80,18 +75,18 @@ internal sealed class ProportionLimit : Proportion, IProportionLimit
         return GetFactory().Create(numerator, denominator, limitMode);
     }
 
-    public IProportionLimit GetProportionLimit(MeasureUnitCode numeratorMeasureUnitCode, decimal defaultQuantity, MeasureUnitCode denominatorMeasureUnitCode, LimitMode limitMode)
+    public IProportionLimit GetProportionLimit(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode, LimitMode limitMode)
     {
-        return GetFactory().Create(numeratorMeasureUnitCode, defaultQuantity, denominatorMeasureUnitCode, limitMode);
+        return GetFactory().Create(numeratorCode, defaultQuantity, denominatorCode, limitMode);
     }
     public IProportionLimit GetProportionLimit(IBaseMeasure numerator, Enum denominatorMeasureUnit, LimitMode limitMode)
     {
         return GetFactory().Create(numerator, denominatorMeasureUnit, limitMode);
     }
 
-    public IProportionLimit GetProportionLimit(IBaseMeasure numerator, MeasureUnitCode denominatorMeasureUnitCode, LimitMode limitMode)
+    public IProportionLimit GetProportionLimit(IBaseMeasure numerator, MeasureUnitCode denominatorCode, LimitMode limitMode)
     {
-        return GetFactory().Create(numerator, denominatorMeasureUnitCode, limitMode);
+        return GetFactory().Create(numerator, denominatorCode, limitMode);
     }
 
     public IProportionLimit GetNew(IProportionLimit other)
@@ -118,16 +113,6 @@ internal sealed class ProportionLimit : Proportion, IProportionLimit
     public override IProportionLimitFactory GetFactory()
     {
         return (IProportionLimitFactory)Factory;
-    }
-
-    public override IProportionLimit GetProportion(IBaseRate baseRate)
-    {
-        return GetFactory().Create(baseRate, default);
-    }
-
-    public override IProportionLimit GetBaseRate(MeasureUnitCode numeratorMeasureUnitCode, decimal defaultQuantity, MeasureUnitCode denominatorMeasureUnitCode)
-    {
-        return GetFactory().Create(numeratorMeasureUnitCode, defaultQuantity, denominatorMeasureUnitCode, default);
     }
     #endregion
     #endregion

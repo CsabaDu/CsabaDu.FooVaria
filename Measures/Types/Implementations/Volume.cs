@@ -16,7 +16,7 @@ internal sealed class Volume(IMeasureFactory factory, VolumeUnit volumeUnit, dou
 
     public MeasureUnitCode GetSpreadMeasureUnitCode()
     {
-        return MeasureUnitCode;
+        return GetMeasureUnitCode();
     }
 
     public ISpreadMeasure GetSpreadMeasure()

@@ -1,12 +1,13 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Factories
-{
-    public interface IQuantifiableFactory : IMeasurableFactory
-    {
-    }
+﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
 
-    public interface IQuantifiableFactory<T> : IQuantifiableFactory
-        where T : class, IQuantifiable
+namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Factories
+{
+    //public interface IBaseQuantifiableFactory : IMeasurableFactory
+    //{
+    //}
+
+    public interface IQuantifiableFactory : IBaseQuantifiableFactory
     {
-        T CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity);
+        IQuantifiable CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity);
     }
 }

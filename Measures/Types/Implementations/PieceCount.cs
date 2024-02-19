@@ -11,7 +11,7 @@ internal sealed class PieceCount(IMeasureFactory factory, Pieces pieces, long qu
 
     public IPieceCount? GetNextCustomMeasure(string customName, decimal exchangeRate, long quantity)
     {
-        return (IPieceCount?)GetBaseMeasure(customName, MeasureUnitCode, exchangeRate, quantity);
+        return (IPieceCount?)GetBaseMeasure(customName, GetMeasureUnitCode(), exchangeRate, quantity);
     }
     #endregion
 }

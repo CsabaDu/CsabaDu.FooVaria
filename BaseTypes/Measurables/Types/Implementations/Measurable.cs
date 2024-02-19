@@ -49,29 +49,28 @@ public abstract class Measurable : CommonBase, IMeasurable
     }
     #endregion
 
-    protected Measurable(IMeasurableFactory factory, MeasureUnitCode measureUnitCode) : base(factory)
+    protected Measurable(IMeasurableFactory factory) : base(factory)
     {
-        MeasureUnitCode = Defined(measureUnitCode, nameof(measureUnitCode));
     }
+    //protected Measurable(IMeasurableFactory factory, MeasureUnitCode measureUnitCode) : base(factory)
+    //{
+    //}
 
-    protected Measurable(IMeasurableFactory factory, Enum measureUnit) : base(factory)
-    {
-        MeasureUnitCode = GetDefinedMeasureUnitCode(measureUnit);
-    }
+    //protected Measurable(IMeasurableFactory factory, Enum measureUnit) : base(factory)
+    //{
+    //}
 
-    protected Measurable(IMeasurableFactory factory, IMeasurable measurable) : base(factory)
-    {
-        MeasureUnitCode = NullChecked(measurable, nameof(measurable)).MeasureUnitCode;
-    }
+    //protected Measurable(IMeasurableFactory factory, IMeasurable measurable) : base(factory)
+    //{
+    //}
 
     protected Measurable(IMeasurable other) : base(other)
     {
-        MeasureUnitCode = other.MeasureUnitCode;
     }
     #endregion
 
     #region Properties
-    public MeasureUnitCode MeasureUnitCode { get; init; }
+    //public MeasureUnitCode MeasureUnitCode { get; init; }
 
     #region Static properties
     public static Dictionary<MeasureUnitCode, Type> MeasureUnitTypeCollection { get; }
@@ -83,22 +82,22 @@ public abstract class Measurable : CommonBase, IMeasurable
     #region Public methods
     public Enum GetDefaultMeasureUnit()
     {
-        return MeasureUnitCode.GetDefaultMeasureUnit();
+        return GetMeasureUnitCode().GetDefaultMeasureUnit();
     }
 
     public IEnumerable<string> GetDefaultMeasureUnitNames()
     {
-        return GetDefaultNames(MeasureUnitCode);
+        return GetDefaultNames(GetMeasureUnitCode());
     }
 
     public Type GetMeasureUnitType()
     {
-        return MeasureUnitTypeCollection[MeasureUnitCode];
+        return MeasureUnitTypeCollection[GetMeasureUnitCode()];
     }
 
     public bool HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
     {
-        return measureUnitCode == MeasureUnitCode;
+        return measureUnitCode == GetMeasureUnitCode();
     }
 
     public bool IsValidMeasureUnitCode(MeasureUnitCode measureUnitCode)
@@ -108,7 +107,7 @@ public abstract class Measurable : CommonBase, IMeasurable
 
     public void ValidateMeasureUnitCode(IMeasurable? measurable, [DisallowNull] string paramName)
     {
-        MeasureUnitCode measureUnitCode = NullChecked(measurable, paramName).MeasureUnitCode;
+        MeasureUnitCode measureUnitCode = NullChecked(measurable, paramName).GetMeasureUnitCode();
 
         ValidateMeasureUnitCode(measureUnitCode, paramName);
     }
@@ -117,7 +116,7 @@ public abstract class Measurable : CommonBase, IMeasurable
     public override bool Equals(object? obj)
     {
         return obj is IMeasurable other
-            && MeasureUnitCode.Equals(other.MeasureUnitCode);
+            && GetMeasureUnitCode().Equals(other.GetMeasureUnitCode());
     }
 
     public override IMeasurableFactory GetFactory()
@@ -127,7 +126,7 @@ public abstract class Measurable : CommonBase, IMeasurable
 
     public override int GetHashCode()
     {
-        return MeasureUnitCode.GetHashCode();
+        return GetMeasureUnitCode().GetHashCode();
     }
     #endregion
 
@@ -139,7 +138,7 @@ public abstract class Measurable : CommonBase, IMeasurable
 
     public virtual TypeCode GetQuantityTypeCode()
     {
-        return MeasureUnitCode.GetQuantityTypeCode();
+        return GetMeasureUnitCode().GetQuantityTypeCode();
     }
 
     public virtual void ValidateMeasureUnit(Enum? measureUnit, string paramName)
@@ -344,9 +343,14 @@ public abstract class Measurable : CommonBase, IMeasurable
     #region Static methods
     protected static TSelf GetDefault<TSelf>(TSelf measurable) where TSelf : class, IMeasurable, IDefaultMeasurable
     {
-        MeasureUnitCode measureUnitCode = measurable.MeasureUnitCode;
+        MeasureUnitCode measureUnitCode = measurable.GetMeasureUnitCode();
 
         return (TSelf)measurable.GetDefault(measureUnitCode)!;
+    }
+
+    public virtual MeasureUnitCode GetMeasureUnitCode()
+    {
+        return GetMeasureUnitCode(GetMeasureUnit());
     }
     #endregion
     #endregion

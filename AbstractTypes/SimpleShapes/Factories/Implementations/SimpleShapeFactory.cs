@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
+
+namespace CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories.Implementations;
 
 public abstract class SimpleShapeFactory : ISimpleShapeFactory
 {
@@ -21,7 +23,7 @@ public abstract class SimpleShapeFactory : ISimpleShapeFactory
         return BulkSpreadFactory.CreateSpread(spreadMeasure);
     }
 
-    public ISpread CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
+    public IQuantifiable CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
     {
         return BulkSpreadFactory.CreateQuantifiable(measureUnitCode, defaultQuantity);
     }

@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Enums;
+﻿namespace CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Enums;
 
 public enum LimitMode
 {

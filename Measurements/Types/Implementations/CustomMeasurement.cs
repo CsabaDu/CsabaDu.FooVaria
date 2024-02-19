@@ -5,7 +5,7 @@ internal sealed class CustomMeasurement(IMeasurementFactory factory, Enum measur
     #region Public methods
     public IEnumerable<Enum> GetNotUsedCustomMeasureUnits()
     {
-        return GetNotUsedCustomMeasureUnits(MeasureUnitCode);
+        return GetNotUsedCustomMeasureUnits(GetMeasureUnitCode());
 
         //IEnumerable<MeasureUnitCode> measureUnitCodes = GetMeasureUnitCodes();
         //IEnumerable<Enum> notUsedCustomMeasureUnits = GetNotUsedCustomMeasureUnits(measureUnitCodes.First());

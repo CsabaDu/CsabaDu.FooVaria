@@ -87,7 +87,7 @@
             return Volume;
         }
 
-        public override sealed IShapeComponent? GetValidShapeComponent(IQuantifiable? shapeComponent)
+        public override sealed IShapeComponent? GetValidShapeComponent(IBaseQuantifiable? shapeComponent)
         {
             if (shapeComponent is not IExtent or IPlaneShape) return null;
 

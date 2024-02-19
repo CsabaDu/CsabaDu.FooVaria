@@ -41,6 +41,11 @@ public sealed class DryMassFactory : MassFactory, IDryMassFactory
     {
         return (IDryBodyFactory)BodyFactory;
     }
+
+    public override IMeasureFactory GetMeasureFactory()
+    {
+        return GetBodyFactory().GetMeasureFactory();
+    }
     #endregion
     #endregion
 }

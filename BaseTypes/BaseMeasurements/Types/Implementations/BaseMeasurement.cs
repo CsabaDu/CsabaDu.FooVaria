@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;
 
-public abstract class BaseMeasurement(IBaseMeasurementFactory factory, Enum measureUnit) : Measurable(factory, measureUnit), IBaseMeasurement
+public abstract class BaseMeasurement(IBaseMeasurementFactory factory) : Measurable(factory), IBaseMeasurement
 {
     #region Constructors
     #region Static constructor
@@ -24,7 +24,7 @@ public abstract class BaseMeasurement(IBaseMeasurementFactory factory, Enum meas
     {
         if (other == null) return 1;
 
-        other.ValidateMeasureUnitCode(MeasureUnitCode, nameof(other));
+        other.ValidateMeasureUnitCode(GetMeasureUnitCode(), nameof(other));
 
         return GetExchangeRate().CompareTo(other.GetExchangeRate());
     }
@@ -42,7 +42,7 @@ public abstract class BaseMeasurement(IBaseMeasurementFactory factory, Enum meas
 
     public IDictionary<object, decimal> GetConstantExchangeRateCollection()
     {
-        return GetConstantExchangeRateCollection(MeasureUnitCode);
+        return GetConstantExchangeRateCollection(GetMeasureUnitCode());
     }
 
     public decimal GetExchangeRate()
@@ -54,7 +54,7 @@ public abstract class BaseMeasurement(IBaseMeasurementFactory factory, Enum meas
 
     public IDictionary<object, decimal> GetExchangeRateCollection()
     {
-        return GetExchangeRateCollection(MeasureUnitCode);
+        return GetExchangeRateCollection(GetMeasureUnitCode());
     }
 
     public Enum GetMeasureUnit(IMeasureUnit<Enum>? other)
@@ -66,14 +66,14 @@ public abstract class BaseMeasurement(IBaseMeasurementFactory factory, Enum meas
     {
         if (context is MeasureUnitCode measureUnitCode) return HasMeasureUnitCode(measureUnitCode);
 
-        return IsValidMeasureUnit(context) && HasMeasureUnitCode(MeasureUnitCode, context!);
+        return IsValidMeasureUnit(context) && HasMeasureUnitCode(GetMeasureUnitCode(), context!);
     }
 
     public decimal ProportionalTo(IBaseMeasurement? other)
     {
         string paramName = nameof(other);
 
-        MeasureUnitCode measureUnitCode = NullChecked(other, paramName).MeasureUnitCode;
+        MeasureUnitCode measureUnitCode = NullChecked(other, paramName).GetMeasureUnitCode();
 
         if (HasMeasureUnitCode(measureUnitCode)) return GetExchangeRate() / other!.GetExchangeRate();
 
@@ -100,7 +100,7 @@ public abstract class BaseMeasurement(IBaseMeasurementFactory factory, Enum meas
 
     public override sealed int GetHashCode()
     {
-        return HashCode.Combine(MeasureUnitCode, GetExchangeRate());
+        return HashCode.Combine(GetMeasureUnitCode(), GetExchangeRate());
     }
 
     public override sealed TypeCode GetQuantityTypeCode()

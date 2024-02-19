@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
+
+namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
 
 public abstract class RateComponentFactory : IRateComponentFactory
 {
@@ -20,7 +22,7 @@ public abstract class RateComponentFactory : IRateComponentFactory
     #endregion
 
     #region Public methods
-    public IBaseMeasure CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
+    public IQuantifiable CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
     {
         IBaseMeasurement baseMeasurement = MeasurementFactory.CreateBaseMeasurement(Defined(measureUnitCode, nameof(measureUnitCode)))!;
 
@@ -36,7 +38,7 @@ public abstract class RateComponentFactory : IRateComponentFactory
     #region Protected methods
     protected object ConvertQuantity(ValueType quantity)
     {
-        return Quantifiable.ConvertQuantity(quantity, nameof(quantity), QuantityTypeCode);
+        return BaseQuantifiable.ConvertQuantity(quantity, nameof(quantity), QuantityTypeCode);
     }
 
     #region Static methods

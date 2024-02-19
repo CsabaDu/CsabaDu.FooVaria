@@ -14,7 +14,7 @@
         {
         }
 
-        private protected BulkSpread(IBulkSpreadFactory factory, IMeasure spreadMeasure) : base(factory, spreadMeasure)
+        private protected BulkSpread(IBulkSpreadFactory factory) : base(factory)
         {
         }
         #endregion
@@ -22,7 +22,7 @@
         #region Public methods
         public bool AreValidShapeExtents(params IExtent[] shapeExtents)
         {
-            return AreValidShapeExtents(MeasureUnitCode, shapeExtents);
+            return AreValidShapeExtents(GetMeasureUnitCode(), shapeExtents);
         }
 
         #region Override methods
@@ -46,10 +46,10 @@
             return base.ExchangeTo(context);
         }
 
-        public override sealed bool? FitsIn(ISpread? other, LimitMode? limitMode)
-        {
-            return base.FitsIn(other, limitMode);
-        }
+        //public bool? FitsIn(ISpread? other, LimitMode? limitMode)
+        //{
+        //    return base.FitsIn(other, limitMode);
+        //}
 
         public override sealed MeasureUnitCode GetSpreadMeasureUnitCode()
         {
@@ -289,9 +289,22 @@
             SpreadMeasure = other.SpreadMeasure;
         }
 
-        private protected BulkSpread(IBulkSpreadFactory<TSelf, TSMeasure> factory, TSMeasure spreadMeasure) : base(factory, spreadMeasure)
+        private protected BulkSpread(IBulkSpreadFactory<TSelf, TSMeasure> factory, TSMeasure spreadMeasure) : base(factory)
         {
-            SpreadMeasure = spreadMeasure;
+            SpreadMeasure = getValidSpreadMeasure(spreadMeasure);
+
+            #region Local methods
+            static TSMeasure getValidSpreadMeasure(ISpreadMeasure? spreadMeasure)
+            {
+                string paramName = nameof(spreadMeasure);
+                TSMeasure measure = TypeChecked<TSMeasure>(spreadMeasure, paramName);
+                double quantity = measure.GetQuantity();
+
+                if (quantity > 0) return measure;
+
+                throw QuantityArgumentOutOfRangeException(paramName, quantity);
+            }
+            #endregion
         }
         #endregion
 

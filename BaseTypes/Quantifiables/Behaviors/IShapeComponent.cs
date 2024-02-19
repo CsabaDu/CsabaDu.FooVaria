@@ -1,5 +1,5 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
+﻿//namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
 
-public interface IShapeComponent
-{
-}
+//public interface IShapeComponent
+//{
+//}

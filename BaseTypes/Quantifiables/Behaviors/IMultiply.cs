@@ -1,8 +1,8 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
+﻿//namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
 
-public interface IMultiply<out TSelf, in TOperand>
-    where TSelf : class, IQuantifiable
-    where TOperand : notnull
-{
-    TSelf Multiply(TOperand multiplier);
-}
+//public interface IMultiply<out TSelf, in TOperand>
+//    where TSelf : class, IBaseQuantifiable
+//    where TOperand : notnull
+//{
+//    TSelf Multiply(TOperand multiplier);
+//}

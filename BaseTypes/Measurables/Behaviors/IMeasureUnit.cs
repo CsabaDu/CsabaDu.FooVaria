@@ -3,6 +3,8 @@
     public interface IMeasureUnit
     {
         Enum GetMeasureUnit();
+        MeasureUnitCode GetMeasureUnitCode();
+
     }
 
     public interface IMeasureUnit<TEnum> : IMeasureUnit

@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Factories
 {
-    public interface IBaseMeasureFactory : IQuantifiableFactory<IBaseMeasure>
+    public interface IBaseMeasureFactory : IQuantifiableFactory
     {
         RateComponentCode RateComponentCode { get; }
 

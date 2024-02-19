@@ -10,12 +10,12 @@ public sealed class ProportionLimitFactory : IProportionLimitFactory
 
     public IProportionLimit Create(IBaseMeasure numerator, IBaseMeasure denominator, LimitMode limitMode)
     {
-        return new ProportionLimit(this, numerator, denominator, limitMode);
+        throw new NotImplementedException();
     }
 
-    public IProportionLimit Create(MeasureUnitCode numeratorMeasureUnitCode, decimal defaultQuantity, MeasureUnitCode denominatorMeasureUnitCode, LimitMode limitMode)
+    public IProportionLimit Create(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode, LimitMode limitMode)
     {
-        return new ProportionLimit(this, numeratorMeasureUnitCode, defaultQuantity, denominatorMeasureUnitCode, limitMode);
+        return new ProportionLimit(this, numeratorCode, defaultQuantity, denominatorCode, limitMode);
     }
 
     public IProportionLimit Create(IBaseMeasure numerator, Enum denominatorMeasureUnit, LimitMode limitMode)
@@ -26,21 +26,26 @@ public sealed class ProportionLimitFactory : IProportionLimitFactory
         return Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit, limitMode);
     }
 
-    public IProportionLimit Create(IBaseMeasure numerator, MeasureUnitCode denominatorMeasureUnitCode, LimitMode limitMode)
+    public IProportionLimit Create(IBaseMeasure numerator, MeasureUnitCode denominatorCode, LimitMode limitMode)
     {
-        Enum denominatorMeasureUnit = denominatorMeasureUnitCode.GetDefaultMeasureUnit();
+        Enum denominatorMeasureUnit = denominatorCode.GetDefaultMeasureUnit();
 
         return Create(numerator, denominatorMeasureUnit, limitMode);
     }
 
     public IProportionLimit Create(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement, LimitMode limitMode)
     {
-        return new ProportionLimit(this, numerator, denominatorMeasurement, limitMode);
+        throw new NotImplementedException();
     }
 
     public IProportionLimit Create(Enum numeratorMeasureUnit, ValueType quantity, Enum denominatorMeasureUnit, LimitMode limitMode)
     {
         return new ProportionLimit(this, numeratorMeasureUnit, quantity, denominatorMeasureUnit, limitMode);
+    }
+
+    public ISimpleRate CreateSimpleRate(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode)
+    {
+        return Create(numeratorCode, defaultQuantity, denominatorCode, default);
     }
 
     public IBaseRate CreateBaseRate(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement)
@@ -53,9 +58,9 @@ public sealed class ProportionLimitFactory : IProportionLimitFactory
         return Create(numerator, denominatorMeasureUnit, default);
     }
 
-    public IBaseRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitCode denominatorMeasureUnitCode)
+    public IBaseRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitCode denominatorCode)
     {
-        return Create(numerator, denominatorMeasureUnitCode, default);
+        return Create(numerator, denominatorCode, default);
     }
 
     public IBaseRate CreateBaseRate(params IBaseMeasure[] baseMeasures)

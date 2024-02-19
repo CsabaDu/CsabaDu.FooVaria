@@ -183,6 +183,13 @@ public static class ExceptionMethods
 
         throw ArgumentTypeOutOfRangeException(paramName, paramType);
     }
+
+    public static T TypeChecked<T>(object? param, [DisallowNull] string paramName)
+    {
+        if (NullChecked(param, paramName) is T typeChecked) return typeChecked;
+
+        throw ArgumentTypeOutOfRangeException(paramName, param!.GetType());
+    }
     #endregion
 
     #region InvalidEnumArgumentException

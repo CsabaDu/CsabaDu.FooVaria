@@ -1,15 +1,15 @@
 ﻿namespace CsabaDu.FooVaria.Proportions.Factories;
 
-public interface IProportionFactory : IBaseRateFactory
+public interface IProportionFactory : ISimpleRateFactory
 {
     IMeasureFactory MeasureFactory { get; init; }
 
     IProportion Create(IBaseRate baseRate);
-    IProportion Create(MeasureUnitCode numeratorMeasureUnitCode, decimal defaultQuantity, MeasureUnitCode denominatorMeasureUnitCode);
+    IProportion Create(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode);
     IProportion Create(Enum numeratorMeasureUnit, ValueType quantity, Enum denominatorMeasureUnit);
     IProportion Create(IBaseMeasure numerator, IBaseMeasure denominator);
 
-    IProportion<TDEnum> Create<TDEnum>(MeasureUnitCode numeratorMeasureUnitCode, decimal numeratorDefaultQuantity, TDEnum denominatorMeasureUnit)
+    IProportion<TDEnum> Create<TDEnum>(MeasureUnitCode numeratorCode, decimal numeratorDefaultQuantity, TDEnum denominatorMeasureUnit)
         where TDEnum : struct, Enum;
     IProportion<TDEnum> Create<TDEnum>(Enum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit)
         where TDEnum : struct, Enum;

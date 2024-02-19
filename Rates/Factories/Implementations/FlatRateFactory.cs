@@ -23,9 +23,9 @@ public sealed class FlatRateFactory(IDenominatorFactory denominatorFactory) : Ra
         return new FlatRate(this, numerator, denominatorMeasureUnit, denominatorQuantity);
     }
 
-    public IFlatRate Create(IMeasure numerator, MeasureUnitCode denominatorMeasureUnitCode)
+    public IFlatRate Create(IMeasure numerator, MeasureUnitCode denominatorCode)
     {
-        return new FlatRate(this, numerator, denominatorMeasureUnitCode);
+        return new FlatRate(this, numerator, denominatorCode);
     }
 
     public IFlatRate Create(IMeasure numerator, IMeasurement denominatorMeasurement)
@@ -78,11 +78,11 @@ public sealed class FlatRateFactory(IDenominatorFactory denominatorFactory) : Ra
         return Create(measure, denominator);
     }
 
-    public override IFlatRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitCode denominatorMeasureUnitCode)
+    public override IFlatRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitCode denominatorCode)
     {
         IMeasure measure = GetValidRateParam<IMeasure>(numerator, nameof(numerator));
 
-        return Create(measure, denominatorMeasureUnitCode);
+        return Create(measure, denominatorCode);
     }
 
     public override IFlatRate CreateNew(IRate other)

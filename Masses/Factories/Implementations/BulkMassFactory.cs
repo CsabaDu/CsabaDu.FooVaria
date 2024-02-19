@@ -1,4 +1,5 @@
-﻿namespace CsabaDu.FooVaria.Masses.Factories.Implementations;
+﻿
+namespace CsabaDu.FooVaria.Masses.Factories.Implementations;
 
 public sealed class BulkMassFactory : MassFactory, IBulkMassFactory
 {
@@ -30,6 +31,11 @@ public sealed class BulkMassFactory : MassFactory, IBulkMassFactory
     public override IBulkBodyFactory GetBodyFactory()
     {
         return (IBulkBodyFactory)BodyFactory;
+    }
+
+    public override IMeasureFactory GetMeasureFactory()
+    {
+        return GetBodyFactory().MeasureFactory;
     }
     #endregion
     #endregion

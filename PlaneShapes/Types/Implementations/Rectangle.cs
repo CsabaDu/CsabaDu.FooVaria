@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace CsabaDu.FooVaria.PlaneShapes.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.PlaneShapes.Types.Implementations;
 
 internal sealed class Rectangle : PlaneShape, IRectangle
 {

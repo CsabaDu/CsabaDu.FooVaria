@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Statics;
+﻿namespace CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
 
 public static class Extensions
 {

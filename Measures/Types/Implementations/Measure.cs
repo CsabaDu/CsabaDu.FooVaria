@@ -1,7 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measures.Types.Implementations
 {
-    internal abstract class Measure
-        : BaseMeasure<IMeasure>, IMeasure
+    internal abstract class Measure : BaseMeasure, IMeasure
     {
         #region Enums
         protected enum MeasureOperationMode
@@ -12,10 +11,10 @@
         #endregion
 
         #region Constructors
-        private protected Measure(IMeasureFactory factory, Enum measureUnit, ValueType quantity) : base(factory, measureUnit)
+        private protected Measure(IMeasureFactory factory, Enum measureUnit, ValueType quantity) : base(factory)
         {
-            Quantity = GetValidMeasureQuantity(quantity);
             Measurement = GetBaseMeasurementFactory().Create(measureUnit);
+            Quantity = GetValidMeasureQuantity(quantity);
         }
         #endregion
 
@@ -33,11 +32,41 @@
             return GetSum(other, SummingMode.Add);
         }
 
+        public IMeasure ConvertToLimitable(ILimiter limiter)
+        {
+            return ConvertToLimitable(this, limiter);
+        }
+
         public IMeasure Divide(decimal divisor)
         {
             if (divisor == 0) throw DecimalArgumentOutOfRangeException(nameof(divisor), divisor);
 
             return GetMeasure(divisor, MeasureOperationMode.Divide);
+        }
+
+        public IMeasure GetBaseMeasure(Enum measureUnit, ValueType quantity)
+        {
+            return GetFactory().Create(measureUnit, quantity);
+        }
+
+        public IMeasure GetBaseMeasure(string name, ValueType quantity)
+        {
+            return GetFactory().Create(name, quantity);
+        }
+
+        public IMeasure? GetBaseMeasure(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
+        {
+            return GetFactory().Create(measureUnit, exchangeRate, quantity, customName);
+        }
+
+        public IMeasure? GetBaseMeasure(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity)
+        {
+            return GetFactory().Create(customName, measureUnitCode, exchangeRate, quantity);
+        }
+
+        public IMeasure GetBaseMeasure(IBaseMeasure baseMeasure)
+        {
+            return GetFactory().Create(baseMeasure);
         }
 
         public IMeasure Multiply(decimal multiplier)
@@ -115,9 +144,9 @@
         {
             if (other == null) return GetBaseMeasure(this);
 
-            if (other.IsExchangeableTo(MeasureUnitCode)) return getMeasure();
+            if (other.IsExchangeableTo(GetMeasureUnitCode())) return getMeasure();
 
-            throw InvalidMeasureUnitCodeEnumArgumentException(other.MeasureUnitCode, nameof(other));
+            throw InvalidMeasureUnitCodeEnumArgumentException(other.GetMeasureUnitCode(), nameof(other));
 
             #region Local methods
             decimal getDefaultQuantitySum()
@@ -194,7 +223,7 @@
 
     internal abstract class Measure<TSelf, TNum, TEnum>(IMeasureFactory factory, TEnum measureUnit, ValueType quantity)
         : Measure<TSelf, TNum>(factory, measureUnit, quantity), IMeasure<TSelf, TNum, TEnum>
-        where TSelf : class, IMeasure, IMeasureUnit
+        where TSelf : class, IMeasure
         where TNum : struct
         where TEnum : struct, Enum
     {
@@ -244,14 +273,14 @@
             throw QuantityArgumentOutOfRangeException(paramName, quantity);
         }
 
-        protected void ValidateSpreadMeasure(string paramName, ISpreadMeasure? spreadMeasure)
+        protected static void ValidateSpreadMeasure(string paramName, ISpreadMeasure? spreadMeasure)
         {
             if (NullChecked(spreadMeasure, paramName).GetSpreadMeasure() is not IMeasure measure)
             {
                 throw ArgumentTypeOutOfRangeException(nameof(spreadMeasure), spreadMeasure!);
             }
 
-            ValidateMeasureUnitCodeByDefinition(measure.MeasureUnitCode, paramName);
+            ValidateMeasureUnitCodeByDefinition(measure.GetMeasureUnitCode(), paramName);
 
             decimal quantity = measure.GetDecimalQuantity();
 

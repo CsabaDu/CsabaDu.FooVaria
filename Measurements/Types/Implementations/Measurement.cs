@@ -1,9 +1,18 @@
 ﻿namespace CsabaDu.FooVaria.Measurements.Types.Implementations;
 
-internal abstract class Measurement(IMeasurementFactory factory, Enum measureUnit) : BaseMeasurement(factory, measureUnit), IMeasurement
+internal abstract class Measurement : BaseMeasurement, IMeasurement
 {
+    #region Constructors
+    private protected Measurement(IMeasurementFactory factory, Enum measureUnit) : base(factory)
+    {
+        ValidateMeasureUnit(measureUnit, nameof(measureUnit));
+
+        MeasureUnit = measureUnit;
+    }
+    #endregion
+
     #region Properties
-    public object MeasureUnit { get; init; } = measureUnit;
+    public object MeasureUnit { get; init; }
 
     #region Static properties
     public static Dictionary<object, string> CustomNameCollection { get; protected set; } = [];
@@ -30,12 +39,12 @@ internal abstract class Measurement(IMeasurementFactory factory, Enum measureUni
 
     public IDictionary<object, string> GetCustomNameCollection()
     {
-        return GetCustomNameCollection(MeasureUnitCode);
+        return GetCustomNameCollection(GetMeasureUnitCode());
     }
 
     public IMeasurement GetDefault()
     {
-        return (IMeasurement)GetDefault(MeasureUnitCode)!;
+        return (IMeasurement)GetDefault(GetMeasureUnitCode())!;
     }
 
     public IMeasurable? GetDefault(MeasureUnitCode measureUnitCode)
@@ -109,7 +118,7 @@ internal abstract class Measurement(IMeasurementFactory factory, Enum measureUni
 
     public bool TryGetMeasurement(decimal exchangeRate, [NotNullWhen(true)] out IMeasurement? measurement)
     {
-        if (TryGetMeasureUnit(MeasureUnitCode, exchangeRate, out Enum? measureUnit) && measureUnit != null)
+        if (TryGetMeasureUnit(GetMeasureUnitCode(), exchangeRate, out Enum? measureUnit) && measureUnit != null)
         {
             measurement = GetMeasurement(measureUnit);
 
@@ -152,6 +161,13 @@ internal abstract class Measurement(IMeasurementFactory factory, Enum measureUni
     public override sealed Enum GetMeasureUnit()
     {
         return (Enum)MeasureUnit;
+    }
+
+    public override sealed MeasureUnitCode GetMeasureUnitCode()
+    {
+        Enum measuureUnit = GetMeasureUnit();
+
+        return GetMeasureUnitCode(measuureUnit);
     }
 
     public override sealed string GetName()

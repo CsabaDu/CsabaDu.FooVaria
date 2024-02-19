@@ -13,7 +13,7 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         Limit = NullChecked(limit, nameof(limit));
     }
 
-    internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, MeasureUnitCode denominatorMeasureUnitCode, ILimit limit) : base(factory, numerator, denominatorMeasureUnitCode)
+    internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, MeasureUnitCode denominatorCode, ILimit limit) : base(factory, numerator, denominatorCode)
     {
         Limit = NullChecked(limit, nameof(limit));
     }
@@ -36,11 +36,6 @@ internal sealed class LimitedRate : Rate, ILimitedRate
 
     #region Properties
     public ILimit Limit { get ; init; }
-    public LimitMode LimitMode
-    {
-        get => LimitMode;
-        init => Limit.GetLimitMode();
-    }
     #endregion
 
     #region Public methods
@@ -74,9 +69,9 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         return GetFactory().Create(numerator, denominatorMeasureUnit, quantity, limit);
     }
 
-    public ILimitedRate GetLimitedRate(IMeasure numerator, MeasureUnitCode denominatorMeasureUnitCode, ILimit limit)
+    public ILimitedRate GetLimitedRate(IMeasure numerator, MeasureUnitCode denominatorCode, ILimit limit)
     {
-        return GetFactory().Create(numerator, denominatorMeasureUnitCode, limit);
+        return GetFactory().Create(numerator, denominatorCode, limit);
     }
 
     public ILimitedRate GetLimitedRate(IMeasure numerator, IMeasurement denominatorMeasurement, ILimit limit)
@@ -128,7 +123,7 @@ internal sealed class LimitedRate : Rate, ILimitedRate
 
     public MeasureUnitCode GetLimiterMeasureUnitCode()
     {
-        return Limit.MeasureUnitCode;
+        return Limit.GetMeasureUnitCode();
     }
 
     public decimal GetLimiterDefaultQuantity()
@@ -136,9 +131,9 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         return Limit.GetDefaultQuantity();
     }
 
-    public LimitMode GetLimitMode(ILimiter limiter)
+    public override LimitMode? GetLimitMode()
     {
-        return NullChecked(limiter, nameof(limiter)).LimitMode;
+        return Limit.LimitMode;
     }
     #endregion
     #endregion
