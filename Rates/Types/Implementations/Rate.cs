@@ -43,10 +43,7 @@ internal abstract class Rate : BaseRate, IRate
     #region Properties
     public IMeasure Numerator { get; init; }
     public IDenominator Denominator { get; init; }
-
-    #region Override properties
-    #region Sealed roperties
-    public IBaseMeasure? this[RateComponentCode rateComponentCode] => rateComponentCode switch
+    public override sealed IBaseMeasure? this[RateComponentCode rateComponentCode] => rateComponentCode switch
     {
         RateComponentCode.Numerator => Numerator,
         RateComponentCode.Denominator => Denominator,
@@ -54,8 +51,6 @@ internal abstract class Rate : BaseRate, IRate
 
         _ => null,
     };
-    #endregion
-    #endregion
     #endregion
 
     #region Public methods

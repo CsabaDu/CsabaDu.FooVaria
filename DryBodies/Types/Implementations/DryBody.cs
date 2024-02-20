@@ -9,7 +9,7 @@
             Volume = other.Volume;
         }
 
-        private protected DryBody(IDryBodyFactory factory, IPlaneShape baseFace, IExtent height) : base(factory, baseFace)
+        private protected DryBody(IDryBodyFactory factory, IPlaneShape baseFace, IExtent height) : base(factory)
         {
             var (validHeight, volume) = getDryBodyValidParams();
 
@@ -29,7 +29,7 @@
             #endregion
         }
 
-        private protected DryBody(IDryBodyFactory factory, params IExtent[] shapeExtents) : base(factory, MeasureUnitCode.VolumeUnit, shapeExtents)
+        private protected DryBody(IDryBodyFactory factory, params IExtent[] shapeExtents) : base(factory)
         {
             Height = shapeExtents.Last();
             Volume = (IVolume)GetSpreadMeasure(shapeExtents);

@@ -43,23 +43,12 @@ namespace CsabaDu.FooVaria.AbstractTypes.SimpleRates.Types.Implementations
             }
             #endregion
         }
-        //protected BaseRate(IBaseRateFactory factory, IBaseMeasurement denominatorMeasurement) : base(factory, denominatorMeasurement)
-        //{
-        //}
-
-        //protected BaseRate(IBaseRateFactory factory, IBaseRate baseRate) : base(factory, baseRate)
-        //{
-        //}
-
-        //protected BaseRate(IBaseRateFactory factory, IBaseQuantifiable denominator) : base(factory, denominator)
-        //{
-        //}
 
         #region Properties
         public MeasureUnitCode NumeratorCode { get; init; }
         public MeasureUnitCode DenominatorCode { get; init; }
         public decimal DefaultQuantity { get; init; }
-        public Enum? this[RateComponentCode rateComponentCode] => rateComponentCode switch
+        public override sealed Enum? this[RateComponentCode rateComponentCode] => rateComponentCode switch
         {
             RateComponentCode.Numerator => NumeratorCode,
             RateComponentCode.Denominator => DenominatorCode,

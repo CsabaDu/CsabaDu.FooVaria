@@ -8,7 +8,7 @@ internal abstract class PlaneShape : SimpleShape, IPlaneShape
         Area = other.Area;
     }
 
-    private protected PlaneShape(IPlaneShapeFactory factory, params IExtent[] shapeExtents) : base(factory, MeasureUnitCode.AreaUnit, shapeExtents)
+    private protected PlaneShape(IPlaneShapeFactory factory, params IExtent[] shapeExtents) : base(factory)
     {
         Area = (IArea)GetSpreadMeasure(shapeExtents);
     }

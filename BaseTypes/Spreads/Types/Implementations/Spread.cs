@@ -1,5 +1,4 @@
-﻿
-namespace CsabaDu.FooVaria.BaseTypes.Spreads.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.BaseTypes.Spreads.Types.Implementations;
 
 public abstract class Spread : Quantifiable, ISpread
 {
@@ -28,10 +27,6 @@ public abstract class Spread : Quantifiable, ISpread
     //{
     //}
     #endregion
-
-    //#region Properties
-    //public decimal DefaultQuantity { get; init; }
-    //#endregion
 
     #region Public methods
     public void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)
@@ -144,17 +139,6 @@ public abstract class Spread : Quantifiable, ISpread
     #region Abstract methods
     public abstract ISpread GetSpread(ISpreadMeasure spreadMeasure);
     public abstract ISpreadMeasure GetSpreadMeasure();
-    #endregion
-    #endregion
-
-    #region Private methods
-    #region Static methods
-    private static int? Compare(ISpread spread, IQuantifiable? other)
-    {
-        if (other?.HasMeasureUnitCode(spread.GetMeasureUnitCode()) != true) return null;
-
-        return spread.GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
-    }
     #endregion
     #endregion
 }

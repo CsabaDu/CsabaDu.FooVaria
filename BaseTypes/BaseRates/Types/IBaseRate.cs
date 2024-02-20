@@ -2,7 +2,7 @@
 {
     public interface IBaseRate : IBaseQuantifiable, IQuantity<decimal>, IProportional<IBaseRate>, IExchangeable<IBaseRate>, IFit<IBaseRate>, IDenominate, ILimitable<IBaseRate>, ILimitMode
     {
-        //object? this[RateComponentCode rateComponentCode] { get; }
+        object? this[RateComponentCode rateComponentCode] { get; }
 
         MeasureUnitCode GetNumeratorCode();
         MeasureUnitCode GetMeasureUnitCode(RateComponentCode rateComponentCode);

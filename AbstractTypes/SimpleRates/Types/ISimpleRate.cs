@@ -2,7 +2,7 @@
 {
     public interface ISimpleRate : IBaseRate/*, ICommonBase<IBaseRate>*/
     {
-        Enum? this[RateComponentCode rateComponentCode] { get; }
+        //Enum? this[RateComponentCode rateComponentCode] { get; }
 
         MeasureUnitCode NumeratorCode { get; init; }
         MeasureUnitCode DenominatorCode { get; init; }

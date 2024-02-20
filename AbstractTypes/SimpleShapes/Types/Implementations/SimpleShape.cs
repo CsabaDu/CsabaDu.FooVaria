@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
-
-namespace CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types.Implementations;
 
 public abstract class SimpleShape : Shape, ISimpleShape
 {
@@ -9,13 +7,8 @@ public abstract class SimpleShape : Shape, ISimpleShape
     {
     }
 
-    protected SimpleShape(ISimpleShapeFactory factory, IShape shape) : base(factory)
+    protected SimpleShape(ISimpleShapeFactory factory) : base(factory)
     {
-    }
-
-    protected SimpleShape(ISimpleShapeFactory factory, MeasureUnitCode measureUnitCode, params IExtent[] shapeExtents) : base(factory)
-    {
-        ValidateShapeExtents(shapeExtents, nameof(shapeExtents));
     }
     #endregion
 
@@ -339,7 +332,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
 
     #region Private methods
     #region Static methods
-    private static int? Compare(ISimpleShape simpleShape, ISimpleShape? other)
+    private static int? Compare(SimpleShape simpleShape, ISimpleShape? other)
     {
         if (other == null) return null;
 

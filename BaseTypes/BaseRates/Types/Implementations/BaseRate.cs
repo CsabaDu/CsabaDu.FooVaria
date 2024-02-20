@@ -10,26 +10,12 @@
         protected BaseRate(IBaseRateFactory factory) : base(factory)
         {
         }
+        #endregion
 
-        //protected BaseRate(IBaseRateFactory factory, MeasureUnitCode denominatorCode) : base(factory, denominatorCode)
-        //{
-        //}
-
-        //protected BaseRate(IBaseRateFactory factory, Enum denominatorMeasureUnit) : base(factory, denominatorMeasureUnit)
-        //{
-        //}
-
-        //protected BaseRate(IBaseRateFactory factory, IBaseMeasurement denominatorMeasurement) : base(factory, denominatorMeasurement)
-        //{
-        //}
-
-        //protected BaseRate(IBaseRateFactory factory, IBaseRate baseRate) : base(factory, baseRate)
-        //{
-        //}
-
-        //protected BaseRate(IBaseRateFactory factory, IBaseQuantifiable denominator) : base(factory, denominator)
-        //{
-        //}
+        #region Properties
+        #region Abstract properties
+        public abstract object? this[RateComponentCode rateComponentCode] { get; }
+        #endregion
         #endregion
 
         #region Public methods
@@ -84,11 +70,6 @@
             return GetFactory().CreateBaseRate(baseRate);
         }
 
-        //public IBaseRate GetBaseRate(IBaseMeasure numerator, IBaseMeasure denominator)
-        //{
-        //    return GetFactory().CreateBaseRate(numerator, denominator);
-        //}
-
         public IBaseRate GetBaseRate(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement)
         {
             return GetFactory().CreateBaseRate(numerator, denominatorMeasurement);
@@ -107,11 +88,6 @@
         public IBaseRate GetBaseRate(params IBaseMeasure[] baseMeasures)
         {
             return GetFactory().CreateBaseRate(baseMeasures);
-        }
-
-        public override sealed MeasureUnitCode GetMeasureUnitCode()
-        {
-            return GetDenominatorCode();
         }
 
         public MeasureUnitCode GetMeasureUnitCode(RateComponentCode rateComponentCode)
@@ -183,9 +159,16 @@
             return HashCode.Combine(GetDenominatorCode(), GetNumeratorCode(), GetDefaultQuantity());
         }
 
+        public override sealed MeasureUnitCode GetMeasureUnitCode()
+        {
+            return GetDenominatorCode();
+        }
+
         public override sealed TypeCode GetQuantityTypeCode()
         {
-            return GetQuantityTypeCode(this);
+            Type quantityType = GetQuantity().GetType();
+
+            return Type.GetTypeCode(quantityType);
         }
 
         public override sealed void ValidateMeasureUnit(Enum? measureUnit, string paramName)

@@ -79,14 +79,6 @@ public abstract class BaseMeasure(IBaseMeasureFactory factory) : Quantifiable(fa
         return GetFactory().RateComponentCode;
     }
 
-    public override IBaseMeasure Round(RoundingMode roundingMode)
-    {
-        ValueType quantity = (ValueType)GetQuantity(roundingMode);
-        IBaseMeasurement baseMeasurement = GetBaseMeasurement();
-
-        return GetBaseMeasure(baseMeasurement, quantity);
-    }
-
     public void ValidateExchangeRate(decimal exchangeRate, string paramName)
     {
         IBaseMeasurement baseMeasurement = GetBaseMeasurement();
@@ -105,6 +97,14 @@ public abstract class BaseMeasure(IBaseMeasureFactory factory) : Quantifiable(fa
         IBaseMeasurement baseMeasurement = GetBaseMeasurement();
 
         return baseMeasurement.GetMeasureUnit();
+    }
+
+    public override IBaseMeasure Round(RoundingMode roundingMode)
+    {
+        ValueType quantity = (ValueType)GetQuantity(roundingMode);
+        IBaseMeasurement baseMeasurement = GetBaseMeasurement();
+
+        return GetBaseMeasure(baseMeasurement, quantity);
     }
 
     #region Sealed methods

@@ -19,5 +19,4 @@
         TTangent CreateOuterTangentShape(T simpleShape);
         TTangent CreateInnerTangentShape(T simpleShape);
     }
-
 }
