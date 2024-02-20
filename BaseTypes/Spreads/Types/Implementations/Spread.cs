@@ -44,7 +44,9 @@ public abstract class Spread : Quantifiable, ISpread
 
         decimal quantity = baseMeasure.GetDefaultQuantity();
 
-        ValidateQuantity(quantity, paramName);
+        if (quantity > 0) return;
+
+        throw QuantityArgumentOutOfRangeException(paramName, quantity);
     }
 
     #region Virtual methods

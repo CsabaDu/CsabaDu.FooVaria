@@ -96,8 +96,8 @@
 		[Mass]&lt;:-[&lt;concrete&gt;DryMass]
 	]
 	[Sections|
-		[&lt;abstract&gt;Section]&lt;:--[&lt;concrete&gt;PlaneSection]
-		[&lt;abstract&gt;Section]&lt;:--[&lt;concrete&gt;CrossSection]
+		[&lt;abstract&gt;Section]&lt;:-[&lt;concrete&gt;PlaneSection]
+		[&lt;abstract&gt;Section]&lt;:-[&lt;concrete&gt;CrossSection]
 	]
 	[ComplexDryBodies|
 		[&lt;concrete&gt;ComplexDryBody]
@@ -1211,13 +1211,9 @@
 						<g transform="translate(1381.75, 1527.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Sections">
 								<g transform="translate(8, 8)" fill="#33322E" data-name="Sections">
 									<g transform="translate(20, 20)" fill="#eee8d5" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Sections">
-										<g stroke-dasharray="6 6" data-name="Sections">
-											<path d="M90.2 36.5 L58 51 L58 71 L58.0 71.0 " fill="none" data-name="Sections"></path>
-										</g>
+										<path d="M90.2 36.5 L58 51 L58 71 L58.0 71.0 " fill="none" data-name="Sections"></path>
 									<path d="M92.4 41.3 L90.2 36.5 L88.0 31.6 L102.4 31.0 Z" data-name="Sections"></path>
-									<g stroke-dasharray="6 6" data-name="Sections">
-											<path d="M183.3 36.5 L215.5 51 L215.5 71 L215.5 71.0 " fill="none" data-name="Sections"></path>
-										</g>
+									<path d="M183.3 36.5 L215.5 51 L215.5 71 L215.5 71.0 " fill="none" data-name="Sections"></path>
 									<path d="M185.5 31.6 L183.3 36.5 L181.1 41.3 L171.1 31.0 Z" data-name="Sections"></path>
 									<g data-name="Section">
 											<g fill="yellow" stroke="#33322E" data-name="Section">

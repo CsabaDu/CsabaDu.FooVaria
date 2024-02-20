@@ -94,8 +94,8 @@
 	[Mass]<:-[<concrete>DryMass]
 ]
 [Sections|
-	[<abstract>Section]<:--[<concrete>PlaneSection]
-	[<abstract>Section]<:--[<concrete>CrossSection]
+	[<abstract>Section]<:-[<concrete>PlaneSection]
+	[<abstract>Section]<:-[<concrete>CrossSection]
 ]
 [ComplexDryBodies|
 	[<concrete>ComplexDryBody]

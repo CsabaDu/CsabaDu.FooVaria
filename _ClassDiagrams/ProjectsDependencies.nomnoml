@@ -55,7 +55,7 @@
 [PlaneShapes]<--[DryBodies]
 [Proportions]<--[Masses]
 [DryBodies]<--[Masses]
-[Shapes]<--[ComplexShapes]
+[SimpleShapes]<--[ComplexShapes]
 [DryBodies]<--[Sections]
 [ComplexShapes]<--[Sections]
 [Sections]<--[ComplexDryBodies]

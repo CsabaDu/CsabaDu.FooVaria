@@ -59,10 +59,10 @@ public abstract class SimpleShape : Shape, ISimpleShape
     {
         if (shape is ISimpleShape simpleShape) return simpleShape.GetShapeExtents();
 
-        if (shape is IComplexShape complexSimpleShape)
-        {
-            throw new NotImplementedException();
-        }
+        //if (shape is IComplexShape complexSimpleShape)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         return null;
     }
@@ -149,10 +149,10 @@ public abstract class SimpleShape : Shape, ISimpleShape
 
         if (other is not ISimpleShape simpleShape)
         {
-            if (other is IComplexShape complexSimpleShape)
-            {
-                throw new NotImplementedException();
-            }
+            //if (other is IComplexShape complexSimpleShape)
+            //{
+            //    throw new NotImplementedException();
+            //}
 
             throw ArgumentTypeOutOfRangeException(paramName, other);
         }
@@ -207,10 +207,10 @@ public abstract class SimpleShape : Shape, ISimpleShape
     {
         if (other is not ISimpleShape simpleShape)
         {
-            if (other is IComplexShape complexSimpleShape)
-            {
-                throw new NotImplementedException();
-            }
+            //if (other is IComplexShape complexSimpleShape)
+            //{
+            //    throw new NotImplementedException();
+            //}
 
             return null;
         }

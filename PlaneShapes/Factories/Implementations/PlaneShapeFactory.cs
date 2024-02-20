@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
-
-namespace CsabaDu.FooVaria.PlaneShapes.Factories.Implementations
+﻿namespace CsabaDu.FooVaria.PlaneShapes.Factories.Implementations
 {
     public abstract class PlaneShapeFactory : SimpleShapeFactory, IPlaneShapeFactory
     {

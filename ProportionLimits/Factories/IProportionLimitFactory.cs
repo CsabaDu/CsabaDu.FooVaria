@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.AbstractTypes.SimpleRates.Factories;
-
-namespace CsabaDu.FooVaria.Proportions.Factories;
+﻿namespace CsabaDu.FooVaria.ProportionLimits.Factories;
 
 public interface IProportionLimitFactory : ISimpleRateFactory, IFactory<IProportionLimit>
 {
