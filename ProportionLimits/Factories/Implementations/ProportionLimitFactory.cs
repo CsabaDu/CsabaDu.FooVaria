@@ -10,7 +10,16 @@ public sealed class ProportionLimitFactory : SimpleRateFactory, IProportionLimit
 
     public IProportionLimit Create(IBaseMeasure numerator, IBaseMeasure denominator, LimitMode limitMode)
     {
-        throw new NotImplementedException();
+        var (numeratorCode, defaultQuantity, denominatorCode) = GetSimpleRateParams(numerator, nameof(numerator), getDenominatorComponents);
+
+        return Create(numeratorCode, defaultQuantity, denominatorCode, limitMode);
+
+        #region Local methods
+        (MeasureUnitCode, decimal) getDenominatorComponents()
+        {
+            return GetSimpleRateComponents(denominator, nameof(denominator));
+        }
+        #endregion
     }
 
     public IProportionLimit Create(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode, LimitMode limitMode)
@@ -35,7 +44,9 @@ public sealed class ProportionLimitFactory : SimpleRateFactory, IProportionLimit
 
     public IProportionLimit Create(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement, LimitMode limitMode)
     {
-        throw new NotImplementedException();
+        Enum denominatorMeasureUnit = NullChecked(denominatorMeasurement, nameof(denominatorMeasurement)).GetMeasureUnit();
+
+        return Create(numerator, denominatorMeasureUnit, limitMode);
     }
 
     public IProportionLimit Create(Enum numeratorMeasureUnit, ValueType quantity, Enum denominatorMeasureUnit, LimitMode limitMode)
@@ -43,21 +54,23 @@ public sealed class ProportionLimitFactory : SimpleRateFactory, IProportionLimit
         return new ProportionLimit(this, numeratorMeasureUnit, quantity, denominatorMeasureUnit, limitMode);
     }
 
-    public override IBaseRate CreateBaseRate(IBaseRate baseRate)
-    {
-        LimitMode limitMode = NullChecked(baseRate, nameof(baseRate)).GetLimitMode() ?? default;
-
-        return Create(baseRate, limitMode);
-    }
-
     public IProportionLimit CreateNew(IProportionLimit other)
     {
         return new ProportionLimit(other);
     }
 
-    public override ISimpleRate CreateSimpleRate(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode)
+    #region Override methods
+    public override IProportionLimit CreateBaseRate(IBaseRate baseRate)
+    {
+        if (NullChecked(baseRate, nameof(baseRate)) is IProportionLimit other) return CreateNew(other);
+
+        return Create(baseRate, default);
+    }
+
+    public override IProportionLimit CreateSimpleRate(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode)
     {
         return Create(numeratorCode, defaultQuantity, denominatorCode, default);
     }
+    #endregion
     #endregion
 }

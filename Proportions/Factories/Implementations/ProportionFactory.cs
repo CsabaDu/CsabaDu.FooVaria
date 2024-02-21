@@ -62,7 +62,8 @@ public sealed class ProportionFactory(IMeasureFactory measureFactory) : SimpleRa
         where TDEnum : struct, Enum
     {
         Enum numeratorMeasureUnit = NullChecked(numerator, nameof(numerator)).GetMeasureUnit();
-        decimal quantity = numerator.GetDefaultQuantity() / GetExchangeRate(numeratorMeasureUnit, nameof(numerator));
+        decimal quantity = numerator.GetDefaultQuantity();
+        quantity /= GetExchangeRate(numeratorMeasureUnit, nameof(numerator));
 
         return Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit);
     }
@@ -119,22 +120,18 @@ public sealed class ProportionFactory(IMeasureFactory measureFactory) : SimpleRa
     {
         return Create(numeratorCode, defaultQuantity, denominatorCode);
     }
+    #endregion
 
-    public override IBaseRate CreateBaseRate(IBaseRate baseRate)
+    #region Override methods
+    public override IProportion CreateBaseRate(IBaseRate baseRate)
     {
         return Create(baseRate);
     }
 
-    public override ISimpleRate CreateSimpleRate(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode)
+    public override IProportion CreateSimpleRate(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode)
     {
         return Create(numeratorCode, defaultQuantity, denominatorCode);
     }
-    #endregion
-    #endregion
-
-    #region Private methods
-    #region Static methods
-
     #endregion
     #endregion
 }

@@ -2,6 +2,8 @@
 
 public interface IProportionLimit : ISimpleRate, ILimiter<IProportionLimit, IBaseRate>, ICommonBase<IProportionLimit>
 {
+    LimitMode LimitMode { get; init; }
+
     IProportionLimit GetProportionLimit(IBaseRate baseRate, LimitMode limitMode);
     IProportionLimit GetProportionLimit(IBaseMeasure numerator, IBaseMeasure denominator, LimitMode limitMode);
     IProportionLimit GetProportionLimit(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement, LimitMode limitMode);
