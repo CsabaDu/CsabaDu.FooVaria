@@ -121,10 +121,10 @@ public abstract class BaseMeasure(IBaseMeasureFactory factory) : Quantifiable(fa
 
         IBaseMeasurementFactory factory = GetBaseMeasurementFactory();
         IBaseMeasurement baseMeasurement = factory.CreateBaseMeasurement(context!)!;
-        decimal quantity = GetDefaultQuantity();
-        quantity /= BaseMeasurement.GetExchangeRate(context!);
+        decimal defaultQuantity = GetDefaultQuantity();
+        defaultQuantity /= BaseMeasurement.GetExchangeRate(context!, nameof(context));
 
-        return GetBaseMeasure(baseMeasurement, quantity);
+        return GetBaseMeasure(baseMeasurement, defaultQuantity);
     }
 
     public override sealed bool? FitsIn(IQuantifiable? other, LimitMode? limitMode)

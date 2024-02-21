@@ -286,7 +286,7 @@ public abstract class Measurable : CommonBase, IMeasurable
         return true;
     }
 
-    public static void ValidateMeasureUnitByDefinition(Enum measureUnit, string paramName)
+    public static void ValidateMeasureUnitByDefinition(Enum? measureUnit, string paramName)
     {
         _ = DefinedMeasureUnit(measureUnit, paramName);
     }

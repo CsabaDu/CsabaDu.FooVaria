@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Fakes.BaseTypes.Types;
 
-internal sealed class BaseMeasurementChild(IBaseMeasurementFactory factory, Enum measureUnit) : BaseMeasurement(factory, measureUnit)
+internal sealed class BaseMeasurementChild(IBaseMeasurementFactory factory) : BaseMeasurement(factory)
 {
     public override Enum GetMeasureUnit()
     {

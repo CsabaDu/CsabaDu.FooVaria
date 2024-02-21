@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.AbstractTypes.SimpleRates.Types;
-
-namespace CsabaDu.FooVaria.AbstractTypes.SimpleRates.Factories
+﻿namespace CsabaDu.FooVaria.AbstractTypes.SimpleRates.Factories
 {
     public interface ISimpleRateFactory : IBaseRateFactory/*, IFactory<IBaseRate>*/
     {

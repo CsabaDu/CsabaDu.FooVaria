@@ -89,13 +89,6 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
         return GetFactory().Create(measureUnit, exchangeRate, customName);
     }
 
-    public static void SetCustomName(Enum measureUnit, string customName)
-    {
-        if (TrySetCustomName(measureUnit, customName)) return;
-
-        throw NameArgumentOutOfRangeException(customName);
-    }
-
     public void SetCustomName(string customName)
     {
         SetCustomName(GetMeasureUnit(), customName);
@@ -146,9 +139,10 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
     #region Sealed methods
     public static decimal GetExchangeRate(string name)
     {
-        Enum? measureUnit = GetMeasureUnit(NullChecked(name, nameof(name)));
+        string paramName = nameof(name);
+        Enum? measureUnit = GetMeasureUnit(NullChecked(name, paramName));
 
-        if (measureUnit != null) return GetExchangeRate(measureUnit);
+        if (measureUnit != null) return GetExchangeRate(measureUnit, paramName);
 
         throw NameArgumentOutOfRangeException(name);
     }
@@ -247,6 +241,13 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
         Enum measureUnit = GetNotUsedCustomMeasureUnits(measureUnitCode).OrderBy(x => x).First();
 
         SetCustomMeasureUnit(measureUnit, exchangeRate, customName);
+    }
+
+    public static void SetCustomName(Enum measureUnit, string customName)
+    {
+        if (TrySetCustomName(measureUnit, customName)) return;
+
+        throw NameArgumentOutOfRangeException(customName);
     }
 
     public static bool TryGetMeasureUnit(string name, [NotNullWhen(true)] out Enum? measureUnit)

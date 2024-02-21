@@ -48,12 +48,12 @@ public static class ExceptionMethods
 
     #region Generic checkers
     #region InvalidEnumArgumentException
-    public static T DefinedMeasureUnit<T>(T measureUnit, string paramName)
+    public static T DefinedMeasureUnit<T>(T? measureUnit, string paramName)
         where T : Enum
     {
-        if (IsDefinedMeasureUnit(NullChecked(measureUnit, paramName))) return measureUnit;
+        if (IsDefinedMeasureUnit(NullChecked(measureUnit, paramName))) return measureUnit!;
 
-        throw new InvalidEnumArgumentException(paramName, (int)(object)measureUnit, typeof(T));
+        throw new InvalidEnumArgumentException(paramName, (int)(object)measureUnit!, typeof(T));
     }
     #endregion
     #endregion

@@ -35,7 +35,7 @@ public abstract class BaseMeasurement(IBaseMeasurementFactory factory) : Measura
             && other.GetExchangeRate() == GetExchangeRate();
     }
 
-    public IBaseMeasurement? GetBaseMeasurement(object context)
+    public IBaseMeasurement? GetBaseMeasurement(Enum context)
     {
         return GetFactory().CreateBaseMeasurement(context);
     }
@@ -49,7 +49,7 @@ public abstract class BaseMeasurement(IBaseMeasurementFactory factory) : Measura
     {
         Enum measureUnit = GetMeasureUnit();
 
-        return GetExchangeRate(measureUnit);
+        return GetExchangeRate(measureUnit, string.Empty);
     }
 
     public IDictionary<object, decimal> GetExchangeRateCollection()
@@ -136,13 +136,15 @@ public abstract class BaseMeasurement(IBaseMeasurementFactory factory) : Measura
 
     }
 
-    public static decimal GetExchangeRate(Enum measureUnit)
+    public static decimal GetExchangeRate(Enum? measureUnit, string paramName)
     {
+        _ = NullChecked(measureUnit, paramName);
+
         decimal exchangeRate = ExchangeRateCollection.FirstOrDefault(x => x.Key.Equals(measureUnit)).Value;
 
         if (exchangeRate != default) return exchangeRate;
 
-        throw InvalidMeasureUnitEnumArgumentException(measureUnit);
+        throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName);
     }
 
     public static Dictionary<object, decimal> GetExchangeRateCollection(MeasureUnitCode measureUnitCode)
@@ -169,14 +171,13 @@ public abstract class BaseMeasurement(IBaseMeasurementFactory factory) : Measura
 
     public static bool IsValidExchangeRate(decimal exchangeRate, Enum measureUnit)
     {
-        return exchangeRate == GetExchangeRate(measureUnit);
+        return exchangeRate == GetExchangeRate(measureUnit, nameof(measureUnit));
     }
 
     public static bool IsValidMeasureUnit(Enum? measureUnit)
     {
-        if (measureUnit == null) return false;
-
-        return GetValidMeasureUnits().Contains(measureUnit);
+        return measureUnit != null
+            && GetValidMeasureUnits().Contains(measureUnit);
     }
 
     public static bool NameEquals(string name, string otherName)

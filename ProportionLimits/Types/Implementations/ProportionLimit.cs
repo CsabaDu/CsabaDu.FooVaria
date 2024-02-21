@@ -13,16 +13,6 @@ internal sealed class ProportionLimit : SimpleRate, IProportionLimit
         LimitMode = Defined(limitMode, nameof(limitMode));
     }
 
-    //internal ProportionLimit(IProportionLimitFactory factory, IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement, LimitMode limitMode) : base(factory, numerator, denominatorMeasurement)
-    //{
-    //    LimitMode = Defined(limitMode, nameof(limitMode));
-    //}
-
-    //internal ProportionLimit(IProportionLimitFactory factory, IBaseMeasure numerator, IBaseMeasure denominator, LimitMode limitMode) : base(factory, numerator, denominator)
-    //{
-    //    LimitMode = Defined(limitMode, nameof(limitMode));
-    //}
-
     internal ProportionLimit(IProportionLimitFactory factory, IBaseRate baseRate, LimitMode limitMode) : base(factory, baseRate)
     {
         LimitMode = Defined(limitMode, nameof(limitMode));

@@ -1,32 +1,14 @@
 ﻿namespace CsabaDu.FooVaria.Proportions.Types.Implementations
 {
-    internal abstract class Proportion : SimpleRate
-    {
-        protected Proportion(ISimpleRate other) : base(other)
-        {
-        }
+    //internal abstract class Proportion(ISimpleRateFactory factory, Enum numeratorMeasureUnit, ValueType quantity, Enum denominatorMeasureUnit)
+    //: SimpleRate(factory, numeratorMeasureUnit, quantity, denominatorMeasureUnit)
+    //{
+    //}
 
-        protected Proportion(ISimpleRateFactory factory, IBaseRate other) : base(factory, other)
-        {
-        }
-
-        protected Proportion(ISimpleRateFactory factory, MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode) : base(factory, numeratorCode, defaultQuantity, denominatorCode)
-        {
-        }
-
-        protected Proportion(ISimpleRateFactory factory, Enum numeratorMeasureUnit, ValueType quantity, Enum denominatorMeasureUnit) : base(factory, numeratorMeasureUnit, quantity, denominatorMeasureUnit)
-        {
-        }
-    }
-    internal abstract class Proportion<TDEnum> : Proportion, IProportion<TDEnum>
+    internal abstract class Proportion<TDEnum>(IProportionFactory factory, Enum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit)
+        : SimpleRate(factory, numeratorMeasureUnit, quantity, denominatorMeasureUnit), IProportion<TDEnum>
         where TDEnum : struct, Enum
     {
-        #region Constructors
-        private protected Proportion(IProportionFactory factory, Enum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit) : base(factory, numeratorMeasureUnit, quantity, denominatorMeasureUnit)
-        {
-        }
-        #endregion
-
         #region Public methods
         public IMeasure Denominate(TDEnum measureUnit)
         {
@@ -48,7 +30,7 @@
 
         public decimal GetQuantity(TDEnum denominatorMeasureUnit)
         {
-            return DefaultQuantity / GetExchangeRate(denominatorMeasureUnit);
+            return DefaultQuantity / GetExchangeRate(denominatorMeasureUnit, nameof(denominatorMeasureUnit));
         }
 
         #region Override methods
@@ -62,16 +44,11 @@
         #endregion
     }
 
-    internal sealed class Proportion<TNEnum, TDEnum> : Proportion<TDEnum>, IProportion<TNEnum, TDEnum>
+    internal sealed class Proportion<TNEnum, TDEnum>(IProportionFactory factory, TNEnum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit) 
+        : Proportion<TDEnum>(factory, numeratorMeasureUnit, quantity, denominatorMeasureUnit), IProportion<TNEnum, TDEnum>
         where TNEnum : struct, Enum
         where TDEnum : struct, Enum
     {
-        #region Constructors
-        internal Proportion(IProportionFactory factory, TNEnum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit) : base(factory, numeratorMeasureUnit, quantity, denominatorMeasureUnit)
-        {
-        }
-        #endregion
-
         #region Public methods
         public TNEnum GetMeasureUnit(IMeasureUnit<TNEnum>? other)
         {
@@ -87,12 +64,12 @@
 
         public decimal GetQuantity(TNEnum numeratorMeasureUnit, TDEnum denominatorMeasureUnit)
         {
-            return GetQuantity(denominatorMeasureUnit) * GetExchangeRate(numeratorMeasureUnit);
+            return GetQuantity(denominatorMeasureUnit) * GetExchangeRate(numeratorMeasureUnit, nameof(numeratorMeasureUnit));
         }
 
         public decimal GetQuantity(TNEnum numeratorMeasureUnit)
         {
-            return DefaultQuantity * GetExchangeRate(numeratorMeasureUnit);
+            return DefaultQuantity * GetExchangeRate(numeratorMeasureUnit, nameof(numeratorMeasureUnit));
         }
         #endregion
     }

@@ -17,7 +17,7 @@ public sealed class MeasurableTests
     {
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
         factoryObject = new MeasurableFactoryClass();
-        measurableObject = new MeasurableChild(factoryObject, measureUnitCode);
+        measurableObject = new MeasurableChild(factoryObject);
         paramName = RandomParams.GetRandomParamName();
         measureUnitType = MeasureUnitTypeSet.First(x => x.Name == Enum.GetName(measureUnitCode));
     }
@@ -42,7 +42,7 @@ public sealed class MeasurableTests
 
     #region Test methods
     #region Constructors
-    #region Measurable(IMeasurableFactory, MeasureUnitCode)
+    #region Measurable(IMeasurableFactory)
     [TestMethod, TestCategory("UnitTest")]
     public void Measurable_nullArg_IMeasurableFactory_arg_MeasureunitTypeCode_throws_ArgumentNullException()
     {

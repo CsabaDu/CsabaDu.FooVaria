@@ -68,8 +68,7 @@
 	[<abstract>SimpleRate]
 ]
 [Proportions|
-	[<abstract>Proportion]<:-[<abstract>Proportion<TDEnum>]
-	[Proportion<TDEnum>]<:-[<concrete>Proportion<TNEnum, TDEnum>]
+	[<abstract>Proportion<TDEnum>]<:-[<concrete>Proportion<TNEnum, TDEnum>]
 ]
 [ProportionLimits|
     [<concrete>ProportionLimit]

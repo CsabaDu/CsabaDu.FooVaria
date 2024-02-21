@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.ProportionLimits.Factories.Implementations;
 
-public sealed class ProportionLimitFactory : IProportionLimitFactory
+public sealed class ProportionLimitFactory : SimpleRateFactory, IProportionLimitFactory
 {
     #region Public methods
     public IProportionLimit Create(IBaseRate baseRate, LimitMode limitMode)
@@ -43,46 +43,21 @@ public sealed class ProportionLimitFactory : IProportionLimitFactory
         return new ProportionLimit(this, numeratorMeasureUnit, quantity, denominatorMeasureUnit, limitMode);
     }
 
-    public ISimpleRate CreateSimpleRate(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode)
+    public override IBaseRate CreateBaseRate(IBaseRate baseRate)
     {
-        return Create(numeratorCode, defaultQuantity, denominatorCode, default);
-    }
+        LimitMode limitMode = NullChecked(baseRate, nameof(baseRate)).GetLimitMode() ?? default;
 
-    public IBaseRate CreateBaseRate(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement)
-    {
-        return Create(numerator, denominatorMeasurement, default);
-    }
-
-    public IBaseRate CreateBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit)
-    {
-        return Create(numerator, denominatorMeasureUnit, default);
-    }
-
-    public IBaseRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitCode denominatorCode)
-    {
-        return Create(numerator, denominatorCode, default);
-    }
-
-    public IBaseRate CreateBaseRate(params IBaseMeasure[] baseMeasures)
-    {
-        string paramName = nameof(baseMeasures);
-        int count = NullChecked(baseMeasures, paramName).Length;
-
-        if (count != 2) throw CountArgumentOutOfRangeException(count, paramName);
-
-        return Create(baseMeasures[0], baseMeasures[1], default);
-    }
-
-    public IBaseRate CreateBaseRate(IBaseRate baseRate)
-    {
-        if (baseRate is IProportionLimit other) return CreateNew(other);
-
-        return Create(baseRate, default);
+        return Create(baseRate, limitMode);
     }
 
     public IProportionLimit CreateNew(IProportionLimit other)
     {
         return new ProportionLimit(other);
+    }
+
+    public override ISimpleRate CreateSimpleRate(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode)
+    {
+        return Create(numeratorCode, defaultQuantity, denominatorCode, default);
     }
     #endregion
 }

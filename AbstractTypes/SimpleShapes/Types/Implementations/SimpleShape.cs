@@ -296,7 +296,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
         quantity = Math.Sqrt(quantity);
         if (!IsDefaultMeasureUnit(extentUnit))
         {
-            quantity /= decimal.ToDouble(GetExchangeRate(extentUnit));
+            quantity /= decimal.ToDouble(GetExchangeRate(extentUnit, nameof(extentUnit)));
         }
         IExtent edge = getShapeExtent();
 

@@ -87,7 +87,7 @@ internal sealed class Circle : PlaneShape, ICircle
         decimal quantity = radius.GetDefaultQuantity() * 2;
         quantity = IsDefaultMeasureUnit(extentUnit) ?
             quantity
-            : quantity / GetExchangeRate(extentUnit);
+            : quantity / GetExchangeRate(extentUnit, nameof(extentUnit));
 
         return (IExtent)radius.GetBaseMeasure(extentUnit, quantity);
     }

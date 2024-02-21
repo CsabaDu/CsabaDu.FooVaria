@@ -70,8 +70,7 @@
 		[&lt;abstract&gt;SimpleRate]
 	]
 	[Proportions|
-		[&lt;abstract&gt;Proportion]&lt;:-[&lt;abstract&gt;Proportion&lt;TDEnum&gt;]
-		[Proportion&lt;TDEnum&gt;]&lt;:-[&lt;concrete&gt;Proportion&lt;TNEnum, TDEnum&gt;]
+		[&lt;abstract&gt;Proportion&lt;TDEnum&gt;]&lt;:-[&lt;concrete&gt;Proportion&lt;TNEnum, TDEnum&gt;]
 	]
 	[ProportionLimits|
 	    [&lt;concrete&gt;ProportionLimit]
@@ -157,7 +156,7 @@
 					<path d="M570.3 827.1 L568.5 832.1 L566.8 837.1 L555.9 827.7 Z"></path>
 					<path d="M2074.3 613.6 L2204 683 L2204 738.5 L2204.0 738.5 " fill="none"></path>
 					<path d="M2076.8 608.9 L2074.3 613.6 L2071.7 618.3 L2062.5 607.3 Z"></path>
-					<path d="M2118.1 864.7 L2057.75 912 L2057.75 967.5 L2057.8 967.5 " fill="none"></path>
+					<path d="M2118.1 864.7 L2057.75 912 L2057.75 1003 L2057.8 1003.0 " fill="none"></path>
 					<path d="M2121.4 868.9 L2118.1 864.7 L2114.9 860.5 L2128.6 856.5 Z"></path>
 					<path d="M2289.9 864.7 L2350.25 912 L2350.25 1038.5 L2350.3 1038.5 " fill="none"></path>
 					<path d="M2293.1 860.5 L2289.9 864.7 L2286.6 868.9 L2279.4 856.5 Z"></path>
@@ -856,38 +855,25 @@
 						</g>
 					<g data-name="Proportions">
 							<g fill="#eee8d5" stroke="#33322E" data-name="Proportions">
-								<rect x="1901.3" y="967.5" height="260.0" width="313.0" data-name="Proportions"></rect>
-							<path d="M1901.3 998.5 L2214.3 998.5" fill="none" data-name="Proportions"></path>
+								<rect x="1901.3" y="1003.0" height="189.0" width="313.0" data-name="Proportions"></rect>
+							<path d="M1901.3 1034.0 L2214.3 1034.0" fill="none" data-name="Proportions"></path>
 							</g>
-						<g transform="translate(1901.25, 967.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Proportions">
+						<g transform="translate(1901.25, 1003)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Proportions">
 								<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Proportions">
 									<text x="148.5" y="13.5" stroke="none" text-anchor="middle" data-name="Proportions">Proportions</text>
 								
 								</g>
 							</g>
-						<g transform="translate(1901.25, 998.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Proportions">
+						<g transform="translate(1901.25, 1034)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Proportions">
 								<g transform="translate(8, 8)" fill="#33322E" data-name="Proportions">
 									<g transform="translate(20, 20)" fill="#eee8d5" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Proportions">
 										<path d="M128.5 44.3 L128.5 51 L128.5 71 L128.5 71.0 " fill="none" data-name="Proportions"></path>
 									<path d="M133.8 44.3 L128.5 44.3 L123.2 44.3 L128.5 31.0 Z" data-name="Proportions"></path>
-									<path d="M128.5 115.3 L128.5 122 L128.5 142 L128.5 142.0 " fill="none" data-name="Proportions"></path>
-									<path d="M133.8 115.3 L128.5 115.3 L123.2 115.3 L128.5 102.0 Z" data-name="Proportions"></path>
-									<g data-name="Proportion">
-											<g fill="yellow" stroke="#33322E" data-name="Proportion">
-												<rect x="79.5" y="0.0" height="31.0" width="98.0" data-name="Proportion"></rect>
-											</g>
-										<g transform="translate(79.5, 0)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="italic" data-name="Proportion">
-												<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Proportion">
-													<text x="41.0" y="13.5" stroke="none" text-anchor="middle" data-name="Proportion">Proportion</text>
-												
-												</g>
-											</g>
-										</g>
 									<g data-name="Proportion&lt;TDEnum&gt;">
 											<g fill="yellow" stroke="#33322E" data-name="Proportion&lt;TDEnum&gt;">
-												<rect x="37.5" y="71.0" height="31.0" width="182.0" data-name="Proportion&lt;TDEnum&gt;"></rect>
+												<rect x="37.5" y="0.0" height="31.0" width="182.0" data-name="Proportion&lt;TDEnum&gt;"></rect>
 											</g>
-										<g transform="translate(37.5, 71)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="italic" data-name="Proportion&lt;TDEnum&gt;">
+										<g transform="translate(37.5, 0)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="italic" data-name="Proportion&lt;TDEnum&gt;">
 												<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Proportion&lt;TDEnum&gt;">
 													<text x="83.0" y="13.5" stroke="none" text-anchor="middle" data-name="Proportion&lt;TDEnum&gt;">Proportion&lt;TDEnum&gt;</text>
 												
@@ -896,9 +882,9 @@
 										</g>
 									<g data-name="Proportion&lt;TNEnum, TDEnum&gt;">
 											<g fill="lime" stroke="#33322E" data-name="Proportion&lt;TNEnum, TDEnum&gt;">
-												<rect x="0.0" y="142.0" height="31.0" width="257.0" data-name="Proportion&lt;TNEnum, TDEnum&gt;"></rect>
+												<rect x="0.0" y="71.0" height="31.0" width="257.0" data-name="Proportion&lt;TNEnum, TDEnum&gt;"></rect>
 											</g>
-										<g transform="translate(0, 142)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Proportion&lt;TNEnum, TDEnum&gt;">
+										<g transform="translate(0, 71)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Proportion&lt;TNEnum, TDEnum&gt;">
 												<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Proportion&lt;TNEnum, TDEnum&gt;">
 													<text x="120.5" y="13.5" stroke="none" text-anchor="middle" data-name="Proportion&lt;TNEnum, TDEnum&gt;">Proportion&lt;TNEnum, TDEnum&gt;</text>
 												

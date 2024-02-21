@@ -75,14 +75,12 @@ public sealed class MeasurementFactory : IMeasurementFactory
         throw NameArgumentOutOfRangeException(name);
     }
 
-    public IBaseMeasurement? CreateBaseMeasurement(object context)
+    public IBaseMeasurement? CreateBaseMeasurement(Enum context)
     {
         return context switch
         {
-            string name => GetStoredMeasurementOrNull(name),
             MeasureUnitCode measureUnitCode => (IBaseMeasurement?)CreateDefault(measureUnitCode),
             Enum measureUnit => GetStoredMeasurementOrNull(measureUnit, true),
-            BaseMeasurement baseMeasurement => Create(baseMeasurement),
 
             _ => null,
         };
@@ -92,9 +90,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
     {
         Enum? measureUnit = GetDefaultMeasureUnit(measureUnitCode);
 
-        bool success = measureUnit != null;
-
-        return GetStoredMeasurementOrNull(measureUnit, success);
+        return GetStoredMeasurementOrNull(measureUnit, true);
     }
 
     public IMeasurement CreateNew(IMeasurement measurement)
