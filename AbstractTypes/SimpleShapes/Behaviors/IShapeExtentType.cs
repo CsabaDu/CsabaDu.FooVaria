@@ -2,9 +2,9 @@
 
 public interface IShapeExtentType
 {
-    bool TryGetShapeExtentCode(IExtent simpleShapeExtent, [NotNullWhen(true)] out ShapeExtentCode? simpleShapeExtentCode);
+    bool TryGetShapeExtentCode(IExtent shapeExtent, [NotNullWhen(true)] out ShapeExtentCode? shapeExtentCode);
     IEnumerable<ShapeExtentCode> GetShapeExtentCodes();
-    bool IsValidShapeExtentCode(ShapeExtentCode simpleShapeExtentCode);
+    bool IsValidShapeExtentCode(ShapeExtentCode shapeExtentCode);
 
-    //void ValidateShapeExtentCode(ShapeExtentCode simpleShapeExtentCode, string paramName);
+    //void ValidateShapeExtentCode(ShapeExtentCode shapeExtentCode, string paramName);
 }

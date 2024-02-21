@@ -2,7 +2,7 @@
 
 public interface IShapeExtents : IShapeExtentType, IShapeExtent
 {
-    IExtent? this[ShapeExtentCode simpleShapeExtentCode] { get; }
+    IExtent? this[ShapeExtentCode shapeExtentCode] { get; }
 
     IEnumerable<IExtent> GetShapeExtents();
 

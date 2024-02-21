@@ -1,4 +1,5 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
+﻿using CsabaDu.FooVaria.BaseTypes.BaseRates.Types;
+using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
 
 namespace CsabaDu.FooVaria.Masses.Types.Implementations;
 
@@ -74,6 +75,25 @@ internal abstract class Mass : BaseQuantifiable, IMass
     public int CompareTo(IMass? mass)
     {
         return GetDefaultQuantity().CompareTo(mass?.GetDefaultQuantity());
+    }
+
+    public virtual bool? FitsIn(ILimiter? limiter) // DryBody
+    {
+        if (limiter == null) return null;
+
+        LimitMode? limitMode = limiter.GetLimitMode();
+
+        if (limiter is IBaseRate baseRate) return GetDensity().FitsIn(baseRate, limitMode);
+
+        if (limiter is not IQuantifiable quantifiable) return null;
+
+        return quantifiable.GetMeasureUnitCode() switch
+        {
+            MeasureUnitCode.VolumeUnit => GetVolume().FitsIn(quantifiable, limitMode),
+            MeasureUnitCode.WeightUnit => Weight.FitsIn(quantifiable, limitMode),
+
+            _ => null,
+        };
     }
 
     public IWeight GetChargeableWeight(decimal ratio, WeightUnit weightUnit, RoundingMode roundingMode)

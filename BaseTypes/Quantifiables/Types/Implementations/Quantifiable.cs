@@ -17,18 +17,18 @@ public abstract class Quantifiable : BaseQuantifiable, IQuantifiable
     #endregion
 
     #region Public methods
-    public int CompareTo(IQuantifiable? other)
-    {
-        if (other == null) return 1;
-
-        ValidateMeasureUnitCode(other.GetMeasureUnitCode(), nameof(other));
-
-        return GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
-    }
-
     public bool Equals(IQuantifiable? other)
     {
         return base.Equals(other);
+    }
+
+    public virtual bool? FitsIn(ILimiter? limiter)
+    {
+        if (limiter is not IQuantifiable quantifiable) return null;
+
+        LimitMode? limitMode = limiter.GetLimitMode();
+
+        return FitsIn(quantifiable, limitMode);
     }
 
     public IQuantifiable GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
@@ -92,6 +92,14 @@ public abstract class Quantifiable : BaseQuantifiable, IQuantifiable
     }
     #endregion
     #endregion
+    public virtual int CompareTo(IQuantifiable? other)
+    {
+        if (other == null) return 1;
+
+        ValidateMeasureUnitCode(other.GetMeasureUnitCode(), nameof(other));
+
+        return GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
+    }
 
     #region Abstract methods
     public abstract IQuantifiable? ExchangeTo(Enum? context);

@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types
 {
-    public interface IBaseMeasure : IQuantifiable, IExchangeRate, IRateComponentCode, IDecimalQuantity, IQuantityTypeCode, ILimitMode/*, IExchange<IBaseMeasure, Enum>*//*, IRound<IBaseMeasure>*/, IEqualityComparer<IBaseMeasure>/*, IFit<IBaseMeasure>*/, ILimitable
+    public interface IBaseMeasure : IQuantifiable, IExchangeRate, IRateComponentCode, IDecimalQuantity, IQuantityTypeCode, ILimitMode/*, IExchange<IBaseMeasure, Enum>*//*, IRound<IBaseMeasure>*/, IEqualityComparer<IBaseMeasure>/*, IFit<IBaseMeasure>*/
     {
         object Quantity { get; init; }
 

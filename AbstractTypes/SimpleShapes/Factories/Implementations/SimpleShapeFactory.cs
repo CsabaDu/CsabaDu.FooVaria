@@ -1,20 +1,10 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
+﻿namespace CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories.Implementations;
 
-namespace CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories.Implementations;
-
-public abstract class SimpleShapeFactory : ISimpleShapeFactory
+public abstract class SimpleShapeFactory(IBulkSpreadFactory bulkSpreadFactory, ITangentShapeFactory tangentShapeFactory) : ISimpleShapeFactory
 {
-    #region Constructors
-    protected SimpleShapeFactory(IBulkSpreadFactory bulkSpreadFactory, ITangentShapeFactory tangentShapeFactory)
-    {
-        BulkSpreadFactory = NullChecked(bulkSpreadFactory, nameof(bulkSpreadFactory));
-        TangentShapeFactory = NullChecked(tangentShapeFactory, nameof(tangentShapeFactory));
-    }
-    #endregion
-
     #region Properties
-    public IBulkSpreadFactory BulkSpreadFactory { get; init; }
-    public ITangentShapeFactory TangentShapeFactory { get; init; }
+    public IBulkSpreadFactory BulkSpreadFactory { get; init; } = NullChecked(bulkSpreadFactory, nameof(bulkSpreadFactory));
+    public ITangentShapeFactory TangentShapeFactory { get; init; } = NullChecked(tangentShapeFactory, nameof(tangentShapeFactory));
     #endregion
 
     #region Public methods
@@ -86,9 +76,9 @@ public abstract class SimpleShapeFactory : ISimpleShapeFactory
 
     protected static IExtent? GetShapeExtent(IShapeComponent shapeComponent)
     {
-        if (shapeComponent is not IExtent simpleShapeExtent) return null;
+        if (shapeComponent is not IExtent shapeExtent) return null;
         
-        if (simpleShapeExtent.GetDefaultQuantity() > 0) return simpleShapeExtent;
+        if (shapeExtent.GetDefaultQuantity() > 0) return shapeExtent;
 
         return null;
     }

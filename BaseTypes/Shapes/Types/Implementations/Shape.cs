@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.Shapes.Types.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Enums;
+using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
+
+namespace CsabaDu.FooVaria.BaseTypes.Shapes.Types.Implementations;
 
 public abstract class Shape : Spread, IShape
 {
@@ -40,6 +43,28 @@ public abstract class Shape : Spread, IShape
         return (IShapeFactory)Factory;
     }
 
+    #region Sealed methods
+    public override sealed int CompareTo(IQuantifiable? other)
+    {
+        if (other is IShape shape) return CompareTo(shape);
+
+        return base.CompareTo(other);
+    }
+
+    public override sealed bool? FitsIn(IQuantifiable? other, LimitMode? limitMode)
+    {
+        if (other is IShape shape) return FitsIn(shape, limitMode);
+
+        return base.FitsIn(other, limitMode);
+    }
+
+    public override sealed bool? FitsIn(ILimiter? limiter)
+    {
+        if (limiter is IShape shape) return FitsIn(shape, limiter.GetLimitMode());
+
+        return base.FitsIn(limiter);
+    }
+
     public override sealed int GetHashCode()
     {
         HashCode hashCode = new();
@@ -53,7 +78,7 @@ public abstract class Shape : Spread, IShape
 
         return hashCode.ToHashCode();
     }
-
+    #endregion
     #endregion
 
     #region Virtual methods
@@ -69,6 +94,7 @@ public abstract class Shape : Spread, IShape
     public abstract bool? FitsIn(IShape? other, LimitMode? limitMode);
     public abstract IShapeComponent? GetValidShapeComponent(IBaseQuantifiable? shapeComponent);
     public abstract IEnumerable<IShapeComponent> GetShapeComponents();
+    public abstract IShape GetShape();
     public abstract IShape? GetShape(params IShapeComponent[] shapeComponents);
     #endregion
     #endregion

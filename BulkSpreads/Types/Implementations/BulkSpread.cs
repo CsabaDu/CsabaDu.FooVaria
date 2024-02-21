@@ -260,9 +260,9 @@
             return quantity * GetValidShapeExtentDefaultQuantity(width, nameof(width));
         }
 
-        private static decimal GetValidShapeExtentDefaultQuantity(IExtent simpleShapeExtent, string name)
+        private static decimal GetValidShapeExtentDefaultQuantity(IExtent shapeExtent, string name)
         {
-            decimal quantity = NullChecked(simpleShapeExtent, name).GetDefaultQuantity();
+            decimal quantity = NullChecked(shapeExtent, name).GetDefaultQuantity();
 
             return quantity > 0 ?
                 quantity

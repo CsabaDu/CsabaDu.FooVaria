@@ -92,6 +92,13 @@ internal sealed class DryMass : Mass, IDryMass
         return BothFitIn(baseFitsIn, dryBodyFitsIn);
     }
 
+    public override bool? FitsIn(ILimiter? limiter)
+    {
+        if (limiter is not IDryBody dryBody) return base.FitsIn(limiter);
+
+        return DryBody.FitsIn(dryBody, limiter.GetLimitMode());
+    }
+
     public override IDryBodyFactory GetBodyFactory()
     {
         return (IDryBodyFactory)base.GetBodyFactory();

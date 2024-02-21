@@ -20,15 +20,6 @@ public abstract class BaseMeasure(IBaseMeasureFactory factory) : Quantifiable(fa
             && x.Equals(y);
     }
 
-    public bool? FitsIn(ILimiter? limiter)
-    {
-        if (limiter is not IBaseMeasure baseMeasure) return null;
-
-        LimitMode? limitMode = limiter.GetLimitMode();
-
-        return FitsIn(baseMeasure, limitMode);
-    }
-
     public IBaseMeasure GetBaseMeasure(ValueType quantity)
     {
         Enum measureUnit = GetMeasureUnit();
@@ -108,6 +99,11 @@ public abstract class BaseMeasure(IBaseMeasureFactory factory) : Quantifiable(fa
     }
 
     #region Sealed methods
+    public override sealed int CompareTo(IQuantifiable? other)
+    {
+        return base.CompareTo(other);
+    }
+
     public override sealed IBaseMeasure? ExchangeTo(Enum? context)
     {
         if (!IsExchangeableTo(context)) return null;
@@ -166,6 +162,11 @@ public abstract class BaseMeasure(IBaseMeasureFactory factory) : Quantifiable(fa
             return comparison == 0 && ceilingBaseMeasure.Equals(other);
         }
         #endregion
+    }
+
+    public override sealed bool? FitsIn(ILimiter? limiter)
+    {
+        return base.FitsIn(limiter);
     }
 
     public override sealed object GetQuantity(RoundingMode roundingMode)

@@ -47,9 +47,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleRates", "AbstractType
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseQuantifiables", "BaseTypes\BaseQuantifiables\BaseQuantifiables.csproj", "{D3F4A94C-8294-46FE-B751-47BA5539D4D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProportionLimits", "ProportionLimits\ProportionLimits.csproj", "{2B781FB1-FE24-44F2-8F85-B16F7F69035B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProportionLimits", "ProportionLimits\ProportionLimits.csproj", "{2B781FB1-FE24-44F2-8F85-B16F7F69035B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComplexShapes", "AbstractTypes\ComplexShapes\ComplexShapes.csproj", "{9189E951-BAAE-4BCB-A86B-4FEBDBD242E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComplexShapes", "AbstractTypes\ComplexShapes\ComplexShapes.csproj", "{9189E951-BAAE-4BCB-A86B-4FEBDBD242E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapeLimits", "ShapeLimits\ShapeLimits.csproj", "{BE21EBF4-A239-416F-9E36-847769EA3273}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -145,6 +147,10 @@ Global
 		{9189E951-BAAE-4BCB-A86B-4FEBDBD242E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9189E951-BAAE-4BCB-A86B-4FEBDBD242E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9189E951-BAAE-4BCB-A86B-4FEBDBD242E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE21EBF4-A239-416F-9E36-847769EA3273}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE21EBF4-A239-416F-9E36-847769EA3273}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE21EBF4-A239-416F-9E36-847769EA3273}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE21EBF4-A239-416F-9E36-847769EA3273}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

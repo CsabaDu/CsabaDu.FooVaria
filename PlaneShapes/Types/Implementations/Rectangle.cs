@@ -21,7 +21,7 @@ internal sealed class Rectangle : PlaneShape, IRectangle
     public IExtent Width { get; init; }
 
     #region Override properties
-    public override IExtent? this[ShapeExtentCode simpleShapeExtentCode] => simpleShapeExtentCode switch
+    public override IExtent? this[ShapeExtentCode shapeExtentCode] => shapeExtentCode switch
     {
         ShapeExtentCode.Length => Length,
         ShapeExtentCode.Width => Width,

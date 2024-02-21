@@ -2,7 +2,7 @@
 
 public interface IShapeExtent
 {
-    IExtent GetShapeExtent(ShapeExtentCode simpleShapeExtentCode);
+    IExtent GetShapeExtent(ShapeExtentCode shapeExtentCode);
 
-    void ValidateShapeExtent(IExtent? simpleShapeExtent, string paramName);
+    void ValidateShapeExtent(IExtent? shapeExtent, string paramName);
 }

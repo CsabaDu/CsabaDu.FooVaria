@@ -23,4 +23,9 @@ public abstract class ComplexShape : Shape, IComplexShape
     {
         return (IComplexShapeFactory)Factory;
     }
+
+    public override ISimpleShape GetShape()
+    {
+        return BaseShape;
+    }
 }

@@ -18,7 +18,7 @@ internal sealed class Cylinder : DryBody<ICylinder, ICircle>, ICylinder
 
     #region Properties
     #region Override properties
-    public override IExtent? this[ShapeExtentCode simpleShapeExtentCode] => simpleShapeExtentCode switch
+    public override IExtent? this[ShapeExtentCode shapeExtentCode] => shapeExtentCode switch
     {
         ShapeExtentCode.Radius => GetRadius(),
         ShapeExtentCode.Height => Height,
