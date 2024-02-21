@@ -1,0 +1,133 @@
+#title: ProjectsDependenciesDetails
+#.base: fill=orange dashed bold italic
+#.abstract: fill=yellow bold italic
+#.concrete: fill=lime bold
+
+[Common|
+	[<base>CommonBase]
+]
+[Measurables|
+	[<base>Measurable]
+]
+[BaseMeasurements|
+	[<base>BaseMeasurement]
+]
+[BaseQuantifiables|
+	[<base>BaseQuantifiable]
+]
+[Quantifiables|
+	[<base>Quantifiable]
+]
+[BaseMeasures|
+	[<base>BaseMeasure]
+]
+[Spreads|
+	[<base>Spread]
+]
+[Shapes|
+	[<base>Shape]
+]
+[BaseRates|
+	[<base>BaseRate]
+]
+[SimpleRates|
+	[<abstract>SimpleRate]
+]
+[SimpleShapes|
+	[<abstract>SimpleShape]
+]
+[ComplexShapes|
+	[<abstract>ComplexShape]
+]
+[Measurements|
+	[<abstract>Measurement]<:-[<concrete>ConstantMeasurement]
+    [Measurement]<:-[<concrete>CustomMeasurement]
+]
+[Measures|
+	[<abstract>Measure]<:-[<abstract>Measure<TSelf, TNum>]
+    [Measure<TSelf, TNum>]<:-[<abstract>Measure<TSelf, TNum>, TEnum]
+    [Measure<TSelf, TNum>, TEnum]<:-[<concrete>Area]
+  	[Measure<TSelf, TNum>, TEnum]<:-[<concrete>Currency]
+    [Measure<TSelf, TNum>, TEnum]<:-[<concrete>Distance]
+    [Measure<TSelf, TNum>, TEnum]<:-[<concrete>Extent]
+    [Measure<TSelf, TNum>, TEnum]<:-[<concrete>PieceCount]
+    [Measure<TSelf, TNum>, TEnum]<:-[<concrete>TimePeriod]
+    [Measure<TSelf, TNum>, TEnum]<:-[<concrete>Volume]
+    [Measure<TSelf, TNum>, TEnum]<:-[<concrete>Weight]
+]
+[RateComponents|
+	[<abstract>RateComponent]<:-[<abstract>RateComponent<TSelf>]
+    [RateComponent<TSelf>]<:-[<concrete>Denominator]
+    [RateComponent<TSelf>]<:-[<concrete>Limit]
+]
+[Rates|
+	[<abstract>Rate]<:-[<concrete>FlatRate]
+	[Rate]<:-[<concrete>LimitedRate]
+]
+[SimpleRates|
+	[<abstract>SimpleRate]
+]
+[Proportions|
+	[<abstract>Proportion<TDEnum>]<:-[<concrete>Proportion<TNEnum, TDEnum>]
+]
+[ProportionLimits|
+    [<concrete>ProportionLimit]
+]
+[BulkSpreads|
+	[<abstract>BulkSpread]<:-[<abstract>BulkSpread<TSelf, TSMeasure>]
+	[BulkSpread<TSelf, TSMeasure>]<:-[<abstract>BulkSpread<TSelf, TSMeasure, TEnum>]
+	[BulkSpread<TSelf, TSMeasure, TEnum>]<:-[<concrete>BulkSurface]
+	[BulkSpread<TSelf, TSMeasure, TEnum>]<:-[<concrete>BulkBody]
+]
+[PlaneShapes|
+	[<abstract>PlaneShape]<:-[<concrete>Circle]
+    [PlaneShape]<:-[<concrete>Rectangle]
+]
+[DryBodies|
+	[<abstract>DryBody]<:-[<abstract>DryBody<TSelf, TBFace>]
+    [<abstract>DryBody<TSelf, TBFace>]<:-[<concrete>Cylinder]
+    [DryBody<TSelf, TBFace>]<:-[<concrete>Cuboid]
+]
+[Masses|
+	[<abstract>Mass]<:-[<concrete>BulkMass]
+	[Mass]<:-[<concrete>DryMass]
+]
+[Sections|
+	[<abstract>Section]<:-[<concrete>PlaneSection]
+	[<abstract>Section]<:-[<concrete>CrossSection]
+]
+[ComplexDryBodies|
+	[<concrete>ComplexDryBody]
+]
+
+[Common]<--[Measurables]
+[Measurables]<--[BaseMeasurements]
+[BaseQuantifiables]-->[Measurables]
+[Quantifiables]-->[BaseQuantifiables]
+[BaseMeasures]-->[BaseMeasurements]
+[BaseMeasures]-->[Quantifiables]
+[BaseMeasures]<--[Spreads]
+[Spreads]<--[Shapes]
+[BaseMeasurements]<--[Measurements]
+[Measurements]<--[Measures]
+[BaseMeasures]<--[Measures]
+[BaseMeasures]<--[BaseRates]
+[Measures]<--[RateComponents]
+[Rates]-->[BaseRates]
+[RateComponents]<--[Rates]
+[BaseRates]<--[SimpleRates]
+[SimpleRates]<--[ProportionLimits]
+[Proportions]-->[SimpleRates]
+[Measures]<--[Proportions]
+[Measures]<--[BulkSpreads]
+[Spreads]<--[BulkSpreads]
+[BulkSpreads]<--[SimpleShapes]
+[Shapes]<--[SimpleShapes]
+[SimpleShapes]<--[PlaneShapes]
+[PlaneShapes]<--[DryBodies]
+[Proportions]<--[Masses]
+[DryBodies]<--[Masses]
+[SimpleShapes]<--[ComplexShapes]
+[DryBodies]<--[Sections]
+[ComplexShapes]<--[Sections]
+[Sections]<--[ComplexDryBodies]
