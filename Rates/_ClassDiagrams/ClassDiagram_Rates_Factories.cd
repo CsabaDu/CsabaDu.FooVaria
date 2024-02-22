@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Interface Name="CsabaDu.FooVaria.Rates.Factories.IFlatRateFactory" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="0.5" Y="4.75" Width="1.5" />
+    <Position X="0.5" Y="4.5" Width="1.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.Rates.Factories.IRateFactory" FixedFromPoint="true">
       <Path>
         <Point X="2" Y="2.57" />
-        <Point X="2" Y="2.945" />
-        <Point X="1.25" Y="2.945" />
-        <Point X="1.25" Y="4.75" />
+        <Point X="2" Y="2.87" />
+        <Point X="1.25" Y="2.87" />
+        <Point X="1.25" Y="4.5" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Common.Factories.IFactory&lt;T&gt;" FixedFromPoint="true">
       <Path>
         <Point X="1.875" Y="3.941" />
-        <Point X="1.875" Y="4.375" />
-        <Point X="1.25" Y="4.375" />
-        <Point X="1.25" Y="4.75" />
+        <Point X="1.875" Y="4.2" />
+        <Point X="1.25" Y="4.2" />
+        <Point X="1.25" Y="4.5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -24,21 +24,21 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Rates.Factories.ILimitedRateFactory" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="2.25" Y="4.75" Width="1.75" />
+    <Position X="2.25" Y="4.5" Width="1.75" />
     <InheritanceLine Type="CsabaDu.FooVaria.Rates.Factories.IRateFactory" FixedFromPoint="true">
       <Path>
         <Point X="2.5" Y="2.57" />
         <Point X="2.5" Y="2.945" />
         <Point X="3.125" Y="2.945" />
-        <Point X="3.125" Y="4.75" />
+        <Point X="3.125" Y="4.5" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Common.Factories.IFactory&lt;T&gt;" FixedFromPoint="true">
       <Path>
         <Point X="2.375" Y="3.941" />
-        <Point X="2.375" Y="4.375" />
-        <Point X="3.125" Y="4.375" />
-        <Point X="3.125" Y="4.75" />
+        <Point X="2.375" Y="4.2" />
+        <Point X="3.125" Y="4.2" />
+        <Point X="3.125" Y="4.5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>

@@ -224,21 +224,9 @@
       <FileName>Behaviors\ICustomMeasure.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IShapeComponent" Collapsed="true">
-    <Position X="3.5" Y="5.5" Width="1.75" />
-    <TypeIdentifier />
-  </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ISpreadMeasure" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
     <Position X="7.5" Y="9.5" Width="1.75" />
-    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity" IsHidden="true" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity" Collapsed="true">
-    <Position X="7.75" Y="7.25" Width="1.25" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity&lt;TNum&gt;" Collapsed="true">
-    <Position X="7.5" Y="8.25" Width="1.75" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IQuantity" IsHidden="true" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IMeasureUnit" Collapsed="true">
@@ -258,7 +246,7 @@
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IMeasureUnit" IsHidden="true" />
-    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IQuantity" IsHidden="true" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.IBaseMeasure&lt;TSelf, TNum&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
@@ -272,38 +260,50 @@
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IMeasureUnit" IsHidden="true" />
-    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity" IsHidden="true" />
-    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity&lt;TNum&gt;" IsHidden="true" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ICalculate" Collapsed="true">
-    <Position X="6" Y="0.5" Width="1.25" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ICalculate&lt;TSelf, TOperand&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="5.5" Y="1.75" Width="2.25" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ISum&lt;TSelf&gt;" Collapsed="true">
-    <Position X="4.5" Y="0.5" Width="1.25" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IMultiply&lt;TSelf, TOperand&gt;" Collapsed="true">
-    <Position X="9.75" Y="0.5" Width="2.25" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IDivide&lt;TSelf, TOperand&gt;" Collapsed="true">
-    <Position X="7.5" Y="0.5" Width="2" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IQuantity" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IQuantity&lt;TNum&gt;" IsHidden="true" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.IBaseMeasure" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
     <Position X="2.75" Y="0.5" Width="1.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IMeasureUnit" IsHidden="true" />
-    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IQuantity" IsHidden="true" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Common.Types.ICommonBase&lt;TSelf&gt;" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="0.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IShapeComponent" Collapsed="true">
+    <Position X="3.5" Y="5.5" Width="1.75" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IQuantity" Collapsed="true">
+    <Position X="7.75" Y="7.25" Width="1.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IQuantity&lt;TNum&gt;" Collapsed="true">
+    <Position X="7.5" Y="8.25" Width="1.75" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.ICalculate" Collapsed="true">
+    <Position X="6" Y="0.5" Width="1.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.ICalculate&lt;TSelf, TOperand&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.5" Y="1.75" Width="2.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.ISum&lt;TSelf&gt;" Collapsed="true">
+    <Position X="4.5" Y="0.5" Width="1.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IDivide&lt;TSelf, TOperand&gt;" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="2" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IMultiply&lt;TSelf, TOperand&gt;" Collapsed="true">
+    <Position X="9.75" Y="0.5" Width="2.25" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />

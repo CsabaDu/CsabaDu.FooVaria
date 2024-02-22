@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="CsabaDu.FooVaria.Rates.Types.Implementations.FlatRate" Collapsed="true">
-    <Position X="0.5" Y="6" Width="1.25" />
+    <Position X="0.5" Y="3" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAIAAAABIQAAAAAAAAADACCAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Types\Implementations\FlatRate.cs</FileName>
@@ -9,25 +9,25 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.Rates.Types.Implementations.LimitedRate" Collapsed="true">
-    <Position X="2" Y="6" Width="1.25" />
+    <Position X="2" Y="3" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAABAAgAAgAIwAAAASDAAAAAAIAAAAAAACAAAAA=</HashCode>
+      <HashCode>AAAAAAABAAgAAgAAwAAAASDAAAAAAIAAAAAAACAAAAA=</HashCode>
       <FileName>Types\Implementations\LimitedRate.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.Rates.Types.Implementations.Rate" Collapsed="true">
-    <Position X="1.25" Y="4.5" Width="1.25" />
+    <Position X="1.25" Y="1.75" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>QAAAAQABAAgAACQAyAAAAAKAAAgAQIBAIAIAKACAAIA=</HashCode>
+      <HashCode>QAAAAQABAAgAACQAyAAAAAKAAAgEQIBAIAAAaAAAAIA=</HashCode>
       <FileName>Types\Implementations\Rate.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.BaseTypes.BaseRates.Types.Implementations.BaseRate" Collapsed="true">
-    <Position X="1.25" Y="3.25" Width="1.25" />
+    <Position X="1.25" Y="0.5" Width="1.25" />
     <TypeIdentifier />
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

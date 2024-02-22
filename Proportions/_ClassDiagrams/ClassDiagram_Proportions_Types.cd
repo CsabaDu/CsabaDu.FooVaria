@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Interface Name="CsabaDu.FooVaria.Proportions.Types.IProportion" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="6" Y="1.75" Width="1.25" />
+    <Position X="2.5" Y="1.75" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAEAIAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Types\IProportion.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Proportions.Types.IProportion&lt;TDEnum&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="4.5" Y="3" Width="2" />
+    <Position X="2.75" Y="3" Width="2" />
     <InheritanceLine Type="CsabaDu.FooVaria.Proportions.Types.IProportion" FixedFromPoint="true">
       <Path>
-        <Point X="6.375" Y="2.441" />
-        <Point X="6.375" Y="2.7" />
-        <Point X="5.5" Y="2.7" />
-        <Point X="5.5" Y="3" />
+        <Point X="2.875" Y="2.441" />
+        <Point X="2.875" Y="2.7" />
+        <Point X="3.75" Y="2.7" />
+        <Point X="3.75" Y="3" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -23,47 +23,18 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.Proportions.Types.IProportion&lt;TNEnum, TDEnum&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="4.25" Y="4.25" Width="2.5" />
+    <Position X="2.5" Y="4.25" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAACAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Types\IProportion.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.Proportions.Types.IProportionLimit" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="6.75" Y="3" Width="1.5" />
-    <InheritanceLine Type="CsabaDu.FooVaria.Proportions.Types.IProportion" FixedFromPoint="true">
-      <Path>
-        <Point X="6.875" Y="2.441" />
-        <Point X="6.875" Y="2.7" />
-        <Point X="7.5" Y="2.7" />
-        <Point X="7.5" Y="3" />
-      </Path>
-    </InheritanceLine>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
-      <FileName>Types\IProportionLimit.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseRates.Types.IBaseRate" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
-    <Position X="6" Y="0.5" Width="1.25" />
-    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IMeasureUnit" IsHidden="true" />
-    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.BaseRates.Behaviors.IDenominate" IsHidden="true" />
-    <TypeIdentifier />
-  </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseRates.Behaviors.IDenominate" Collapsed="true">
-    <Position X="3.5" Y="0.75" Width="1.25" />
+    <Position X="5" Y="0.75" Width="1.25" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseRates.Behaviors.IDenominate&lt;TNumerator, TDenominator&gt;" Collapsed="true">
-    <Position X="2.5" Y="1.75" Width="3.25" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ILimiter" Collapsed="true">
-    <Position X="10" Y="0.75" Width="1.25" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ILimiter&lt;TSelf, TLimitable&gt;" Collapsed="true">
-    <Position X="9.5" Y="1.75" Width="2.25" />
+    <Position X="4" Y="1.75" Width="3.25" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IMeasureUnit" Collapsed="true">
@@ -74,8 +45,10 @@
     <Position X="0.5" Y="3" Width="2" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Common.Types.ICommonBase&lt;TSelf&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="7.5" Y="1.75" Width="1.75" />
+  <Interface Name="CsabaDu.FooVaria.AbstractTypes.SimpleRates.Types.ISimpleRate" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
+    <Position X="2.5" Y="0.5" Width="1.25" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IMeasureUnit" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.BaseRates.Behaviors.IDenominate" IsHidden="true" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />

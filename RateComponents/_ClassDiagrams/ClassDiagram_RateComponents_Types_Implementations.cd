@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="CsabaDu.FooVaria.RateComponents.Types.Implementations.Denominator" Collapsed="true">
-    <Position X="0.5" Y="8.25" Width="2" />
+    <Position X="0.5" Y="4.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAQAAAAACCAAAAAAAACCAAAAAAABgAAICgAAAAAA=</HashCode>
       <FileName>Types\Implementations\Denominator.cs</FileName>
@@ -9,7 +9,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.RateComponents.Types.Implementations.Limit" Collapsed="true">
-    <Position X="2.75" Y="8.25" Width="1.75" />
+    <Position X="2.75" Y="4.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAQABAAgCAAAIwAAAACDAAAAAAIBgAAAAgCAAAAA=</HashCode>
       <FileName>Types\Implementations\Limit.cs</FileName>
@@ -17,15 +17,15 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.RateComponents.Types.Implementations.RateComponent" Collapsed="true">
-    <Position X="1.75" Y="5.5" Width="1.5" />
+    <Position X="2" Y="1.75" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAgAAAAAAAACCAAAEAAAgAAAQBAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAACCAAAAAAAgAAAQBAAAAAA=</HashCode>
       <FileName>Types\Implementations\RateComponent.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.RateComponents.Types.Implementations.RateComponent&lt;TSelf&gt;" Collapsed="true">
-    <Position X="1.5" Y="6.75" Width="2" />
+    <Position X="1.75" Y="3" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAABgAAAAAAAAAAA=</HashCode>
       <FileName>Types\Implementations\RateComponent.cs</FileName>
@@ -33,9 +33,9 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations.BaseMeasure" Collapsed="true">
-    <Position X="1.5" Y="4.25" Width="2" />
+    <Position X="2" Y="0.5" Width="1.25" />
     <TypeIdentifier />
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

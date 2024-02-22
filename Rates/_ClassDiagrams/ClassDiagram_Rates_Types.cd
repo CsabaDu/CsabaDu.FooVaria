@@ -60,10 +60,6 @@
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.BaseRates.Behaviors.IDenominate" IsHidden="true" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IExchange&lt;TSelf, TContext&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="9.75" Y="1.75" Width="2.25" />
-    <TypeIdentifier />
-  </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IExchangeable&lt;TContext&gt;" Collapsed="true">
     <Position X="8.75" Y="0.5" Width="2" />
     <TypeIdentifier />
@@ -84,32 +80,36 @@
     <Position X="8" Y="4.25" Width="1.75" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ILimiter" Collapsed="true">
-    <Position X="11" Y="3.25" Width="1.25" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ILimiter&lt;TSelf, TLimitable&gt;" Collapsed="true">
-    <Position X="10.5" Y="4.25" Width="2.25" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ICalculate" Collapsed="true">
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.ICalculate" Collapsed="true">
     <Position X="5.25" Y="3" Width="1.25" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ICalculate&lt;TSelf, TOperand&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="4.75" Y="4.25" Width="2.25" />
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.ICalculate&lt;TSelf, TOperand&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5" Y="4.25" Width="1.75" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IDivide&lt;TSelf, TOperand&gt;" Collapsed="true">
-    <Position X="3" Y="3" Width="2" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ISum&lt;TSelf&gt;" Collapsed="true">
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.ISum&lt;TSelf&gt;" Collapsed="true">
     <Position X="6.75" Y="3" Width="1.25" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IMultiply&lt;TSelf, TOperand&gt;" Collapsed="true">
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IDivide&lt;TSelf, TOperand&gt;" Collapsed="true">
+    <Position X="3" Y="3" Width="2" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IMultiply&lt;TSelf, TOperand&gt;" Collapsed="true">
     <Position X="0.5" Y="3" Width="2.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IExchange&lt;TSelf, TContext&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.75" Y="1.75" Width="2.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.ILimiter" Collapsed="true">
+    <Position X="10.5" Y="3" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.ILimiter&lt;TSelf, TLimitable&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="4.25" Width="1.5" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />
