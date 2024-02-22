@@ -40,7 +40,12 @@ internal abstract class PlaneShape : SimpleShape, IPlaneShape
 
     public override sealed IBulkSurfaceFactory GetBulkSpreadFactory()
     {
-        return (IBulkSurfaceFactory)base.GetBulkSpreadFactory();
+        return GetFactory().BulkSurfaceFactory;
+    }
+
+    public override sealed IPlaneShape GetShape()
+    {
+        return this;
     }
 
     public override sealed IArea GetSpreadMeasure()

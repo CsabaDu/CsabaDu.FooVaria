@@ -169,6 +169,11 @@ public abstract class BaseMeasure(IBaseMeasureFactory factory) : Quantifiable(fa
         return base.FitsIn(limiter);
     }
 
+    public override sealed IBaseMeasure GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
+    {
+        return (IBaseMeasure)GetFactory().CreateQuantifiable(measureUnitCode, defaultQuantity);
+    }
+
     public override sealed object GetQuantity(RoundingMode roundingMode)
     {
         return GetDecimalQuantity().Round(roundingMode);

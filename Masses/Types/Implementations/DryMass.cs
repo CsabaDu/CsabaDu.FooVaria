@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
-
-namespace CsabaDu.FooVaria.Masses.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Masses.Types.Implementations;
 
 internal sealed class DryMass : Mass, IDryMass
 {

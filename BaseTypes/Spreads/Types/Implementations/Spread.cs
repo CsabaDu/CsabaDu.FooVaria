@@ -117,6 +117,12 @@ public abstract class Spread : Quantifiable, ISpread
 
         return GetSpread(spreadMeasure);
     }
+
+    public override sealed ISpread GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
+    {
+        return (ISpread)GetFactory().CreateQuantifiable(measureUnitCode, defaultQuantity);
+    }
+
     public override sealed object GetQuantity(RoundingMode roundingMode)
     {
         IBaseMeasure spreadMeasure = (IBaseMeasure)GetSpreadMeasure();

@@ -99,6 +99,9 @@
 [ComplexDryBodies|
 	[<concrete>ComplexDryBody]
 ]
+[ShapeLimits|
+	[<concrete>ShapeLimit]
+]
 
 [Common]<--[Measurables]
 [Measurables]<--[BaseMeasurements]
@@ -128,6 +131,7 @@
 [Proportions]<--[Masses]
 [DryBodies]<--[Masses]
 [SimpleShapes]<--[ComplexShapes]
+[ShapeLimits]-->[SimpleShapes]
 [DryBodies]<--[Sections]
 [ComplexShapes]<--[Sections]
 [Sections]<--[ComplexDryBodies]

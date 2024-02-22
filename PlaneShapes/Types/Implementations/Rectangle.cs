@@ -110,7 +110,7 @@ internal sealed class Rectangle : PlaneShape, IRectangle
 
     public override ICircleFactory GetTangentShapeFactory()
     {
-        return (ICircleFactory)base.GetTangentShapeFactory();
+        return GetFactory().CircleFactory;
     }
 
     public override IExtent GetDiagonal(ExtentUnit extentUnit)

@@ -1,16 +1,10 @@
 ﻿namespace CsabaDu.FooVaria.DryBodies.Factories.Implementations
 {
-    public abstract class DryBodyFactory : SimpleShapeFactory, IDryBodyFactory
+    public abstract class DryBodyFactory(IBulkBodyFactory bulkBodyFactory, IPlaneShapeFactory baseFaceFactory) : SimpleShapeFactory, IDryBodyFactory
     {
-        #region Constructors
-        private protected DryBodyFactory(IBulkBodyFactory bulkSpreadFactory, ITangentShapeFactory tangentShapeFactory, IPlaneShapeFactory baseFaceFactory) : base(bulkSpreadFactory, tangentShapeFactory)
-        {
-            BaseFaceFactory = NullChecked(baseFaceFactory, nameof(baseFaceFactory));
-        }
-        #endregion
-
         #region Properties
-        public IPlaneShapeFactory BaseFaceFactory { get; init; }
+        public IPlaneShapeFactory BaseFaceFactory { get; init; } = NullChecked(baseFaceFactory, nameof(baseFaceFactory));
+        public IBulkBodyFactory BulkBodyFactory { get; init; } = NullChecked(bulkBodyFactory, nameof(bulkBodyFactory));
         #endregion
 
         #region Public methods
@@ -70,7 +64,7 @@
         #region Sealed methods
         public override sealed IBulkBodyFactory GetBulkSpreadFactory()
         {
-            return (IBulkBodyFactory)BulkSpreadFactory;
+            return BulkBodyFactory;
         }
         #endregion
         #endregion
@@ -146,16 +140,10 @@
         #endregion
     }
 
-    public abstract class DryBodyFactory<T, TBFace> : DryBodyFactory, IDryBodyFactory<T, TBFace>
+    public abstract class DryBodyFactory<T, TBFace>(IBulkBodyFactory bulkBodyFactory, IPlaneShapeFactory baseFaceFactory) : DryBodyFactory(bulkBodyFactory, baseFaceFactory), IDryBodyFactory<T, TBFace>
         where T : class, IDryBody, ITangentShape
         where TBFace : class, IPlaneShape, ITangentShape
     {
-        #region Constructors
-        public DryBodyFactory(IBulkBodyFactory bulkSpreadFactory, ITangentShapeFactory tangentShapeFactory, IPlaneShapeFactory baseFaceFactory) : base(bulkSpreadFactory, tangentShapeFactory, baseFaceFactory)
-        {
-        }
-        #endregion
-
         #region Public methods
         #region Abstract methods
         public abstract T Create(TBFace baseFace, IExtent height);
@@ -163,10 +151,10 @@
         #endregion
 
         #region Protected methods
-        protected TTangent CreateTangentShape<TTangent>(ISimpleShapeFactory<T, TTangent> factory, IPlaneShape baseFace, T dryBody)
+        protected static TTangent CreateTangentShape<TTangent>(ISimpleShapeFactory<T, TTangent> factory, IPlaneShape baseFace, T dryBody)
             where TTangent : class, IDryBody, ITangentShape
         {
-            IDryBodyFactory tangentShapeFactory = (GetTangentShapeFactory() as IDryBodyFactory)!;
+            IDryBodyFactory tangentShapeFactory = (factory.GetTangentShapeFactory() as IDryBodyFactory)!;
 
             return (TTangent)tangentShapeFactory.Create(baseFace, dryBody.Height);
         }

@@ -1,10 +1,26 @@
-﻿namespace CsabaDu.FooVaria.ShapeLimits.Factories.Implementations;
+﻿using CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories;
+using CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories.Implementations;
+using CsabaDu.FooVaria.BulkSpreads.Factories;
+using CsabaDu.FooVaria.Shapes.Factories;
 
-public sealed class ShapeLimitFactory(IBulkSpreadFactory bulkSpreadFactory, ITangentShapeFactory tangentShapeFactory) : SimpleShapeFactory(bulkSpreadFactory, tangentShapeFactory), IShapeLimitFactory
+namespace CsabaDu.FooVaria.ShapeLimits.Factories.Implementations;
+
+public sealed class ShapeLimitFactory(ISimpleShapeFactory simpleShapeFactory) : SimpleShapeFactory, IShapeLimitFactory
 {
+    public ISimpleShapeFactory SimpleShapeFactory { get; init; } = NullChecked(simpleShapeFactory, nameof(simpleShapeFactory));
+
     public IShapeLimit Create(ISimpleShape simpleShape, LimitMode limitMode)
     {
         return new ShapeLimit(this, simpleShape, limitMode);
+    }
+
+    public IShapeLimit? Create(LimitMode limitMode, params IShapeComponent[] shapeComponents)
+    {
+        ISimpleShape? simpleShape = CreateShape(shapeComponents);
+
+        if (simpleShape == null) return null;
+
+        return Create(simpleShape, limitMode);
     }
 
     public IShapeLimit CreateNew(IShapeLimit other)
@@ -12,12 +28,18 @@ public sealed class ShapeLimitFactory(IBulkSpreadFactory bulkSpreadFactory, ITan
         return new ShapeLimit(other);
     }
 
-    public override IShape? CreateShape(params IShapeComponent[] shapeComponents)
+    public override ISimpleShape? CreateShape(params IShapeComponent[] shapeComponents)
     {
-        int count = NullChecked(shapeComponents, nameof(shapeComponents)).Length;
+        return (ISimpleShape?)SimpleShapeFactory.CreateShape(shapeComponents);
+    }
 
-        if (count == 1 && shapeComponents[0] is ISimpleShape simpleShape) return Create(simpleShape, default);
+    public override IBulkSpreadFactory GetBulkSpreadFactory()
+    {
+        return SimpleShapeFactory.GetBulkSpreadFactory();
+    }
 
-        return null;
+    public override ITangentShapeFactory GetTangentShapeFactory()
+    {
+        return SimpleShapeFactory.GetTangentShapeFactory();
     }
 }

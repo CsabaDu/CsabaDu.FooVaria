@@ -1,7 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Enums;
-using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
-
-namespace CsabaDu.FooVaria.BaseTypes.Shapes.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.BaseTypes.Shapes.Types.Implementations;
 
 public abstract class Shape : Spread, IShape
 {
@@ -96,15 +93,6 @@ public abstract class Shape : Spread, IShape
     public abstract IEnumerable<IShapeComponent> GetShapeComponents();
     public abstract IShape GetShape();
     public abstract IShape? GetShape(params IShapeComponent[] shapeComponents);
-    #endregion
-    #endregion
-
-    #region Protected methods
-    #region Static methods
-    protected static bool IsValidShapeComponentOf<T>(IShape shape, T shapeComponent) where T : class, IBaseQuantifiable, IShapeComponent
-    {
-        return shape?.GetShapeComponents() is IEnumerable<T>;
-    }
     #endregion
     #endregion
 }

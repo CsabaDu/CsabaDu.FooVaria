@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Enums;
-
-namespace CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types.Implementations;
 
 public abstract class SimpleShape : Shape, ISimpleShape
 {
@@ -144,12 +142,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
 
         if (other is not ISimpleShape simpleShape)
         {
-            //if (other is IComplexShape complexSimpleShape)
-            //{
-            //    throw new NotImplementedException();
-            //}
-
-            throw ArgumentTypeOutOfRangeException(paramName, other);
+            simpleShape = (ISimpleShape)other.GetShape();
         }
 
         ValidateMeasureUnitCode(simpleShape.GetMeasureUnitCode(), paramName);
@@ -223,14 +216,14 @@ public abstract class SimpleShape : Shape, ISimpleShape
         return Compare(this, simpleShape)?.FitsIn(limitMode);
     }
 
-    public override sealed ISimpleShape GetShape()
+    public override ISimpleShape GetShape()
     {
         return this;
     }
 
     public override sealed ISpread GetSpread(ISpreadMeasure spreadMeasure)
     {
-        return GetFactory().BulkSpreadFactory.CreateSpread(spreadMeasure);
+        return GetBulkSpreadFactory().CreateSpread(spreadMeasure);
     }
 
     public override sealed IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
@@ -257,15 +250,9 @@ public abstract class SimpleShape : Shape, ISimpleShape
     #endregion
 
     #region Virtual methods
-    public virtual IBulkSpreadFactory GetBulkSpreadFactory()
-    {
-        return GetFactory().BulkSpreadFactory;
-    }
+    public abstract IBulkSpreadFactory GetBulkSpreadFactory();
 
-    public virtual ITangentShapeFactory GetTangentShapeFactory()
-    {
-        return GetFactory().TangentShapeFactory;
-    }
+    public abstract ITangentShapeFactory GetTangentShapeFactory();
     #endregion
 
     #region Static methods

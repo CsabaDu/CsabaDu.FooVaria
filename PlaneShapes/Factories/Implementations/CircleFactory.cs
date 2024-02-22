@@ -1,14 +1,9 @@
-﻿using CsabaDu.FooVaria.PlaneShapes.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.PlaneShapes.Factories.Implementations;
 
-namespace CsabaDu.FooVaria.PlaneShapes.Factories.Implementations;
-
-public sealed class CircleFactory : PlaneShapeFactory, ICircleFactory
+public sealed class CircleFactory(IBulkSurfaceFactory bulkSpreadFactory, IRectangleFactory rectangleFactory)
+    : PlaneShapeFactory(bulkSpreadFactory), ICircleFactory
 {
-    #region Constructors
-    public CircleFactory(IBulkSurfaceFactory bulkSpreadFactory, IRectangleFactory tangentShapeFactory) : base(bulkSpreadFactory, tangentShapeFactory)
-    {
-    }
-    #endregion
+    public IRectangleFactory RectangleFactory { get; init; } = NullChecked(rectangleFactory, nameof(rectangleFactory));
 
     #region Public methods
     public ICircle Create(IExtent radius)
@@ -64,7 +59,7 @@ public sealed class CircleFactory : PlaneShapeFactory, ICircleFactory
 
     public override IRectangleFactory GetTangentShapeFactory()
     {
-        return (IRectangleFactory)TangentShapeFactory;
+        return RectangleFactory;
     }
     #endregion
     #endregion

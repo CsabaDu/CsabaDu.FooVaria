@@ -1,21 +1,21 @@
 ﻿namespace CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories.Implementations;
 
-public abstract class SimpleShapeFactory(IBulkSpreadFactory bulkSpreadFactory, ITangentShapeFactory tangentShapeFactory) : ISimpleShapeFactory
+public abstract class SimpleShapeFactory : ISimpleShapeFactory
 {
     #region Properties
-    public IBulkSpreadFactory BulkSpreadFactory { get; init; } = NullChecked(bulkSpreadFactory, nameof(bulkSpreadFactory));
-    public ITangentShapeFactory TangentShapeFactory { get; init; } = NullChecked(tangentShapeFactory, nameof(tangentShapeFactory));
+    //public IBulkSpreadFactory BulkSpreadFactory { get; init; } = NullChecked(bulkSpreadFactory, nameof(bulkSpreadFactory));
+    //public abstract ITangentShapeFactory TangentShapeFactory { get; init; }
     #endregion
 
     #region Public methods
     public ISpread CreateSpread(ISpreadMeasure spreadMeasure)
     {
-        return BulkSpreadFactory.CreateSpread(spreadMeasure);
+        return GetBulkSpreadFactory().CreateSpread(spreadMeasure);
     }
 
     public IQuantifiable CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
     {
-        return BulkSpreadFactory.CreateQuantifiable(measureUnitCode, defaultQuantity);
+        return GetBulkSpreadFactory().CreateQuantifiable(measureUnitCode, defaultQuantity);
     }
 
     public IExtent CreateShapeExtent(ExtentUnit extentUnit, ValueType quantity)
@@ -29,35 +29,25 @@ public abstract class SimpleShapeFactory(IBulkSpreadFactory bulkSpreadFactory, I
 
     public IMeasureFactory GetMeasureFactory()
     {
-        return BulkSpreadFactory.MeasureFactory;
+        return GetBulkSpreadFactory().MeasureFactory;
     }
-
-    #region Virtual methods
-    public virtual IBulkSpreadFactory GetBulkSpreadFactory()
-    {
-        return BulkSpreadFactory;
-    }
-
-    public virtual ITangentShapeFactory GetTangentShapeFactory()
-    {
-        return TangentShapeFactory;
-    }
-    #endregion
 
     #region Abstract methods
     public abstract IShape? CreateShape(params IShapeComponent[] shapeComponents);
+    public abstract IBulkSpreadFactory GetBulkSpreadFactory();
+    public abstract ITangentShapeFactory GetTangentShapeFactory();
     #endregion
     #endregion
 
     #region Protected methods
+    #region Static methods
     protected static TTangent CreateTangentShape<T, TTangent>(ISimpleShapeFactory<T, TTangent> factory, params IShapeComponent[] shapeComponents)
     where T : class, ISimpleShape, ITangentShape
     where TTangent : class, ISimpleShape, ITangentShape
     {
-        return (TTangent)factory.TangentShapeFactory.CreateShape(shapeComponents)!;
+        return (TTangent)factory.GetTangentShapeFactory().CreateShape(shapeComponents)!;
     }
 
-    #region Static methods
     protected static int GetShapeComponentsCount(IShapeComponent[] shapeComponents)
     {
         return shapeComponents?.Length ?? 0;

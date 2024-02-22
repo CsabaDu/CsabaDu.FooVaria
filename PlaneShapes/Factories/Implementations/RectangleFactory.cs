@@ -1,12 +1,9 @@
 ﻿namespace CsabaDu.FooVaria.PlaneShapes.Factories.Implementations;
 
-public sealed class RectangleFactory : PlaneShapeFactory, IRectangleFactory
+public sealed class RectangleFactory(IBulkSurfaceFactory bulkSpreadFactory, ICircleFactory circleFactory)
+    : PlaneShapeFactory(bulkSpreadFactory), IRectangleFactory
 {
-    #region Constructors
-    public RectangleFactory(IBulkSurfaceFactory bulkSpreadFactory, ICircleFactory tangentShapeFactory) : base(bulkSpreadFactory, tangentShapeFactory)
-    {
-    }
-    #endregion
+    public ICircleFactory CircleFactory { get; init; } = NullChecked(circleFactory, nameof(circleFactory));
 
     #region Public methods
     public override IPlaneShape? CreateShape(params IShapeComponent[] shapeComponents)
@@ -51,7 +48,7 @@ public sealed class RectangleFactory : PlaneShapeFactory, IRectangleFactory
     #region Override methods
     public override ICircleFactory GetTangentShapeFactory()
     {
-        return (ICircleFactory)TangentShapeFactory;
+        return CircleFactory;
     }
     #endregion
     #endregion

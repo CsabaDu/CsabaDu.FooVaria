@@ -4,6 +4,7 @@
     {
         RateComponentCode RateComponentCode { get; }
 
+        //IBaseMeasure CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity);
         IBaseMeasure CreateBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity);
     }
 

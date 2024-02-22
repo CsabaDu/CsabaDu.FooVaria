@@ -1,4 +1,5 @@
-﻿namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
+﻿
+namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
 {
     internal abstract class DryBody : SimpleShape, IDryBody
     {
@@ -92,6 +93,16 @@
             if (shapeComponent is not IExtent or IPlaneShape) return null;
 
             return (IShapeComponent)shapeComponent;
+        }
+
+        public override sealed IBulkBodyFactory GetBulkSpreadFactory()
+        {
+            return GetFactory().BulkBodyFactory;
+        }
+
+        public override sealed IDryBody GetShape()
+        {
+            return this;
         }
         #endregion
         #endregion

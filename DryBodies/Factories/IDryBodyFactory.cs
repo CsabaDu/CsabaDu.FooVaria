@@ -5,6 +5,7 @@ namespace CsabaDu.FooVaria.DryBodies.Factories
 {
     public interface IDryBodyFactory : ISimpleShapeFactory, IBodyFactory
     {
+        IBulkBodyFactory BulkBodyFactory { get; init; }
         IPlaneShapeFactory BaseFaceFactory { get; init; }
 
         IDryBody Create(IPlaneShape baseFace, IExtent height);

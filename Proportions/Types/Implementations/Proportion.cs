@@ -1,10 +1,5 @@
 ﻿namespace CsabaDu.FooVaria.Proportions.Types.Implementations
 {
-    //internal abstract class Proportion(ISimpleRateFactory factory, Enum numeratorMeasureUnit, ValueType quantity, Enum denominatorMeasureUnit)
-    //: SimpleRate(factory, numeratorMeasureUnit, quantity, denominatorMeasureUnit)
-    //{
-    //}
-
     internal abstract class Proportion<TDEnum>(IProportionFactory factory, Enum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit)
         : SimpleRate(factory, numeratorMeasureUnit, quantity, denominatorMeasureUnit), IProportion<TDEnum>
         where TDEnum : struct, Enum

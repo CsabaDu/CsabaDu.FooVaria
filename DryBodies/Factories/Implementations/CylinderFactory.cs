@@ -1,13 +1,10 @@
-﻿using CsabaDu.FooVaria.DryBodies.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.DryBodies.Factories.Implementations;
 
-namespace CsabaDu.FooVaria.DryBodies.Factories.Implementations;
-
-public sealed class CylinderFactory : DryBodyFactory<ICylinder, ICircle>, ICylinderFactory
+public sealed class CylinderFactory(IBulkBodyFactory bulkSpreadFactory, ICuboidFactory cuboidFactory, ICircleFactory baseFaceFactory)
+    : DryBodyFactory<ICylinder, ICircle>(bulkSpreadFactory, baseFaceFactory), ICylinderFactory
 {
-    #region Constructors
-    public CylinderFactory(IBulkBodyFactory bulkSpreadFactory, ICuboidFactory tangentShapeFactory, ICircleFactory baseFaceFactory) : base(bulkSpreadFactory, tangentShapeFactory, baseFaceFactory)
-    {
-    }
+    #region Properties
+    public ICuboidFactory CuboidFactory { get; init; } = NullChecked(cuboidFactory, nameof(cuboidFactory));
     #endregion
 
     #region Public methods
@@ -85,7 +82,7 @@ public sealed class CylinderFactory : DryBodyFactory<ICylinder, ICircle>, ICylin
 
     public override ICuboidFactory GetTangentShapeFactory()
     {
-        return (ICuboidFactory)TangentShapeFactory;
+        return CuboidFactory;
     }
     #endregion
     #endregion

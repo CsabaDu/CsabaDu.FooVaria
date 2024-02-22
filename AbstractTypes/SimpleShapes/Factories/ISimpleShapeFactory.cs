@@ -2,9 +2,6 @@
 {
     public interface ISimpleShapeFactory : IShapeFactory
     {
-        IBulkSpreadFactory BulkSpreadFactory { get; init; }
-        ITangentShapeFactory TangentShapeFactory { get; init; }
-
         IMeasureFactory GetMeasureFactory();
         IBulkSpreadFactory GetBulkSpreadFactory();
         ITangentShapeFactory GetTangentShapeFactory();
@@ -15,6 +12,7 @@
         where T : class, ISimpleShape, ITangentShape
         where TTangent : class, ISimpleShape, ITangentShape
     {
+
         TTangent CreateTangentShape(T simpleShape, SideCode sideCode);
         TTangent CreateOuterTangentShape(T simpleShape);
         TTangent CreateInnerTangentShape(T simpleShape);

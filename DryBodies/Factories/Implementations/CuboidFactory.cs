@@ -1,11 +1,10 @@
 ﻿namespace CsabaDu.FooVaria.DryBodies.Factories.Implementations;
 
-public sealed class CuboidFactory : DryBodyFactory<ICuboid, IRectangle>, ICuboidFactory
+public sealed class CuboidFactory(IBulkBodyFactory bulkSpreadFactory, IRectangleFactory baseFaceFactory, ICylinderFactory cylinderFactory)
+    : DryBodyFactory<ICuboid, IRectangle>(bulkSpreadFactory, baseFaceFactory), ICuboidFactory
 {
-    #region Constructors
-    public CuboidFactory(IBulkBodyFactory bulkSpreadFactory, ICylinderFactory tangentShapeFactory, IRectangleFactory baseFaceFactory) : base(bulkSpreadFactory, tangentShapeFactory, baseFaceFactory)
-    {
-    }
+    #region Properties
+    public ICylinderFactory CylinderFactory { get; init; } = NullChecked(cylinderFactory, nameof(cylinderFactory));
     #endregion
 
     #region Public methods
@@ -85,7 +84,7 @@ public sealed class CuboidFactory : DryBodyFactory<ICuboid, IRectangle>, ICuboid
 
     public override ICylinderFactory GetTangentShapeFactory()
     {
-        return (ICylinderFactory)TangentShapeFactory;
+        return CylinderFactory;
     }
     #endregion
     #endregion

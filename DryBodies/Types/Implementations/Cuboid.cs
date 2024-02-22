@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.DryBodies.Types.Implementations;
+﻿using CsabaDu.FooVaria.DryBodies.Factories.Implementations;
+
+namespace CsabaDu.FooVaria.DryBodies.Types.Implementations;
 
 internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
 {
@@ -204,7 +206,7 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
 
     public override ICylinderFactory GetTangentShapeFactory()
     {
-        return (ICylinderFactory)base.GetTangentShapeFactory();
+        return GetFactory().CylinderFactory;
     }
 
     public override ICuboidFactory GetFactory()

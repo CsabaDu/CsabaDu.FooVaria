@@ -1,13 +1,6 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
+﻿namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Factories;
 
-namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Factories
+public interface IQuantifiableFactory : IBaseQuantifiableFactory
 {
-    //public interface IBaseQuantifiableFactory : IMeasurableFactory
-    //{
-    //}
-
-    public interface IQuantifiableFactory : IBaseQuantifiableFactory
-    {
-        IQuantifiable CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity);
-    }
+    IQuantifiable CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity);
 }

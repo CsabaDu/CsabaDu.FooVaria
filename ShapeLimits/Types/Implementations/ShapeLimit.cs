@@ -4,20 +4,22 @@ public sealed class ShapeLimit : SimpleShape, IShapeLimit
 {
     internal ShapeLimit(IShapeLimit other) : base(other)
     {
-        SimpleShape = other.SimpleShape;
         LimitMode = other.LimitMode;
+        SimpleShape = other.SimpleShape;
     }
 
-    internal ShapeLimit(ISimpleShapeFactory factory, ISimpleShape simpleShape, LimitMode limitMode) : base(factory)
+    internal ShapeLimit(IShapeLimitFactory factory, ISimpleShape simpleShape, LimitMode limitMode) : base(factory)
     {
-        SimpleShape = NullChecked(simpleShape, nameof(simpleShape));
-        LimitMode = Defined(limitMode, nameof(limitMode));
-    }
+        ValidateSimpleShape(simpleShape, nameof(simpleShape));
 
-    public override IExtent? this[ShapeExtentCode shapeExtentCode] => SimpleShape[shapeExtentCode];
+        LimitMode = Defined(limitMode, nameof(limitMode));
+        SimpleShape = simpleShape;
+    }
 
     public LimitMode LimitMode { get; init; }
     public ISimpleShape SimpleShape { get; init; }
+
+    public override IExtent? this[ShapeExtentCode shapeExtentCode] => SimpleShape[shapeExtentCode];
 
     public bool Equals(IShapeLimit? x, IShapeLimit? y)
     {
@@ -27,11 +29,6 @@ public sealed class ShapeLimit : SimpleShape, IShapeLimit
             && y != null
             && x.LimitMode == y.LimitMode
             && x.Equals(y);
-    }
-
-    public override IExtent GetDiagonal(ExtentUnit extentUnit)
-    {
-        return SimpleShape.GetDiagonal();
     }
 
     public int GetHashCode([DisallowNull] IShapeLimit shapeLimit)
@@ -64,9 +61,33 @@ public sealed class ShapeLimit : SimpleShape, IShapeLimit
         return GetFactory().Create(simpleShape, limitMode);
     }
 
-    public override ISpreadMeasure GetSpreadMeasure()
+    public bool? Includes(IShape? limitable)
     {
-        return SimpleShape.GetSpreadMeasure();
+        return limitable?.FitsIn(this, LimitMode);
+    }
+
+    public ISimpleShapeFactory GetSimpleShapeFactory()
+    {
+        return (ISimpleShapeFactory)SimpleShape.Factory;
+    }
+
+    public void ValidateSimpleShape(ISimpleShape? simpleShape, string paramName)
+    {
+        IFactory factory = NullChecked(simpleShape, nameof(simpleShape)).GetFactory();
+
+        if (GetSimpleShapeFactory().Equals(factory)) return;
+
+        throw ArgumentTypeOutOfRangeException(paramName, simpleShape!);
+    }
+
+    public override IShapeLimitFactory GetFactory()
+    {
+        return (IShapeLimitFactory)Factory;
+    }
+
+    public override Enum GetMeasureUnit()
+    {
+        return SimpleShape.GetMeasureUnit();
     }
 
     public override IShapeComponent? GetValidShapeComponent(IBaseQuantifiable? shapeComponent)
@@ -74,13 +95,27 @@ public sealed class ShapeLimit : SimpleShape, IShapeLimit
         return SimpleShape.GetValidShapeComponent(shapeComponent);
     }
 
-    public bool? Includes(IShape? limitable)
+    public override ISpreadMeasure GetSpreadMeasure()
     {
-        return limitable?.FitsIn(this, LimitMode);
+        return SimpleShape.GetSpreadMeasure();
     }
 
-    public override IShapeLimitFactory GetFactory()
+    public override IExtent GetDiagonal(ExtentUnit extentUnit)
     {
-        return (IShapeLimitFactory)Factory;
+        return SimpleShape.GetDiagonal(extentUnit);
+    }
+
+    public override IBulkSpreadFactory GetBulkSpreadFactory()
+    {
+        return SimpleShape.GetBulkSpreadFactory();
+    }
+
+    public override ISimpleShape GetShape()
+    {
+        return SimpleShape;
+    }
+    public override ITangentShapeFactory GetTangentShapeFactory()
+    {
+        return SimpleShape.GetTangentShapeFactory();
     }
 }

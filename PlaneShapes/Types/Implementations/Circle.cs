@@ -76,7 +76,7 @@ internal sealed class Circle : PlaneShape, ICircle
 
     public override IRectangleFactory GetTangentShapeFactory()
     {
-        return (IRectangleFactory)base.GetTangentShapeFactory();
+        return GetFactory().RectangleFactory;
     }
 
     public override IExtent GetDiagonal(ExtentUnit extentUnit)

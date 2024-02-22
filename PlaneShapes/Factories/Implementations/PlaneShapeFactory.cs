@@ -1,11 +1,9 @@
 ﻿namespace CsabaDu.FooVaria.PlaneShapes.Factories.Implementations
 {
-    public abstract class PlaneShapeFactory : SimpleShapeFactory, IPlaneShapeFactory
+    public abstract class PlaneShapeFactory(IBulkSurfaceFactory bulkSpreadFactory) : SimpleShapeFactory, IPlaneShapeFactory
     {
-        #region Constructors
-        private protected PlaneShapeFactory(IBulkSurfaceFactory bulkSpreadFactory, ITangentShapeFactory tangentShapeFactory) : base(bulkSpreadFactory, tangentShapeFactory)
-        {
-        }
+        #region Properties
+        public IBulkSurfaceFactory BulkSurfaceFactory { get; init; } = NullChecked(bulkSpreadFactory, nameof(bulkSpreadFactory));
         #endregion
 
         #region Public methods
@@ -13,7 +11,7 @@
         #region Sealed methods
         public override sealed IBulkSurfaceFactory GetBulkSpreadFactory()
         {
-            return (IBulkSurfaceFactory)BulkSpreadFactory;
+            return BulkSurfaceFactory;
         }
         #endregion
         #endregion

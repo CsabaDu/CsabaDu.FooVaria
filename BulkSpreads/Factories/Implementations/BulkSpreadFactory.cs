@@ -1,7 +1,4 @@
-﻿
-using CsabaDu.FooVaria.BaseTypes.Measurables.Statics;
-using CsabaDu.FooVaria.BaseTypes.Quantifiables.Factories;
-using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
+﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
 
 namespace CsabaDu.FooVaria.BulkSpreads.Factories.Implementations
 {

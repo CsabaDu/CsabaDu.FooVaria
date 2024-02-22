@@ -31,11 +31,6 @@ public abstract class Quantifiable : BaseQuantifiable, IQuantifiable
         return FitsIn(quantifiable, limitMode);
     }
 
-    public IQuantifiable GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
-    {
-        return GetFactory().CreateQuantifiable(measureUnitCode, defaultQuantity);
-    }
-
     public bool IsExchangeableTo(Enum? context)
     {
         if (context == null) return false;
@@ -104,6 +99,7 @@ public abstract class Quantifiable : BaseQuantifiable, IQuantifiable
     #region Abstract methods
     public abstract IQuantifiable? ExchangeTo(Enum? context);
     public abstract bool? FitsIn(IQuantifiable? other, LimitMode? limitMode);
+    public abstract IQuantifiable GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity);
     public abstract object GetQuantity(RoundingMode roundingMode);
     public abstract IQuantifiable Round(RoundingMode roundingMode);
     #endregion
