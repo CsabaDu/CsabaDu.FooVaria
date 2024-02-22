@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories;
-
-namespace CsabaDu.FooVaria.ShapeLimits.Types;
+﻿namespace CsabaDu.FooVaria.ShapeLimits.Types;
 
 public interface IShapeLimit : ISimpleShape, ILimiter<IShapeLimit, IShape>, ICommonBase<IShapeLimit>
 {
@@ -8,6 +6,7 @@ public interface IShapeLimit : ISimpleShape, ILimiter<IShapeLimit, IShape>, ICom
     ISimpleShape SimpleShape { get; init; }
 
     IShapeLimit GetShapeLimit(ISimpleShape simpleShape, LimitMode limitMode);
+    IShapeLimit? GetShapeLimit(LimitMode limitMode, params IShapeComponent[] shapeComponents);
     ISimpleShapeFactory GetSimpleShapeFactory();
     void ValidateSimpleShape(ISimpleShape? simpleShape, string paramName);
 }

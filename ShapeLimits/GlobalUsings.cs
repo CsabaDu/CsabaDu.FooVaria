@@ -1,5 +1,6 @@
 ﻿global using CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Enums;
 global using CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories;
+global using CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories.Implementations;
 global using CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types;
 global using CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types.Implementations;
 global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;

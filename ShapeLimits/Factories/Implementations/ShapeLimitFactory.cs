@@ -1,9 +1,4 @@
-﻿using CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories;
-using CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories.Implementations;
-using CsabaDu.FooVaria.BulkSpreads.Factories;
-using CsabaDu.FooVaria.Shapes.Factories;
-
-namespace CsabaDu.FooVaria.ShapeLimits.Factories.Implementations;
+﻿namespace CsabaDu.FooVaria.ShapeLimits.Factories.Implementations;
 
 public sealed class ShapeLimitFactory(ISimpleShapeFactory simpleShapeFactory) : SimpleShapeFactory, IShapeLimitFactory
 {
@@ -16,6 +11,8 @@ public sealed class ShapeLimitFactory(ISimpleShapeFactory simpleShapeFactory) : 
 
     public IShapeLimit? Create(LimitMode limitMode, params IShapeComponent[] shapeComponents)
     {
+        if (!Enum.IsDefined(limitMode)) return null;
+
         ISimpleShape? simpleShape = CreateShape(shapeComponents);
 
         if (simpleShape == null) return null;

@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations.BaseMeasure" Collapsed="true">
-    <Position X="0.5" Y="4" Width="1.5" />
+    <Position X="0.5" Y="1.75" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>QgACAwAAAAhCCAAAoAAAAACCAAAGAIAAAAKArAIAAAA=</HashCode>
+      <HashCode>QgACAwAAAAhCCAQAoAAAAACCAAAGAIAAACKArAIAAAA=</HashCode>
       <FileName>Types\Implementations\BaseMeasure.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.Implementations.Quantifiable" Collapsed="true">
-    <Position X="0.5" Y="2.75" Width="1.5" />
+    <Position X="0.5" Y="0.5" Width="1.25" />
     <TypeIdentifier />
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

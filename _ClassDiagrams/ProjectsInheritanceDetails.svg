@@ -1,4 +1,4 @@
-<svg version="1.1" baseProfile="full" width="3015.8" height="1777.0" viewbox="0 0 3015.75 1777" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events">
+<svg version="1.1" baseProfile="full" width="2599.8" height="1777.0" viewbox="0 0 2599.75 1777" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events">
 		<title >ProjectsInheritanceDetails</title>
 	<desc >#title: ProjectsInheritanceDetails
 	#.base: fill=orange dashed bold italic
@@ -114,8 +114,8 @@
 	[BaseQuantifiables]&lt;:-[Quantifiables]
 	[Quantifiables]&lt;:-[BaseMeasures]
 	[Quantifiables]&lt;:-[Spreads]
-	[Spreads]&lt;:-[BulkSpreads]
 	[Spreads]&lt;:-[Shapes]
+	[Spreads]&lt;:-[BulkSpreads]
 	[Shapes]&lt;:-[SimpleShapes]
 	[SimpleShapes]&lt;:-[ShapeLimits]
 	[SimpleShapes]&lt;:-[PlaneShapes]
@@ -132,7 +132,7 @@
 	<g stroke-width="1.0" text-align="left" font="12pt Helvetica, Arial, sans-serif" font-size="12pt" font-family="Helvetica" font-weight="bold" font-style="normal">
 			<g font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" stroke-width="3.0" stroke-linejoin="round" stroke-linecap="round" stroke="#33322E">
 				<g stroke="transparent" fill="transparent">
-					<rect x="0.0" y="0.0" height="1777.0" width="3015.8" stroke="none"></rect>
+					<rect x="0.0" y="0.0" height="1777.0" width="2599.8" stroke="none"></rect>
 				</g>
 			<g transform="translate(8, 8)" fill="#33322E">
 					<g transform="translate(20, 20)" fill="#eee8d5" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal">
@@ -148,24 +148,24 @@
 					<path d="M1148.8 400.3 L1147.9 395.0 L1147.0 389.8 L1161.1 392.7 Z"></path>
 					<path d="M1262.6 447.3 L1262.5625 454 L1262.5625 474 L1262.6 474.0 " fill="none"></path>
 					<path d="M1267.9 447.3 L1262.6 447.3 L1257.2 447.3 L1262.6 434.0 Z"></path>
-					<path d="M1377.2 394.4 L1728.375 454 L1728.375 509.5 L1728.4 509.5 " fill="none"></path>
-					<path d="M1378.1 389.2 L1377.2 394.4 L1376.3 399.7 L1364.1 392.2 Z"></path>
-					<path d="M1633.8 601.7 L1401.8125 683 L1401.8125 738.5 L1401.8 738.5 " fill="none"></path>
-					<path d="M1635.6 606.7 L1633.8 601.7 L1632.0 596.6 L1646.4 597.3 Z"></path>
-					<path d="M1823.4 589.7 L2242.25 683 L2242.25 738.5 L2242.3 738.5 " fill="none"></path>
-					<path d="M1824.5 584.5 L1823.4 589.7 L1822.2 594.9 L1810.4 586.8 Z"></path>
-					<path d="M2168.8 855.9 L2098.25 912 L2098.25 932 L2098.3 932.0 " fill="none"></path>
-					<path d="M2172.1 860.1 L2168.8 855.9 L2165.5 851.7 L2179.3 847.6 Z"></path>
-					<path d="M2315.7 855.9 L2386.25 912 L2386.25 1038.5 L2386.3 1038.5 " fill="none"></path>
-					<path d="M2319.0 851.7 L2315.7 855.9 L2312.4 860.1 L2305.3 847.6 Z"></path>
-					<path d="M2314.7 1138.6 L2063.5 1283 L2063.5 1303 L2063.5 1303.0 " fill="none"></path>
-					<path d="M2317.3 1143.3 L2314.7 1138.6 L2312.0 1134.0 L2326.3 1132.0 Z"></path>
-					<path d="M1964.4 1382.0 L1672.75 1441 L1672.75 1532 L1672.8 1532.0 " fill="none"></path>
-					<path d="M1965.5 1387.3 L1964.4 1382.0 L1963.4 1376.8 L1977.5 1379.4 Z"></path>
-					<path d="M1965.7 1414.3 L1915.75 1441 L1915.75 1496.5 L1915.8 1496.5 " fill="none"></path>
-					<path d="M1968.3 1419.0 L1965.7 1414.3 L1963.2 1409.6 L1977.5 1408.0 Z"></path>
-					<path d="M2161.3 1414.3 L2211.25 1441 L2211.25 1461 L2211.3 1461.0 " fill="none"></path>
-					<path d="M2163.8 1409.6 L2161.3 1414.3 L2158.7 1419.0 L2149.5 1408.0 Z"></path>
+					<path d="M1377.1 397.5 L1664.375 454 L1664.375 509.5 L1664.4 509.5 " fill="none"></path>
+					<path d="M1378.2 392.3 L1377.1 397.5 L1376.1 402.8 L1364.1 395.0 Z"></path>
+					<path d="M1570.2 609.6 L1401.8125 683 L1401.8125 738.5 L1401.8 738.5 " fill="none"></path>
+					<path d="M1572.3 614.5 L1570.2 609.6 L1568.0 604.7 L1582.4 604.3 Z"></path>
+					<path d="M1759.3 592.7 L2114.25 683 L2114.25 738.5 L2114.3 738.5 " fill="none"></path>
+					<path d="M1760.6 587.5 L1759.3 592.7 L1758.0 597.8 L1746.4 589.4 Z"></path>
+					<path d="M2040.8 855.9 L1970.25 912 L1970.25 1038.5 L1970.3 1038.5 " fill="none"></path>
+					<path d="M2044.1 860.1 L2040.8 855.9 L2037.5 851.7 L2051.3 847.6 Z"></path>
+					<path d="M2187.7 855.9 L2258.25 912 L2258.25 932 L2258.3 932.0 " fill="none"></path>
+					<path d="M2191.0 851.7 L2187.7 855.9 L2184.4 860.1 L2177.3 847.6 Z"></path>
+					<path d="M1898.7 1138.6 L1647.5 1283 L1647.5 1303 L1647.5 1303.0 " fill="none"></path>
+					<path d="M1901.3 1143.3 L1898.7 1138.6 L1896.0 1134.0 L1910.3 1132.0 Z"></path>
+					<path d="M1548.4 1382.0 L1256.75 1441 L1256.75 1532 L1256.8 1532.0 " fill="none"></path>
+					<path d="M1549.5 1387.3 L1548.4 1382.0 L1547.4 1376.8 L1561.5 1379.4 Z"></path>
+					<path d="M1549.7 1414.3 L1499.75 1441 L1499.75 1496.5 L1499.8 1496.5 " fill="none"></path>
+					<path d="M1552.3 1419.0 L1549.7 1414.3 L1547.2 1409.6 L1561.5 1408.0 Z"></path>
+					<path d="M1745.3 1414.3 L1795.25 1441 L1795.25 1461 L1795.3 1461.0 " fill="none"></path>
+					<path d="M1747.8 1409.6 L1745.3 1414.3 L1742.7 1419.0 L1733.5 1408.0 Z"></path>
 					<path d="M1301.7 832.1 L1070.5 912 L1070.5 932 L1070.5 932.0 " fill="none"></path>
 					<path d="M1303.5 837.1 L1301.7 832.1 L1300.0 827.1 L1314.3 827.7 Z"></path>
 					<path d="M1501.9 832.1 L1733.125 912 L1733.125 967.5 L1733.1 967.5 " fill="none"></path>
@@ -178,12 +178,12 @@
 					<path d="M220.2 868.9 L216.9 864.7 L213.6 860.5 L227.4 856.5 Z"></path>
 					<path d="M388.6 864.7 L449 912 L449 1038.5 L449.0 1038.5 " fill="none"></path>
 					<path d="M391.9 860.5 L388.6 864.7 L385.3 868.9 L378.1 856.5 Z"></path>
-					<path d="M2457.8 1139.4 L2702.5 1283 L2702.5 1303 L2702.5 1303.0 " fill="none"></path>
-					<path d="M2460.4 1134.8 L2457.8 1139.4 L2455.1 1144.0 L2446.3 1132.7 Z"></path>
-					<path d="M2596.6 1416.2 L2548.25 1441 L2548.25 1496.5 L2548.3 1496.5 " fill="none"></path>
-					<path d="M2599.1 1421.0 L2596.6 1416.2 L2594.2 1411.5 L2608.5 1410.1 Z"></path>
-					<path d="M2808.4 1416.2 L2856.75 1441 L2856.75 1532 L2856.8 1532.0 " fill="none"></path>
-					<path d="M2810.8 1411.5 L2808.4 1416.2 L2805.9 1421.0 L2796.5 1410.1 Z"></path>
+					<path d="M2041.8 1139.4 L2286.5 1283 L2286.5 1303 L2286.5 1303.0 " fill="none"></path>
+					<path d="M2044.4 1134.8 L2041.8 1139.4 L2039.1 1144.0 L2030.3 1132.7 Z"></path>
+					<path d="M2180.6 1416.2 L2132.25 1441 L2132.25 1496.5 L2132.3 1496.5 " fill="none"></path>
+					<path d="M2183.1 1421.0 L2180.6 1416.2 L2178.2 1411.5 L2192.5 1410.1 Z"></path>
+					<path d="M2392.4 1416.2 L2440.75 1441 L2440.75 1532 L2440.8 1532.0 " fill="none"></path>
+					<path d="M2394.8 1411.5 L2392.4 1416.2 L2389.9 1421.0 L2380.5 1410.1 Z"></path>
 					<g data-name="Common">
 							<g fill="#eee8d5" stroke="#33322E" data-name="Common">
 								<rect x="672.1" y="0.0" height="118.0" width="180.0" data-name="Common"></rect>
@@ -302,16 +302,16 @@
 						</g>
 					<g data-name="Quantifiables">
 							<g fill="#eee8d5" stroke="#33322E" data-name="Quantifiables">
-								<rect x="1646.4" y="509.5" height="118.0" width="164.0" data-name="Quantifiables"></rect>
-							<path d="M1646.4 540.5 L1810.4 540.5" fill="none" data-name="Quantifiables"></path>
+								<rect x="1582.4" y="509.5" height="118.0" width="164.0" data-name="Quantifiables"></rect>
+							<path d="M1582.4 540.5 L1746.4 540.5" fill="none" data-name="Quantifiables"></path>
 							</g>
-						<g transform="translate(1646.375, 509.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Quantifiables">
+						<g transform="translate(1582.375, 509.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Quantifiables">
 								<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Quantifiables">
 									<text x="74.0" y="13.5" stroke="none" text-anchor="middle" data-name="Quantifiables">Quantifiables</text>
 								
 								</g>
 							</g>
-						<g transform="translate(1646.375, 540.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Quantifiables">
+						<g transform="translate(1582.375, 540.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Quantifiables">
 								<g transform="translate(8, 8)" fill="#33322E" data-name="Quantifiables">
 									<g transform="translate(20, 20)" data-name="Quantifiables">
 										<g data-name="Quantifiable">
@@ -360,16 +360,16 @@
 						</g>
 					<g data-name="Spreads">
 							<g fill="#eee8d5" stroke="#33322E" data-name="Spreads">
-								<rect x="2179.3" y="738.5" height="118.0" width="126.0" data-name="Spreads"></rect>
-							<path d="M2179.3 769.5 L2305.3 769.5" fill="none" data-name="Spreads"></path>
+								<rect x="2051.3" y="738.5" height="118.0" width="126.0" data-name="Spreads"></rect>
+							<path d="M2051.3 769.5 L2177.3 769.5" fill="none" data-name="Spreads"></path>
 							</g>
-						<g transform="translate(2179.25, 738.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Spreads">
+						<g transform="translate(2051.25, 738.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Spreads">
 								<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Spreads">
 									<text x="55.0" y="13.5" stroke="none" text-anchor="middle" data-name="Spreads">Spreads</text>
 								
 								</g>
 							</g>
-						<g transform="translate(2179.25, 769.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Spreads">
+						<g transform="translate(2051.25, 769.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Spreads">
 								<g transform="translate(8, 8)" fill="#33322E" data-name="Spreads">
 									<g transform="translate(20, 20)" data-name="Spreads">
 										<g data-name="Spread">
@@ -389,16 +389,16 @@
 						</g>
 					<g data-name="Shapes">
 							<g fill="#eee8d5" stroke="#33322E" data-name="Shapes">
-								<rect x="2326.3" y="1038.5" height="118.0" width="120.0" data-name="Shapes"></rect>
-							<path d="M2326.3 1069.5 L2446.3 1069.5" fill="none" data-name="Shapes"></path>
+								<rect x="1910.3" y="1038.5" height="118.0" width="120.0" data-name="Shapes"></rect>
+							<path d="M1910.3 1069.5 L2030.3 1069.5" fill="none" data-name="Shapes"></path>
 							</g>
-						<g transform="translate(2326.25, 1038.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Shapes">
+						<g transform="translate(1910.25, 1038.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Shapes">
 								<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Shapes">
 									<text x="52.0" y="13.5" stroke="none" text-anchor="middle" data-name="Shapes">Shapes</text>
 								
 								</g>
 							</g>
-						<g transform="translate(2326.25, 1069.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Shapes">
+						<g transform="translate(1910.25, 1069.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Shapes">
 								<g transform="translate(8, 8)" fill="#33322E" data-name="Shapes">
 									<g transform="translate(20, 20)" data-name="Shapes">
 										<g data-name="Shape">
@@ -476,16 +476,16 @@
 						</g>
 					<g data-name="SimpleShapes">
 							<g fill="#eee8d5" stroke="#33322E" data-name="SimpleShapes">
-								<rect x="1977.5" y="1303.0" height="118.0" width="172.0" data-name="SimpleShapes"></rect>
-							<path d="M1977.5 1334.0 L2149.5 1334.0" fill="none" data-name="SimpleShapes"></path>
+								<rect x="1561.5" y="1303.0" height="118.0" width="172.0" data-name="SimpleShapes"></rect>
+							<path d="M1561.5 1334.0 L1733.5 1334.0" fill="none" data-name="SimpleShapes"></path>
 							</g>
-						<g transform="translate(1977.5, 1303)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="SimpleShapes">
+						<g transform="translate(1561.5, 1303)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="SimpleShapes">
 								<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="SimpleShapes">
 									<text x="78.0" y="13.5" stroke="none" text-anchor="middle" data-name="SimpleShapes">SimpleShapes</text>
 								
 								</g>
 							</g>
-						<g transform="translate(1977.5, 1334)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SimpleShapes">
+						<g transform="translate(1561.5, 1334)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SimpleShapes">
 								<g transform="translate(8, 8)" fill="#33322E" data-name="SimpleShapes">
 									<g transform="translate(20, 20)" data-name="SimpleShapes">
 										<g data-name="SimpleShape">
@@ -505,16 +505,16 @@
 						</g>
 					<g data-name="ComplexShapes">
 							<g fill="#eee8d5" stroke="#33322E" data-name="ComplexShapes">
-								<rect x="2608.5" y="1303.0" height="118.0" width="188.0" data-name="ComplexShapes"></rect>
-							<path d="M2608.5 1334.0 L2796.5 1334.0" fill="none" data-name="ComplexShapes"></path>
+								<rect x="2192.5" y="1303.0" height="118.0" width="188.0" data-name="ComplexShapes"></rect>
+							<path d="M2192.5 1334.0 L2380.5 1334.0" fill="none" data-name="ComplexShapes"></path>
 							</g>
-						<g transform="translate(2608.5, 1303)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ComplexShapes">
+						<g transform="translate(2192.5, 1303)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ComplexShapes">
 								<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ComplexShapes">
 									<text x="86.0" y="13.5" stroke="none" text-anchor="middle" data-name="ComplexShapes">ComplexShapes</text>
 								
 								</g>
 							</g>
-						<g transform="translate(2608.5, 1334)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ComplexShapes">
+						<g transform="translate(2192.5, 1334)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ComplexShapes">
 								<g transform="translate(8, 8)" fill="#33322E" data-name="ComplexShapes">
 									<g transform="translate(20, 20)" data-name="ComplexShapes">
 										<g data-name="ComplexShape">
@@ -942,16 +942,16 @@
 						</g>
 					<g data-name="BulkSpreads">
 							<g fill="#eee8d5" stroke="#33322E" data-name="BulkSpreads">
-								<rect x="1910.3" y="932.0" height="331.0" width="376.0" data-name="BulkSpreads"></rect>
-							<path d="M1910.3 963.0 L2286.3 963.0" fill="none" data-name="BulkSpreads"></path>
+								<rect x="2070.3" y="932.0" height="331.0" width="376.0" data-name="BulkSpreads"></rect>
+							<path d="M2070.3 963.0 L2446.3 963.0" fill="none" data-name="BulkSpreads"></path>
 							</g>
-						<g transform="translate(1910.25, 932)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="BulkSpreads">
+						<g transform="translate(2070.25, 932)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="BulkSpreads">
 								<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="BulkSpreads">
 									<text x="180.0" y="13.5" stroke="none" text-anchor="middle" data-name="BulkSpreads">BulkSpreads</text>
 								
 								</g>
 							</g>
-						<g transform="translate(1910.25, 963)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="BulkSpreads">
+						<g transform="translate(2070.25, 963)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="BulkSpreads">
 								<g transform="translate(8, 8)" fill="#33322E" data-name="BulkSpreads">
 									<g transform="translate(20, 20)" fill="#eee8d5" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="BulkSpreads">
 										<path d="M160.0 44.3 L160 51 L160 71 L160.0 71.0 " fill="none" data-name="BulkSpreads"></path>
@@ -1023,16 +1023,16 @@
 						</g>
 					<g data-name="PlaneShapes">
 							<g fill="#eee8d5" stroke="#33322E" data-name="PlaneShapes">
-								<rect x="1791.8" y="1496.5" height="189.0" width="248.0" data-name="PlaneShapes"></rect>
-							<path d="M1791.8 1527.5 L2039.8 1527.5" fill="none" data-name="PlaneShapes"></path>
+								<rect x="1375.8" y="1496.5" height="189.0" width="248.0" data-name="PlaneShapes"></rect>
+							<path d="M1375.8 1527.5 L1623.8 1527.5" fill="none" data-name="PlaneShapes"></path>
 							</g>
-						<g transform="translate(1791.75, 1496.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="PlaneShapes">
+						<g transform="translate(1375.75, 1496.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="PlaneShapes">
 								<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="PlaneShapes">
 									<text x="116.0" y="13.5" stroke="none" text-anchor="middle" data-name="PlaneShapes">PlaneShapes</text>
 								
 								</g>
 							</g>
-						<g transform="translate(1791.75, 1527.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="PlaneShapes">
+						<g transform="translate(1375.75, 1527.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="PlaneShapes">
 								<g transform="translate(8, 8)" fill="#33322E" data-name="PlaneShapes">
 									<g transform="translate(20, 20)" fill="#eee8d5" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="PlaneShapes">
 										<path d="M51.3 38.0 L30 51 L30 71 L30.0 71.0 " fill="none" data-name="PlaneShapes"></path>
@@ -1078,16 +1078,16 @@
 						</g>
 					<g data-name="DryBodies">
 							<g fill="#eee8d5" stroke="#33322E" data-name="DryBodies">
-								<rect x="2079.8" y="1461.0" height="260.0" width="263.0" data-name="DryBodies"></rect>
-							<path d="M2079.8 1492.0 L2342.8 1492.0" fill="none" data-name="DryBodies"></path>
+								<rect x="1663.8" y="1461.0" height="260.0" width="263.0" data-name="DryBodies"></rect>
+							<path d="M1663.8 1492.0 L1926.8 1492.0" fill="none" data-name="DryBodies"></path>
 							</g>
-						<g transform="translate(2079.75, 1461)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="DryBodies">
+						<g transform="translate(1663.75, 1461)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="DryBodies">
 								<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="DryBodies">
 									<text x="123.5" y="13.5" stroke="none" text-anchor="middle" data-name="DryBodies">DryBodies</text>
 								
 								</g>
 							</g>
-						<g transform="translate(2079.75, 1492)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="DryBodies">
+						<g transform="translate(1663.75, 1492)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="DryBodies">
 								<g transform="translate(8, 8)" fill="#33322E" data-name="DryBodies">
 									<g transform="translate(20, 20)" fill="#eee8d5" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="DryBodies">
 										<path d="M103.5 44.3 L103.5 51 L103.5 71 L103.5 71.0 " fill="none" data-name="DryBodies"></path>
@@ -1201,16 +1201,16 @@
 						</g>
 					<g data-name="Sections">
 							<g fill="#eee8d5" stroke="#33322E" data-name="Sections">
-								<rect x="2382.8" y="1496.5" height="189.0" width="331.0" data-name="Sections"></rect>
-							<path d="M2382.8 1527.5 L2713.8 1527.5" fill="none" data-name="Sections"></path>
+								<rect x="1966.8" y="1496.5" height="189.0" width="331.0" data-name="Sections"></rect>
+							<path d="M1966.8 1527.5 L2297.8 1527.5" fill="none" data-name="Sections"></path>
 							</g>
-						<g transform="translate(2382.75, 1496.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Sections">
+						<g transform="translate(1966.75, 1496.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Sections">
 								<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Sections">
 									<text x="157.5" y="13.5" stroke="none" text-anchor="middle" data-name="Sections">Sections</text>
 								
 								</g>
 							</g>
-						<g transform="translate(2382.75, 1527.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Sections">
+						<g transform="translate(1966.75, 1527.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Sections">
 								<g transform="translate(8, 8)" fill="#33322E" data-name="Sections">
 									<g transform="translate(20, 20)" fill="#eee8d5" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Sections">
 										<path d="M90.2 36.5 L58 51 L58 71 L58.0 71.0 " fill="none" data-name="Sections"></path>
@@ -1256,16 +1256,16 @@
 						</g>
 					<g data-name="ComplexDryBodies">
 							<g fill="#eee8d5" stroke="#33322E" data-name="ComplexDryBodies">
-								<rect x="2753.8" y="1532.0" height="118.0" width="206.0" data-name="ComplexDryBodies"></rect>
-							<path d="M2753.8 1563.0 L2959.8 1563.0" fill="none" data-name="ComplexDryBodies"></path>
+								<rect x="2337.8" y="1532.0" height="118.0" width="206.0" data-name="ComplexDryBodies"></rect>
+							<path d="M2337.8 1563.0 L2543.8 1563.0" fill="none" data-name="ComplexDryBodies"></path>
 							</g>
-						<g transform="translate(2753.75, 1532)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ComplexDryBodies">
+						<g transform="translate(2337.75, 1532)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ComplexDryBodies">
 								<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ComplexDryBodies">
 									<text x="95.0" y="13.5" stroke="none" text-anchor="middle" data-name="ComplexDryBodies">ComplexDryBodies</text>
 								
 								</g>
 							</g>
-						<g transform="translate(2753.75, 1563)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ComplexDryBodies">
+						<g transform="translate(2337.75, 1563)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ComplexDryBodies">
 								<g transform="translate(8, 8)" fill="#33322E" data-name="ComplexDryBodies">
 									<g transform="translate(20, 20)" data-name="ComplexDryBodies">
 										<g data-name="ComplexDryBody">
@@ -1285,16 +1285,16 @@
 						</g>
 					<g data-name="ShapeLimits">
 							<g fill="#eee8d5" stroke="#33322E" data-name="ShapeLimits">
-								<rect x="1593.8" y="1532.0" height="118.0" width="158.0" data-name="ShapeLimits"></rect>
-							<path d="M1593.8 1563.0 L1751.8 1563.0" fill="none" data-name="ShapeLimits"></path>
+								<rect x="1177.8" y="1532.0" height="118.0" width="158.0" data-name="ShapeLimits"></rect>
+							<path d="M1177.8 1563.0 L1335.8 1563.0" fill="none" data-name="ShapeLimits"></path>
 							</g>
-						<g transform="translate(1593.75, 1532)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ShapeLimits">
+						<g transform="translate(1177.75, 1532)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ShapeLimits">
 								<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ShapeLimits">
 									<text x="71.0" y="13.5" stroke="none" text-anchor="middle" data-name="ShapeLimits">ShapeLimits</text>
 								
 								</g>
 							</g>
-						<g transform="translate(1593.75, 1563)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ShapeLimits">
+						<g transform="translate(1177.75, 1563)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ShapeLimits">
 								<g transform="translate(8, 8)" fill="#33322E" data-name="ShapeLimits">
 									<g transform="translate(20, 20)" data-name="ShapeLimits">
 										<g data-name="ShapeLimit">

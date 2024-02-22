@@ -34,5 +34,9 @@
       <FileName>Behaviors\IRound.cs</FileName>
     </TypeIdentifier>
   </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.ILimitable" Collapsed="true">
+    <Position X="8" Y="1.5" Width="1.25" />
+    <TypeIdentifier />
+  </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

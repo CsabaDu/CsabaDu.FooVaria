@@ -61,6 +61,10 @@ public sealed class ShapeLimit : SimpleShape, IShapeLimit
         return GetFactory().Create(simpleShape, limitMode);
     }
 
+    public IShapeLimit? GetShapeLimit(LimitMode limitMode, params IShapeComponent[] shapeComponents)
+    {
+        return GetFactory().Create(limitMode, shapeComponents);
+    }
     public bool? Includes(IShape? limitable)
     {
         return limitable?.FitsIn(this, LimitMode);
