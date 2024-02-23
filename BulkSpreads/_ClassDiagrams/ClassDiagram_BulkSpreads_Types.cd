@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Interface Name="CsabaDu.FooVaria.BulkSpreads.Types.IBulkBody" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="6.25" Y="8" Width="1.25" />
+    <Position X="5.5" Y="8" Width="1.25" />
     <InheritanceLine Type="CsabaDu.FooVaria.BulkSpreads.Types.IBulkSpread&lt;TSelf, TSMeasure, TEnum&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="6.5" Y="7.441" />
-        <Point X="6.5" Y="7.7" />
-        <Point X="6.875" Y="7.7" />
-        <Point X="6.875" Y="8" />
+        <Point X="5.75" Y="7.441" />
+        <Point X="5.75" Y="7.7" />
+        <Point X="6.125" Y="7.7" />
+        <Point X="6.125" Y="8" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -16,13 +16,13 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BulkSpreads.Types.IBulkSurface" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="4.75" Y="8" Width="1.25" />
+    <Position X="4" Y="8" Width="1.25" />
     <InheritanceLine Type="CsabaDu.FooVaria.BulkSpreads.Types.IBulkSpread&lt;TSelf, TSMeasure, TEnum&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="6" Y="7.441" />
-        <Point X="6" Y="7.7" />
-        <Point X="5.375" Y="7.7" />
-        <Point X="5.375" Y="8" />
+        <Point X="5.25" Y="7.441" />
+        <Point X="5.25" Y="7.7" />
+        <Point X="4.625" Y="7.7" />
+        <Point X="4.625" Y="8" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -45,7 +45,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BulkSpreads.Types.IBulkSpread&lt;TSelf, TSMeasure, TEnum&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="4.75" Y="6.75" Width="3" />
+    <Position X="4" Y="6.75" Width="3" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
       <FileName>Types\IBulkSpread.cs</FileName>
@@ -69,8 +69,8 @@
     <Position X="5.5" Y="0.5" Width="1.25" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IMeasureUnit" IsHidden="true" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ISpreadMeasure" IsHidden="true" />
-    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity&lt;System.Double&gt;" IsHidden="true" />
-    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IQuantity&lt;System.Double&gt;" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IQuantity" IsHidden="true" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Common.Types.ICommonBase&lt;TSelf&gt;" Collapsed="true" BaseTypeListCollapsed="true">
@@ -87,15 +87,7 @@
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ISpreadMeasure" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
     <Position X="3.75" Y="4.25" Width="1.5" />
-    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity" IsHidden="true" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity" Collapsed="true">
-    <Position X="3.75" Y="2" Width="1.5" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity&lt;TNum&gt;" Collapsed="true">
-    <Position X="3.5" Y="3" Width="2" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IQuantity" IsHidden="true" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Spreads.Types.IBody" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
@@ -110,8 +102,8 @@
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IMeasureUnit" IsHidden="true" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ISpreadMeasure" IsHidden="true" />
-    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity&lt;System.Double&gt;" IsHidden="true" />
-    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IQuantity&lt;System.Double&gt;" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IQuantity" IsHidden="true" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Spreads.Types.ISurface" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
@@ -126,8 +118,16 @@
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IMeasureUnit" IsHidden="true" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.ISpreadMeasure" IsHidden="true" />
-    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity&lt;System.Double&gt;" IsHidden="true" />
-    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IQuantity" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IQuantity&lt;System.Double&gt;" IsHidden="true" />
+    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IQuantity" IsHidden="true" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IQuantity" Collapsed="true">
+    <Position X="3.75" Y="2" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IQuantity&lt;TNum&gt;" Collapsed="true">
+    <Position X="3.5" Y="3" Width="2" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />

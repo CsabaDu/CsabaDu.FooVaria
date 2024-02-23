@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="CsabaDu.FooVaria.PlaneShapes.Types.Implementations.Circle" Collapsed="true">
-    <Position X="0.5" Y="8" Width="1.25" />
+    <Position X="0.5" Y="3" Width="1.25" />
     <TypeIdentifier>
       <HashCode>IAAIAIAAAAAAAAAACAAAACCAAIAQAABAAAAAAAgABAA=</HashCode>
       <FileName>Types\Implementations\Circle.cs</FileName>
@@ -9,15 +9,15 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.PlaneShapes.Types.Implementations.PlaneShape" Collapsed="true">
-    <Position X="1.25" Y="6.75" Width="1.25" />
+    <Position X="1.25" Y="1.75" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAABAEAAAAAQAAQAAAAA=</HashCode>
+      <HashCode>AAAQAAAAAAAAAACAAAAAAACAAAAAEAAABAQAAQAAAAA=</HashCode>
       <FileName>Types\Implementations\PlaneShape.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.PlaneShapes.Types.Implementations.Rectangle" Collapsed="true">
-    <Position X="2" Y="8" Width="1.25" />
+    <Position X="2" Y="3" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAABAIAAIAAAAAAADAAAAGDAAIAQEABAAAAAAEAABAA=</HashCode>
       <FileName>Types\Implementations\Rectangle.cs</FileName>
@@ -25,9 +25,9 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types.Implementations.SimpleShape" Collapsed="true">
-    <Position X="1.25" Y="5.5" Width="1.25" />
+    <Position X="1.25" Y="0.5" Width="1.25" />
     <TypeIdentifier />
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
