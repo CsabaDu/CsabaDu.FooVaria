@@ -59,11 +59,6 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
         return GetDefaultName(measureUnit);
     }
 
-    //public static string GetDefaultName(Enum measureUnit)
-    //{
-    //    return Measurable.GetDefaultName(measureUnit);
-    //}
-
     public IMeasurement GetMeasurement(Enum measureUnit)
     {
         return GetFactory().Create(measureUnit);
@@ -268,22 +263,17 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
     {
         if (!IsCustomMeasureUnit(measureUnit)) return false;
 
+        if ((int)(object)measureUnit == default) return false;
+
         if (!exchangeRate.IsValidExchangeRate()) return false;
 
-        return trySetCustomMeasureUnit(measureUnit, exchangeRate, customName);
+        if (!TrySetExchangeRate(measureUnit, exchangeRate)) return false;
 
-        #region Local methods
-        static bool trySetCustomMeasureUnit(Enum measureUnit, decimal exchangeRate, string customName)
-        {
-            if (!TrySetExchangeRate(measureUnit, exchangeRate)) return false;
+        if (TrySetCustomName(measureUnit, customName)) return true;
 
-            if (TrySetCustomName(measureUnit, customName)) return true;
+        if (RemoveExchangeRate(measureUnit)) return false;
 
-            if (RemoveExchangeRate(measureUnit)) return false;
-
-            throw new InvalidOperationException(null);
-        }
-        #endregion
+        throw new InvalidOperationException(null);
     }
 
     public static bool TrySetCustomMeasureUnit(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate)

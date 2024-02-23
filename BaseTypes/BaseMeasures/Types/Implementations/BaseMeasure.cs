@@ -53,7 +53,7 @@ public abstract class BaseMeasure(IBaseMeasureFactory factory) : Quantifiable(fa
 
     public object GetQuantity(TypeCode quantityTypeCode)
     {
-        ValueType quantity = (ValueType)Quantity;
+        ValueType quantity = (ValueType)(Quantity ?? throw new InvalidOperationException(null));
 
         return quantity.ToQuantity(quantityTypeCode) ?? throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
     }
@@ -183,7 +183,7 @@ public abstract class BaseMeasure(IBaseMeasureFactory factory) : Quantifiable(fa
     {
         if (NullChecked(baseQuantifiable, paramName) is IBaseMeasure baseMeasure)
         {
-            ValueType quantity = (ValueType)baseMeasure.Quantity;
+            ValueType quantity = (ValueType)(baseMeasure.Quantity ?? throw new InvalidOperationException(null));
 
             ValidateQuantity(quantity, paramName);
         }

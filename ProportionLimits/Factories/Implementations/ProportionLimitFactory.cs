@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.ProportionLimits.Factories.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations;
+
+namespace CsabaDu.FooVaria.ProportionLimits.Factories.Implementations;
 
 public sealed class ProportionLimitFactory : SimpleRateFactory, IProportionLimitFactory
 {
@@ -30,7 +32,7 @@ public sealed class ProportionLimitFactory : SimpleRateFactory, IProportionLimit
     public IProportionLimit Create(IBaseMeasure numerator, Enum denominatorMeasureUnit, LimitMode limitMode)
     {
         Enum numeratorMeasureUnit = NullChecked(numerator, nameof(numerator)).GetMeasureUnit();
-        ValueType quantity = (ValueType)numerator.Quantity;
+        ValueType quantity = (ValueType)(numerator.Quantity ?? throw new InvalidOperationException(null));
 
         return Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit, limitMode);
     }

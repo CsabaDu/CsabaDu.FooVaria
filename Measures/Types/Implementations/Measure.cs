@@ -81,11 +81,6 @@
         }
 
         #region Override methods
-        public override IMeasureFactory GetFactory()
-        {
-            return (IMeasureFactory)Factory;
-        }
-
         #region Sealed methods
         public override sealed IMeasurement GetBaseMeasurement()
         {
@@ -100,6 +95,16 @@
         public override sealed decimal GetDefaultQuantity()
         {
             return GetDefaultQuantity(Quantity, GetExchangeRate());
+        }
+
+        public override sealed IMeasureFactory GetFactory()
+        {
+            return (IMeasureFactory)Factory;
+        }
+
+        public override sealed LimitMode? GetLimitMode()
+        {
+            return base.GetLimitMode();
         }
 
         public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
@@ -181,6 +186,10 @@
             catch (InvalidEnumArgumentException)
             {
                 throw new InvalidOperationException(null);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(ex.Message, ex);
             }
 
             return quantity;
