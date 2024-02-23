@@ -9,6 +9,6 @@
 
     public interface IShapeComponents<out T> : IShapeComponents where T : class, IBaseQuantifiable, IShapeComponent
     {
-        IEnumerable<T>? GetShapeComponents(IShape shape);
+        IEnumerable<T> GetShapeComponents(IShape shape);
     }
 }

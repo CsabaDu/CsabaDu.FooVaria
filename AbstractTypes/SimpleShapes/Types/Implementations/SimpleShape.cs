@@ -48,16 +48,14 @@ public abstract class SimpleShape : Shape, ISimpleShape
         return (ISimpleShape)GetShape(shapeExtents)!;
     }
 
-    public IEnumerable<IExtent>? GetShapeComponents(IShape shape)
+    public IEnumerable<IExtent> GetShapeComponents(IShape shape)
     {
-        if (shape is ISimpleShape simpleShape) return simpleShape.GetShapeExtents();
+        if (NullChecked(shape, nameof(shape)) is not ISimpleShape simpleShape)
+        {
+            simpleShape = (ISimpleShape)shape.GetShape();
+        }
 
-        //if (shape is IComplexShape complexSimpleShape)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        return null;
+        return simpleShape.GetShapeExtents();
     }
 
     public IExtent GetShapeExtent(ShapeExtentCode shapeExtentCode)
@@ -256,19 +254,6 @@ public abstract class SimpleShape : Shape, ISimpleShape
     #endregion
 
     #region Static methods
-
-    //public static IExtent GetDiagonal(ISimpleShape simpleShape, ExtentUnit extentUnit = default)
-    //{
-    //    return NullChecked(simpleShape, nameof(simpleShape)) switch
-    //    {
-    //        Circle circle => GetCircleDiagonal(circle, extentUnit),
-    //        Cuboid cuboid => GetCuboidDiagonal(cuboid, extentUnit),
-    //        Cylinder cylinder => GetCylinderDiagonal(cylinder, extentUnit),
-    //        Rectangle rectangle => GetRectangleDiagonal(rectangle, extentUnit),
-
-    //        _ => throw new InvalidOperationException(null)
-    //    };
-    //}
     public static IExtent GetRectangularShapeDiagonal<T>(T simpleShape, ExtentUnit extentUnit = default)
         where T : class, ISimpleShape, IRectangularShape
     {
