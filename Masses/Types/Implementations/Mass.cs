@@ -1,14 +1,7 @@
-﻿using CsabaDu.FooVaria.BaseTypes.BaseRates.Types;
-using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
-
-namespace CsabaDu.FooVaria.Masses.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Masses.Types.Implementations;
 
 internal abstract class Mass : BaseQuantifiable, IMass
 {
-    #region Constants
-    private const MeasureUnitCode WeightMeasureUnitCode = MeasureUnitCode.WeightUnit;
-    #endregion
-
     #region Constructors
     private protected Mass(IMass other) : base(other)
     {
@@ -124,7 +117,9 @@ internal abstract class Mass : BaseQuantifiable, IMass
     {
         IWeight volumeWeight = GetVolumeWeight(ratio);
 
-        return GetMeasureUnitCode(volumeWeight);
+        return IsWeightNotLess(volumeWeight) ?
+            Weight.GetMeasureUnitCode()
+            : GetBody().GetMeasureUnitCode();
     }
 
     public double GetQuantity()
@@ -146,12 +141,16 @@ internal abstract class Mass : BaseQuantifiable, IMass
 
     public ISpreadMeasure GetSpreadMeasure()
     {
-        return GetBody().GetSpreadMeasure();
+        IBody body = GetBody();
+
+        return body.GetSpreadMeasure();
     }
 
     public MeasureUnitCode GetSpreadMeasureUnitCode()
     {
-        return GetBody().GetSpreadMeasureUnitCode();
+        IBody body = GetBody();
+
+        return body.GetSpreadMeasureUnitCode();
     }
 
     public IVolume GetVolume()
@@ -161,16 +160,18 @@ internal abstract class Mass : BaseQuantifiable, IMass
 
     public IWeight GetVolumeWeight()
     {
-        IWeight volumeWeight = GetVolumeWeight(this);
-
-        return GetGreaterWeight(volumeWeight);
+        return GetVolumeWeight(decimal.One);
     }
 
     public IWeight GetVolumeWeight(decimal ratio)
     {
+        IVolume volume = GetVolume();
+        IWeight volumeWeight = volume.ConvertMeasure();
+
+        if (ratio == decimal.One) return GetGreaterWeight(volumeWeight);
+
         ValidateQuantity(ratio, nameof(ratio));
 
-        IWeight volumeWeight = GetVolumeWeight(this);
         volumeWeight = (IWeight)volumeWeight.Multiply(ratio);
 
         return GetGreaterWeight(volumeWeight);
@@ -192,12 +193,17 @@ internal abstract class Mass : BaseQuantifiable, IMass
 
     public decimal ProportionalTo(IMass? mass)
     {
-        return GetDefaultQuantity() / NullChecked(mass, nameof(mass)).GetVolumeWeight().GetDefaultQuantity();
+        decimal defaultQuantity = GetDefaultQuantity();
+        decimal massDefaultQuantity = NullChecked(mass, nameof(mass)).GetVolumeWeight().GetDefaultQuantity();
+
+        return defaultQuantity / massDefaultQuantity;
     }
 
     public void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)
     {
-        GetBody().ValidateSpreadMeasure(spreadMeasure, paramName);
+        IBody body = GetBody();
+
+        body.ValidateSpreadMeasure(spreadMeasure, paramName);
     }
 
     public void ValidateMassComponent(IBaseQuantifiable? massComponent, string paramName)
@@ -348,25 +354,9 @@ internal abstract class Mass : BaseQuantifiable, IMass
         return (IWeight)volumeWeight.ExchangeTo(GetMeasureUnit())!;
     }
 
-    private MeasureUnitCode GetMeasureUnitCode(IWeight volumeWeight)
-    {
-        return IsWeightNotLess(volumeWeight) ?
-            Weight.GetMeasureUnitCode()
-            : GetBody().GetMeasureUnitCode();
-    }
-
     private bool IsWeightNotLess(IWeight volumeWeight)
     {
         return volumeWeight.CompareTo(Weight) >= 0;
     }
-
-    #region Static methods
-    private static IWeight GetVolumeWeight(IMass mass)
-    {
-        IVolume volume = mass.GetVolume();
-
-        return volume.ConvertMeasure();
-    }
-    #endregion
     #endregion
 }

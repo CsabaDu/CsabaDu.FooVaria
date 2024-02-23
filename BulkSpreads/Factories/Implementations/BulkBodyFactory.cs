@@ -1,13 +1,7 @@
 ﻿namespace CsabaDu.FooVaria.BulkSpreads.Factories.Implementations;
 
-public sealed class BulkBodyFactory : BulkSpreadFactory<IBulkBody, IVolume, VolumeUnit>, IBulkBodyFactory
+public sealed class BulkBodyFactory(IMeasureFactory measureFactory) : BulkSpreadFactory<IBulkBody, IVolume, VolumeUnit>(measureFactory), IBulkBodyFactory
 {
-    #region Constructors
-    public BulkBodyFactory(IMeasureFactory measureFactory) : base(measureFactory)
-    {
-    }
-    #endregion
-
     #region Public methods
     #region Override methods
     public override IBulkBody Create(IVolume volume)

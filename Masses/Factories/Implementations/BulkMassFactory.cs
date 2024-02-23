@@ -1,14 +1,8 @@
 ﻿
 namespace CsabaDu.FooVaria.Masses.Factories.Implementations;
 
-public sealed class BulkMassFactory : MassFactory, IBulkMassFactory
+public sealed class BulkMassFactory(IProportionFactory proportionFactory, IBulkBodyFactory bodyFactory) : MassFactory(proportionFactory, bodyFactory), IBulkMassFactory
 {
-    #region Constructors
-    public BulkMassFactory(IProportionFactory proportionFactory, IBulkBodyFactory bodyFactory) : base(proportionFactory, bodyFactory)
-    {
-    }
-    #endregion
-
     #region Public methods
     public IBulkMass Create(IWeight weight, IVolume volume)
     {

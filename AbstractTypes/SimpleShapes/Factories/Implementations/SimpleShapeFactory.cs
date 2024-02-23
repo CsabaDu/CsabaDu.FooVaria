@@ -2,11 +2,6 @@
 
 public abstract class SimpleShapeFactory : ISimpleShapeFactory
 {
-    #region Properties
-    //public IBulkSpreadFactory BulkSpreadFactory { get; init; } = NullChecked(bulkSpreadFactory, nameof(bulkSpreadFactory));
-    //public abstract ITangentShapeFactory TangentShapeFactory { get; init; }
-    #endregion
-
     #region Public methods
     public ISpread CreateSpread(ISpreadMeasure spreadMeasure)
     {

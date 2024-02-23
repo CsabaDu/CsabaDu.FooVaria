@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories;
-
-namespace CsabaDu.FooVaria.ShapeLimits.Factories;
+﻿namespace CsabaDu.FooVaria.ShapeLimits.Factories;
 
 public interface IShapeLimitFactory : ISimpleShapeFactory, IFactory<IShapeLimit>
 {

@@ -177,7 +177,7 @@
             #endregion
         }
 
-        private object GetValidMeasureQuantity(ValueType quantity)
+        private ValueType GetValidMeasureQuantity(ValueType quantity)
         {
             try
             {

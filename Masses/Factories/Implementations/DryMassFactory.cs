@@ -1,13 +1,7 @@
 ﻿namespace CsabaDu.FooVaria.Masses.Factories.Implementations;
 
-public sealed class DryMassFactory : MassFactory, IDryMassFactory
+public sealed class DryMassFactory(IProportionFactory proportionFactory, IDryBodyFactory bodyFactory) : MassFactory(proportionFactory, bodyFactory), IDryMassFactory
 {
-    #region Constructors
-    public DryMassFactory(IProportionFactory proportionFactory, IDryBodyFactory bodyFactory) : base(proportionFactory, bodyFactory)
-    {
-    }
-    #endregion
-
     #region Public methods
     public IDryMass Create(IWeight weight, IDryBody dryBody)
     {
