@@ -181,7 +181,8 @@ internal abstract class Mass : BaseQuantifiable, IMass
     {
         if (context is MeasureUnitCode measureUnitCode) return hasMeasureUnitCode(measureUnitCode);
 
-        return BaseMeasurement.IsValidMeasureUnit(context) && hasMeasureUnitCode(GetDefinedMeasureUnitCode(context!));
+        return BaseMeasurement.IsValidMeasureUnit(context)
+            && hasMeasureUnitCode(GetDefinedMeasureUnitCode(context!));
 
         #region Local methods
         bool hasMeasureUnitCode(MeasureUnitCode measureUnitCode)
