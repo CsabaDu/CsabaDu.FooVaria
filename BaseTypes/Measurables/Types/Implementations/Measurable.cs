@@ -43,7 +43,9 @@ public abstract class Measurable : CommonBase, IMeasurable
         #region Local methods
         static Type getMeasureUnitType(MeasureUnitCode measureUnitCode)
         {
-            return MeasureUnitTypeSet.First(x => x.Name == Enum.GetName(measureUnitCode));
+            string? measureUnitCodeName = Enum.GetName(measureUnitCode);
+
+            return MeasureUnitTypeSet.First(x => x.Name == measureUnitCodeName);
         }
         #endregion
     }
@@ -52,17 +54,6 @@ public abstract class Measurable : CommonBase, IMeasurable
     protected Measurable(IMeasurableFactory factory) : base(factory)
     {
     }
-    //protected Measurable(IMeasurableFactory factory, MeasureUnitCode measureUnitCode) : base(factory)
-    //{
-    //}
-
-    //protected Measurable(IMeasurableFactory factory, Enum measureUnit) : base(factory)
-    //{
-    //}
-
-    //protected Measurable(IMeasurableFactory factory, IMeasurable measurable) : base(factory)
-    //{
-    //}
 
     protected Measurable(IMeasurable other) : base(other)
     {
@@ -70,8 +61,6 @@ public abstract class Measurable : CommonBase, IMeasurable
     #endregion
 
     #region Properties
-    //public MeasureUnitCode MeasureUnitCode { get; init; }
-
     #region Static properties
     public static Dictionary<MeasureUnitCode, Type> MeasureUnitTypeCollection { get; }
     public static HashSet<Type> MeasureUnitTypeSet { get; }

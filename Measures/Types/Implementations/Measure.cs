@@ -11,19 +11,15 @@
         #endregion
 
         #region Constructors
-        private protected Measure(IMeasureFactory factory, Enum measureUnit, ValueType quantity) : base(factory)
+        private protected Measure(IMeasureFactory factory, Enum measureUnit/*, ValueType quantity*/) : base(factory)
         {
             Measurement = GetBaseMeasurementFactory().Create(measureUnit);
-            Quantity = GetValidMeasureQuantity(quantity);
+            //Quantity = GetValidMeasureQuantity(quantity);
         }
         #endregion
 
         #region Properties
         public IMeasurement Measurement { get; init; }
-
-        #region Override properties
-        public override sealed object Quantity { get; init; }
-        #endregion
         #endregion
 
         #region Public methods
@@ -176,32 +172,20 @@
             }
             #endregion
         }
-
-        private ValueType GetValidMeasureQuantity(ValueType quantity)
-        {
-            try
-            {
-                ValidateQuantity(quantity, GetQuantityTypeCode(), nameof(quantity));
-            }
-            catch (InvalidEnumArgumentException)
-            {
-                throw new InvalidOperationException(null);
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException(ex.Message, ex);
-            }
-
-            return quantity;
-        }
         #endregion
     }
 
-    internal abstract class Measure<TSelf, TNum>(IMeasureFactory factory, Enum measureUnit, ValueType quantity)
-        : Measure(factory, measureUnit, quantity), IMeasure<TSelf, TNum>
+    internal abstract class Measure<TSelf, TNum>(IMeasureFactory factory, Enum measureUnit, TNum quantity)
+        : Measure(factory, measureUnit), IMeasure<TSelf, TNum>
         where TSelf : class, IMeasure
         where TNum : struct
     {
+        #region Properties
+        #region Override properties
+        public override sealed object Quantity { get; init; } = quantity;
+        #endregion
+        #endregion
+
         #region Public methods
         public TSelf GetBaseMeasure(TNum quantity)
         {
@@ -230,7 +214,7 @@
         #endregion
     }
 
-    internal abstract class Measure<TSelf, TNum, TEnum>(IMeasureFactory factory, TEnum measureUnit, ValueType quantity)
+    internal abstract class Measure<TSelf, TNum, TEnum>(IMeasureFactory factory, TEnum measureUnit, TNum quantity)
         : Measure<TSelf, TNum>(factory, measureUnit, quantity), IMeasure<TSelf, TNum, TEnum>
         where TSelf : class, IMeasure
         where TNum : struct

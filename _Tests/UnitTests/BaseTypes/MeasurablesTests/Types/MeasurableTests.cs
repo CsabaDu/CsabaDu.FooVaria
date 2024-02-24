@@ -1,5 +1,3 @@
-using CsabaDu.FooVaria.BaseTypes.Measurables.Statics;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.MeasurablesTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
@@ -48,29 +46,13 @@ public sealed class MeasurableTests
     {
         // Arrange
         factoryObject = null;
-        measureUnitCode = SampleParams.NotDefinedMeasureUnitCode;
 
         // Act
-        void attempt() => _ = new MeasurableChild(factoryObject, measureUnitCode);
+        void attempt() => _ = new MeasurableChild(factoryObject);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
         Assert.AreEqual(ParamNames.factory, ex.ParamName);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void Measurable_validArg_IMeasurableFactory_invalidArg_MeasureunitTypeCode_throws_InvalidEnumArgumentException()
-    {
-        // Arrange
-        factoryObject = new MeasurableFactoryClass();
-        measureUnitCode = SampleParams.NotDefinedMeasureUnitCode;
-
-        // Act
-        void attempt() => _ = new MeasurableChild(factoryObject, measureUnitCode);
-
-        // Assert
-        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
-        Assert.AreEqual(ParamNames.measureUnitCode, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
@@ -78,125 +60,12 @@ public sealed class MeasurableTests
     {
         // Arrange
         factoryObject = new MeasurableFactoryClass();
-        measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
 
         // Act
-        var actual = new MeasurableChild(factoryObject, measureUnitCode);
+        var actual = new MeasurableChild(factoryObject);
 
         // Assert
         Assert.IsInstanceOfType(actual, typeof(IMeasurable));
-        Assert.AreEqual(measureUnitCode, actual.MeasureUnitCode);
-    }
-    #endregion
-
-    #region Measurable(IMeasurableFactory, Enum)
-    [TestMethod, TestCategory("UnitTest")]
-    public void Measurable_nullArg_IMeasurableFactory_arg_Enum_throws_ArgumentNullException()
-    {
-        // Arrange
-        factoryObject = null;
-        measureUnit = null;
-
-        // Act
-        void attempt() => _ = new MeasurableChild(factoryObject, measureUnit);
-
-        // Assert
-        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-        Assert.AreEqual(ParamNames.factory, ex.ParamName);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void Measurable_validArg_IMeasurableFactory_nullArg_Enum_throws_ArgumentNullException()
-    {
-        // Arrange
-        factoryObject = new MeasurableFactoryClass();
-        measureUnit = null;
-
-        // Act
-        void attempt() => _ = new MeasurableChild(factoryObject, measureUnit);
-
-        // Assert
-        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-        Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetInvalidEnumMeasureUnitArgArrayList), DynamicDataSourceType.Method)]
-    public void Measurable_validArg_IMeasurableFactory_invalidArg_Enum_throws_InvalidEnumArgumentException(Enum measureUnit)
-    {
-        // Arrange
-        factoryObject = new MeasurableFactoryClass();
-
-        // Act
-        void attempt() => _ = new MeasurableChild(factoryObject, measureUnit);
-
-        // Assert
-        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
-        Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void Measurable_validArgs_IMeasurableFactory_Enum_creates()
-    {
-        // Arrange
-        factoryObject = new MeasurableFactoryClass();
-        measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
-        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
-
-        // Act
-        var actual = new MeasurableChild(factoryObject, measureUnit);
-
-        // Assert
-        Assert.IsInstanceOfType(actual, typeof(IMeasurable));
-        Assert.AreEqual(measureUnitCode, actual.MeasureUnitCode);
-    }
-    #endregion
-
-    #region Measurable(IMeasurableFactory, IMeasurable)
-    [TestMethod, TestCategory("UnitTest")]
-    public void Measurable_nullArg_IMeasurableFactory_arg_IMeasurable_throws_ArgumentNullException()
-    {
-        // Arrange
-        factoryObject = null;
-        measurableObject = null;
-
-        // Act
-        void attempt() => _ = new MeasurableChild(factoryObject, measurableObject);
-
-        // Assert
-        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-        Assert.AreEqual(ParamNames.factory, ex.ParamName);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void Measurable_validArg_IMeasurableFactory_nullArg_IMeasurable_throws_ArgumentNullException()
-    {
-        // Arrange
-        factoryObject = new MeasurableFactoryClass();
-        measurableObject = null;
-
-        // Act
-        void attempt() => _ = new MeasurableChild(factoryObject, measurableObject);
-
-        // Assert
-        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-        Assert.AreEqual(ParamNames.measurable, ex.ParamName);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void Measurable_validArgs_IMeasurableFactory_IMeasurable_creates()
-    {
-        // Arrange
-        factoryObject = new MeasurableFactoryClass();
-        measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
-        measurableObject = new MeasurableChild(factoryObject, measureUnitCode);
-
-        // Act
-        var actual = new MeasurableChild(factoryObject, measurableObject);
-
-        // Assert
-        Assert.IsInstanceOfType(actual, typeof(IMeasurable));
-        Assert.AreEqual(measureUnitCode, actual.MeasureUnitCode);
     }
     #endregion
 
@@ -233,58 +102,58 @@ public sealed class MeasurableTests
     #endregion
     #endregion
 
-    #region Equals
-    #region Equals(object?)
-    [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetMeasurableEqualsArgsArrayList), DynamicDataSourceType.Method)]
-    public void Equals_arg_object_returns_expected(bool expected, object other, MeasureUnitCode measureUnitCode)
-    {
-        // Arrange
-        measurableObject = new MeasurableChild(factoryObject, measureUnitCode);
+    //#region Equals
+    //#region Equals(object?)
+    //[TestMethod, TestCategory("UnitTest")]
+    //[DynamicData(nameof(GetMeasurableEqualsArgsArrayList), DynamicDataSourceType.Method)]
+    //public void Equals_arg_object_returns_expected(bool expected, object other, MeasureUnitCode measureUnitCode)
+    //{
+    //    // Arrange
+    //    measurableObject = new MeasurableChild(factoryObject);
 
-        // Act
-        var actual = measurableObject.Equals(other);
+    //    // Act
+    //    var actual = measurableObject.Equals(other);
 
-        // Assert
-        Assert.AreEqual(expected, actual);
-    }
-    #endregion
-    #endregion
+    //    // Assert
+    //    Assert.AreEqual(expected, actual);
+    //}
+    //#endregion
+    //#endregion
 
-    #region GetDefaultMeasureUnit
-    #region GetDefaultMeasureUnit()
-    [TestMethod, TestCategory("UnitTest")]
-    public void GetDefaultMeasureUnit_returns_expected()
-    {
-        // Arrange
-        Enum expected = (Enum)Enum.ToObject(measureUnitType, 0);
+    //#region GetDefaultMeasureUnit
+    //#region GetDefaultMeasureUnit()
+    //[TestMethod, TestCategory("UnitTest")]
+    //public void GetDefaultMeasureUnit_returns_expected()
+    //{
+    //    // Arrange
+    //    Enum expected = (Enum)Enum.ToObject(measureUnitType, 0);
 
-        // Act
-        var actual = measurableObject.GetDefaultMeasureUnit();
+    //    // Act
+    //    var actual = measurableObject.GetDefaultMeasureUnit();
 
-        // Assert
-        Assert.AreEqual(expected, actual);
-    }
-    #endregion
-    #endregion
+    //    // Assert
+    //    Assert.AreEqual(expected, actual);
+    //}
+    //#endregion
+    //#endregion
 
-    #region GetDefaultMeasureUnitNames
-    #region GetDefaultMeasureUnitNames()
-    [TestMethod, TestCategory("UnitTest")]
-    public void GetDefaultMeasureUnitNames_returns_expected()
-    {
-        // Arrange
-        string measureUnitCodeName = Enum.GetName(measureUnitCode);
-        IEnumerable<string> expected = Enum.GetNames(measureUnitType).Select(x => x + measureUnitCodeName);
+    //#region GetDefaultMeasureUnitNames
+    //#region GetDefaultMeasureUnitNames()
+    //[TestMethod, TestCategory("UnitTest")]
+    //public void GetDefaultMeasureUnitNames_returns_expected()
+    //{
+    //    // Arrange
+    //    string measureUnitCodeName = Enum.GetName(measureUnitCode);
+    //    IEnumerable<string> expected = Enum.GetNames(measureUnitType).Select(x => x + measureUnitCodeName);
 
-        // Act
-        var actual = measurableObject.GetDefaultMeasureUnitNames();
+    //    // Act
+    //    var actual = measurableObject.GetDefaultMeasureUnitNames();
 
-        // Assert
-        Assert.IsTrue(expected.SequenceEqual(actual));
-    }
-    #endregion
-    #endregion
+    //    // Assert
+    //    Assert.IsTrue(expected.SequenceEqual(actual));
+    //}
+    //#endregion
+    //#endregion
 
     #region GetFactory
     #region GetFactory()
