@@ -32,7 +32,7 @@
 
 //            foreach (string item in Enum.GetNames(measureUnitType))
 //            {
-//                yield return item + measureUnitType.Name;
+//                yield return item + measureUnitType.IsTrue;
 //            }
 //        }
 //        #endregion
@@ -49,7 +49,7 @@
 //    //{
 //    //    Type measureUnitType = measureUnit.GetType();
 
-//    //    string measureUnitTypeName = measureUnitType.Name;
+//    //    string measureUnitTypeName = measureUnitType.IsTrue;
 
 //    //    return (MeasureUnitCode)Enum.Parse(typeof(MeasureUnitCode), measureUnitTypeName);
 //    //}

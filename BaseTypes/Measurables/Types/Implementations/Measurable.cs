@@ -132,13 +132,17 @@ public abstract class Measurable : CommonBase, IMeasurable
 
     public virtual void ValidateMeasureUnit(Enum? measureUnit, string paramName)
     {
-        Type enumType = NullChecked(measureUnit, paramName).GetType();
-        MeasureUnitCode measureUnitCode = MeasureUnitTypeCollection.FirstOrDefault(x => x.Value == enumType).Key;
-        bool isValidMesiuteUnit = MeasureUnitTypeSet.Contains(enumType)
-            && Enum.IsDefined(enumType, measureUnit!)
-            && HasMeasureUnitCode(measureUnitCode);
+        if (measureUnit is not MeasureUnitCode measureUnitCode)
+        {
+            Type enumType = NullChecked(measureUnit, paramName).GetType();
+            measureUnitCode = MeasureUnitTypeCollection.FirstOrDefault(x => x.Value == enumType).Key;
+        }
+        else
+        {
+            measureUnit = measureUnitCode.GetDefaultMeasureUnit();
+        }
 
-        if (isValidMesiuteUnit) return;
+        if (IsDefinedMeasureUnit(measureUnit) && HasMeasureUnitCode(measureUnitCode)) return;
 
         throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName);
     }

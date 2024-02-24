@@ -1,3 +1,6 @@
+using CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors;
+using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.MeasurablesTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
@@ -15,10 +18,13 @@ public sealed class MeasurableTests
     {
         factoryObject = new MeasurableFactoryClass();
         measurableObject = new MeasurableChild(factoryObject);
+
         measureUnit = RandomParams.GetRandomMeasureUnit();
         measurableObject.TestHelper_MeasureUnit = measureUnit;
-        //measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
-        //measureUnitType = MeasureUnitTypeSet.First(x => x.Name == Enum.GetName(measureUnitCode));
+
+        measureUnitType = measureUnit.GetType();
+        measureUnitCode = GetMeasureUnitCode(measureUnitType);
+
         paramName = RandomParams.GetRandomParamName();
     }
     #endregion
@@ -119,212 +125,213 @@ public sealed class MeasurableTests
     #endregion
     #endregion
 
-    //#region GetDefaultMeasureUnit
-    //#region GetDefaultMeasureUnit()
-    //[TestMethod, TestCategory("UnitTest")]
-    //public void GetDefaultMeasureUnit_returns_expected()
-    //{
-    //    // Arrange
-    //    Enum expected = (Enum)Enum.ToObject(measureUnitType, 0);
+    #region GetDefaultMeasureUnit
+    #region GetDefaultMeasureUnit()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetDefaultMeasureUnit_returns_expected()
+    {
+        // Arrange
+        Enum expected = (Enum)Enum.ToObject(measureUnitType, 0);
 
-    //    // Act
-    //    var actual = measurableObject.GetDefaultMeasureUnit();
+        // Act
+        var actual = measurableObject.GetDefaultMeasureUnit();
 
-    //    // Assert
-    //    Assert.AreEqual(expected, actual);
-    //}
-    //#endregion
-    //#endregion
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
 
-    //#region GetDefaultMeasureUnitNames
-    //#region GetDefaultMeasureUnitNames()
-    //[TestMethod, TestCategory("UnitTest")]
-    //public void GetDefaultMeasureUnitNames_returns_expected()
-    //{
-    //    // Arrange
-    //    string measureUnitCodeName = Enum.GetName(measureUnitCode);
-    //    IEnumerable<string> expected = Enum.GetNames(measureUnitType).Select(x => x + measureUnitCodeName);
+    #region GetDefaultMeasureUnitNames
+    #region GetDefaultMeasureUnitNames()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetDefaultMeasureUnitNames_returns_expected()
+    {
+        // Arrange
+        string measureUnitCodeName = Enum.GetName(measureUnitCode);
+        IEnumerable<string> expected = Enum.GetNames(measureUnitType).Select(x => x + measureUnitCodeName);
 
-    //    // Act
-    //    var actual = measurableObject.GetDefaultMeasureUnitNames();
+        // Act
+        var actual = measurableObject.GetDefaultMeasureUnitNames();
 
-    //    // Assert
-    //    Assert.IsTrue(expected.SequenceEqual(actual));
-    //}
-    //#endregion
-    //#endregion
+        // Assert
+        Assert.IsTrue(expected.SequenceEqual(actual));
+    }
+    #endregion
+    #endregion
 
-    //#region GetFactory
-    //#region GetFactory()
-    //[TestMethod, TestCategory("UnitTest")]
-    //public void GetFactory_returns_expected()
-    //{
-    //    // Arrange
-    //    // Act
-    //    var actual = measurableObject.GetFactory();
+    #region GetFactory
+    #region GetFactory()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetFactory_returns_expected()
+    {
+        // Arrange
+        // Act
+        var actual = measurableObject.GetFactory();
 
-    //    // Assert
-    //    Assert.IsNotNull(actual);
-    //    Assert.IsInstanceOfType(measurableObject.GetFactory(), typeof(IMeasurableFactory));
-    //}
-    //#endregion
-    //#endregion
+        // Assert
+        Assert.IsNotNull(actual);
+        Assert.IsInstanceOfType(measurableObject.GetFactory(), typeof(IMeasurableFactory));
+    }
+    #endregion
+    #endregion
 
-    //#region GetHashCode
-    //#region GetHashCode()
-    //[TestMethod, TestCategory("UnitTest")]
-    //public void GetHashCode_returns_expected()
-    //{
-    //    // Arrange
-    //    int expected = measureUnitCode.GetHashCode();
+    #region GetHashCode
+    #region GetHashCode()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetHashCode_returns_expected()
+    {
+        // Arrange
+        int expected = measureUnitCode.GetHashCode();
 
-    //    // Act
-    //    var actual = measurableObject.GetHashCode();
+        // Act
+        var actual = measurableObject.GetHashCode();
 
-    //    // Assert
-    //    Assert.AreEqual(expected, actual);
-    //}
-    //#endregion
-    //#endregion
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
 
-    //#region GetMeasureUnitCodes
-    //#region GetMeasureUnitCodes()
-    //[TestMethod, TestCategory("UnitTest")]
-    //public void GetMeasureUnitCodes_returns_expected()
-    //{
-    //    // Arrange
-    //    IEnumerable<MeasureUnitCode> expected = Enum.GetValues<MeasureUnitCode>();
+    #region GetMeasureUnitCodes
+    #region GetMeasureUnitCodes()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetMeasureUnitCodes_returns_expected()
+    {
+        // Arrange
+        IEnumerable<MeasureUnitCode> expected = Enum.GetValues<MeasureUnitCode>();
 
-    //    // Act
-    //    var actual = measurableObject.GetMeasureUnitCodes();
+        // Act
+        var actual = measurableObject.GetMeasureUnitCodes();
 
-    //    // Assert
-    //    Assert.IsTrue(expected.SequenceEqual(actual));
-    //}
-    //#endregion
-    //#endregion
+        // Assert
+        Assert.IsTrue(expected.SequenceEqual(actual));
+    }
+    #endregion
+    #endregion
 
-    //#region GetMeasureUnitType
-    //#region GetMeasureUnitType()
-    //[TestMethod, TestCategory("UnitTest")]
-    //public void GetMeasureUnitType_returns_expected()
-    //{
-    //    // Arrange
-    //    Type expected = MeasureUnitTypeSet.First(x => x.Name == Enum.GetName(measureUnitCode));
+    #region GetMeasureUnitType
+    #region GetMeasureUnitType()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetMeasureUnitType_returns_expected()
+    {
+        // Arrange
+        Type expected = MeasureUnitTypeSet.First(x => x.Name == Enum.GetName(measureUnitCode));
 
-    //    // Act
-    //    var actual = measurableObject.GetMeasureUnitType();
+        // Act
+        var actual = measurableObject.GetMeasureUnitType();
 
-    //    // Assert
-    //    Assert.AreEqual(expected, actual);
-    //}
-    //#endregion
-    //#endregion
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
 
-    //#region HasMeasureUnitCode
-    //#region HasMeasureUnitCode(MeasureUnitCode)
-    //[TestMethod, TestCategory("UnitTest")]
-    //[DynamicData(nameof(GetHasMeasureUnitCodeArgsArrayList), DynamicDataSourceType.Method)]
-    //public void HasMeasureUnitCode_arg_MeasureUnitCode_returns_expected(MeasureUnitCode measureUnitCode, IMeasurable measurable, bool expected)
-    //{
-    //    // Arrange
-    //    // Act
-    //    var actual = measurable.HasMeasureUnitCode(measureUnitCode);
+    #region HasMeasureUnitCode
+    #region HasMeasureUnitCode(MeasureUnitCode)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetHasMeasureUnitCodeArgsArrayList), DynamicDataSourceType.Method)]
+    public void HasMeasureUnitCode_arg_MeasureUnitCode_returns_expected(Enum measureUnit, MeasureUnitCode measureUnitCode, bool expected)
+    {
+        // Arrange
+        measurableObject.TestHelper_MeasureUnit = measureUnit;
 
-    //    // Assert
-    //    Assert.AreEqual(expected, actual);
-    //}
-    //#endregion
-    //#endregion
+        // Act
+        var actual = measurableObject.HasMeasureUnitCode(measureUnitCode);
 
-    //#region GetQuantityTypeCode
-    //#region GetQuantityTypeCode()
-    //[TestMethod, TestCategory("UnitTest")]
-    //public void GetQuantityTypeCode_returns_expected()
-    //{
-    //    // Arrange
-    //    TypeCode expected = measureUnitCode.GetQuantityTypeCode();
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
 
-    //    // Act
-    //    var actual = measurableObject.GetQuantityTypeCode();
+    #region GetQuantityTypeCode
+    #region GetQuantityTypeCode()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetQuantityTypeCode_returns_expected()
+    {
+        // Arrange
+        TypeCode expected = measureUnitCode.GetQuantityTypeCode();
 
-    //    // Assert
-    //    Assert.AreEqual(expected, actual);
-    //}
-    //#endregion
-    //#endregion
+        // Act
+        var actual = measurableObject.GetQuantityTypeCode();
 
-    //#region IsValidMeasureUnitCode
-    //#region IsValidMeasureUnitCode(MeasureUnitCode)
-    //[TestMethod, TestCategory("UnitTest")]
-    //[DynamicData(nameof(GetIsValidMeasureUnitCodeArgsArrayList), DynamicDataSourceType.Method)]
-    //public void IsValidMeasureUnitCode_arg_MeasureUnitCode_returns_expected(bool expected, MeasureUnitCode measureUnitCode)
-    //{
-    //    // Arrange
-    //    // Act
-    //    var actual = measurableObject.IsValidMeasureUnitCode(measureUnitCode);
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
 
-    //    // Assert
-    //    Assert.AreEqual(expected, actual);
-    //}
-    //#endregion
-    //#endregion
+    #region IsValidMeasureUnitCode
+    #region IsValidMeasureUnitCode(MeasureUnitCode)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetMeasurableIsValidMeasureUnitCodeArgsArrayList), DynamicDataSourceType.Method)]
+    public void IsValidMeasureUnitCode_arg_MeasureUnitCode_returns_expected(bool expected, MeasureUnitCode measureUnitCode)
+    {
+        // Arrange
+        // Act
+        var actual = measurableObject.IsValidMeasureUnitCode(measureUnitCode);
 
-    //#region ValidateMeasureUnit
-    //#region ValidateMeasureUnit(Enum, string)
-    //[TestMethod, TestCategory("UnitTest")]
-    //public void ValidateMeasureUnit_nullArg_Enum_arg_string_throws_ArgumentNullException()
-    //{
-    //    // Arrange
-    //    measureUnit = null;
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
 
-    //    // Act
-    //    void attempt() => measurableObject.ValidateMeasureUnit(measureUnit, paramName);
+    #region ValidateMeasureUnit
+    #region ValidateMeasureUnit(Enum, string)
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateMeasureUnit_nullArg_Enum_arg_string_throws_ArgumentNullException()
+    {
+        // Arrange
+        measureUnit = null;
 
-    //    // Assert
-    //    var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-    //    Assert.AreEqual(paramName, ex.ParamName);
-    //}
+        // Act
+        void attempt() => measurableObject.ValidateMeasureUnit(measureUnit, paramName);
 
-    //[TestMethod, TestCategory("UnitTest")]
-    //[DynamicData(nameof(GetMeasurableValidateMeasureUnitInvalidArgsArrayList), DynamicDataSourceType.Method)]
-    //public void ValidateMeasureUnit_invalidArg_Enum_arg_string_throws_InvalidEnumArgumentException(Enum measureUnit, MeasureUnitCode measureUnitCode)
-    //{
-    //    // Arrange
-    //    measurableObject = new MeasurableChild(factoryObject, measureUnitCode);
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
+        Assert.AreEqual(paramName, ex.ParamName);
+    }
 
-    //    // Act
-    //    void attempt() => measurableObject.ValidateMeasureUnit(measureUnit, paramName);
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetMeasurableValidateMeasureUnitInvalidArgsArrayList), DynamicDataSourceType.Method)]
+    public void ValidateMeasureUnit_invalidArg_Enum_arg_string_throws_InvalidEnumArgumentException(Enum measureUnit, MeasureUnitCode measureUnitCode)
+    {
+        // Arrange
+        measurableObject.TestHelper_MeasureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
+        paramName = RandomParams.GetRandomParamName();
 
-    //    // Assert
-    //    var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
-    //    Assert.AreEqual(paramName, ex.ParamName);
-    //}
+        // Act
+        void attempt() => measurableObject.ValidateMeasureUnit(measureUnit, paramName);
 
-    //[TestMethod, TestCategory("UnitTest")]
-    //public void ValidateMeasureUnit_validArg_Enum_arg_string_returns()
-    //{
-    //    // Arrange
-    //    measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
-    //    measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
-    //    measurableObject = new MeasurableChild(factoryObject, measureUnitCode);
-    //    bool returned = true;
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(paramName, ex.ParamName);
+    }
 
-    //    // Act
-    //    try
-    //    {
-    //        measurableObject.ValidateMeasureUnit(measureUnit, paramName);
-    //    }
-    //    catch
-    //    {
-    //        returned = false;
-    //    }
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateMeasureUnit_validArg_Enum_arg_string_returns()
+    {
+        // Arrange
+        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
+        bool returned = true;
 
-    //    // Assert
-    //    Assert.IsTrue(returned);
-    //}
-    //#endregion
-    //#endregion
+        // Act
+        try
+        {
+            measurableObject.ValidateMeasureUnit(measureUnit, paramName);
+        }
+        catch
+        {
+            returned = false;
+        }
+
+        // Assert
+        Assert.IsTrue(returned);
+    }
+    #endregion
+    #endregion
 
     //#region ValidateMeasureUnitCode
     //#region ValidateMeasureUnitCode(MeasureUnitCode, string)
@@ -430,9 +437,9 @@ public sealed class MeasurableTests
         return DynamicDataSources.GetMeasurableEqualsArgsArrayList();
     }
 
-    private static IEnumerable<object[]> GetIsValidMeasureUnitCodeArgsArrayList()
+    private static IEnumerable<object[]> GetMeasurableIsValidMeasureUnitCodeArgsArrayList()
     {
-        return DynamicDataSources.GetIsValidMeasureUnitCodeArgsArrayList();
+        return DynamicDataSources.GetMeasurableIsValidMeasureUnitCodeArgsArrayList();
     }
 
     private static IEnumerable<object[]> GetMeasurableValidateMeasureUnitInvalidArgsArrayList()
