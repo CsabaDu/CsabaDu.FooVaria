@@ -11,15 +11,9 @@
         #endregion
 
         #region Constructors
-        private protected Measure(IMeasureFactory factory, Enum measureUnit/*, ValueType quantity*/) : base(factory)
+        private protected Measure(IMeasureFactory factory) : base(factory)
         {
-            Measurement = GetBaseMeasurementFactory().Create(measureUnit);
-            //Quantity = GetValidMeasureQuantity(quantity);
         }
-        #endregion
-
-        #region Properties
-        public IMeasurement Measurement { get; init; }
         #endregion
 
         #region Public methods
@@ -78,11 +72,6 @@
 
         #region Override methods
         #region Sealed methods
-        public override sealed IMeasurement GetBaseMeasurement()
-        {
-            return Measurement;
-        }
-
         public override sealed IMeasurementFactory GetBaseMeasurementFactory()
         {
             return GetFactory().MeasurementFactory;
@@ -165,7 +154,7 @@
 
             IMeasure getMeasure()
             {
-                Enum measureUnit = Measurement.GetMeasureUnit();
+                Enum measureUnit = GetBaseMeasurement().GetMeasureUnit();
                 decimal quantity = getDefaultQuantitySum() / GetExchangeRate();
 
                 return GetBaseMeasure(measureUnit, quantity);
@@ -175,21 +164,29 @@
         #endregion
     }
 
-    internal abstract class Measure<TSelf, TNum>(IMeasureFactory factory, Enum measureUnit, TNum quantity)
-        : Measure(factory, measureUnit), IMeasure<TSelf, TNum>
+    internal abstract class Measure<TSelf, TNum> : Measure, IMeasure<TSelf, TNum>
         where TSelf : class, IMeasure
         where TNum : struct
     {
+        #region Constructory
+        private protected Measure(IMeasureFactory factory, TNum quantity) : base(factory)
+        {
+            Quantity = quantity;
+        }
+        #endregion
+
         #region Properties
         #region Override properties
-        public override sealed object Quantity { get; init; } = quantity;
+        public override sealed object Quantity { get; init; }
         #endregion
         #endregion
 
         #region Public methods
         public TSelf GetBaseMeasure(TNum quantity)
         {
-            return GetMeasure(Measurement, quantity);
+            IMeasurement measurement = (IMeasurement)GetBaseMeasurement();
+
+            return GetMeasure(measurement, quantity);
         }
 
         public TSelf GetMeasure(string name, TNum quantity)
@@ -214,14 +211,24 @@
         #endregion
     }
 
-    internal abstract class Measure<TSelf, TNum, TEnum>(IMeasureFactory factory, TEnum measureUnit, TNum quantity)
-        : Measure<TSelf, TNum>(factory, measureUnit, quantity), IMeasure<TSelf, TNum, TEnum>
+    internal abstract class Measure<TSelf, TNum, TEnum> : Measure<TSelf, TNum>, IMeasure<TSelf, TNum, TEnum>
         where TSelf : class, IMeasure
         where TNum : struct
         where TEnum : struct, Enum
     {
         #region Constants
         private const decimal ConvertRatio = 1000m;
+        #endregion
+
+        #region Constructors
+        private protected Measure(IMeasureFactory factory, TEnum measureUnit, TNum quantity) : base(factory, quantity)
+        {
+            Measurement = GetBaseMeasurementFactory().Create(measureUnit);
+        }
+        #endregion
+
+        #region Properties
+        public IMeasurement Measurement { get; init; }
         #endregion
 
         #region Public methods
@@ -238,6 +245,11 @@
         public TEnum GetMeasureUnit(IMeasureUnit<TEnum>? other)
         {
             return (TEnum)(other ?? this).GetMeasureUnit();
+        }
+
+        public override sealed IMeasurement GetBaseMeasurement()
+        {
+            return Measurement;
         }
         #endregion
 

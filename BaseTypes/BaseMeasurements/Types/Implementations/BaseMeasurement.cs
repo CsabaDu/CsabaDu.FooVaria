@@ -1,7 +1,16 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;
 
-public abstract class BaseMeasurement(IBaseMeasurementFactory factory) : Measurable(factory), IBaseMeasurement
+public abstract class BaseMeasurement : Measurable, IBaseMeasurement
 {
+    #region Static fields
+    private static readonly decimal[] AreaExchangeRates = [100, 10000, 1000000];
+    private static readonly decimal[] DistanceExchangeRates = [1000];
+    private static readonly decimal[] ExtentExchangeRates = [10, 100, 1000];
+    private static readonly decimal[] TimePeriodExchangeRates = [60, 1440, 10080, 14400];
+    private static readonly decimal[] VolumeExchangeRates = [1000, 1000000, 1000000000];
+    private static readonly decimal[] WeightExchangeRates = [1000, 1000000];
+    #endregion
+
     #region Constructors
     #region Static constructor
     static BaseMeasurement()
@@ -10,6 +19,10 @@ public abstract class BaseMeasurement(IBaseMeasurementFactory factory) : Measura
         ExchangeRateCollection = new(ConstantExchangeRateCollection);
     }
     #endregion
+
+    protected BaseMeasurement(IBaseMeasurementFactory factory) : base(factory)
+    {
+    }
     #endregion
 
     #region Properties
@@ -215,14 +228,14 @@ public abstract class BaseMeasurement(IBaseMeasurementFactory factory) : Measura
     #region Static methods
     private static Dictionary<object, decimal> InitConstantExchangeRateCollection()
     {
-        return initConstantExchangeRates<AreaUnit>(100, 10000, 1000000)
+        return initConstantExchangeRates<AreaUnit>(AreaExchangeRates)
             .Union(initConstantExchangeRates<Currency>())
-            .Union(initConstantExchangeRates<DistanceUnit>(1000))
-            .Union(initConstantExchangeRates<ExtentUnit>(10, 100, 1000))
+            .Union(initConstantExchangeRates<DistanceUnit>(DistanceExchangeRates))
+            .Union(initConstantExchangeRates<ExtentUnit>(ExtentExchangeRates))
             .Union(initConstantExchangeRates<Pieces>())
-            .Union(initConstantExchangeRates<TimePeriodUnit>(60, 1440, 10080, 14400))
-            .Union(initConstantExchangeRates<VolumeUnit>(1000, 1000000, 1000000000))
-            .Union(initConstantExchangeRates<WeightUnit>(1000, 1000000))
+            .Union(initConstantExchangeRates<TimePeriodUnit>(TimePeriodExchangeRates))
+            .Union(initConstantExchangeRates<VolumeUnit>(VolumeExchangeRates))
+            .Union(initConstantExchangeRates<WeightUnit>(WeightExchangeRates))
             .ToDictionary(x => x.Key, x => x.Value);
 
         #region Local methods

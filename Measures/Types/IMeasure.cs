@@ -2,7 +2,6 @@
 {
     public interface IMeasure : IBaseMeasure<IMeasure>/*, ILimitable<IMeasure>*/, ICalculate<IMeasure, decimal>/*, IFit<IBaseMeasure>*/
     {
-        IMeasurement Measurement { get; init; }
     }
 
     public interface IMeasure<TSelf, TNum> : IMeasure, IBaseMeasure<TSelf, TNum>
@@ -18,6 +17,8 @@
         where TNum : struct
         where TEnum : struct, Enum
     {
+        IMeasurement Measurement { get; init; }
+
         TSelf GetMeasure(TEnum measureUnit, TNum quantity);
         TSelf GetMeasure(TEnum measureUnit);
     }
