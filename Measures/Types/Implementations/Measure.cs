@@ -184,9 +184,9 @@
         #region Public methods
         public TSelf GetBaseMeasure(TNum quantity)
         {
-            IMeasurement measurement = (IMeasurement)GetBaseMeasurement();
+            IBaseMeasurement baseMeasurement = GetBaseMeasurement();
 
-            return GetMeasure(measurement, quantity);
+            return (TSelf)GetBaseMeasure(baseMeasurement, quantity);
         }
 
         public TSelf GetMeasure(string name, TNum quantity)

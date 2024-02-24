@@ -1,19 +1,10 @@
 ﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
 
-internal sealed class Denominator : RateComponent<IDenominator>, IDenominator
+internal sealed class Denominator(IDenominatorFactory factory, IMeasurement measurement, decimal quantity) : RateComponent<IDenominator>(factory, measurement), IDenominator
 {
-    #region Constructors
-    internal Denominator(IDenominatorFactory factory, IMeasurement measurement, decimal quantity) : base(factory, measurement)
-    {
-        Quantity = quantity > 0 ?
-            quantity
-            : throw QuantityArgumentOutOfRangeException(quantity);
-    }
-    #endregion
-
     #region Properties
     #region Override properties
-    public override object Quantity { get; init; }
+    public override object Quantity { get; init; } = GetDenominatorQuantity(quantity);
     #endregion
     #endregion
 
@@ -107,6 +98,17 @@ internal sealed class Denominator : RateComponent<IDenominator>, IDenominator
     public IDenominator ConvertToLimitable(ILimiter limiter)
     {
         return ConvertToLimitable(this, limiter);
+    }
+    #endregion
+    #endregion
+
+    #region Private methods
+    #region Static methods
+    private static decimal GetDenominatorQuantity(decimal quantity)
+    {
+        return quantity > 0 ?
+            quantity
+            : throw QuantityArgumentOutOfRangeException(quantity);
     }
     #endregion
     #endregion

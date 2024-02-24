@@ -13,48 +13,11 @@ internal abstract class Mass : BaseQuantifiable, IMass
         ValidateMassComponent(weight, nameof(weight));
 
         Weight = weight;
-
-        //ValidateMassComponent(body, nameof(body));
     }
-
-    //private protected Mass(IMassFactory factory, IWeight weight, IPlaneShape baseFace, IExtent height) : base(factory)
-    //{
-    //    validateParams();
-
-    //    Weight = weight;
-
-    //    #region Local methods
-    //    void validateParams()
-    //    {
-    //        ValidateMassComponent(weight, nameof(weight));
-    //        _ = NullChecked(baseFace, nameof(baseFace));
-    //        ValidateMassComponent(height, nameof(height));
-    //    }
-    //    #endregion
-    //}
-
-    //private protected Mass(IMassFactory factory, IWeight weight, params IExtent[] shapeExtents) : base(factory)
-    //{
-    //    validateParams();
-
-    //    Weight = weight;
-
-    //    #region Local methods
-    //    void validateParams()
-    //    {
-    //        ValidateMassComponent(weight, nameof(weight));
-    //        foreach (IExtent item in NullChecked(shapeExtents, nameof(shapeExtents)))
-    //        {
-    //            ValidateMassComponent(item, nameof(shapeExtents));
-    //        }
-    //    }
-    //    #endregion
-    //}
     #endregion
 
     #region Properties
     public IWeight Weight { get; init; }
-    public abstract IBody GetBody();
     public IMeasure? this[MeasureUnitCode measureUnitCode] => measureUnitCode switch
     {
         MeasureUnitCode.VolumeUnit => GetVolume(),
@@ -330,6 +293,7 @@ internal abstract class Mass : BaseQuantifiable, IMass
     #endregion
 
     #region Abstract methods
+    public abstract IBody GetBody();
     public abstract IMass GetMass(IWeight weight, IBody body);
     #endregion
     #endregion

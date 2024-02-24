@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations;
-
-namespace CsabaDu.FooVaria.ProportionLimits.Factories.Implementations;
+﻿namespace CsabaDu.FooVaria.ProportionLimits.Factories.Implementations;
 
 public sealed class ProportionLimitFactory : SimpleRateFactory, IProportionLimitFactory
 {

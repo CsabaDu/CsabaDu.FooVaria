@@ -1,9 +1,15 @@
 ﻿namespace CsabaDu.FooVaria.Proportions.Types.Implementations
 {
-    internal abstract class Proportion<TDEnum>(IProportionFactory factory, Enum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit)
-        : SimpleRate(factory, numeratorMeasureUnit, quantity, denominatorMeasureUnit), IProportion<TDEnum>
+    internal abstract class Proportion<TDEnum> : SimpleRate, IProportion<TDEnum>
         where TDEnum : struct, Enum
     {
+        #region Constructors
+        private protected Proportion(IProportionFactory factory, Enum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit) : base(factory, numeratorMeasureUnit, quantity, denominatorMeasureUnit)
+        {
+            
+        }
+        #endregion
+
         #region Public methods
         public IMeasure Denominate(TDEnum measureUnit)
         {

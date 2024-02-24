@@ -3,7 +3,9 @@
 public sealed class RectangleFactory(IBulkSurfaceFactory bulkSpreadFactory, ICircleFactory circleFactory)
     : PlaneShapeFactory(bulkSpreadFactory), IRectangleFactory
 {
+    #region Properties
     public ICircleFactory CircleFactory { get; init; } = NullChecked(circleFactory, nameof(circleFactory));
+    #endregion
 
     #region Public methods
     public override IPlaneShape? CreateShape(params IShapeComponent[] shapeComponents)

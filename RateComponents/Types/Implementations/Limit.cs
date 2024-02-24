@@ -1,20 +1,12 @@
 ﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
 
-internal sealed class Limit : RateComponent<ILimit>, ILimit
+internal sealed class Limit(ILimitFactory factory, IMeasurement measurement, ulong quantity, LimitMode limitMode) : RateComponent<ILimit>(factory, measurement), ILimit
 {
-    #region Constructors
-    internal Limit(ILimitFactory factory, IMeasurement measurement, ulong quantity, LimitMode limitMode) : base(factory, measurement)
-    {
-        Quantity = quantity;
-        LimitMode = Defined(limitMode, nameof(limitMode));
-    }
-    #endregion
-
     #region Properties
-    public LimitMode LimitMode { get; init; }
+    public LimitMode LimitMode { get; init; } = Defined(limitMode, nameof(limitMode));
 
     #region Override properties
-    public override object Quantity { get; init; }
+    public override object Quantity { get; init; } = quantity;
     #endregion
     #endregion
 

@@ -3,14 +3,9 @@
     internal abstract class RateComponent : BaseMeasure, IRateComponent
     {
         #region Constructors
-        private protected RateComponent(IRateComponentFactory factory, IMeasurement measurement) : base(factory)
+        private protected RateComponent(IRateComponentFactory factory/*, IMeasurement measurement*/) : base(factory)
         {
-            Measurement = GetBaseMeasurementFactory().CreateNew(measurement);
         }
-        #endregion
-
-        #region Properties
-        public IMeasurement Measurement { get; init; }
         #endregion
 
         #region Public methods
@@ -25,21 +20,12 @@
             return (IRateComponentFactory)Factory;
         }
 
-        public override sealed IMeasurement GetBaseMeasurement()
-        {
-            return Measurement;
-        }
-
         #region Sealed methods
         public override sealed IMeasurementFactory GetBaseMeasurementFactory()
         {
             return GetFactory().MeasurementFactory;
         }
 
-        public override sealed void ValidateMeasureUnit(Enum? measureUnit, string paramName)
-        {
-            Measurement.ValidateMeasureUnit(measureUnit!, paramName);
-        }
         #endregion
         #endregion
 
@@ -63,12 +49,37 @@
         #endregion
     }
 
-    internal abstract class RateComponent<TSelf>(IRateComponentFactory factory, IMeasurement measurement) : RateComponent(factory, measurement), IRateComponent<TSelf>
+    internal abstract class RateComponent<TSelf> : RateComponent, IRateComponent<TSelf>
         where TSelf : class, IBaseMeasure
     {
+        #region Constructors
+        private protected RateComponent(IRateComponentFactory factory, IMeasurement measurement) : base(factory)
+        {
+            Measurement = GetBaseMeasurementFactory().CreateNew(measurement);
+        }
+        #endregion
+
+        #region Properties
+        public IMeasurement Measurement { get; init; }
+        #endregion
+
         #region Public methods
         #region Abstract methods
         public abstract TSelf GetDefault();
+        #endregion
+
+        #region Override methods
+        #region Sealed methods
+        public override sealed IMeasurement GetBaseMeasurement()
+        {
+            return Measurement;
+        }
+
+        public override sealed void ValidateMeasureUnit(Enum? measureUnit, string paramName)
+        {
+            Measurement.ValidateMeasureUnit(measureUnit!, paramName);
+        }
+        #endregion
         #endregion
         #endregion
 

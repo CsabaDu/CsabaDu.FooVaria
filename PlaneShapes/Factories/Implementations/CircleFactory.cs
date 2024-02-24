@@ -3,7 +3,9 @@
 public sealed class CircleFactory(IBulkSurfaceFactory bulkSpreadFactory, IRectangleFactory rectangleFactory)
     : PlaneShapeFactory(bulkSpreadFactory), ICircleFactory
 {
+    #region Properties
     public IRectangleFactory RectangleFactory { get; init; } = NullChecked(rectangleFactory, nameof(rectangleFactory));
+    #endregion
 
     #region Public methods
     public ICircle Create(IExtent radius)

@@ -1,7 +1,13 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations;
 
-public abstract class BaseMeasure(IBaseMeasureFactory factory) : Quantifiable(factory), IBaseMeasure
+public abstract class BaseMeasure : Quantifiable, IBaseMeasure
 {
+    #region Constructors
+    protected BaseMeasure(IBaseMeasureFactory factory) : base(factory)
+    {
+    }
+    #endregion
+
     #region Properties
     #region Abstract properties
     public abstract object Quantity { get; init; }
