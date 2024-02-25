@@ -2,8 +2,6 @@
 {
     public interface IBaseMeasure : IQuantifiable, IExchangeRate, IRateComponentCode, IDecimalQuantity, IQuantityTypeCode, ILimitMode, IEqualityComparer<IBaseMeasure>
     {
-        object Quantity { get; init; }
-
         IBaseMeasure GetBaseMeasure(ValueType quantity);
         IBaseMeasure GetBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity);
         IBaseMeasurement GetBaseMeasurement();
@@ -40,6 +38,8 @@
         where TSelf : class, IBaseMeasure/*, IDefaultBaseMeasure*/
         where TNum : struct
     {
+        TNum Quantity { get; init; }
+
         TSelf GetBaseMeasure(TNum quantity);
     }
 }

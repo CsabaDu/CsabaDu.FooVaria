@@ -169,7 +169,7 @@
 
             if (spreadMeasure is not IMeasure measure) throw ArgumentTypeOutOfRangeException(paramName, spreadMeasure!);
 
-            double quantity = (double)measure.Quantity;
+            double quantity = (double)measure.GetBaseQuantity();
 
             if (quantity > 0) return measure;
 

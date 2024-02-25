@@ -2,6 +2,7 @@
 {
     public interface IQuantity
     {
+        ValueType GetBaseQuantity();
         object GetQuantity(TypeCode quantityTypeCode);
     }
 

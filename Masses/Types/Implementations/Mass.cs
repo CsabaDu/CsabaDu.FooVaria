@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Masses.Types.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
+
+namespace CsabaDu.FooVaria.Masses.Types.Implementations;
 
 internal abstract class Mass : BaseQuantifiable, IMass
 {
@@ -59,6 +61,11 @@ internal abstract class Mass : BaseQuantifiable, IMass
         return (IWeight)GetVolumeWeight(ratio)
             .ExchangeTo(weightUnit)!
             .Round(roundingMode);
+    }
+
+    public ValueType GetBaseQuantity()
+    {
+        return GetDefaultQuantity();
     }
 
     public decimal GetDefaultQuantity(decimal ratio)

@@ -4,10 +4,7 @@ internal sealed class Limit(ILimitFactory factory, IMeasurement measurement, ulo
 {
     #region Properties
     public LimitMode LimitMode { get; init; } = Defined(limitMode, nameof(limitMode));
-
-    #region Override properties
-    public override object Quantity { get; init; } = quantity;
-    #endregion
+    public ulong Quantity { get; init; } = quantity;
     #endregion
 
     #region Public methods
@@ -19,11 +16,6 @@ internal sealed class Limit(ILimitFactory factory, IMeasurement measurement, ulo
     public ILimit GetBaseMeasure(ulong quantity)
     {
         return GetRateComponent(quantity);
-    }
-
-    public override ILimit GetDefault()
-    {
-        return GetDefault(this);
     }
 
     public int GetHashCode([DisallowNull] ILimit limit)
@@ -49,11 +41,6 @@ internal sealed class Limit(ILimitFactory factory, IMeasurement measurement, ulo
     public ILimit GetLimit(IBaseMeasure baseMeasure, LimitMode limitMode)
     {
         return GetFactory().Create(baseMeasure, limitMode);
-    }
-
-    public ILimit GetLimit(ILimit other)
-    {
-        return GetFactory().CreateNew(other);
     }
 
     public ILimit GetLimit(ulong quantity)
@@ -88,7 +75,7 @@ internal sealed class Limit(ILimitFactory factory, IMeasurement measurement, ulo
 
     public ulong GetQuantity()
     {
-        return (ulong)Quantity;
+        return Quantity;
     }
 
     public bool? Includes(IBaseMeasure? limitable)
@@ -97,9 +84,14 @@ internal sealed class Limit(ILimitFactory factory, IMeasurement measurement, ulo
     }
 
     #region Override methods
-    public override decimal GetDefaultQuantity()
+    public override ValueType GetBaseQuantity()
     {
-        return GetDefaultQuantity(Quantity);
+        return Quantity;
+    }
+
+    public override ILimit GetDefault()
+    {
+        return GetDefault(this);
     }
 
     public override ILimitFactory GetFactory()

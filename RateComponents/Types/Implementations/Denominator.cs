@@ -3,15 +3,13 @@
 internal sealed class Denominator(IDenominatorFactory factory, IMeasurement measurement, decimal quantity) : RateComponent<IDenominator>(factory, measurement), IDenominator
 {
     #region Properties
-    #region Override properties
-    public override object Quantity { get; init; } = GetDenominatorQuantity(quantity);
-    #endregion
+    public decimal Quantity { get; init; } = GetDenominatorQuantity(quantity);
     #endregion
 
     #region Public methods
-    public override IDenominator GetDefault()
+    public IDenominator GetBaseMeasure(decimal quantity)
     {
-        return GetDefault(this);
+        return (IDenominator)GetBaseMeasure((ValueType)quantity);
     }
 
     public IDenominator GetDenominator(Enum measureUnit)
@@ -40,9 +38,14 @@ internal sealed class Denominator(IDenominatorFactory factory, IMeasurement meas
     }
 
     #region Override methods
-    public override decimal GetDefaultQuantity()
+    public override ValueType GetBaseQuantity()
     {
-        return GetDefaultQuantity(Quantity);
+        return Quantity;
+    }
+
+    public override IDenominator GetDefault()
+    {
+        return GetDefault(this);
     }
 
     public override IDenominatorFactory GetFactory()
@@ -60,14 +63,9 @@ internal sealed class Denominator(IDenominatorFactory factory, IMeasurement meas
         return (IDenominator)GetBaseMeasure(measurement, quantity);
     }
 
-    public IDenominator GetBaseMeasure(decimal quantity)
-    {
-        return (IDenominator)GetBaseMeasure((ValueType)quantity);
-    }
-
     public decimal GetQuantity()
     {
-        return (decimal)Quantity;
+        return Quantity;
     }
 
     public IDenominator GetBaseMeasure(Enum measureUnit, ValueType quantity)

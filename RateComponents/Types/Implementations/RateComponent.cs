@@ -50,7 +50,7 @@
     }
 
     internal abstract class RateComponent<TSelf> : RateComponent, IRateComponent<TSelf>
-        where TSelf : class, IBaseMeasure
+        where TSelf : class, IRateComponent
     {
         #region Constructors
         private protected RateComponent(IRateComponentFactory factory, IMeasurement measurement) : base(factory)
@@ -96,4 +96,30 @@
         }
         #endregion
     }
+
+    //internal abstract class RateComponent<TSelf, TNum> : RateComponent<TSelf>, IRateComponent<TSelf, TNum>
+    //    where TSelf : class, IRateComponent<TSelf>
+    //    where TNum : struct
+    //{
+    //    private protected RateComponent(IRateComponentFactory factory, IMeasurement measurement) : base(factory, measurement)
+    //    {
+    //    }
+
+    //    public TNum Quantity { get; init; }
+
+    //    public TSelf GetBaseMeasure(TNum quantity)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    public TSelf GetNew(TSelf other)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    public TNum GetQuantity()
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}
 }

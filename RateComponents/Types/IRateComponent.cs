@@ -6,8 +6,14 @@
     }
 
     public interface IRateComponent<TSelf> : IRateComponent, IDefaultMeasurable<TSelf>
-        where TSelf : class, IBaseMeasure
+        where TSelf : class, IRateComponent
     {
         IMeasurement Measurement { get; init; }
+    }
+
+    public interface IRateComponent<TSelf, TNum> : IRateComponent<TSelf>, IBaseMeasure<TSelf, TNum>
+        where TSelf : class, IRateComponent<TSelf>
+        where TNum : struct
+    {
     }
 }

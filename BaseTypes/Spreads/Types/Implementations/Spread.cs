@@ -29,6 +29,11 @@ public abstract class Spread : Quantifiable, ISpread
     #endregion
 
     #region Public methods
+    public ValueType GetBaseQuantity()
+    {
+        return GetQuantity();
+    }
+
     public void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)
     {
         IBaseMeasure? baseMeasure = NullChecked(spreadMeasure, paramName).GetSpreadMeasure() as IBaseMeasure;
@@ -45,7 +50,6 @@ public abstract class Spread : Quantifiable, ISpread
     }
 
     #region Virtual methods
-
     public override ISpread? ExchangeTo(Enum? context)
     {
         IQuantifiable? exchanged = (GetSpreadMeasure() as IQuantifiable)?.ExchangeTo(context);

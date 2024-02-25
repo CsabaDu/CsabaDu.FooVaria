@@ -342,6 +342,25 @@ internal class DynamicDataSources
         #endregion
     }
 
+    internal IEnumerable<object[]> GetValidMeasureUnitArgsArrayList()
+    {
+        measureUnit = RandomParams.GetRandomMeasureUnit();
+        yield return toObjectArray();
+
+        measureUnit = RandomParams.GetRandomMeasureUnitCode();
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            return new Enum_arg
+            {
+                MeasureUnit = measureUnit,
+            }
+            .ToObjectArray();
+        }
+        #endregion
+    }
     internal IEnumerable<object[]> GetMeasurableValidateMeasureUnitCodeArgsArrayList()
     {
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode();

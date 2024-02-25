@@ -10,7 +10,7 @@ public abstract class BaseMeasure : Quantifiable, IBaseMeasure
 
     #region Properties
     #region Abstract properties
-    public abstract object Quantity { get; init; }
+    public abstract ValueType GetBaseQuantity();
     #endregion
     #endregion
 
@@ -59,7 +59,7 @@ public abstract class BaseMeasure : Quantifiable, IBaseMeasure
 
     public object GetQuantity(TypeCode quantityTypeCode)
     {
-        ValueType quantity = (ValueType)(Quantity ?? throw new InvalidOperationException(null));
+        ValueType quantity = GetBaseQuantity();
 
         return quantity.ToQuantity(quantityTypeCode) ?? throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
     }
@@ -175,6 +175,11 @@ public abstract class BaseMeasure : Quantifiable, IBaseMeasure
         return base.FitsIn(limiter);
     }
 
+    public override sealed decimal GetDefaultQuantity()
+    {
+        return GetDefaultQuantity(GetBaseQuantity(), GetExchangeRate());
+    }
+
     public override sealed IBaseMeasure GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
     {
         return (IBaseMeasure)GetFactory().CreateQuantifiable(measureUnitCode, defaultQuantity);
@@ -187,14 +192,14 @@ public abstract class BaseMeasure : Quantifiable, IBaseMeasure
 
     public override sealed void ValidateQuantity(IBaseQuantifiable? baseQuantifiable, string paramName)
     {
-        if (NullChecked(baseQuantifiable, paramName) is IBaseMeasure baseMeasure)
+        if (NullChecked(baseQuantifiable, paramName) is not IBaseMeasure baseMeasure)
         {
-            ValueType quantity = (ValueType)(baseMeasure.Quantity ?? throw new InvalidOperationException(null));
-
-            ValidateQuantity(quantity, paramName);
+            throw ArgumentTypeOutOfRangeException(paramName, baseQuantifiable!);
         }
 
-        throw ArgumentTypeOutOfRangeException(paramName, baseQuantifiable!);
+        ValueType quantity = baseMeasure.GetBaseQuantity();
+
+        ValidateQuantity(quantity, paramName);
     }
 
     #endregion

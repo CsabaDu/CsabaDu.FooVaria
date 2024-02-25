@@ -77,10 +77,10 @@
             return GetFactory().MeasurementFactory;
         }
 
-        public override sealed decimal GetDefaultQuantity()
-        {
-            return GetDefaultQuantity(Quantity, GetExchangeRate());
-        }
+        //public override sealed decimal GetDefaultQuantity()
+        //{
+        //    return GetDefaultQuantity(GetBaseQuantity(), GetExchangeRate());
+        //}
 
         public override sealed IMeasureFactory GetFactory()
         {
@@ -176,9 +176,7 @@
         #endregion
 
         #region Properties
-        #region Override properties
-        public override sealed object Quantity { get; init; }
-        #endregion
+        public TNum Quantity { get; init; }
         #endregion
 
         #region Public methods
@@ -206,8 +204,15 @@
 
         public TNum GetQuantity()
         {
-            return (TNum)Quantity;
+            return Quantity;
         }
+
+        #region Override methods
+        public override sealed ValueType GetBaseQuantity()
+        {
+            return Quantity;
+        }
+        #endregion
         #endregion
     }
 

@@ -1,6 +1,3 @@
-using CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors;
-using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.MeasurablesTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
@@ -311,10 +308,16 @@ public sealed class MeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void ValidateMeasureUnit_validArg_Enum_arg_string_returns()
+    [DynamicData(nameof(GetValidMeasureUnitArgsArrayList), DynamicDataSourceType.Method)]
+    public void ValidateMeasureUnit_validArg_Enum_arg_string_returns(Enum measureUnit)
     {
         // Arrange
-        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
+        if (measureUnit is not MeasureUnitCode measureUnitCode)
+        {
+            measureUnitCode = GetMeasureUnitCode(measureUnit);
+        }
+
+        measurableObject.TestHelper_MeasureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
         bool returned = true;
 
         // Act
@@ -455,6 +458,10 @@ public sealed class MeasurableTests
     private static IEnumerable<object[]> GetHasMeasureUnitCodeArgsArrayList()
     {
         return DynamicDataSources.GetHasMeasureUnitCodeArgsArrayList();
+    }
+    private static IEnumerable<object[]> GetValidMeasureUnitArgsArrayList()
+    {
+        return DynamicDataSources.GetValidMeasureUnitArgsArrayList();
     }
     #endregion
 }

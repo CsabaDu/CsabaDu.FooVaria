@@ -64,7 +64,7 @@ public sealed class LimitFactory(IMeasurementFactory measurementFactory)
     public ILimit Create(IBaseMeasure baseMeasure, LimitMode limitMode)
     {
         Enum measureUnit = NullChecked(baseMeasure, nameof(baseMeasure)).GetMeasureUnit();
-        ValueType quantity = (ValueType)(baseMeasure.Quantity ?? throw new InvalidOperationException(null));
+        ValueType quantity = baseMeasure.GetBaseQuantity();
 
         return GetOrCreateStoredLimit(measureUnit, quantity, limitMode);
     }

@@ -30,7 +30,7 @@ public sealed class ProportionLimitFactory : SimpleRateFactory, IProportionLimit
     public IProportionLimit Create(IBaseMeasure numerator, Enum denominatorMeasureUnit, LimitMode limitMode)
     {
         Enum numeratorMeasureUnit = NullChecked(numerator, nameof(numerator)).GetMeasureUnit();
-        ValueType quantity = (ValueType)(numerator.Quantity ?? throw new InvalidOperationException(null));
+        ValueType quantity = numerator.GetBaseQuantity();
 
         return Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit, limitMode);
     }

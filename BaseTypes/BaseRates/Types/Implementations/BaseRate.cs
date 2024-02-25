@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.BaseRates.Types.Implementations
+﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
+
+namespace CsabaDu.FooVaria.BaseTypes.BaseRates.Types.Implementations
 {
     public abstract class BaseRate : BaseQuantifiable, IBaseRate
     {
@@ -63,6 +65,11 @@
             if (!limitModeValue.IsDefined()) return null;
 
             return comparison.FitsIn(limitModeValue);
+        }
+
+        public ValueType GetBaseQuantity()
+        {
+            return GetQuantity();
         }
 
         public IBaseRate GetBaseRate(IBaseRate baseRate)
