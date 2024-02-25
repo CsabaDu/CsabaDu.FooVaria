@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
-
-namespace CsabaDu.FooVaria.BaseTypes.BaseRates.Types.Implementations
+﻿namespace CsabaDu.FooVaria.BaseTypes.BaseRates.Types.Implementations
 {
     public abstract class BaseRate : BaseQuantifiable, IBaseRate
     {
@@ -12,12 +10,6 @@ namespace CsabaDu.FooVaria.BaseTypes.BaseRates.Types.Implementations
         protected BaseRate(IBaseRateFactory factory) : base(factory)
         {
         }
-        #endregion
-
-        #region Properties
-        #region Abstract properties
-        public abstract object? this[RateComponentCode rateComponentCode] { get; }
-        #endregion
         #endregion
 
         #region Public methods
@@ -207,6 +199,7 @@ namespace CsabaDu.FooVaria.BaseTypes.BaseRates.Types.Implementations
         public abstract IBaseRate GetBaseRate(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode);
         public abstract MeasureUnitCode GetDenominatorCode();
         public abstract MeasureUnitCode GetNumeratorCode();
+        public abstract object GetRateComponent(RateComponentCode rateComponentCode);
 
         #endregion
 

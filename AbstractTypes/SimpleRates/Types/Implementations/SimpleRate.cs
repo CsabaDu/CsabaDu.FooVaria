@@ -48,10 +48,7 @@ public abstract class SimpleRate : BaseRate, ISimpleRate
     public MeasureUnitCode NumeratorCode { get; init; }
     public MeasureUnitCode DenominatorCode { get; init; }
     public decimal DefaultQuantity { get; init; }
-
-    #region Override properties
-    #region Sealed properties
-    public override sealed Enum? this[RateComponentCode rateComponentCode] => rateComponentCode switch
+    public Enum? this[RateComponentCode rateComponentCode] => rateComponentCode switch
     {
         RateComponentCode.Numerator => NumeratorCode,
         RateComponentCode.Denominator => DenominatorCode,
@@ -59,8 +56,6 @@ public abstract class SimpleRate : BaseRate, ISimpleRate
 
         _ => null,
     };
-    #endregion
-    #endregion
     #endregion
 
     #region Public methods
@@ -99,6 +94,11 @@ public abstract class SimpleRate : BaseRate, ISimpleRate
     public override sealed MeasureUnitCode GetNumeratorCode()
     {
         return NumeratorCode;
+    }
+
+    public override sealed Enum GetRateComponent(RateComponentCode rateComponentCode)
+    {
+        return this[rateComponentCode] ?? throw InvalidRateComponentCodeArgumentException(rateComponentCode);
     }
     #endregion
     #endregion
