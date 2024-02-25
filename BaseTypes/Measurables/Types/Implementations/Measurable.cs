@@ -120,6 +120,11 @@ public abstract class Measurable : CommonBase, IMeasurable
     #endregion
 
     #region Virtual methods
+    public virtual MeasureUnitCode GetMeasureUnitCode()
+    {
+        return GetMeasureUnitCode(GetMeasureUnit());
+    }
+    
     public virtual IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
     {
         return MeasureUnitCodes;
@@ -334,17 +339,6 @@ public abstract class Measurable : CommonBase, IMeasurable
 
     #region Protected methods
     #region Static methods
-    protected static TSelf GetDefault<TSelf>(TSelf measurable) where TSelf : class, IMeasurable, IDefaultMeasurable
-    {
-        MeasureUnitCode measureUnitCode = measurable.GetMeasureUnitCode();
-
-        return (TSelf)measurable.GetDefault(measureUnitCode)!;
-    }
-
-    public virtual MeasureUnitCode GetMeasureUnitCode()
-    {
-        return GetMeasureUnitCode(GetMeasureUnit());
-    }
     #endregion
     #endregion
 }

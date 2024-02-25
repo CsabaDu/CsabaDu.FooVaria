@@ -35,25 +35,6 @@ internal abstract class Mass : BaseQuantifiable, IMass
         return GetDefaultQuantity().CompareTo(mass?.GetDefaultQuantity());
     }
 
-    public virtual bool? FitsIn(ILimiter? limiter) // DryBody
-    {
-        if (limiter == null) return null;
-
-        LimitMode? limitMode = limiter.GetLimitMode();
-
-        if (limiter is IBaseRate baseRate) return GetDensity().FitsIn(baseRate, limitMode);
-
-        if (limiter is not IQuantifiable quantifiable) return null;
-
-        return quantifiable.GetMeasureUnitCode() switch
-        {
-            MeasureUnitCode.VolumeUnit => GetVolume().FitsIn(quantifiable, limitMode),
-            MeasureUnitCode.WeightUnit => Weight.FitsIn(quantifiable, limitMode),
-
-            _ => null,
-        };
-    }
-
     public IWeight GetChargeableWeight(decimal ratio, WeightUnit weightUnit, RoundingMode roundingMode)
     {
         ValidateMeasureUnit(weightUnit, nameof(weightUnit));
@@ -291,6 +272,25 @@ internal abstract class Mass : BaseQuantifiable, IMass
         bool? weightFitsIn = Weight.FitsIn(other.Weight, limitMode);
 
         return BothFitIn(bodyFitsIn, weightFitsIn);
+    }
+
+    public virtual bool? FitsIn(ILimiter? limiter)
+    {
+        if (limiter == null) return null;
+
+        LimitMode? limitMode = limiter.GetLimitMode();
+
+        if (limiter is IBaseRate baseRate) return GetDensity().FitsIn(baseRate, limitMode);
+
+        if (limiter is not IQuantifiable quantifiable) return null;
+
+        return quantifiable.GetMeasureUnitCode() switch
+        {
+            MeasureUnitCode.VolumeUnit => GetVolume().FitsIn(quantifiable, limitMode),
+            MeasureUnitCode.WeightUnit => Weight.FitsIn(quantifiable, limitMode),
+
+            _ => null,
+        };
     }
 
     public virtual IBodyFactory GetBodyFactory()

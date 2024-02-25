@@ -89,11 +89,6 @@ internal sealed class Limit(ILimitFactory factory, IMeasurement measurement, ulo
         return Quantity;
     }
 
-    public override ILimit GetDefault()
-    {
-        return GetDefault(this);
-    }
-
     public override ILimitFactory GetFactory()
     {
         return (ILimitFactory)Factory;

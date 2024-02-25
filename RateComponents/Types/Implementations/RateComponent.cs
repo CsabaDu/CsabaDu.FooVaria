@@ -64,9 +64,10 @@
         #endregion
 
         #region Public methods
-        #region Abstract methods
-        public abstract TSelf GetDefault();
-        #endregion
+        public TSelf GetDefault()
+        {
+            return (TSelf)GetDefault(GetMeasureUnitCode())!;
+        }
 
         #region Override methods
         #region Sealed methods
@@ -96,30 +97,4 @@
         }
         #endregion
     }
-
-    //internal abstract class RateComponent<TSelf, TNum> : RateComponent<TSelf>, IRateComponent<TSelf, TNum>
-    //    where TSelf : class, IRateComponent<TSelf>
-    //    where TNum : struct
-    //{
-    //    private protected RateComponent(IRateComponentFactory factory, IMeasurement measurement) : base(factory, measurement)
-    //    {
-    //    }
-
-    //    public TNum Quantity { get; init; }
-
-    //    public TSelf GetBaseMeasure(TNum quantity)
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-
-    //    public TSelf GetNew(TSelf other)
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-
-    //    public TNum GetQuantity()
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-    //}
 }

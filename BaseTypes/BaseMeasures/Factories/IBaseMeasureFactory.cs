@@ -4,11 +4,10 @@
     {
         RateComponentCode RateComponentCode { get; }
 
-        //IBaseMeasure CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity);
         IBaseMeasure CreateBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity);
     }
 
-    public interface IBaseMeasureFactory<T> : IBaseMeasureFactory, IFactory<T>
+    public interface IBaseMeasureFactory<T> : IBaseMeasureFactory
         where T : class, IBaseMeasure
     {
         T Create(string name, ValueType quantity);

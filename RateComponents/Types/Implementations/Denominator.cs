@@ -43,11 +43,6 @@ internal sealed class Denominator(IDenominatorFactory factory, IMeasurement meas
         return Quantity;
     }
 
-    public override IDenominator GetDefault()
-    {
-        return GetDefault(this);
-    }
-
     public override IDenominatorFactory GetFactory()
     {
         return (IDenominatorFactory)Factory;

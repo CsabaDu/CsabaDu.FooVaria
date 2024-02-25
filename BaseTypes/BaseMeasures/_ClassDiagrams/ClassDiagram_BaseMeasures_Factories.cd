@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseMeasures.Factories.IBaseMeasureFactory" Collapsed="true">
-    <Position X="0.5" Y="1.75" Width="1.75" />
+    <Position X="0.5" Y="1.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\IBaseMeasureFactory.cs</FileName>
@@ -11,9 +11,7 @@
     <Position X="0.5" Y="3" Width="2" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.BaseMeasures.Factories.IBaseMeasureFactory" FixedFromPoint="true">
       <Path>
-        <Point X="1.375" Y="2.441" />
-        <Point X="1.375" Y="2.7" />
-        <Point X="1.5" Y="2.7" />
+        <Point X="1.5" Y="2.441" />
         <Point X="1.5" Y="3" />
       </Path>
     </InheritanceLine>
@@ -22,12 +20,8 @@
       <FileName>Factories\IBaseMeasureFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.Common.Factories.IFactory&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="2.5" Y="1.75" Width="1.25" />
-    <TypeIdentifier />
-  </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Factories.IQuantifiableFactory" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="0.5" Y="0.5" Width="1.75" />
+    <Position X="0.5" Y="0.5" Width="2" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />
