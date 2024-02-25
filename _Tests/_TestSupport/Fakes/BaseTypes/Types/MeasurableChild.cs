@@ -3,7 +3,7 @@
 internal sealed class MeasurableChild : Measurable
 {
     #region TestHelpers
-    internal Enum TestHelper_MeasureUnit { private get; set; }
+    internal Enum GetMeasureUnitValue { private get; set; }
     #endregion
 
     public MeasurableChild(IMeasurable other) : base(other)
@@ -16,6 +16,6 @@ internal sealed class MeasurableChild : Measurable
 
     public override Enum GetMeasureUnit()
     {
-        return TestHelper_MeasureUnit;
+        return GetMeasureUnitValue;
     }
 }

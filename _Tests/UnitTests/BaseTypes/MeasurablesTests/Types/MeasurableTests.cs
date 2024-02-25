@@ -1,3 +1,5 @@
+using CsabaDu.FooVaria.Tests.TestSupport.Params;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.MeasurablesTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
@@ -13,26 +15,25 @@ public sealed class MeasurableTests
     [TestInitialize]
     public void InitializeMeasurableTests()
     {
-        factoryObject = new MeasurableFactoryClass();
-        measurableObject = new MeasurableChild(factoryObject);
+        _factory = new();
+        _measurable = new(_factory);
 
-        measureUnit = RandomParams.GetRandomMeasureUnit();
-        measurableObject.TestHelper_MeasureUnit = measureUnit;
+        _measureUnit = RandomParams.GetRandomMeasureUnit();
+        _measurable.GetMeasureUnitValue = _measureUnit;
 
-        measureUnitType = measureUnit.GetType();
-        measureUnitCode = GetMeasureUnitCode(measureUnitType);
-
-        paramName = RandomParams.GetRandomParamName();
+        _measureUnitType = _measureUnit.GetType();
+        _measureUnitCode = GetMeasureUnitCode(_measureUnitType);
     }
     #endregion
 
     #region Private fields
-    private MeasureUnitCode measureUnitCode;
-    private MeasurableChild measurableObject;
-    private MeasurableFactoryClass factoryObject;
-    private Enum measureUnit;
-    private string paramName;
-    Type measureUnitType;
+    private MeasureUnitCode _measureUnitCode;
+    private MeasurableChild _measurable;
+    private MeasurableFactoryClass _factory;
+    private Enum _measureUnit;
+    Type _measureUnitType;
+
+    private string _paramName;
 
     #region Readonly fields
     private readonly RandomParams RandomParams = new();
@@ -50,10 +51,10 @@ public sealed class MeasurableTests
     public void Measurable_nullArg_IMeasurableFactory_arg_MeasureunitTypeCode_throws_ArgumentNullException()
     {
         // Arrange
-        factoryObject = null;
+        _factory = null;
 
         // Act
-        void attempt() => _ = new MeasurableChild(factoryObject);
+        void attempt() => _ = new MeasurableChild(_factory);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
@@ -64,10 +65,10 @@ public sealed class MeasurableTests
     public void Measurable_validArgs_IMeasurableFactory_MeasureunitTypeCode_creates()
     {
         // Arrange
-        factoryObject = new MeasurableFactoryClass();
+        _factory = new MeasurableFactoryClass();
 
         // Act
-        var actual = new MeasurableChild(factoryObject);
+        var actual = new MeasurableChild(_factory);
 
         // Assert
         Assert.IsInstanceOfType(actual, typeof(IMeasurable));
@@ -79,10 +80,10 @@ public sealed class MeasurableTests
     public void Measurable_nullArg_IMeasurable_throws_ArgumentNullException()
     {
         // Arrange
-        measurableObject = null;
+        _measurable = null;
 
         // Act
-        void attempt() => _ = new MeasurableChild(measurableObject);
+        void attempt() => _ = new MeasurableChild(_measurable);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
@@ -93,10 +94,10 @@ public sealed class MeasurableTests
     public void Measurable_validArg_IMeasurable_creates()
     {
         // Arrange
-        measurableObject = new MeasurableChild(factoryObject);
+        _measurable = new MeasurableChild(_factory);
 
         // Act
-        var actual = new MeasurableChild(measurableObject);
+        var actual = new MeasurableChild(_measurable);
 
         // Assert
         Assert.IsInstanceOfType(actual, typeof(IMeasurable));
@@ -111,10 +112,10 @@ public sealed class MeasurableTests
     public void Equals_arg_object_returns_expected(bool expected, object obj, Enum measureUnit)
     {
         // Arrange
-        measurableObject.TestHelper_MeasureUnit = measureUnit;
+        _measurable.GetMeasureUnitValue = measureUnit;
 
         // Act
-        var actual = measurableObject.Equals(obj);
+        var actual = _measurable.Equals(obj);
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -128,10 +129,10 @@ public sealed class MeasurableTests
     public void GetDefaultMeasureUnit_returns_expected()
     {
         // Arrange
-        Enum expected = (Enum)Enum.ToObject(measureUnitType, 0);
+        Enum expected = (Enum)Enum.ToObject(_measureUnitType, 0);
 
         // Act
-        var actual = measurableObject.GetDefaultMeasureUnit();
+        var actual = _measurable.GetDefaultMeasureUnit();
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -145,11 +146,11 @@ public sealed class MeasurableTests
     public void GetDefaultMeasureUnitNames_returns_expected()
     {
         // Arrange
-        string measureUnitCodeName = Enum.GetName(measureUnitCode);
-        IEnumerable<string> expected = Enum.GetNames(measureUnitType).Select(x => x + measureUnitCodeName);
+        string measureUnitCodeName = Enum.GetName(_measureUnitCode);
+        IEnumerable<string> expected = Enum.GetNames(_measureUnitType).Select(x => x + measureUnitCodeName);
 
         // Act
-        var actual = measurableObject.GetDefaultMeasureUnitNames();
+        var actual = _measurable.GetDefaultMeasureUnitNames();
 
         // Assert
         Assert.IsTrue(expected.SequenceEqual(actual));
@@ -164,11 +165,11 @@ public sealed class MeasurableTests
     {
         // Arrange
         // Act
-        var actual = measurableObject.GetFactory();
+        var actual = _measurable.GetFactory();
 
         // Assert
         Assert.IsNotNull(actual);
-        Assert.IsInstanceOfType(measurableObject.GetFactory(), typeof(IMeasurableFactory));
+        Assert.IsInstanceOfType(_measurable.GetFactory(), typeof(IMeasurableFactory));
     }
     #endregion
     #endregion
@@ -179,10 +180,10 @@ public sealed class MeasurableTests
     public void GetHashCode_returns_expected()
     {
         // Arrange
-        int expected = measureUnitCode.GetHashCode();
+        int expected = _measureUnitCode.GetHashCode();
 
         // Act
-        var actual = measurableObject.GetHashCode();
+        var actual = _measurable.GetHashCode();
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -199,7 +200,7 @@ public sealed class MeasurableTests
         IEnumerable<MeasureUnitCode> expected = Enum.GetValues<MeasureUnitCode>();
 
         // Act
-        var actual = measurableObject.GetMeasureUnitCodes();
+        var actual = _measurable.GetMeasureUnitCodes();
 
         // Assert
         Assert.IsTrue(expected.SequenceEqual(actual));
@@ -213,10 +214,10 @@ public sealed class MeasurableTests
     public void GetMeasureUnitType_returns_expected()
     {
         // Arrange
-        Type expected = MeasureUnitTypeSet.First(x => x.Name == Enum.GetName(measureUnitCode));
+        Type expected = MeasureUnitTypeSet.First(x => x.Name == Enum.GetName(_measureUnitCode));
 
         // Act
-        var actual = measurableObject.GetMeasureUnitType();
+        var actual = _measurable.GetMeasureUnitType();
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -231,10 +232,10 @@ public sealed class MeasurableTests
     public void HasMeasureUnitCode_arg_MeasureUnitCode_returns_expected(Enum measureUnit, MeasureUnitCode measureUnitCode, bool expected)
     {
         // Arrange
-        measurableObject.TestHelper_MeasureUnit = measureUnit;
+        _measurable.GetMeasureUnitValue = measureUnit;
 
         // Act
-        var actual = measurableObject.HasMeasureUnitCode(measureUnitCode);
+        var actual = _measurable.HasMeasureUnitCode(measureUnitCode);
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -248,10 +249,10 @@ public sealed class MeasurableTests
     public void GetQuantityTypeCode_returns_expected()
     {
         // Arrange
-        TypeCode expected = measureUnitCode.GetQuantityTypeCode();
+        TypeCode expected = _measureUnitCode.GetQuantityTypeCode();
 
         // Act
-        var actual = measurableObject.GetQuantityTypeCode();
+        var actual = _measurable.GetQuantityTypeCode();
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -267,7 +268,7 @@ public sealed class MeasurableTests
     {
         // Arrange
         // Act
-        var actual = measurableObject.IsValidMeasureUnitCode(measureUnitCode);
+        var actual = _measurable.IsValidMeasureUnitCode(measureUnitCode);
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -281,14 +282,15 @@ public sealed class MeasurableTests
     public void ValidateMeasureUnit_nullArg_Enum_arg_string_throws_ArgumentNullException()
     {
         // Arrange
-        measureUnit = null;
+        _measureUnit = null;
+        _paramName = RandomParams.GetRandomParamName();
 
         // Act
-        void attempt() => measurableObject.ValidateMeasureUnit(measureUnit, paramName);
+        void attempt() => _measurable.ValidateMeasureUnit(_measureUnit, _paramName);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-        Assert.AreEqual(paramName, ex.ParamName);
+        Assert.AreEqual(_paramName, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
@@ -296,15 +298,15 @@ public sealed class MeasurableTests
     public void ValidateMeasureUnit_invalidArg_Enum_arg_string_throws_InvalidEnumArgumentException(Enum measureUnit, MeasureUnitCode measureUnitCode)
     {
         // Arrange
-        measurableObject.TestHelper_MeasureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
-        paramName = RandomParams.GetRandomParamName();
+        _measurable.GetMeasureUnitValue = RandomParams.GetRandomMeasureUnit(measureUnitCode);
+        _paramName = RandomParams.GetRandomParamName();
 
         // Act
-        void attempt() => measurableObject.ValidateMeasureUnit(measureUnit, paramName);
+        void attempt() => _measurable.ValidateMeasureUnit(measureUnit, _paramName);
 
         // Assert
         var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
-        Assert.AreEqual(paramName, ex.ParamName);
+        Assert.AreEqual(_paramName, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
@@ -316,14 +318,14 @@ public sealed class MeasurableTests
         {
             measureUnitCode = GetMeasureUnitCode(measureUnit);
         }
-
-        measurableObject.TestHelper_MeasureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
+        _measurable.GetMeasureUnitValue = RandomParams.GetRandomMeasureUnit(measureUnitCode);
+        _paramName = RandomParams.GetRandomParamName();
         bool returned = true;
 
         // Act
         try
         {
-            measurableObject.ValidateMeasureUnit(measureUnit, paramName);
+            _measurable.ValidateMeasureUnit(measureUnit, _paramName);
         }
         catch
         {
@@ -336,93 +338,103 @@ public sealed class MeasurableTests
     #endregion
     #endregion
 
-    //#region ValidateMeasureUnitCode
-    //#region ValidateMeasureUnitCode(MeasureUnitCode, string)
-    //[TestMethod, TestCategory("UnitTest")]
-    //[DynamicData(nameof(GetMeasurableValidateMeasureUnitCodeArgsArrayList), DynamicDataSourceType.Method)]
-    //public void ValidateMeasureUnitCode_invalidArg_MeasureUnitCodem_arg_string_throws_InvalidEnumArgumentException(MeasureUnitCode measureUnitCode, IMeasurable measurable)
-    //{
-    //    // Arrange
-    //    // Act
-    //    void attempt() => measurable.ValidateMeasureUnitCode(measureUnitCode, paramName);
+    #region ValidateMeasureUnitCode
+    #region ValidateMeasureUnitCode(MeasureUnitCode, string)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetMeasurableValidateMeasureUnitCodeInvalidArgsArrayList), DynamicDataSourceType.Method)]
+    public void ValidateMeasureUnitCode_invalidArg_MeasureUnitCode_arg_string_throws_InvalidEnumArgumentException(Enum measureUnit, MeasureUnitCode measureUnitCode)
+    {
+        // Arrange
+        _measurable.GetMeasureUnitValue = measureUnit;
+        _paramName = RandomParams.GetRandomParamName();
 
-    //    // Assert
-    //    var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
-    //    Assert.AreEqual(paramName, ex.ParamName);
-    //}
+        // Act
+        void attempt() => _measurable.ValidateMeasureUnitCode(measureUnitCode, _paramName);
 
-    //[TestMethod, TestCategory("UnitTest")]
-    //public void ValidateMeasureUnitCode_validArg_MeasureUnitCodem_arg_string_returns()
-    //{
-    //    // Arrange
-    //    measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
-    //    measurableObject = new MeasurableChild(factoryObject, measureUnitCode);
-    //    bool returned = true;
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(_paramName, ex.ParamName);
+    }
 
-    //    // Act
-    //    try
-    //    {
-    //        measurableObject.ValidateMeasureUnitCode(measureUnitCode, paramName);
-    //    }
-    //    catch
-    //    {
-    //        returned = false;
-    //    }
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateMeasureUnitCode_validArg_MeasureUnitCode_arg_string_returns()
+    {
+        // Arrange
+        _paramName = RandomParams.GetRandomParamName();
+        bool returned = true;
 
-    //    // Assert
-    //    Assert.IsTrue(returned);
-    //}
-    //#endregion
+        // Act
+        try
+        {
+            _measurable.ValidateMeasureUnitCode(_measureUnitCode, _paramName);
+        }
+        catch
+        {
+            returned = false;
+        }
 
-    //#region ValidateMeasureUnitCode(IMeasurable?, string)
-    //[TestMethod, TestCategory("UnitTest")]
-    //public void ValidateMeasureUnitCode_nullArg_IMeasurable_arg_string_throws_ArgumentNullException()
-    //{
-    //    // Arrange
-    //    // Act
-    //    void attempt() => measurableObject.ValidateMeasureUnitCode(null, paramName);
+        // Assert
+        Assert.IsTrue(returned);
+    }
+    #endregion
 
-    //    // Assert
-    //    var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-    //    Assert.AreEqual(paramName, ex.ParamName);
-    //}
+    #region ValidateMeasureUnitCode(IMeasurable?, string)
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateMeasureUnitCode_nullArg_IMeasurable_arg_string_throws_ArgumentNullException()
+    {
+        // Arrange
+        _paramName = RandomParams.GetRandomParamName();
 
-    //[TestMethod, TestCategory("UnitTest")]
-    //public void ValidateMeasureUnitCode_invalidArg_IMeasurable_arg_string_throws_InvalidEnumArgumentException()
-    //{
-    //    // Arrange
-    //    measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
+        // Act
+        void attempt() => _measurable.ValidateMeasureUnitCode(null, _paramName);
 
-    //    // Act
-    //    void attempt() => measurableObject.ValidateMeasureUnitCode(new MeasurableChild(factoryObject, measureUnitCode), paramName);
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
+        Assert.AreEqual(_paramName, ex.ParamName);
+    }
 
-    //    // Assert
-    //    var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
-    //    Assert.AreEqual(paramName, ex.ParamName);
-    //}
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateMeasureUnitCode_invalidArg_IMeasurable_arg_string_throws_InvalidEnumArgumentException()
+    {
+        // Arrange
+        MeasurableChild measurable = new(_factory);
+        _measureUnitCode = RandomParams.GetRandomMeasureUnitCode(_measureUnitCode);
+        measurable.GetMeasureUnitValue = RandomParams.GetRandomMeasureUnit(_measureUnitCode);
+        _paramName = RandomParams.GetRandomParamName();
 
-    //[TestMethod, TestCategory("UnitTest")]
-    //public void ValidateMeasureUnitCode_validArg_IMeasurable_arg_string_returns()
-    //{
-    //    // Arrange
-    //    measurableObject = new MeasurableChild(factoryObject, measureUnitCode);
-    //    bool returned = true;
+        // Act
+        void attempt() => _measurable.ValidateMeasureUnitCode(measurable, _paramName);
 
-    //    // Act
-    //    try
-    //    {
-    //        measurableObject.ValidateMeasureUnitCode(measureUnitCode, paramName);
-    //    }
-    //    catch
-    //    {
-    //        returned = false;
-    //    }
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(_paramName, ex.ParamName);
+    }
 
-    //    // Assert
-    //    Assert.IsTrue(returned);
-    //}
-    //#endregion
-    //#endregion
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateMeasureUnitCode_validArg_IMeasurable_arg_string_returns()
+    {
+        // Arrange
+        MeasurableChild measurable = new(_factory);
+        measurable.GetMeasureUnitValue = RandomParams.GetRandomMeasureUnit(_measureUnitCode);
+        _paramName = RandomParams.GetRandomParamName();
+
+        bool returned = true;
+
+        // Act
+        try
+        {
+            _measurable.ValidateMeasureUnitCode(_measurable, _paramName);
+        }
+        catch
+        {
+            returned = false;
+        }
+
+        // Assert
+        Assert.IsTrue(returned);
+    }
+    #endregion
+    #endregion
 
     //#region Static methods
 
@@ -450,9 +462,9 @@ public sealed class MeasurableTests
         return DynamicDataSources.GetMeasurableValidateMeasureUnitInvalidArgsArrayList();
     }
 
-    private static IEnumerable<object[]> GetMeasurableValidateMeasureUnitCodeArgsArrayList()
+    private static IEnumerable<object[]> GetMeasurableValidateMeasureUnitCodeInvalidArgsArrayList()
     {
-        return DynamicDataSources.GetMeasurableValidateMeasureUnitCodeArgsArrayList();
+        return DynamicDataSources.GetMeasurableValidateMeasureUnitCodeInvalidArgsArrayList();
     }
 
     private static IEnumerable<object[]> GetHasMeasureUnitCodeArgsArrayList()

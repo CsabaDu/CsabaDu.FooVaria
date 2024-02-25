@@ -16,20 +16,20 @@
 //        [TestInitialize]
 //        public void InitializeMeasurableTests()
 //        {
-//            measureUnit = RandomParams.GetRandomValidMeasureUnit();
-//            measureUnitCode = MeasureUnitTypes.GetMeasureUnitCode(measureUnit);
-//            factoryObject = new BaseMeasurementFactoryClass();
-//            baseMeasurement = new BaseMeasurementChild(factoryObject, measureUnit);
+//            _measureUnit = RandomParams.GetRandomValidMeasureUnit();
+//            _measureUnitCode = MeasureUnitTypes.GetMeasureUnitCode(_measureUnit);
+//            _factory = new BaseMeasurementFactoryClass();
+//            baseMeasurement = new BaseMeasurementChild(_factory, _measureUnit);
 //            baseMeasurement.RestoreConstantExchangeRates();
 //        }
 //        #endregion
 
 //        #region Private fields
 //        private IBaseMeasurement baseMeasurement;
-//        private IBaseMeasurementFactory factoryObject;
-//        private Enum measureUnit;
+//        private IBaseMeasurementFactory _factory;
+//        private Enum _measureUnit;
 //        string name;
-//        MeasureUnitCode measureUnitCode;
+//        MeasureUnitCode _measureUnitCode;
 
 //        #region Readonly fields
 //        private readonly BaseMeasurementVariant BaseMeasurementVariant = new();
@@ -48,57 +48,57 @@
 //        public void BaseMeasurement_nullArg_IBaseMeasurementFactory_arg_Enum_throws_ArgumentNullException()
 //        {
 //            // Arrange
-//            factoryObject = null;
-//            measureUnit = null;
+//            _factory = null;
+//            _measureUnit = null;
 
 //            // Act
-//            void attempt() => _ = new BaseMeasurementChild(factoryObject, measureUnit);
+//            void attempt() => _ = new BaseMeasurementChild(_factory, _measureUnit);
 
 //            // Assert
 //            var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-//            Assert.AreEqual(ParamNames.factoryObject, ex.ParamName);
+//            Assert.AreEqual(ParamNames._factory, ex.ParamName);
 //        }
 
 //        [TestMethod, TestCategory("UnitTest")]
 //        public void BaseMeasurement_validArg_IBaseMeasurementFactory_nullArg_Enum_throws_ArgumentNullException()
 //        {
 //            // Arrange
-//            measureUnit = null;
+//            _measureUnit = null;
 
 //            // Act
-//            void attempt() => _ = new BaseMeasurementChild(factoryObject, measureUnit);
+//            void attempt() => _ = new BaseMeasurementChild(_factory, _measureUnit);
 
 //            // Assert
 //            var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-//            Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
+//            Assert.AreEqual(ParamNames._measureUnit, ex.ParamName);
 //        }
 
 //        [TestMethod, TestCategory("UnitTest")]
 //        [DynamicData(nameof(GetInvalidBaseMeasurementEnumMeasureUnitArgArrayList), DynamicDataSourceType.Method)]
-//        public void BaseMeasurement_validArg_IBaseMeasurementFactory_invalidArg_Enum_throws_InvalidEnumArgumentException(Enum measureUnit)
+//        public void BaseMeasurement_validArg_IBaseMeasurementFactory_invalidArg_Enum_throws_InvalidEnumArgumentException(Enum _measureUnit)
 //        {
 //            // Arrange
 //            // Act
-//            void attempt() => _ = new BaseMeasurementChild(factoryObject, measureUnit);
+//            void attempt() => _ = new BaseMeasurementChild(_factory, _measureUnit);
 
 //            // Assert
 //            var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
-//            Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
+//            Assert.AreEqual(ParamNames._measureUnit, ex.ParamName);
 //        }
 
 //        [TestMethod, TestCategory("UnitTest")]
 //        public void BaseMeasurement_validArgs_IBaseMeasurementFactory_Enum_creates()
 //        {
 //            // Arrange
-//            measureUnit = RandomParams.GetRandomValidMeasureUnit();
-//            measureUnitCode = MeasureUnitTypes.GetMeasureUnitCode(measureUnit);
+//            _measureUnit = RandomParams.GetRandomValidMeasureUnit();
+//            _measureUnitCode = MeasureUnitTypes.GetMeasureUnitCode(_measureUnit);
 
 //            // Act
-//            var actual = new BaseMeasurementChild(factoryObject, measureUnit);
+//            var actual = new BaseMeasurementChild(_factory, _measureUnit);
 
 //            // Assert
 //            Assert.IsInstanceOfType(actual, typeof(IBaseMeasurement));
-//            Assert.AreEqual(measureUnitCode, actual.MeasureUnitCode);
+//            Assert.AreEqual(_measureUnitCode, actual.MeasureUnitCode);
 //        }
 //        #endregion
 //        #endregion
@@ -109,10 +109,10 @@
 //        public void GetConstantExchangeRateCollection_returns_expected()
 //        {
 //            // Arrange
-//            measureUnit = RandomParams.GetRandomValidMeasureUnit();
-//            measureUnitCode = MeasureUnitTypes.GetMeasureUnitCode(measureUnit);
-//            baseMeasurement = new BaseMeasurementChild(factoryObject, measureUnit);
-//            IDictionary<object, decimal> expected = BaseMeasurementVariant.GetConstantExchangeRateCollection(measureUnitCode);
+//            _measureUnit = RandomParams.GetRandomValidMeasureUnit();
+//            _measureUnitCode = MeasureUnitTypes.GetMeasureUnitCode(_measureUnit);
+//            baseMeasurement = new BaseMeasurementChild(_factory, _measureUnit);
+//            IDictionary<object, decimal> expected = BaseMeasurementVariant.GetConstantExchangeRateCollection(_measureUnitCode);
 
 //            // Act
 //            var actual = baseMeasurement.GetConstantExchangeRateCollection();
@@ -127,24 +127,24 @@
 //        public void GetConstantExchangeRateCollection_invalidArg_MeasureUnitCode_throws_InvalidEnumArgumentException()
 //        {
 //            // Arrange
-//            measureUnitCode = SampleParams.NotDefinedMeasureUnitCode;
+//            _measureUnitCode = SampleParams.NotDefinedMeasureUnitCode;
 
 //            // Act
-//            void attempt() => _ = baseMeasurement.GetConstantExchangeRateCollection(measureUnitCode);
+//            void attempt() => _ = baseMeasurement.GetConstantExchangeRateCollection(_measureUnitCode);
 
 //            // Assert
 //            var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
-//            Assert.AreEqual(ParamNames.measureUnitCode, ex.ParamName);
+//            Assert.AreEqual(ParamNames._measureUnitCode, ex.ParamName);
 //        }
 
 //        [TestMethod, TestCategory("UnitTest")]
 //        public void GetConstantExchangeRateCollection_validArg_MeasureUnitCode_returns_expected()
 //        {
-//            measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
-//            IDictionary<object, decimal> expected = BaseMeasurementVariant.GetConstantExchangeRateCollection(measureUnitCode);
+//            _measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
+//            IDictionary<object, decimal> expected = BaseMeasurementVariant.GetConstantExchangeRateCollection(_measureUnitCode);
 
 //            // Act
-//            var actual = baseMeasurement.GetConstantExchangeRateCollection(measureUnitCode);
+//            var actual = baseMeasurement.GetConstantExchangeRateCollection(_measureUnitCode);
 
 //            // Assert
 //            Assert.IsTrue(expected.SequenceEqual(actual));
@@ -156,11 +156,11 @@
 //        #region GetCustomName(Enum)
 //        [TestMethod, TestCategory("UnitTest")]
 //        [DynamicData(nameof(GetInvalidGetCustomNameArgArrayList), DynamicDataSourceType.Method)]
-//        public void GetCustomName_nullOrInvalidArg_Enum_returns_null(Enum measureUnit)
+//        public void GetCustomName_nullOrInvalidArg_Enum_returns_null(Enum _measureUnit)
 //        {
 //            // Arrange
 //            // Act
-//            var actual = baseMeasurement.GetCustomName(measureUnit);
+//            var actual = baseMeasurement.GetCustomName(_measureUnit);
 
 //            // Assert
 //            Assert.IsNull(actual);
@@ -170,13 +170,13 @@
 //        public void GetCustomName_validArg_Enum_returns_expected()
 //        {
 //            // Arrange
-//            measureUnit = RandomParams.GetRandomValidMeasureUnit();
-//            baseMeasurement = new BaseMeasurementChild(factoryObject, measureUnit);
+//            _measureUnit = RandomParams.GetRandomValidMeasureUnit();
+//            baseMeasurement = new BaseMeasurementChild(_factory, _measureUnit);
 //            name = Guid.NewGuid().ToString();
-//            baseMeasurement.SetCustomName(measureUnit, name);
+//            baseMeasurement.SetCustomName(_measureUnit, name);
 
 //            // Act
-//            var actual = baseMeasurement.GetCustomName(measureUnit);
+//            var actual = baseMeasurement.GetCustomName(_measureUnit);
 
 //            // Assert
 //            Assert.AreEqual(name, actual);
@@ -209,24 +209,24 @@
 //        public void GetCustomNameCollection_invalidArg_MeasureUnitCode_throws_InvalidEnumArgumentException()
 //        {
 //            // Arrange
-//            measureUnitCode = SampleParams.NotDefinedMeasureUnitCode;
+//            _measureUnitCode = SampleParams.NotDefinedMeasureUnitCode;
 
 //            // Act
-//            void attempt() => _ = baseMeasurement.GetCustomNameCollection(measureUnitCode);
+//            void attempt() => _ = baseMeasurement.GetCustomNameCollection(_measureUnitCode);
 
 //            // Assert
 //            var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
-//            Assert.AreEqual(ParamNames.measureUnitCode, ex.ParamName);
+//            Assert.AreEqual(ParamNames._measureUnitCode, ex.ParamName);
 //        }
 
 //        [TestMethod, TestCategory("UnitTest")]
 //        [DynamicData(nameof(GetCustomNameCollectionMeasureUnitCodeArgArrayList), DynamicDataSourceType.Method)]
-//        public void GetCustomNameCollection_validArg_MeasureUnitCode_returns_expected(IDictionary<object, string> expected, MeasureUnitCode measureUnitCode)
+//        public void GetCustomNameCollection_validArg_MeasureUnitCode_returns_expected(IDictionary<object, string> expected, MeasureUnitCode _measureUnitCode)
 //        {
 //            // Arrange
-//            measureUnit = MeasureUnitTypes.GetDefaultMeasureUnit(RandomParams.GetRandomMeasureUnitCode(measureUnitCode));
+//            _measureUnit = MeasureUnitTypes.GetDefaultMeasureUnit(RandomParams.GetRandomMeasureUnitCode(_measureUnitCode));
 //            name = Guid.NewGuid().ToString();
-//            baseMeasurement.SetCustomName(measureUnit, name);
+//            baseMeasurement.SetCustomName(_measureUnit, name);
 
 //            foreach (KeyValuePair<object, string> item in expected)
 //            {
@@ -234,7 +234,7 @@
 //            }
 
 //            // Act
-//            var actual = baseMeasurement.GetCustomNameCollection(measureUnitCode);
+//            var actual = baseMeasurement.GetCustomNameCollection(_measureUnitCode);
 
 //            // Assert
 //            Assert.IsTrue(expected.SequenceEqual(actual));
@@ -248,14 +248,14 @@
 //        public void GetDefaultName_nullArg_Enum_throws_ArgumentNullException()
 //        {
 //            // Arrange
-//            measureUnit = null;
+//            _measureUnit = null;
 
 //            // Act
-//            void attempt() => baseMeasurement.GetDefaultName(measureUnit);
+//            void attempt() => baseMeasurement.GetDefaultName(_measureUnit);
 
 //            // Assert
 //            var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-//            Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
+//            Assert.AreEqual(ParamNames._measureUnit, ex.ParamName);
 //        }
 
 //        #endregion

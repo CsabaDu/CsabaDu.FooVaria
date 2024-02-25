@@ -4,8 +4,8 @@
 public sealed class CommonBaseTests
 {
     #region Private fields
-    private FactoryClass factoryObject;
-    private CommonBaseChild commonBaseObject;
+    private FactoryClass _factory;
+    private CommonBaseChild _commonBase;
     #endregion
 
     #region Test methods
@@ -15,10 +15,10 @@ public sealed class CommonBaseTests
     public void CommonBase_nullArg_IFactory_throws_ArgumentNullException()
     {
         // Arrange
-        factoryObject = null;
+        _factory = null;
 
         // Act
-        void attempt() => _ = new CommonBaseChild(factoryObject);
+        void attempt() => _ = new CommonBaseChild(_factory);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
@@ -29,10 +29,10 @@ public sealed class CommonBaseTests
     public void CommonBase_validArg_IFactory_creates()
     {
         // Arrange
-        factoryObject = new FactoryClass();
+        _factory = new FactoryClass();
 
         // Act
-        var actual = new CommonBaseChild(factoryObject);
+        var actual = new CommonBaseChild(_factory);
 
         // Assert
         Assert.IsInstanceOfType(actual, typeof(ICommonBase));
@@ -45,10 +45,10 @@ public sealed class CommonBaseTests
     public void CommonBase_nullArg_ICommonBase_throws_ArgumentNullException()
     {
         // Arrange
-        commonBaseObject = null;
+        _commonBase = null;
 
         // Act
-        void attempt() => _ = new CommonBaseChild(commonBaseObject);
+        void attempt() => _ = new CommonBaseChild(_commonBase);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
@@ -59,11 +59,11 @@ public sealed class CommonBaseTests
     public void CommonBase_validArg_ICommonBase_creates()
     {
         // Arrange
-        factoryObject = new FactoryClass();
-        commonBaseObject = new CommonBaseChild(factoryObject);
+        _factory = new FactoryClass();
+        _commonBase = new CommonBaseChild(_factory);
 
         // Act
-        var actual = new CommonBaseChild(commonBaseObject);
+        var actual = new CommonBaseChild(_commonBase);
 
         // Assert
         Assert.IsInstanceOfType(actual, typeof(ICommonBase));
@@ -78,14 +78,14 @@ public sealed class CommonBaseTests
     public void GetFactory_returns_expected()
     {
         // Arrange
-        factoryObject = new FactoryClass();
-        commonBaseObject = new CommonBaseChild(factoryObject);
+        _factory = new FactoryClass();
+        _commonBase = new CommonBaseChild(_factory);
 
         // Act
-        var actual = commonBaseObject.GetFactory();
+        var actual = _commonBase.GetFactory();
 
         // Assert
-        Assert.AreEqual(factoryObject, actual);
+        Assert.AreEqual(_factory, actual);
     }
     #endregion
     #endregion
