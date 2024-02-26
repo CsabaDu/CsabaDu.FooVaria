@@ -236,13 +236,13 @@ internal class DynamicDataSources
         isTrue = true;
         obj = new MeasurableChild(new MeasurableFactoryClass());
         measureUnit = RandomParams.GetRandomMeasureUnit();
-        (obj as MeasurableChild).GetMeasureUnitReturns = measureUnit;
+        (obj as MeasurableChild).GetMeasureUnit_returns = measureUnit;
         yield return toObjectArray();
 
         // IMeasure different MeasureUnit with same MeasureUnitCode
         measureUnitCode = GetMeasureUnitCode(measureUnit);
         measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode, measureUnit);
-        (obj as MeasurableChild).GetMeasureUnitReturns = measureUnit;
+        (obj as MeasurableChild).GetMeasureUnit_returns = measureUnit;
         yield return toObjectArray();
 
         // IMeasure with different MeasureUnitCode
@@ -321,7 +321,7 @@ internal class DynamicDataSources
 
     internal IEnumerable<object[]> GetMeasurableValidateMeasureUnitInvalidArgsArrayList()
     {
-        // Not MeasureUnit type enum
+        // Not MeasureUnit type Not MeasureUnitCode enum
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
         measureUnit = TypeCode.Empty;
         yield return toObjectArray();
@@ -333,6 +333,9 @@ internal class DynamicDataSources
         // Invalid type defined measureUnit
         measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
+
+        // Invalid MeasureUnitCode enum
+        measureUnit = NotDefinedMeasureUnitCode;
         yield return toObjectArray();
 
         #region toObjectArray method
@@ -351,17 +354,19 @@ internal class DynamicDataSources
     internal IEnumerable<object[]> GetValidMeasureUnitArgsArrayList()
     {
         measureUnit = RandomParams.GetRandomMeasureUnit();
+        measureUnitCode = GetMeasureUnitCode(measureUnit);
         yield return toObjectArray();
 
-        measureUnit = RandomParams.GetRandomMeasureUnitCode();
+        measureUnit = measureUnitCode;
         yield return toObjectArray();
 
         #region toObjectArray method
         object[] toObjectArray()
         {
-            return new Enum_arg
+            return new Enum_MeasureUnitCode_args
             {
                 MeasureUnit = measureUnit,
+                MeasureUnitCode = measureUnitCode,
             }
             .ToObjectArray();
         }

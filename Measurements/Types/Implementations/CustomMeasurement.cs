@@ -8,16 +8,16 @@ internal sealed class CustomMeasurement(IMeasurementFactory factory, Enum measur
         return (ICustomMeasurement?)GetFactory().Create(measureUnit, exchangeRate, customName);
     }
 
-    public ICustomMeasurement? GetCustomMeasurement(string customName, MeasureUnitCode customMeasureUnitCode, decimal exchangeRate)
+    public ICustomMeasurement? GetNextCustomMeasurement(string customName, MeasureUnitCode customMeasureUnitCode, decimal exchangeRate)
     {
         return (ICustomMeasurement?)GetFactory().Create(customName, customMeasureUnitCode, exchangeRate);
     }
 
-    public ICustomMeasurement? GetCustomMeasurement(string customName, decimal exchangeRate)
+    public ICustomMeasurement? GetNextCustomMeasurement(string customName, decimal exchangeRate)
     {
         MeasureUnitCode measureUnitCode = GetMeasureUnitCode();
 
-        return GetCustomMeasurement(customName, measureUnitCode, exchangeRate);
+        return GetNextCustomMeasurement(customName, measureUnitCode, exchangeRate);
     }
 
     public IEnumerable<Enum> GetNotUsedCustomMeasureUnits()

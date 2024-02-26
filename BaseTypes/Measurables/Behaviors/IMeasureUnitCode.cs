@@ -1,11 +1,9 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors;
 
-public interface IMeasureUnitType
+public interface IMeasureUnitCode
 {
-    Type GetMeasureUnitType();
-    //IEnumerable<MeasureUnitCode> GetMeasureUnitCodes();
     bool HasMeasureUnitCode(MeasureUnitCode measureUnitCode);
-    //bool IsValidMeasureUnitCode(MeasureUnitCode measureUnitCode);
+    MeasureUnitCode GetMeasureUnitCode();
 
     void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, [DisallowNull] string paramName);
 }

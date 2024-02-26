@@ -51,10 +51,9 @@ public sealed class MeasurementFactory : IMeasurementFactory
 
         if (success) return GetStoredMeasurement(measureUnit);
 
-        if (!TryGetMeasureUnitCode(measureUnit, out MeasureUnitCode? measureUnitCode)) return null;
+        MeasureUnitCode measureUnitCode = GetMeasureUnitCode(measureUnit);
 
-        success = measureUnitCode.Value.IsCustomMeasureUnitCode()
-            //&& (int)(object)measureUnit != default
+        success = measureUnitCode.IsCustomMeasureUnitCode()
             && TrySetCustomMeasureUnit(measureUnit, exchangeRate, customName);
 
         return GetStoredMeasurementOrNull(measureUnit, success);

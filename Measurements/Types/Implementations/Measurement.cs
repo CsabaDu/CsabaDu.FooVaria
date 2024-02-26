@@ -222,7 +222,7 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
         return customMeasureUnits.Where(x => !ExchangeRateCollection.ContainsKey(x));
     }
 
-    public static void InitializeCustomExchangeRates(MeasureUnitCode measureUnitCode, IDictionary<string, decimal> customExchangeRateCollection)
+    public static void InitCustomExchangeRates(MeasureUnitCode measureUnitCode, IDictionary<string, decimal> customExchangeRateCollection)
     {
         ValidateCustomMeasureUnitCode(measureUnitCode);
 
@@ -230,9 +230,9 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
 
         for (int i = 0; i < count; i++)
         {
-            KeyValuePair<string, decimal> NamedCustomExchangeRate = customExchangeRateCollection.ElementAt(i);
-            string? customName = NamedCustomExchangeRate.Key;
-            decimal exchangeRate = NamedCustomExchangeRate.Value;
+            KeyValuePair<string, decimal> namedCustomExchangeRate = customExchangeRateCollection.ElementAt(i);
+            string? customName = namedCustomExchangeRate.Key;
+            decimal exchangeRate = namedCustomExchangeRate.Value;
             Enum measureUnit = GetNotUsedCustomMeasureUnits(measureUnitCode).First();
 
             if (!TrySetCustomMeasureUnit(measureUnit, exchangeRate, customName))

@@ -1,8 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.Measurables.Types;
 
-public interface IMeasurable : ICommonBase, IDefaultMeasureUnit, IMeasureUnitType, IQuantityType, IMeasureUnit
+public interface IMeasurable : ICommonBase, IDefaultMeasureUnit, IMeasureUnitCode, IQuantityType, IMeasureUnit
 {
-    //MeasureUnitCode MeasureUnitCode { get; init; }
-
     void ValidateMeasureUnitCode(IMeasurable? measurable, [DisallowNull] string paramName);
 }

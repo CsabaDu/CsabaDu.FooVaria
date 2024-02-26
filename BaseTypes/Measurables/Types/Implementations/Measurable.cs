@@ -125,21 +125,20 @@ public abstract class Measurable : CommonBase, IMeasurable
         return GetMeasureUnitCode().GetQuantityTypeCode();
     }
 
-    public virtual void ValidateMeasureUnit(Enum? measureUnit, string paramName)
+    public virtual void ValidateMeasureUnit(Enum? measureUnit, [DisallowNull] string paramName)
     {
-        if (measureUnit is not MeasureUnitCode measureUnitCode)
+        if (measureUnit is MeasureUnitCode measureUnitCode)
         {
-            Type enumType = NullChecked(measureUnit, paramName).GetType();
-            measureUnitCode = MeasureUnitTypeCollection.FirstOrDefault(x => x.Value == enumType).Key;
+            ValidateMeasureUnitCode(measureUnitCode, paramName);
         }
         else
         {
-            measureUnit = measureUnitCode.GetDefaultMeasureUnit();
+            measureUnitCode = GetMeasureUnitCode(DefinedMeasureUnit(measureUnit, paramName));
+
+            if (HasMeasureUnitCode(measureUnitCode)) return;
+
+            throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName);
         }
-
-        if (IsDefinedMeasureUnit(measureUnit) && HasMeasureUnitCode(measureUnitCode)) return;
-
-        throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName);
     }
 
     public virtual void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, [DisallowNull] string paramName)
@@ -215,7 +214,7 @@ public abstract class Measurable : CommonBase, IMeasurable
         return MeasureUnitTypeCollection[measureUnitCode];
     }
 
-    public static MeasureUnitCode GetDefinedMeasureUnitCode(Enum measureUnit)
+    public static MeasureUnitCode GetDefinedMeasureUnitCode(Enum? measureUnit)
     {
         string name = DefinedMeasureUnit(measureUnit, nameof(measureUnit)).GetType().Name;
 
@@ -224,9 +223,14 @@ public abstract class Measurable : CommonBase, IMeasurable
 
     public static MeasureUnitCode GetMeasureUnitCode(Type measureUnitType)
     {
-        string name = NullChecked(measureUnitType, nameof(measureUnitType)).Name;
+        string paramName = nameof(measureUnitType);
 
-        return GetMeasureUnitCode(name);
+        if (MeasureUnitTypeSet.Contains(NullChecked(measureUnitType, paramName)))
+        {
+            return MeasureUnitTypeCollection.First(x => x.Value == measureUnitType).Key;
+        }
+
+        throw new ArgumentOutOfRangeException(paramName);
     }
 
     public static MeasureUnitCode GetMeasureUnitCode(string name)
@@ -234,7 +238,7 @@ public abstract class Measurable : CommonBase, IMeasurable
         return MeasureUnitCodes.First(x => Enum.GetName(x) == name);
     }
 
-    public static MeasureUnitCode GetMeasureUnitCode(Enum measureUnit)
+    public static MeasureUnitCode GetMeasureUnitCode(Enum? measureUnit)
     {
         if (measureUnit is not MeasureUnitCode measureUnitCode) return GetDefinedMeasureUnitCode(measureUnit);
 

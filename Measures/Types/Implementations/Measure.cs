@@ -168,7 +168,7 @@
         where TSelf : class, IMeasure
         where TNum : struct
     {
-        #region Constructory
+        #region Constructors
         private protected Measure(IMeasureFactory factory, TNum quantity) : base(factory)
         {
             Quantity = quantity;
