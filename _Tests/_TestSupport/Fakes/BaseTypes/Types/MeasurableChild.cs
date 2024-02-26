@@ -3,19 +3,19 @@
 internal sealed class MeasurableChild : Measurable
 {
     #region TestHelpers
-    internal Enum GetMeasureUnitValue { private get; set; }
+    internal Enum GetMeasureUnitReturns { private get; set; }
     #endregion
 
-    public MeasurableChild(IMeasurable other) : base(other)
+    internal MeasurableChild(IMeasurable other) : base(other)
     {
     }
 
-    public MeasurableChild(IMeasurableFactory factory) : base(factory)
+    internal MeasurableChild(IMeasurableFactory factory) : base(factory)
     {
     }
 
     public override Enum GetMeasureUnit()
     {
-        return GetMeasureUnitValue;
+        return GetMeasureUnitReturns;
     }
 }

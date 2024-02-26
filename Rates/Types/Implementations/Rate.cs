@@ -213,15 +213,15 @@ internal abstract class Rate : BaseRate, IRate
         return Denominator.GetMeasureUnitCode();
     }
 
-    public override sealed IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
-    {
-        IEnumerable<MeasureUnitCode> measureUnitCodes = base.GetMeasureUnitCodes();
-        ILimit? limit = GetLimit();
+    //public override sealed IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
+    //{
+    //    IEnumerable<MeasureUnitCode> measureUnitCodes = base.GetMeasureUnitCodes();
+    //    ILimit? limit = GetLimit();
 
-        return limit == null ?
-            measureUnitCodes
-            : measureUnitCodes.Append(limit.GetMeasureUnitCode());
-    }
+    //    return limit == null ?
+    //        measureUnitCodes
+    //        : measureUnitCodes.Append(limit.GetMeasureUnitCode());
+    //}
 
     public override sealed MeasureUnitCode GetNumeratorCode()
     {

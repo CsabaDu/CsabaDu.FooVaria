@@ -1,12 +1,10 @@
-﻿using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Behaviors;
-
-namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
+﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
 
 public class RandomParams
 {
     #region Private fields
     private static readonly Random Random = Random.Shared;
-    private static readonly IEnumerable<MeasureUnitCode> CustomMeasureUnitCodes = MeasureUnitCodes.Where(IsDefaultMeasureUnitNameDefault);
+    private static readonly IEnumerable<MeasureUnitCode> CustomMeasureUnitCodes = MeasureUnitCodes.Where(x => x.IsCustomMeasureUnitCode());
     #endregion
 
 
@@ -95,17 +93,15 @@ public class RandomParams
         return measureUnit;
     }
 
-    #region Private methods
-    #region Static methods
-    private static bool IsDefaultMeasureUnitNameDefault(MeasureUnitCode measureUnitCode)
+    public IEnumerable<MeasureUnitCode> GetRandomMeasureUnitCodes()
     {
-        Type measureUnitType = measureUnitCode.GetMeasureUnitType();
-        object defaultMeasureUnit = measureUnitCode.GetDefaultMeasureUnit();
-        string defaultMeasureUnitDefaultName = Enum.GetName(measureUnitType, defaultMeasureUnit);
+        int count = Random.Next(1, MeasureUnitCodes.Length);
 
-        return defaultMeasureUnitDefaultName == DefaultCustomMeasureUnitDefaultName;
+        return GetRandomItems(MeasureUnitCodes, count);
     }
 
+    #region Private methods
+    #region Static methods
     private static T GetRandomItem<T>(T[] items)
     {
         return Random.GetItems(items, 1)[0];
@@ -114,6 +110,37 @@ public class RandomParams
     private static T GetRandomItem<T>(IEnumerable<T> items)
     {
         return GetRandomItem(items.ToArray());
+    }
+
+    private static IEnumerable<T> GetRandomItems<T>(IEnumerable<T> items, int count)
+    {
+        int maxValue = items.Count();
+
+        int[] randomIndexArray = GetRandomIndexArray(maxValue, count);
+
+        foreach (int index in randomIndexArray)
+        {
+            yield return items.ElementAt(index);
+        }
+    }
+
+    private static int[] GetRandomIndexArray(int maxValue, int count)
+    {
+        int[] randomIndexArray = new int[count];
+
+        for (int i = 0; i  <= count; i++)
+        {
+            int item = Random.Next(maxValue);
+
+            while (randomIndexArray.Contains(item))
+            {
+                item = Random.Next(1, maxValue);
+            }
+
+            randomIndexArray[i] = item;
+        }
+
+        return randomIndexArray;
     }
     #endregion
     #endregion

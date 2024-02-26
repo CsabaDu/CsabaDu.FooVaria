@@ -87,6 +87,7 @@ public abstract class Quantifiable : BaseQuantifiable, IQuantifiable
     }
     #endregion
     #endregion
+
     public virtual int CompareTo(IQuantifiable? other)
     {
         if (other == null) return 1;

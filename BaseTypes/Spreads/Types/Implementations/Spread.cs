@@ -106,11 +106,11 @@ public abstract class Spread : Quantifiable, ISpread
         return (GetSpreadMeasure() as IMeasurable)!.GetMeasureUnit();
     }
 
-    public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
-    {
-        yield return MeasureUnitCode.AreaUnit;
-        yield return MeasureUnitCode.VolumeUnit;
-    }
+    //public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
+    //{
+    //    yield return MeasureUnitCode.AreaUnit;
+    //    yield return MeasureUnitCode.VolumeUnit;
+    //}
 
     #region Sealed methods
     public override sealed ISpread Round(RoundingMode roundingMode)

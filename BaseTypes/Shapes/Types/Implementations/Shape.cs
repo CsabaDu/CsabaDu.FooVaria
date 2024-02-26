@@ -30,7 +30,7 @@ public abstract class Shape : Spread, IShape
     }
 
     #region Override methods
-    public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
+    public override sealed IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
     {
         return base.GetMeasureUnitCodes().Append(MeasureUnitCode.ExtentUnit);
     }

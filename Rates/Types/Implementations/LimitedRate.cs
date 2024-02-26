@@ -126,6 +126,11 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         return Limit.GetMeasureUnitCode();
     }
 
+    public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
+    {
+        return base.GetMeasureUnitCodes().Append(Limit.GetMeasureUnitCode());
+    }
+
     public decimal GetLimiterDefaultQuantity()
     {
         return Limit.GetDefaultQuantity();

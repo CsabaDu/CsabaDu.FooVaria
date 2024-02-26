@@ -46,14 +46,14 @@
             return base.ExchangeTo(context);
         }
 
-        //public bool? FitsIn(ISpread? other, LimitMode? limitMode)
-        //{
-        //    return base.FitsIn(other, limitMode);
-        //}
-
         public override sealed MeasureUnitCode GetSpreadMeasureUnitCode()
         {
             return base.GetSpreadMeasureUnitCode();
+        }
+
+        public override sealed IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
+        {
+            return base.GetMeasureUnitCodes();
         }
 
         public override sealed double GetQuantity()

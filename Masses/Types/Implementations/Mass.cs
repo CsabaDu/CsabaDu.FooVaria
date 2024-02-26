@@ -178,7 +178,9 @@ internal abstract class Mass : BaseQuantifiable, IMass
 
     public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
     {
-        return MeasureUnitCodes.Where(x => this[x] != null);
+        IBody body = GetBody();
+
+        return base.GetMeasureUnitCodes().Append(body.GetMeasureUnitCode());
     }
 
     #region Sealed methods

@@ -236,13 +236,13 @@ internal class DynamicDataSources
         isTrue = true;
         obj = new MeasurableChild(new MeasurableFactoryClass());
         measureUnit = RandomParams.GetRandomMeasureUnit();
-        (obj as MeasurableChild).GetMeasureUnitValue = measureUnit;
+        (obj as MeasurableChild).GetMeasureUnitReturns = measureUnit;
         yield return toObjectArray();
 
         // IMeasure different MeasureUnit with same MeasureUnitCode
         measureUnitCode = GetMeasureUnitCode(measureUnit);
         measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode, measureUnit);
-        (obj as MeasurableChild).GetMeasureUnitValue = measureUnit;
+        (obj as MeasurableChild).GetMeasureUnitReturns = measureUnit;
         yield return toObjectArray();
 
         // IMeasure with different MeasureUnitCode
@@ -267,21 +267,27 @@ internal class DynamicDataSources
 
     internal IEnumerable<object[]> GetMeasurableIsValidMeasureUnitCodeArgsArrayList()
     {
+        measureUnit = RandomParams.GetRandomMeasureUnit();
         measureUnitCode = NotDefinedMeasureUnitCode;
         isTrue = false;
         yield return toObjectArray();
 
-        measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
+        measureUnitCode = GetMeasureUnitCode(measureUnit);
         isTrue = true;
+        yield return toObjectArray();
+
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
+        isTrue = false;
         yield return toObjectArray();
 
         #region toObjectArray method
         object[] toObjectArray()
         {
-            return new Bool_MeasureUnitCode_args
+            return new Enum_MeasureUnitCode_bool_args
             {
-                IsTrue = isTrue,
+                MeasureUnit = measureUnit,
                 MeasureUnitCode = measureUnitCode,
+                IsTrue = isTrue,
             }
             .ToObjectArray();
         }

@@ -143,9 +143,14 @@
 
         public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
         {
-            yield return GetNumeratorCode();
-            yield return GetDenominatorCode();
+            return base.GetMeasureUnitCodes().Append(GetNumeratorCode());
         }
+
+        //public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
+        //{
+        //    yield return GetNumeratorCode();
+        //    yield return GetDenominatorCode();
+        //}
 
         #region Sealed methods
         public override sealed bool Equals(object? obj)

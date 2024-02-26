@@ -11,7 +11,7 @@ public abstract class Measurable : CommonBase, IMeasurable
     #endregion
 
     #region Constants
-    public const string DefaultCustomMeasureUnitDefaultName = "Default";
+    public const string DefaultCustomMeasureUnitName = "Default";
     #endregion
 
     #region Constructors
@@ -127,7 +127,7 @@ public abstract class Measurable : CommonBase, IMeasurable
     
     public virtual IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
     {
-        return MeasureUnitCodes;
+        yield return GetMeasureUnitCode();
     }
 
     public virtual TypeCode GetQuantityTypeCode()

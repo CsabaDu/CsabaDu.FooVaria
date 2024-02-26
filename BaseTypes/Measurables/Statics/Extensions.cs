@@ -58,11 +58,10 @@ public static class Extensions
     {
         if (!Enum.IsDefined(measureUnitCode)) return false;
 
-        Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
-        Type measureUnitType = measureUnit.GetType();
-        string name = Enum.GetName(measureUnitType, measureUnit)!;
+        Type measureUnitType = measureUnitCode.GetMeasureUnitType();
+        string? defaultMeasureUnitName = Enum.GetName(measureUnitType, default(int));
 
-        return name == DefaultCustomMeasureUnitDefaultName;
+        return defaultMeasureUnitName == DefaultCustomMeasureUnitName;
     }
 
     public static bool IsSpreadMeasureUnitCode(this MeasureUnitCode measureUnitCode)

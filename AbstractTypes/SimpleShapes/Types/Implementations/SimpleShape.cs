@@ -224,11 +224,6 @@ public abstract class SimpleShape : Shape, ISimpleShape
         return GetBulkSpreadFactory().CreateSpread(spreadMeasure);
     }
 
-    public override sealed IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
-    {
-        return base.GetMeasureUnitCodes();
-    }
-
     public override sealed IEnumerable<IShapeComponent> GetShapeComponents()
     {
         return GetShapeExtents();
