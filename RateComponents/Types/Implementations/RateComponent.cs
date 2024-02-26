@@ -26,6 +26,12 @@
             return GetFactory().MeasurementFactory;
         }
 
+        public override sealed TypeCode GetQuantityTypeCode()
+        {
+            Type quantityType = GetBaseQuantity().GetType();
+
+            return Type.GetTypeCode(quantityType);
+        }
         #endregion
         #endregion
 

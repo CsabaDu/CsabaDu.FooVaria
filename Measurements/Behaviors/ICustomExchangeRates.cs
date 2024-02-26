@@ -1,7 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Measurements.Behaviors;
+﻿//namespace CsabaDu.FooVaria.Measurements.Behaviors;
 
-public interface ICustomMExchangeRates
-{
-    void InitializeCustomExchangeRates(MeasureUnitCode measureUnitCode, IDictionary<string, decimal> customExchangeRateCollection);
+//public interface ICustomMExchangeRates
+//{
+//    void InitializeCustomExchangeRates(MeasureUnitCode measureUnitCode, IDictionary<string, decimal> customExchangeRateCollection);
 
-}
+//}

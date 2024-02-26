@@ -49,6 +49,7 @@ public sealed class MeasureFactory(IMeasurementFactory measurementFactory) : IMe
 
         return CreateMeasure(measurement, quantity);
     }
+
     public IMeasure CreateNew(IMeasure other)
     {
         return CreateMeasure(other, nameof(other));

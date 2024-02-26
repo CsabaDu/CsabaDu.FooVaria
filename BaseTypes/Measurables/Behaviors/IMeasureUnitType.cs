@@ -3,9 +3,9 @@
 public interface IMeasureUnitType
 {
     Type GetMeasureUnitType();
-    IEnumerable<MeasureUnitCode> GetMeasureUnitCodes();
+    //IEnumerable<MeasureUnitCode> GetMeasureUnitCodes();
     bool HasMeasureUnitCode(MeasureUnitCode measureUnitCode);
-    bool IsValidMeasureUnitCode(MeasureUnitCode measureUnitCode);
+    //bool IsValidMeasureUnitCode(MeasureUnitCode measureUnitCode);
 
     void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, [DisallowNull] string paramName);
 }

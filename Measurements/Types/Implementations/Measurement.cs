@@ -222,6 +222,27 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
         return customMeasureUnits.Where(x => !ExchangeRateCollection.ContainsKey(x));
     }
 
+    public static void InitializeCustomExchangeRates(MeasureUnitCode measureUnitCode, IDictionary<string, decimal> customExchangeRateCollection)
+    {
+        ValidateCustomMeasureUnitCode(measureUnitCode);
+
+        int count = NullChecked(customExchangeRateCollection, nameof(customExchangeRateCollection)).Count;
+
+        for (int i = 0; i < count; i++)
+        {
+            KeyValuePair<string, decimal> NamedCustomExchangeRate = customExchangeRateCollection.ElementAt(i);
+            string? customName = NamedCustomExchangeRate.Key;
+            decimal exchangeRate = NamedCustomExchangeRate.Value;
+            Enum measureUnit = GetNotUsedCustomMeasureUnits(measureUnitCode).First();
+
+            if (!TrySetCustomMeasureUnit(measureUnit, exchangeRate, customName))
+            {
+                throw DecimalArgumentOutOfRangeException(nameof(exchangeRate), exchangeRate);
+            }
+
+        }
+    }
+
     public static void SetCustomMeasureUnit(Enum measureUnit, decimal exchangeRate, string customName)
     {
         if (TrySetCustomMeasureUnit(measureUnit, exchangeRate, customName)) return;

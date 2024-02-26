@@ -91,11 +91,6 @@ public abstract class Spread : Quantifiable, ISpread
     #endregion
 
     #region Override methods
-    public override sealed decimal GetDefaultQuantity()
-    {
-        return (GetSpreadMeasure() as IBaseQuantifiable)!.GetDefaultQuantity();
-    }
-
     public override ISpreadFactory GetFactory()
     {
         return (ISpreadFactory)Factory;
@@ -105,12 +100,6 @@ public abstract class Spread : Quantifiable, ISpread
     {
         return (GetSpreadMeasure() as IMeasurable)!.GetMeasureUnit();
     }
-
-    //public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
-    //{
-    //    yield return MeasureUnitCode.AreaUnit;
-    //    yield return MeasureUnitCode.VolumeUnit;
-    //}
 
     #region Sealed methods
     public override sealed ISpread Round(RoundingMode roundingMode)
@@ -122,9 +111,19 @@ public abstract class Spread : Quantifiable, ISpread
         return GetSpread(spreadMeasure);
     }
 
+    public override sealed decimal GetDefaultQuantity()
+    {
+        return (GetSpreadMeasure() as IBaseQuantifiable)!.GetDefaultQuantity();
+    }
+
     public override sealed ISpread GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
     {
         return (ISpread)GetFactory().CreateQuantifiable(measureUnitCode, defaultQuantity);
+    }
+
+    public override sealed TypeCode GetQuantityTypeCode()
+    {
+        return base.GetQuantityTypeCode();
     }
 
     public override sealed object GetQuantity(RoundingMode roundingMode)

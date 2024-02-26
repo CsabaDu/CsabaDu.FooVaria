@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Interface Name="CsabaDu.FooVaria.Measurements.Behaviors.ICustomMeasureUnit" Collapsed="true">
-    <Position X="5.75" Y="1.75" Width="1.75" />
+    <Position X="3.5" Y="1.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Behaviors\ICustomMeasureUnit.cs</FileName>
@@ -54,15 +54,8 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAQAAAAAAAAAAA=</HashCode>
       <FileName>Types\ICustomMeasurement.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="CsabaDu.FooVaria.Measurements.Behaviors.ICustomMExchangeRates" Collapsed="true">
-    <Position X="3.5" Y="1.75" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
-      <FileName>Behaviors\ICustomExchangeRates.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Types.IDefaultMeasurable&lt;TSelf&gt;" Collapsed="true" BaseTypeListCollapsed="true">

@@ -76,11 +76,6 @@ public abstract class Quantifiable : BaseQuantifiable, IQuantifiable
         return base.GetMeasureUnitCode();
     }
 
-    public override sealed TypeCode GetQuantityTypeCode()
-    {
-        return base.GetQuantityTypeCode();
-    }
-
     public override sealed void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
     {
         base.ValidateMeasureUnitCode(measureUnitCode, paramName);
@@ -88,6 +83,7 @@ public abstract class Quantifiable : BaseQuantifiable, IQuantifiable
     #endregion
     #endregion
 
+    #region Virtual methods
     public virtual int CompareTo(IQuantifiable? other)
     {
         if (other == null) return 1;
@@ -96,6 +92,7 @@ public abstract class Quantifiable : BaseQuantifiable, IQuantifiable
 
         return GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
     }
+    #endregion
 
     #region Abstract methods
     public abstract IQuantifiable? ExchangeTo(Enum? context);

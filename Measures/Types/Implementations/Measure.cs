@@ -77,11 +77,6 @@
             return GetFactory().MeasurementFactory;
         }
 
-        //public override sealed decimal GetDefaultQuantity()
-        //{
-        //    return GetDefaultQuantity(GetBaseQuantity(), GetExchangeRate());
-        //}
-
         public override sealed IMeasureFactory GetFactory()
         {
             return (IMeasureFactory)Factory;
@@ -90,6 +85,11 @@
         public override sealed LimitMode? GetLimitMode()
         {
             return base.GetLimitMode();
+        }
+
+        public override sealed TypeCode GetQuantityTypeCode()
+        {
+            return base.GetQuantityTypeCode();
         }
 
         public override sealed void ValidateQuantity(ValueType? quantity, string paramName)

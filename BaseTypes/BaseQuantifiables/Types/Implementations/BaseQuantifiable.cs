@@ -34,6 +34,11 @@ public abstract class BaseQuantifiable : Measurable, IBaseQuantifiable
     #endregion
 
     #region Public methods
+    public bool IsValidMeasureUnitCode(MeasureUnitCode measureUnitCode)
+    {
+        return GetMeasureUnitCodes().Contains(measureUnitCode);
+    }
+
     #region Override methods
     public override bool Equals(object? obj)
     {
@@ -53,7 +58,12 @@ public abstract class BaseQuantifiable : Measurable, IBaseQuantifiable
     }
     #endregion
 
-    #region Virtual methods
+    #region Virtual methods    
+    public virtual IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
+    {
+        yield return GetMeasureUnitCode();
+    }
+
     public virtual void ValidateQuantity(ValueType? quantity, string paramName)
     {
         _ = ConvertQuantity(quantity, paramName, GetQuantityTypeCode());

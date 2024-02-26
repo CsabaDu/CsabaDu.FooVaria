@@ -89,11 +89,6 @@ public abstract class Measurable : CommonBase, IMeasurable
         return measureUnitCode == GetMeasureUnitCode();
     }
 
-    public bool IsValidMeasureUnitCode(MeasureUnitCode measureUnitCode)
-    {
-        return GetMeasureUnitCodes().Contains(measureUnitCode);
-    }
-
     public void ValidateMeasureUnitCode(IMeasurable? measurable, [DisallowNull] string paramName)
     {
         MeasureUnitCode measureUnitCode = NullChecked(measurable, paramName).GetMeasureUnitCode();
@@ -123,11 +118,6 @@ public abstract class Measurable : CommonBase, IMeasurable
     public virtual MeasureUnitCode GetMeasureUnitCode()
     {
         return GetMeasureUnitCode(GetMeasureUnit());
-    }
-    
-    public virtual IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
-    {
-        yield return GetMeasureUnitCode();
     }
 
     public virtual TypeCode GetQuantityTypeCode()
