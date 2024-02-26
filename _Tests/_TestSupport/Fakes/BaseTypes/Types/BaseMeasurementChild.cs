@@ -2,13 +2,18 @@
 
 internal sealed class BaseMeasurementChild(IBaseMeasurementFactory factory) : BaseMeasurement(factory)
 {
+    #region TestHelpers
+    internal Enum GetMeasureUnit_returns { private get; set; }
+    internal string GetName_returns { private get; set; }
+    #endregion
+
     public override Enum GetMeasureUnit()
     {
-        throw new NotImplementedException();
+        return GetMeasureUnit_returns;
     }
 
     public override string GetName()
     {
-        throw new NotImplementedException();
+        return GetName_returns;
     }
 }

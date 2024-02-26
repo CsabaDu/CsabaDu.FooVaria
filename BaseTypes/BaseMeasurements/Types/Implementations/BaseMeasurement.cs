@@ -70,11 +70,6 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
         return GetExchangeRateCollection(GetMeasureUnitCode());
     }
 
-    public Enum GetMeasureUnit(IMeasureUnit<Enum>? other)
-    {
-        return (other ?? this).GetMeasureUnit();
-    }
-
     public bool IsExchangeableTo(Enum? context)
     {
         if (context is MeasureUnitCode measureUnitCode) return HasMeasureUnitCode(measureUnitCode);

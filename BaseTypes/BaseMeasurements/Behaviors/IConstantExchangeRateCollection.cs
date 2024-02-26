@@ -1,7 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Behaviors;
 
-public interface IConstantExchangeRates
+public interface IConstantExchangeRateCollection
 {
     IDictionary<object, decimal> GetConstantExchangeRateCollection();
-    //IDictionary<object, decimal> GetConstantExchangeRateCollection(MeasureUnitCode measureUnitCode);
 }

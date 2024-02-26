@@ -1,11 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Behaviors;
 
-public interface IExchangeRateCollection : IConstantExchangeRates, IExchangeRate
+public interface IExchangeRateCollection : IConstantExchangeRateCollection, IExchangeRate
 {
-    //IDictionary<object, decimal> GetExchangeRateCollection(MeasureUnitCode measureUnitCode);
     IDictionary<object, decimal> GetExchangeRateCollection();
-    //decimal GetExchangeRate(string name);
-    //bool IsValidExchangeRate(decimal exchangeRate, Enum measureUnit);
-
-    //void ValidateExchangeRate(decimal exchangeRate, string paramName, Enum measureUnit);
 }

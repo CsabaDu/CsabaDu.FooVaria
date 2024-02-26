@@ -480,11 +480,6 @@ public sealed class MeasurableTests
         return DynamicDataSources.GetMeasurableEqualsArgsArrayList();
     }
 
-    //private static IEnumerable<object[]> GetMeasurableIsValidMeasureUnitCodeArgsArrayList()
-    //{
-    //    return DynamicDataSources.GetMeasurableIsValidMeasureUnitCodeArgsArrayList();
-    //}
-
     private static IEnumerable<object[]> GetMeasurableValidateMeasureUnitInvalidArgsArrayList()
     {
         return DynamicDataSources.GetMeasurableValidateMeasureUnitInvalidArgsArrayList();

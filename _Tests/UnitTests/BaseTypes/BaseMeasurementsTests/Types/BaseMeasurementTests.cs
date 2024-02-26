@@ -5,27 +5,37 @@ public sealed class BaseMeasurementTests
 {
     #region Initialize
     [ClassInitialize]
-    public static void InitializeMeasurableTestsClass(TestContext context)
+    public static void InitializeBaseMeasurementTestsClass(TestContext context)
     {
         DynamicDataSources = new();
     }
 
     [TestInitialize]
-    public void InitializeMeasurableTests()
+    public void InitializeBaseMeasurementTests()
     {
-        measureUnit = RandomParams.GetRandomValidMeasureUnit();
-        measureUnitCode = Measurable.GetMeasureUnitCode(measureUnit);
-        factoryObject = new BaseMeasurementFactoryClass();
-        baseMeasurementObject = new BaseMeasurementChild(factoryObject);
+        _factory = new();
+        _baseMeasurement = new(_factory);
+
+        _measureUnit = RandomParams.GetRandomMeasureUnit();
+        _baseMeasurement.GetMeasureUnit_returns = _measureUnit;
+
+        _measureUnitType = _measureUnit.GetType();
+        _measureUnitCode = GetMeasureUnitCode(_measureUnitType);
+        
+        _name = RandomParams.GetRandomParamName();
+        _baseMeasurement.GetName_returns = _name;
     }
     #endregion
 
     #region Private fields
-    private IBaseMeasurement baseMeasurementObject;
-    private IBaseMeasurementFactory factoryObject;
-    private Enum measureUnit;
-    string name;
-    MeasureUnitCode measureUnitCode;
+    private MeasureUnitCode _measureUnitCode;
+    private BaseMeasurementChild _baseMeasurement;
+    private BaseMeasurementFactoryClass _factory;
+    private Enum _measureUnit;
+    Type _measureUnitType;
+    string _name;
+
+    private string _paramName;
 
     #region Readonly fields
     private readonly RandomParams RandomParams = new();
@@ -37,66 +47,34 @@ public sealed class BaseMeasurementTests
     #endregion
 
     #region Test methods
-    //#region Constructors
-    //#region BaseMeasurement(IBaseMeasurementFactory, Enum)
-    //[TestMethod, TestCategory("UnitTest")]
-    //public void BaseMeasurement_nullArg_IBaseMeasurementFactory_arg_Enum_throws_ArgumentNullException()
-    //{
-    //    // Arrange
-    //    factoryObject = null;
-    //    measureUnit = null;
+    #region Constructors
+    #region BaseMeasurement(IBaseMeasurementFactory)
+    [TestMethod, TestCategory("UnitTest")]
+    public void BaseMeasurement_nullArg_IBaseMeasurementFactory_throws_ArgumentNullException()
+    {
+        // Arrange
+        _factory = null;
 
-    //    // Act
-    //    void attempt() => _ = new BaseMeasurementChild(factoryObject, measureUnit);
+        // Act
+        void attempt() => _ = new BaseMeasurementChild(_factory);
 
-    //    // Assert
-    //    var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-    //    Assert.AreEqual(ParamNames.factory, ex.ParamName);
-    //}
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
+        Assert.AreEqual(ParamNames.factory, ex.ParamName);
+    }
 
-    //[TestMethod, TestCategory("UnitTest")]
-    //public void BaseMeasurement_validArg_IBaseMeasurementFactory_nullArg_Enum_throws_ArgumentNullException()
-    //{
-    //    // Arrange
-    //    measureUnit = null;
+    [TestMethod, TestCategory("UnitTest")]
+    public void BaseMeasurement_validArg_IBaseMeasurementFactory_creates()
+    {
+        // Arrange
+        // Act
+        var actual = new BaseMeasurementChild(_factory);
 
-    //    // Act
-    //    void attempt() => _ = new BaseMeasurementChild(factoryObject, measureUnit);
-
-    //    // Assert
-    //    var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-    //    Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
-    //}
-
-    //[TestMethod, TestCategory("UnitTest")]
-    //[DynamicData(nameof(GetInvalidEnumMeasureUnitArgArrayList), DynamicDataSourceType.Method)]
-    //public void BaseMeasurement_validArg_IBaseMeasurementFactory_invalidArg_Enum_throws_InvalidEnumArgumentException(Enum measureUnit)
-    //{
-    //    // Arrange
-    //    // Act
-    //    void attempt() => _ = new BaseMeasurementChild(factoryObject, measureUnit);
-
-    //    // Assert
-    //    var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
-    //    Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
-    //}
-
-    //[TestMethod, TestCategory("UnitTest")]
-    //public void BaseMeasurement_validArgs_IBaseMeasurementFactory_Enum_creates()
-    //{
-    //    // Arrange
-    //    measureUnit = RandomParams.GetRandomValidMeasureUnit();
-    //    measureUnitCode = Measurable.GetMeasureUnitCode(measureUnit);
-
-    //    // Act
-    //    var actual = new BaseMeasurementChild(factoryObject, measureUnit);
-
-    //    // Assert
-    //    Assert.IsInstanceOfType(actual, typeof(IBaseMeasurement));
-    //    Assert.AreEqual(measureUnitCode, actual.MeasureUnitCode);
-    //}
-    //#endregion
-    //#endregion
+        // Assert
+        Assert.IsInstanceOfType(actual, typeof(IBaseMeasurement));
+    }
+    #endregion
+    #endregion
 
     //#region CompareTo
     //#region CompareTo(IBaseMeasurement?)
