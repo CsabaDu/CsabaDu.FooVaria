@@ -11,13 +11,5 @@
         where TLimitable : class, IBaseQuantifiable, ILimitable
     {
         bool? Includes(TLimitable? limitable);
-
-        //public sealed LimitMode GetLimitMode(ILimiter limiter)
-        //{
-        //    LimitMode? limitMode = NullChecked(limiter, nameof(limiter)).GetLimitMode();
-
-        //    return limitMode!.Value;
-        //}
-        //TSelf GetLimiter(TLimitable limitable, LimitMode limitMode);
     }
 }

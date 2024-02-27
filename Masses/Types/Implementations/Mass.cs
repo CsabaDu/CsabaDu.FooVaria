@@ -1,4 +1,6 @@
 ﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
+using CsabaDu.FooVaria.BaseTypes.Measurables.Types;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CsabaDu.FooVaria.Masses.Types.Implementations;
 
@@ -143,6 +145,13 @@ internal abstract class Mass : BaseQuantifiable, IMass
         #endregion
     }
 
+    public bool TryExchangeTo(Enum? context, [NotNullWhen(true)] out IMass? exchanged)
+    {
+        exchanged = ExchangeTo(context);
+
+        return exchanged != null;
+    }
+
     public decimal ProportionalTo(IMass? mass)
     {
         decimal defaultQuantity = GetDefaultQuantity();
@@ -194,9 +203,9 @@ internal abstract class Mass : BaseQuantifiable, IMass
         return HashCode.Combine(Weight, GetBody());
     }
 
-    public override sealed Enum GetMeasureUnit()
+    public override sealed Enum GetBaseMeasureUnit()
     {
-        return Weight.GetMeasureUnit();
+        return Weight.GetBaseMeasureUnit();
     }
 
     public override sealed TypeCode GetQuantityTypeCode()
@@ -325,7 +334,7 @@ internal abstract class Mass : BaseQuantifiable, IMass
     {
         if (IsWeightNotLess(volumeWeight)) return Weight;
 
-        return (IWeight)volumeWeight.ExchangeTo(GetMeasureUnit())!;
+        return (IWeight)volumeWeight.ExchangeTo(GetBaseMeasureUnit())!;
     }
 
     private bool IsWeightNotLess(IWeight volumeWeight)

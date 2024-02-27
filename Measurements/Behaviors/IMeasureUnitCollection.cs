@@ -6,7 +6,7 @@ public interface IMeasureUnitCollection
 }
 
 
-    //Enum? GetMeasureUnit(string name);
+    //Enum? GetBaseMeasureUnit(string name);
     //string GetDefaultName(Enum measureUnit);
 
     //bool TryGetMeasureUnit(MeasureUnitCode measureUnitCode, decimal exchangeRate, [NotNullWhen(true)] out Enum? measureUnit);

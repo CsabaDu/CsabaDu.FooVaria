@@ -1,4 +1,5 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.Implementations;
+﻿
+namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.Implementations;
 
 public abstract class Quantifiable : BaseQuantifiable, IQuantifiable
 {
@@ -58,7 +59,14 @@ public abstract class Quantifiable : BaseQuantifiable, IQuantifiable
         throw QuantityArgumentOutOfRangeException(paramName, defaultQuantity);
     }
 
-    public void ValidateQuantifiable(IBaseQuantifiable? baseQuantifiable, string paramName)
+    public bool TryExchangeTo(Enum? context, [NotNullWhen(true)] out IQuantifiable? exchanged)
+    {
+        exchanged = ExchangeTo(context);
+
+        return exchanged != null;
+    }
+
+    public void ValidateQuantifiable(IBaseQuantifiable? baseQuantifiable,[DisallowNull] string paramName)
     {
         ValidateMeasureUnitCode(baseQuantifiable, paramName);
         ValidateQuantity(baseQuantifiable, paramName);

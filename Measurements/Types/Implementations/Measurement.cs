@@ -27,7 +27,7 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
 
     public string? GetCustomName()
     {
-        Enum measureUnit = GetMeasureUnit();
+        Enum measureUnit = GetBaseMeasureUnit();
 
         return GetCustomName(measureUnit);
     }
@@ -54,7 +54,7 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
 
     public string GetDefaultName()
     {
-        Enum measureUnit = GetMeasureUnit();
+        Enum measureUnit = GetBaseMeasureUnit();
 
         return GetDefaultName(measureUnit);
     }
@@ -86,14 +86,14 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
 
     public void SetCustomName(string customName)
     {
-        SetCustomName(GetMeasureUnit(), customName);
+        SetCustomName(GetBaseMeasureUnit(), customName);
     }
 
     public void SetOrReplaceCustomName(string customName)
     {
         ValidateCustomName(customName);
 
-        Enum measureUnit = GetMeasureUnit();
+        Enum measureUnit = GetBaseMeasureUnit();
 
         if (CustomNameCollection.TryAdd(measureUnit, customName)) return;
 
@@ -120,7 +120,7 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
 
     public bool TrySetCustomName(string? customName)
     {
-        return TrySetCustomName(GetMeasureUnit(), customName);
+        return TrySetCustomName(GetBaseMeasureUnit(), customName);
     }
 
     public static void ValidateCustomName(string? customName)
@@ -147,14 +147,14 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
         return (IMeasurementFactory)Factory;
     }
 
-    public override sealed Enum GetMeasureUnit()
+    public override sealed Enum GetBaseMeasureUnit()
     {
         return (Enum)MeasureUnit;
     }
 
     public override sealed MeasureUnitCode GetMeasureUnitCode()
     {
-        Enum measuureUnit = GetMeasureUnit();
+        Enum measuureUnit = GetBaseMeasureUnit();
 
         return GetMeasureUnitCode(measuureUnit);
     }

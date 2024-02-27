@@ -60,7 +60,7 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
 
     public decimal GetExchangeRate()
     {
-        Enum measureUnit = GetMeasureUnit();
+        Enum measureUnit = GetBaseMeasureUnit();
 
         return GetExchangeRate(measureUnit, string.Empty);
     }
@@ -90,7 +90,7 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
 
     public void ValidateExchangeRate(decimal exchangeRate, string paramName)
     {
-        ValidateExchangeRate(exchangeRate, paramName, GetMeasureUnit());
+        ValidateExchangeRate(exchangeRate, paramName, GetBaseMeasureUnit());
     }
 
     #region Override methods

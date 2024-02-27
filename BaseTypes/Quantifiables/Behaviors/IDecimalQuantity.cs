@@ -4,4 +4,3 @@ public interface IDecimalQuantity : IQuantity
 {
     decimal GetDecimalQuantity();
 }
-

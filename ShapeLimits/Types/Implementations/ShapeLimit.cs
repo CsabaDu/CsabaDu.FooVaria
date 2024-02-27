@@ -89,9 +89,9 @@ public sealed class ShapeLimit : SimpleShape, IShapeLimit
         return (IShapeLimitFactory)Factory;
     }
 
-    public override Enum GetMeasureUnit()
+    public override Enum GetBaseMeasureUnit()
     {
-        return SimpleShape.GetMeasureUnit();
+        return SimpleShape.GetBaseMeasureUnit();
     }
 
     public override IShapeComponent? GetValidShapeComponent(IBaseQuantifiable? shapeComponent)

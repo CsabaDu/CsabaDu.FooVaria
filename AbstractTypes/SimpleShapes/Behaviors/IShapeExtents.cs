@@ -6,6 +6,6 @@ public interface IShapeExtents : IShapeExtentType, IShapeExtent
 
     IEnumerable<IExtent> GetShapeExtents();
 
-    void ValidateShapeExtentCount(int count, string paramName);
-    void ValidateShapeExtents(IEnumerable<IExtent> shapeExtents, string paramName);
+    void ValidateShapeExtentCount(int count, [DisallowNull] string paramName);
+    void ValidateShapeExtents(IEnumerable<IExtent> shapeExtents, [DisallowNull] string paramName);
 }

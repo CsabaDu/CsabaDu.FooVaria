@@ -29,7 +29,7 @@ public sealed class ProportionLimitFactory : SimpleRateFactory, IProportionLimit
 
     public IProportionLimit Create(IBaseMeasure numerator, Enum denominatorMeasureUnit, LimitMode limitMode)
     {
-        Enum numeratorMeasureUnit = NullChecked(numerator, nameof(numerator)).GetMeasureUnit();
+        Enum numeratorMeasureUnit = NullChecked(numerator, nameof(numerator)).GetBaseMeasureUnit();
         ValueType quantity = numerator.GetBaseQuantity();
 
         return Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit, limitMode);
@@ -44,7 +44,7 @@ public sealed class ProportionLimitFactory : SimpleRateFactory, IProportionLimit
 
     public IProportionLimit Create(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement, LimitMode limitMode)
     {
-        Enum denominatorMeasureUnit = NullChecked(denominatorMeasurement, nameof(denominatorMeasurement)).GetMeasureUnit();
+        Enum denominatorMeasureUnit = NullChecked(denominatorMeasurement, nameof(denominatorMeasurement)).GetBaseMeasureUnit();
 
         return Create(numerator, denominatorMeasureUnit, limitMode);
     }

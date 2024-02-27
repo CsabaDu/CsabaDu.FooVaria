@@ -51,11 +51,9 @@
         where TDEnum : struct, Enum
     {
         #region Public methods
-        public TNEnum GetMeasureUnit(IMeasureUnit<TNEnum>? other)
+        public TNEnum GetMeasureUnit()
         {
-            if (other == null) return default;
-
-            return (TNEnum)other.GetMeasureUnit();
+            return (TNEnum)GetBaseMeasureUnit();
         }
 
         public IProportion<TNEnum, TDEnum> GetProportion(TNEnum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit)

@@ -5,13 +5,5 @@ public interface IExchange<TSelf, in TContext> : IProportional<TSelf>, IExchange
     where TContext : notnull
 {
     TSelf? ExchangeTo(TContext? context);
-
-    #region Default implementations
-    public sealed bool TryExchangeTo(TContext? context, [NotNullWhen(true)] out TSelf? exchanged)
-    {
-        exchanged = ExchangeTo(context);
-
-        return exchanged != null;
-    }
-    #endregion
+    bool TryExchangeTo(TContext? context, [NotNullWhen(true)] out TSelf? exchanged);
 }

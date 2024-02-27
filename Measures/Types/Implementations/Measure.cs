@@ -103,7 +103,7 @@
         #region Private methods
         private IMeasure GetMeasure(decimal operand, MeasureOperationMode measureOperationMode)
         {
-            Enum measureUnit = GetMeasureUnit();
+            Enum measureUnit = GetBaseMeasureUnit();
             decimal quantity = getQuantity();
 
             return (IMeasure)GetBaseMeasure(quantity).ExchangeTo(measureUnit)!;
@@ -154,7 +154,7 @@
 
             IMeasure getMeasure()
             {
-                Enum measureUnit = GetBaseMeasurement().GetMeasureUnit();
+                Enum measureUnit = GetBaseMeasurement().GetBaseMeasureUnit();
                 decimal quantity = getDefaultQuantitySum() / GetExchangeRate();
 
                 return GetBaseMeasure(measureUnit, quantity);
@@ -247,9 +247,9 @@
             return (TSelf)(ExchangeTo(measureUnit) ?? throw InvalidMeasureUnitEnumArgumentException(measureUnit));
         }
 
-        public TEnum GetMeasureUnit(IMeasureUnit<TEnum>? other)
+        public TEnum GetMeasureUnit()
         {
-            return (TEnum)(other ?? this).GetMeasureUnit();
+            return (TEnum)GetBaseMeasureUnit();
         }
 
         public override sealed IMeasurement GetBaseMeasurement()

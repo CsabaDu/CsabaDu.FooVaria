@@ -2,13 +2,13 @@
 {
     public interface IMeasureUnit
     {
-        Enum GetMeasureUnit();
+        Enum GetBaseMeasureUnit();
         Type GetMeasureUnitType();
     }
 
     public interface IMeasureUnit<TEnum> : IMeasureUnit
         where TEnum : Enum
     {
-        TEnum GetMeasureUnit(IMeasureUnit<TEnum>? other);
+        TEnum GetMeasureUnit();
     }
 }

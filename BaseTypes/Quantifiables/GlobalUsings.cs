@@ -6,4 +6,5 @@ global using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Factories;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
+global using System.Diagnostics.CodeAnalysis;
 global using static CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics.ExceptionMethods;

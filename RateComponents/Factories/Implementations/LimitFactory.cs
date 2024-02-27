@@ -63,7 +63,7 @@ public sealed class LimitFactory(IMeasurementFactory measurementFactory)
 
     public ILimit Create(IBaseMeasure baseMeasure, LimitMode limitMode)
     {
-        Enum measureUnit = NullChecked(baseMeasure, nameof(baseMeasure)).GetMeasureUnit();
+        Enum measureUnit = NullChecked(baseMeasure, nameof(baseMeasure)).GetBaseMeasureUnit();
         ValueType quantity = baseMeasure.GetBaseQuantity();
 
         return GetOrCreateStoredLimit(measureUnit, quantity, limitMode);
@@ -85,7 +85,7 @@ public sealed class LimitFactory(IMeasurementFactory measurementFactory)
     #region Override methods
     public override ILimit CreateBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity)
     {
-        Enum measureUnit = NullChecked(baseMeasurement, nameof(baseMeasurement)).GetMeasureUnit();
+        Enum measureUnit = NullChecked(baseMeasurement, nameof(baseMeasurement)).GetBaseMeasureUnit();
 
         return Create(measureUnit, quantity, default);
     }

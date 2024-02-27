@@ -4,5 +4,5 @@ public interface IShapeExtent
 {
     IExtent GetShapeExtent(ShapeExtentCode shapeExtentCode);
 
-    void ValidateShapeExtent(IExtent? shapeExtent, string paramName);
+    void ValidateShapeExtent(IExtent? shapeExtent, [DisallowNull] string paramName);
 }

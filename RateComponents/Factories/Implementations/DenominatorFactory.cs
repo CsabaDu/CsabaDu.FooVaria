@@ -49,7 +49,7 @@ public sealed class DenominatorFactory(IMeasurementFactory measurementFactory)
 
     public IDenominator Create(IBaseMeasure baseMeasure, ValueType quantity)
     {
-        Enum measureUnit = NullChecked(baseMeasure, nameof(baseMeasure)).GetMeasureUnit();
+        Enum measureUnit = NullChecked(baseMeasure, nameof(baseMeasure)).GetBaseMeasureUnit();
 
         return GetOrCreateStoredDenominator(measureUnit, quantity);
     }
@@ -88,7 +88,7 @@ public sealed class DenominatorFactory(IMeasurementFactory measurementFactory)
     {
         if (NullChecked(baseMeasure, nameof(baseMeasure)) is IDenominator denominator) return CreateNew(denominator);
 
-        Enum measureUnit = baseMeasure.GetMeasureUnit();
+        Enum measureUnit = baseMeasure.GetBaseMeasureUnit();
         ValueType quantity = baseMeasure.GetDecimalQuantity();
 
         return GetOrCreateStoredDenominator(measureUnit, quantity);
@@ -102,7 +102,7 @@ public sealed class DenominatorFactory(IMeasurementFactory measurementFactory)
     #region Override methods
     public override IDenominator CreateBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity)
     {
-        Enum measureUnit = NullChecked(baseMeasurement, nameof(baseMeasurement)).GetMeasureUnit();
+        Enum measureUnit = NullChecked(baseMeasurement, nameof(baseMeasurement)).GetBaseMeasureUnit();
 
         return GetOrCreateStoredDenominator(measureUnit, quantity);
     }

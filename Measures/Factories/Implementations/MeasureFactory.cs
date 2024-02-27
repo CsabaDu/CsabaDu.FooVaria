@@ -22,7 +22,7 @@ public sealed class MeasureFactory(IMeasurementFactory measurementFactory) : IMe
 
     public IBaseMeasure CreateBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity)
     {
-        Enum measureUnit = NullChecked(baseMeasurement, nameof(baseMeasurement)).GetMeasureUnit();
+        Enum measureUnit = NullChecked(baseMeasurement, nameof(baseMeasurement)).GetBaseMeasureUnit();
 
         return CreateMeasure(measureUnit, quantity);
     }
@@ -97,14 +97,14 @@ public sealed class MeasureFactory(IMeasurementFactory measurementFactory) : IMe
 
     private IMeasure CreateMeasure(IBaseMeasurement baseMeasurement, ValueType quantity)
     {
-        Enum measureUnit = baseMeasurement.GetMeasureUnit();
+        Enum measureUnit = baseMeasurement.GetBaseMeasureUnit();
 
         return CreateMeasure(measureUnit, quantity);
     }
 
     private IMeasure CreateMeasure(IBaseMeasure baseMeasure, string paramName)
     {
-        Enum measureUnit = NullChecked(baseMeasure, paramName).GetMeasureUnit();
+        Enum measureUnit = NullChecked(baseMeasure, paramName).GetBaseMeasureUnit();
         ValueType quantity = baseMeasure.GetDecimalQuantity();
 
         return CreateMeasure(measureUnit, quantity);

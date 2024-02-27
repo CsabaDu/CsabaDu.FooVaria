@@ -18,7 +18,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
     #region Public methods
     public IMeasurement Create(IBaseMeasurement baseMeasurement)
     {
-        Enum measureUnit = NullChecked(baseMeasurement, nameof(baseMeasurement)).GetMeasureUnit();
+        Enum measureUnit = NullChecked(baseMeasurement, nameof(baseMeasurement)).GetBaseMeasureUnit();
 
         return GetStoredMeasurement(measureUnit);
     }
@@ -95,7 +95,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
 
     public IMeasurement CreateNew(IMeasurement measurement)
     {
-        Enum measureUnit = NullChecked(measurement, nameof(measurement)).GetMeasureUnit();
+        Enum measureUnit = NullChecked(measurement, nameof(measurement)).GetBaseMeasureUnit();
 
         return GetStoredMeasurement(measureUnit);
     }

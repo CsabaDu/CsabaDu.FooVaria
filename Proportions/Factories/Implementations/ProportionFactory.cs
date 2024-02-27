@@ -61,7 +61,7 @@ public sealed class ProportionFactory(IMeasureFactory measureFactory) : SimpleRa
     public IProportion<TDEnum> Create<TDEnum>(IBaseMeasure numerator, TDEnum denominatorMeasureUnit)
         where TDEnum : struct, Enum
     {
-        Enum numeratorMeasureUnit = NullChecked(numerator, nameof(numerator)).GetMeasureUnit();
+        Enum numeratorMeasureUnit = NullChecked(numerator, nameof(numerator)).GetBaseMeasureUnit();
         decimal quantity = numerator.GetDefaultQuantity();
         quantity /= GetExchangeRate(numeratorMeasureUnit, nameof(numerator));
 

@@ -96,9 +96,9 @@ public abstract class Spread : Quantifiable, ISpread
         return (ISpreadFactory)Factory;
     }
 
-    public override Enum GetMeasureUnit()
+    public override Enum GetBaseMeasureUnit()
     {
-        return (GetSpreadMeasure() as IMeasurable)!.GetMeasureUnit();
+        return (GetSpreadMeasure() as IMeasurable)!.GetBaseMeasureUnit();
     }
 
     #region Sealed methods

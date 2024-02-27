@@ -1,9 +1,10 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
+﻿
+namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
 
 public interface ISpreadMeasure : IQuantity<double>
 {
     ISpreadMeasure GetSpreadMeasure();
     MeasureUnitCode GetSpreadMeasureUnitCode();
 
-    void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName);
+    void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, [DisallowNull] string paramName);
 }

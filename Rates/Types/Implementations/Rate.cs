@@ -179,6 +179,13 @@ internal abstract class Rate : BaseRate, IRate
         return base.ProportionalTo(other);
     }
 
+    public bool TryExchangeTo(IMeasurable? context, [NotNullWhen(true)] out IRate? exchanged)
+    {
+        exchanged = ExchangeTo(context);
+
+        return exchanged != null;
+    }
+
     #region Override methods
     public override IRateFactory GetFactory()
     {
@@ -203,9 +210,9 @@ internal abstract class Rate : BaseRate, IRate
         return Numerator.GetDefaultQuantity() / Denominator.GetDefaultQuantity();
     }
 
-    public override sealed Enum GetMeasureUnit()
+    public override sealed Enum GetBaseMeasureUnit()
     {
-        return Numerator.GetMeasureUnit();
+        return Numerator.GetBaseMeasureUnit();
     }
 
     public override sealed MeasureUnitCode GetDenominatorCode()

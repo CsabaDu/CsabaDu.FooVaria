@@ -10,7 +10,7 @@ public abstract class SimpleRateFactory : ISimpleRateFactory
         #region Local methods
         (MeasureUnitCode, decimal) getDenominatorComponents()
         {
-            Enum? measureUnit = denominatorMeasurement?.GetMeasureUnit();
+            Enum? measureUnit = denominatorMeasurement?.GetBaseMeasureUnit();
 
             return GetSimpleRateComponents(measureUnit, nameof(denominatorMeasurement));
         }

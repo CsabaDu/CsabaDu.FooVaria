@@ -28,7 +28,7 @@ public abstract class BaseMeasure : Quantifiable, IBaseMeasure
 
     public IBaseMeasure GetBaseMeasure(ValueType quantity)
     {
-        Enum measureUnit = GetMeasureUnit();
+        Enum measureUnit = GetBaseMeasureUnit();
         IBaseMeasurementFactory factory = GetBaseMeasurementFactory();
         IBaseMeasurement baseMeasurement = factory.CreateBaseMeasurement(measureUnit)!;
 
@@ -89,11 +89,11 @@ public abstract class BaseMeasure : Quantifiable, IBaseMeasure
         return (IBaseMeasureFactory)Factory;
     }
 
-    public override Enum GetMeasureUnit()
+    public override Enum GetBaseMeasureUnit()
     {
         IBaseMeasurement baseMeasurement = GetBaseMeasurement();
 
-        return baseMeasurement.GetMeasureUnit();
+        return baseMeasurement.GetBaseMeasureUnit();
     }
 
     public override IBaseMeasure Round(RoundingMode roundingMode)

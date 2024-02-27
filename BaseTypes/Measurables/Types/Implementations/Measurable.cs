@@ -117,7 +117,7 @@ public abstract class Measurable : CommonBase, IMeasurable
     #region Virtual methods
     public virtual MeasureUnitCode GetMeasureUnitCode()
     {
-        return GetMeasureUnitCode(GetMeasureUnit());
+        return GetMeasureUnitCode(GetBaseMeasureUnit());
     }
 
     public virtual TypeCode GetQuantityTypeCode()
@@ -150,7 +150,7 @@ public abstract class Measurable : CommonBase, IMeasurable
     #endregion
 
     #region Abstract methods
-    public abstract Enum GetMeasureUnit();
+    public abstract Enum GetBaseMeasureUnit();
     #endregion
 
     #region Static methods

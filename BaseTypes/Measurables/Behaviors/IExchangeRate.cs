@@ -3,7 +3,6 @@
 public interface IExchangeRate
 {
     decimal GetExchangeRate();
-    //decimal GetExchangeRate(Enum measureUnit);
 
-    void ValidateExchangeRate(decimal exchangeRate, string paramName);
+    void ValidateExchangeRate(decimal exchangeRate, [DisallowNull] string paramName);
 }
