@@ -1,8 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
-using CsabaDu.FooVaria.BaseTypes.Measurables.Types;
-using System.Diagnostics.CodeAnalysis;
-
-namespace CsabaDu.FooVaria.Masses.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Masses.Types.Implementations;
 
 internal abstract class Mass : BaseQuantifiable, IMass
 {

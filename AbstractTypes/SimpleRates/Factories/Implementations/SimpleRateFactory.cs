@@ -36,7 +36,7 @@ public abstract class SimpleRateFactory : ISimpleRateFactory
         return CreateSimpleRate(numeratorCode, defaultQuantity, denominatorCode);
     }
 
-    public IBaseRate CreateBaseRate(params IBaseMeasure[] baseMeasures)
+    public virtual IBaseRate CreateBaseRate(params IBaseMeasure[] baseMeasures)
     {
         string paramName = nameof(baseMeasures);
         int count = NullChecked(baseMeasures, paramName).Length;
