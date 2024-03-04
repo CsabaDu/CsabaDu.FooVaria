@@ -5,10 +5,10 @@
         bool? FitsIn(ILimiter? limiter);
     }
 
-    public interface ILimitable<out TSelf> : ILimitable
-    where TSelf : class, IBaseQuantifiable, ILimitable
-    {
-        TSelf ConvertToLimitable(ILimiter limiter);
-    }
+    //public interface ILimitable<out TSelf> : ILimitable
+    //where TSelf : class, IBaseQuantifiable, ILimitable
+    //{
+    //    TSelf ConvertToLimitable(ILimiter limiter);
+    //}
 }
 

@@ -54,21 +54,22 @@ public abstract class RateFactory : IRateFactory
     }
 
     #region Abstract methods
-    public abstract IRate Create(params IBaseMeasure[] rateComponents);
-    public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement);
-    public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit);
-    public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitCode denominatorCode);
-    public IBaseRate CreateBaseRate(IBaseRate baseRate)
-    {
-        if (baseRate is IRate other) return CreateNew(other);
+    public abstract IRate Create(params IBaseMeasure[] baseMeasures);
+    public abstract IBaseRate CreateBaseRate(params IQuantifiable[] quantifiables);
+    public abstract IBaseRate CreateBaseRate(IQuantifiable numerator, IBaseMeasurement denominatorMeasurement);
+    public abstract IBaseRate CreateBaseRate(IQuantifiable numerator, Enum denominatorMeasureUnit);
+    public abstract IBaseRate CreateBaseRate(IQuantifiable numerator, MeasureUnitCode denominatorCode);
+    //public IBaseRate CreateBaseRate(IBaseRate baseRate)
+    //{
+    //    if (baseRate is IRate other) return CreateNew(other);
 
-        decimal defaultQuantity = NullChecked(baseRate, nameof(baseRate)).GetDefaultQuantity();
-        MeasureUnitCode numeratorCode = baseRate.GetNumeratorCode();
-        IBaseMeasure numerator = CreateBaseMeasure(numeratorCode, defaultQuantity);
-        MeasureUnitCode denominatorCode = baseRate.GetMeasureUnitCode();
+    //    decimal defaultQuantity = NullChecked(baseRate, nameof(baseRate)).GetDefaultQuantity();
+    //    MeasureUnitCode numeratorCode = baseRate.GetNumeratorCode();
+    //    IBaseMeasure numerator = CreateBaseMeasure(numeratorCode, defaultQuantity);
+    //    MeasureUnitCode denominatorCode = baseRate.GetMeasureUnitCode();
 
-        return CreateBaseRate(numerator, denominatorCode);
-    }
+    //    return CreateBaseRate(numerator, denominatorCode);
+    //}
     public abstract IRate CreateNew(IRate other);
     #endregion
     #endregion
@@ -82,7 +83,6 @@ public abstract class RateFactory : IRateFactory
 
         throw ArgumentTypeOutOfRangeException(paramName, measurable);
     }
-
     #endregion
     #endregion
 }

@@ -190,10 +190,10 @@ public abstract class BaseMeasure : Quantifiable, IBaseMeasure
         return GetDecimalQuantity().Round(roundingMode);
     }
 
-    public override sealed IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
-    {
-        return base.GetMeasureUnitCodes();
-    }
+    //public override sealed IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
+    //{
+    //    return base.GetMeasureUnitCodes();
+    //}
 
     public override sealed void ValidateQuantity(IBaseQuantifiable? baseQuantifiable, string paramName)
     {

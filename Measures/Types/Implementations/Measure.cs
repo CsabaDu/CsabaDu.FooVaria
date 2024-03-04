@@ -22,10 +22,10 @@
             return GetSum(other, SummingMode.Add);
         }
 
-        public IMeasure ConvertToLimitable(ILimiter limiter)
-        {
-            return ConvertToLimitable(this, limiter);
-        }
+        //public IMeasure ConvertToLimitable(ILimiter limiter)
+        //{
+        //    return ConvertToLimitable(this, limiter);
+        //}
 
         public IMeasure Divide(decimal divisor)
         {

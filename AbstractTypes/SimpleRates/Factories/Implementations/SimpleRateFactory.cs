@@ -1,75 +1,72 @@
 ﻿namespace CsabaDu.FooVaria.AbstractTypes.SimpleRates.Factories.Implementations;
 
-public abstract class SimpleRateFactory : ISimpleRateFactory
+public abstract class SimpleRateFactory(IMeasureFactory measureFactory) : ISimpleRateFactory
 {
+    #region Properties
+    public IMeasureFactory MeasureFactory { get; init; } = NullChecked(measureFactory, nameof(measureFactory));
+    #endregion
+
     #region Public methods
-    public IBaseRate CreateBaseRate(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement)
+    public IBaseRate CreateBaseRate(IQuantifiable numerator, Enum denominator)
     {
-        return CreateSimpleRate(numerator, nameof(numerator), getDenominatorComponents);
-
-        #region Local methods
-        (MeasureUnitCode, decimal) getDenominatorComponents()
-        {
-            Enum? measureUnit = denominatorMeasurement?.GetBaseMeasureUnit();
-
-            return GetSimpleRateComponents(measureUnit, nameof(denominatorMeasurement));
-        }
-        #endregion
-    }
-
-    public IBaseRate CreateBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit)
-    {
-        return CreateSimpleRate(numerator, nameof(numerator), getDenominatorComponents);
-
-        #region Local methods
-        (MeasureUnitCode, decimal) getDenominatorComponents()
-        {
-            return GetSimpleRateComponents(denominatorMeasureUnit, nameof(denominatorMeasureUnit));
-        }
-        #endregion
-    }
-
-    public IBaseRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitCode denominatorCode)
-    {
-        var (numeratorCode, defaultQuantity) = GetSimpleRateComponents(numerator, nameof(numerator));
+        MeasureUnitCode numeratorCode = NullChecked(numerator, nameof(numerator)).GetMeasureUnitCode();
+        MeasurementElements denominatorElements = GetMeasurementElements(denominator);
+        MeasureUnitCode denominatorCode = denominatorElements.GetMeasureUnitCode();
+        decimal defaultQuantity = numerator.GetDecimalQuantity() * denominatorElements.ExchangeRate;
 
         return CreateSimpleRate(numeratorCode, defaultQuantity, denominatorCode);
     }
 
-    public virtual IBaseRate CreateBaseRate(params IBaseMeasure[] baseMeasures)
+    public IBaseRate CreateBaseRate(IQuantifiable numerator, IMeasurable denominator)
     {
-        string paramName = nameof(baseMeasures);
-        int count = NullChecked(baseMeasures, paramName).Length;
+        if (denominator is IQuantifiable quantifiable && numerator != null) return CreateBaseRate(numerator, quantifiable);
+
+        if (NullChecked(denominator, nameof(denominator)) is IBaseQuantifiable)
+            throw ArgumentTypeOutOfRangeException(nameof(denominator), denominator);
+
+        Enum denominatorMeasureUnit = denominator.GetBaseMeasureUnit();
+
+        return CreateBaseRate(numerator!, denominatorMeasureUnit);
+    }
+
+    public IBaseRate CreateBaseRate(params IQuantifiable[] quantifiables)
+    {
+        string paramName = nameof(quantifiables);
+        int count = NullChecked(quantifiables, paramName).Length;
 
         if (count != 2) throw CountArgumentOutOfRangeException(count, paramName);
 
-        return CreateSimpleRate(baseMeasures[0], paramName, getDenominatorComponents);
+        IQuantifiable numerator = quantifiables[0];
+        IQuantifiable denominator = quantifiables[1];
+        decimal defaultQuantity = numerator.ProportionalTo(denominator);
 
-        #region Local methods
-        (MeasureUnitCode, decimal) getDenominatorComponents()
-        {
-            return GetSimpleRateComponents(baseMeasures[1], paramName);
-        }
-        #endregion
+        return CreateSimpleRate(numerator.GetMeasureUnitCode(), defaultQuantity, denominator.GetMeasureUnitCode());
     }
 
     #region Abstract methods
-    public abstract IBaseRate CreateBaseRate(IBaseRate baseRate);
     public abstract ISimpleRate CreateSimpleRate(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode);
     #endregion
     #endregion
 
     #region Protected methods
     #region Static methods
-    protected static (MeasureUnitCode MeasureUnitCode, decimal Quantity) GetSimpleRateComponents(IBaseMeasure baseMeasure, string paramName)
+    protected static (MeasureUnitCode MeasureUnitCode, decimal Quantity) GetSimpleRateComponents(IQuantifiable quantifiable, string paramName)
     {
-        MeasureUnitCode measureUnitCode = NullChecked(baseMeasure, paramName).GetMeasureUnitCode();
-        decimal quantity = baseMeasure.GetDefaultQuantity();
+        MeasureUnitCode measureUnitCode = NullChecked(quantifiable, paramName).GetMeasureUnitCode();
+        decimal quantity = quantifiable.GetDefaultQuantity();
 
         return (measureUnitCode, quantity);
     }
 
-    protected static (MeasureUnitCode, decimal, MeasureUnitCode) GetSimpleRateParams(IBaseMeasure numerator, string paramName, Func<(MeasureUnitCode, decimal)> getDenominatorComponents)
+    protected static (Enum MeasureUnit, decimal Quantity) GetSimpleRateComponents_1(IQuantifiable? quantifiable, string paramName)
+    {
+        Enum measureUnit = NullChecked(quantifiable, paramName).GetBaseMeasureUnit();
+        decimal quantity = quantifiable!.GetDecimalQuantity();
+
+        return (measureUnit, quantity);
+    }
+
+    protected static (MeasureUnitCode, decimal, MeasureUnitCode) GetSimpleRateParams(IQuantifiable numerator, string paramName, Func<(MeasureUnitCode, decimal)> getDenominatorComponents)
     {
         var (numeratorCode, defaultQuantity) = GetSimpleRateComponents(numerator, paramName);
         var (denominatorCode, exchangeRate) = getDenominatorComponents();
@@ -77,25 +74,34 @@ public abstract class SimpleRateFactory : ISimpleRateFactory
 
         return (numeratorCode, defaultQuantity, denominatorCode);
     }
+
+    protected static (Enum, decimal, Enum) GetSimpleRateParams_1(IQuantifiable numerator, string paramName, Func<(Enum, decimal)> getDenominatorMeasureUnit)
+    {
+        var (numeratorMeasureUnit, quantity) = GetSimpleRateComponents_1(numerator, paramName);
+        var (denominatorMeasureUnit, exchangeRate) = getDenominatorMeasureUnit();
+        quantity /= exchangeRate;
+
+        return (numeratorMeasureUnit, quantity, denominatorMeasureUnit);
+    }
     #endregion
     #endregion
 
     #region Private methods
-    private ISimpleRate CreateSimpleRate(IBaseMeasure numerator, string paramName, Func<(MeasureUnitCode, decimal)> getDenominatorComponents)
-    {
-        var (numeratorCode, defaultQuantity, denominatorCode) = GetSimpleRateParams(numerator, paramName, getDenominatorComponents);
+    //private ISimpleRate CreateSimpleRate(IQuantifiable numerator, string paramName, Func<(Enum, decimal)> getDenominatorComponents)
+    //{
+    //    var (numeratorMeasureUnit, quantity, denominatorMeasureUnit) = GetSimpleRateParams_1(numerator, paramName, getDenominatorComponents);
 
-        return CreateSimpleRate(numeratorCode, defaultQuantity, denominatorCode);
-    }
+    //    return CreateSimpleRate(numeratorMeasureUnit, quantity, denominatorMeasureUnit);
+    //}
 
     #region Static methods
-    private static (MeasureUnitCode MeasureUnitCode, decimal ExchangeRate) GetSimpleRateComponents(Enum? measureUnit, string paramName)
-    {
-        decimal exchangeRate = GetExchangeRate(measureUnit, paramName);
-        MeasureUnitCode measureUnitCode = GetMeasureUnitCode(measureUnit!);
+    //private static (MeasureUnitCode MeasureUnitCode, decimal ExchangeRate) GetSimpleRateComponents(Enum? measureUnit, string paramName)
+    //{
+    //    decimal exchangeRate = GetExchangeRate(measureUnit, paramName);
+    //    MeasureUnitCode measureUnitCode = GetMeasureUnitCode(measureUnit!);
 
-        return (measureUnitCode, exchangeRate); 
-    }
+    //    return (measureUnitCode, exchangeRate); 
+    //}
     #endregion
     #endregion
 }

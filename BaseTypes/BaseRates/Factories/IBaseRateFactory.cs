@@ -1,10 +1,13 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.BaseRates.Factories;
+﻿using CsabaDu.FooVaria.BaseTypes.Common.Factories;
+using CsabaDu.FooVaria.BaseTypes.Measurables.Types;
 
-public interface IBaseRateFactory : IBaseQuantifiableFactory
+namespace CsabaDu.FooVaria.BaseTypes.BaseRates.Factories;
+
+public interface IBaseRateFactory : IBaseQuantifiableFactory/*, IFactory<IBaseRate>*/
 {
-    IBaseRate CreateBaseRate(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement);
-    IBaseRate CreateBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit);
-    IBaseRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitCode denominatorCode);
-    IBaseRate CreateBaseRate(params IBaseMeasure[] baseMeasures);
-    IBaseRate CreateBaseRate(IBaseRate baseRate);
+    IBaseRate CreateBaseRate(IQuantifiable numerator, IMeasurable denominator);
+    IBaseRate CreateBaseRate(IQuantifiable numerator, Enum denominatorContext);
+    //IBaseRate CreateBaseRate(IQuantifiable numerator, MeasureUnitCode denominatorCode);
+    IBaseRate CreateBaseRate(params IQuantifiable[] quantifiables);
+    //IBaseRate CreateBaseRate(IBaseRate baseRate);
 }

@@ -10,5 +10,7 @@
         where TDenominator : notnull
     {
         TNumerator Denominate(TDenominator denominator);
+
+        void ValidateDenominator(TDenominator denominator);
     }
 }

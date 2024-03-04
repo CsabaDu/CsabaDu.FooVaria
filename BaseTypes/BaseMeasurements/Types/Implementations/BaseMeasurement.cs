@@ -2,6 +2,24 @@
 
 public abstract class BaseMeasurement : Measurable, IBaseMeasurement
 {
+    #region Structs
+    public readonly struct MeasurementElements(Enum measureUnit)
+    {
+        public MeasureUnitElements MeasureUnitElements => new(measureUnit);
+        public decimal ExchangeRate => GetExchangeRate(measureUnit, nameof(measureUnit));
+
+        public Enum GetMeasureUnit()
+        {
+            return MeasureUnitElements.MeasureUnit;
+        }
+
+        public MeasureUnitCode GetMeasureUnitCode()
+        {
+            return MeasureUnitElements.MeasureUnitCode;
+        }
+    }
+    #endregion
+
     #region Static fields
     private static readonly decimal[] AreaExchangeRates = [100, 10000, 1000000];
     private static readonly decimal[] DistanceExchangeRates = [1000];
@@ -146,7 +164,10 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
 
     public static decimal GetExchangeRate(Enum? measureUnit, string paramName)
     {
-        _ = NullChecked(measureUnit, paramName);
+        if (NullChecked(measureUnit, paramName) is MeasureUnitCode measureUnitCode)
+        {
+            measureUnit = measureUnitCode.GetDefaultMeasureUnit();
+        }
 
         decimal exchangeRate = ExchangeRateCollection.FirstOrDefault(x => x.Key.Equals(measureUnit)).Value;
 
@@ -158,6 +179,12 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
     public static Dictionary<object, decimal> GetExchangeRateCollection(MeasureUnitCode measureUnitCode)
     {
         return GetMeasureUnitBasedCollection(ExchangeRateCollection, measureUnitCode);
+    }
+
+
+    public static MeasurementElements GetMeasurementElements(Enum measureUnit)
+    {
+        return new(measureUnit);
     }
 
     public static IEnumerable<object> GetValidMeasureUnits()

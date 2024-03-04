@@ -1,7 +1,8 @@
-﻿namespace CsabaDu.FooVaria.AbstractTypes.SimpleRates.Factories
+﻿namespace CsabaDu.FooVaria.AbstractTypes.SimpleRates.Factories;
+
+public interface ISimpleRateFactory : IBaseRateFactory
 {
-    public interface ISimpleRateFactory : IBaseRateFactory/*, IFactory<IBaseRate>*/
-    {
-        ISimpleRate CreateSimpleRate(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode);
-    }
+    IMeasureFactory MeasureFactory { get; init; }
+
+    ISimpleRate CreateSimpleRate(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode);
 }

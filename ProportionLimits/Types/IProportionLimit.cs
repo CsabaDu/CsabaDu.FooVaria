@@ -5,10 +5,11 @@ public interface IProportionLimit : ISimpleRate, ILimiter<IProportionLimit, IBas
     LimitMode LimitMode { get; init; }
 
     IProportionLimit GetProportionLimit(IBaseRate baseRate, LimitMode limitMode);
-    IProportionLimit GetProportionLimit(IBaseMeasure numerator, IBaseMeasure denominator, LimitMode limitMode);
-    IProportionLimit GetProportionLimit(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement, LimitMode limitMode);
-    IProportionLimit GetProportionLimit(Enum numeratorMeasureUnit, ValueType quantity, Enum denominatorMeasureUnit, LimitMode limitMode);
-    IProportionLimit GetProportionLimit(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode, LimitMode limitMode);
-    IProportionLimit GetProportionLimit(IBaseMeasure numerator, Enum denominatorMeasureUnit, LimitMode limitMode);
-    IProportionLimit GetProportionLimit(IBaseMeasure numerator, MeasureUnitCode denominatorCode, LimitMode limitMode);
+    IProportionLimit GetProportionLimit(IQuantifiable numerator, IQuantifiable denominator, LimitMode limitMode);
+    IProportionLimit GetProportionLimit(IQuantifiable numerator, IBaseMeasurement denominatorMeasurement, LimitMode limitMode);
+    IProportionLimit GetProportionLimit(IQuantifiable numerator, Enum denominatorContext, LimitMode limitMode);
+    IProportionLimit GetProportionLimit(Enum numeratorContext, ValueType quantity, Enum denominatorContext, LimitMode limitMode);
 }
+
+    //IProportionLimit GetProportionLimit(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode, LimitMode limitMode);
+    //IProportionLimit GetProportionLimit(IQuantifiable numerator, MeasureUnitCode denominatorCode, LimitMode limitMode);

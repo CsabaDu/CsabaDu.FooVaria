@@ -22,6 +22,16 @@ public abstract class Shape : Spread, IShape
         return GetShapeComponents().Count();
     }
 
+    public bool IsValidMeasureUnitCode(MeasureUnitCode measureUnitCode)
+    {
+        return IsValidMeasureUnitCode(this, measureUnitCode);
+    }
+
+    public void ValidateMeasureUnitCodes(IBaseQuantifiable? baseQuantifiable, string paramName)
+    {
+        ValidateMeasureUnitCodes(this, baseQuantifiable, paramName);
+    }
+
     public void ValidateShapeComponent(IBaseQuantifiable? shapeComponent, string paramName)
     {
         if (GetValidShapeComponent(NullChecked(shapeComponent, paramName)) != null) return;
@@ -30,9 +40,10 @@ public abstract class Shape : Spread, IShape
     }
 
     #region Override methods
-    public override sealed IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
+    public IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
     {
-        return base.GetMeasureUnitCodes().Append(MeasureUnitCode.ExtentUnit);
+        yield return GetMeasureUnitCode();
+        yield return MeasureUnitCode.ExtentUnit;
     }
 
     public override IShapeFactory GetFactory()

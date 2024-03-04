@@ -1,11 +1,7 @@
 ﻿namespace CsabaDu.FooVaria.Proportions.Factories.Implementations;
 
-public sealed class ProportionFactory(IMeasureFactory measureFactory) : SimpleRateFactory, IProportionFactory
+public sealed class ProportionFactory(IMeasureFactory measureFactory) : SimpleRateFactory(measureFactory), IProportionFactory
 {
-    #region Properties
-    public IMeasureFactory MeasureFactory { get; init; } = NullChecked(measureFactory, nameof(measureFactory));
-    #endregion
-
     #region Public methods
     #region IProportion<TNEnum, TDEnum>
     public IProportion<TNEnum, TDEnum> Create<TNEnum, TDEnum>(TNEnum numeratorMeasureUnit, ValueType quantity, TDEnum denominatorMeasureUnit)

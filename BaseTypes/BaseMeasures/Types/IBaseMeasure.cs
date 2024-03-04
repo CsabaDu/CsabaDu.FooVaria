@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types
 {
-    public interface IBaseMeasure : IQuantifiable, IExchangeRate, IRateComponentCode, IDecimalQuantity, IQuantityTypeCode, ILimitMode, IEqualityComparer<IBaseMeasure>
+    public interface IBaseMeasure : IQuantifiable, IExchangeRate, IRateComponentCode/*, IDecimalQuantity*/, IQuantityTypeCode, ILimitMode, IEqualityComparer<IBaseMeasure>
     {
         IBaseMeasure GetBaseMeasure(ValueType quantity);
         IBaseMeasure GetBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity);
@@ -8,7 +8,7 @@
         IBaseMeasurementFactory GetBaseMeasurementFactory();
     }
 
-    public interface IBaseMeasure<TSelf> : IBaseMeasure, ILimitable<TSelf>
+    public interface IBaseMeasure<TSelf> : IBaseMeasure/*, ILimitable<TSelf>*/
         where TSelf : class, IBaseMeasure
     {
         TSelf GetBaseMeasure(Enum measureUnit, ValueType quantity);

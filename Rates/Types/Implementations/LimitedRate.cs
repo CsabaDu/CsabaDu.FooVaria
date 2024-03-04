@@ -13,20 +13,20 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         Limit = NullChecked(limit, nameof(limit));
     }
 
-    internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, MeasureUnitCode denominatorCode, ILimit limit) : base(factory, numerator, denominatorCode)
-    {
-        Limit = NullChecked(limit, nameof(limit));
-    }
+    //internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, MeasureUnitCode denominatorCode, ILimit limit) : base(factory, numerator, denominatorCode)
+    //{
+    //    Limit = NullChecked(limit, nameof(limit));
+    //}
 
-    internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, IMeasurement denominatorMeasurement, ILimit limit) : base(factory, numerator, denominatorMeasurement)
-    {
-        Limit = NullChecked(limit, nameof(limit));
-    }
+    //internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, IMeasurement denominatorMeasurement, ILimit limit) : base(factory, numerator, denominatorMeasurement)
+    //{
+    //    Limit = NullChecked(limit, nameof(limit));
+    //}
 
-    internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, Enum denominatorMeasureUnit, ValueType denominatorQuantity, ILimit limit) : base(factory, numerator, denominatorMeasureUnit, denominatorQuantity)
-    {
-        Limit = NullChecked(limit, nameof(limit));
-    }
+    //internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, Enum denominatorMeasureUnit, ValueType denominatorQuantity, ILimit limit) : base(factory, numerator, denominatorMeasureUnit, denominatorQuantity)
+    //{
+    //    Limit = NullChecked(limit, nameof(limit));
+    //}
 
     internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, IDenominator denominator, ILimit limit) : base(factory, numerator, denominator)
     {
@@ -89,20 +89,9 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         return GetLimitedRate(numerator, Denominator, limit);
     }
 
-    public ILimitedRate GetLimitedRate(IBaseRate baseRate, ILimit limit)
+    public ILimitedRate GetLimitedRate(IRate rate, ILimit limit)
     {
-        if (baseRate is IRate rate) return getLimitedRate();
-
-        rate = GetRate(baseRate);
-
-        return getLimitedRate();
-
-        #region Local methods
-        ILimitedRate getLimitedRate()
-        {
-            return GetFactory().Create(rate, limit);
-        }
-        #endregion
+        return GetFactory().Create(rate, limit);
     }
 
     public ILimitedRate GetNew(ILimitedRate other)
@@ -134,6 +123,11 @@ internal sealed class LimitedRate : Rate, ILimitedRate
     public decimal GetLimiterDefaultQuantity()
     {
         return Limit.GetDefaultQuantity();
+    }
+
+    public override ILimitedRate GetRate(IRate rate)
+    {
+        return (ILimitedRate)GetFactory().CreateNew(rate);
     }
 
     public override LimitMode? GetLimitMode()

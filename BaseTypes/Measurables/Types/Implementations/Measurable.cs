@@ -2,6 +2,30 @@
 
 public abstract class Measurable : CommonBase, IMeasurable
 {
+    #region Structs
+    public readonly struct MeasureUnitElements(Enum measureUnit)
+    {
+        public Enum MeasureUnit => getMeasureUnitElements(measureUnit).MeasureUnit;
+        public MeasureUnitCode MeasureUnitCode => getMeasureUnitElements(measureUnit).MeasureUnitCode;
+
+        #region Local methods
+        static (Enum MeasureUnit, MeasureUnitCode MeasureUnitCode) getMeasureUnitElements(Enum measureUnit)
+        {
+            string paramName = nameof(measureUnit);
+
+            if (measureUnit is MeasureUnitCode measureUnitCode)
+            {
+                return (Defined(measureUnitCode, paramName).GetDefaultMeasureUnit(), measureUnitCode);
+            }
+            else
+            {
+                return (DefinedMeasureUnit(measureUnit, paramName), GetMeasureUnitCode(measureUnit));
+            }
+        }
+        #endregion
+    }
+    #endregion
+
     #region Enums
     protected enum SummingMode
     {
@@ -243,6 +267,11 @@ public abstract class Measurable : CommonBase, IMeasurable
         if (measureUnit is not MeasureUnitCode measureUnitCode) return GetDefinedMeasureUnitCode(measureUnit);
 
         return Defined(measureUnitCode, nameof(measureUnit));
+    }
+
+    public static MeasureUnitElements GetMeasureUnitElements(Enum measureUnit)
+    {
+        return new(measureUnit);
     }
 
     public static bool HasMeasureUnitCode(MeasureUnitCode measureUnitCode, Enum measureUnit)

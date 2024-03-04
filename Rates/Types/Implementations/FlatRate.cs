@@ -11,17 +11,17 @@ internal sealed class FlatRate : Rate, IFlatRate
     {
     }
 
-    internal FlatRate(IFlatRateFactory factory, IMeasure numerator, MeasureUnitCode denominatorCode) : base(factory, numerator, denominatorCode)
-    {
-    }
+    //internal FlatRate(IFlatRateFactory factory, IMeasure numerator, MeasureUnitCode denominatorCode) : base(factory, numerator, denominatorCode)
+    //{
+    //}
 
-    internal FlatRate(IFlatRateFactory factory, IMeasure numerator, Enum denominatorMeasureUnit, ValueType denominatorQuantity) : base(factory, numerator, denominatorMeasureUnit, denominatorQuantity)
-    {
-    }
+    //internal FlatRate(IFlatRateFactory factory, IMeasure numerator, Enum denominatorMeasureUnit, ValueType denominatorQuantity) : base(factory, numerator, denominatorMeasureUnit, denominatorQuantity)
+    //{
+    //}
 
-    internal FlatRate(IFlatRateFactory factory, IMeasure numerator, IMeasurement denominatorMeasurement) : base(factory, numerator, denominatorMeasurement)
-    {
-    }
+    //internal FlatRate(IFlatRateFactory factory, IMeasure numerator, IMeasurement denominatorMeasurement) : base(factory, numerator, denominatorMeasurement)
+    //{
+    //}
 
     internal FlatRate(IFlatRateFactory factory, IMeasure numerator, IDenominator denominator) : base(factory, numerator, denominator)
     {
@@ -76,22 +76,9 @@ internal sealed class FlatRate : Rate, IFlatRate
         return GetFlatRate(numerator, Denominator);
     }
 
-    public IFlatRate GetFlatRate(IBaseRate baseRate)
+    public IFlatRate GetFlatRate(IRate rate)
     {
-        if (baseRate is IFlatRate flatRate) return GetNew(flatRate);
-
-        if (baseRate is IRate rate) return getFlatRate();
-
-        rate = GetRate(baseRate);
-
-        return getFlatRate();
-
-        #region Local methods
-        IFlatRate getFlatRate()
-        {
-            return GetFactory().Create(rate);
-        }
-        #endregion
+        return GetFactory().Create(rate);
     }
 
     public IFlatRate GetNew(IFlatRate other)
@@ -120,6 +107,11 @@ internal sealed class FlatRate : Rate, IFlatRate
     public override IFlatRateFactory GetFactory()
     {
         return (IFlatRateFactory)Factory;
+    }
+
+    public override IFlatRate GetRate(IRate rate)
+    {
+        return GetFactory().Create(rate);
     }
     #endregion
     #endregion

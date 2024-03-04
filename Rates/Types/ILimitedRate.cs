@@ -11,5 +11,5 @@ public interface ILimitedRate : IRate, ILimiter<ILimitedRate, IBaseMeasure>, ICo
     ILimitedRate GetLimitedRate(IMeasure numerator, MeasureUnitCode denominatorCode, ILimit limit);
     ILimitedRate GetLimitedRate(IMeasure numerator, IDenominator denominator, ILimit limit);
     ILimitedRate GetLimitedRate(IMeasure numerator, ILimit limit);
-    ILimitedRate GetLimitedRate(IBaseRate baseRate, ILimit limit);
+    ILimitedRate GetLimitedRate(IRate rate, ILimit limit);
 }

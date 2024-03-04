@@ -17,19 +17,19 @@
         {
             if (other == null) return 1;
 
-            ValidateMeasureUnitCodes(other);
+            ValidateMeasureUnitCodes(other, nameof(other));
 
             return GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
         }
 
-        public IBaseRate ConvertToLimitable(ILimiter limiter)
-        {
-            string paramName = nameof(limiter);
+        //public IBaseRate ConvertToLimitable(ILimiter limiter)
+        //{
+        //    string paramName = nameof(limiter);
 
-            if (NullChecked(limiter, paramName) is IBaseRate baseRate) return GetBaseRate(baseRate);
+        //    if (NullChecked(limiter, paramName) is IBaseRate baseRate) return GetBaseRate(baseRate);
 
-            throw ArgumentTypeOutOfRangeException(paramName, limiter);
-        }
+        //    throw ArgumentTypeOutOfRangeException(paramName, limiter);
+        //}
 
         public bool Equals(IBaseRate? other)
         {
@@ -64,41 +64,24 @@
             return GetQuantity();
         }
 
-        public IBaseRate GetBaseRate(IBaseRate baseRate)
+        public IBaseRate GetBaseRate(IQuantifiable numerator, Enum denominator)
         {
-            return GetFactory().CreateBaseRate(baseRate);
+            return GetFactory().CreateBaseRate(numerator, denominator);
         }
 
-        public IBaseRate GetBaseRate(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement)
+        public IBaseRate GetBaseRate(IQuantifiable numerator, IMeasurable denominator)
         {
-            return GetFactory().CreateBaseRate(numerator, denominatorMeasurement);
+            return GetFactory().CreateBaseRate(numerator, denominator);
         }
 
-        public IBaseRate GetBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit)
+        public IBaseRate GetBaseRate(params IQuantifiable[] quantifiables)
         {
-            return GetFactory().CreateBaseRate(numerator, denominatorMeasureUnit);
+            return GetFactory().CreateBaseRate(quantifiables);
         }
 
-        public IBaseRate GetBaseRate(IBaseMeasure numerator, MeasureUnitCode denominatorCode)
-        {
-            return GetFactory().CreateBaseRate(numerator, denominatorCode);
-        }
+        //public abstract IBaseRate GetBaseRate(IBaseRate baseRate);
 
-        public IBaseRate GetBaseRate(params IBaseMeasure[] baseMeasures)
-        {
-            return GetFactory().CreateBaseRate(baseMeasures);
-        }
-
-        public MeasureUnitCode GetMeasureUnitCode(RateComponentCode rateComponentCode)
-        {
-            return rateComponentCode switch
-            {
-                RateComponentCode.Numerator => GetNumeratorCode(),
-                RateComponentCode.Denominator => GetDenominatorCode(),
-
-                _ => throw InvalidRateComponentCodeArgumentException(rateComponentCode)
-            };
-        }
+        public abstract MeasureUnitCode GetMeasureUnitCode(RateComponentCode rateComponentCode);
 
         public decimal GetQuantity()
         {
@@ -121,13 +104,39 @@
                 && baseRate.GetNumeratorCode() == GetNumeratorCode();
         }
 
+        public bool IsValidMeasureUnitCode(MeasureUnitCode measureUnitCode)
+        {
+            return IsValidMeasureUnitCode(this, measureUnitCode);
+        }
+
+        public bool IsValidRateComponent(object? rateComponent, RateComponentCode rateComponentCode)
+        {
+            return GetRateComponent(rateComponentCode)?.Equals(rateComponent) == true;
+        }
+
         public decimal ProportionalTo(IBaseRate? other)
         {
-            decimal defaultQuantity = NullChecked(other, nameof(other)).GetDefaultQuantity();
+            string paramName = nameof(other);
 
-            ValidateMeasureUnitCodes(other!);
+            decimal defaultQuantity = NullChecked(other, paramName).GetDefaultQuantity();
+
+            ValidateMeasureUnitCodes(other, paramName);
 
             return Math.Abs(GetDefaultQuantity() / defaultQuantity);
+        }
+
+        public void ValidateMeasureUnitCodes(IBaseQuantifiable? baseQuantifiable, string paramName)
+        {
+            ValidateMeasureUnitCodes(this, baseQuantifiable, paramName);
+        }
+
+        public void ValidateRateComponentCode(RateComponentCode rateComponentCode)
+        {
+            object? rateComponent = GetRateComponent(Defined(rateComponentCode, nameof(rateComponentCode)));
+
+            if (rateComponent != null) return;
+
+            throw InvalidRateComponentCodeArgumentException(rateComponentCode);
         }
 
         #region Override methods
@@ -135,22 +144,6 @@
         {
             return (IBaseRateFactory)Factory;
         }
-
-        public override sealed void ValidateQuantity(IBaseQuantifiable? baseQuantifiable, string paramName)
-        {
-            base.ValidateQuantity(baseQuantifiable, paramName);
-        }
-
-        public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
-        {
-            return base.GetMeasureUnitCodes().Append(GetNumeratorCode());
-        }
-
-        //public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
-        //{
-        //    yield return GetNumeratorCode();
-        //    yield return GetDenominatorCode();
-        //}
 
         #region Sealed methods
         public override sealed bool Equals(object? obj)
@@ -185,6 +178,11 @@
             ValidateMeasureUnitCode(this, measureUnitCode, paramName);
         }
 
+        public override sealed void ValidateQuantity(IBaseQuantifiable? baseQuantifiable, string paramName)
+        {
+            base.ValidateQuantity(baseQuantifiable, paramName);
+        }
+
         public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
         {
             ValidatePositiveQuantity(quantity, paramName);
@@ -201,10 +199,11 @@
         #endregion
 
         #region Abstract methods
-        public abstract IBaseRate GetBaseRate(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode);
+        //public abstract IBaseRate GetBaseRate(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode);
         public abstract MeasureUnitCode GetDenominatorCode();
+        public abstract IEnumerable<MeasureUnitCode> GetMeasureUnitCodes();
         public abstract MeasureUnitCode GetNumeratorCode();
-        public abstract object GetRateComponent(RateComponentCode rateComponentCode);
+        public abstract object? GetRateComponent(RateComponentCode rateComponentCode);
 
         #endregion
 
@@ -217,18 +216,6 @@
         #endregion
 
         #region Protected methods
-        protected void ValidateMeasureUnitCodes(IBaseRate other)
-        {
-            if (IsExchangeableTo(other)) return;
-
-            MeasureUnitCode measureUnitCode  = GetMeasureUnitCode();
-
-            measureUnitCode = other.HasMeasureUnitCode(measureUnitCode) ?
-                GetNumeratorCode()
-                : measureUnitCode;
-
-            throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, nameof(other));
-        }
         #endregion
     }
 }

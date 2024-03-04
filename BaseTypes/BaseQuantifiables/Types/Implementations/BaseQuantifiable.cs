@@ -34,11 +34,6 @@ public abstract class BaseQuantifiable : Measurable, IBaseQuantifiable
     #endregion
 
     #region Public methods
-    public bool IsValidMeasureUnitCode(MeasureUnitCode measureUnitCode)
-    {
-        return GetMeasureUnitCodes().Contains(measureUnitCode);
-    }
-
     #region Override methods
     public override bool Equals(object? obj)
     {
@@ -59,10 +54,10 @@ public abstract class BaseQuantifiable : Measurable, IBaseQuantifiable
     #endregion
 
     #region Virtual methods    
-    public virtual IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
-    {
-        yield return GetMeasureUnitCode();
-    }
+    //public virtual IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
+    //{
+    //    yield return GetMeasureUnitCode();
+    //}
 
     public virtual void ValidateQuantity(ValueType? quantity, string paramName)
     {
@@ -124,11 +119,31 @@ public abstract class BaseQuantifiable : Measurable, IBaseQuantifiable
         return quantity.ToQuantity(quantityTypeCode) ?? throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
     }
 
-    protected static void ValidateMeasureUnitCode(IBaseQuantifiable baseQuantifiable, MeasureUnitCode measureUnitCode, string paramName)
+    protected static bool IsValidMeasureUnitCode(IMeasureUnitCodes measureUnitCodes, MeasureUnitCode measureUnitCode)
     {
-        if (baseQuantifiable.GetMeasureUnitCodes().Contains(measureUnitCode)) return;
+        return measureUnitCodes.GetMeasureUnitCodes().Contains(measureUnitCode);
+    }
+
+    protected static void ValidateMeasureUnitCode(IMeasureUnitCodes measureUnitCodes, MeasureUnitCode measureUnitCode, string paramName)
+    {
+        if (measureUnitCodes.GetMeasureUnitCodes().Contains(measureUnitCode)) return;
 
         throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
+    }
+
+    protected static void ValidateMeasureUnitCodes(IMeasureUnitCodes measureUnitCodes, IBaseQuantifiable? baseQuantifiable, string paramName)
+    {
+        if (baseQuantifiable is IMeasureUnitCodes other)
+        {
+            foreach (MeasureUnitCode item in other.GetMeasureUnitCodes())
+            {
+                ValidateMeasureUnitCode(measureUnitCodes, item, paramName);
+            }
+        }
+
+        MeasureUnitCode measureUnitCode = NullChecked(baseQuantifiable, paramName).GetMeasureUnitCode();
+
+        ValidateMeasureUnitCode(measureUnitCodes, measureUnitCode, paramName);
     }
 
     protected static void ValidatePositiveQuantity(ValueType? quantity, string paramName)

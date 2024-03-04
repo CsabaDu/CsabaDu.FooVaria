@@ -1,4 +1,5 @@
-﻿namespace CsabaDu.FooVaria.Masses.Types.Implementations;
+﻿
+namespace CsabaDu.FooVaria.Masses.Types.Implementations;
 
 internal abstract class Mass : BaseQuantifiable, IMass
 {
@@ -52,7 +53,7 @@ internal abstract class Mass : BaseQuantifiable, IMass
         return GetVolumeWeight(ratio).GetDefaultQuantity();
     }
 
-    public IProportion<WeightUnit, VolumeUnit> GetDensity()
+    public IProportion GetDensity()
     {
         return GetFactory().CreateDensity(this);
     }
@@ -126,6 +127,11 @@ internal abstract class Mass : BaseQuantifiable, IMass
         return GetGreaterWeight(volumeWeight);
     }
 
+    public bool IsValidMeasureUnitCode(MeasureUnitCode measureUnitCode)
+    {
+        return IsValidMeasureUnitCode(this, measureUnitCode);
+    }
+
     public bool IsExchangeableTo(Enum? context)
     {
         if (context is MeasureUnitCode measureUnitCode) return hasMeasureUnitCode(measureUnitCode);
@@ -175,17 +181,15 @@ internal abstract class Mass : BaseQuantifiable, IMass
         ValidateQuantity(defaultQuantity, paramName);
     }
 
+    public void ValidateMeasureUnitCodes(IBaseQuantifiable? baseQuantifiable, string paramName)
+    {
+        ValidateMeasureUnitCodes(this, baseQuantifiable, paramName);
+    }
+
     #region Override methods
     public override IMassFactory GetFactory()
     {
         return (IMassFactory)Factory;
-    }
-
-    public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
-    {
-        IBody body = GetBody();
-
-        return base.GetMeasureUnitCodes().Append(body.GetMeasureUnitCode());
     }
 
     #region Sealed methods
@@ -227,6 +231,11 @@ internal abstract class Mass : BaseQuantifiable, IMass
     #endregion
 
     #region Virtual methods
+    public virtual IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
+    {
+        return MeasureUnitCodes.Where(x => this[x] is not null);
+    }
+
     public virtual bool Equals(IMass? other)
     {
         return base.Equals(other)

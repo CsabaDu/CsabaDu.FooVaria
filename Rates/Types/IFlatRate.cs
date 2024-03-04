@@ -9,5 +9,5 @@ public interface IFlatRate : IRate, ICalculate<IFlatRate, decimal>, ICommonBase<
     IFlatRate GetFlatRate(IMeasure numerator, IMeasurement denominatorMeasurement);
     IFlatRate GetFlatRate(IMeasure numerator, IDenominator denominator);
     IFlatRate GetFlatRate(IMeasure numerator);
-    IFlatRate GetFlatRate(IBaseRate baseRate);
+    IFlatRate GetFlatRate(IRate baseRate);
 }
