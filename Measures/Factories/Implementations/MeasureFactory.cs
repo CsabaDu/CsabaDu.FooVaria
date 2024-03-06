@@ -15,9 +15,9 @@ public sealed class MeasureFactory(IMeasurementFactory measurementFactory) : IMe
         return CreateMeasure(measurement, quantity);
     }
 
-    public IMeasure Create(IBaseMeasure baseMeasure)
+    public IMeasure Create(IQuantifiable quantifiable)
     {
-        return CreateMeasure(baseMeasure, nameof(baseMeasure));
+        return CreateMeasure(quantifiable, nameof(quantifiable));
     }
 
     public IBaseMeasure CreateBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity)
@@ -102,10 +102,10 @@ public sealed class MeasureFactory(IMeasurementFactory measurementFactory) : IMe
         return CreateMeasure(measureUnit, quantity);
     }
 
-    private IMeasure CreateMeasure(IBaseMeasure baseMeasure, string paramName)
+    private IMeasure CreateMeasure(IQuantifiable quantifiable, string paramName)
     {
-        Enum measureUnit = NullChecked(baseMeasure, paramName).GetBaseMeasureUnit();
-        ValueType quantity = baseMeasure.GetDecimalQuantity();
+        Enum measureUnit = NullChecked(quantifiable, paramName).GetBaseMeasureUnit();
+        ValueType quantity = quantifiable.GetDecimalQuantity();
 
         return CreateMeasure(measureUnit, quantity);
     }

@@ -290,7 +290,7 @@ internal abstract class Mass : BaseQuantifiable, IMass
         return BothFitIn(bodyFitsIn, weightFitsIn);
     }
 
-    public virtual bool? FitsIn(ILimiter? limiter)
+    public override bool? FitsIn(ILimiter? limiter)
     {
         if (limiter == null) return null;
 

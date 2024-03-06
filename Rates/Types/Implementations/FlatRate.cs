@@ -11,18 +11,6 @@ internal sealed class FlatRate : Rate, IFlatRate
     {
     }
 
-    //internal FlatRate(IFlatRateFactory factory, IMeasure numerator, MeasureUnitCode denominatorCode) : base(factory, numerator, denominatorCode)
-    //{
-    //}
-
-    //internal FlatRate(IFlatRateFactory factory, IMeasure numerator, Enum denominatorMeasureUnit, ValueType denominatorQuantity) : base(factory, numerator, denominatorMeasureUnit, denominatorQuantity)
-    //{
-    //}
-
-    //internal FlatRate(IFlatRateFactory factory, IMeasure numerator, IMeasurement denominatorMeasurement) : base(factory, numerator, denominatorMeasurement)
-    //{
-    //}
-
     internal FlatRate(IFlatRateFactory factory, IMeasure numerator, IDenominator denominator) : base(factory, numerator, denominator)
     {
     }
@@ -76,11 +64,6 @@ internal sealed class FlatRate : Rate, IFlatRate
         return GetFlatRate(numerator, Denominator);
     }
 
-    public IFlatRate GetFlatRate(IRate rate)
-    {
-        return GetFactory().Create(rate);
-    }
-
     public IFlatRate GetNew(IFlatRate other)
     {
         return GetFactory().CreateNew(other);
@@ -111,7 +94,7 @@ internal sealed class FlatRate : Rate, IFlatRate
 
     public override IFlatRate GetRate(IRate rate)
     {
-        return GetFactory().Create(rate);
+        return (IFlatRate)GetFactory().CreateNew(rate);
     }
     #endregion
     #endregion
@@ -119,7 +102,7 @@ internal sealed class FlatRate : Rate, IFlatRate
     #region Private methods
     private IFlatRate GetSum(IFlatRate? other, SummingMode summingMode)
     {
-        if (other == null) return GetFlatRate(this);
+        if (other == null) return GetRate(this);
 
         if (!other.TryExchangeTo(Denominator, out IRate? exchanged))
         {

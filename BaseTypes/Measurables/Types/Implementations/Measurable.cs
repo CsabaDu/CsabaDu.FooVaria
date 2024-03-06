@@ -3,13 +3,13 @@
 public abstract class Measurable : CommonBase, IMeasurable
 {
     #region Structs
-    public readonly struct MeasureUnitElements(Enum context, string paramName)
+    public readonly struct MeasureUnitElements(Enum? context, string paramName)
     {
-        public Enum MeasureUnit => GetMeasureUnitElements(context, paramName).MeasureUnit;
-        public MeasureUnitCode MeasureUnitCode => GetMeasureUnitElements(context, paramName).MeasureUnitCode;
+        public Enum MeasureUnit => getMeasureUnitElements(context, paramName).MeasureUnit;
+        public MeasureUnitCode MeasureUnitCode => getMeasureUnitElements(context, paramName).MeasureUnitCode;
 
         #region Local methods
-        static (Enum MeasureUnit, MeasureUnitCode MeasureUnitCode) GetMeasureUnitElements(Enum measureUnit, string paramName)
+        static (Enum MeasureUnit, MeasureUnitCode MeasureUnitCode) getMeasureUnitElements(Enum? measureUnit, string paramName)
         {
             return measureUnit is MeasureUnitCode measureUnitCode ?
                 (Defined(measureUnitCode, paramName).GetDefaultMeasureUnit(), measureUnitCode)

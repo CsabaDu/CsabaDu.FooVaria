@@ -55,28 +55,28 @@ public abstract class Shape : Spread, IShape
     public override sealed int CompareTo(IQuantifiable? other)
     {
         return other is IShape shape ?
-            CompareTo(shape)
+            GetShape().CompareTo(shape.GetShape())
             : base.CompareTo(other);
     }
 
     public override sealed bool Equals(IQuantifiable? other)
     {
         return other is IShape shape ?
-            Equals(shape)
+            GetShape().Equals(shape.GetShape())
             : base.Equals(other);
     }
 
     public override sealed bool? FitsIn(IQuantifiable? other, LimitMode? limitMode)
     {
         return other is IShape shape ?
-            FitsIn(shape, limitMode)
+            GetShape().FitsIn(shape.GetShape(), limitMode)
             : base.FitsIn(other, limitMode);
     }
 
     public override sealed bool? FitsIn(ILimiter? limiter)
     {
         return limiter is IShape shape ?
-            FitsIn(shape, limiter.GetLimitMode())
+            GetShape().FitsIn(shape.GetShape(), limiter.GetLimitMode())
             : base.FitsIn(limiter);
     }
 

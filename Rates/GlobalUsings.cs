@@ -4,6 +4,7 @@ global using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types;
 global using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations;
 global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
 global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Enums;
+global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types;
 global using CsabaDu.FooVaria.BaseTypes.BaseRates.Behaviors;
 global using CsabaDu.FooVaria.BaseTypes.BaseRates.Factories;
 global using CsabaDu.FooVaria.BaseTypes.BaseRates.Types;

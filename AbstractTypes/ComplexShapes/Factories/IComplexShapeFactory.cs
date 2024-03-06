@@ -2,5 +2,5 @@
 
 public interface IComplexShapeFactory : IShapeFactory
 {
-    ISimpleShapeFactory SimpleShapeFactory { get; init; }
+    ISimpleShapeFactory GetSimpleShapeFactory();
 }

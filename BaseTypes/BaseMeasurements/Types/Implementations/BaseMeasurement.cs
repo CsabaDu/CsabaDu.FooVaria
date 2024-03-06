@@ -3,7 +3,7 @@
 public abstract class BaseMeasurement : Measurable, IBaseMeasurement
 {
     #region Structs
-    public readonly struct MeasurementElements(Enum context, string paramName)
+    public readonly struct MeasurementElements(Enum? context, string paramName)
     {
         public MeasureUnitElements MeasureUnitElements => new(context, paramName);
         public decimal ExchangeRate => GetExchangeRate(context, paramName);
@@ -164,11 +164,7 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
 
     public static decimal GetExchangeRate(Enum? measureUnit, string paramName)
     {
-        if (NullChecked(measureUnit, paramName) is MeasureUnitCode measureUnitCode)
-        {
-            measureUnit = measureUnitCode.GetDefaultMeasureUnit();
-        }
-
+        measureUnit = new MeasureUnitElements(measureUnit, paramName).MeasureUnit;
         decimal exchangeRate = ExchangeRateCollection.FirstOrDefault(x => x.Key.Equals(measureUnit)).Value;
 
         if (exchangeRate != default) return exchangeRate;

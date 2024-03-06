@@ -1,8 +1,8 @@
-﻿namespace CsabaDu.FooVaria.AbstractTypes.ComplexShapes.Types;
+﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
+
+namespace CsabaDu.FooVaria.AbstractTypes.ComplexShapes.Types;
 
 public interface IComplexShape : IShape
 {
-    ISimpleShape BaseShape { get; init; }
-
-    ISimpleShapeFactory GetSimpleShapeFactory();
+    ISimpleShape GetBaseShape();
 }

@@ -14,6 +14,6 @@
         T Create(Enum measureUnit, ValueType quantity);
         T? Create(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName);
         T? Create(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity);
-        T Create(IBaseMeasure baseMeasure);
+        T Create(IQuantifiable quantifiable);
     }
 }

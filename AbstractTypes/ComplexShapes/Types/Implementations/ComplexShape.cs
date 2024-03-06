@@ -4,28 +4,21 @@ public abstract class ComplexShape : Shape, IComplexShape
 {
     protected ComplexShape(IComplexShape other) : base(other)
     {
-        BaseShape = NullChecked(other, nameof(other)).BaseShape;
     }
 
-    protected ComplexShape(IComplexShapeFactory factory, ISimpleShape baseShape) : base(factory)
+    protected ComplexShape(IComplexShapeFactory factory) : base(factory)
     {
-        BaseShape = NullChecked(baseShape, nameof(baseShape));
     }
 
-    public ISimpleShape BaseShape { get; init; }
-
-    public ISimpleShapeFactory GetSimpleShapeFactory()
-    {
-        return GetFactory().SimpleShapeFactory;
-    }
+    public abstract ISimpleShape GetBaseShape();
 
     public override IComplexShapeFactory GetFactory()
     {
         return (IComplexShapeFactory)Factory;
     }
 
-    public override ISimpleShape GetShape()
+    public override sealed ISimpleShape GetShape()
     {
-        return BaseShape;
+        return GetBaseShape();
     }
 }
