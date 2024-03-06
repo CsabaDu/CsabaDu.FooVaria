@@ -1,7 +1,4 @@
-﻿
-using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
-
-namespace CsabaDu.FooVaria.ProportionLimits.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.ProportionLimits.Types.Implementations;
 
 internal sealed class ProportionLimit : SimpleRate, IProportionLimit
 {
@@ -15,11 +12,6 @@ internal sealed class ProportionLimit : SimpleRate, IProportionLimit
     {
         LimitMode = Defined(limitMode, nameof(limitMode));
     }
-
-    internal ProportionLimit(IProportionLimit other) : base(other)
-    {
-        LimitMode = other.GetLimitMode()!.Value;
-    }
     #endregion
 
     #region Properties
@@ -31,11 +23,10 @@ internal sealed class ProportionLimit : SimpleRate, IProportionLimit
     {
         if (x == null && y == null) return true;
 
-        if (x == null || y == null) return false;
-
-        if (x.GetLimitMode()!.Value != y.GetLimitMode()!.Value) return false;
-
-        return x.Equals(y);
+        return x != null
+            && y != null
+            && x.GetLimitMode()!.Value == y.GetLimitMode()!.Value
+            && x.Equals(y);
     }
 
     public int GetHashCode([DisallowNull] IProportionLimit proportionLimit)
@@ -53,17 +44,12 @@ internal sealed class ProportionLimit : SimpleRate, IProportionLimit
         return GetNumeratorCode();
     }
 
-    public IProportionLimit GetNew(IProportionLimit other)
-    {
-        return GetFactory().CreateNew(other);
-    }
-
     public IProportionLimit GetProportionLimit(IBaseRate baseRate, LimitMode limitMode)
     {
         return GetFactory().Create(baseRate, limitMode);
     }
 
-    public IProportionLimit GetProportionLimit(Enum numeratorMeasureUnit, ValueType quantity, Enum denominatorMeasureUnit, LimitMode limitMode)
+    public IProportionLimit GetProportionLimit(Enum numeratorMeasureUnit, decimal quantity, Enum denominatorMeasureUnit, LimitMode limitMode)
     {
         return GetFactory().Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit, limitMode);
     }

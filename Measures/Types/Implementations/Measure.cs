@@ -276,13 +276,6 @@
             return (TOther)GetBaseMeasure(measureUnit, quantity);
         }
 
-        protected void ValidateBulkSpreadQuantity(ValueType? quantity, string paramName)
-        {
-            if (GetValidQuantityOrNull(this, NullChecked(quantity, paramName)) is double bulkSpreadQuantity && bulkSpreadQuantity > 0) return;
-
-            throw QuantityArgumentOutOfRangeException(paramName, quantity);
-        }
-
         protected static void ValidateSpreadMeasure(string paramName, ISpreadMeasure? spreadMeasure)
         {
             if (NullChecked(spreadMeasure, paramName).GetSpreadMeasure() is not IMeasure measure)

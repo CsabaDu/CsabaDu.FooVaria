@@ -2,6 +2,15 @@
 
 public abstract class SimpleRateFactory(IMeasureFactory measureFactory) : ISimpleRateFactory
 {
+    #region Structs
+    protected readonly struct SimpleRateParams(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode)
+    {
+        public MeasureUnitCode NumeratorCode => numeratorCode;
+        public decimal DefaultQuantity => defaultQuantity;
+        public MeasureUnitCode DenominatorCode => denominatorCode;
+    }
+    #endregion
+
     #region Properties
     public IMeasureFactory MeasureFactory { get; init; } = NullChecked(measureFactory, nameof(measureFactory));
     #endregion
@@ -9,38 +18,32 @@ public abstract class SimpleRateFactory(IMeasureFactory measureFactory) : ISimpl
     #region Public methods
     public IBaseRate CreateBaseRate(IQuantifiable numerator, Enum denominator)
     {
-        MeasureUnitCode numeratorCode = NullChecked(numerator, nameof(numerator)).GetMeasureUnitCode();
-        MeasurementElements denominatorElements = GetMeasurementElements(denominator);
-        MeasureUnitCode denominatorCode = denominatorElements.GetMeasureUnitCode();
-        decimal defaultQuantity = numerator.GetDecimalQuantity() * denominatorElements.ExchangeRate;
+        MeasurementElements denominatorElements = new(denominator, nameof(denominator));
+        SimpleRateParams simpleRateParams = GetSimpleRateParams(numerator, nameof(numerator), denominatorElements);
 
-        return CreateSimpleRate(numeratorCode, defaultQuantity, denominatorCode);
+        return CreateSimpleRate(simpleRateParams);
     }
 
     public IBaseRate CreateBaseRate(IQuantifiable numerator, IMeasurable denominator)
     {
-        if (denominator is IQuantifiable quantifiable && numerator != null) return CreateBaseRate(numerator, quantifiable);
+        if (denominator is IQuantifiable quantifiable) return CreateBaseRate(numerator, quantifiable);
 
-        if (NullChecked(denominator, nameof(denominator)) is IBaseQuantifiable)
-            throw ArgumentTypeOutOfRangeException(nameof(denominator), denominator);
+        string paramName = nameof(denominator);
 
-        Enum denominatorMeasureUnit = denominator.GetBaseMeasureUnit();
+        if (denominator is IBaseQuantifiable) throw ArgumentTypeOutOfRangeException(paramName, denominator);
 
-        return CreateBaseRate(numerator!, denominatorMeasureUnit);
+        Enum measureUnit = NullChecked(denominator, paramName).GetBaseMeasureUnit();
+        MeasurementElements denominatorElements = new(measureUnit, paramName);
+        SimpleRateParams simpleRateParams = GetSimpleRateParams(numerator, nameof(numerator), denominatorElements);
+
+        return CreateSimpleRate(simpleRateParams);
     }
 
-    public IBaseRate CreateBaseRate(params IQuantifiable[] quantifiables)
+    public IBaseRate CreateBaseRate(IQuantifiable numerator, IQuantifiable denominator)
     {
-        string paramName = nameof(quantifiables);
-        int count = NullChecked(quantifiables, paramName).Length;
+        SimpleRateParams simpleRateParams = GetSimpleRateParams(numerator, denominator);
 
-        if (count != 2) throw CountArgumentOutOfRangeException(count, paramName);
-
-        IQuantifiable numerator = quantifiables[0];
-        IQuantifiable denominator = quantifiables[1];
-        decimal defaultQuantity = numerator.ProportionalTo(denominator);
-
-        return CreateSimpleRate(numerator.GetMeasureUnitCode(), defaultQuantity, denominator.GetMeasureUnitCode());
+        return CreateSimpleRate(simpleRateParams);
     }
 
     #region Abstract methods
@@ -49,59 +52,47 @@ public abstract class SimpleRateFactory(IMeasureFactory measureFactory) : ISimpl
     #endregion
 
     #region Protected methods
-    #region Static methods
-    protected static (MeasureUnitCode MeasureUnitCode, decimal Quantity) GetSimpleRateComponents(IQuantifiable quantifiable, string paramName)
+    protected ISimpleRate CreateSimpleRate(SimpleRateParams simpleRateParams)
     {
-        MeasureUnitCode measureUnitCode = NullChecked(quantifiable, paramName).GetMeasureUnitCode();
-        decimal quantity = quantifiable.GetDefaultQuantity();
-
-        return (measureUnitCode, quantity);
+        return CreateSimpleRate(simpleRateParams.NumeratorCode, simpleRateParams.DefaultQuantity, simpleRateParams.DenominatorCode);
     }
-
-    protected static (Enum MeasureUnit, decimal Quantity) GetSimpleRateComponents_1(IQuantifiable? quantifiable, string paramName)
-    {
-        Enum measureUnit = NullChecked(quantifiable, paramName).GetBaseMeasureUnit();
-        decimal quantity = quantifiable!.GetDecimalQuantity();
-
-        return (measureUnit, quantity);
-    }
-
-    protected static (MeasureUnitCode, decimal, MeasureUnitCode) GetSimpleRateParams(IQuantifiable numerator, string paramName, Func<(MeasureUnitCode, decimal)> getDenominatorComponents)
-    {
-        var (numeratorCode, defaultQuantity) = GetSimpleRateComponents(numerator, paramName);
-        var (denominatorCode, exchangeRate) = getDenominatorComponents();
-        defaultQuantity /= exchangeRate;
-
-        return (numeratorCode, defaultQuantity, denominatorCode);
-    }
-
-    protected static (Enum, decimal, Enum) GetSimpleRateParams_1(IQuantifiable numerator, string paramName, Func<(Enum, decimal)> getDenominatorMeasureUnit)
-    {
-        var (numeratorMeasureUnit, quantity) = GetSimpleRateComponents_1(numerator, paramName);
-        var (denominatorMeasureUnit, exchangeRate) = getDenominatorMeasureUnit();
-        quantity /= exchangeRate;
-
-        return (numeratorMeasureUnit, quantity, denominatorMeasureUnit);
-    }
-    #endregion
-    #endregion
-
-    #region Private methods
-    //private ISimpleRate CreateSimpleRate(IQuantifiable numerator, string paramName, Func<(Enum, decimal)> getDenominatorComponents)
-    //{
-    //    var (numeratorMeasureUnit, quantity, denominatorMeasureUnit) = GetSimpleRateParams_1(numerator, paramName, getDenominatorComponents);
-
-    //    return CreateSimpleRate(numeratorMeasureUnit, quantity, denominatorMeasureUnit);
-    //}
 
     #region Static methods
-    //private static (MeasureUnitCode MeasureUnitCode, decimal ExchangeRate) GetSimpleRateComponents(Enum? measureUnit, string paramName)
-    //{
-    //    decimal exchangeRate = GetExchangeRate(measureUnit, paramName);
-    //    MeasureUnitCode measureUnitCode = GetMeasureUnitCode(measureUnit!);
+    protected static SimpleRateParams GetSimpleRateParams(IQuantifiable numerator, string paramName, MeasurementElements denominatorElements)
+    {
+        MeasureUnitCode numeratorCode = NullChecked(numerator, paramName).GetMeasureUnitCode();
+        decimal defaultQuantity = numerator.GetDefaultQuantity() / denominatorElements.ExchangeRate;
+        MeasureUnitCode denominatorCode = denominatorElements.GetMeasureUnitCode();
 
-    //    return (measureUnitCode, exchangeRate); 
-    //}
+        return new(numeratorCode, defaultQuantity, denominatorCode);
+    }
+
+    protected static SimpleRateParams GetSimpleRateParams(Enum numeratorContext, decimal quantity, Enum denominator)
+    {
+        MeasurementElements measurementElements = new(numeratorContext, nameof(numeratorContext));
+        MeasureUnitCode numeratorCode = measurementElements.GetMeasureUnitCode();
+        decimal numeratorExchangeRate = measurementElements.ExchangeRate;
+
+        measurementElements = new(denominator, nameof(denominator));
+        MeasureUnitCode denominatorCode = measurementElements.GetMeasureUnitCode();
+        decimal denominatorExchangeRate = measurementElements.ExchangeRate;
+
+        if (numeratorExchangeRate != denominatorExchangeRate)
+        {
+            quantity *= numeratorExchangeRate /= denominatorExchangeRate;
+        }
+
+        return new(numeratorCode, quantity, denominatorCode);
+    }
+
+    protected static SimpleRateParams GetSimpleRateParams(IQuantifiable numerator, IQuantifiable denominator)
+    {
+        MeasureUnitCode numeratorCode = NullChecked(numerator, nameof(numerator)).GetMeasureUnitCode();
+        MeasureUnitCode denominatorCode = NullChecked(denominator, nameof(denominator)).GetMeasureUnitCode();
+        decimal defaultQuantity = numerator.GetDefaultQuantity() / denominator.GetDefaultQuantity();
+
+        return new(numeratorCode, defaultQuantity, denominatorCode);
+    }
     #endregion
     #endregion
 }

@@ -29,7 +29,7 @@ public abstract class Spread : Quantifiable, ISpread
     #endregion
 
     #region Public methods
-    public ValueType GetBaseQuantity()
+    public override sealed ValueType GetBaseQuantity()
     {
         return GetQuantity();
     }
@@ -59,21 +59,6 @@ public abstract class Spread : Quantifiable, ISpread
         return GetSpread(spreadMeasure);
     }
 
-    public override bool? FitsIn(IQuantifiable? other, LimitMode? limitMode)
-    {
-        if (other == null && limitMode == null) return true;
-
-        if (other == null) return null;
-
-        if (!other.HasMeasureUnitCode(GetMeasureUnitCode())) return null;
-
-        int? comparison = GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
-
-        return comparison.HasValue ?
-            comparison.Value.FitsIn(limitMode ?? LimitMode.BeNotGreater)
-            : null;
-    }
-
     public virtual MeasureUnitCode GetSpreadMeasureUnitCode()
     {
         return GetMeasureUnitCode();
@@ -82,11 +67,6 @@ public abstract class Spread : Quantifiable, ISpread
     public virtual double GetQuantity()
     {
         return GetSpreadMeasure().GetQuantity();
-    }
-
-    public object GetQuantity(TypeCode quantityTypeCode)
-    {
-        return GetQuantity<ISpread, double>(this, quantityTypeCode);
     }
     #endregion
 
@@ -116,21 +96,9 @@ public abstract class Spread : Quantifiable, ISpread
         return (GetSpreadMeasure() as IBaseQuantifiable)!.GetDefaultQuantity();
     }
 
-    public override sealed ISpread GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
-    {
-        return (ISpread)GetFactory().CreateQuantifiable(measureUnitCode, defaultQuantity);
-    }
-
     public override sealed TypeCode GetQuantityTypeCode()
     {
         return base.GetQuantityTypeCode();
-    }
-
-    public override sealed object GetQuantity(RoundingMode roundingMode)
-    {
-        IBaseMeasure spreadMeasure = (IBaseMeasure)GetSpreadMeasure();
-
-        return spreadMeasure.GetQuantity(roundingMode);
     }
 
     public override sealed void ValidateQuantity(IBaseQuantifiable? baseQuantifiable, string paramName)

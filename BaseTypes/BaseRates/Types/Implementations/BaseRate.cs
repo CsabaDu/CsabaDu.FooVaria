@@ -22,22 +22,13 @@
             return GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
         }
 
-        //public IBaseRate ConvertToLimitable(ILimiter limiter)
-        //{
-        //    string paramName = nameof(limiter);
-
-        //    if (NullChecked(limiter, paramName) is IBaseRate baseRate) return GetBaseRate(baseRate);
-
-        //    throw ArgumentTypeOutOfRangeException(paramName, limiter);
-        //}
-
         public bool Equals(IBaseRate? other)
         {
             return base.Equals(other)
                 && other.GetNumeratorCode() == GetNumeratorCode();
         }
 
-        public bool? FitsIn(ILimiter? limiter)
+        public override sealed bool? FitsIn(ILimiter? limiter)
         {
             if (limiter is not IBaseRate baseRate) return null;
 
@@ -74,12 +65,10 @@
             return GetFactory().CreateBaseRate(numerator, denominator);
         }
 
-        public IBaseRate GetBaseRate(params IQuantifiable[] quantifiables)
+        public IBaseRate GetBaseRate(IQuantifiable numerator, IQuantifiable denominator)
         {
-            return GetFactory().CreateBaseRate(quantifiables);
+            return GetFactory().CreateBaseRate(numerator, denominator);
         }
-
-        //public abstract IBaseRate GetBaseRate(IBaseRate baseRate);
 
         public abstract MeasureUnitCode GetMeasureUnitCode(RateComponentCode rateComponentCode);
 
@@ -130,9 +119,9 @@
             ValidateMeasureUnitCodes(this, baseQuantifiable, paramName);
         }
 
-        public void ValidateRateComponentCode(RateComponentCode rateComponentCode)
+        public void ValidateRateComponentCode(RateComponentCode rateComponentCode, string paramName)
         {
-            object? rateComponent = GetRateComponent(Defined(rateComponentCode, nameof(rateComponentCode)));
+            object? rateComponent = GetRateComponent(Defined(rateComponentCode, paramName));
 
             if (rateComponent != null) return;
 

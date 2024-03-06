@@ -1,19 +1,7 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations;
 
-public abstract class BaseMeasure : Quantifiable, IBaseMeasure
+public abstract class BaseMeasure(IBaseMeasureFactory factory) : Quantifiable(factory), IBaseMeasure
 {
-    #region Constructors
-    protected BaseMeasure(IBaseMeasureFactory factory) : base(factory)
-    {
-    }
-    #endregion
-
-    #region Properties
-    #region Abstract properties
-    public abstract ValueType GetBaseQuantity();
-    #endregion
-    #endregion
-
     #region Public methods
     public bool Equals(IBaseMeasure? x, IBaseMeasure? y)
     {
@@ -40,11 +28,6 @@ public abstract class BaseMeasure : Quantifiable, IBaseMeasure
         return GetFactory().CreateBaseMeasure(baseMeasurement, quantity);
     }
 
-    public decimal GetDecimalQuantity()
-    {
-        return (decimal)GetQuantity(TypeCode.Decimal);
-    }
-
     public decimal GetExchangeRate()
     {
         IBaseMeasurement baseMeasurement = GetBaseMeasurement();
@@ -55,13 +38,6 @@ public abstract class BaseMeasure : Quantifiable, IBaseMeasure
     public int GetHashCode([DisallowNull] IBaseMeasure other)
     {
         return HashCode.Combine(other.GetRateComponentCode(), other.GetLimitMode(), other.GetHashCode());
-    }
-
-    public object GetQuantity(TypeCode quantityTypeCode)
-    {
-        ValueType quantity = GetBaseQuantity();
-
-        return quantity.ToQuantity(quantityTypeCode) ?? throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
     }
 
     public TypeCode? GetQuantityTypeCode(object quantity)
@@ -110,6 +86,11 @@ public abstract class BaseMeasure : Quantifiable, IBaseMeasure
         return base.CompareTo(other);
     }
 
+    public override sealed bool Equals(IQuantifiable? other)
+    {
+        return base.Equals(other);
+    }
+
     public override sealed IBaseMeasure? ExchangeTo(Enum? context)
     {
         if (!IsExchangeableTo(context)) return null;
@@ -131,43 +112,7 @@ public abstract class BaseMeasure : Quantifiable, IBaseMeasure
 
     public override sealed bool? FitsIn(IQuantifiable? other, LimitMode? limitMode)
     {
-        bool limitModeHasValue = limitMode.HasValue;
-
-        if (other == null && !limitModeHasValue) return true;
-
-        if (other?.HasMeasureUnitCode(GetMeasureUnitCode()) != true) return null;
-
-        if (!limitModeHasValue) return CompareTo(other) <= 0;
-
-        _ = Defined(limitMode!.Value, nameof(limitMode));
-
-        IQuantifiable ceilingBaseMeasure = other.Round(RoundingMode.Ceiling);
-        other = limitMode switch
-        {
-            LimitMode.BeNotLess or
-            LimitMode.BeGreater => ceilingBaseMeasure,
-
-            LimitMode.BeNotGreater or
-            LimitMode.BeLess or
-            LimitMode.BeEqual => other!.Round(RoundingMode.Floor),
-
-            _ => null,
-        };
-
-        if (other == null) return null;
-
-        int comparison = CompareTo(other);
-
-        if (limitMode == LimitMode.BeEqual) return areEqual();
-
-        return comparison.FitsIn(limitMode);
-
-        #region Local methods
-        bool areEqual()
-        {
-            return comparison == 0 && ceilingBaseMeasure.Equals(other);
-        }
-        #endregion
+        return base.FitsIn(other, limitMode);
     }
 
     public override sealed bool? FitsIn(ILimiter? limiter)
@@ -179,21 +124,6 @@ public abstract class BaseMeasure : Quantifiable, IBaseMeasure
     {
         return GetDefaultQuantity(GetBaseQuantity(), GetExchangeRate());
     }
-
-    public override sealed IBaseMeasure GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
-    {
-        return (IBaseMeasure)GetFactory().CreateQuantifiable(measureUnitCode, defaultQuantity);
-    }
-
-    public override sealed object GetQuantity(RoundingMode roundingMode)
-    {
-        return GetDecimalQuantity().Round(roundingMode);
-    }
-
-    //public override sealed IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
-    //{
-    //    return base.GetMeasureUnitCodes();
-    //}
 
     public override sealed void ValidateQuantity(IBaseQuantifiable? baseQuantifiable, string paramName)
     {
@@ -245,38 +175,38 @@ public abstract class BaseMeasure : Quantifiable, IBaseMeasure
 
     #region Protected methods
     #region Static methods
-    protected static object? GetValidQuantityOrNull(IBaseMeasure baseMeasure, object? quantity)
-    {
-        quantity = ((ValueType?)quantity)?.ToQuantity(baseMeasure.GetQuantityTypeCode());
+    //protected static object? GetValidQuantityOrNull(IBaseMeasure baseMeasure, object? quantity)
+    //{
+    //    quantity = ((ValueType?)quantity)?.ToQuantity(baseMeasure.GetQuantityTypeCode());
 
-        return baseMeasure.GetRateComponentCode() switch
-        {
-            RateComponentCode.Denominator => getValidDenominatorQuantity(),
-            RateComponentCode.Numerator or
-            RateComponentCode.Limit => quantity,
+    //    return baseMeasure.GetRateComponentCode() switch
+    //    {
+    //        RateComponentCode.Denominator => getValidDenominatorQuantity(),
+    //        RateComponentCode.Numerator or
+    //        RateComponentCode.Limit => quantity,
 
-            _ => throw new InvalidOperationException(null),
-        };
+    //        _ => throw new InvalidOperationException(null),
+    //    };
 
-        #region Local methods
-        object? getValidDenominatorQuantity()
-        {
-            if (quantity == null || (decimal)quantity <= 0) return null;
+    //    #region Local methods
+    //    object? getValidDenominatorQuantity()
+    //    {
+    //        if (quantity == null || (decimal)quantity <= 0) return null;
 
-            return quantity;
-        }
-        #endregion
-    }
+    //        return quantity;
+    //    }
+    //    #endregion
+    //}
 
-    protected static TSelf ConvertToLimitable<TSelf>(IBaseMeasure<TSelf> limitable, ILimiter limiter)
-        where TSelf : class, IBaseMeasure
-    {
-        string paramName = nameof(limiter);
+    //protected static TSelf ConvertToLimitable<TSelf>(IBaseMeasure<TSelf> limitable, ILimiter limiter)
+    //    where TSelf : class, IBaseMeasure
+    //{
+    //    string paramName = nameof(limiter);
 
-        if (NullChecked(limiter, paramName) is IBaseMeasure baseMeasure) return limitable.GetBaseMeasure(baseMeasure);
+    //    if (NullChecked(limiter, paramName) is IBaseMeasure baseMeasure) return limitable.GetBaseMeasure(baseMeasure);
 
-        throw ArgumentTypeOutOfRangeException(paramName, limiter);
-    }
+    //    throw ArgumentTypeOutOfRangeException(paramName, limiter);
+    //}
     #endregion
     #endregion
 

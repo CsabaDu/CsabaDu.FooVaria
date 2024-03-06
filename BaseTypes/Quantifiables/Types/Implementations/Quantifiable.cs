@@ -1,5 +1,4 @@
-﻿
-namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.Implementations;
 
 public abstract class Quantifiable : BaseQuantifiable, IQuantifiable
 {
@@ -13,23 +12,90 @@ public abstract class Quantifiable : BaseQuantifiable, IQuantifiable
     }
     #endregion
 
-    #region Properties
-    //public MeasureUnitCode MeasureUnitCode { get; init; }
-    #endregion
-
     #region Public methods
-    public bool Equals(IQuantifiable? other)
+    public virtual int CompareTo(IQuantifiable? other)
+    {
+        if (other == null) return 1;
+
+        ValidateMeasureUnitCode(other.GetMeasureUnitCode(), nameof(other));
+
+        return GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
+    }
+
+    public virtual bool Equals(IQuantifiable? other)
     {
         return base.Equals(other);
     }
 
-    public virtual bool? FitsIn(ILimiter? limiter)
+    public override bool? FitsIn(ILimiter? limiter)
     {
         if (limiter is not IQuantifiable quantifiable) return null;
 
         LimitMode? limitMode = limiter.GetLimitMode();
 
         return FitsIn(quantifiable, limitMode);
+    }
+
+    public virtual bool? FitsIn(IQuantifiable? other, LimitMode? limitMode)
+    {
+        bool limitModeHasValue = limitMode.HasValue;
+
+        if (other == null && !limitModeHasValue) return true;
+
+        if (other?.HasMeasureUnitCode(GetMeasureUnitCode()) != true) return null;
+
+        if (!limitModeHasValue) return CompareTo(other) <= 0;
+
+        _ = Defined(limitMode!.Value, nameof(limitMode));
+
+        IQuantifiable ceilingBaseMeasure = other.Round(RoundingMode.Ceiling);
+        other = limitMode switch
+        {
+            LimitMode.BeNotLess or
+            LimitMode.BeGreater => ceilingBaseMeasure,
+
+            LimitMode.BeNotGreater or
+            LimitMode.BeLess or
+            LimitMode.BeEqual => other.Round(RoundingMode.Floor),
+
+            _ => null,
+        };
+
+        if (other == null) return null;
+
+        int comparison = CompareTo(other);
+
+        if (limitMode == LimitMode.BeEqual) return comparison == 0 && ceilingBaseMeasure.Equals(other);
+
+        return comparison.FitsIn(limitMode);
+    }
+
+    public decimal GetDecimalQuantity()
+    {
+        return (decimal)GetQuantity(TypeCode.Decimal);
+    }
+
+    public IQuantifiable GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
+    {
+        return GetFactory().CreateQuantifiable(measureUnitCode, defaultQuantity);
+    }
+
+    public object GetQuantity(RoundingMode roundingMode)
+    {
+        ValueType baseQuantity = GetBaseQuantity();
+
+        return baseQuantity switch
+        {
+            double quantity => quantity.Round(roundingMode),
+            decimal quantity => quantity.Round(roundingMode),
+
+            _ => baseQuantity,
+        };
+    }
+
+    public object GetQuantity(TypeCode quantityTypeCode)
+    {
+        return GetBaseQuantity().ToQuantity(quantityTypeCode) ?? throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
     }
 
     public bool IsExchangeableTo(Enum? context)
@@ -91,22 +157,9 @@ public abstract class Quantifiable : BaseQuantifiable, IQuantifiable
     #endregion
     #endregion
 
-    #region Virtual methods
-    public virtual int CompareTo(IQuantifiable? other)
-    {
-        if (other == null) return 1;
-
-        ValidateMeasureUnitCode(other.GetMeasureUnitCode(), nameof(other));
-
-        return GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
-    }
-    #endregion
-
     #region Abstract methods
     public abstract IQuantifiable? ExchangeTo(Enum? context);
-    public abstract bool? FitsIn(IQuantifiable? other, LimitMode? limitMode);
-    public abstract IQuantifiable GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity);
-    public abstract object GetQuantity(RoundingMode roundingMode);
+    public abstract ValueType GetBaseQuantity();
     public abstract IQuantifiable Round(RoundingMode roundingMode);
     #endregion
     #endregion

@@ -17,3 +17,4 @@ global using CsabaDu.FooVaria.Proportions.Types;
 global using static CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations.BaseMeasurement;
 global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Statics.ExceptionMethods;
+global using CsabaDu.FooVaria.Proportions.Types.Implementations;

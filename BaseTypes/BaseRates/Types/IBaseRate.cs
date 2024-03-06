@@ -6,9 +6,9 @@ public interface IBaseRate : IBaseQuantifiable, IQuantity<decimal>, IProportiona
     MeasureUnitCode GetMeasureUnitCode(RateComponentCode rateComponentCode);
     IBaseRate GetBaseRate(IQuantifiable numerator, Enum denominator);
     IBaseRate GetBaseRate(IQuantifiable numerator, IMeasurable denominator);
-    IBaseRate GetBaseRate(params IQuantifiable[] quantifiables);
+    IBaseRate GetBaseRate(IQuantifiable numerator, IQuantifiable denominator);
 
-    void ValidateRateComponentCode(RateComponentCode rateComponentCode);
+    void ValidateRateComponentCode(RateComponentCode rateComponentCode, string paramName);
 }
 
 

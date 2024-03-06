@@ -11,12 +11,12 @@ public abstract class MassFactory : IMassFactory
     public IProportionFactory ProportionFactory { get; init; }
     public IBodyFactory BodyFactory { get; init; }
 
-    public IProportion<WeightUnit, VolumeUnit> CreateDensity(IMass mass)
+    public IProportion CreateDensity(IMass mass)
     {
         IWeight weight = NullChecked(mass, nameof(mass)).Weight;
         IVolume volume = mass.GetVolume();
 
-        return (IProportion<WeightUnit, VolumeUnit>)ProportionFactory.Create(weight, volume);
+        return (IProportion)ProportionFactory.CreateBaseRate(weight, volume);
     }
 
     public virtual IBodyFactory GetBodyFactory()

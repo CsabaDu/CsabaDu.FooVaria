@@ -6,7 +6,7 @@ public interface IMassFactory : IBaseQuantifiableFactory
     IProportionFactory ProportionFactory { get; init; }
 
     IMass Create(IWeight weight, IBody body);
-    IProportion<WeightUnit, VolumeUnit> CreateDensity(IMass mass);
+    IProportion CreateDensity(IMass mass);
     IMeasureFactory GetMeasureFactory();
     IBodyFactory GetBodyFactory();
 }

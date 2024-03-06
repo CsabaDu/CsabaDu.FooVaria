@@ -3,24 +3,17 @@
 public abstract class Measurable : CommonBase, IMeasurable
 {
     #region Structs
-    public readonly struct MeasureUnitElements(Enum measureUnit)
+    public readonly struct MeasureUnitElements(Enum context, string paramName)
     {
-        public Enum MeasureUnit => getMeasureUnitElements(measureUnit).MeasureUnit;
-        public MeasureUnitCode MeasureUnitCode => getMeasureUnitElements(measureUnit).MeasureUnitCode;
+        public Enum MeasureUnit => GetMeasureUnitElements(context, paramName).MeasureUnit;
+        public MeasureUnitCode MeasureUnitCode => GetMeasureUnitElements(context, paramName).MeasureUnitCode;
 
         #region Local methods
-        static (Enum MeasureUnit, MeasureUnitCode MeasureUnitCode) getMeasureUnitElements(Enum measureUnit)
+        static (Enum MeasureUnit, MeasureUnitCode MeasureUnitCode) GetMeasureUnitElements(Enum measureUnit, string paramName)
         {
-            string paramName = nameof(measureUnit);
-
-            if (measureUnit is MeasureUnitCode measureUnitCode)
-            {
-                return (Defined(measureUnitCode, paramName).GetDefaultMeasureUnit(), measureUnitCode);
-            }
-            else
-            {
-                return (DefinedMeasureUnit(measureUnit, paramName), GetMeasureUnitCode(measureUnit));
-            }
+            return measureUnit is MeasureUnitCode measureUnitCode ?
+                (Defined(measureUnitCode, paramName).GetDefaultMeasureUnit(), measureUnitCode)
+                : (DefinedMeasureUnit(measureUnit, paramName), GetMeasureUnitCode(measureUnit));
         }
         #endregion
     }
@@ -267,11 +260,6 @@ public abstract class Measurable : CommonBase, IMeasurable
         if (measureUnit is not MeasureUnitCode measureUnitCode) return GetDefinedMeasureUnitCode(measureUnit);
 
         return Defined(measureUnitCode, nameof(measureUnit));
-    }
-
-    public static MeasureUnitElements GetMeasureUnitElements(Enum measureUnit)
-    {
-        return new(measureUnit);
     }
 
     public static bool HasMeasureUnitCode(MeasureUnitCode measureUnitCode, Enum measureUnit)

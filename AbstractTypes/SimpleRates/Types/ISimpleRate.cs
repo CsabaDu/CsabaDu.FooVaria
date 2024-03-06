@@ -13,6 +13,3 @@ public interface ISimpleRate : IBaseRate, IDenominate<IMeasure, Enum>
     decimal GetQuantity(Enum numerator, string numeratorName, Enum denominator, string denominatorName);
     ISimpleRate GetSimpleRate(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode);
 }
-
-    //ISimpleRate GetSimpleRate(IBaseRate baseRate);
-    //ISimpleRate GetSimpleRate(IQuantifiable numerator, IQuantifiable denominator);

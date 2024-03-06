@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.ProportionLimits.Factories.Implementations;
 
-public sealed class ProportionLimitFactory : SimpleRateFactory, IProportionLimitFactory
+public sealed class ProportionLimitFactory(IMeasureFactory measureFactory) : SimpleRateFactory(measureFactory), IProportionLimitFactory
 {
     #region Public methods
     public IProportionLimit Create(IBaseRate baseRate, LimitMode limitMode)
@@ -8,69 +8,59 @@ public sealed class ProportionLimitFactory : SimpleRateFactory, IProportionLimit
         return new ProportionLimit(this, baseRate, limitMode);
     }
 
-    public IProportionLimit Create(IBaseMeasure numerator, IBaseMeasure denominator, LimitMode limitMode)
-    {
-        var (numeratorCode, defaultQuantity, denominatorCode) = GetSimpleRateParams(numerator, nameof(numerator), getDenominatorComponents);
-
-        return Create(numeratorCode, defaultQuantity, denominatorCode, limitMode);
-
-        #region Local methods
-        (MeasureUnitCode, decimal) getDenominatorComponents()
-        {
-            return GetSimpleRateComponents(denominator, nameof(denominator));
-        }
-        #endregion
-    }
-
     public IProportionLimit Create(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode, LimitMode limitMode)
     {
         return new ProportionLimit(this, numeratorCode, defaultQuantity, denominatorCode, limitMode);
     }
 
-    public IProportionLimit Create(IBaseMeasure numerator, Enum denominatorMeasureUnit, LimitMode limitMode)
+    public IProportionLimit Create(IQuantifiable numerator, IQuantifiable denominator, LimitMode limitMode)
     {
-        Enum numeratorMeasureUnit = NullChecked(numerator, nameof(numerator)).GetBaseMeasureUnit();
-        ValueType quantity = numerator.GetBaseQuantity();
+        SimpleRateParams simpleRateParams = GetSimpleRateParams(numerator, denominator);
 
-        return Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit, limitMode);
+        return CreateProportionLimit(simpleRateParams, limitMode);
     }
 
-    public IProportionLimit Create(IBaseMeasure numerator, MeasureUnitCode denominatorCode, LimitMode limitMode)
+    public IProportionLimit Create(IQuantifiable numerator, Enum denominator, LimitMode limitMode)
     {
-        Enum denominatorMeasureUnit = denominatorCode.GetDefaultMeasureUnit();
+        MeasurementElements denominatorElements = new(denominator, nameof(denominator));
+        SimpleRateParams simpleRateParams = GetSimpleRateParams(numerator, nameof(numerator), denominatorElements);
 
-        return Create(numerator, denominatorMeasureUnit, limitMode);
+        return CreateProportionLimit(simpleRateParams, limitMode);
     }
 
-    public IProportionLimit Create(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement, LimitMode limitMode)
+    public IProportionLimit Create(IQuantifiable numerator, IBaseMeasurement denominator, LimitMode limitMode)
     {
-        Enum denominatorMeasureUnit = NullChecked(denominatorMeasurement, nameof(denominatorMeasurement)).GetBaseMeasureUnit();
+        string paramName = nameof(denominator);
+        Enum measureUnit = NullChecked(denominator, paramName).GetBaseMeasureUnit();
+        MeasurementElements denominatorElements = new(measureUnit, paramName);
+        SimpleRateParams simpleRateParams = GetSimpleRateParams(numerator, nameof(numerator), denominatorElements);
 
-        return Create(numerator, denominatorMeasureUnit, limitMode);
+        return CreateProportionLimit(simpleRateParams, limitMode);
     }
 
-    public IProportionLimit Create(Enum numeratorMeasureUnit, ValueType quantity, Enum denominatorMeasureUnit, LimitMode limitMode)
+    public IProportionLimit Create(Enum numeratorContext, decimal quantity, Enum denominator, LimitMode limitMode)
     {
-        return new ProportionLimit(this, numeratorMeasureUnit, quantity, denominatorMeasureUnit, limitMode);
-    }
+        if (numeratorContext is MeasureUnitCode numeratorCode
+            && denominator is MeasureUnitCode denominatorCode)
+            return Create(numeratorCode, quantity, denominatorCode, limitMode);
 
-    public IProportionLimit CreateNew(IProportionLimit other)
-    {
-        return new ProportionLimit(other);
+        SimpleRateParams simpleRateParams = GetSimpleRateParams(numeratorContext, quantity, denominator);
+
+        return CreateProportionLimit(simpleRateParams, limitMode);
     }
 
     #region Override methods
-    public override IProportionLimit CreateBaseRate(IBaseRate baseRate)
-    {
-        if (NullChecked(baseRate, nameof(baseRate)) is IProportionLimit other) return CreateNew(other);
-
-        return Create(baseRate, default);
-    }
-
     public override IProportionLimit CreateSimpleRate(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode)
     {
         return Create(numeratorCode, defaultQuantity, denominatorCode, default);
     }
     #endregion
+    #endregion
+
+    #region Private methods
+    private IProportionLimit CreateProportionLimit(SimpleRateParams simpleRateParams, LimitMode limitMode)
+    {
+        return Create(simpleRateParams.NumeratorCode, simpleRateParams.DefaultQuantity, simpleRateParams.DenominatorCode, limitMode);
+    }
     #endregion
 }

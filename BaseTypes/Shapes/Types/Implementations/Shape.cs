@@ -17,6 +17,12 @@ public abstract class Shape : Spread, IShape
     #endregion
 
     #region Public methods
+    public IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
+    {
+        yield return GetMeasureUnitCode();
+        yield return MeasureUnitCode.ExtentUnit;
+    }
+
     public int GetShapeComponentCount()
     {
         return GetShapeComponents().Count();
@@ -40,12 +46,6 @@ public abstract class Shape : Spread, IShape
     }
 
     #region Override methods
-    public IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
-    {
-        yield return GetMeasureUnitCode();
-        yield return MeasureUnitCode.ExtentUnit;
-    }
-
     public override IShapeFactory GetFactory()
     {
         return (IShapeFactory)Factory;
@@ -54,30 +54,37 @@ public abstract class Shape : Spread, IShape
     #region Sealed methods
     public override sealed int CompareTo(IQuantifiable? other)
     {
-        if (other is IShape shape) return CompareTo(shape);
+        return other is IShape shape ?
+            CompareTo(shape)
+            : base.CompareTo(other);
+    }
 
-        return base.CompareTo(other);
+    public override sealed bool Equals(IQuantifiable? other)
+    {
+        return other is IShape shape ?
+            Equals(shape)
+            : base.Equals(other);
     }
 
     public override sealed bool? FitsIn(IQuantifiable? other, LimitMode? limitMode)
     {
-        if (other is IShape shape) return FitsIn(shape, limitMode);
-
-        return base.FitsIn(other, limitMode);
+        return other is IShape shape ?
+            FitsIn(shape, limitMode)
+            : base.FitsIn(other, limitMode);
     }
 
     public override sealed bool? FitsIn(ILimiter? limiter)
     {
-        if (limiter is IShape shape) return FitsIn(shape, limiter.GetLimitMode());
-
-        return base.FitsIn(limiter);
+        return limiter is IShape shape ?
+            FitsIn(shape, limiter.GetLimitMode())
+            : base.FitsIn(limiter);
     }
 
     public override sealed int GetHashCode()
     {
         HashCode hashCode = new();
 
-        hashCode.Add(GetMeasureUnitCode());
+        hashCode.Add(base.GetHashCode());
 
         foreach (IShapeComponent item in GetShapeComponents())
         {

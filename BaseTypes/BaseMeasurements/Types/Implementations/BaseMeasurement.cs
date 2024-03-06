@@ -3,10 +3,10 @@
 public abstract class BaseMeasurement : Measurable, IBaseMeasurement
 {
     #region Structs
-    public readonly struct MeasurementElements(Enum measureUnit)
+    public readonly struct MeasurementElements(Enum context, string paramName)
     {
-        public MeasureUnitElements MeasureUnitElements => new(measureUnit);
-        public decimal ExchangeRate => GetExchangeRate(measureUnit, nameof(measureUnit));
+        public MeasureUnitElements MeasureUnitElements => new(context, paramName);
+        public decimal ExchangeRate => GetExchangeRate(context, paramName);
 
         public Enum GetMeasureUnit()
         {
@@ -179,12 +179,6 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
     public static Dictionary<object, decimal> GetExchangeRateCollection(MeasureUnitCode measureUnitCode)
     {
         return GetMeasureUnitBasedCollection(ExchangeRateCollection, measureUnitCode);
-    }
-
-
-    public static MeasurementElements GetMeasurementElements(Enum measureUnit)
-    {
-        return new(measureUnit);
     }
 
     public static IEnumerable<object> GetValidMeasureUnits()

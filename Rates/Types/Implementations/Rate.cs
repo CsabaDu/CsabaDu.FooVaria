@@ -62,6 +62,7 @@ internal abstract class Rate : BaseRate, IRate
     {
         return base.CompareTo(other);
     }
+
     public IMeasure Denominate(IQuantifiable denominator)
     {
         string paramName = nameof(denominator);

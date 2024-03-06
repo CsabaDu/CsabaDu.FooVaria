@@ -73,6 +73,7 @@ public abstract class BaseQuantifiable : Measurable, IBaseQuantifiable
     #endregion
 
     #region Abstract methods
+    public abstract bool? FitsIn(ILimiter? limiter);
     public abstract decimal GetDefaultQuantity();
     #endregion
 

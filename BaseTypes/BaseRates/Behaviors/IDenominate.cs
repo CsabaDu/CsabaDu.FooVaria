@@ -6,7 +6,7 @@
     }
 
     public interface IDenominate<out TNumerator, in TDenominator> : IDenominate
-        where TNumerator : class, IBaseMeasure
+        where TNumerator : class, IQuantifiable
         where TDenominator : notnull
     {
         TNumerator Denominate(TDenominator denominator);

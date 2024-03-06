@@ -3,13 +3,6 @@
 public abstract class SimpleRate : BaseRate, ISimpleRate
 {
     #region Constructors
-    protected SimpleRate(ISimpleRate other) : base(other)
-    {
-        NumeratorCode = other.NumeratorCode;
-        DenominatorCode = other.DenominatorCode;
-        DefaultQuantity = other.DefaultQuantity;
-    }
-
     protected SimpleRate(ISimpleRateFactory factory, IBaseRate baseRate) : base(factory)
     {
         NumeratorCode = NullChecked(baseRate, nameof(baseRate)).GetNumeratorCode();
@@ -59,39 +52,25 @@ public abstract class SimpleRate : BaseRate, ISimpleRate
         return GetFactory().CreateSimpleRate(numeratorCode, quantity, denominatorCode);
     }
 
-    public ISimpleRate GetSimpleRate(IQuantifiable numerator, IQuantifiable denominator)
-    {
-        decimal defaultQuantity = NullChecked(numerator, nameof(numerator)).GetDefaultQuantity();
-        defaultQuantity /= NullChecked(denominator, nameof(denominator)).GetDefaultQuantity();
-
-        return GetSimpleRate(numerator.GetMeasureUnitCode(), defaultQuantity, denominator.GetMeasureUnitCode());
-    }
-
     public decimal GetQuantity(Enum context, string paramName)
     {
-        MeasurementElements measurementElements = GetMeasurementElements(context);
+        MeasurementElements measurementElements = new(context, paramName);
         MeasureUnitCode measureUnitCode = measurementElements.GetMeasureUnitCode();
-
-        if (!GetMeasureUnitCodes().Contains(measureUnitCode))
-        {
-            throw new InvalidEnumArgumentException(paramName, (int)(object)context, context.GetType());
-        }
-
         decimal exchangeRate = measurementElements.ExchangeRate;
 
-        if (exchangeRate == decimal.One) return DefaultQuantity;
+        if (measureUnitCode == DenominatorCode) return DefaultQuantity * exchangeRate;
 
-        return measureUnitCode == NumeratorCode ?
-            DefaultQuantity / exchangeRate
-            : DefaultQuantity * exchangeRate;
+        if (measureUnitCode == NumeratorCode) return DefaultQuantity / exchangeRate;
+
+        throw new InvalidEnumArgumentException(paramName, (int)(object)context, context.GetType());
     }
 
     public decimal GetQuantity(Enum numerator, string numeratorName, Enum denominator, string denominatorName)
     {
-        MeasurementElements numeratorElements = GetValidMeasurementElements(numerator, RateComponentCode.Numerator, numeratorName);
-        decimal numeratorExchangeRate = numeratorElements.ExchangeRate;
-        MeasurementElements denominatorElements = GetValidMeasurementElements(denominator, RateComponentCode.Denominator, denominatorName);
-        decimal denominatorExchangeRate = denominatorElements.ExchangeRate;
+        MeasurementElements measurementElements = GetValidMeasurementElements(numerator, RateComponentCode.Numerator, numeratorName);
+        decimal numeratorExchangeRate = measurementElements.ExchangeRate;
+        measurementElements = GetValidMeasurementElements(denominator, RateComponentCode.Denominator, denominatorName);
+        decimal denominatorExchangeRate = measurementElements.ExchangeRate;
 
         if (numeratorExchangeRate == denominatorExchangeRate) return DefaultQuantity;
 
@@ -101,16 +80,6 @@ public abstract class SimpleRate : BaseRate, ISimpleRate
     public void ValidateDenominator(Enum denominator)
     {
         _ = GetValidMeasurementElements(denominator, RateComponentCode.Denominator, nameof(denominator));
-    }
-
-    private MeasurementElements GetValidMeasurementElements(Enum context, RateComponentCode rateComponentCode, string paramName)
-    {
-        MeasurementElements measurementElements = GetMeasurementElements(context);
-        MeasureUnitCode measureUnitCode = GetMeasureUnitCode(rateComponentCode);
-
-        if (measureUnitCode == measurementElements.GetMeasureUnitCode()) return measurementElements;
-
-        throw new InvalidEnumArgumentException(paramName, (int)(object)context, context.GetType());
     }
 
     #region Override methods
@@ -137,9 +106,9 @@ public abstract class SimpleRate : BaseRate, ISimpleRate
 
     public override sealed MeasureUnitCode GetMeasureUnitCode(RateComponentCode rateComponentCode)
     {
-        return GetRateComponent(rateComponentCode) is MeasureUnitCode measureUnitCode ?
-            measureUnitCode
-            : throw InvalidRateComponentCodeArgumentException(rateComponentCode);
+        if (GetRateComponent(rateComponentCode) is MeasureUnitCode measureUnitCode) return measureUnitCode;
+
+        throw InvalidRateComponentCodeArgumentException(rateComponentCode);
     }
 
     public override sealed IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
@@ -158,5 +127,17 @@ public abstract class SimpleRate : BaseRate, ISimpleRate
     }
     #endregion
     #endregion
+    #endregion
+
+    #region Private methods
+    private MeasurementElements GetValidMeasurementElements(Enum context, RateComponentCode rateComponentCode, string paramName)
+    {
+        MeasurementElements measurementElements = new(context, paramName);
+        MeasureUnitCode measureUnitCode = GetMeasureUnitCode(rateComponentCode);
+
+        if (measureUnitCode == measurementElements.GetMeasureUnitCode()) return measurementElements;
+
+        throw new InvalidEnumArgumentException(paramName, (int)(object)context, context.GetType());
+    }
     #endregion
 }
