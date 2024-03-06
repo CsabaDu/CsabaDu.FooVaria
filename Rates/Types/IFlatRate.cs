@@ -4,10 +4,10 @@ public interface IFlatRate : IRate, ICalculate<IFlatRate, decimal>, ICommonBase<
 {
     IFlatRate GetFlatRate(IMeasure numerator, string name, ValueType quantity);
     IFlatRate GetFlatRate(IMeasure numerator, string name);
-    IFlatRate GetFlatRate(IMeasure numerator, Enum denominatorMeasureUnit, ValueType quantity);
+    IFlatRate GetFlatRate(IMeasure numerator, Enum denominatorContext, ValueType quantity);
     IFlatRate GetFlatRate(IMeasure numerator, MeasureUnitCode denominatorCode);
-    IFlatRate GetFlatRate(IMeasure numerator, IMeasurement denominatorMeasurement);
+    IFlatRate GetFlatRate(IMeasure numerator, IMeasurement denominator);
     IFlatRate GetFlatRate(IMeasure numerator, IDenominator denominator);
     IFlatRate GetFlatRate(IMeasure numerator);
-    IFlatRate GetFlatRate(IBaseRate baseRate);
+    //IFlatRate GetFlatRate(IRate baseRate);
 }

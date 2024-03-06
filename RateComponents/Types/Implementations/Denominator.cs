@@ -88,10 +88,10 @@ internal sealed class Denominator(IDenominatorFactory factory, IMeasurement meas
         return GetFactory().Create(baseMeasure);
     }
 
-    public IDenominator ConvertToLimitable(ILimiter limiter)
-    {
-        return ConvertToLimitable(this, limiter);
-    }
+    //public IDenominator ConvertToLimitable(ILimiter limiter)
+    //{
+    //    return ConvertToLimitable(this, limiter);
+    //}
     #endregion
     #endregion
 

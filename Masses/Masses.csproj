@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DryBodies\DryBodies.csproj" />
-    <ProjectReference Include="..\Proportions\Proportions.csproj" />
+    <ProjectReference Include="..\SimpleRates\SimpleRates.csproj" />
   </ItemGroup>
 
   <ItemGroup>

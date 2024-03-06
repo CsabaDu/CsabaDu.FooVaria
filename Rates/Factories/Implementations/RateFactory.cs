@@ -19,56 +19,35 @@ public abstract class RateFactory : IRateFactory
         return DenominatorFactory.Create(measureUnit, quantity);
     }
 
-    public IBaseRate CreateBaseRate(params IBaseMeasure[] baseMeasures)
+    public IBaseRate CreateBaseRate(IQuantifiable numerator, IQuantifiable denominator)
     {
-        int count = baseMeasures?.Length ?? 0;
+        IMeasure measure = GetValidNumerator(numerator, nameof(numerator));
+        IDenominator baseMeasure = DenominatorFactory.Create(denominator);
 
-        return count switch
-        {
-            1 => createRateFrom1Param(),
-            2 or 3 => createRateFrom2or3Params(),
+        return Create(measure, baseMeasure);
+    }
 
-            _ => throw CountArgumentOutOfRangeException(count, nameof(baseMeasures)),
-        };
+    public IBaseRate CreateBaseRate(IQuantifiable numerator, IMeasurable denominator)
+    {
+        if (denominator is IQuantifiable quantifiable) return CreateBaseRate(numerator, quantifiable);
 
-        #region Local methods
-        IRate createRateFrom1Param()
-        {
-            if (baseMeasures![0] is IRate rate) return CreateNew(rate);
+        string paramName = nameof(denominator);
 
-            throw exception();
-        }
+        if (denominator is IBaseQuantifiable) throw ArgumentTypeOutOfRangeException(paramName, denominator);
 
-        IRate createRateFrom2or3Params() // TODO fölösleges?
-        {
-            if (baseMeasures is IBaseMeasure[] rateComponents) return Create(rateComponents);
+        Enum measureUnit = NullChecked(denominator, paramName).GetBaseMeasureUnit();
 
-            throw exception();
-        }
-
-        ArgumentOutOfRangeException exception()
-        {
-            return ArgumentTypeOutOfRangeException(nameof(baseMeasures), baseMeasures!);
-        }
-        #endregion
+        return CreateBaseRate(numerator, measureUnit);
+    }
+    
+    public IDenominator CreateDenominator(IQuantifiable quantifiable)
+    {
+        return DenominatorFactory.Create(quantifiable);
     }
 
     #region Abstract methods
-    public abstract IRate Create(params IBaseMeasure[] rateComponents);
-    public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement);
-    public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit);
-    public abstract IBaseRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitCode denominatorCode);
-    public IBaseRate CreateBaseRate(IBaseRate baseRate)
-    {
-        if (baseRate is IRate other) return CreateNew(other);
-
-        decimal defaultQuantity = NullChecked(baseRate, nameof(baseRate)).GetDefaultQuantity();
-        MeasureUnitCode numeratorCode = baseRate.GetNumeratorCode();
-        IBaseMeasure numerator = CreateBaseMeasure(numeratorCode, defaultQuantity);
-        MeasureUnitCode denominatorCode = baseRate.GetMeasureUnitCode();
-
-        return CreateBaseRate(numerator, denominatorCode);
-    }
+    public abstract IRate Create(params IBaseMeasure[] baseMeasures);
+    public abstract IBaseRate CreateBaseRate(IQuantifiable numerator, Enum denominator);
     public abstract IRate CreateNew(IRate other);
     #endregion
     #endregion
@@ -83,6 +62,12 @@ public abstract class RateFactory : IRateFactory
         throw ArgumentTypeOutOfRangeException(paramName, measurable);
     }
 
+    protected static IMeasure GetValidNumerator(IQuantifiable numerator, string paramName)
+    {
+        if (NullChecked(numerator, paramName) is IMeasure measure) return measure;
+        
+        throw ArgumentTypeOutOfRangeException(paramName, numerator);
+    }
     #endregion
     #endregion
 }

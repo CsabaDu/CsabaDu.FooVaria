@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.DryBodies.Factories.Implementations;
-
-namespace CsabaDu.FooVaria.DryBodies.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.DryBodies.Types.Implementations;
 
 internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
 {

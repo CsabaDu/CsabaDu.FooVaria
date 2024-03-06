@@ -41,9 +41,8 @@ public sealed class MeasurementFactory : IMeasurementFactory
     {
         if (measureUnit == null) return null;
 
-        measureUnit = GetOrConvertToMeasureUnit(measureUnit);
-
-        if (!IsDefinedMeasureUnit(measureUnit)) return null;
+        MeasureUnitElements measureUnitElements = new(measureUnit, nameof(measureUnit));
+        measureUnit = measureUnitElements.MeasureUnit;
 
         bool success = ExchangeRateCollection.TryGetValue(measureUnit, out decimal validExchangeRate)
             && exchangeRate == validExchangeRate
@@ -51,21 +50,19 @@ public sealed class MeasurementFactory : IMeasurementFactory
 
         if (success) return GetStoredMeasurement(measureUnit);
 
-        MeasureUnitCode measureUnitCode = GetMeasureUnitCode(measureUnit);
-
+        MeasureUnitCode measureUnitCode = measureUnitElements.MeasureUnitCode;
         success = measureUnitCode.IsCustomMeasureUnitCode()
             && TrySetCustomMeasureUnit(measureUnit, exchangeRate, customName);
 
         return GetStoredMeasurementOrNull(measureUnit, success);
     }
 
-    public IMeasurement Create(Enum measureUnit)
+    public IMeasurement Create(Enum context)
     {
-        measureUnit = GetOrConvertToMeasureUnit(measureUnit);
+        string paramName = nameof(context);
+        Enum measureUnit = new MeasurementElements(context, paramName).GetMeasureUnit();
 
-        if (IsValidMeasureUnit(NullChecked(measureUnit, nameof(measureUnit)))) return GetStoredMeasurement(measureUnit);
-
-        throw InvalidMeasureUnitEnumArgumentException(measureUnit);
+        return GetStoredMeasurement(measureUnit);
     }
 
     public IMeasurement Create(string name)
@@ -175,20 +172,9 @@ public sealed class MeasurementFactory : IMeasurementFactory
         #region Local methods
         static string getMeasureUnitName(object measureUnit)
         {
-            return getMeasureUnitName((Enum)measureUnit);
+            return GetMeasureUnitName((Enum)measureUnit);
         }
         #endregion
-    }
-
-    private static Enum GetOrConvertToMeasureUnit(Enum measureUnit)
-    {
-        if (measureUnit is MeasureUnitCode measureUnitCode
-            && measureUnitCode.IsDefined())
-        {
-            measureUnit = measureUnitCode.GetDefaultMeasureUnit();
-        }
-
-        return measureUnit;
     }
     #endregion
     #endregion
