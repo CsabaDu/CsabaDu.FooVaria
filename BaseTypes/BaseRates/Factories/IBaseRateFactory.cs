@@ -6,6 +6,3 @@ public interface IBaseRateFactory : IBaseQuantifiableFactory/*, IFactory<IBaseRa
     IBaseRate CreateBaseRate(IQuantifiable numerator, IMeasurable denominator);
     IBaseRate CreateBaseRate(IQuantifiable numerator, IQuantifiable denominator);
 }
-
-    //IBaseRate CreateBaseRate(IQuantifiable numerator, MeasureUnitCode denominatorCode);
-    //IBaseRate CreateBaseRate(IBaseRate baseRate);

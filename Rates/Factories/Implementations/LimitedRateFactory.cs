@@ -1,6 +1,4 @@
-﻿using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;
-
-namespace CsabaDu.FooVaria.Rates.Factories.Implementations;
+﻿namespace CsabaDu.FooVaria.Rates.Factories.Implementations;
 
 public sealed class LimitedRateFactory(IDenominatorFactory denominatorFactory, ILimitFactory limitFactory) : RateFactory(denominatorFactory), ILimitedRateFactory
 {

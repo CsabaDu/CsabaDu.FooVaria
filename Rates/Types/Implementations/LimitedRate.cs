@@ -13,21 +13,6 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         Limit = NullChecked(limit, nameof(limit));
     }
 
-    //internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, MeasureUnitCode denominatorCode, ILimit limit) : base(factory, numerator, denominatorCode)
-    //{
-    //    Limit = NullChecked(limit, nameof(limit));
-    //}
-
-    //internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, IMeasurement denominatorMeasurement, ILimit limit) : base(factory, numerator, denominatorMeasurement)
-    //{
-    //    Limit = NullChecked(limit, nameof(limit));
-    //}
-
-    //internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, Enum denominatorMeasureUnit, ValueType denominatorQuantity, ILimit limit) : base(factory, numerator, denominatorMeasureUnit, denominatorQuantity)
-    //{
-    //    Limit = NullChecked(limit, nameof(limit));
-    //}
-
     internal LimitedRate(ILimitedRateFactory factory, IMeasure numerator, IDenominator denominator, ILimit limit) : base(factory, numerator, denominator)
     {
         Limit = NullChecked(limit, nameof(limit));
