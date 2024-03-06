@@ -1,8 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
-using CsabaDu.FooVaria.RateComponents.Types;
-using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;
-
-namespace CsabaDu.FooVaria.Rates.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Rates.Types.Implementations;
 
 internal abstract class Rate : BaseRate, IRate
 {
@@ -18,24 +14,6 @@ internal abstract class Rate : BaseRate, IRate
         Numerator = NullChecked(rate, nameof(rate)).Numerator;
         Denominator = rate.Denominator;
     }
-
-    //private protected Rate(IRateFactory factory, IMeasure numerator, MeasureUnitCode denominatorCode) : base(factory)
-    //{
-    //    Numerator = NullChecked(numerator, nameof(numerator));
-    //    Denominator = CreateDenominator(denominatorCode);
-    //}
-
-    //private protected Rate(IRateFactory factory, IMeasure numerator, Enum denominatorMeasureUnit, ValueType denominatorQuantity) : base(factory)
-    //{
-    //    Numerator = NullChecked(numerator, nameof(numerator));
-    //    Denominator = factory.DenominatorFactory.Create(denominatorMeasureUnit, denominatorQuantity);
-    //}
-
-    //private protected Rate(IRateFactory factory, IMeasure numerator, IMeasurement denominatorMeasurement) : base(factory)
-    //{
-    //    Numerator = NullChecked(numerator, nameof(numerator));
-    //    Denominator = factory.DenominatorFactory.Create(denominatorMeasurement);
-    //}
 
     private protected Rate(IRateFactory factory, IMeasure numerator, IDenominator denominator) : base(factory)
     {

@@ -12,5 +12,3 @@ public interface IRate : IBaseRate, IExchange<IRate, IMeasurable>, IDenominate<I
     IRate GetRate(params IBaseMeasure[] baseMeasures);
     IRate GetRate(IRate rate);
 }
-
-    //IRate GetRate(IBaseRate rate);
