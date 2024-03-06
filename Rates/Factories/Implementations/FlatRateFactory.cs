@@ -1,5 +1,4 @@
-﻿
-namespace CsabaDu.FooVaria.Rates.Factories.Implementations;
+﻿namespace CsabaDu.FooVaria.Rates.Factories.Implementations;
 
 public sealed class FlatRateFactory(IDenominatorFactory denominatorFactory) : RateFactory(denominatorFactory), IFlatRateFactory
 {
@@ -18,29 +17,32 @@ public sealed class FlatRateFactory(IDenominatorFactory denominatorFactory) : Ra
         return Create(numerator, denominator);
     }
 
-    public IFlatRate Create(IMeasure numerator, Enum denominatorMeasureUnit, ValueType denominatorQuantity)
+    public IFlatRate Create(IMeasure numerator, Enum denominatorContext, ValueType denominatorQuantity)
     {
-        return new FlatRate(this, numerator, denominatorMeasureUnit, denominatorQuantity);
+        MeasureUnitElements denominatorElements = new MeasureUnitElements(denominatorContext, nameof(denominatorContext));
+        Enum measureUnit = denominatorElements.MeasureUnit;
+        IDenominator denominator = DenominatorFactory.Create(measureUnit);
+
+        return Create(numerator, denominator);
     }
 
     public IFlatRate Create(IMeasure numerator, MeasureUnitCode denominatorCode)
     {
-        return new FlatRate(this, numerator, denominatorCode);
+        IDenominator denominator = DenominatorFactory.Create(denominatorCode);
+
+        return Create(numerator, denominator);
     }
 
-    public IFlatRate Create(IMeasure numerator, IMeasurement denominatorMeasurement)
+    public IFlatRate Create(IMeasure numerator, IMeasurement denominator)
     {
-        return new FlatRate(this, numerator, denominatorMeasurement);
+        IDenominator baseMeasure = DenominatorFactory.Create(denominator);
+
+        return Create(numerator, baseMeasure);
     }
 
     public IFlatRate Create(IMeasure numerator, IDenominator denominator)
     {
         return new FlatRate(this, numerator, denominator);
-    }
-
-    public IFlatRate Create(IRate rate)
-    {
-        return new FlatRate(this, rate);
     }
 
     public IFlatRate CreateNew(IFlatRate other)
@@ -56,38 +58,30 @@ public sealed class FlatRateFactory(IDenominatorFactory denominatorFactory) : Ra
 
         if (count != 2) throw QuantityArgumentOutOfRangeException(paramName, count);
 
-        IMeasure numerator = GetValidRateParam<IMeasure>(rateComponents![0], paramName);
-        IDenominator denominator = GetValidRateParam<IDenominator>(rateComponents[1], paramName);
+        IMeasure numerator = GetValidNumerator(rateComponents![0], paramName);
+        IBaseMeasure baseMeasure = rateComponents[1];
+
+        if (baseMeasure is not IDenominator denominator)
+        {
+            denominator = CreateDenominator(baseMeasure);
+        }
 
         return Create(numerator, denominator);
     }
 
-    public override IFlatRate CreateBaseRate(IBaseMeasure numerator, IBaseMeasurement denominatorMeasurement)
+    public override IFlatRate CreateBaseRate(IQuantifiable numerator, Enum denominator)
     {
         IMeasure measure = GetValidRateParam<IMeasure>(numerator, nameof(numerator));
-        IMeasurement measurement = GetValidRateParam<IMeasurement>(denominatorMeasurement, nameof(denominatorMeasurement));
+        IDenominator baseMeasure = DenominatorFactory.Create(denominator);
 
-        return Create(measure, measurement);
-    }
-
-    public override IFlatRate CreateBaseRate(IBaseMeasure numerator, Enum denominatorMeasureUnit)
-    {
-        IMeasure measure = GetValidRateParam<IMeasure>(numerator, nameof(numerator));
-        IDenominator denominator = DenominatorFactory.Create(denominatorMeasureUnit);
-
-        return Create(measure, denominator);
-    }
-
-    public override IFlatRate CreateBaseRate(IBaseMeasure numerator, MeasureUnitCode denominatorCode)
-    {
-        IMeasure measure = GetValidRateParam<IMeasure>(numerator, nameof(numerator));
-
-        return Create(measure, denominatorCode);
+        return Create(measure, baseMeasure);
     }
 
     public override IFlatRate CreateNew(IRate other)
     {
-        return Create(other);
+        if (other is IFlatRate flatRate) return CreateNew(flatRate);
+
+        return new FlatRate(this, other);
     }
     #endregion
     #endregion

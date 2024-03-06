@@ -31,7 +31,8 @@
 	[<base>BaseRate]
 ]
 [SimpleRates|
-	[<abstract>SimpleRate]
+	[<abstract>SimpleRate]<:-[<concrete>Proportion]
+	[SimpleRate]<:-[<concrete>ProportionLimit]
 ]
 [SimpleShapes|
 	[<abstract>SimpleShape]
@@ -65,13 +66,8 @@
 	[Rate]<:-[<concrete>LimitedRate]
 ]
 [SimpleRates|
-	[<abstract>SimpleRate]
-]
-[Proportions|
-	[<abstract>Proportion<TDEnum>]<:-[<concrete>Proportion<TNEnum, TDEnum>]
-]
-[ProportionLimits|
-    [<concrete>ProportionLimit]
+	[<abstract>SimpleRate]<:-[<concrete>Proportion]
+	[<abstract>SimpleRate]<:-[<concrete>ProportionLimit]
 ]
 [BulkSpreads|
 	[<abstract>BulkSpread]<:-[<abstract>BulkSpread<TSelf, TSMeasure>]
@@ -107,13 +103,13 @@
 [Measurables]<:-[BaseMeasurements]
 [BaseMeasurements]<:-[Measurements]
 [Measurables]<:-[BaseQuantifiables]
-[BaseQuantifiables]<:-[BaseRates]
-[BaseQuantifiables]<:-[Masses]
 [BaseQuantifiables]<:-[Quantifiables]
+[BaseQuantifiables]<:-[Masses]
+[BaseQuantifiables]<:-[BaseRates]
 [Quantifiables]<:-[BaseMeasures]
 [Quantifiables]<:-[Spreads]
-[Spreads]<:-[Shapes]
 [Spreads]<:-[BulkSpreads]
+[Spreads]<:-[Shapes]
 [Shapes]<:-[SimpleShapes]
 [SimpleShapes]<:-[ShapeLimits]
 [SimpleShapes]<:-[PlaneShapes]
@@ -122,8 +118,6 @@
 [BaseMeasures]<:-[RateComponents]
 [BaseRates]<:-[SimpleRates]
 [BaseRates]<:-[Rates]
-[SimpleRates]<:-[ProportionLimits]
-[SimpleRates]<:-[Proportions]
 [Shapes]<:-[ComplexShapes]
 [ComplexShapes]<:-[Sections]
 [ComplexShapes]<:-[ComplexDryBodies]

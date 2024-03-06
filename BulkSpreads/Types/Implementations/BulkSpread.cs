@@ -31,14 +31,14 @@
             return (IBulkSpreadFactory)Factory;
         }
 
-        public override void ValidateMeasureUnit(Enum? measureUnit, string paramName)
-        {
-            MeasureUnitCode measureUnitCode = GetDefinedMeasureUnitCode(measureUnit!);
+        //public override void ValidateMeasureUnit(Enum? measureUnit, string paramName)
+        //{
+        //    MeasureUnitCode measureUnitCode = GetDefinedMeasureUnitCode(measureUnit!);
 
-            if (IsValidMeasureUnitCode(measureUnitCode)) return;
+        //    if (IsValidMeasureUnitCode(measureUnitCode)) return;
 
-            throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName);
-        }
+        //    throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName);
+        //}
 
         #region Sealed methods
         public override sealed ISpread? ExchangeTo(Enum? context)
@@ -49,11 +49,6 @@
         public override sealed MeasureUnitCode GetSpreadMeasureUnitCode()
         {
             return base.GetSpreadMeasureUnitCode();
-        }
-
-        public override sealed IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
-        {
-            return base.GetMeasureUnitCodes();
         }
 
         public override sealed double GetQuantity()

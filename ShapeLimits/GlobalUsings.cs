@@ -1,5 +1,4 @@
-﻿global using CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Enums;
-global using CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories;
+﻿global using CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories;
 global using CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories.Implementations;
 global using CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types;
 global using CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types.Implementations;
@@ -10,6 +9,7 @@ global using CsabaDu.FooVaria.BaseTypes.Common.Factories;
 global using CsabaDu.FooVaria.BaseTypes.Common.Types;
 global using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
+global using CsabaDu.FooVaria.BaseTypes.Shapes.Enums;
 global using CsabaDu.FooVaria.BaseTypes.Shapes.Types;
 global using CsabaDu.FooVaria.BulkSpreads.Factories;
 global using CsabaDu.FooVaria.Measures.Types;

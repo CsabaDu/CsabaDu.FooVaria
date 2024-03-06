@@ -22,10 +22,10 @@
             return GetSum(other, SummingMode.Add);
         }
 
-        public IMeasure ConvertToLimitable(ILimiter limiter)
-        {
-            return ConvertToLimitable(this, limiter);
-        }
+        //public IMeasure ConvertToLimitable(ILimiter limiter)
+        //{
+        //    return ConvertToLimitable(this, limiter);
+        //}
 
         public IMeasure Divide(decimal divisor)
         {
@@ -274,13 +274,6 @@
             };
 
             return (TOther)GetBaseMeasure(measureUnit, quantity);
-        }
-
-        protected void ValidateBulkSpreadQuantity(ValueType? quantity, string paramName)
-        {
-            if (GetValidQuantityOrNull(this, NullChecked(quantity, paramName)) is double bulkSpreadQuantity && bulkSpreadQuantity > 0) return;
-
-            throw QuantityArgumentOutOfRangeException(paramName, quantity);
         }
 
         protected static void ValidateSpreadMeasure(string paramName, ISpreadMeasure? spreadMeasure)

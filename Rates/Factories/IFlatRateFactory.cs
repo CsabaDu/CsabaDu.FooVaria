@@ -8,5 +8,5 @@ public interface IFlatRateFactory : IRateFactory, IFactory<IFlatRate>
     IFlatRate Create(IMeasure numerator, MeasureUnitCode denominatorCode);
     IFlatRate Create(IMeasure numerator, IMeasurement denominatorMeasurement);
     IFlatRate Create(IMeasure numerator, IDenominator denominator);
-    IFlatRate Create(IRate rate);
+    //IFlatRate Create(IRate rate);
 }

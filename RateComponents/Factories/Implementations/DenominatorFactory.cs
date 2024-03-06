@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
+
+namespace CsabaDu.FooVaria.RateComponents.Factories.Implementations;
 
 public sealed class DenominatorFactory(IMeasurementFactory measurementFactory)
     : RateComponentFactory(measurementFactory), IDenominatorFactory
@@ -27,9 +29,9 @@ public sealed class DenominatorFactory(IMeasurementFactory measurementFactory)
     #endregion
 
     #region Public methods
-    public IDenominator Create(Enum measureUnit)
+    public IDenominator Create(Enum context)
     {
-        IMeasurement measurement = MeasurementFactory.Create(measureUnit);
+        IMeasurement measurement = MeasurementFactory.Create(context);
 
         return GetOrCreateStoredDenominator(measurement);
     }
@@ -84,12 +86,12 @@ public sealed class DenominatorFactory(IMeasurementFactory measurementFactory)
         return GetOrCreateStoredDenominator(measurement, quantity);
     }
 
-    public IDenominator Create(IBaseMeasure baseMeasure)
+    public IDenominator Create(IQuantifiable quantifiable)
     {
-        if (NullChecked(baseMeasure, nameof(baseMeasure)) is IDenominator denominator) return CreateNew(denominator);
+        if (NullChecked(quantifiable, nameof(quantifiable)) is IDenominator denominator) return CreateNew(denominator);
 
-        Enum measureUnit = baseMeasure.GetBaseMeasureUnit();
-        ValueType quantity = baseMeasure.GetDecimalQuantity();
+        Enum measureUnit = quantifiable.GetBaseMeasureUnit();
+        ValueType quantity = quantifiable.GetDecimalQuantity();
 
         return GetOrCreateStoredDenominator(measureUnit, quantity);
     }
