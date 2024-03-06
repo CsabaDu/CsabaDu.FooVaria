@@ -1,15 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Interface Name="CsabaDu.FooVaria.AbstractTypes.SimpleRates.Factories.ISimpleRateFactory" Collapsed="true">
-    <Position X="0.5" Y="1.75" Width="1.75" />
+  <Interface Name="CsabaDu.FooVaria.SimpleRates.Factories.ISimpleRateFactory" Collapsed="true">
+    <Position X="1.5" Y="1.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\ISimpleRateFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseRates.Factories.IBaseRateFactory" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="0.5" Y="0.5" Width="1.75" />
+    <Position X="1.5" Y="0.5" Width="1.75" />
     <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.SimpleRates.Factories.IProportionFactory" Collapsed="true">
+    <Position X="0.5" Y="3" Width="1.75" />
+    <InheritanceLine Type="CsabaDu.FooVaria.SimpleRates.Factories.ISimpleRateFactory" FixedFromPoint="true">
+      <Path>
+        <Point X="2.125" Y="2.441" />
+        <Point X="2.125" Y="2.7" />
+        <Point X="1.375" Y="2.7" />
+        <Point X="1.375" Y="3" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Factories\IProportionFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.SimpleRates.Factories.IProportionLimitFactory" Collapsed="true">
+    <Position X="2.5" Y="3" Width="2" />
+    <InheritanceLine Type="CsabaDu.FooVaria.SimpleRates.Factories.ISimpleRateFactory" FixedFromPoint="true">
+      <Path>
+        <Point X="2.625" Y="2.441" />
+        <Point X="2.625" Y="2.7" />
+        <Point X="3.5" Y="2.7" />
+        <Point X="3.5" Y="3" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Factories\IProportionLimitFactory.cs</FileName>
+    </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

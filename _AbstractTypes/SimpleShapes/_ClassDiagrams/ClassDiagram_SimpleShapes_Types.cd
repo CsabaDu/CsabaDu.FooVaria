@@ -143,5 +143,12 @@
     <Position X="2.75" Y="2.75" Width="1.75" />
     <TypeIdentifier />
   </Interface>
+  <Interface Name="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Behaviors.IHorizontalRotation" Collapsed="true">
+    <Position X="11" Y="5.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Behaviors\IHorizontalRotation.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

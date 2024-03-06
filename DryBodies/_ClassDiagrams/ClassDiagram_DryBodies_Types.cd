@@ -60,28 +60,28 @@
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types.IRectangularShape&lt;TSelf, TTangent&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
-    <Position X="5.75" Y="3" Width="2.75" />
+    <Position X="8" Y="3" Width="2.75" />
     <InheritanceLine Type="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types.ISimpleShape" IsHidden="true" />
     <InheritanceLine Type="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Behaviors.IHorizontalRotation" IsHidden="true" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Behaviors.IHorizontalRotation" Collapsed="true">
-    <Position X="9" Y="2" Width="1.75" />
+    <Position X="11.25" Y="2" Width="1.75" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Behaviors.IHorizontalRotation&lt;TSelf&gt;" Collapsed="true">
-    <Position X="8.75" Y="3" Width="2.25" />
+    <Position X="11" Y="3" Width="2.25" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.DryBodies.Behaviors.ISpatialRotation" Collapsed="true">
-    <Position X="11.5" Y="2" Width="1.5" />
+    <Position X="6" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Behaviors\ISpatialRotation.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.DryBodies.Behaviors.ISpatialRotation&lt;TSelf&gt;" Collapsed="true">
-    <Position X="11.25" Y="3" Width="2" />
+    <Position X="5.75" Y="3" Width="2" />
     <TypeIdentifier>
       <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
       <FileName>Behaviors\ISpatialRotation.cs</FileName>

@@ -10,7 +10,6 @@
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Spreads.Types.ISpread" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
     <Position X="2.5" Y="0.5" Width="1.25" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IFit&lt;CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.IQuantifiable&gt;" IsHidden="true" />
-    <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.ILimitable" IsHidden="true" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Shapes.Behaviors.IShapeComponents" Collapsed="true">
@@ -67,8 +66,8 @@
     <Position X="4" Y="0.5" Width="1.25" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.ILimitable" Collapsed="true">
-    <Position X="5.5" Y="0.5" Width="1.25" />
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IMeasureUnitCodes" Collapsed="true">
+    <Position X="5.5" Y="0.5" Width="1.75" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />
