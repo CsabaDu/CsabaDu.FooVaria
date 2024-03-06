@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.ProportionLimits.Types;
+﻿namespace CsabaDu.FooVaria.SimpleRates.Types;
 
 public interface IProportionLimit : ISimpleRate, ILimiter<IProportionLimit, IBaseRate>
 {

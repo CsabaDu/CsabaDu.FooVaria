@@ -1,5 +1,4 @@
-﻿
-namespace CsabaDu.FooVaria.Masses.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Masses.Types.Implementations;
 
 internal abstract class Mass : BaseQuantifiable, IMass
 {

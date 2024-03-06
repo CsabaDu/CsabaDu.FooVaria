@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.ProportionLimits.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.SimpleRates.Types.Implementations;
 
 internal sealed class ProportionLimit : SimpleRate, IProportionLimit
 {

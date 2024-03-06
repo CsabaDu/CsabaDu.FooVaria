@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.ProportionLimits.Factories.Implementations;
+﻿namespace CsabaDu.FooVaria.SimpleRates.Factories.Implementations;
 
 public sealed class ProportionLimitFactory(IMeasureFactory measureFactory) : SimpleRateFactory(measureFactory), IProportionLimitFactory
 {

@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.ProportionLimits.Factories;
+﻿namespace CsabaDu.FooVaria.SimpleRates.Factories;
 
 public interface IProportionLimitFactory : ISimpleRateFactory
 {

@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Proportions.Types;
+﻿namespace CsabaDu.FooVaria.SimpleRates.Types;
 
 public interface IProportion : ISimpleRate
 {

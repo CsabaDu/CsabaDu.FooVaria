@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Proportions.Factories;
+﻿namespace CsabaDu.FooVaria.SimpleRates.Factories;
 
 public interface IProportionFactory : ISimpleRateFactory
 {
