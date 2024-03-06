@@ -10,4 +10,6 @@ global using CsabaDu.FooVaria.BaseTypes.Shapes.Types;
 global using CsabaDu.FooVaria.BaseTypes.Spreads.Factories;
 global using CsabaDu.FooVaria.BaseTypes.Spreads.Types;
 global using CsabaDu.FooVaria.BaseTypes.Spreads.Types.Implementations;
+global using System.ComponentModel;
 global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.ExceptionMethods;
+global using CsabaDu.FooVaria.BaseTypes.Shapes.Enums;
