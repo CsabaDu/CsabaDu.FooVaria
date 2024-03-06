@@ -17,7 +17,7 @@
 
     public interface IBulkSpreadFactory<T, in TSMeasure, in TEnum> : IBulkSpreadFactory<T, TSMeasure>
         where T : class, IBulkSpread
-        where TSMeasure : class, IMeasure, ISpreadMeasure, ILimitable
+        where TSMeasure : class, IMeasure, ISpreadMeasure
         where TEnum : struct, Enum
     {
         T Create(TEnum measureUnit, double quantity);

@@ -34,7 +34,7 @@ namespace CsabaDu.FooVaria.BulkSpreads.Factories.Implementations
 
     public abstract class BulkSpreadFactory<T, TSMeasure> : BulkSpreadFactory, IBulkSpreadFactory<T, TSMeasure>
         where T : class, IBulkSpread
-        where TSMeasure : class, IMeasure, ISpreadMeasure, ILimitable
+        where TSMeasure : class, IMeasure, ISpreadMeasure
     {
         #region Constructors
         private protected BulkSpreadFactory(IMeasureFactory measureFactory) : base(measureFactory)
