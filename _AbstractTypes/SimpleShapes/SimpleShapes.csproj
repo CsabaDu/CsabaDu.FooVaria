@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BaseTypes\Shapes\Shapes.csproj" />
+    <ProjectReference Include="..\..\_BaseTypes\Shapes\Shapes.csproj" />
     <ProjectReference Include="..\..\BulkSpreads\BulkSpreads.csproj" />
   </ItemGroup>
 
