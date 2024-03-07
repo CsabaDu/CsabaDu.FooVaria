@@ -23,7 +23,7 @@ public sealed class LimitedRateFactory(IDenominatorFactory denominatorFactory, I
 
     public ILimitedRate Create(IMeasure numerator, Enum denominatorContext, ValueType denominatorQuantity, ILimit limit)
     {
-        MeasureUnitElements denominatorElements = new MeasureUnitElements(denominatorContext, nameof(denominatorContext));
+        MeasureUnitElements denominatorElements = new(denominatorContext, nameof(denominatorContext));
         Enum measureUnit = denominatorElements.MeasureUnit;
         IDenominator denominator = DenominatorFactory.Create(measureUnit);
 
@@ -67,7 +67,7 @@ public sealed class LimitedRateFactory(IDenominatorFactory denominatorFactory, I
     #region Override methods
     public override ILimitedRate Create(params IBaseMeasure[] rateComponents)
     {
-        string paramName = nameof(rateComponents);
+        const string paramName = nameof(rateComponents);
         int count = rateComponents?.Length ?? 0;
 
         if (count < 2 || count > 3) throw QuantityArgumentOutOfRangeException(paramName, count);

@@ -3,18 +3,19 @@
 public class RandomParams
 {
     #region Private fields
+    private const int ItemCount = 1000;
     private static readonly Random Random = Random.Shared;
     private static readonly IEnumerable<MeasureUnitCode> CustomMeasureUnitCodes = MeasureUnitCodes.Where(x => x.IsCustomMeasureUnitCode());
     #endregion
 
-    private static Enum[] RandomMeasureUnits => GetRandomItems(GetAllMeasureUnits().ToArray(), 1000);
+    private static Enum[] RandomMeasureUnits => GetRandomItems(GetAllMeasureUnits().ToArray(), ItemCount);
     private static Enum[] RandomMeasureUnitsAndMeasureUnitCodes => GetRandomMeasureUnitAndMeasureUnitCodes();
 
     private static Enum[] GetRandomMeasureUnitAndMeasureUnitCodes()
     {
         IEnumerable<Enum> measureUnits = GetAllMeasureUnits().Union([.. MeasureUnitCodes]).ToArray();
 
-        return GetRandomItems(measureUnits.ToArray(), 1000);
+        return GetRandomItems(measureUnits.ToArray(), ItemCount);
     }
 
     #region Public methods

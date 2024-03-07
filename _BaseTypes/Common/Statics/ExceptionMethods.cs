@@ -153,7 +153,6 @@ public static class ExceptionMethods
         return new ArgumentOutOfRangeException(paramName, count, null);
     }
 
-
     #endregion
 
     #region Generic checkers

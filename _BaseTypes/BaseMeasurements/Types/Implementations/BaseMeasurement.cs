@@ -97,7 +97,7 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
 
     public decimal ProportionalTo(IBaseMeasurement? other)
     {
-        string paramName = nameof(other);
+        const string paramName = nameof(other);
 
         MeasureUnitCode measureUnitCode = NullChecked(other, paramName).GetMeasureUnitCode();
 
@@ -159,7 +159,6 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
         {
             yield return item;
         }
-
     }
 
     public static decimal GetExchangeRate(Enum? measureUnit, string paramName)

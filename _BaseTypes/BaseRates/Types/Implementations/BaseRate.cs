@@ -88,8 +88,7 @@
 
         public bool IsExchangeableTo(IBaseRate? baseRate)
         {
-            return baseRate != null
-                && baseRate.HasMeasureUnitCode(GetMeasureUnitCode())
+            return baseRate?.HasMeasureUnitCode(GetMeasureUnitCode()) == true
                 && baseRate.GetNumeratorCode() == GetNumeratorCode();
         }
 
@@ -105,7 +104,7 @@
 
         public decimal ProportionalTo(IBaseRate? other)
         {
-            string paramName = nameof(other);
+            const string paramName = nameof(other);
 
             decimal defaultQuantity = NullChecked(other, paramName).GetDefaultQuantity();
 
@@ -202,9 +201,6 @@
             return Enum.GetValues<RateComponentCode>();
         }
         #endregion
-        #endregion
-
-        #region Protected methods
         #endregion
     }
 }

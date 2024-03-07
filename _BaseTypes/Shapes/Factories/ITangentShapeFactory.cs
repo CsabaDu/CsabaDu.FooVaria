@@ -1,5 +1,3 @@
 ﻿namespace CsabaDu.FooVaria.Shapes.Factories;
 
-public interface ITangentShapeFactory : IShapeFactory
-{
-}
+public interface ITangentShapeFactory : IShapeFactory;

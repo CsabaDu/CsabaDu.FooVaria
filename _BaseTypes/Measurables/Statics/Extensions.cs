@@ -61,7 +61,7 @@ public static class Extensions
         Type measureUnitType = measureUnitCode.GetMeasureUnitType();
         string? defaultMeasureUnitName = Enum.GetName(measureUnitType, default(int));
 
-        return defaultMeasureUnitName == DefaultCustomMeasureUnitName;
+        return defaultMeasureUnitName == Default;
     }
 
     public static bool IsSpreadMeasureUnitCode(this MeasureUnitCode measureUnitCode)

@@ -19,7 +19,7 @@ public sealed class FlatRateFactory(IDenominatorFactory denominatorFactory) : Ra
 
     public IFlatRate Create(IMeasure numerator, Enum denominatorContext, ValueType denominatorQuantity)
     {
-        MeasureUnitElements denominatorElements = new MeasureUnitElements(denominatorContext, nameof(denominatorContext));
+        MeasureUnitElements denominatorElements = new(denominatorContext, nameof(denominatorContext));
         Enum measureUnit = denominatorElements.MeasureUnit;
         IDenominator denominator = DenominatorFactory.Create(measureUnit);
 
@@ -53,7 +53,7 @@ public sealed class FlatRateFactory(IDenominatorFactory denominatorFactory) : Ra
     #region Override methods
     public override IFlatRate Create(params IBaseMeasure[] rateComponents)
     {
-        string paramName = nameof(rateComponents);
+        const string paramName = nameof(rateComponents);
         int count = rateComponents?.Length ?? 0;
 
         if (count != 2) throw QuantityArgumentOutOfRangeException(paramName, count);

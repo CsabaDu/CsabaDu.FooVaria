@@ -6,4 +6,3 @@ public interface ISum<TSelf>
     TSelf Add(TSelf? other);
     TSelf Subtract(TSelf? other);
 }
-

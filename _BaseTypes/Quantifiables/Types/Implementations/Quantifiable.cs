@@ -114,7 +114,7 @@ public abstract class Quantifiable : BaseQuantifiable, IQuantifiable
 
     public decimal ProportionalTo(IQuantifiable? other)
     {
-        string paramName = nameof(other);
+        const string paramName = nameof(other);
 
         ValidateMeasureUnitCode(other, paramName);
 

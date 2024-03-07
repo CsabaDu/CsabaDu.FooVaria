@@ -4,4 +4,3 @@ public interface ILimitable
 {
     bool? FitsIn(ILimiter? limiter);
 }
-

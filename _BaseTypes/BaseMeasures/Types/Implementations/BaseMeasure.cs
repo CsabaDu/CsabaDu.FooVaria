@@ -105,7 +105,7 @@ public abstract class BaseMeasure(IBaseMeasureFactory factory) : Quantifiable(fa
         IBaseMeasurementFactory factory = GetBaseMeasurementFactory();
         IBaseMeasurement baseMeasurement = factory.CreateBaseMeasurement(context!)!;
         decimal defaultQuantity = GetDefaultQuantity();
-        defaultQuantity /= BaseMeasurement.GetExchangeRate(context!, nameof(context));
+        defaultQuantity /= BaseMeasurement.GetExchangeRate(context, nameof(context));
 
         return GetBaseMeasure(baseMeasurement, defaultQuantity);
     }

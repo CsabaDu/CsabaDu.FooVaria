@@ -136,7 +136,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
     {
         if (other == null) return 1;
 
-        string paramName = nameof(other);
+        const string paramName = nameof(other);
 
         if (other is not ISimpleShape simpleShape)
         {

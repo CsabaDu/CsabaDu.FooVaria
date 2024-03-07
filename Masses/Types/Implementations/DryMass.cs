@@ -114,7 +114,7 @@ internal sealed class DryMass : Mass, IDryMass
 
     public override IDryMass GetMass(IWeight weight, IBody body)
     {
-        string paramName = nameof(body);
+        const string paramName = nameof(body);
 
         if (NullChecked(body, paramName) is IDryBody dryBody) return GetDryMass(weight, dryBody);
 

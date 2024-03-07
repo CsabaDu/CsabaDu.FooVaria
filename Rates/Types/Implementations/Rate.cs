@@ -43,7 +43,7 @@ internal abstract class Rate : BaseRate, IRate
 
     public IMeasure Denominate(IQuantifiable denominator)
     {
-        string paramName = nameof(denominator);
+        const string paramName = nameof(denominator);
         MeasureUnitCode measureUnitCode = NullChecked(denominator, paramName).GetMeasureUnitCode();
 
         if (!HasMeasureUnitCode(measureUnitCode))
@@ -128,23 +128,10 @@ internal abstract class Rate : BaseRate, IRate
         return GetFactory().Create(rateComponents);
     }
 
-    //public IRate GetRate(IMeasure numerator, IDenominator denominator)
-    //{
-    //    return GetFactory().Create(numerator, denominator);
-    //}
     public IBaseMeasure GetBaseMeasure(RateComponentCode rateComponentCode)
     {
         return GetRateComponent(rateComponentCode) ?? throw InvalidRateComponentCodeArgumentException(rateComponentCode);
     }
-
-    //public IRate GetRate(IBaseRate baseRate)
-    //{
-    //    //decimal defaultQuantity = NullChecked(baseRate, nameof(baseRate)).GetDefaultQuantity();
-    //    //MeasureUnitCode numeratorCode = GetMeasureUnitCode(RateComponentCode.Numerator);
-    //    //MeasureUnitCode denominatorCode = GetMeasureUnitCode(RateComponentCode.Denominator);
-
-    //    return (IRate)GetBaseRate(baseRate);
-    //}
 
     public bool IsExchangeableTo(IMeasurable? context)
     {
@@ -185,29 +172,6 @@ internal abstract class Rate : BaseRate, IRate
     }
 
     #region Sealed methods
-    //public override sealed IRate GetBaseRate(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode)
-    //{
-    //    Enum numeratorMeasureUnit = numeratorCode.GetDefaultMeasureUnit();
-
-    //    ValidateQuantity(defaultQuantity, nameof(defaultQuantity));
-
-    //    IBaseMeasure denominator = CreateDenominator(denominatorCode);
-    //    IBaseMeasure numerator = Numerator.GetBaseMeasure(numeratorMeasureUnit, defaultQuantity);
-
-    //    return GetRate(numerator, denominator);
-    //}
-
-    //public override sealed IRate GetBaseRate(IBaseRate baseRate)
-    //{
-    //    if (NullChecked(baseRate, nameof(baseRate)) is IRate rate) return GetRate(rate);
-
-    //    MeasureUnitCode numeratorCode = baseRate.GetNumeratorCode();
-    //    decimal defaultQuantity = baseRate.GetDefaultQuantity();
-    //    MeasureUnitCode denominatorCode = baseRate.GetDenominatorCode();
-
-    //    return GetBaseRate(numeratorCode, defaultQuantity, denominatorCode);
-    //}
-
     public override sealed decimal GetDefaultQuantity()
     {
         return Numerator.GetDefaultQuantity() / Denominator.GetDefaultQuantity();
@@ -249,15 +213,5 @@ internal abstract class Rate : BaseRate, IRate
     public abstract ILimit? GetLimit();
     public abstract IRate GetRate(IRate rate);
     #endregion
-    #endregion
-
-    #region Private methods
-    private IDenominator CreateDenominator(MeasureUnitCode denominatorCode)
-    {
-        IDenominatorFactory factory = GetFactory().DenominatorFactory;
-
-        return (IDenominator)(factory.CreateDefault(denominatorCode)
-            ?? throw InvalidMeasureUnitCodeEnumArgumentException(denominatorCode, nameof(denominatorCode)));
-    }
     #endregion
 }

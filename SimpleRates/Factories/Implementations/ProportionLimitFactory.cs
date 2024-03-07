@@ -30,7 +30,7 @@ public sealed class ProportionLimitFactory(IMeasureFactory measureFactory) : Sim
 
     public IProportionLimit Create(IQuantifiable numerator, IBaseMeasurement denominator, LimitMode limitMode)
     {
-        string paramName = nameof(denominator);
+        const string paramName = nameof(denominator);
         Enum measureUnit = NullChecked(denominator, paramName).GetBaseMeasureUnit();
         MeasurementElements denominatorElements = new(measureUnit, paramName);
         SimpleRateParams simpleRateParams = GetSimpleRateParams(numerator, nameof(numerator), denominatorElements);
@@ -42,7 +42,9 @@ public sealed class ProportionLimitFactory(IMeasureFactory measureFactory) : Sim
     {
         if (numeratorContext is MeasureUnitCode numeratorCode
             && denominator is MeasureUnitCode denominatorCode)
+        {
             return Create(numeratorCode, quantity, denominatorCode, limitMode);
+        }
 
         SimpleRateParams simpleRateParams = GetSimpleRateParams(numeratorContext, quantity, denominator);
 

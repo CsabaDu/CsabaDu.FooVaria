@@ -61,7 +61,10 @@
             _ = NullChecked(quantity, paramName);
 
             if (quantity!.ToQuantity(TypeCode.Double) is double doubleQuantity
-                && doubleQuantity > 0) return;
+                && doubleQuantity > 0)
+            {
+                return;
+            }
 
             throw QuantityArgumentOutOfRangeException(paramName, quantity);
         }
@@ -159,7 +162,7 @@
 
         public static IMeasure GetValidSpreadMeasure(ISpreadMeasure? spreadMeasure)
         {
-            string paramName = nameof(spreadMeasure);
+            const string paramName = nameof(spreadMeasure);
             spreadMeasure = NullChecked(spreadMeasure, nameof(spreadMeasure)).GetSpreadMeasure();
 
             if (spreadMeasure is not IMeasure measure) throw ArgumentTypeOutOfRangeException(paramName, spreadMeasure!);
@@ -173,7 +176,7 @@
 
         public static IMeasure GetValidSpreadMeasure(MeasureUnitCode measureUnitCode, ISpreadMeasure? spreadMeasure)
         {
-            string paramName = nameof(spreadMeasure);
+            const string paramName = nameof(spreadMeasure);
 
             ValidateMeasureUnitCodeByDefinition(measureUnitCode, nameof(measureUnitCode));
 
@@ -291,7 +294,7 @@
             #region Local methods
             static TSMeasure getValidSpreadMeasure(ISpreadMeasure? spreadMeasure)
             {
-                string paramName = nameof(spreadMeasure);
+                const string paramName = nameof(spreadMeasure);
                 TSMeasure measure = TypeChecked<TSMeasure>(spreadMeasure, paramName);
                 double quantity = measure.GetQuantity();
 
@@ -403,4 +406,3 @@
         #endregion
     }
 }
-

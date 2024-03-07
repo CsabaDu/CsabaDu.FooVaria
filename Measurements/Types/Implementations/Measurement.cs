@@ -99,7 +99,9 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
 
         if (CustomNameCollection.Remove(measureUnit)
             && CustomNameCollection.TryAdd(measureUnit, customName))
+        {
             return;
+        }
 
         throw new InvalidOperationException(null);
     }
@@ -134,7 +136,7 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
     #region Sealed methods
     public static decimal GetExchangeRate(string name)
     {
-        string paramName = nameof(name);
+        const string paramName = nameof(name);
         Enum? measureUnit = GetMeasureUnit(NullChecked(name, paramName));
 
         if (measureUnit != null) return GetExchangeRate(measureUnit, paramName);
@@ -239,7 +241,6 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
             {
                 throw DecimalArgumentOutOfRangeException(nameof(exchangeRate), exchangeRate);
             }
-
         }
     }
 

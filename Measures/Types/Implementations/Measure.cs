@@ -22,11 +22,6 @@
             return GetSum(other, SummingMode.Add);
         }
 
-        //public IMeasure ConvertToLimitable(ILimiter limiter)
-        //{
-        //    return ConvertToLimitable(this, limiter);
-        //}
-
         public IMeasure Divide(decimal divisor)
         {
             if (divisor == 0) throw DecimalArgumentOutOfRangeException(nameof(divisor), divisor);
@@ -62,7 +57,6 @@
         public IMeasure Multiply(decimal multiplier)
         {
             return GetMeasure(multiplier, MeasureOperationMode.Multiply);
-
         }
 
         public IMeasure Subtract(IMeasure? other)

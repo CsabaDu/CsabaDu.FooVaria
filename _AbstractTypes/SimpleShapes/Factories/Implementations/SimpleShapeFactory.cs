@@ -62,7 +62,7 @@ public abstract class SimpleShapeFactory : ISimpleShapeFactory
     protected static IExtent? GetShapeExtent(IShapeComponent shapeComponent)
     {
         if (shapeComponent is not IExtent shapeExtent) return null;
-        
+
         if (shapeExtent.GetDefaultQuantity() > 0) return shapeExtent;
 
         return null;

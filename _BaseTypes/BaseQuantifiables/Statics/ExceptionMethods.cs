@@ -43,7 +43,6 @@ public static class ExceptionMethods
     public static ArgumentOutOfRangeException QuantityArgumentOutOfRangeException(string? paramName, ValueType? quantity)
     {
         return new ArgumentOutOfRangeException(paramName, Type.GetTypeCode(quantity?.GetType()), null);
-
     }
     #endregion
 }

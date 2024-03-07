@@ -28,7 +28,7 @@ public abstract class Measurable : CommonBase, IMeasurable
     #endregion
 
     #region Constants
-    public const string DefaultCustomMeasureUnitName = "Default";
+    public const string Default = nameof(Default);
     #endregion
 
     #region Constructors
@@ -345,11 +345,6 @@ public abstract class Measurable : CommonBase, IMeasurable
 
         throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
     }
-    #endregion
-    #endregion
-
-    #region Protected methods
-    #region Static methods
     #endregion
     #endregion
 }

@@ -65,7 +65,7 @@ public sealed class CuboidFactory(IBulkBodyFactory bulkSpreadFactory, IRectangle
 
     public override IDryBody Create(IPlaneShape baseFace, IExtent height)
     {
-        string paramName = nameof(baseFace);
+        const string paramName = nameof(baseFace);
 
         if (NullChecked(baseFace, paramName) is IRectangle rectangle) return Create(rectangle, height);
 

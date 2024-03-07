@@ -1,5 +1,3 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.Shapes.Types;
 
-public interface IRectangularShape : ITangentShape
-{
-}
+public interface IRectangularShape : ITangentShape;

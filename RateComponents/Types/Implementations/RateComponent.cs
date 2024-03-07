@@ -35,9 +35,6 @@
         #endregion
         #endregion
 
-        #region Virtual methods
-        #endregion
-
         #region Abstract methods
         public object GetDefaultRateComponentQuantity()
         {
@@ -84,7 +81,7 @@
 
         public override sealed void ValidateMeasureUnit(Enum? measureUnit, string paramName)
         {
-            Measurement.ValidateMeasureUnit(measureUnit!, paramName);
+            Measurement.ValidateMeasureUnit(measureUnit, paramName);
         }
         #endregion
         #endregion
@@ -95,7 +92,6 @@
         {
             return GetDefaultQuantity(quantity, GetExchangeRate());
         }
-
 
         protected TSelf GetRateComponent(ValueType quantity)
         {

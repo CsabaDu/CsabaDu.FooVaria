@@ -12,7 +12,9 @@ public sealed class ProportionFactory(IMeasureFactory measureFactory) : SimpleRa
     {
         if (numeratorContext is MeasureUnitCode numeratorCode
             && denominator is MeasureUnitCode denominatorCode)
+        {
             return CreateSimpleRate(numeratorCode, quantity, denominatorCode);
+        }
 
         SimpleRateParams simpleRateParams = GetSimpleRateParams(numeratorContext, quantity, denominator);
 

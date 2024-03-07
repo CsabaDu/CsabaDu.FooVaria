@@ -12,5 +12,4 @@
     {
         TSelf GetNew(TSelf other);
     }
-
 }
