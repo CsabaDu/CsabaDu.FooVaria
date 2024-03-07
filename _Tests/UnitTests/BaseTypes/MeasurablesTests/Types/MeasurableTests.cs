@@ -199,7 +199,7 @@ public sealed class MeasurableTests
         _measurable.GetMeasureUnit_returns = expected;
 
         // Act
-        var actual = _measurable.GetMeasureUnit();
+        var actual = _measurable.GetBaseMeasureUnit();
 
         // Assert
         Assert.AreEqual(expected, actual);

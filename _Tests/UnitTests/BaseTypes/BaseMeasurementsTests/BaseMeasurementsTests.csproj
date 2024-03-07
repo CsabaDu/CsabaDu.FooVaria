@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\BaseTypes\BaseMeasurements\BaseMeasurements.csproj" />
     <ProjectReference Include="..\..\..\_TestSupport\TestSupport.csproj" />
   </ItemGroup>
 

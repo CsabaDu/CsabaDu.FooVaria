@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-	  <ProjectReference Include="..\..\..\..\BaseTypes\Measurables\Measurables.csproj" />
 	  <ProjectReference Include="..\..\..\_TestSupport\TestSupport.csproj" />
   </ItemGroup>
 

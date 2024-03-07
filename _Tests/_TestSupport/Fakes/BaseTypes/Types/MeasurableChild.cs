@@ -14,7 +14,7 @@ internal sealed class MeasurableChild : Measurable
     {
     }
 
-    public override Enum GetMeasureUnit()
+    public override Enum GetBaseMeasureUnit()
     {
         return GetMeasureUnit_returns;
     }

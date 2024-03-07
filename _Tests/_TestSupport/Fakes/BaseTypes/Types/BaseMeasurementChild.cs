@@ -7,7 +7,7 @@ internal sealed class BaseMeasurementChild(IBaseMeasurementFactory factory) : Ba
     internal string GetName_returns { private get; set; }
     #endregion
 
-    public override Enum GetMeasureUnit()
+    public override Enum GetBaseMeasureUnit()
     {
         return GetMeasureUnit_returns;
     }
