@@ -236,13 +236,13 @@ internal class DynamicDataSources
         isTrue = true;
         obj = new MeasurableChild(new MeasurableFactoryClass());
         measureUnit = RandomParams.GetRandomMeasureUnit();
-        (obj as MeasurableChild).GetMeasureUnit_returns = measureUnit;
+        (obj as MeasurableChild).GetBaseMeasureUnit_returns = measureUnit;
         yield return toObjectArray();
 
         // IMeasure different MeasureUnit with same MeasureUnitCode
         measureUnitCode = GetMeasureUnitCode(measureUnit);
         measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode, measureUnit);
-        (obj as MeasurableChild).GetMeasureUnit_returns = measureUnit;
+        (obj as MeasurableChild).GetBaseMeasureUnit_returns = measureUnit;
         yield return toObjectArray();
 
         // IMeasure with different MeasureUnitCode

@@ -17,7 +17,7 @@ public sealed class MeasurableTests
         _measurable = new(_factory);
 
         _measureUnit = RandomParams.GetRandomMeasureUnit();
-        _measurable.GetMeasureUnit_returns = _measureUnit;
+        _measurable.GetBaseMeasureUnit_returns = _measureUnit;
 
         _measureUnitType = _measureUnit.GetType();
         _measureUnitCode = GetMeasureUnitCode(_measureUnitType);
@@ -110,7 +110,7 @@ public sealed class MeasurableTests
     public void Equals_arg_object_returns_expected(bool expected, object obj, Enum measureUnit)
     {
         // Arrange
-        _measurable.GetMeasureUnit_returns = measureUnit;
+        _measurable.GetBaseMeasureUnit_returns = measureUnit;
 
         // Act
         var actual = _measurable.Equals(obj);
@@ -189,14 +189,14 @@ public sealed class MeasurableTests
     #endregion
     #endregion
 
-    #region GetMeasureUnit
-    #region GetMeasureUnit()
+    #region GetBaseMeasureUnit
+    #region GetBaseMeasureUnit()
     [TestMethod, TestCategory("UnitTest")]
-    public void GetMeasureUnit_returns_expected()
+    public void GetBaseMeasureUnit_returns_expected()
     {
         // Arrange
         Enum expected = RandomParams.GetRandomMeasureUnit();
-        _measurable.GetMeasureUnit_returns = expected;
+        _measurable.GetBaseMeasureUnit_returns = expected;
 
         // Act
         var actual = _measurable.GetBaseMeasureUnit();
@@ -285,7 +285,7 @@ public sealed class MeasurableTests
     public void HasMeasureUnitCode_arg_MeasureUnitCode_returns_expected(Enum measureUnit, MeasureUnitCode measureUnitCode, bool expected)
     {
         // Arrange
-        _measurable.GetMeasureUnit_returns = measureUnit;
+        _measurable.GetBaseMeasureUnit_returns = measureUnit;
 
         // Act
         var actual = _measurable.HasMeasureUnitCode(measureUnitCode);
@@ -303,7 +303,7 @@ public sealed class MeasurableTests
     //public void IsValidMeasureUnitCode_arg_MeasureUnitCode_returns_expected(Enum measureUnit, MeasureUnitCode measureUnitCode, bool expected)
     //{
     //    // Arrange
-    //    _measurable.GetMeasureUnit_returns = measureUnit;
+    //    _measurable.GetBaseMeasureUnit_returns = measureUnit;
 
     //    // Act
     //    var actual = _measurable.IsValidMeasureUnitCode(measureUnitCode);
@@ -335,7 +335,7 @@ public sealed class MeasurableTests
     public void ValidateMeasureUnit_invalidArg_Enum_arg_string_throws_InvalidEnumArgumentException(Enum measureUnit, MeasureUnitCode measureUnitCode)
     {
         // Arrange
-        _measurable.GetMeasureUnit_returns = measureUnitCode.GetDefaultMeasureUnit();
+        _measurable.GetBaseMeasureUnit_returns = measureUnitCode.GetDefaultMeasureUnit();
         _paramName = RandomParams.GetRandomParamName();
 
         // Act
@@ -351,7 +351,7 @@ public sealed class MeasurableTests
     public void ValidateMeasureUnit_validArg_Enum_arg_string_returns(Enum measureUnit, MeasureUnitCode measureUnitCode)
     {
         // Arrange
-        _measurable.GetMeasureUnit_returns = measureUnitCode.GetDefaultMeasureUnit();
+        _measurable.GetBaseMeasureUnit_returns = measureUnitCode.GetDefaultMeasureUnit();
         _paramName = RandomParams.GetRandomParamName();
         bool returned = true;
 
@@ -378,7 +378,7 @@ public sealed class MeasurableTests
     public void ValidateMeasureUnitCode_invalidArg_MeasureUnitCode_arg_string_throws_InvalidEnumArgumentException(Enum measureUnit, MeasureUnitCode measureUnitCode)
     {
         // Arrange
-        _measurable.GetMeasureUnit_returns = measureUnit;
+        _measurable.GetBaseMeasureUnit_returns = measureUnit;
         _paramName = RandomParams.GetRandomParamName();
 
         // Act
@@ -432,7 +432,7 @@ public sealed class MeasurableTests
         // Arrange
         MeasurableChild measurable = new(_factory);
         _measureUnitCode = RandomParams.GetRandomMeasureUnitCode(_measureUnitCode);
-        measurable.GetMeasureUnit_returns = RandomParams.GetRandomMeasureUnit(_measureUnitCode);
+        measurable.GetBaseMeasureUnit_returns = RandomParams.GetRandomMeasureUnit(_measureUnitCode);
         _paramName = RandomParams.GetRandomParamName();
 
         // Act
@@ -448,7 +448,7 @@ public sealed class MeasurableTests
     {
         // Arrange
         MeasurableChild measurable = new(_factory);
-        measurable.GetMeasureUnit_returns = RandomParams.GetRandomMeasureUnit(_measureUnitCode);
+        measurable.GetBaseMeasureUnit_returns = RandomParams.GetRandomMeasureUnit(_measureUnitCode);
         _paramName = RandomParams.GetRandomParamName();
 
         bool returned = true;

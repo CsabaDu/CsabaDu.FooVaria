@@ -7,6 +7,15 @@ public class RandomParams
     private static readonly IEnumerable<MeasureUnitCode> CustomMeasureUnitCodes = MeasureUnitCodes.Where(x => x.IsCustomMeasureUnitCode());
     #endregion
 
+    private static Enum[] RandomMeasureUnits => GetRandomItems(GetAllMeasureUnits().ToArray(), 1000);
+    private static Enum[] RandomMeasureUnitsAndMeasureUnitCodes => GetRandomMeasureUnitAndMeasureUnitCodes();
+
+    private static Enum[] GetRandomMeasureUnitAndMeasureUnitCodes()
+    {
+        IEnumerable<Enum> measureUnits = GetAllMeasureUnits().Union([.. MeasureUnitCodes]).ToArray();
+
+        return GetRandomItems(measureUnits.ToArray(), 1000);
+    }
 
     #region Public methods
     public MeasureUnitCode GetRandomMeasureUnitCode(MeasureUnitCode? excludedMeasureUnitCode = null)
@@ -43,7 +52,7 @@ public class RandomParams
         #region Local methods
         Enum getRandomMeasureUnit()
         {
-            return GetRandomItem(measureUnitTypeCode.Value.GetAllMeasureUnits());
+            return GetRandomItems(measureUnitTypeCode.Value.GetAllMeasureUnits());
         }
         #endregion
     }
@@ -69,19 +78,19 @@ public class RandomParams
         #region Local methods
         object getRandomValidMeasureUnit()
         {
-            return GetRandomItem(BaseMeasurement.ExchangeRateCollection.Keys);
+            return GetRandomItems(BaseMeasurement.ExchangeRateCollection.Keys);
         }
         #endregion
     }
 
     public string GetRandomParamName()
     {
-        return GetRandomItem(ParamNames.GetParamNames());
+        return GetRandomItems(ParamNames.GetParamNames());
     }
 
     public Enum GetRandomNotUsedCustomMeasureUnit()
     {
-        MeasureUnitCode customMeasureUnitCode = GetRandomItem(CustomMeasureUnitCodes);
+        MeasureUnitCode customMeasureUnitCode = GetRandomItems(CustomMeasureUnitCodes);
 
         Enum measureUnit = GetRandomMeasureUnit(customMeasureUnitCode);
 
@@ -93,7 +102,7 @@ public class RandomParams
         return measureUnit;
     }
 
-    public IEnumerable<MeasureUnitCode> GetRandomMeasureUnitCodes()
+    public MeasureUnitCode[] GetRandomCountRandomMeasureUnitCodes()
     {
         int count = Random.Next(1, MeasureUnitCodes.Length);
 
@@ -107,7 +116,13 @@ public class RandomParams
         return Random.GetItems(items, 1)[0];
     }
 
-    private static T GetRandomItem<T>(IEnumerable<T> items)
+    private static T[] GetRandomItems<T>(T[] items, int count)
+    {
+        return Random.GetItems(items, count);
+    }
+
+
+    private static T GetRandomItems<T>(IEnumerable<T> items)
     {
         return GetRandomItem(items.ToArray());
     }
