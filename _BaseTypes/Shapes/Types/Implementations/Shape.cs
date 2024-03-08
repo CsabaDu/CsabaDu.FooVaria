@@ -3,17 +3,9 @@
 public abstract class Shape : Spread, IShape
 {
     #region Constructors
-    protected Shape(IShape other) : base(other)
+    protected Shape(IRootObject rootObject, string paramName) : base(rootObject, paramName)
     {
     }
-
-    protected Shape(IShapeFactory factory) : base(factory)
-    {
-    }
-
-    //protected Shape(ISpreadFactory factory, MeasureUnitCode measureUnitCode, params IShapeComponent[] shapeComponents) : base(factory, measureUnitCode, shapeComponents)
-    //{
-    //}
     #endregion
 
     #region Public methods
@@ -46,11 +38,6 @@ public abstract class Shape : Spread, IShape
     }
 
     #region Override methods
-    public override IShapeFactory GetFactory()
-    {
-        return (IShapeFactory)Factory;
-    }
-
     #region Sealed methods
     public override sealed int CompareTo(IQuantifiable? other)
     {

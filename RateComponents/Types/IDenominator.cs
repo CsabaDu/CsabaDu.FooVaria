@@ -2,6 +2,8 @@
 
 public interface IDenominator : IRateComponent<IDenominator, decimal>, IBaseMeasure<IDenominator>
 {
+    IDenominatorFactory Factory { get; init; }
+
     IDenominator GetDenominator(Enum measureUnit);
     IDenominator GetDenominator(string name);
     IDenominator GetDenominator(IMeasurement measurement);

@@ -2,6 +2,7 @@
 
 public interface ILimit : IRateComponent<ILimit, ulong>, ILimiter<ILimit, IBaseMeasure>
 {
+    ILimitFactory Factory { get; init; }
     LimitMode LimitMode { get; init; }
 
     ILimit GetLimit(string name, ValueType quantity, LimitMode limitMode);

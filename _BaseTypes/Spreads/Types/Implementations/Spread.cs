@@ -3,29 +3,9 @@
 public abstract class Spread : Quantifiable, ISpread
 {
     #region Constructors
-    protected Spread(ISpread other) : base(other)
+    protected Spread(IRootObject rootObject, string paramName) : base(rootObject, paramName)
     {
     }
-
-    protected Spread(ISpreadFactory factory) : base(factory)
-    {
-    }
-
-    //protected Spread(ISpreadFactory factory, ISpread spread) : base(factory, spread)
-    //{
-    //}
-
-    //protected Spread(ISpreadFactory factory, MeasureUnitCode measureUnitCode, params IShapeComponent[] shapeComponents) : base(factory, measureUnitCode, shapeComponents)
-    //{
-    //}
-
-    //protected Spread(ISpreadFactory factory, IBaseMeasure baseMeasure) : base(factory, baseMeasure)
-    //{
-    //}
-
-    //protected Spread(ISpreadFactory factory, Enum measureUnit) : base(factory, measureUnit)
-    //{
-    //}
     #endregion
 
     #region Public methods
@@ -71,11 +51,6 @@ public abstract class Spread : Quantifiable, ISpread
     #endregion
 
     #region Override methods
-    public override ISpreadFactory GetFactory()
-    {
-        return (ISpreadFactory)Factory;
-    }
-
     public override Enum GetBaseMeasureUnit()
     {
         return (GetSpreadMeasure() as IMeasurable)!.GetBaseMeasureUnit();

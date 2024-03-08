@@ -3,19 +3,19 @@
 internal abstract class Rate : BaseRate, IRate
 {
     #region Constructors
-    private protected Rate(IRate other) : base(other)
+    private protected Rate(IRate other) : base(other, nameof(other))
     {
         Numerator = other.Numerator;
         Denominator = other.Denominator;
     }
 
-    protected Rate(IRateFactory factory, IRate rate) : base(factory)
+    protected Rate(IRateFactory factory, IRate rate) : base(factory, nameof(factory))
     {
         Numerator = NullChecked(rate, nameof(rate)).Numerator;
         Denominator = rate.Denominator;
     }
 
-    private protected Rate(IRateFactory factory, IMeasure numerator, IDenominator denominator) : base(factory)
+    private protected Rate(IRateFactory factory, IMeasure numerator, IDenominator denominator) : base(factory, nameof(factory))
     {
         Numerator = NullChecked(numerator, nameof(numerator));
         Denominator = NullChecked(denominator, nameof(denominator));
@@ -125,7 +125,9 @@ internal abstract class Rate : BaseRate, IRate
 
     public IRate GetRate(params IBaseMeasure[] rateComponents)
     {
-        return GetFactory().Create(rateComponents);
+        IRateFactory factory = (IRateFactory)GetFactory();
+
+        return factory.Create(rateComponents);
     }
 
     public IBaseMeasure GetBaseMeasure(RateComponentCode rateComponentCode)
@@ -166,11 +168,6 @@ internal abstract class Rate : BaseRate, IRate
     }
 
     #region Override methods
-    public override IRateFactory GetFactory()
-    {
-        return (IRateFactory)Factory;
-    }
-
     #region Sealed methods
     public override sealed decimal GetDefaultQuantity()
     {

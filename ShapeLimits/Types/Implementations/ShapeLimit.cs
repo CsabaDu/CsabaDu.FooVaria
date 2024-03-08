@@ -4,20 +4,23 @@ public sealed class ShapeLimit : SimpleShape, IShapeLimit
 {
     internal ShapeLimit(IShapeLimit other) : base(other)
     {
-        LimitMode = other.LimitMode;
         SimpleShape = other.SimpleShape;
+        LimitMode = other.LimitMode;
+        Factory = other.Factory;
     }
 
     internal ShapeLimit(IShapeLimitFactory factory, ISimpleShape simpleShape, LimitMode limitMode) : base(factory)
     {
         ValidateSimpleShape(simpleShape, nameof(simpleShape));
 
-        LimitMode = Defined(limitMode, nameof(limitMode));
         SimpleShape = simpleShape;
+        LimitMode = Defined(limitMode, nameof(limitMode));
+        Factory = factory;
     }
 
     public LimitMode LimitMode { get; init; }
     public ISimpleShape SimpleShape { get; init; }
+    public IShapeLimitFactory Factory { get; init; }
 
     public override IExtent? this[ShapeExtentCode shapeExtentCode] => SimpleShape[shapeExtentCode];
 
@@ -53,17 +56,17 @@ public sealed class ShapeLimit : SimpleShape, IShapeLimit
 
     public IShapeLimit GetNew(IShapeLimit other)
     {
-        return GetFactory().CreateNew(other);
+        return Factory.CreateNew(other);
     }
 
     public IShapeLimit GetShapeLimit(ISimpleShape simpleShape, LimitMode limitMode)
     {
-        return GetFactory().Create(simpleShape, limitMode);
+        return Factory.Create(simpleShape, limitMode);
     }
 
     public IShapeLimit? GetShapeLimit(LimitMode limitMode, params IShapeComponent[] shapeComponents)
     {
-        return GetFactory().Create(limitMode, shapeComponents);
+        return Factory.Create(limitMode, shapeComponents);
     }
     public bool? Includes(IShape? limitable)
     {
@@ -72,7 +75,7 @@ public sealed class ShapeLimit : SimpleShape, IShapeLimit
 
     public ISimpleShapeFactory GetSimpleShapeFactory()
     {
-        return (ISimpleShapeFactory)SimpleShape.Factory;
+        return (ISimpleShapeFactory)SimpleShape.GetFactory();
     }
 
     public void ValidateSimpleShape(ISimpleShape? simpleShape, string paramName)
@@ -86,7 +89,7 @@ public sealed class ShapeLimit : SimpleShape, IShapeLimit
 
     public override IShapeLimitFactory GetFactory()
     {
-        return (IShapeLimitFactory)Factory;
+        return Factory;
     }
 
     public override Enum GetBaseMeasureUnit()

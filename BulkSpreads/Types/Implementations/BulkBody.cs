@@ -5,11 +5,17 @@ internal sealed class BulkBody : BulkSpread<IBulkBody, IVolume, VolumeUnit>, IBu
     #region Constructors
     internal BulkBody(IBulkBody other) : base(other)
     {
+        Factory = other.Factory;
     }
 
     internal BulkBody(IBulkBodyFactory factory, IVolume volume) : base(factory, volume)
     {
+        Factory = factory;
     }
+    #endregion
+
+    #region Properties
+    public IBulkBodyFactory Factory { get; init; }
     #endregion
 
     #region Public methods
@@ -31,7 +37,7 @@ internal sealed class BulkBody : BulkSpread<IBulkBody, IVolume, VolumeUnit>, IBu
     #region Override methods
     public override IBulkBodyFactory GetFactory()
     {
-        return (IBulkBodyFactory)Factory;
+        return Factory;
     }
 
     public override IBulkBody GetBulkSpread(ISpread baseSppread)

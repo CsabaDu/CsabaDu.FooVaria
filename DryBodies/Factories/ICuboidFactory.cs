@@ -2,7 +2,8 @@
 
 public interface ICuboidFactory : IDryBodyFactory<ICuboid, IRectangle>, IRectangularShapeFactory<ICuboid, ICylinder>
 {
-    ICylinderFactory CylinderFactory { get; init; }
+    ICylinderFactory TangentShapeFactory { get; init; }
+    IRectangleFactory BaseFaceFactory { get; init; }
 
     ICuboid Create(IExtent length, IExtent width, IExtent height);
     IRectangle CreateBaseFace(IExtent length, IExtent width);

@@ -2,7 +2,7 @@
 
 public interface ICircleFactory : IPlaneShapeFactory, ICircularShapeFactory<ICircle, IRectangle>
 {
-    IRectangleFactory RectangleFactory { get; init; }
+    IRectangleFactory TangentShapeFactory { get; init; }
 
     ICircle Create(IExtent radius);
 }

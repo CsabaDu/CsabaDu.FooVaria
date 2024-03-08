@@ -4,7 +4,7 @@ public sealed class RectangleFactory(IBulkSurfaceFactory bulkSpreadFactory, ICir
     : PlaneShapeFactory(bulkSpreadFactory), IRectangleFactory
 {
     #region Properties
-    public ICircleFactory CircleFactory { get; init; } = NullChecked(circleFactory, nameof(circleFactory));
+    public ICircleFactory TangentShapeFactory { get; init; } = NullChecked(circleFactory, nameof(circleFactory));
     #endregion
 
     #region Public methods
@@ -50,7 +50,7 @@ public sealed class RectangleFactory(IBulkSurfaceFactory bulkSpreadFactory, ICir
     #region Override methods
     public override ICircleFactory GetTangentShapeFactory()
     {
-        return CircleFactory;
+        return TangentShapeFactory;
     }
     #endregion
     #endregion

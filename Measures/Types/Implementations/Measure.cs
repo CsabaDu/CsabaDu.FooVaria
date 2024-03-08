@@ -11,9 +11,14 @@
         #endregion
 
         #region Constructors
-        private protected Measure(IMeasureFactory factory) : base(factory)
+        private protected Measure(IMeasureFactory factory) : base(factory, nameof(factory))
         {
+            Factory = factory;
         }
+        #endregion
+
+        #region Properties
+        public IMeasureFactory Factory { get; init; }
         #endregion
 
         #region Public methods
@@ -31,27 +36,27 @@
 
         public IMeasure GetBaseMeasure(Enum measureUnit, ValueType quantity)
         {
-            return GetFactory().Create(measureUnit, quantity);
+            return Factory.Create(measureUnit, quantity);
         }
 
         public IMeasure GetBaseMeasure(string name, ValueType quantity)
         {
-            return GetFactory().Create(name, quantity);
+            return Factory.Create(name, quantity);
         }
 
         public IMeasure? GetBaseMeasure(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
         {
-            return GetFactory().Create(measureUnit, exchangeRate, quantity, customName);
+            return Factory.Create(measureUnit, exchangeRate, quantity, customName);
         }
 
         public IMeasure? GetBaseMeasure(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity)
         {
-            return GetFactory().Create(customName, measureUnitCode, exchangeRate, quantity);
+            return Factory.Create(customName, measureUnitCode, exchangeRate, quantity);
         }
 
         public IMeasure GetBaseMeasure(IBaseMeasure baseMeasure)
         {
-            return GetFactory().Create(baseMeasure);
+            return Factory.Create(baseMeasure);
         }
 
         public IMeasure Multiply(decimal multiplier)
@@ -68,12 +73,12 @@
         #region Sealed methods
         public override sealed IMeasurementFactory GetBaseMeasurementFactory()
         {
-            return GetFactory().MeasurementFactory;
+            return Factory.MeasurementFactory;
         }
 
         public override sealed IMeasureFactory GetFactory()
         {
-            return (IMeasureFactory)Factory;
+            return Factory;
         }
 
         public override sealed LimitMode? GetLimitMode()
@@ -183,17 +188,17 @@
 
         public TSelf GetMeasure(string name, TNum quantity)
         {
-            return (TSelf)GetFactory().Create(name, quantity);
+            return (TSelf)Factory.Create(name, quantity);
         }
 
         public TSelf GetMeasure(IMeasurement measurement, TNum quantity)
         {
-            return (TSelf)GetFactory().CreateBaseMeasure(measurement, quantity);
+            return (TSelf)Factory.CreateBaseMeasure(measurement, quantity);
         }
 
         public TSelf GetNew(TSelf other)
         {
-            return (TSelf)GetFactory().CreateNew(other);
+            return (TSelf)Factory.CreateNew(other);
         }
 
         public TNum GetQuantity()

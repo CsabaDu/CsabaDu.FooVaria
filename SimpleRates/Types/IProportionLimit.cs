@@ -3,6 +3,7 @@
 public interface IProportionLimit : ISimpleRate, ILimiter<IProportionLimit, IBaseRate>
 {
     LimitMode LimitMode { get; init; }
+    IProportionLimitFactory Factory { get; init; }
 
     IProportionLimit GetProportionLimit(IBaseRate baseRate, LimitMode limitMode);
     IProportionLimit GetProportionLimit(IQuantifiable numerator, IQuantifiable denominator, LimitMode limitMode);

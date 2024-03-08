@@ -5,15 +5,22 @@ internal sealed class FlatRate : Rate, IFlatRate
     #region Constructors
     internal FlatRate(IFlatRate other) : base(other)
     {
+        Factory = other.Factory;
     }
 
     internal FlatRate(IFlatRateFactory factory, IRate rate) : base(factory, rate)
     {
+        Factory = factory;
     }
 
     internal FlatRate(IFlatRateFactory factory, IMeasure numerator, IDenominator denominator) : base(factory, numerator, denominator)
     {
+        Factory = factory;
     }
+    #endregion
+
+    #region Properties
+    public IFlatRateFactory Factory { get; init; }
     #endregion
 
     #region Public methods
@@ -31,32 +38,32 @@ internal sealed class FlatRate : Rate, IFlatRate
 
     public IFlatRate GetFlatRate(IMeasure numerator, string name, ValueType quantity)
     {
-        return GetFactory().Create(numerator, name, quantity);
+        return Factory.Create(numerator, name, quantity);
     }
 
     public IFlatRate GetFlatRate(IMeasure numerator, string name)
     {
-        return GetFactory().Create(numerator, name);
+        return Factory.Create(numerator, name);
     }
 
     public IFlatRate GetFlatRate(IMeasure numerator, Enum denominatorMeasureUnit, ValueType quantity)
     {
-        return GetFactory().Create(numerator, denominatorMeasureUnit, quantity);
+        return Factory.Create(numerator, denominatorMeasureUnit, quantity);
     }
 
     public IFlatRate GetFlatRate(IMeasure numerator, IMeasurement denominatorMeasurement)
     {
-        return GetFactory().Create(numerator, denominatorMeasurement);
+        return Factory.Create(numerator, denominatorMeasurement);
     }
 
     public IFlatRate GetFlatRate(IMeasure numerator, MeasureUnitCode denominatorCode)
     {
-        return GetFactory().Create(numerator, denominatorCode);
+        return Factory.Create(numerator, denominatorCode);
     }
 
     public IFlatRate GetFlatRate(IMeasure numerator, IDenominator denominator)
     {
-        return GetFactory().Create(numerator, denominator);
+        return Factory.Create(numerator, denominator);
     }
 
     public IFlatRate GetFlatRate(IMeasure numerator)
@@ -66,7 +73,7 @@ internal sealed class FlatRate : Rate, IFlatRate
 
     public IFlatRate GetNew(IFlatRate other)
     {
-        return GetFactory().CreateNew(other);
+        return Factory.CreateNew(other);
     }
 
     public IFlatRate Multiply(decimal multiplier)
@@ -82,19 +89,19 @@ internal sealed class FlatRate : Rate, IFlatRate
     }
 
     #region Override methods
+    public override IFlatRateFactory GetFactory()
+    {
+        return Factory;
+    }
+
     public override ILimit? GetLimit()
     {
         return null;
     }
 
-    public override IFlatRateFactory GetFactory()
-    {
-        return (IFlatRateFactory)Factory;
-    }
-
     public override IFlatRate GetRate(IRate rate)
     {
-        return (IFlatRate)GetFactory().CreateNew(rate);
+        return (IFlatRate)Factory.CreateNew(rate);
     }
     #endregion
     #endregion

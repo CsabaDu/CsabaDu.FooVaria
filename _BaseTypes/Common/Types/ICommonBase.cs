@@ -2,7 +2,7 @@
 {
     public interface ICommonBase : IRootObject
     {
-        IFactory Factory { get; init; }
+        //IFactory Factory { get; init; }
 
         IFactory GetFactory();
     }

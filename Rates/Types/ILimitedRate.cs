@@ -2,6 +2,7 @@
 
 public interface ILimitedRate : IRate, ILimiter<ILimitedRate, IBaseMeasure>, ICommonBase<ILimitedRate>
 {
+    ILimitedRateFactory Factory { get; init; }
     ILimit Limit { get; init; }
 
     ILimitedRate GetLimitedRate(IMeasure numerator, string name, ValueType quantity, ILimit limit);

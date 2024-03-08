@@ -18,11 +18,7 @@ public abstract class BaseQuantifiable : Measurable, IBaseQuantifiable
     }
     #endregion
 
-    protected BaseQuantifiable(IBaseQuantifiable other) : base(other)
-    {
-    }
-
-    protected BaseQuantifiable(IBaseQuantifiableFactory factory) : base(factory)
+    protected BaseQuantifiable(IRootObject rootObject, string paramName) : base(rootObject, paramName)
     {
     }
     #endregion
@@ -46,19 +42,9 @@ public abstract class BaseQuantifiable : Measurable, IBaseQuantifiable
     {
         return HashCode.Combine(GetMeasureUnitCode(), GetDefaultQuantity());
     }
-
-    public override IBaseQuantifiableFactory GetFactory()
-    {
-        return (IBaseQuantifiableFactory)Factory;
-    }
     #endregion
 
     #region Virtual methods    
-    //public virtual IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
-    //{
-    //    yield return GetMeasureUnitCode();
-    //}
-
     public virtual void ValidateQuantity(ValueType? quantity, string paramName)
     {
         _ = ConvertQuantity(quantity, paramName, GetQuantityTypeCode());

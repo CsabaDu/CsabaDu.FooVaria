@@ -7,18 +7,21 @@ internal sealed class Rectangle : PlaneShape, IRectangle
     {
         Length = other.Length;
         Width = other.Width;
+        Factory = other.Factory;
     }
 
     internal Rectangle(IRectangleFactory factory, IExtent length, IExtent width) : base(factory, length, width)
     {
         Length = length;
         Width = width;
+        Factory = factory;
     }
     #endregion
 
     #region Properties
     public IExtent Length { get; init; }
     public IExtent Width { get; init; }
+    public IRectangleFactory Factory { get; init; }
 
     #region Override properties
     public override IExtent? this[ShapeExtentCode shapeExtentCode] => shapeExtentCode switch
@@ -110,7 +113,7 @@ internal sealed class Rectangle : PlaneShape, IRectangle
 
     public override ICircleFactory GetTangentShapeFactory()
     {
-        return GetFactory().CircleFactory;
+        return GetFactory().TangentShapeFactory;
     }
 
     public override IExtent GetDiagonal(ExtentUnit extentUnit)

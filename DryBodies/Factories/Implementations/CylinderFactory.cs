@@ -1,10 +1,12 @@
 ﻿namespace CsabaDu.FooVaria.DryBodies.Factories.Implementations;
 
-public sealed class CylinderFactory(IBulkBodyFactory bulkSpreadFactory, ICuboidFactory cuboidFactory, ICircleFactory baseFaceFactory)
-    : DryBodyFactory<ICylinder, ICircle>(bulkSpreadFactory, baseFaceFactory), ICylinderFactory
+public sealed class CylinderFactory(IBulkBodyFactory bulkSpreadFactory, ICircleFactory baseFaceFactory, ICuboidFactory tangentShapeFactory)
+    : DryBodyFactory<ICylinder, ICircle>(bulkSpreadFactory), ICylinderFactory
 {
     #region Properties
-    public ICuboidFactory CuboidFactory { get; init; } = NullChecked(cuboidFactory, nameof(cuboidFactory));
+    public ICuboidFactory TangentShapeFactory { get; init; } = NullChecked(tangentShapeFactory, nameof(tangentShapeFactory));
+    public ICircleFactory BaseFaceFactory { get; init; } = NullChecked(baseFaceFactory, nameof(baseFaceFactory));
+
     #endregion
 
     #region Public methods
@@ -15,7 +17,7 @@ public sealed class CylinderFactory(IBulkBodyFactory bulkSpreadFactory, ICuboidF
 
     public ICircle CreateBaseFace(IExtent radius)
     {
-        return GetBaseFaceFactory().Create(radius);
+        return BaseFaceFactory.Create(radius);
     }
 
     public ICuboid CreateInnerTangentShape(ICylinder cylinder, IExtent tangentRectangleSide)
@@ -45,7 +47,7 @@ public sealed class CylinderFactory(IBulkBodyFactory bulkSpreadFactory, ICuboidF
     public IRectangle CreateVerticalProjection(ICylinder cylinder)
     {
         IExtent horizontal = NullChecked(cylinder, nameof(cylinder)).BaseFace.GetDiagonal();
-        IRectangleFactory factory = (IRectangleFactory)BaseFaceFactory.GetTangentShapeFactory();
+        IRectangleFactory factory = (IRectangleFactory)BaseFaceFactory.TangentShapeFactory;
 
         return CreateVerticalProjection(factory, horizontal, cylinder)!;
     }
@@ -67,22 +69,22 @@ public sealed class CylinderFactory(IBulkBodyFactory bulkSpreadFactory, ICuboidF
 
         if (NullChecked(baseFace, paramName) is ICircle circle) return Create(circle, height);
 
-        return GetTangentShapeFactory().Create(baseFace, height);
+        return TangentShapeFactory.Create(baseFace, height);
     }
 
     public override IDryBody? CreateShape(params IShapeComponent[] shapeComponents)
     {
-        return CreateDryBody(GetTangentShapeFactory(), this, shapeComponents);
+        return CreateDryBody(TangentShapeFactory, this, shapeComponents);
     }
 
     public override ICircleFactory GetBaseFaceFactory()
     {
-        return (ICircleFactory)BaseFaceFactory;
+        return BaseFaceFactory;
     }
 
     public override ICuboidFactory GetTangentShapeFactory()
     {
-        return CuboidFactory;
+        return TangentShapeFactory;
     }
     #endregion
     #endregion

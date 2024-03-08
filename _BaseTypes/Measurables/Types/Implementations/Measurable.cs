@@ -68,11 +68,7 @@ public abstract class Measurable : CommonBase, IMeasurable
     }
     #endregion
 
-    protected Measurable(IMeasurableFactory factory) : base(factory)
-    {
-    }
-
-    protected Measurable(IMeasurable other) : base(other)
+    protected Measurable(IRootObject rootObject, string paramName) : base(rootObject, paramName)
     {
     }
     #endregion
@@ -120,10 +116,10 @@ public abstract class Measurable : CommonBase, IMeasurable
             && GetMeasureUnitCode().Equals(other.GetMeasureUnitCode());
     }
 
-    public override IMeasurableFactory GetFactory()
-    {
-        return (IMeasurableFactory)Factory;
-    }
+    //public override IMeasurableFactory GetFactory()
+    //{
+    //    return (IMeasurableFactory)Factory;
+    //}
 
     public override int GetHashCode()
     {
@@ -187,11 +183,11 @@ public abstract class Measurable : CommonBase, IMeasurable
 
     public static IEnumerable<Enum> GetAllMeasureUnits()
     {
-        IEnumerable<Enum> allMeasureUnits = MeasureUnitCodes.First().GetAllMeasureUnits();
+        IEnumerable<Enum> allMeasureUnits = MeasureUnitCodes[0].GetAllMeasureUnits();
 
         for (int i = 1; i < MeasureUnitCodes.Length; i++)
         {
-            IEnumerable<Enum> next = MeasureUnitCodes.ElementAt(i).GetAllMeasureUnits();
+            IEnumerable<Enum> next = MeasureUnitCodes[i].GetAllMeasureUnits();
             allMeasureUnits = allMeasureUnits.Union(next);
         }
 
@@ -240,7 +236,7 @@ public abstract class Measurable : CommonBase, IMeasurable
 
     public static MeasureUnitCode GetMeasureUnitCode(Type measureUnitType)
     {
-        string paramName = nameof(measureUnitType);
+        const string paramName = nameof(measureUnitType);
 
         if (MeasureUnitTypeSet.Contains(NullChecked(measureUnitType, paramName)))
         {
@@ -265,7 +261,7 @@ public abstract class Measurable : CommonBase, IMeasurable
     public static bool HasMeasureUnitCode(MeasureUnitCode measureUnitCode, Enum measureUnit)
     {
         return IsDefinedMeasureUnit(measureUnit)
-            && measureUnitCode == GetDefinedMeasureUnitCode(measureUnit!);
+            && measureUnitCode == GetDefinedMeasureUnitCode(measureUnit);
     }
 
     public static bool IsDefaultMeasureUnit(Enum measureUnit)
@@ -290,7 +286,7 @@ public abstract class Measurable : CommonBase, IMeasurable
 
         if (!IsDefinedMeasureUnit(measureUnit)) return false;
 
-        measureUnitCode = GetDefinedMeasureUnitCode(measureUnit!);
+        measureUnitCode = GetDefinedMeasureUnitCode(measureUnit);
 
         return true;
     }

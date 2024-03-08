@@ -4,6 +4,7 @@ public interface IShapeLimit : ISimpleShape, ILimiter<IShapeLimit, IShape>, ICom
 {
     LimitMode LimitMode { get; init; }
     ISimpleShape SimpleShape { get; init; }
+    IShapeLimitFactory Factory { get; init; }
 
     IShapeLimit GetShapeLimit(ISimpleShape simpleShape, LimitMode limitMode);
     IShapeLimit? GetShapeLimit(LimitMode limitMode, params IShapeComponent[] shapeComponents);

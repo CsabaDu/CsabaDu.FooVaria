@@ -3,33 +3,15 @@
 public abstract class CommonBase : ICommonBase
 {
     #region Constructors
-    protected CommonBase(IFactory factory)
+    protected CommonBase(IRootObject rootObject, string paramName)
     {
-        Factory = NullChecked(factory, nameof(factory));
+        _ = NullChecked(rootObject, paramName);
     }
-
-    protected CommonBase(ICommonBase other)
-    {
-        Factory = NullChecked(other, nameof(other)).Factory;
-    }
-
-    //protected CommonBase(IRootObject rootObject)
-    //{
-    //    _ = NullChecked(rootObject, nameof(rootObject));
-    //}
-
-    #endregion
-
-    #region Properties
-    public IFactory Factory { get; init; }
     #endregion
 
     #region Public methods
-    #region Virtual methods
-    public virtual IFactory GetFactory()
-    {
-        return Factory;
-    }
+    #region Abstract methods
+    public abstract IFactory GetFactory();
     #endregion
     #endregion
 }
