@@ -2,6 +2,8 @@
 
 public interface IFlatRate : IRate, ICalculate<IFlatRate, decimal>, ICommonBase<IFlatRate>
 {
+    IFlatRateFactory Factory { get; init; }
+
     IFlatRate GetFlatRate(IMeasure numerator, string name, ValueType quantity);
     IFlatRate GetFlatRate(IMeasure numerator, string name);
     IFlatRate GetFlatRate(IMeasure numerator, Enum denominatorContext, ValueType quantity);

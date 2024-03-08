@@ -2,6 +2,7 @@
 
 public interface IMeasurement : IBaseMeasurement, IMeasureUnitCollection, ICustomNameCollection, IDefaultMeasurable<IMeasurement>
 {
+    IMeasurementFactory Factory { get; init; }
     object MeasureUnit { get; init; }
 
     IMeasurement GetMeasurement(Enum measureUnit);

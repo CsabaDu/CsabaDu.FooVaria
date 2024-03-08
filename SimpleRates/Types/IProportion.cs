@@ -2,6 +2,8 @@
 
 public interface IProportion : ISimpleRate
 {
+    IProportionFactory Factory { get; init; }
+
     IProportion GetProportion(IQuantifiable numerator, IQuantifiable denominator);
     IProportion GetProportion(IQuantifiable numerator, IBaseMeasurement denominator);
     IProportion GetProportion(IQuantifiable numerator, Enum denominator);

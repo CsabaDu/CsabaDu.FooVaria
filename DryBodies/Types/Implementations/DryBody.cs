@@ -12,20 +12,17 @@ namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
 
         private protected DryBody(IDryBodyFactory factory, IPlaneShape baseFace, IExtent height) : base(factory)
         {
-            var (validHeight, volume) = getDryBodyValidParams();
+            ValidateShapeExtent(height, nameof(height));
 
-            Height = validHeight;
-            Volume = volume;
+            Height = height;
+            Volume = getVolume();
 
             #region Local methods
-            (IExtent, IVolume) getDryBodyValidParams()
+            IVolume getVolume()
             {
-                ValidateShapeExtent(height, nameof(height));
-
                 IExtent[] shapeExtents = baseFace.GetShapeExtents().Append(height).ToArray();
-                IVolume volume = (IVolume)GetSpreadMeasure(shapeExtents);
 
-                return (height, volume);
+                return (IVolume)GetSpreadMeasure(shapeExtents);
             }
             #endregion
         }
@@ -55,7 +52,7 @@ namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
 
         public IDryBody GetDryBody(IPlaneShape baseFace, IExtent height)
         {
-            return GetFactory().Create(baseFace, height);
+            return GetDryBodyFactory().Create(baseFace, height);
         }
 
         public IExtent GetHeight()
@@ -77,11 +74,6 @@ namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
         }
 
         #region Override methods
-        public override IDryBodyFactory GetFactory()
-        {
-            return (IDryBodyFactory)Factory;
-        }
-
         #region Sealed methods
         public override sealed IVolume GetSpreadMeasure()
         {
@@ -97,7 +89,7 @@ namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
 
         public override sealed IBulkBodyFactory GetBulkSpreadFactory()
         {
-            return GetFactory().BulkBodyFactory;
+            return GetDryBodyFactory().BulkBodyFactory;
         }
 
         public override sealed IDryBody GetShape()
@@ -107,17 +99,18 @@ namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
         #endregion
         #endregion
 
-        #region Virtual methods
-        public virtual IPlaneShapeFactory GetBaseFaceFactory()
-        {
-            return GetFactory().BaseFaceFactory;
-        }
-        #endregion
-
         #region Abstract methods
         public abstract IPlaneShape GetBaseFace();
+        public abstract IPlaneShapeFactory GetBaseFaceFactory();
         public abstract IPlaneShape GetProjection(ShapeExtentCode perpendicular);
         #endregion
+        #endregion
+
+        #region Private methods
+        private IDryBodyFactory GetDryBodyFactory()
+        {
+            return (IDryBodyFactory)GetFactory();
+        }
         #endregion
     }
 
@@ -131,12 +124,12 @@ namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
             BaseFace = (TBFace)other.GetBaseFace();
         }
 
-        private protected DryBody(IDryBodyFactory factory, params IExtent[] shapeExtents) : base(factory, shapeExtents)
+        private protected DryBody(IDryBodyFactory<TSelf, TBFace> factory, params IExtent[] shapeExtents) : base(factory, shapeExtents)
         {
             BaseFace = (TBFace)GetSimpleShape(shapeExtents.SkipLast(1).ToArray());
         }
 
-        private protected DryBody(IDryBodyFactory factory, TBFace baseFace, IExtent height) : base(factory, baseFace, height)
+        private protected DryBody(IDryBodyFactory<TSelf, TBFace> factory, TBFace baseFace, IExtent height) : base(factory, baseFace, height)
         {
             BaseFace = baseFace;
         }
@@ -149,15 +142,12 @@ namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
         #region Public methods
         public TSelf GetDryBody(TBFace baseFace, IExtent height)
         {
-            return GetFactory().Create(baseFace, height);
+            IDryBodyFactory<TSelf, TBFace> factory = (IDryBodyFactory<TSelf, TBFace>)GetFactory();
+
+            return factory.Create(baseFace, height);
         }
 
         #region Override methods
-        public override IDryBodyFactory<TSelf, TBFace> GetFactory()
-        {
-            return (IDryBodyFactory<TSelf, TBFace>)Factory;
-        }
-
         #region Sealed methods
         public override sealed IPlaneShape GetBaseFace()
         {

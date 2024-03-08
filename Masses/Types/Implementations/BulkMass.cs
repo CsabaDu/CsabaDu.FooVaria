@@ -7,16 +7,19 @@ internal sealed class BulkMass : Mass, IBulkMass
     public BulkMass(IBulkMass other) : base(other)
     {
         BulkBody = other.BulkBody;
+        Factory = other.Factory;
     }
 
     public BulkMass(IBulkMassFactory factory, IWeight weight, IBody body) : base(factory, weight)
     {
         BulkBody = GetBodyFactory().Create(NullChecked(body, nameof(body)))!;
+        Factory = factory;
     }
     #endregion
 
     #region Properties
     public IBulkBody BulkBody { get; init; }
+    public IBulkMassFactory Factory { get; init; }
     #endregion
 
     #region Public methods
@@ -27,33 +30,28 @@ internal sealed class BulkMass : Mass, IBulkMass
 
     public IBulkMass GetBulkMass(IWeight weight, IVolume volume)
     {
-        return GetFactory().Create(weight, volume);
+        return Factory.Create(weight, volume);
     }
 
     public IBulkMass GetBulkMass(IWeight weight, IBody body)
     {
-        return (IBulkMass)GetFactory().Create(weight, body);
+        return (IBulkMass)Factory.Create(weight, body);
     }
 
     public IBulkMass GetNew(IBulkMass other)
     {
-        return GetFactory().CreateNew(other);
+        return Factory.CreateNew(other);
     }
 
     #region Override methods
     public override IBulkBodyFactory GetBodyFactory()
     {
-        return (IBulkBodyFactory)base.GetBodyFactory();
+        return (IBulkBodyFactory)Factory.GetBodyFactory();
     }
 
     public override IBulkMassFactory GetFactory()
     {
-        return (IBulkMassFactory)Factory;
-    }
-
-    public override IBulkMass GetMass(IWeight weight, IBody body)
-    {
-        return GetBulkMass(weight, body);
+        return Factory;
     }
     #endregion
     #endregion

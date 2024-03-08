@@ -6,16 +6,19 @@ internal sealed class Circle : PlaneShape, ICircle
     internal Circle(ICircle other) : base(other)
     {
         Radius = other.Radius;
+        Factory = other.Factory;
     }
 
     internal Circle(ICircleFactory factory, IExtent radius) : base(factory, radius)
     {
         Radius = radius;
+        Factory = factory;
     }
     #endregion
 
     #region Properties
     public IExtent Radius { get; init; }
+    public ICircleFactory Factory { get; init; }
 
     #region Override properties
     public override IExtent? this[ShapeExtentCode shapeExtentCode] => shapeExtentCode switch
@@ -76,7 +79,7 @@ internal sealed class Circle : PlaneShape, ICircle
 
     public override IRectangleFactory GetTangentShapeFactory()
     {
-        return GetFactory().RectangleFactory;
+        return GetFactory().TangentShapeFactory;
     }
 
     public override IExtent GetDiagonal(ExtentUnit extentUnit)

@@ -3,11 +3,11 @@
 public abstract class SimpleShape : Shape, ISimpleShape
 {
     #region Constructors
-    protected SimpleShape(ISimpleShape other) : base(other)
+    protected SimpleShape(ISimpleShape other) : base(other, nameof(other))
     {
     }
 
-    protected SimpleShape(ISimpleShapeFactory factory) : base(factory)
+    protected SimpleShape(ISimpleShapeFactory factory) : base(factory, nameof(factory))
     {
     }
     #endregion
@@ -21,7 +21,9 @@ public abstract class SimpleShape : Shape, ISimpleShape
     #region Public methods
     public override sealed IShape? GetShape(params IShapeComponent[] shapeComponents)
     {
-        return GetFactory().CreateShape(shapeComponents);
+        ISimpleShapeFactory factory = (ISimpleShapeFactory)GetFactory();
+
+        return factory.CreateShape(shapeComponents);
     }
 
     public IExtent GetDiagonal()
@@ -126,11 +128,6 @@ public abstract class SimpleShape : Shape, ISimpleShape
     }
 
     #region Override methods
-    public override ISimpleShapeFactory GetFactory()
-    {
-        return (ISimpleShapeFactory)Factory;
-    }
-
     #region Sealed methods
     public override sealed int CompareTo(IShape? other)
     {

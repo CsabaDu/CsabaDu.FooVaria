@@ -1,9 +1,8 @@
 ﻿namespace CsabaDu.FooVaria.DryBodies.Factories.Implementations
 {
-    public abstract class DryBodyFactory(IBulkBodyFactory bulkBodyFactory, IPlaneShapeFactory baseFaceFactory) : SimpleShapeFactory, IDryBodyFactory
+    public abstract class DryBodyFactory(IBulkBodyFactory bulkBodyFactory) : SimpleShapeFactory, IDryBodyFactory
     {
         #region Properties
-        public IPlaneShapeFactory BaseFaceFactory { get; init; } = NullChecked(baseFaceFactory, nameof(baseFaceFactory));
         public IBulkBodyFactory BulkBodyFactory { get; init; } = NullChecked(bulkBodyFactory, nameof(bulkBodyFactory));
         #endregion
 
@@ -70,10 +69,7 @@
         #endregion
 
         #region Virtual methods
-        public virtual IPlaneShapeFactory GetBaseFaceFactory()
-        {
-            return BaseFaceFactory;
-        }
+        public abstract IPlaneShapeFactory GetBaseFaceFactory();
         #endregion
 
         #region Abstract methods
@@ -140,7 +136,7 @@
         #endregion
     }
 
-    public abstract class DryBodyFactory<T, TBFace>(IBulkBodyFactory bulkBodyFactory, IPlaneShapeFactory baseFaceFactory) : DryBodyFactory(bulkBodyFactory, baseFaceFactory), IDryBodyFactory<T, TBFace>
+    public abstract class DryBodyFactory<T, TBFace>(IBulkBodyFactory bulkBodyFactory) : DryBodyFactory(bulkBodyFactory), IDryBodyFactory<T, TBFace>
         where T : class, IDryBody, ITangentShape
         where TBFace : class, IPlaneShape, ITangentShape
     {

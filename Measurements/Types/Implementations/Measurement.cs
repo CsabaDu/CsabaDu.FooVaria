@@ -3,15 +3,17 @@
 internal abstract class Measurement : BaseMeasurement, IMeasurement
 {
     #region Constructors
-    private protected Measurement(IMeasurementFactory factory, Enum measureUnit) : base(factory)
+    private protected Measurement(IMeasurementFactory factory, Enum measureUnit) : base(factory, nameof(factory))
     {
         ValidateMeasureUnit(measureUnit, nameof(measureUnit));
 
         MeasureUnit = measureUnit;
+        Factory = factory;
     }
     #endregion
 
     #region Properties
+    public IMeasurementFactory Factory { get; init; }
     public object MeasureUnit { get; init; }
 
     #region Static properties
@@ -49,7 +51,7 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
 
     public IMeasurable? GetDefault(MeasureUnitCode measureUnitCode)
     {
-        return GetFactory().CreateDefault(measureUnitCode);
+        return Factory.CreateDefault(measureUnitCode);
     }
 
     public string GetDefaultName()
@@ -61,27 +63,27 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
 
     public IMeasurement GetMeasurement(Enum measureUnit)
     {
-        return GetFactory().Create(measureUnit);
+        return Factory.Create(measureUnit);
     }
 
     public IMeasurement GetMeasurement(IMeasurement other)
     {
-        return GetFactory().CreateNew(other);
+        return Factory.CreateNew(other);
     }
 
     public IMeasurement GetMeasurement(string name)
     {
-        return GetFactory().Create(name);
+        return Factory.Create(name);
     }
 
     public IMeasurement? GetMeasurement(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate)
     {
-        return GetFactory().Create(customName, measureUnitCode, exchangeRate);
+        return Factory.Create(customName, measureUnitCode, exchangeRate);
     }
 
     public IMeasurement? GetMeasurement(Enum measureUnit, decimal exchangeRate, string customName)
     {
-        return GetFactory().Create(measureUnit, exchangeRate, customName);
+        return Factory.Create(measureUnit, exchangeRate, customName);
     }
 
     public void SetCustomName(string customName)
@@ -146,7 +148,7 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
 
     public override sealed IMeasurementFactory GetFactory()
     {
-        return (IMeasurementFactory)Factory;
+        return Factory;
     }
 
     public override sealed Enum GetBaseMeasureUnit()

@@ -38,7 +38,7 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
     }
     #endregion
 
-    protected BaseMeasurement(IBaseMeasurementFactory factory) : base(factory)
+    protected BaseMeasurement(IRootObject rootObject, string paramName) : base(rootObject, paramName)
     {
     }
     #endregion
@@ -68,7 +68,9 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
 
     public IBaseMeasurement? GetBaseMeasurement(Enum context)
     {
-        return GetFactory().CreateBaseMeasurement(context);
+        IBaseMeasurementFactory factory = (IBaseMeasurementFactory)GetFactory();
+
+        return factory.CreateBaseMeasurement(context);
     }
 
     public IDictionary<object, decimal> GetConstantExchangeRateCollection()
@@ -112,11 +114,6 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
     }
 
     #region Override methods
-    public override IBaseMeasurementFactory GetFactory()
-    {
-        return (IBaseMeasurementFactory)Factory;
-    }
-
     #region Sealed methods
     public override sealed bool Equals(object? obj)
     {

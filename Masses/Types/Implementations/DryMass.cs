@@ -6,16 +6,19 @@ internal sealed class DryMass : Mass, IDryMass
     internal DryMass(IDryMass other) : base(other)
     {
         DryBody = other.DryBody;
+        Factory = other.Factory;
     }
 
     internal DryMass(IDryMassFactory factory, IWeight weight, IDryBody dryBody) : base(factory, weight)
     {
         DryBody = NullChecked(dryBody, nameof(dryBody));
+        Factory = factory;
     }
 
     internal DryMass(IDryMassFactory factory, IWeight weight, params IExtent[] shapeExtents) : base(factory, weight)
     {
         DryBody = getDryBody();
+        Factory = factory;
 
         #region Local methods
         IDryBody getDryBody()
@@ -32,32 +35,34 @@ internal sealed class DryMass : Mass, IDryMass
     internal DryMass(IDryMassFactory factory, IWeight weight, IPlaneShape baseFace, IExtent height) : base(factory, weight)
     {
         DryBody = GetBodyFactory().Create(baseFace, height);
+        Factory = factory;
     }
     #endregion
 
     #region Properties
     public IDryBody DryBody { get; init; }
+    public IDryMassFactory Factory { get; init; }
     #endregion
 
     #region Public methods
     public IDryMass GetDryMass(IWeight weight, IDryBody dryBody)
     {
-        return GetFactory().Create(weight, dryBody);
+        return Factory.Create(weight, dryBody);
     }
 
     public IDryMass GetDryMass(IWeight weight, IPlaneShape baseFace, IExtent height)
     {
-        return GetFactory().Create(weight, baseFace, height);
+        return Factory.Create(weight, baseFace, height);
     }
 
     public IDryMass GetDryMass(IWeight weight, params IExtent[] shapeExtents)
     {
-        return GetFactory().Create(weight, shapeExtents);
+        return Factory.Create(weight, shapeExtents);
     }
 
     public IDryMass GetNew(IDryMass other)
     {
-        return GetFactory().CreateNew(other);
+        return Factory.CreateNew(other);
     }
 
     #region Override methods
@@ -99,26 +104,17 @@ internal sealed class DryMass : Mass, IDryMass
 
     public override IDryBodyFactory GetBodyFactory()
     {
-        return (IDryBodyFactory)base.GetBodyFactory();
+        return (IDryBodyFactory)Factory.GetBodyFactory();
     }
 
     public override IDryMassFactory GetFactory()
     {
-        return (IDryMassFactory)Factory;
+        return Factory;
     }
 
     public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
     {
         return base.GetMeasureUnitCodes().Append(MeasureUnitCode.ExtentUnit);
-    }
-
-    public override IDryMass GetMass(IWeight weight, IBody body)
-    {
-        const string paramName = nameof(body);
-
-        if (NullChecked(body, paramName) is IDryBody dryBody) return GetDryMass(weight, dryBody);
-
-        throw ArgumentTypeOutOfRangeException(paramName, body);
     }
 
     public override IDryBody GetBody()

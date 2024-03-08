@@ -1,9 +1,11 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
+﻿using CsabaDu.FooVaria.BaseTypes.Common;
+
+namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
 {
     internal abstract class RateComponent : BaseMeasure, IRateComponent
     {
         #region Constructors
-        private protected RateComponent(IRateComponentFactory factory/*, IMeasurement measurement*/) : base(factory)
+        private protected RateComponent(IRateComponentFactory factory) : base(factory, nameof(factory))
         {
         }
         #endregion
@@ -11,19 +13,19 @@
         #region Public methods
         public IMeasurable? GetDefault(MeasureUnitCode measureUnitCode)
         {
-            return GetFactory().CreateDefault(measureUnitCode);
+            return GetRateComponentFactory().CreateDefault(measureUnitCode);
+        }
+
+        public object GetDefaultRateComponentQuantity()
+        {
+            return GetRateComponentFactory().DefaultRateComponentQuantity;
         }
 
         #region Override methods
-        public override IRateComponentFactory GetFactory()
-        {
-            return (IRateComponentFactory)Factory;
-        }
-
         #region Sealed methods
         public override sealed IMeasurementFactory GetBaseMeasurementFactory()
         {
-            return GetFactory().MeasurementFactory;
+            return GetRateComponentFactory().MeasurementFactory;
         }
 
         public override sealed TypeCode GetQuantityTypeCode()
@@ -34,20 +36,20 @@
         }
         #endregion
         #endregion
-
-        #region Abstract methods
-        public object GetDefaultRateComponentQuantity()
-        {
-            return GetFactory().DefaultRateComponentQuantity;
-        }
-        #endregion
         #endregion
 
         #region Protected methods
         protected TNum GetDefaultRateComponentQuantity<TNum>()
             where TNum : struct
         {
-            return (TNum)GetFactory().DefaultRateComponentQuantity;
+            return (TNum)GetRateComponentFactory().DefaultRateComponentQuantity;
+        }
+        #endregion
+
+        #region Private methods
+        private IRateComponentFactory GetRateComponentFactory()
+        {
+            return (IRateComponentFactory)GetFactory();
         }
         #endregion
     }
@@ -56,9 +58,9 @@
         where TSelf : class, IRateComponent
     {
         #region Constructors
-        private protected RateComponent(IRateComponentFactory factory, IMeasurement measurement) : base(factory)
+        private protected RateComponent(IRateComponentFactory<TSelf> factory, IMeasurement measurement) : base(factory)
         {
-            Measurement = GetBaseMeasurementFactory().CreateNew(measurement);
+            Measurement = NullChecked(measurement, nameof(measurement));
         }
         #endregion
 

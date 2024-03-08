@@ -5,11 +5,17 @@ internal sealed class BulkSurface : BulkSpread<IBulkSurface, IArea, AreaUnit>, I
     #region Constructors
     internal BulkSurface(IBulkSurface other) : base(other)
     {
+        Factory = other.Factory;
     }
 
     internal BulkSurface(IBulkSurfaceFactory factory, IArea area) : base(factory, area)
     {
+        Factory = factory;
     }
+    #endregion
+
+    #region Properties
+    public IBulkSurfaceFactory Factory { get; init; }
     #endregion
 
     #region Public methods
@@ -31,7 +37,7 @@ internal sealed class BulkSurface : BulkSpread<IBulkSurface, IArea, AreaUnit>, I
     #region Override methods
     public override IBulkSurfaceFactory GetFactory()
     {
-        return (IBulkSurfaceFactory)Factory;
+        return Factory;
     }
 
     public override IBulkSurface GetBulkSpread(ISpread baseSppread)

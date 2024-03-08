@@ -25,11 +25,6 @@ internal abstract class PlaneShape : SimpleShape, IPlaneShape
     }
 
     #region Override methods
-    public override IPlaneShapeFactory GetFactory()
-    {
-        return (IPlaneShapeFactory)Factory;
-    }
-
     #region Sealed methods
     public override sealed IShapeComponent? GetValidShapeComponent(IBaseQuantifiable? shapeComponent)
     {
@@ -40,7 +35,9 @@ internal abstract class PlaneShape : SimpleShape, IPlaneShape
 
     public override sealed IBulkSurfaceFactory GetBulkSpreadFactory()
     {
-        return GetFactory().BulkSurfaceFactory;
+        IPlaneShapeFactory factory = (IPlaneShapeFactory)GetFactory();
+
+        return factory.BulkSurfaceFactory;
     }
 
     public override sealed IPlaneShape GetShape()

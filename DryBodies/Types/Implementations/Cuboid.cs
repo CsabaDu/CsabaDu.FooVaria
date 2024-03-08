@@ -5,18 +5,23 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
     #region Constructors
     internal Cuboid(ICuboid other) : base(other)
     {
+        Factory = other.Factory;
     }
 
     internal Cuboid(ICuboidFactory factory, IExtent length, IExtent width, IExtent height) : base(factory, length, width, height)
     {
+        Factory = factory;
     }
 
     internal Cuboid(ICuboidFactory factory, IRectangle baseFace, IExtent height) : base(factory, baseFace, height)
     {
+        Factory = factory;
     }
     #endregion
 
     #region Properties
+    public ICuboidFactory Factory { get; init; }
+
     #region Override properties
     public override IExtent? this[ShapeExtentCode shapeExtentCode] => shapeExtentCode switch
     {
@@ -46,7 +51,7 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
 
     public ICuboid GetCuboid(IExtent length, IExtent width, IExtent height)
     {
-        return GetFactory().Create(length, width, height);
+        return Factory.Create(length, width, height);
     }
 
     public ICylinder GetInnerTangentShape(ComparisonCode comparisonCode)
@@ -73,22 +78,22 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
 
     public ICylinder GetOuterTangentShape()
     {
-        return GetFactory().CreateOuterTangentShape(this);
+        return Factory.CreateOuterTangentShape(this);
     }
 
     public override ICuboid GetNew(ICuboid other)
     {
-        return GetFactory().CreateNew(other);
+        return Factory.CreateNew(other);
     }
 
     public IShape GetTangentShape(SideCode sideCode)
     {
-        return GetFactory().CreateTangentShape(this, sideCode);
+        return Factory.CreateTangentShape(this, sideCode);
     }
 
     public IRectangle GetVerticalProjection(ComparisonCode comparisonCode)
     {
-        return GetFactory().CreateVerticalProjection(this, comparisonCode);
+        return Factory.CreateVerticalProjection(this, comparisonCode);
     }
 
     public IExtent GetWidth()
@@ -194,22 +199,22 @@ internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
     #region Override methods
     public override IRectangleFactory GetBaseFaceFactory()
     {
-        return (IRectangleFactory)base.GetBaseFaceFactory();
+        return (IRectangleFactory)Factory.GetBaseFaceFactory();
     }
 
     public override IPlaneShape GetProjection(ShapeExtentCode perpendicular)
     {
-        return GetFactory().CreateProjection(this, perpendicular)!;
+        return Factory.CreateProjection(this, perpendicular)!;
     }
 
     public override ICylinderFactory GetTangentShapeFactory()
     {
-        return GetFactory().CylinderFactory;
+        return Factory.TangentShapeFactory;
     }
 
     public override ICuboidFactory GetFactory()
     {
-        return (ICuboidFactory)Factory;
+        return Factory;
     }
 
     public override IExtent GetDiagonal(ExtentUnit extentUnit)

@@ -3,12 +3,12 @@
 internal abstract class Mass : BaseQuantifiable, IMass
 {
     #region Constructors
-    private protected Mass(IMass other) : base(other)
+    private protected Mass(IMass other) : base(other, nameof(other))
     {
         Weight = other.Weight;
     }
 
-    private protected Mass(IMassFactory factory, IWeight weight) : base(factory)
+    private protected Mass(IMassFactory factory, IWeight weight) : base(factory, nameof(factory))
     {
         ValidateMassComponent(weight, nameof(weight));
 
@@ -54,7 +54,9 @@ internal abstract class Mass : BaseQuantifiable, IMass
 
     public IProportion GetDensity()
     {
-        return GetFactory().CreateDensity(this);
+        IMassFactory factory = GetMassFactory();
+
+        return factory.CreateDensity(this);
     }
 
     public override MeasureUnitCode GetMeasureUnitCode()
@@ -136,7 +138,7 @@ internal abstract class Mass : BaseQuantifiable, IMass
         if (context is MeasureUnitCode measureUnitCode) return hasMeasureUnitCode(measureUnitCode);
 
         return BaseMeasurement.IsValidMeasureUnit(context)
-            && hasMeasureUnitCode(GetDefinedMeasureUnitCode(context!));
+            && hasMeasureUnitCode(GetDefinedMeasureUnitCode(context));
 
         #region Local methods
         bool hasMeasureUnitCode(MeasureUnitCode measureUnitCode)
@@ -186,11 +188,6 @@ internal abstract class Mass : BaseQuantifiable, IMass
     }
 
     #region Override methods
-    public override IMassFactory GetFactory()
-    {
-        return (IMassFactory)Factory;
-    }
-
     #region Sealed methods
     public override sealed decimal GetDefaultQuantity()
     {
@@ -307,16 +304,17 @@ internal abstract class Mass : BaseQuantifiable, IMass
             _ => null,
         };
     }
-
-    public virtual IBodyFactory GetBodyFactory()
-    {
-        return GetFactory().BodyFactory;
-    }
     #endregion
 
     #region Abstract methods
     public abstract IBody GetBody();
-    public abstract IMass GetMass(IWeight weight, IBody body);
+    public abstract IBodyFactory GetBodyFactory();
+    public IMass GetMass(IWeight weight, IBody body)
+    {
+        IMassFactory factory = GetMassFactory();
+
+        return factory.Create(weight, body);
+    }
     #endregion
     #endregion
 
@@ -339,6 +337,11 @@ internal abstract class Mass : BaseQuantifiable, IMass
         if (IsWeightNotLess(volumeWeight)) return Weight;
 
         return (IWeight)volumeWeight.ExchangeTo(GetBaseMeasureUnit())!;
+    }
+
+    private IMassFactory GetMassFactory()
+    {
+        return (IMassFactory)GetFactory();
     }
 
     private bool IsWeightNotLess(IWeight volumeWeight)

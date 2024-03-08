@@ -15,5 +15,4 @@
         TTangent GetOuterTangentShape();
         TTangent GetInnerTangentShape();
     }
-
 }

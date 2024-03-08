@@ -1,7 +1,13 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations;
 
-public abstract class BaseMeasure(IBaseMeasureFactory factory) : Quantifiable(factory), IBaseMeasure
+public abstract class BaseMeasure : Quantifiable, IBaseMeasure
 {
+    #region Constructors
+    protected BaseMeasure(IRootObject rootObject, string paramName) : base(rootObject, paramName)
+    {
+    }
+    #endregion
+
     #region Public methods
     public bool Equals(IBaseMeasure? x, IBaseMeasure? y)
     {
@@ -25,7 +31,7 @@ public abstract class BaseMeasure(IBaseMeasureFactory factory) : Quantifiable(fa
 
     public IBaseMeasure GetBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity)
     {
-        return GetFactory().CreateBaseMeasure(baseMeasurement, quantity);
+        return GetBaseMeasureFactory().CreateBaseMeasure(baseMeasurement, quantity);
     }
 
     public decimal GetExchangeRate()
@@ -49,7 +55,7 @@ public abstract class BaseMeasure(IBaseMeasureFactory factory) : Quantifiable(fa
 
     public RateComponentCode GetRateComponentCode()
     {
-        return GetFactory().RateComponentCode;
+        return GetBaseMeasureFactory().RateComponentCode;
     }
 
     public void ValidateExchangeRate(decimal exchangeRate, string paramName)
@@ -60,11 +66,6 @@ public abstract class BaseMeasure(IBaseMeasureFactory factory) : Quantifiable(fa
     }
 
     #region Override methods
-    public override IBaseMeasureFactory GetFactory()
-    {
-        return (IBaseMeasureFactory)Factory;
-    }
-
     public override Enum GetBaseMeasureUnit()
     {
         IBaseMeasurement baseMeasurement = GetBaseMeasurement();
@@ -211,6 +212,10 @@ public abstract class BaseMeasure(IBaseMeasureFactory factory) : Quantifiable(fa
     #endregion
 
     #region Private methods
+    private IBaseMeasureFactory GetBaseMeasureFactory()
+    {
+        return (IBaseMeasureFactory)GetFactory();
+    }
     #region Static methods
     private static TypeCode? GetValidQuantityTypeCodeOrNull(TypeCode quantityTypeCode)
     {

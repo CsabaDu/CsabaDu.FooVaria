@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations
+﻿using CsabaDu.FooVaria.BaseTypes.Common;
+using System;
+
+namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations
 {
     internal abstract class BulkSpread : Spread, IBulkSpread
     {
@@ -10,11 +13,11 @@
         #endregion
 
         #region Constructors
-        private protected BulkSpread(IBulkSpread other) : base(other)
+        private protected BulkSpread(IRootObject other) : base(other, nameof(other))
         {
         }
 
-        private protected BulkSpread(IBulkSpreadFactory factory) : base(factory)
+        private protected BulkSpread(IBulkSpreadFactory factory) : base(factory, nameof(factory))
         {
         }
         #endregion
@@ -26,20 +29,6 @@
         }
 
         #region Override methods
-        public override IBulkSpreadFactory GetFactory()
-        {
-            return (IBulkSpreadFactory)Factory;
-        }
-
-        //public override void ValidateMeasureUnit(Enum? measureUnit, string paramName)
-        //{
-        //    MeasureUnitCode measureUnitCode = GetDefinedMeasureUnitCode(measureUnit!);
-
-        //    if (IsValidMeasureUnitCode(measureUnitCode)) return;
-
-        //    throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName);
-        //}
-
         #region Sealed methods
         public override sealed ISpread? ExchangeTo(Enum? context)
         {
@@ -313,20 +302,19 @@
         #region Public methods
         public TSelf GetNew(TSelf other)
         {
-            return GetFactory().CreateNew(other);
+            IBulkSpreadFactory<TSelf, TSMeasure> factory = GetBulkSpreadFactory();
+
+            return factory.CreateNew(other);
         }
 
         public TSelf GetBulkSpread(TSMeasure spreadMeasure)
         {
-            return GetFactory().Create(spreadMeasure);
+            IBulkSpreadFactory<TSelf, TSMeasure> factory = GetBulkSpreadFactory();
+
+            return factory.Create(spreadMeasure);
         }
 
         #region Override methods
-        public override IBulkSpreadFactory<TSelf, TSMeasure> GetFactory()
-        {
-            return (IBulkSpreadFactory<TSelf, TSMeasure>)Factory;
-        }
-
         #region Sealed methods
         public override sealed TSMeasure GetSpreadMeasure()
         {
@@ -334,6 +322,13 @@
         }
         #endregion
         #endregion
+        #endregion
+
+        #region Private methods
+        private IBulkSpreadFactory<TSelf, TSMeasure> GetBulkSpreadFactory()
+        {
+            return (IBulkSpreadFactory<TSelf, TSMeasure>)GetFactory();
+        }
         #endregion
     }
 
@@ -353,28 +348,46 @@
         #endregion
 
         #region Public methods
-        #region Override methods
-        public override IBulkSpreadFactory<TSelf, TSMeasure, TEnum> GetFactory()
+        public TEnum GetMeasureUnit()
         {
-            return (IBulkSpreadFactory<TSelf, TSMeasure, TEnum>)Factory;
+            return SpreadMeasure.GetMeasureUnit();
         }
 
+        public TSelf GetBulkSpread(TEnum measureUnit)
+        {
+            return (TSelf)(ExchangeTo(measureUnit) ?? throw InvalidMeasureUnitEnumArgumentException(measureUnit));
+        }
+
+        public TSelf GetBulkSpread(TEnum measureUnit, double quantity)
+        {
+            IBulkSpreadFactory<TSelf, TSMeasure, TEnum> factory = GetBulkSpreadFactory();
+
+            return factory.Create(measureUnit, quantity);
+        }
+
+        #region Override methods
         #region Sealed methods
         public override sealed TSelf GetSpread(ISpreadMeasure spreadMeasure)
         {
             ValidateSpreadMeasure(spreadMeasure, nameof(spreadMeasure));
 
-            return GetFactory().Create((TSMeasure)spreadMeasure);
+            IBulkSpreadFactory<TSelf, TSMeasure, TEnum> factory = GetBulkSpreadFactory();
+
+            return factory.Create((TSMeasure)spreadMeasure);
         }
 
         public override sealed TSelf GetBulkSpread(params IExtent[] shapeExtents)
         {
-            return (TSelf)GetFactory().Create(shapeExtents);
+            IBulkSpreadFactory<TSelf, TSMeasure, TEnum> factory = GetBulkSpreadFactory();
+
+            return (TSelf)factory.Create(shapeExtents);
         }
 
         public override sealed TSelf GetBulkSpread(ISpreadMeasure spreadMeasure)
         {
-            if (spreadMeasure.GetSpreadMeasure() is TSMeasure validSpreadMeasure) return GetFactory().Create(validSpreadMeasure);
+            IBulkSpreadFactory<TSelf, TSMeasure, TEnum> factory = GetBulkSpreadFactory();
+
+            if (spreadMeasure.GetSpreadMeasure() is TSMeasure validSpreadMeasure) return factory.Create(validSpreadMeasure);
 
             throw ArgumentTypeOutOfRangeException(nameof(spreadMeasure), spreadMeasure!);
         }
@@ -387,22 +400,13 @@
         }
         #endregion
         #endregion
-
-        #region Abstract methods
-        public TEnum GetMeasureUnit()
-        {
-            return SpreadMeasure.GetMeasureUnit();
-        }
-        public TSelf GetBulkSpread(TEnum measureUnit)
-        {
-            return (TSelf)(ExchangeTo(measureUnit) ?? throw InvalidMeasureUnitEnumArgumentException(measureUnit));
-        }
-
-        public TSelf GetBulkSpread(TEnum measureUnit, double quantity)
-        {
-            return GetFactory().Create(measureUnit, quantity);
-        }
         #endregion
+
+        #region Private methods
+        private IBulkSpreadFactory<TSelf, TSMeasure, TEnum> GetBulkSpreadFactory()
+        {
+            return (IBulkSpreadFactory<TSelf, TSMeasure, TEnum>)GetFactory();
+        }
         #endregion
     }
 }

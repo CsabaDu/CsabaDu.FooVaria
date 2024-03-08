@@ -1,12 +1,8 @@
-﻿using CsabaDu.FooVaria.DryBodies.Types;
-using CsabaDu.FooVaria.PlaneShapes.Factories;
-
-namespace CsabaDu.FooVaria.DryBodies.Factories
+﻿namespace CsabaDu.FooVaria.DryBodies.Factories
 {
     public interface IDryBodyFactory : ISimpleShapeFactory, IBodyFactory
     {
         IBulkBodyFactory BulkBodyFactory { get; init; }
-        IPlaneShapeFactory BaseFaceFactory { get; init; }
 
         IDryBody Create(IPlaneShape baseFace, IExtent height);
         IPlaneShape? CreateProjection(IDryBody dryBody, ShapeExtentCode perpendicular);

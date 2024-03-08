@@ -3,11 +3,7 @@
 public abstract class Quantifiable : BaseQuantifiable, IQuantifiable
 {
     #region Constructors
-    protected Quantifiable(IQuantifiable other) : base(other)
-    {
-    }
-
-    protected Quantifiable(IQuantifiableFactory factory) : base(factory)
+    protected Quantifiable(IRootObject rootObject, string paramName) : base(rootObject, paramName)
     {
     }
     #endregion
@@ -77,7 +73,9 @@ public abstract class Quantifiable : BaseQuantifiable, IQuantifiable
 
     public IQuantifiable GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
     {
-        return GetFactory().CreateQuantifiable(measureUnitCode, defaultQuantity);
+        IQuantifiableFactory factory = (IQuantifiableFactory)GetFactory();
+
+        return factory.CreateQuantifiable(measureUnitCode, defaultQuantity);
     }
 
     public object GetQuantity(RoundingMode roundingMode)
@@ -139,11 +137,6 @@ public abstract class Quantifiable : BaseQuantifiable, IQuantifiable
     }
 
     #region Override methods
-    public override IQuantifiableFactory GetFactory()
-    {
-        return (IQuantifiableFactory)Factory;
-    }
-
     #region Sealed methods
     public override sealed MeasureUnitCode GetMeasureUnitCode()
     {

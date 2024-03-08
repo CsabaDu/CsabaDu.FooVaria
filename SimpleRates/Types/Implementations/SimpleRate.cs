@@ -3,14 +3,14 @@
 public abstract class SimpleRate : BaseRate, ISimpleRate
 {
     #region Constructors
-    protected SimpleRate(ISimpleRateFactory factory, IBaseRate baseRate) : base(factory)
+    protected SimpleRate(ISimpleRateFactory factory, IBaseRate baseRate) : base(factory, nameof(factory))
     {
         NumeratorCode = NullChecked(baseRate, nameof(baseRate)).GetNumeratorCode();
         DenominatorCode = baseRate.GetDenominatorCode();
         DefaultQuantity = baseRate.GetDefaultQuantity();
     }
 
-    protected SimpleRate(ISimpleRateFactory factory, MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode) : base(factory)
+    protected SimpleRate(ISimpleRateFactory factory, MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode) : base(factory, nameof(factory))
     {
         NumeratorCode = Defined(numeratorCode, nameof(numeratorCode));
         DenominatorCode = Defined(denominatorCode, nameof(denominatorCode));
@@ -44,12 +44,12 @@ public abstract class SimpleRate : BaseRate, ISimpleRate
 
     public IMeasureFactory GetMeasureFactory()
     {
-        return GetFactory().MeasureFactory;
+        return GetSimpleRateFactory().MeasureFactory;
     }
 
     public ISimpleRate GetSimpleRate(MeasureUnitCode numeratorCode, decimal quantity, MeasureUnitCode denominatorCode)
     {
-        return GetFactory().CreateSimpleRate(numeratorCode, quantity, denominatorCode);
+        return GetSimpleRateFactory().CreateSimpleRate(numeratorCode, quantity, denominatorCode);
     }
 
     public decimal GetQuantity(Enum context, string paramName)
@@ -83,11 +83,6 @@ public abstract class SimpleRate : BaseRate, ISimpleRate
     }
 
     #region Override methods
-    public override ISimpleRateFactory GetFactory()
-    {
-        return (ISimpleRateFactory)Factory;
-    }
-
     #region Sealed methods
     public override sealed decimal GetDefaultQuantity()
     {
@@ -130,6 +125,11 @@ public abstract class SimpleRate : BaseRate, ISimpleRate
     #endregion
 
     #region Private methods
+    private ISimpleRateFactory GetSimpleRateFactory()
+    {
+        return (ISimpleRateFactory)GetFactory();
+    }
+
     private MeasurementElements GetValidMeasurementElements(Enum context, RateComponentCode rateComponentCode, string paramName)
     {
         MeasurementElements measurementElements = new(context, paramName);

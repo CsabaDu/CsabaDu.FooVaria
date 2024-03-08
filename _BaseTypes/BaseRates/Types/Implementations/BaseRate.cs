@@ -3,11 +3,7 @@
     public abstract class BaseRate : BaseQuantifiable, IBaseRate
     {
         #region Constructors
-        protected BaseRate(IBaseRate other) : base(other)
-        {
-        }
-
-        protected BaseRate(IBaseRateFactory factory) : base(factory)
+        protected BaseRate(IRootObject rootObject, string paramName) : base(rootObject, paramName)
         {
         }
         #endregion
@@ -57,17 +53,17 @@
 
         public IBaseRate GetBaseRate(IQuantifiable numerator, Enum denominator)
         {
-            return GetFactory().CreateBaseRate(numerator, denominator);
+            return GetBaseRateFactory().CreateBaseRate(numerator, denominator);
         }
 
         public IBaseRate GetBaseRate(IQuantifiable numerator, IMeasurable denominator)
         {
-            return GetFactory().CreateBaseRate(numerator, denominator);
+            return GetBaseRateFactory().CreateBaseRate(numerator, denominator);
         }
 
         public IBaseRate GetBaseRate(IQuantifiable numerator, IQuantifiable denominator)
         {
-            return GetFactory().CreateBaseRate(numerator, denominator);
+            return GetBaseRateFactory().CreateBaseRate(numerator, denominator);
         }
 
         public abstract MeasureUnitCode GetMeasureUnitCode(RateComponentCode rateComponentCode);
@@ -128,10 +124,10 @@
         }
 
         #region Override methods
-        public override IBaseRateFactory GetFactory()
-        {
-            return (IBaseRateFactory)Factory;
-        }
+        //public override IBaseRateFactory GetFactory()
+        //{
+        //    return (IBaseRateFactory)Factory;
+        //}
 
         #region Sealed methods
         public override sealed bool Equals(object? obj)
@@ -202,5 +198,10 @@
         }
         #endregion
         #endregion
+
+        private IBaseRateFactory GetBaseRateFactory()
+        {
+            return (IBaseRateFactory)GetFactory();
+        }
     }
 }

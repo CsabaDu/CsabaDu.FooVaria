@@ -2,7 +2,8 @@
 
 public interface ICylinderFactory : IDryBodyFactory<ICylinder, ICircle>, ICircularShapeFactory<ICylinder, ICuboid>
 {
-    ICuboidFactory CuboidFactory { get; init; }
+    ICuboidFactory TangentShapeFactory { get; init; }
+    ICircleFactory BaseFaceFactory { get; init; }
 
     ICylinder Create(IExtent radius, IExtent height);
     ICircle CreateBaseFace(IExtent radius);

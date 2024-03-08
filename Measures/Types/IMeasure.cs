@@ -2,6 +2,7 @@
 {
     public interface IMeasure : IBaseMeasure<IMeasure>, ICalculate<IMeasure, decimal>
     {
+        IMeasureFactory Factory { get; init; }
     }
 
     public interface IMeasure<TSelf, TNum> : IMeasure, IBaseMeasure<TSelf, TNum>
