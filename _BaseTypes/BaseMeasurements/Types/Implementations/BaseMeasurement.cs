@@ -114,11 +114,6 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
     }
 
     #region Override methods
-    //public override IBaseMeasurementFactory GetFactory()
-    //{
-    //    return (IBaseMeasurementFactory)Factory;
-    //}
-
     #region Sealed methods
     public override sealed bool Equals(object? obj)
     {
