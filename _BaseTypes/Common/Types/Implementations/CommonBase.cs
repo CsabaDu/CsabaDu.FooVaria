@@ -12,6 +12,12 @@ public abstract class CommonBase : ICommonBase
     {
         Factory = NullChecked(other, nameof(other)).Factory;
     }
+
+    //protected CommonBase(IRootObject rootObject)
+    //{
+    //    _ = NullChecked(rootObject, nameof(rootObject));
+    //}
+
     #endregion
 
     #region Properties
