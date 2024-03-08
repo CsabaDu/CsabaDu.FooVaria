@@ -70,11 +70,8 @@ internal abstract class Rate : BaseRate, IRate
         if (!x.Equals(y)) return false;
 
         ILimit? xLimit = x.GetLimit();
-        ILimit? yLimit = y.GetLimit();
 
-        return xLimit == null
-            && yLimit == null
-            || xLimit?.Equals(xLimit, yLimit) == true;
+        return xLimit?.Equals(xLimit, y.GetLimit()) == true;
     }
 
     public IRate? ExchangeTo(IMeasurable? context)
