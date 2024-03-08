@@ -28,7 +28,7 @@ public abstract class SimpleRateFactory(IMeasureFactory measureFactory) : ISimpl
     {
         if (denominator is IQuantifiable quantifiable) return CreateBaseRate(numerator, quantifiable);
 
-        string paramName = nameof(denominator);
+        const string paramName = nameof(denominator);
 
         if (denominator is IBaseQuantifiable) throw ArgumentTypeOutOfRangeException(paramName, denominator);
 
@@ -62,7 +62,7 @@ public abstract class SimpleRateFactory(IMeasureFactory measureFactory) : ISimpl
     {
         MeasureUnitCode numeratorCode = NullChecked(numerator, paramName).GetMeasureUnitCode();
         decimal defaultQuantity = numerator.GetDefaultQuantity() / denominatorElements.ExchangeRate;
-        MeasureUnitCode denominatorCode = denominatorElements.GetMeasureUnitCode();
+        MeasureUnitCode denominatorCode = denominatorElements.MeasureUnitCode;
 
         return new(numeratorCode, defaultQuantity, denominatorCode);
     }
@@ -70,11 +70,11 @@ public abstract class SimpleRateFactory(IMeasureFactory measureFactory) : ISimpl
     protected static SimpleRateParams GetSimpleRateParams(Enum numeratorContext, decimal quantity, Enum denominator)
     {
         MeasurementElements measurementElements = new(numeratorContext, nameof(numeratorContext));
-        MeasureUnitCode numeratorCode = measurementElements.GetMeasureUnitCode();
+        MeasureUnitCode numeratorCode = measurementElements.MeasureUnitCode;
         decimal numeratorExchangeRate = measurementElements.ExchangeRate;
 
         measurementElements = new(denominator, nameof(denominator));
-        MeasureUnitCode denominatorCode = measurementElements.GetMeasureUnitCode();
+        MeasureUnitCode denominatorCode = measurementElements.MeasureUnitCode;
         decimal denominatorExchangeRate = measurementElements.ExchangeRate;
 
         if (numeratorExchangeRate != denominatorExchangeRate)

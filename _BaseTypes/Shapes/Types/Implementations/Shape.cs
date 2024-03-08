@@ -1,13 +1,7 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.Shapes.Types.Implementations;
 
-public abstract class Shape : Spread, IShape
+public abstract class Shape(IRootObject rootObject, string paramName) : Spread(rootObject, paramName), IShape
 {
-    #region Constructors
-    protected Shape(IRootObject rootObject, string paramName) : base(rootObject, paramName)
-    {
-    }
-    #endregion
-
     #region Public methods
     public IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
     {

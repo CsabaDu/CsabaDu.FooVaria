@@ -12,7 +12,6 @@
         where T : class, ISimpleShape, ITangentShape
         where TTangent : class, ISimpleShape, ITangentShape
     {
-
         TTangent CreateTangentShape(T simpleShape, SideCode sideCode);
         TTangent CreateOuterTangentShape(T simpleShape);
         TTangent CreateInnerTangentShape(T simpleShape);

@@ -1,8 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measures.Behaviors
 {
-    public interface ICustomMeasure
-    {
-    }
+    public interface ICustomMeasure;
 
     public interface ICustomMeasure<TSelf, TNum, TEnum> : ICustomMeasure
         where TSelf : class, IMeasure<TSelf, TNum, TEnum>

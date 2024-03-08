@@ -60,7 +60,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
     public IMeasurement Create(Enum context)
     {
         const string paramName = nameof(context);
-        Enum measureUnit = new MeasurementElements(context, paramName).GetMeasureUnit();
+        Enum measureUnit = new MeasurementElements(context, paramName).MeasureUnit;
 
         return GetStoredMeasurement(measureUnit);
     }

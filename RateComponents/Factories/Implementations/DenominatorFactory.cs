@@ -23,7 +23,7 @@ public sealed class DenominatorFactory(IMeasurementFactory measurementFactory)
 
     #region Private properties
     #region Static properties
-    private static HashSet<IDenominator> DenominatorSet { get; set; }
+    private static HashSet<IDenominator> DenominatorSet { get; }
     #endregion
     #endregion
     #endregion
@@ -35,7 +35,6 @@ public sealed class DenominatorFactory(IMeasurementFactory measurementFactory)
 
         return GetOrCreateStoredDenominator(measurement);
     }
-
 
     public IDenominator Create(string name)
     {
@@ -98,7 +97,7 @@ public sealed class DenominatorFactory(IMeasurementFactory measurementFactory)
 
     public IDenominator CreateNew(IDenominator other)
     {
-        return GetStoredRateComponent(other, DenominatorSet) ?? throw new InvalidOperationException(null);
+        return GetOrAddStoredRateComponent(other, DenominatorSet) ?? throw new InvalidOperationException(null);
     }
 
     #region Override methods

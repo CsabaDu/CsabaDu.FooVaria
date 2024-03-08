@@ -55,7 +55,7 @@ public abstract class SimpleRate : BaseRate, ISimpleRate
     public decimal GetQuantity(Enum context, string paramName)
     {
         MeasurementElements measurementElements = new(context, paramName);
-        MeasureUnitCode measureUnitCode = measurementElements.GetMeasureUnitCode();
+        MeasureUnitCode measureUnitCode = measurementElements.MeasureUnitCode;
         decimal exchangeRate = measurementElements.ExchangeRate;
 
         if (measureUnitCode == DenominatorCode) return DefaultQuantity * exchangeRate;
@@ -135,7 +135,7 @@ public abstract class SimpleRate : BaseRate, ISimpleRate
         MeasurementElements measurementElements = new(context, paramName);
         MeasureUnitCode measureUnitCode = GetMeasureUnitCode(rateComponentCode);
 
-        if (measureUnitCode == measurementElements.GetMeasureUnitCode()) return measurementElements;
+        if (measureUnitCode == measurementElements.MeasureUnitCode) return measurementElements;
 
         throw new InvalidEnumArgumentException(paramName, (int)(object)context, context.GetType());
     }

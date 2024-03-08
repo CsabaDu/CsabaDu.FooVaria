@@ -1,21 +1,19 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
 
-public abstract class Measurable : CommonBase, IMeasurable
+public abstract class Measurable(IRootObject rootObject, string paramName) : CommonBase(rootObject, paramName), IMeasurable
 {
     #region Structs
-    public readonly struct MeasureUnitElements(Enum? context, string paramName)
+    public record MeasureUnitElements(Enum? context, string paramName)
     {
-        public Enum MeasureUnit => getMeasureUnitElements(context, paramName).MeasureUnit;
-        public MeasureUnitCode MeasureUnitCode => getMeasureUnitElements(context, paramName).MeasureUnitCode;
+        public Enum MeasureUnit => GetMeasureUnitElements(context, paramName).MeasureUnit;
+        public MeasureUnitCode MeasureUnitCode => GetMeasureUnitElements(context, paramName).MeasureUnitCode;
 
-        #region Local methods
-        static (Enum MeasureUnit, MeasureUnitCode MeasureUnitCode) getMeasureUnitElements(Enum? measureUnit, string paramName)
+        private static (Enum MeasureUnit, MeasureUnitCode MeasureUnitCode) GetMeasureUnitElements(Enum? measureUnit, string paramName)
         {
             return measureUnit is MeasureUnitCode measureUnitCode ?
                 (Defined(measureUnitCode, paramName).GetDefaultMeasureUnit(), measureUnitCode)
                 : (DefinedMeasureUnit(measureUnit, paramName), GetMeasureUnitCode(measureUnit));
         }
-        #endregion
     }
     #endregion
 
@@ -66,11 +64,8 @@ public abstract class Measurable : CommonBase, IMeasurable
         }
         #endregion
     }
-    #endregion
 
-    protected Measurable(IRootObject rootObject, string paramName) : base(rootObject, paramName)
-    {
-    }
+    #endregion
     #endregion
 
     #region Properties

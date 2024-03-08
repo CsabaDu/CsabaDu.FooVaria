@@ -37,4 +37,3 @@ public sealed class BulkBodyFactory(IMeasureFactory measureFactory) : BulkSpread
     #endregion
     #endregion
 }
-

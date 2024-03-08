@@ -37,4 +37,3 @@ public sealed class BulkSurfaceFactory(IMeasureFactory measureFactory) : BulkSpr
     #endregion
     #endregion
 }
-

@@ -1,22 +1,11 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;
 
-public abstract class BaseMeasurement : Measurable, IBaseMeasurement
+public abstract class BaseMeasurement(IRootObject rootObject, string paramName) : Measurable(rootObject, paramName), IBaseMeasurement
 {
     #region Structs
-    public readonly struct MeasurementElements(Enum? context, string paramName)
+    public sealed record MeasurementElements(Enum? context, string paramName) : MeasureUnitElements(context, paramName)
     {
-        public MeasureUnitElements MeasureUnitElements => new(context, paramName);
-        public decimal ExchangeRate => GetExchangeRate(context, paramName);
-
-        public Enum GetMeasureUnit()
-        {
-            return MeasureUnitElements.MeasureUnit;
-        }
-
-        public MeasureUnitCode GetMeasureUnitCode()
-        {
-            return MeasureUnitElements.MeasureUnitCode;
-        }
+        public decimal ExchangeRate => GetExchangeRate(MeasureUnit, paramName);
     }
     #endregion
 
@@ -36,11 +25,8 @@ public abstract class BaseMeasurement : Measurable, IBaseMeasurement
         ConstantExchangeRateCollection = InitConstantExchangeRateCollection();
         ExchangeRateCollection = new(ConstantExchangeRateCollection);
     }
-    #endregion
 
-    protected BaseMeasurement(IRootObject rootObject, string paramName) : base(rootObject, paramName)
-    {
-    }
+    #endregion
     #endregion
 
     #region Properties

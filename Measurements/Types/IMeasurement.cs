@@ -12,4 +12,3 @@ public interface IMeasurement : IBaseMeasurement, IMeasureUnitCollection, ICusto
     IMeasurement GetMeasurement(string name);
     bool TryGetMeasurement(decimal exchangeRate, [NotNullWhen(true)] out IMeasurement? measurement);
 }
-

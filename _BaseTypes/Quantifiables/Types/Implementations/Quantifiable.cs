@@ -1,13 +1,7 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.Implementations;
 
-public abstract class Quantifiable : BaseQuantifiable, IQuantifiable
+public abstract class Quantifiable(IRootObject rootObject, string paramName) : BaseQuantifiable(rootObject, paramName), IQuantifiable
 {
-    #region Constructors
-    protected Quantifiable(IRootObject rootObject, string paramName) : base(rootObject, paramName)
-    {
-    }
-    #endregion
-
     #region Public methods
     public virtual int CompareTo(IQuantifiable? other)
     {

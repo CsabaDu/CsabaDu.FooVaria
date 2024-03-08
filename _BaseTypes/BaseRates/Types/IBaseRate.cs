@@ -10,7 +10,3 @@ public interface IBaseRate : IBaseQuantifiable, IQuantity<decimal>, IProportiona
 
     void ValidateRateComponentCode(RateComponentCode rateComponentCode, string paramName);
 }
-
-
-    //IBaseRate GetBaseRate(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode);
-    //IBaseRate GetBaseRate(IBaseRate baseRate);

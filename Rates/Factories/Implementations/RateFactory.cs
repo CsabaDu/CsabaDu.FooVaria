@@ -31,7 +31,7 @@ public abstract class RateFactory : IRateFactory
     {
         if (denominator is IQuantifiable quantifiable) return CreateBaseRate(numerator, quantifiable);
 
-        string paramName = nameof(denominator);
+        const string paramName = nameof(denominator);
 
         if (denominator is IBaseQuantifiable) throw ArgumentTypeOutOfRangeException(paramName, denominator);
 
@@ -39,7 +39,7 @@ public abstract class RateFactory : IRateFactory
 
         return CreateBaseRate(numerator, measureUnit);
     }
-    
+
     public IDenominator CreateDenominator(IQuantifiable quantifiable)
     {
         return DenominatorFactory.Create(quantifiable);
@@ -65,7 +65,7 @@ public abstract class RateFactory : IRateFactory
     protected static IMeasure GetValidNumerator(IQuantifiable numerator, string paramName)
     {
         if (NullChecked(numerator, paramName) is IMeasure measure) return measure;
-        
+
         throw ArgumentTypeOutOfRangeException(paramName, numerator);
     }
     #endregion

@@ -42,7 +42,7 @@ public abstract class RateComponentFactory : IRateComponentFactory
     }
 
     #region Static methods
-    protected static T? GetStoredRateComponent<T>(T? other, HashSet<T> rateComponentSet)
+    protected static T? GetOrAddStoredRateComponent<T>(T? other, HashSet<T> rateComponentSet)
         where T : class, IRateComponent
     {
         bool exists = rateComponentSet.Contains(NullChecked(other, nameof(other)))

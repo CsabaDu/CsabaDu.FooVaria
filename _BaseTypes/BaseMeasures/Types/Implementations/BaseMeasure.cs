@@ -1,13 +1,7 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations;
 
-public abstract class BaseMeasure : Quantifiable, IBaseMeasure
+public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Quantifiable(rootObject, paramName), IBaseMeasure
 {
-    #region Constructors
-    protected BaseMeasure(IRootObject rootObject, string paramName) : base(rootObject, paramName)
-    {
-    }
-    #endregion
-
     #region Public methods
     public bool Equals(IBaseMeasure? x, IBaseMeasure? y)
     {

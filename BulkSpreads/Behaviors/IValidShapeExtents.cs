@@ -4,4 +4,3 @@ public interface IValidShapeExtents
 {
     bool AreValidShapeExtents(params IExtent[] shapeExtents);
 }
-

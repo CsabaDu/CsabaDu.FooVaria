@@ -20,7 +20,7 @@ public sealed class LimitFactory(IMeasurementFactory measurementFactory)
 
     #region Private properties
     #region Static properties
-    private static HashSet<ILimit> LimitSet { get; set; }
+    private static HashSet<ILimit> LimitSet { get; }
     #endregion
     #endregion
     #endregion
@@ -79,7 +79,7 @@ public sealed class LimitFactory(IMeasurementFactory measurementFactory)
 
     public ILimit CreateNew(ILimit other)
     {
-        return GetStoredRateComponent(other, LimitSet) ?? throw new InvalidOperationException(null);
+        return GetOrAddStoredRateComponent(other, LimitSet) ?? throw new InvalidOperationException(null);
     }
 
     #region Override methods

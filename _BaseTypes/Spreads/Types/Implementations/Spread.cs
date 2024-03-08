@@ -1,13 +1,7 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.Spreads.Types.Implementations;
 
-public abstract class Spread : Quantifiable, ISpread
+public abstract class Spread(IRootObject rootObject, string paramName) : Quantifiable(rootObject, paramName), ISpread
 {
-    #region Constructors
-    protected Spread(IRootObject rootObject, string paramName) : base(rootObject, paramName)
-    {
-    }
-    #endregion
-
     #region Public methods
     public override sealed ValueType GetBaseQuantity()
     {
