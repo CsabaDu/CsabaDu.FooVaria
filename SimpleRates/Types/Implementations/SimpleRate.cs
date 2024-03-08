@@ -54,7 +54,7 @@ public abstract class SimpleRate : BaseRate, ISimpleRate
 
     public decimal GetQuantity(Enum context, string paramName)
     {
-        MeasurementElements measurementElements = new(context, paramName);
+        MeasurementElements measurementElements = GetMeasurementElements(context, paramName);
         MeasureUnitCode measureUnitCode = measurementElements.MeasureUnitCode;
         decimal exchangeRate = measurementElements.ExchangeRate;
 
@@ -132,7 +132,7 @@ public abstract class SimpleRate : BaseRate, ISimpleRate
 
     private MeasurementElements GetValidMeasurementElements(Enum context, RateComponentCode rateComponentCode, string paramName)
     {
-        MeasurementElements measurementElements = new(context, paramName);
+        MeasurementElements measurementElements = GetMeasurementElements(context, paramName);
         MeasureUnitCode measureUnitCode = GetMeasureUnitCode(rateComponentCode);
 
         if (measureUnitCode == measurementElements.MeasureUnitCode) return measurementElements;

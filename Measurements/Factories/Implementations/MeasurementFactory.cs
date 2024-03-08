@@ -41,7 +41,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
     {
         if (measureUnit == null) return null;
 
-        MeasureUnitElements measureUnitElements = new(measureUnit, nameof(measureUnit));
+        MeasureUnitElements measureUnitElements = GetMeasureUnitElements(measureUnit, nameof(measureUnit));
         measureUnit = measureUnitElements.MeasureUnit;
 
         bool success = ExchangeRateCollection.TryGetValue(measureUnit, out decimal validExchangeRate)
@@ -60,7 +60,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
     public IMeasurement Create(Enum context)
     {
         const string paramName = nameof(context);
-        Enum measureUnit = new MeasurementElements(context, paramName).MeasureUnit;
+        Enum measureUnit = GetMeasurementElements(context, paramName).MeasureUnit;
 
         return GetStoredMeasurement(measureUnit);
     }

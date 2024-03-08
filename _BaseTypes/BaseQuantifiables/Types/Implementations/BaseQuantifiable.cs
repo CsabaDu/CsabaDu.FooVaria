@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types.Implementations;
 
-public abstract class BaseQuantifiable : Measurable, IBaseQuantifiable
+public abstract class BaseQuantifiable(IRootObject rootObject, string paramName) : Measurable(rootObject, paramName), IBaseQuantifiable
 {
     #region Constructors
     #region Static constructor
@@ -17,10 +17,6 @@ public abstract class BaseQuantifiable : Measurable, IBaseQuantifiable
         ];
     }
     #endregion
-
-    protected BaseQuantifiable(IRootObject rootObject, string paramName) : base(rootObject, paramName)
-    {
-    }
     #endregion
 
     #region Properties

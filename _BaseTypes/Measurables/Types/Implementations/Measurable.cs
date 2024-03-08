@@ -2,19 +2,8 @@
 
 public abstract class Measurable(IRootObject rootObject, string paramName) : CommonBase(rootObject, paramName), IMeasurable
 {
-    #region Structs
-    public record MeasureUnitElements(Enum? context, string paramName)
-    {
-        public Enum MeasureUnit => GetMeasureUnitElements(context, paramName).MeasureUnit;
-        public MeasureUnitCode MeasureUnitCode => GetMeasureUnitElements(context, paramName).MeasureUnitCode;
-
-        private static (Enum MeasureUnit, MeasureUnitCode MeasureUnitCode) GetMeasureUnitElements(Enum? measureUnit, string paramName)
-        {
-            return measureUnit is MeasureUnitCode measureUnitCode ?
-                (Defined(measureUnitCode, paramName).GetDefaultMeasureUnit(), measureUnitCode)
-                : (DefinedMeasureUnit(measureUnit, paramName), GetMeasureUnitCode(measureUnit));
-        }
-    }
+    #region Records
+    public record MeasureUnitElements(Enum MeasureUnit, MeasureUnitCode MeasureUnitCode);
     #endregion
 
     #region Enums
@@ -251,6 +240,18 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
         if (measureUnit is not MeasureUnitCode measureUnitCode) return GetDefinedMeasureUnitCode(measureUnit);
 
         return Defined(measureUnitCode, nameof(measureUnit));
+    }
+
+    public static MeasureUnitElements GetMeasureUnitElements(Enum? context, string paramName)
+    {
+        Enum measureUnit = context is MeasureUnitCode measureUnitCode ?
+            Defined(measureUnitCode, paramName).GetDefaultMeasureUnit()
+            : DefinedMeasureUnit(context, paramName);
+        measureUnitCode = Enum.IsDefined(typeof(MeasureUnitCode), context!) ?
+            (MeasureUnitCode)context!
+            : GetMeasureUnitCode(context);
+
+        return new(measureUnit, measureUnitCode);
     }
 
     public static bool HasMeasureUnitCode(MeasureUnitCode measureUnitCode, Enum measureUnit)

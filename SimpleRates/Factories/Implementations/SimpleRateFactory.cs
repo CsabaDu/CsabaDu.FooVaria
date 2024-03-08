@@ -3,12 +3,7 @@
 public abstract class SimpleRateFactory(IMeasureFactory measureFactory) : ISimpleRateFactory
 {
     #region Structs
-    protected readonly struct SimpleRateParams(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode)
-    {
-        public MeasureUnitCode NumeratorCode => numeratorCode;
-        public decimal DefaultQuantity => defaultQuantity;
-        public MeasureUnitCode DenominatorCode => denominatorCode;
-    }
+    protected record SimpleRateParams(MeasureUnitCode NumeratorCode, decimal DefaultQuantity, MeasureUnitCode DenominatorCode);
     #endregion
 
     #region Properties
@@ -18,7 +13,7 @@ public abstract class SimpleRateFactory(IMeasureFactory measureFactory) : ISimpl
     #region Public methods
     public IBaseRate CreateBaseRate(IQuantifiable numerator, Enum denominator)
     {
-        MeasurementElements denominatorElements = new(denominator, nameof(denominator));
+        MeasurementElements denominatorElements = GetMeasurementElements(denominator, nameof(denominator));
         SimpleRateParams simpleRateParams = GetSimpleRateParams(numerator, nameof(numerator), denominatorElements);
 
         return CreateSimpleRate(simpleRateParams);
@@ -33,7 +28,7 @@ public abstract class SimpleRateFactory(IMeasureFactory measureFactory) : ISimpl
         if (denominator is IBaseQuantifiable) throw ArgumentTypeOutOfRangeException(paramName, denominator);
 
         Enum measureUnit = NullChecked(denominator, paramName).GetBaseMeasureUnit();
-        MeasurementElements denominatorElements = new(measureUnit, paramName);
+        MeasurementElements denominatorElements = GetMeasurementElements(measureUnit, paramName);
         SimpleRateParams simpleRateParams = GetSimpleRateParams(numerator, nameof(numerator), denominatorElements);
 
         return CreateSimpleRate(simpleRateParams);
@@ -69,11 +64,11 @@ public abstract class SimpleRateFactory(IMeasureFactory measureFactory) : ISimpl
 
     protected static SimpleRateParams GetSimpleRateParams(Enum numeratorContext, decimal quantity, Enum denominator)
     {
-        MeasurementElements measurementElements = new(numeratorContext, nameof(numeratorContext));
+        MeasurementElements measurementElements = GetMeasurementElements(numeratorContext, nameof(numeratorContext));
         MeasureUnitCode numeratorCode = measurementElements.MeasureUnitCode;
         decimal numeratorExchangeRate = measurementElements.ExchangeRate;
 
-        measurementElements = new(denominator, nameof(denominator));
+        measurementElements = GetMeasurementElements(denominator, nameof(denominator));
         MeasureUnitCode denominatorCode = measurementElements.MeasureUnitCode;
         decimal denominatorExchangeRate = measurementElements.ExchangeRate;
 

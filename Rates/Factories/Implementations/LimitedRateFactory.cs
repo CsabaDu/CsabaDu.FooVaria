@@ -23,7 +23,7 @@ public sealed class LimitedRateFactory(IDenominatorFactory denominatorFactory, I
 
     public ILimitedRate Create(IMeasure numerator, Enum denominatorContext, ValueType denominatorQuantity, ILimit limit)
     {
-        MeasureUnitElements denominatorElements = new(denominatorContext, nameof(denominatorContext));
+        MeasureUnitElements denominatorElements = GetMeasureUnitElements(denominatorContext, nameof(denominatorContext));
         Enum measureUnit = denominatorElements.MeasureUnit;
         IDenominator denominator = DenominatorFactory.Create(measureUnit);
 

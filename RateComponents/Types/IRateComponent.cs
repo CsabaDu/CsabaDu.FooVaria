@@ -13,7 +13,5 @@
 
     public interface IRateComponent<TSelf, TNum> : IRateComponent<TSelf>, IBaseMeasure<TSelf, TNum>
         where TSelf : class, IRateComponent<TSelf>
-        where TNum : struct
-    {
-    }
+        where TNum : struct;
 }

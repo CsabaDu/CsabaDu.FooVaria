@@ -8,7 +8,5 @@
     }
 
     public interface IRateComponentFactory<T> : IRateComponentFactory, IFactory<T>
-        where T : class, IBaseMeasure
-    {
-    }
+        where T : class, IBaseMeasure;
 }

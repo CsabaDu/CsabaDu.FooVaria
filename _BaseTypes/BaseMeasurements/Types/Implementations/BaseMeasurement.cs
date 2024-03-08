@@ -2,11 +2,8 @@
 
 public abstract class BaseMeasurement(IRootObject rootObject, string paramName) : Measurable(rootObject, paramName), IBaseMeasurement
 {
-    #region Structs
-    public sealed record MeasurementElements(Enum? context, string paramName) : MeasureUnitElements(context, paramName)
-    {
-        public decimal ExchangeRate => GetExchangeRate(MeasureUnit, paramName);
-    }
+    #region Records
+    public sealed record MeasurementElements(Enum MeasureUnit, MeasureUnitCode MeasureUnitCode, decimal ExchangeRate) : MeasureUnitElements(MeasureUnit, MeasureUnitCode);
     #endregion
 
     #region Static fields
@@ -146,7 +143,7 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
 
     public static decimal GetExchangeRate(Enum? measureUnit, string paramName)
     {
-        measureUnit = new MeasureUnitElements(measureUnit, paramName).MeasureUnit;
+        measureUnit = GetMeasureUnitElements(measureUnit, paramName).MeasureUnit;
         decimal exchangeRate = ExchangeRateCollection.FirstOrDefault(x => x.Key.Equals(measureUnit)).Value;
 
         if (exchangeRate != default) return exchangeRate;
@@ -157,6 +154,19 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
     public static Dictionary<object, decimal> GetExchangeRateCollection(MeasureUnitCode measureUnitCode)
     {
         return GetMeasureUnitBasedCollection(ExchangeRateCollection, measureUnitCode);
+    }
+
+    public static MeasurementElements GetMeasurementElements(Enum? context, string paramName)
+    {
+        Enum measureUnit = context is MeasureUnitCode measureUnitCode ?
+            Defined(measureUnitCode, paramName).GetDefaultMeasureUnit()
+            : DefinedMeasureUnit(context, paramName);
+        decimal exchangeRate = GetExchangeRate(measureUnit, paramName);
+        measureUnitCode = Enum.IsDefined(typeof(MeasureUnitCode), context!) ?
+            (MeasureUnitCode)context!
+            : GetMeasureUnitCode(context);
+
+        return new(measureUnit, measureUnitCode, exchangeRate);
     }
 
     public static IEnumerable<object> GetValidMeasureUnits()

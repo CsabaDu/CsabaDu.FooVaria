@@ -19,7 +19,7 @@ public sealed class FlatRateFactory(IDenominatorFactory denominatorFactory) : Ra
 
     public IFlatRate Create(IMeasure numerator, Enum denominatorContext, ValueType denominatorQuantity)
     {
-        MeasureUnitElements denominatorElements = new(denominatorContext, nameof(denominatorContext));
+        MeasureUnitElements denominatorElements = GetMeasureUnitElements(denominatorContext, nameof(denominatorContext));
         Enum measureUnit = denominatorElements.MeasureUnit;
         IDenominator denominator = DenominatorFactory.Create(measureUnit);
 

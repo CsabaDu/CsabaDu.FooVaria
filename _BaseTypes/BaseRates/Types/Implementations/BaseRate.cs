@@ -1,13 +1,7 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.BaseRates.Types.Implementations
 {
-    public abstract class BaseRate : BaseQuantifiable, IBaseRate
+    public abstract class BaseRate(IRootObject rootObject, string paramName) : BaseQuantifiable(rootObject, paramName), IBaseRate
     {
-        #region Constructors
-        protected BaseRate(IRootObject rootObject, string paramName) : base(rootObject, paramName)
-        {
-        }
-        #endregion
-
         #region Public methods
         public int CompareTo(IBaseRate? other)
         {
