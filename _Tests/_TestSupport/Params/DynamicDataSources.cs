@@ -14,185 +14,79 @@ internal class DynamicDataSources
     #endregion
     #endregion
 
-    #region Protected types
+    #region Internal records
     #region Abstract ObjectArray
-    protected abstract class ObjectArray
+    internal abstract record ObjectArray
     {
-        public abstract object[] ToObjectArray();
+        internal abstract object[] ToObjectArray();
     }
     #endregion
 
     #region bool
-    protected class Bool_arg : ObjectArray
+    internal record Bool_arg(bool IsTrue) : ObjectArray
     {
-        internal bool IsTrue { get; init; }
-
-        public override object[] ToObjectArray()
-        {
-            return
-            [
-                IsTrue,
-            ];
-        }
+        internal override object[] ToObjectArray() => [IsTrue];
     }
 
     #region bool, object
-    protected class Bool_Object_args : Bool_arg
+    internal record Bool_Object_args(bool IsTrue, object Obj) : Bool_arg(IsTrue)
     {
-        internal object Object { get; init; }
-
-        public override object[] ToObjectArray()
-        {
-            return
-            [
-                IsTrue,
-                Object,
-            ];
-        }
+        internal override object[] ToObjectArray() => [IsTrue, Obj];
     }
 
     #region bool, object, Enum
-    protected class Bool_Object_Enum_args : Bool_Object_args
+    internal record Bool_Object_Enum_args(bool IsTrue, object Obj, Enum MeasureUnit) : Bool_Object_args(IsTrue, Obj)
     {
-        internal Enum MeasureUnit { get; init; }
-
-        public override object[] ToObjectArray()
-        {
-            return
-            [
-                IsTrue,
-                Object,
-                MeasureUnit,
-            ];
-        }
+        internal override object[] ToObjectArray() => [IsTrue, Obj, MeasureUnit];
     }
     #endregion
     #endregion
 
     #region bool, MeasureUnitCode
-    protected class Bool_MeasureUnitCode_args : Bool_arg
+    internal record Bool_MeasureUnitCode_args(bool IsTrue, MeasureUnitCode MeasureUnitCode) : Bool_arg(IsTrue)
     {
-        internal MeasureUnitCode MeasureUnitCode { get; init; }
-
-        public override object[] ToObjectArray()
-        {
-            return
-            [
-                IsTrue,
-                MeasureUnitCode,
-            ];
-        }
+        internal override object[] ToObjectArray() => [IsTrue, MeasureUnitCode];
     }
     #endregion
     #endregion
 
     #region Enum
-    protected class Enum_arg : ObjectArray
+    internal record Enum_arg(Enum MeasureUnit) : ObjectArray
     {
-        internal Enum MeasureUnit { get; init; }
-
-        public override object[] ToObjectArray()
-        {
-            return
-            [
-                MeasureUnit,
-            ];
-        }
+        internal override object[] ToObjectArray() => [MeasureUnit];
     }
 
     #region Enum, MeasureUnitCode
-    protected class Enum_MeasureUnitCode_args : Enum_arg
+    internal record Enum_MeasureUnitCode_args(Enum MeasureUnit, MeasureUnitCode MeasureUnitCode) : Enum_arg(MeasureUnit)
     {
-        internal MeasureUnitCode MeasureUnitCode { get; init; }
-
-        public override object[] ToObjectArray()
-        {
-            return
-            [
-                MeasureUnit,
-                MeasureUnitCode,
-            ];
-        }
+        internal override object[] ToObjectArray() => [MeasureUnit, MeasureUnitCode];
     }
 
     #region Enum, MeasureUnitCode, bool
-    protected class Enum_MeasureUnitCode_bool_args : Enum_MeasureUnitCode_args
+    internal record Enum_MeasureUnitCode_bool_args(Enum MeasureUnit, MeasureUnitCode MeasureUnitCode, bool IsTrue) : Enum_MeasureUnitCode_args(MeasureUnit, MeasureUnitCode)
     {
-        internal bool IsTrue { get; init; }
-
-        public override object[] ToObjectArray()
-        {
-            return
-            [
-                MeasureUnit,
-                MeasureUnitCode,
-                IsTrue,
-            ];
-        }
+        internal override object[] ToObjectArray() => [MeasureUnit, MeasureUnitCode, IsTrue];
     }
     #endregion
     #endregion
-
-    //    #region Enum, string
-    //    protected class Enum_string_args : Enum_arg
-    //    {
-    //        internal string IsTrue { get; init; }
-
-    //        public override object[] ToObjectArray()
-    //        {
-    //            return new object[]
-    //            {
-    //                MeasureUnit,
-    //                IsTrue,
-    //            };
-    //        }
-    //    }
-    //    #endregion
     #endregion
 
     #region MeasureUnitCode
-    protected class MeasureUnitCode_arg : ObjectArray
+    internal record MeasureUnitCode_arg(MeasureUnitCode MeasureUnitCode) : ObjectArray
     {
-        internal MeasureUnitCode MeasureUnitCode { get; init; }
-
-        public override object[] ToObjectArray()
-        {
-            return
-            [
-                MeasureUnitCode,
-            ];
-        }
+        internal override object[] ToObjectArray() => [MeasureUnitCode];
     }
 
     #region MeasureUnitCode, IMeasurable
-    protected class MeasureUnitCode_IMeasurable_args : MeasureUnitCode_arg
+    internal record MeasureUnitCode_IMeasurable_args(MeasureUnitCode MeasureUnitCode, IMeasurable Measurable) : MeasureUnitCode_arg(MeasureUnitCode)
     {
-        internal IMeasurable Measurable { get; init; }
-
-        public override object[] ToObjectArray()
-        {
-            return
-            [
-                MeasureUnitCode,
-                Measurable,
-            ];
-        }
+        internal override object[] ToObjectArray() => [MeasureUnitCode, Measurable];
     }
 
     #region MeasureUnitCode, IMeasurable, bool
-    protected class MeasureUnitCode_IMeasurable_bool_args : MeasureUnitCode_IMeasurable_args
+    internal record MeasureUnitCode_IMeasurable_bool_args(MeasureUnitCode MeasureUnitCode, IMeasurable Measurable, bool IsTrue) : MeasureUnitCode_IMeasurable_args(MeasureUnitCode, Measurable)
     {
-        internal bool IsTrue { get; init; }
-
-        public override object[] ToObjectArray()
-        {
-            return
-            [
-                MeasureUnitCode,
-                Measurable,
-                IsTrue,
-            ];
-        }
+        internal override object[] ToObjectArray() => [MeasureUnitCode, Measurable, IsTrue];
     }
     #endregion
     #endregion
@@ -211,11 +105,7 @@ internal class DynamicDataSources
         #region toObjectArray method
         object[] toObjectArray()
         {
-            return new Enum_arg
-            {
-                MeasureUnit = measureUnit,
-            }
-            .ToObjectArray();
+            return new Enum_arg(measureUnit).ToObjectArray();
         }
         #endregion
     }
@@ -254,13 +144,7 @@ internal class DynamicDataSources
         #region toObjectArray method
         object[] toObjectArray()
         {
-            return new Bool_Object_Enum_args
-            {
-                IsTrue = isTrue,
-                Object = obj,
-                MeasureUnit = measureUnit,
-            }
-            .ToObjectArray();
+            return new Bool_Object_Enum_args(isTrue, obj, measureUnit).ToObjectArray();
         }
         #endregion
     }
@@ -283,13 +167,7 @@ internal class DynamicDataSources
         #region toObjectArray method
         object[] toObjectArray()
         {
-            return new Enum_MeasureUnitCode_bool_args
-            {
-                MeasureUnit = measureUnit,
-                MeasureUnitCode = measureUnitCode,
-                IsTrue = isTrue,
-            }
-            .ToObjectArray();
+            return new Enum_MeasureUnitCode_bool_args(measureUnit, measureUnitCode, isTrue).ToObjectArray();
         }
         #endregion
     }
@@ -308,13 +186,7 @@ internal class DynamicDataSources
         #region toObjectArray method
         object[] toObjectArray()
         {
-            return new Enum_MeasureUnitCode_bool_args
-            {
-                MeasureUnit = measureUnit,
-                MeasureUnitCode = measureUnitCode,
-                IsTrue = isTrue,
-            }
-            .ToObjectArray();
+            return new Enum_MeasureUnitCode_bool_args(measureUnit, measureUnitCode, isTrue).ToObjectArray();
         }
         #endregion
     }
@@ -341,12 +213,7 @@ internal class DynamicDataSources
         #region toObjectArray method
         object[] toObjectArray()
         {
-            return new Enum_MeasureUnitCode_args
-            {
-                MeasureUnit = measureUnit,
-                MeasureUnitCode = measureUnitCode,
-            }
-            .ToObjectArray();
+            return new Enum_MeasureUnitCode_args(measureUnit, measureUnitCode).ToObjectArray();
         }
         #endregion
     }
@@ -363,12 +230,7 @@ internal class DynamicDataSources
         #region toObjectArray method
         object[] toObjectArray()
         {
-            return new Enum_MeasureUnitCode_args
-            {
-                MeasureUnit = measureUnit,
-                MeasureUnitCode = measureUnitCode,
-            }
-            .ToObjectArray();
+            return new Enum_MeasureUnitCode_args(measureUnit, measureUnitCode).ToObjectArray();
         }
         #endregion
     }
@@ -384,12 +246,7 @@ internal class DynamicDataSources
         #region toObjectArray method
         object[] toObjectArray()
         {
-            return new Enum_MeasureUnitCode_args
-            {
-                MeasureUnit = measureUnit,
-                MeasureUnitCode = measureUnitCode,
-            }
-            .ToObjectArray();
+            return new Enum_MeasureUnitCode_args(measureUnit, measureUnitCode).ToObjectArray();
         }
         #endregion
     }
@@ -407,11 +264,7 @@ internal class DynamicDataSources
         #region toObjectArray method
         object[] toObjectArray()
         {
-            return new Enum_arg
-            {
-                MeasureUnit = measureUnit,
-            }
-            .ToObjectArray();
+            return new Enum_arg(measureUnit).ToObjectArray();
         }
         #endregion
     }
@@ -467,7 +320,7 @@ internal class DynamicDataSources
     //            return new Bool_Object_Enum_args
     //            {
     //                IsTrue = isTrue,
-    //                Object = obj,
+    //                Obj = obj,
     //                MeasureUnitCode = measureUnitCode,
     //            }
     //            .ToObjectArray();
