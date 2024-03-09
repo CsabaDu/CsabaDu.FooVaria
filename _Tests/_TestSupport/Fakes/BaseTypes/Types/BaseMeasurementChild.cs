@@ -3,13 +3,12 @@
 internal sealed class BaseMeasurementChild(IRootObject rootObject, string paramName) : BaseMeasurement(rootObject, paramName)
 {
     #region TestHelpers
-    internal Enum GetBaseMeasureUnit_returns { private get; set; }
-    internal string GetName_returns { private get; set; }
+    internal BaseMeasurementReturns Returns { private get; set; } = new();
     #endregion
 
-    public override Enum GetBaseMeasureUnit() => GetBaseMeasureUnit_returns;
+    public override Enum GetBaseMeasureUnit() => Returns.GetBaseMeasureUnit;
 
-    public override IFactory GetFactory() => new BaseMeasurementFactoryObject();
+    public override IFactory GetFactory() => Returns.GetFactory;
 
-    public override string GetName() => GetName_returns;
+    public override string GetName() => Returns.GetName;
 }

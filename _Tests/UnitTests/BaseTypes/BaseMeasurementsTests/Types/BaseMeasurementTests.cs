@@ -19,11 +19,15 @@ public sealed class BaseMeasurementTests
         _paramName = string.Empty;
         _baseMeasurement = new(_rootObject, _paramName);
 
-        _paramName = RandomParams.GetRandomParamName();
-        _baseMeasurement.GetName_returns = _paramName;
-
         _measureUnit = RandomParams.GetRandomMeasureUnit();
-        _baseMeasurement.GetBaseMeasureUnit_returns = _measureUnit;
+        _paramName = RandomParams.GetRandomParamName();
+        _baseMeasurement.Returns = new()
+        {
+            GetFactory = new BaseMeasurementFactoryObject(),
+            GetName = _paramName,
+            GetBaseMeasureUnit = _measureUnit,
+        };
+
         _measureUnitType = _measureUnit.GetType();
         _measureUnitCode = GetMeasureUnitCode(_measureUnitType);
     }

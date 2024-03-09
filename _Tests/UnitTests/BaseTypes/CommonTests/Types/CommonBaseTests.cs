@@ -4,7 +4,7 @@
 public sealed class CommonBaseTests
 {
     #region Private fields
-    private ICommonBase _commonBase;
+    private CommonBaseChild _commonBase;
     private string _paramName;
     private IRootObject _rootObject;
 
@@ -53,7 +53,13 @@ public sealed class CommonBaseTests
     public void GetFactory_returns_expected()
     {
         // Arrange
-        _commonBase = new CommonBaseChild(SampleParams.rootObject, string.Empty);
+        _commonBase = new(SampleParams.rootObject, string.Empty)
+        {
+            Returns = new()
+            {
+                GetFactory = new FactoryObject(),
+            }
+        };
 
         // Act
         var actual = _commonBase.GetFactory();

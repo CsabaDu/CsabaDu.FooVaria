@@ -3,10 +3,10 @@
 internal sealed class MeasurableChild(IRootObject rootObject, string paramName) : Measurable(rootObject, paramName)
 {
     #region TestHelpers
-    internal Enum GetBaseMeasureUnit_returns { private get; set; }
+    internal MeasurableReturns Returns { private get; set; } = new();
     #endregion
 
-    public override Enum GetBaseMeasureUnit() => GetBaseMeasureUnit_returns;
+    public override Enum GetBaseMeasureUnit() => Returns.GetBaseMeasureUnit;
 
-    public override IFactory GetFactory() => new MeasurableFactoryObject();
+    public override IFactory GetFactory() => Returns.GetFactory;
 }
