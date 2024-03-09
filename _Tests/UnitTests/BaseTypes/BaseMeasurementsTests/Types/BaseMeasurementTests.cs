@@ -1,3 +1,5 @@
+using CsabaDu.FooVaria.BaseTypes.Common;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasurementsTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
@@ -13,29 +15,30 @@ public sealed class BaseMeasurementTests
     [TestInitialize]
     public void InitializeBaseMeasurementTests()
     {
-        _factory = new();
-        _baseMeasurement = new(_factory);
+        _rootObject = SampleParams.rootObject;
+        _paramName = string.Empty;
+        _baseMeasurement = new(_rootObject, _paramName);
+
+        _paramName = RandomParams.GetRandomParamName();
+        _baseMeasurement.GetName_returns = _paramName;
 
         _measureUnit = RandomParams.GetRandomMeasureUnit();
-        _baseMeasurement.GetMeasureUnit_returns = _measureUnit;
-
+        _baseMeasurement.GetBaseMeasureUnit_returns = _measureUnit;
         _measureUnitType = _measureUnit.GetType();
         _measureUnitCode = GetMeasureUnitCode(_measureUnitType);
-        
-        _name = RandomParams.GetRandomParamName();
-        _baseMeasurement.GetName_returns = _name;
     }
     #endregion
 
     #region Private fields
-    private MeasureUnitCode _measureUnitCode;
     private BaseMeasurementChild _baseMeasurement;
-    private BaseMeasurementFactoryClass _factory;
+    private BaseMeasurementFactoryObject _factory;
     private Enum _measureUnit;
-    Type _measureUnitType;
-    string _name;
-
+    private MeasureUnitCode _measureUnitCode;
+    private Type _measureUnitType;
     private string _paramName;
+    private IRootObject _rootObject;
+
+    //private string _paramName;
 
     #region Readonly fields
     private readonly RandomParams RandomParams = new();
@@ -48,27 +51,31 @@ public sealed class BaseMeasurementTests
 
     #region Test methods
     #region Constructors
-    #region BaseMeasurement(IBaseMeasurementFactory)
+    #region BaseMeasurement(IRootObject)
     [TestMethod, TestCategory("UnitTest")]
     public void BaseMeasurement_nullArg_IBaseMeasurementFactory_throws_ArgumentNullException()
     {
         // Arrange
-        _factory = null;
+        _rootObject = null;
+        _paramName = RandomParams.GetRandomParamName();
 
         // Act
-        void attempt() => _ = new BaseMeasurementChild(_factory);
+        void attempt() => _ = new BaseMeasurementChild(_rootObject, _paramName);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-        Assert.AreEqual(ParamNames.factory, ex.ParamName);
+        Assert.AreEqual(_paramName, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
     public void BaseMeasurement_validArg_IBaseMeasurementFactory_creates()
     {
         // Arrange
+        _rootObject = SampleParams.rootObject;
+        _paramName = string.Empty;
+
         // Act
-        var actual = new BaseMeasurementChild(_factory);
+        var actual = new BaseMeasurementChild(_rootObject, _paramName);
 
         // Assert
         Assert.IsInstanceOfType(actual, typeof(IBaseMeasurement));

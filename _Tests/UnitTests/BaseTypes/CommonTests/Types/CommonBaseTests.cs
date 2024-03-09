@@ -4,70 +4,45 @@
 public sealed class CommonBaseTests
 {
     #region Private fields
-    private FactoryClass _factory;
-    private CommonBaseChild _commonBase;
+    private ICommonBase _commonBase;
+    private string _paramName;
+    private IRootObject _rootObject;
+
+    #region Readonly fields
+    private readonly RandomParams RandomParams = new();
+    #endregion
     #endregion
 
     #region Test methods
     #region Constructors
-    #region CommonBase(IFactory)
+    #region CommonBase(IRootObject)
     [TestMethod, TestCategory("UnitTest")]
-    public void CommonBase_nullArg_IFactory_throws_ArgumentNullException()
+    public void CommonBase_nullArg_IRootObject_throws_ArgumentNullException()
     {
         // Arrange
-        _factory = null;
+        _rootObject = null;
+        _paramName = RandomParams.GetRandomParamName();
 
         // Act
-        void attempt() => _ = new CommonBaseChild(_factory);
+        void attempt() => _ = new CommonBaseChild(_rootObject, _paramName);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-        Assert.AreEqual(ParamNames.factory, ex.ParamName);
+        Assert.AreEqual(_paramName, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void CommonBase_validArg_IFactory_creates()
+    public void CommonBase_validArg_IRootObject_creates()
     {
         // Arrange
-        _factory = new FactoryClass();
+        _rootObject = SampleParams.rootObject;
+        _paramName = string.Empty;
 
         // Act
-        var actual = new CommonBaseChild(_factory);
+        var actual = new CommonBaseChild(_rootObject, _paramName);
 
         // Assert
         Assert.IsInstanceOfType(actual, typeof(ICommonBase));
-        Assert.IsNotNull(actual.Factory);
-    }
-    #endregion
-
-    #region CommonBase(ICommonBase)
-    [TestMethod, TestCategory("UnitTest")]
-    public void CommonBase_nullArg_ICommonBase_throws_ArgumentNullException()
-    {
-        // Arrange
-        _commonBase = null;
-
-        // Act
-        void attempt() => _ = new CommonBaseChild(_commonBase);
-
-        // Assert
-        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-        Assert.AreEqual(ParamNames.other, ex.ParamName);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void CommonBase_validArg_ICommonBase_creates()
-    {
-        // Arrange
-        _factory = new FactoryClass();
-        _commonBase = new CommonBaseChild(_factory);
-
-        // Act
-        var actual = new CommonBaseChild(_commonBase);
-
-        // Assert
-        Assert.IsInstanceOfType(actual, typeof(ICommonBase));
-        Assert.IsNotNull(actual.Factory);
     }
     #endregion
     #endregion
@@ -78,14 +53,13 @@ public sealed class CommonBaseTests
     public void GetFactory_returns_expected()
     {
         // Arrange
-        _factory = new FactoryClass();
-        _commonBase = new CommonBaseChild(_factory);
+        _commonBase = new CommonBaseChild(SampleParams.rootObject, string.Empty);
 
         // Act
         var actual = _commonBase.GetFactory();
 
         // Assert
-        Assert.AreEqual(_factory, actual);
+        Assert.IsInstanceOfType(actual, typeof(IFactory));
     }
     #endregion
     #endregion

@@ -1,13 +1,11 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Fakes.BaseTypes.Types
+﻿
+namespace CsabaDu.FooVaria.Tests.TestSupport.Fakes.BaseTypes.Types
 {
-    internal sealed class CommonBaseChild : CommonBase
+    internal sealed class CommonBaseChild(IRootObject rootObject, string paramName) : CommonBase(rootObject, paramName)
     {
-        public CommonBaseChild(IFactory factory) : base(factory)
+        public override IFactory GetFactory()
         {
-        }
-
-        public CommonBaseChild(ICommonBase other) : base(other)
-        {
+            return new FactoryObject();
         }
     }
 }

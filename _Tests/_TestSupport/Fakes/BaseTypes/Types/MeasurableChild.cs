@@ -1,21 +1,12 @@
 ﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Fakes.BaseTypes.Types;
 
-internal sealed class MeasurableChild : Measurable
+internal sealed class MeasurableChild(IRootObject rootObject, string paramName) : Measurable(rootObject, paramName)
 {
     #region TestHelpers
     internal Enum GetBaseMeasureUnit_returns { private get; set; }
     #endregion
 
-    internal MeasurableChild(IMeasurable other) : base(other)
-    {
-    }
+    public override Enum GetBaseMeasureUnit() => GetBaseMeasureUnit_returns;
 
-    internal MeasurableChild(IMeasurableFactory factory) : base(factory)
-    {
-    }
-
-    public override Enum GetBaseMeasureUnit()
-    {
-        return GetBaseMeasureUnit_returns;
-    }
+    public override IFactory GetFactory() => new MeasurableFactoryObject();
 }

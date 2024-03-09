@@ -53,7 +53,7 @@ public class RandomParams
         #region Local methods
         Enum getRandomMeasureUnit()
         {
-            return GetRandomItems(measureUnitTypeCode.Value.GetAllMeasureUnits());
+            return GetRandomItem(measureUnitTypeCode.Value.GetAllMeasureUnits());
         }
         #endregion
     }
@@ -62,7 +62,7 @@ public class RandomParams
     {
         MeasureUnitCode measureUnitCode = GetRandomMeasureUnitCode(excludedMeasureUnitCode);
 
-        return GetNotDefinedMeasureUnit(measureUnitCode);
+        return SampleParams.GetNotDefinedMeasureUnit(measureUnitCode);
     }
 
     public Enum GetRandomValidMeasureUnit(Enum excludedMeasureUnit = null)
@@ -79,19 +79,21 @@ public class RandomParams
         #region Local methods
         object getRandomValidMeasureUnit()
         {
-            return GetRandomItems(BaseMeasurement.ExchangeRateCollection.Keys);
+            return GetRandomItem(BaseMeasurement.ExchangeRateCollection.Keys);
         }
         #endregion
     }
 
     public string GetRandomParamName()
     {
-        return GetRandomItems(ParamNames.GetParamNames());
+        IEnumerable<string> paramNames = ParamNames.GetParamNames();
+
+        return GetRandomItem(paramNames);
     }
 
     public Enum GetRandomNotUsedCustomMeasureUnit()
     {
-        MeasureUnitCode customMeasureUnitCode = GetRandomItems(CustomMeasureUnitCodes);
+        MeasureUnitCode customMeasureUnitCode = GetRandomItem(CustomMeasureUnitCodes);
 
         Enum measureUnit = GetRandomMeasureUnit(customMeasureUnitCode);
 
@@ -123,7 +125,7 @@ public class RandomParams
     }
 
 
-    private static T GetRandomItems<T>(IEnumerable<T> items)
+    private static T GetRandomItem<T>(IEnumerable<T> items)
     {
         return GetRandomItem(items.ToArray());
     }

@@ -2,10 +2,10 @@
 
 public static class SampleParams
 {
-    public static readonly int MeasureUnitCodeCount = MeasureUnitCodes.Length;
-    public static readonly MeasureUnitCode NotDefinedMeasureUnitCode = (MeasureUnitCode)MeasureUnitCodeCount;
-
-    public static Enum GetNotDefinedMeasureUnit(MeasureUnitCode measureUnitCode)
+    internal static readonly int MeasureUnitCodeCount = MeasureUnitCodes.Length;
+    internal static readonly MeasureUnitCode NotDefinedMeasureUnitCode = (MeasureUnitCode)MeasureUnitCodeCount;
+    internal static readonly RootObject rootObject = new();
+    internal static Enum GetNotDefinedMeasureUnit(MeasureUnitCode measureUnitCode)
     {
         Type measureUnitType = GetMeasureUnitType(measureUnitCode);
         int count = Enum.GetNames(measureUnitType).Length;

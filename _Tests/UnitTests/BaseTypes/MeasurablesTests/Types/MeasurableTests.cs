@@ -13,25 +13,24 @@ public sealed class MeasurableTests
     [TestInitialize]
     public void InitializeMeasurableTests()
     {
-        _factory = new();
-        _measurable = new(_factory);
+        _rootObject = SampleParams.rootObject;
+        _paramName = string.Empty;
+        _measurable = new(_rootObject, _paramName);
 
         _measureUnit = RandomParams.GetRandomMeasureUnit();
         _measurable.GetBaseMeasureUnit_returns = _measureUnit;
-
         _measureUnitType = _measureUnit.GetType();
         _measureUnitCode = GetMeasureUnitCode(_measureUnitType);
     }
     #endregion
 
     #region Private fields
-    private MeasureUnitCode _measureUnitCode;
     private MeasurableChild _measurable;
-    private MeasurableFactoryClass _factory;
     private Enum _measureUnit;
-    Type _measureUnitType;
-
+    private MeasureUnitCode _measureUnitCode;
+    private Type _measureUnitType;
     private string _paramName;
+    private IRootObject _rootObject;
 
     #region Readonly fields
     private readonly RandomParams RandomParams = new();
@@ -44,58 +43,31 @@ public sealed class MeasurableTests
 
     #region Test methods
     #region Constructors
-    #region Measurable(IMeasurableFactory)
+    #region Measurable(IRootObject)
     [TestMethod, TestCategory("UnitTest")]
     public void Measurable_nullArg_IMeasurableFactory_arg_MeasureunitTypeCode_throws_ArgumentNullException()
     {
         // Arrange
-        _factory = null;
+        _rootObject = null;
+        _paramName = RandomParams.GetRandomParamName();
 
         // Act
-        void attempt() => _ = new MeasurableChild(_factory);
+        void attempt() => _ = new MeasurableChild(_rootObject, _paramName);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-        Assert.AreEqual(ParamNames.factory, ex.ParamName);
+        Assert.AreEqual(_paramName, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
     public void Measurable_validArgs_IMeasurableFactory_MeasureunitTypeCode_creates()
     {
         // Arrange
-        _factory = new MeasurableFactoryClass();
+        _rootObject = SampleParams.rootObject;
+        _paramName = string.Empty;
 
         // Act
-        var actual = new MeasurableChild(_factory);
-
-        // Assert
-        Assert.IsInstanceOfType(actual, typeof(IMeasurable));
-    }
-    #endregion
-
-    #region Measurable(IMeasurable)
-    [TestMethod, TestCategory("UnitTest")]
-    public void Measurable_nullArg_IMeasurable_throws_ArgumentNullException()
-    {
-        // Arrange
-        _measurable = null;
-
-        // Act
-        void attempt() => _ = new MeasurableChild(_measurable);
-
-        // Assert
-        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-        Assert.AreEqual(ParamNames.other, ex.ParamName);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void Measurable_validArg_IMeasurable_creates()
-    {
-        // Arrange
-        _measurable = new MeasurableChild(_factory);
-
-        // Act
-        var actual = new MeasurableChild(_measurable);
+        var actual = new MeasurableChild(_rootObject, _paramName);
 
         // Assert
         Assert.IsInstanceOfType(actual, typeof(IMeasurable));
@@ -430,7 +402,7 @@ public sealed class MeasurableTests
     public void ValidateMeasureUnitCode_invalidArg_IMeasurable_arg_string_throws_InvalidEnumArgumentException()
     {
         // Arrange
-        MeasurableChild measurable = new(_factory);
+        MeasurableChild measurable = new(SampleParams.rootObject, _paramName);
         _measureUnitCode = RandomParams.GetRandomMeasureUnitCode(_measureUnitCode);
         measurable.GetBaseMeasureUnit_returns = RandomParams.GetRandomMeasureUnit(_measureUnitCode);
         _paramName = RandomParams.GetRandomParamName();
@@ -447,7 +419,7 @@ public sealed class MeasurableTests
     public void ValidateMeasureUnitCode_validArg_IMeasurable_arg_string_returns()
     {
         // Arrange
-        MeasurableChild measurable = new(_factory);
+        MeasurableChild measurable = new(SampleParams.rootObject, _paramName);
         measurable.GetBaseMeasureUnit_returns = RandomParams.GetRandomMeasureUnit(_measureUnitCode);
         _paramName = RandomParams.GetRandomParamName();
 
@@ -456,7 +428,7 @@ public sealed class MeasurableTests
         // Act
         try
         {
-            _measurable.ValidateMeasureUnitCode(_measurable, _paramName);
+            _measurable.ValidateMeasureUnitCode(measurable, _paramName);
         }
         catch
         {
