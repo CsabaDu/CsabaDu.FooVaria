@@ -10,17 +10,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonTests", "_Tests\UnitT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeasurablesTests", "_Tests\UnitTests\BaseTypes\MeasurablesTests\MeasurablesTests.csproj", "{8F4E9D39-3077-4CBE-81D5-4D00BCB23E00}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "BaseTypes\Common\Common.csproj", "{2F880879-B052-4229-99D4-294A6D565E07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "_BaseTypes\Common\Common.csproj", "{2F880879-B052-4229-99D4-294A6D565E07}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BaseTypes", "BaseTypes", "{75E70B27-CE92-4951-8EED-0AAC810F7B6C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Measurables", "BaseTypes\Measurables\Measurables.csproj", "{3E1A166C-E1AF-48E8-BB8E-6F152872D142}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Measurables", "_BaseTypes\Measurables\Measurables.csproj", "{3E1A166C-E1AF-48E8-BB8E-6F152872D142}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BaseTypes", "BaseTypes", "{2713F936-5028-42B1-9D89-ECE3CEBC6D7B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{1421C086-834E-4730-9368-83D0F838A8CA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseMeasurements", "BaseTypes\BaseMeasurements\BaseMeasurements.csproj", "{53157D5F-233D-4DD7-BB13-4F993E64A704}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseMeasurements", "_BaseTypes\BaseMeasurements\BaseMeasurements.csproj", "{53157D5F-233D-4DD7-BB13-4F993E64A704}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseMeasurementsTests", "_Tests\UnitTests\BaseTypes\BaseMeasurementsTests\BaseMeasurementsTests.csproj", "{7FFBF725-CF24-4FC4-B86A-D26057434A21}"
 EndProject

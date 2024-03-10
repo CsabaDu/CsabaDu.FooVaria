@@ -36,7 +36,7 @@ public sealed class CommonBaseTests
     {
         // Arrange
         _rootObject = SampleParams.rootObject;
-        _paramName = string.Empty;
+        _paramName = null;
 
         // Act
         var actual = new CommonBaseChild(_rootObject, _paramName);
@@ -53,7 +53,9 @@ public sealed class CommonBaseTests
     public void GetFactory_returns_expected()
     {
         // Arrange
-        _commonBase = new(SampleParams.rootObject, string.Empty)
+        _rootObject = SampleParams.rootObject;
+        _paramName = null;
+        _commonBase = new(_rootObject, _paramName)
         {
             Returns = new()
             {
