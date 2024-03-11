@@ -81,6 +81,11 @@ public class RandomParams
         #endregion
     }
 
+    public Enum GetRandomValidMeasureUnit(MeasureUnitCode measureUnitCode)
+    {
+        return (Enum)GetRandomItem(BaseMeasurement.GetValidMeasureUnits(measureUnitCode));
+    }
+
     public string GetRandomParamName()
     {
         IEnumerable<string> paramNames = ParamNames.GetParamNames();

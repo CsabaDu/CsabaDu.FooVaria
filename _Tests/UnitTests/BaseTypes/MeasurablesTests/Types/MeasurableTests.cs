@@ -1,3 +1,5 @@
+using CsabaDu.FooVaria.BaseTypes.Common.Factories;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.MeasurablesTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
@@ -13,6 +15,7 @@ public sealed class MeasurableTests
     [TestInitialize]
     public void InitializeMeasurableTests()
     {
+        _factory = null;
         _paramName = null;
         _rootObject = SampleParams.rootObject;
         _measureUnit = RandomParams.GetRandomMeasureUnit();
@@ -20,7 +23,7 @@ public sealed class MeasurableTests
         {
             Returns = new()
             {
-                GetFactory = null,
+                GetFactory = _factory,
                 GetBaseMeasureUnit = _measureUnit,
             }
         };
@@ -37,6 +40,7 @@ public sealed class MeasurableTests
     private Type _measureUnitType;
     private string _paramName;
     private IRootObject _rootObject;
+    private IFactory _factory;
 
     #region Readonly fields
     private readonly RandomParams RandomParams = new();

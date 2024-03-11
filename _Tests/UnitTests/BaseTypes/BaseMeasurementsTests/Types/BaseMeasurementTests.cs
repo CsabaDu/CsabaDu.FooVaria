@@ -1,5 +1,3 @@
-using CsabaDu.FooVaria.BaseTypes.Common;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasurementsTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
@@ -15,17 +13,18 @@ public sealed class BaseMeasurementTests
     [TestInitialize]
     public void InitializeBaseMeasurementTests()
     {
+        _factory = null;
+        _paramName = null;
         _rootObject = SampleParams.rootObject;
-        _paramName = string.Empty;
-        _baseMeasurement = new(_rootObject, _paramName);
-
-        _measureUnit = RandomParams.GetRandomMeasureUnit();
-        _paramName = RandomParams.GetRandomParamName();
-        _baseMeasurement.Returns = new()
+        _measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        _baseMeasurement = new(_rootObject, _paramName)
         {
-            GetFactory = new BaseMeasurementFactoryObject(),
-            GetName = _paramName,
-            GetBaseMeasureUnit = _measureUnit,
+            Returns = new()
+            {
+                GetFactory = _factory,
+                GetName = _paramName,
+                GetBaseMeasureUnit = _measureUnit,
+            }
         };
 
         _measureUnitType = _measureUnit.GetType();
@@ -69,9 +68,75 @@ public sealed class BaseMeasurementTests
     // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
     #endregion
 
-    // int IComparable<IBaseMeasurement>.CompareTo(IBaseMeasurement other)
-    // bool IEquatable<IBaseMeasurement>.Equals(IBaseMeasurement other)
-    // bool BaseMeasurement.Equals(object? obj)
+    #region int CompareTo
+    #region IComparable<IBaseMeasurement>.CompareTo(IBaseMeasurement?)
+    [TestMethod, TestCategory("UnitTest")]
+    public void CompareTo_nullArg_IBaseMeasurement_returns_expected()
+    {
+        // Arrange
+        IBaseMeasurement other = null;
+        const int expected = 1;
+
+        // Act
+        var actual = _baseMeasurement.CompareTo(other);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void CompareTo_invalidArg_IBaseMeasurement_throws_InvalidEnumArgumentException()
+    {
+        // Arrange
+        _measureUnitCode = RandomParams.GetRandomMeasureUnitCode(_measureUnitCode);
+        IBaseMeasurement other = new BaseMeasurementChild(_rootObject, _paramName)
+        {
+            Returns = new()
+            {
+                GetBaseMeasureUnit = RandomParams.GetRandomValidMeasureUnit(_measureUnitCode)
+            }
+        };
+
+        // Act
+        void attempt() => _ = _baseMeasurement.CompareTo(other);
+
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(ParamNames.other, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void CompareTo_validArg_IBaseMeasurement_returns_expected()
+    {
+        // Arrange
+        IBaseMeasurement other = new BaseMeasurementChild(_rootObject, _paramName)
+        {
+            Returns = new()
+            {
+                GetBaseMeasureUnit = RandomParams.GetRandomValidMeasureUnit(_measureUnitCode)
+            }
+        };
+        int expected = _baseMeasurement.GetExchangeRate().CompareTo(other.GetExchangeRate());
+
+        // Act
+        var actual = _baseMeasurement.CompareTo(other);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region bool Equals
+    #region IEquatable<IBaseMeasurement>.Equals(IBaseMeasurement?)
+
+    #endregion
+
+    #region BaseMeasurement.Equals(object?)
+
+    #endregion
+    #endregion
+
     // IBaseMeasurement IBaseMeasurement.GetBaseMeasurement(Enum context)
     // IDictionary<object, decimal> IConstantExchangeRateCollection.GetConstantExchangeRateCollection()
     // decimal IExchangeRate.GetExchangeRate()

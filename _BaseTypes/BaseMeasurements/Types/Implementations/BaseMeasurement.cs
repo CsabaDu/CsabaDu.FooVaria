@@ -78,10 +78,15 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
 
     public static IEnumerable<object> GetValidMeasureUnits()
     {
-        foreach (object item in ExchangeRateCollection.Keys)
-        {
-            yield return item;
-        }
+        return ExchangeRateCollection.Keys;
+    }
+
+
+    public static IEnumerable<object> GetValidMeasureUnits(MeasureUnitCode measureUnitCode)
+    {
+        Type measureUnitType = measureUnitCode.GetMeasureUnitType();
+
+        return GetValidMeasureUnits().Where(x => x.GetType() == measureUnitType);
     }
 
     public static bool IsCustomMeasureUnit(Enum measureUnit)
@@ -102,6 +107,12 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
     {
         return measureUnit != null
             && GetValidMeasureUnits().Contains(measureUnit);
+    }
+
+    public static bool IsValidMeasureUnit(Enum? measureUnit, MeasureUnitCode measureUnitCode)
+    {
+        return measureUnit != null
+            && GetValidMeasureUnits(measureUnitCode).Contains(measureUnit);
     }
 
     public static bool NameEquals(string name, string otherName)
@@ -209,89 +220,6 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
     #region Abstract methods
     public abstract string GetName();
     #endregion
-
-    //#region Static methods
-    //public static Dictionary<object, decimal> GetConstantExchangeRateCollection(MeasureUnitCode measureUnitCode)
-    //{
-    //    return GetMeasureUnitBasedCollection(ConstantExchangeRateCollection, measureUnitCode);
-    //}
-
-    //public static IEnumerable<object> GetConstantMeasureUnits()
-    //{
-    //    foreach (object item in ConstantExchangeRateCollection.Keys)
-    //    {
-    //        yield return item;
-    //    }
-    //}
-
-    //public static decimal GetExchangeRate(Enum? measureUnit, string paramName)
-    //{
-    //    measureUnit = GetMeasureUnitElements(measureUnit, paramName).MeasureUnit;
-    //    decimal exchangeRate = ExchangeRateCollection.FirstOrDefault(x => x.Key.Equals(measureUnit)).Value;
-
-    //    if (exchangeRate != default) return exchangeRate;
-
-    //    throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName);
-    //}
-
-    //public static Dictionary<object, decimal> GetExchangeRateCollection(MeasureUnitCode measureUnitCode)
-    //{
-    //    return GetMeasureUnitBasedCollection(ExchangeRateCollection, measureUnitCode);
-    //}
-
-    //public static MeasurementElements GetMeasurementElements(Enum? context, string paramName)
-    //{
-    //    Enum? measureUnit = context is MeasureUnitCode measureUnitCode ?
-    //        Defined(measureUnitCode, paramName).GetDefaultMeasureUnit()
-    //        : DefinedMeasureUnit(context, paramName);
-    //    decimal exchangeRate = GetExchangeRate(measureUnit, paramName);
-    //    measureUnitCode = context!.Equals(measureUnit) ?
-    //        MeasurableHelpers.GetMeasureUnitCode(context)
-    //        : (MeasureUnitCode)context!;
-
-    //    return new(measureUnit!, measureUnitCode, exchangeRate);
-    //}
-
-    //public static IEnumerable<object> GetValidMeasureUnits()
-    //{
-    //    foreach (object item in ExchangeRateCollection.Keys)
-    //    {
-    //        yield return item;
-    //    }
-    //}
-
-    //public static bool IsCustomMeasureUnit(Enum measureUnit)
-    //{
-    //    if (!IsDefinedMeasureUnit(measureUnit)) return false;
-
-    //    MeasureUnitCode measureUnitCode = GetDefinedMeasureUnitCode(measureUnit);
-
-    //    return measureUnitCode.IsCustomMeasureUnitCode();
-    //}
-
-    //public static bool IsValidExchangeRate(decimal exchangeRate, Enum measureUnit)
-    //{
-    //    return exchangeRate == GetExchangeRate(measureUnit, nameof(measureUnit));
-    //}
-
-    //public static bool IsValidMeasureUnit(Enum? measureUnit)
-    //{
-    //    return measureUnit != null
-    //        && GetValidMeasureUnits().Contains(measureUnit);
-    //}
-
-    //public static bool NameEquals(string name, string otherName)
-    //{
-    //    return string.Equals(name, otherName, StringComparison.OrdinalIgnoreCase);
-    //}
-
-    //public static void ValidateExchangeRate(decimal exchangeRate, string paramName, Enum measureUnit)
-    //{
-    //    if (IsValidExchangeRate(exchangeRate, measureUnit)) return;
-
-    //    throw DecimalArgumentOutOfRangeException(paramName, exchangeRate);
-    //}
-    //#endregion
     #endregion
 
     #region Protected methods
