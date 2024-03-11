@@ -10,6 +10,10 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
     }
     #endregion
 
+    #region Records
+    public record MeasureUnitElements(Enum MeasureUnit, MeasureUnitCode MeasureUnitCode);
+    #endregion
+
     #region Constants
     public const string Default = nameof(Default);
     #endregion
@@ -63,16 +67,30 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
 
     #region Public methods
     #region Static methods
-    #region Records
-    public record MeasureUnitElements(Enum MeasureUnit, MeasureUnitCode MeasureUnitCode);
-    #endregion
-
-    #region Static methods
-    public static Enum GetMeasureUnit(MeasureUnitCode measureUnitCode, int value)
+    public static Enum? GetMeasureUnit(MeasureUnitCode measureUnitCode, int value)
     {
-        Type measureUnitType = measureUnitCode.GetMeasureUnitType();
+        //Type measureUnitType = measureUnitCode.GetMeasureUnitType();
 
-        return DefinedMeasureUnit((Enum)Enum.ToObject(measureUnitType, value), nameof(value));
+        //return DefinedMeasureUnit((Enum)Enum.ToObject(measureUnitType, value), nameof(value));
+
+        return GetAllMeasureUnits()
+            .Where(itemTypeNameEqualsMeasureUnitCodeName)
+            .FirstOrDefault(itemValueEqualsValue);
+
+        #region Local methods
+        bool itemTypeNameEqualsMeasureUnitCodeName(Enum measureUnit)
+        {
+            string? measureUnitCodeName = Enum.GetName(Defined(measureUnitCode, nameof(measureUnitCode)));
+            string measureUnitTypeName = measureUnit.GetType().Name;
+
+            return measureUnitTypeName == measureUnitCodeName;
+        }
+
+        bool itemValueEqualsValue(Enum measureUnit)
+        {
+            return (int)(object)measureUnit == value;
+        }
+        #endregion
     }
 
     public static IEnumerable<Enum> GetAllMeasureUnits()
@@ -241,7 +259,7 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
         throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
     }
     #endregion
-    #endregion
+
     public Enum GetDefaultMeasureUnit()
     {
         return GetMeasureUnitCode().GetDefaultMeasureUnit()!;
