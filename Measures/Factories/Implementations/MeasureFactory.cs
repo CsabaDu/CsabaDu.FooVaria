@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measures.Factories.Implementations;
+﻿using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;
+
+namespace CsabaDu.FooVaria.Measures.Factories.Implementations;
 
 public sealed class MeasureFactory(IMeasurementFactory measurementFactory) : IMeasureFactory
 {
@@ -64,16 +66,9 @@ public sealed class MeasureFactory(IMeasurementFactory measurementFactory) : IMe
     #region Private methods
     private IMeasure CreateMeasure([DisallowNull] Enum measureUnit, ValueType quantity)
     {
-        if (measureUnit is MeasureUnitCode measureUnitCode)
-        {
-            measureUnit = measureUnitCode.GetDefaultMeasureUnit();
-        }
-        else
-        {
-            measureUnitCode = GetDefinedMeasureUnitCode(measureUnit);
-        }
+        MeasureUnitElements measureUnitElements = GetMeasureUnitElements(measureUnit, nameof(measureUnit));
 
-        return measureUnit switch
+        return measureUnitElements.MeasureUnit switch
         {
             AreaUnit areaUnit => new Area(this, areaUnit, (double)convertQuantity()),
             Currency currency => new Cash(this, currency, (decimal)convertQuantity()),
@@ -89,7 +84,7 @@ public sealed class MeasureFactory(IMeasurementFactory measurementFactory) : IMe
 
         object convertQuantity()
         {
-            TypeCode quantityTypeCode = measureUnitCode.GetQuantityTypeCode();
+            TypeCode quantityTypeCode = measureUnitElements.MeasureUnitCode.GetQuantityTypeCode();
 
             return ConvertQuantity(quantity, nameof(quantity), quantityTypeCode);
         }

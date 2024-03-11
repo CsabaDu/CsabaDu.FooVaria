@@ -262,7 +262,7 @@
             where TOther : IMeasure, IConvertMeasure
         {
             MeasureUnitCode measureUnitCode = MeasurableHelpers.GetMeasureUnitCode(typeof(TOther));
-            Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
+            Enum? measureUnit = measureUnitCode.GetDefaultMeasureUnit();
             decimal quantity = GetDefaultQuantity();
             quantity = measureOperationMode switch
             {
@@ -272,7 +272,7 @@
                 _ => throw new InvalidOperationException(null),
             };
 
-            return (TOther)GetBaseMeasure(measureUnit, quantity);
+            return (TOther)GetBaseMeasure(measureUnit!, quantity);
         }
 
         protected static void ValidateSpreadMeasure(string paramName, ISpreadMeasure? spreadMeasure)

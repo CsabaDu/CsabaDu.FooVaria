@@ -91,7 +91,7 @@ public abstract class SimpleRate : BaseRate, ISimpleRate
 
     public override sealed Enum GetBaseMeasureUnit()
     {
-        return NumeratorCode.GetDefaultMeasureUnit();
+        return NumeratorCode.GetDefaultMeasureUnit()!;
     }
 
     public override sealed MeasureUnitCode GetDenominatorCode()

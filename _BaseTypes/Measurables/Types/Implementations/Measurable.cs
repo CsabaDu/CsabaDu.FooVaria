@@ -68,7 +68,7 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
     #region Public methods
     public Enum GetDefaultMeasureUnit()
     {
-        return GetMeasureUnitCode().GetDefaultMeasureUnit();
+        return GetMeasureUnitCode().GetDefaultMeasureUnit()!;
     }
 
     public IEnumerable<string> GetDefaultMeasureUnitNames()

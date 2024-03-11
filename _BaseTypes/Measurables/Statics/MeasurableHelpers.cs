@@ -96,14 +96,14 @@ public static class MeasurableHelpers
 
     public static MeasureUnitElements GetMeasureUnitElements(Enum? context, string paramName)
     {
-        Enum measureUnit = context is MeasureUnitCode measureUnitCode ?
+        Enum? measureUnit = context is MeasureUnitCode measureUnitCode ?
             Defined(measureUnitCode, paramName).GetDefaultMeasureUnit()
             : DefinedMeasureUnit(context, paramName);
-        measureUnitCode = Enum.IsDefined(typeof(MeasureUnitCode), context!) ?
-            (MeasureUnitCode)context!
-            : GetMeasureUnitCode(context);
+        measureUnitCode = context!.Equals(measureUnit) ?
+            GetMeasureUnitCode(context)
+            : (MeasureUnitCode)context!;
 
-        return new(measureUnit, measureUnitCode);
+        return new(measureUnit!, measureUnitCode);
     }
 
     public static bool HasMeasureUnitCode(MeasureUnitCode measureUnitCode, Enum measureUnit)

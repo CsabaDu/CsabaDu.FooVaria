@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;
+﻿using static CsabaDu.FooVaria.BaseTypes.Measurables.Statics.MeasurableHelpers;
+
+namespace CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;
 
 public abstract class BaseMeasurement(IRootObject rootObject, string paramName) : Measurable(rootObject, paramName), IBaseMeasurement
 {
@@ -158,15 +160,15 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
 
     public static MeasurementElements GetMeasurementElements(Enum? context, string paramName)
     {
-        Enum measureUnit = context is MeasureUnitCode measureUnitCode ?
+        Enum? measureUnit = context is MeasureUnitCode measureUnitCode ?
             Defined(measureUnitCode, paramName).GetDefaultMeasureUnit()
             : DefinedMeasureUnit(context, paramName);
         decimal exchangeRate = GetExchangeRate(measureUnit, paramName);
-        measureUnitCode = Enum.IsDefined(typeof(MeasureUnitCode), context!) ?
-            (MeasureUnitCode)context!
-            : MeasurableHelpers.GetMeasureUnitCode(context);
+        measureUnitCode = context!.Equals(measureUnit) ?
+            MeasurableHelpers.GetMeasureUnitCode(context)
+            : (MeasureUnitCode)context!;
 
-        return new(measureUnit, measureUnitCode, exchangeRate);
+        return new(measureUnit!, measureUnitCode, exchangeRate);
     }
 
     public static IEnumerable<object> GetValidMeasureUnits()
