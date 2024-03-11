@@ -164,7 +164,7 @@
         {
             const string paramName = nameof(spreadMeasure);
 
-            MeasurableHelpers.ValidateMeasureUnitCodeByDefinition(measureUnitCode, nameof(measureUnitCode));
+            ValidateMeasureUnitCodeByDefinition(measureUnitCode, nameof(measureUnitCode));
 
             IMeasure measure = GetValidSpreadMeasure(spreadMeasure);
 

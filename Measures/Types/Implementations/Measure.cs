@@ -261,7 +261,7 @@
         protected TOther ConvertMeasure<TOther>(MeasureOperationMode measureOperationMode)
             where TOther : IMeasure, IConvertMeasure
         {
-            MeasureUnitCode measureUnitCode = MeasurableHelpers.GetMeasureUnitCode(typeof(TOther));
+            MeasureUnitCode measureUnitCode = GetMeasureUnitCode(typeof(TOther));
             Enum? measureUnit = measureUnitCode.GetDefaultMeasureUnit();
             decimal quantity = GetDefaultQuantity();
             quantity = measureOperationMode switch

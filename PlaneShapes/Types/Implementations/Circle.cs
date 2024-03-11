@@ -74,7 +74,7 @@ internal sealed class Circle : PlaneShape, ICircle
     #region Override methods
     public override ICircleFactory GetFactory()
     {
-        return (ICircleFactory)Factory;
+        return Factory;
     }
 
     public override IRectangleFactory GetTangentShapeFactory()

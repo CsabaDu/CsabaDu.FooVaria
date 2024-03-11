@@ -34,6 +34,89 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
     #endregion
 
     #region Public methods
+    #region Static methods
+    public static Dictionary<object, decimal> GetConstantExchangeRateCollection(MeasureUnitCode measureUnitCode)
+    {
+        return GetMeasureUnitBasedCollection(ConstantExchangeRateCollection, measureUnitCode);
+    }
+
+    public static IEnumerable<object> GetConstantMeasureUnits()
+    {
+        foreach (object item in ConstantExchangeRateCollection.Keys)
+        {
+            yield return item;
+        }
+    }
+
+    public static decimal GetExchangeRate(Enum? measureUnit, string paramName)
+    {
+        measureUnit = GetMeasureUnitElements(measureUnit, paramName).MeasureUnit;
+        decimal exchangeRate = ExchangeRateCollection.FirstOrDefault(x => x.Key.Equals(measureUnit)).Value;
+
+        if (exchangeRate != default) return exchangeRate;
+
+        throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName);
+    }
+
+    public static Dictionary<object, decimal> GetExchangeRateCollection(MeasureUnitCode measureUnitCode)
+    {
+        return GetMeasureUnitBasedCollection(ExchangeRateCollection, measureUnitCode);
+    }
+
+    public static MeasurementElements GetMeasurementElements(Enum? context, string paramName)
+    {
+        Enum? measureUnit = context is MeasureUnitCode measureUnitCode ?
+            Defined(measureUnitCode, paramName).GetDefaultMeasureUnit()
+            : DefinedMeasureUnit(context, paramName);
+        decimal exchangeRate = GetExchangeRate(measureUnit, paramName);
+        measureUnitCode = context!.Equals(measureUnit) ?
+            GetMeasureUnitCode(context)
+            : (MeasureUnitCode)context!;
+
+        return new(measureUnit!, measureUnitCode, exchangeRate);
+    }
+
+    public static IEnumerable<object> GetValidMeasureUnits()
+    {
+        foreach (object item in ExchangeRateCollection.Keys)
+        {
+            yield return item;
+        }
+    }
+
+    public static bool IsCustomMeasureUnit(Enum measureUnit)
+    {
+        if (!IsDefinedMeasureUnit(measureUnit)) return false;
+
+        MeasureUnitCode measureUnitCode = GetDefinedMeasureUnitCode(measureUnit);
+
+        return measureUnitCode.IsCustomMeasureUnitCode();
+    }
+
+    public static bool IsValidExchangeRate(decimal exchangeRate, Enum measureUnit)
+    {
+        return exchangeRate == GetExchangeRate(measureUnit, nameof(measureUnit));
+    }
+
+    public static bool IsValidMeasureUnit(Enum? measureUnit)
+    {
+        return measureUnit != null
+            && GetValidMeasureUnits().Contains(measureUnit);
+    }
+
+    public static bool NameEquals(string name, string otherName)
+    {
+        return string.Equals(name, otherName, StringComparison.OrdinalIgnoreCase);
+    }
+
+    public static void ValidateExchangeRate(decimal exchangeRate, string paramName, Enum measureUnit)
+    {
+        if (IsValidExchangeRate(exchangeRate, measureUnit)) return;
+
+        throw DecimalArgumentOutOfRangeException(paramName, exchangeRate);
+    }
+    #endregion
+
     public int CompareTo(IBaseMeasurement? other)
     {
         if (other == null) return 1;
@@ -77,7 +160,7 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
     {
         if (context is MeasureUnitCode measureUnitCode) return HasMeasureUnitCode(measureUnitCode);
 
-        return IsValidMeasureUnit(context) && MeasurableHelpers.HasMeasureUnitCode(GetMeasureUnitCode(), context!);
+        return IsValidMeasureUnit(context) && HasMeasureUnitCode(GetMeasureUnitCode(), context!);
     }
 
     public decimal ProportionalTo(IBaseMeasurement? other)
@@ -127,88 +210,88 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
     public abstract string GetName();
     #endregion
 
-    #region Static methods
-    public static Dictionary<object, decimal> GetConstantExchangeRateCollection(MeasureUnitCode measureUnitCode)
-    {
-        return GetMeasureUnitBasedCollection(ConstantExchangeRateCollection, measureUnitCode);
-    }
+    //#region Static methods
+    //public static Dictionary<object, decimal> GetConstantExchangeRateCollection(MeasureUnitCode measureUnitCode)
+    //{
+    //    return GetMeasureUnitBasedCollection(ConstantExchangeRateCollection, measureUnitCode);
+    //}
 
-    public static IEnumerable<object> GetConstantMeasureUnits()
-    {
-        foreach (object item in ConstantExchangeRateCollection.Keys)
-        {
-            yield return item;
-        }
-    }
+    //public static IEnumerable<object> GetConstantMeasureUnits()
+    //{
+    //    foreach (object item in ConstantExchangeRateCollection.Keys)
+    //    {
+    //        yield return item;
+    //    }
+    //}
 
-    public static decimal GetExchangeRate(Enum? measureUnit, string paramName)
-    {
-        measureUnit = GetMeasureUnitElements(measureUnit, paramName).MeasureUnit;
-        decimal exchangeRate = ExchangeRateCollection.FirstOrDefault(x => x.Key.Equals(measureUnit)).Value;
+    //public static decimal GetExchangeRate(Enum? measureUnit, string paramName)
+    //{
+    //    measureUnit = GetMeasureUnitElements(measureUnit, paramName).MeasureUnit;
+    //    decimal exchangeRate = ExchangeRateCollection.FirstOrDefault(x => x.Key.Equals(measureUnit)).Value;
 
-        if (exchangeRate != default) return exchangeRate;
+    //    if (exchangeRate != default) return exchangeRate;
 
-        throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName);
-    }
+    //    throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName);
+    //}
 
-    public static Dictionary<object, decimal> GetExchangeRateCollection(MeasureUnitCode measureUnitCode)
-    {
-        return GetMeasureUnitBasedCollection(ExchangeRateCollection, measureUnitCode);
-    }
+    //public static Dictionary<object, decimal> GetExchangeRateCollection(MeasureUnitCode measureUnitCode)
+    //{
+    //    return GetMeasureUnitBasedCollection(ExchangeRateCollection, measureUnitCode);
+    //}
 
-    public static MeasurementElements GetMeasurementElements(Enum? context, string paramName)
-    {
-        Enum? measureUnit = context is MeasureUnitCode measureUnitCode ?
-            Defined(measureUnitCode, paramName).GetDefaultMeasureUnit()
-            : DefinedMeasureUnit(context, paramName);
-        decimal exchangeRate = GetExchangeRate(measureUnit, paramName);
-        measureUnitCode = context!.Equals(measureUnit) ?
-            MeasurableHelpers.GetMeasureUnitCode(context)
-            : (MeasureUnitCode)context!;
+    //public static MeasurementElements GetMeasurementElements(Enum? context, string paramName)
+    //{
+    //    Enum? measureUnit = context is MeasureUnitCode measureUnitCode ?
+    //        Defined(measureUnitCode, paramName).GetDefaultMeasureUnit()
+    //        : DefinedMeasureUnit(context, paramName);
+    //    decimal exchangeRate = GetExchangeRate(measureUnit, paramName);
+    //    measureUnitCode = context!.Equals(measureUnit) ?
+    //        MeasurableHelpers.GetMeasureUnitCode(context)
+    //        : (MeasureUnitCode)context!;
 
-        return new(measureUnit!, measureUnitCode, exchangeRate);
-    }
+    //    return new(measureUnit!, measureUnitCode, exchangeRate);
+    //}
 
-    public static IEnumerable<object> GetValidMeasureUnits()
-    {
-        foreach (object item in ExchangeRateCollection.Keys)
-        {
-            yield return item;
-        }
-    }
+    //public static IEnumerable<object> GetValidMeasureUnits()
+    //{
+    //    foreach (object item in ExchangeRateCollection.Keys)
+    //    {
+    //        yield return item;
+    //    }
+    //}
 
-    public static bool IsCustomMeasureUnit(Enum measureUnit)
-    {
-        if (!IsDefinedMeasureUnit(measureUnit)) return false;
+    //public static bool IsCustomMeasureUnit(Enum measureUnit)
+    //{
+    //    if (!IsDefinedMeasureUnit(measureUnit)) return false;
 
-        MeasureUnitCode measureUnitCode = GetDefinedMeasureUnitCode(measureUnit);
+    //    MeasureUnitCode measureUnitCode = GetDefinedMeasureUnitCode(measureUnit);
 
-        return measureUnitCode.IsCustomMeasureUnitCode();
-    }
+    //    return measureUnitCode.IsCustomMeasureUnitCode();
+    //}
 
-    public static bool IsValidExchangeRate(decimal exchangeRate, Enum measureUnit)
-    {
-        return exchangeRate == GetExchangeRate(measureUnit, nameof(measureUnit));
-    }
+    //public static bool IsValidExchangeRate(decimal exchangeRate, Enum measureUnit)
+    //{
+    //    return exchangeRate == GetExchangeRate(measureUnit, nameof(measureUnit));
+    //}
 
-    public static bool IsValidMeasureUnit(Enum? measureUnit)
-    {
-        return measureUnit != null
-            && GetValidMeasureUnits().Contains(measureUnit);
-    }
+    //public static bool IsValidMeasureUnit(Enum? measureUnit)
+    //{
+    //    return measureUnit != null
+    //        && GetValidMeasureUnits().Contains(measureUnit);
+    //}
 
-    public static bool NameEquals(string name, string otherName)
-    {
-        return string.Equals(name, otherName, StringComparison.OrdinalIgnoreCase);
-    }
+    //public static bool NameEquals(string name, string otherName)
+    //{
+    //    return string.Equals(name, otherName, StringComparison.OrdinalIgnoreCase);
+    //}
 
-    public static void ValidateExchangeRate(decimal exchangeRate, string paramName, Enum measureUnit)
-    {
-        if (IsValidExchangeRate(exchangeRate, measureUnit)) return;
+    //public static void ValidateExchangeRate(decimal exchangeRate, string paramName, Enum measureUnit)
+    //{
+    //    if (IsValidExchangeRate(exchangeRate, measureUnit)) return;
 
-        throw DecimalArgumentOutOfRangeException(paramName, exchangeRate);
-    }
-    #endregion
+    //    throw DecimalArgumentOutOfRangeException(paramName, exchangeRate);
+    //}
+    //#endregion
     #endregion
 
     #region Protected methods

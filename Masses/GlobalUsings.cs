@@ -1,5 +1,4 @@
 ﻿global using CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types;
-global using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;
 global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
 global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Enums;
 global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
@@ -31,4 +30,3 @@ global using CsabaDu.FooVaria.SimpleRates.Types;
 global using System.Diagnostics.CodeAnalysis;
 global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Statics.ExceptionMethods;
-global using static CsabaDu.FooVaria.BaseTypes.Measurables.Statics.MeasurableHelpers;
