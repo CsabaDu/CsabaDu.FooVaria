@@ -9,45 +9,45 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "_BaseTypes\Common
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Measurables", "_BaseTypes\Measurables\Measurables.csproj", "{57EE404F-5287-46A4-A5D7-51A0952E9E70}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseMeasurements", "_BaseTypes\BaseMeasurements\BaseMeasurements.csproj", "{9A010CC2-9E7C-4D58-B688-DF021B107DE5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseQuantifiables", "_BaseTypes\BaseQuantifiables\BaseQuantifiables.csproj", "{D3F4A94C-8294-46FE-B751-47BA5539D4D1}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quantifiables", "_BaseTypes\Quantifiables\Quantifiables.csproj", "{9F8A045B-68D3-4681-9776-6A326E659ACF}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseMeasures", "_BaseTypes\BaseMeasures\BaseMeasures.csproj", "{4EDF3A34-E153-47A9-B40C-CBDFC8F5A139}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spreads", "_BaseTypes\Spreads\Spreads.csproj", "{9A3FEE96-426B-4273-8F73-752EB05ED82C}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shapes", "_BaseTypes\Shapes\Shapes.csproj", "{A6D5A236-F64B-48A3-92D0-1EC9A19A0FF6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseRates", "_BaseTypes\BaseRates\BaseRates.csproj", "{6221C4B8-E19B-4938-A571-9CB60C3CCCA3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AbstractTypes", "_AbstractTypes", "{5F40102A-C774-45D0-8D85-1CDB6923B617}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Measurements", "Measurements\Measurements.csproj", "{3BA709AD-7F0A-4581-AE2F-7A55EE9C7075}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Measures", "Measures\Measures.csproj", "{709E0E62-3759-4299-A56F-A89B8A66569C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RateComponents", "RateComponents\RateComponents.csproj", "{1D382C47-2CD3-486B-A4D4-94A9BAAA1194}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BulkSpreads", "BulkSpreads\BulkSpreads.csproj", "{90449B9B-F322-4063-89D5-A5E8E98A33A9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Measures", "Measures\Measures.csproj", "{709E0E62-3759-4299-A56F-A89B8A66569C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleShapes", "_AbstractTypes\SimpleShapes\SimpleShapes.csproj", "{D523461C-D1BD-47C6-8B6F-7D29B46EC0F5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Measurements", "Measurements\Measurements.csproj", "{3BA709AD-7F0A-4581-AE2F-7A55EE9C7075}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShapeLimits", "ShapeLimits\ShapeLimits.csproj", "{BE21EBF4-A239-416F-9E36-847769EA3273}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlaneShapes", "PlaneShapes\PlaneShapes.csproj", "{9E045AA9-D2D4-4E5C-8AAB-2134BFB3EEAE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DryBodies", "DryBodies\DryBodies.csproj", "{C258EE46-D297-4688-A567-3ED2A3ED36D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleRates", "SimpleRates\SimpleRates.csproj", "{F6798440-4219-4C7E-A827-3586F17626A2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rates", "Rates\Rates.csproj", "{726E09A7-C805-470D-BB42-1259C9D7E3AE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Masses", "Masses\Masses.csproj", "{734D60B1-08AC-47D4-B9EA-AE7BE1AEB64B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spreads", "_BaseTypes\Spreads\Spreads.csproj", "{9A3FEE96-426B-4273-8F73-752EB05ED82C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseMeasures", "_BaseTypes\BaseMeasures\BaseMeasures.csproj", "{4EDF3A34-E153-47A9-B40C-CBDFC8F5A139}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseMeasurements", "_BaseTypes\BaseMeasurements\BaseMeasurements.csproj", "{9A010CC2-9E7C-4D58-B688-DF021B107DE5}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseRates", "_BaseTypes\BaseRates\BaseRates.csproj", "{6221C4B8-E19B-4938-A571-9CB60C3CCCA3}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DryBodies", "DryBodies\DryBodies.csproj", "{C258EE46-D297-4688-A567-3ED2A3ED36D8}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlaneShapes", "PlaneShapes\PlaneShapes.csproj", "{9E045AA9-D2D4-4E5C-8AAB-2134BFB3EEAE}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AbstractTypes", "_AbstractTypes", "{5F40102A-C774-45D0-8D85-1CDB6923B617}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseQuantifiables", "_BaseTypes\BaseQuantifiables\BaseQuantifiables.csproj", "{D3F4A94C-8294-46FE-B751-47BA5539D4D1}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComplexShapes", "_AbstractTypes\ComplexShapes\ComplexShapes.csproj", "{9189E951-BAAE-4BCB-A86B-4FEBDBD242E4}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShapeLimits", "ShapeLimits\ShapeLimits.csproj", "{BE21EBF4-A239-416F-9E36-847769EA3273}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleRates", "SimpleRates\SimpleRates.csproj", "{F6798440-4219-4C7E-A827-3586F17626A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

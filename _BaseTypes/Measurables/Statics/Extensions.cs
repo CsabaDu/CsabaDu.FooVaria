@@ -36,7 +36,9 @@ public static class Extensions
 
     public static Type GetMeasureUnitType(this MeasureUnitCode measureUnitCode)
     {
-        return MeasurableHelpers.GetMeasureUnitType(measureUnitCode);
+        ValidateMeasureUnitCodeByDefinition(measureUnitCode, nameof(measureUnitCode));
+
+        return MeasureUnitTypeCollection[measureUnitCode];
     }
 
     public static IEnumerable<Enum> GetAllMeasureUnits(this MeasureUnitCode measureUnitCode)
@@ -49,8 +51,10 @@ public static class Extensions
         }
     }
 
-    public static Enum GetDefaultMeasureUnit(this MeasureUnitCode measureUnitCode)
+    public static Enum? GetDefaultMeasureUnit(this MeasureUnitCode measureUnitCode)
     {
+        if (!Enum.IsDefined(measureUnitCode)) return null;
+
         return measureUnitCode.GetAllMeasureUnits().First(x => (int)(object)x == 0);
     }
 

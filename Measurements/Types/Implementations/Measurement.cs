@@ -220,7 +220,7 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
     {
         ValidateCustomMeasureUnitCode(measureUnitCode);
 
-        Type measureUnitType = MeasurableHelpers.GetMeasureUnitType(measureUnitCode);
+        Type measureUnitType = measureUnitCode.GetMeasureUnitType();
         IEnumerable<Enum> customMeasureUnits = Enum.GetValues(measureUnitType).Cast<Enum>();
 
         return customMeasureUnits.Where(x => !ExchangeRateCollection.ContainsKey(x));

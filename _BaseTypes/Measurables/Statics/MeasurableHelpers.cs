@@ -5,17 +5,17 @@ public static class MeasurableHelpers
     #region Static methods
     public static Enum GetMeasureUnit(MeasureUnitCode measureUnitCode, int value)
     {
-        Type measureUnitType = GetMeasureUnitType(measureUnitCode);
+        Type measureUnitType = measureUnitCode.GetMeasureUnitType();
 
         return DefinedMeasureUnit((Enum)Enum.ToObject(measureUnitType, value), nameof(value));
     }
 
-    public static Enum? GetDefaultMeasureUnit(MeasureUnitCode measureUnitCode)
-    {
-        if (!Enum.IsDefined(measureUnitCode)) return null;
+    //public static Enum? GetDefaultMeasureUnit(MeasureUnitCode measureUnitCode)
+    //{
+    //    if (!Enum.IsDefined(measureUnitCode)) return null;
 
-        return measureUnitCode.GetDefaultMeasureUnit();
-    }
+    //    return measureUnitCode.GetDefaultMeasureUnit();
+    //}
 
     public static IEnumerable<Enum> GetAllMeasureUnits()
     {
@@ -56,12 +56,12 @@ public static class MeasurableHelpers
         return GetAllMeasureUnits().Select(x => GetDefaultName(x));
     }
 
-    public static Type GetMeasureUnitType(MeasureUnitCode measureUnitCode)
-    {
-        ValidateMeasureUnitCodeByDefinition(measureUnitCode, nameof(measureUnitCode));
+    //public static Type GetMeasureUnitType(MeasureUnitCode measureUnitCode)
+    //{
+    //    ValidateMeasureUnitCodeByDefinition(measureUnitCode, nameof(measureUnitCode));
 
-        return MeasureUnitTypeCollection[measureUnitCode];
-    }
+    //    return MeasureUnitTypeCollection[measureUnitCode];
+    //}
 
     public static MeasureUnitCode GetDefinedMeasureUnitCode(Enum? measureUnit)
     {
@@ -178,7 +178,7 @@ public static class MeasurableHelpers
     {
         MeasureUnitCode measureUnitCode = GetDefinedMeasureUnitCode(measureUnit);
 
-        if (NullChecked(measureUnitType, nameof(measureUnitType)) == GetMeasureUnitType(measureUnitCode)) return;
+        if (NullChecked(measureUnitType, nameof(measureUnitType)) == measureUnitCode.GetMeasureUnitType()) return;
 
         throw InvalidMeasureUnitEnumArgumentException(measureUnit);
     }

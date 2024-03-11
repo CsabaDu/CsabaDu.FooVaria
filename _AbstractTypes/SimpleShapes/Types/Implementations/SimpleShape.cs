@@ -161,7 +161,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
                 return base.ExchangeTo(context);
             }
 
-            extentUnit = (ExtentUnit)MeasurableHelpers.GetDefaultMeasureUnit(measureUnitCode)!;
+            extentUnit = (ExtentUnit)measureUnitCode.GetDefaultMeasureUnit()!;
         }
 
         IEnumerable<IExtent> exchangedShapeExtents = getExchangedShapeExtents();

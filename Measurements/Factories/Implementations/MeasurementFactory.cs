@@ -85,7 +85,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
 
     public IMeasurable? CreateDefault(MeasureUnitCode measureUnitCode)
     {
-        Enum? measureUnit = GetDefaultMeasureUnit(measureUnitCode);
+        Enum? measureUnit = measureUnitCode.GetDefaultMeasureUnit();
 
         return GetStoredMeasurementOrNull(measureUnit, true);
     }

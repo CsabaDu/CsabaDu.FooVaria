@@ -151,12 +151,12 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
     #endregion
 
     //#region Static methods
-    public static Enum GetMeasureUnit(MeasureUnitCode measureUnitCode, int value)
-    {
-        Type measureUnitType = MeasurableHelpers.GetMeasureUnitType(measureUnitCode);
+    //public static Enum GetMeasureUnit(MeasureUnitCode measureUnitCode, int value)
+    //{
+    //    Type measureUnitType = MeasurableHelpers.GetMeasureUnitType(measureUnitCode);
 
-        return DefinedMeasureUnit((Enum)Enum.ToObject(measureUnitType, value), nameof(value));
-    }
+    //    return DefinedMeasureUnit((Enum)Enum.ToObject(measureUnitType, value), nameof(value));
+    //}
 
     //public static Enum? GetDefaultMeasureUnit(MeasureUnitCode measureUnitCode)
     //{
