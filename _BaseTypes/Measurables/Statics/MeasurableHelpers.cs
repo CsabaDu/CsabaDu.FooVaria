@@ -2,6 +2,10 @@
 
 public static class MeasurableHelpers
 {
+    #region Records
+    public record MeasureUnitElements(Enum MeasureUnit, MeasureUnitCode MeasureUnitCode);
+    #endregion
+
     #region Static methods
     public static Enum GetMeasureUnit(MeasureUnitCode measureUnitCode, int value)
     {
@@ -9,13 +13,6 @@ public static class MeasurableHelpers
 
         return DefinedMeasureUnit((Enum)Enum.ToObject(measureUnitType, value), nameof(value));
     }
-
-    //public static Enum? GetDefaultMeasureUnit(MeasureUnitCode measureUnitCode)
-    //{
-    //    if (!Enum.IsDefined(measureUnitCode)) return null;
-
-    //    return measureUnitCode.GetDefaultMeasureUnit();
-    //}
 
     public static IEnumerable<Enum> GetAllMeasureUnits()
     {
@@ -55,13 +52,6 @@ public static class MeasurableHelpers
     {
         return GetAllMeasureUnits().Select(x => GetDefaultName(x));
     }
-
-    //public static Type GetMeasureUnitType(MeasureUnitCode measureUnitCode)
-    //{
-    //    ValidateMeasureUnitCodeByDefinition(measureUnitCode, nameof(measureUnitCode));
-
-    //    return MeasureUnitTypeCollection[measureUnitCode];
-    //}
 
     public static MeasureUnitCode GetDefinedMeasureUnitCode(Enum? measureUnit)
     {
@@ -190,5 +180,4 @@ public static class MeasurableHelpers
         throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
     }
     #endregion
-
 }

@@ -1,6 +1,4 @@
-﻿using static CsabaDu.FooVaria.BaseTypes.Measurables.Statics.MeasurableHelpers;
-
-namespace CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;
 
 public abstract class BaseMeasurement(IRootObject rootObject, string paramName) : Measurable(rootObject, paramName), IBaseMeasurement
 {

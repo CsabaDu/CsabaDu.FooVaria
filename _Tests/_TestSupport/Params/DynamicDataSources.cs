@@ -219,8 +219,9 @@ internal class DynamicDataSources
         // Invalid type defined measureUnit
         measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
+        yield return toObjectArray();
 
-        // Invalid MeasureUnitCode enum
+        // Not defined MeasureUnitCode enum
         measureUnit = SampleParams.NotDefinedMeasureUnitCode;
         yield return toObjectArray();
 
