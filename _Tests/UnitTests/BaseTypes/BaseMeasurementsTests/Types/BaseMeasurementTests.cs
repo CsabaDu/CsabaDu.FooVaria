@@ -54,44 +54,34 @@ public sealed class BaseMeasurementTests
     #endregion
 
     #region Test methods
-    #region Constructors
-    #region BaseMeasurement(IRootObject)
-    [TestMethod, TestCategory("UnitTest")]
-    public void BaseMeasurement_nullArg_IBaseMeasurementFactory_throws_ArgumentNullException()
-    {
-        // Arrange
-        _rootObject = null;
-        _paramName = RandomParams.GetRandomParamName();
 
-        // Act
-        void attempt() => _ = new BaseMeasurementChild(_rootObject, _paramName);
-
-        // Assert
-        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-        Assert.AreEqual(_paramName, ex.ParamName);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void BaseMeasurement_validArg_IBaseMeasurementFactory_creates()
-    {
-        // Arrange
-        _rootObject = SampleParams.rootObject;
-        _paramName = string.Empty;
-
-        // Act
-        var actual = new BaseMeasurementChild(_rootObject, _paramName);
-
-        // Assert
-        Assert.IsInstanceOfType(actual, typeof(IBaseMeasurement));
-    }
-    #endregion
+    #region Tested in parent classes' tests
+    // BaseMeasurement(IRootObject rootObject, string paramName)
+    // Enum IMeasureUnit.GetBaseMeasureUnit()
+    // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
+    // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
+    // IFactory ICommonBase.GetFactory()
+    // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
+    // Type IMeasureUnit.GetMeasureUnitType()
+    // TypeCode IQuantityType.GetQuantityTypeCode()
+    // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
+    // void IMeasurable.ValidateMeasureUnitCode(IMeasurable measurable, string paramName)
+    // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
     #endregion
 
-    //#region CompareTo
-    //#region CompareTo(IBaseMeasurement?)
-
-    //#endregion
-    //#endregion
+    // int IComparable<IBaseMeasurement>.CompareTo(IBaseMeasurement other)
+    // bool IEquatable<IBaseMeasurement>.Equals(IBaseMeasurement other)
+    // bool BaseMeasurement.Equals(object? obj)
+    // IBaseMeasurement IBaseMeasurement.GetBaseMeasurement(Enum context)
+    // IDictionary<object, decimal> IConstantExchangeRateCollection.GetConstantExchangeRateCollection()
+    // decimal IExchangeRate.GetExchangeRate()
+    // IDictionary<object, decimal> IExchangeRateCollection.GetExchangeRateCollection()
+    // int BaseMeasurement.GetHashCode()
+    // string INamed.GetName()
+    // bool IExchangeable<Enum>.IsExchangeableTo(Enum context)
+    // decimal IProportional<IBaseMeasurement>.ProportionalTo(IBaseMeasurement other)
+    // void IExchangeRate.ValidateExchangeRate(decimal exchangeRate, string paramName)
+    // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum measureUnit, string paramName)
 
     #endregion
 

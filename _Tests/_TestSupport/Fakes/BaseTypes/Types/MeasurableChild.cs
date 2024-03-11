@@ -3,11 +3,13 @@
 internal sealed class MeasurableChild(IRootObject rootObject, string paramName) : Measurable(rootObject, paramName)
 {
     #region Members
-    // MeasurableChild MeasurableChild(IRootObject rootObject, string paramName)
+    // Measurable(IRootObject rootObject, string paramName)
+    // bool Measurable.Equals(object? obj)
     // Enum IMeasureUnit.GetBaseMeasureUnit()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
     // IFactory ICommonBase.GetFactory()
+    // int Measurable.GetHashCode()
     // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()
     // TypeCode IQuantityType.GetQuantityTypeCode()
