@@ -8,6 +8,7 @@ global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
 global using CsabaDu.FooVaria.BaseTypes.Common.Enums;
 global using CsabaDu.FooVaria.BaseTypes.Common.Factories;
 global using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
+global using CsabaDu.FooVaria.BaseTypes.Measurables.Statics;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
 global using CsabaDu.FooVaria.BaseTypes.Shapes.Behaviors;
@@ -25,4 +26,5 @@ global using static CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementa
 global using static CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Statics.ExceptionMethods;
+global using static CsabaDu.FooVaria.BaseTypes.Measurables.Statics.MeasurableHelpers;
 global using static CsabaDu.FooVaria.BaseTypes.Shapes.Statics.ExceptionMethods;

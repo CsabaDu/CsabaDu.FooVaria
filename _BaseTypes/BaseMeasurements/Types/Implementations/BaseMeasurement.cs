@@ -77,7 +77,7 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
     {
         if (context is MeasureUnitCode measureUnitCode) return HasMeasureUnitCode(measureUnitCode);
 
-        return IsValidMeasureUnit(context) && HasMeasureUnitCode(GetMeasureUnitCode(), context!);
+        return IsValidMeasureUnit(context) && MeasurableHelpers.HasMeasureUnitCode(GetMeasureUnitCode(), context!);
     }
 
     public decimal ProportionalTo(IBaseMeasurement? other)
@@ -164,7 +164,7 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         decimal exchangeRate = GetExchangeRate(measureUnit, paramName);
         measureUnitCode = Enum.IsDefined(typeof(MeasureUnitCode), context!) ?
             (MeasureUnitCode)context!
-            : GetMeasureUnitCode(context);
+            : MeasurableHelpers.GetMeasureUnitCode(context);
 
         return new(measureUnit, measureUnitCode, exchangeRate);
     }

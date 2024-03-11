@@ -58,7 +58,7 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
     {
         Enum measureUnit = GetBaseMeasureUnit();
 
-        return GetDefaultName(measureUnit);
+        return MeasurableHelpers.GetDefaultName(measureUnit);
     }
 
     public IMeasurement GetMeasurement(Enum measureUnit)
@@ -160,7 +160,7 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
     {
         Enum measuureUnit = GetBaseMeasureUnit();
 
-        return GetMeasureUnitCode(measuureUnit);
+        return MeasurableHelpers.GetMeasureUnitCode(measuureUnit);
     }
 
     public override sealed string GetName()
@@ -186,7 +186,7 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
 
     public static string GetMeasureUnitName(Enum measureUnit)
     {
-        return GetCustomName(measureUnit) ?? GetDefaultName(measureUnit);
+        return GetCustomName(measureUnit) ?? MeasurableHelpers.GetDefaultName(measureUnit);
     }
 
     public static Enum? GetMeasureUnit(string name)
@@ -220,7 +220,7 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
     {
         ValidateCustomMeasureUnitCode(measureUnitCode);
 
-        Type measureUnitType = GetMeasureUnitType(measureUnitCode);
+        Type measureUnitType = MeasurableHelpers.GetMeasureUnitType(measureUnitCode);
         IEnumerable<Enum> customMeasureUnits = Enum.GetValues(measureUnitType).Cast<Enum>();
 
         return customMeasureUnits.Where(x => !ExchangeRateCollection.ContainsKey(x));
@@ -399,7 +399,7 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
         #region Local methods
         static string getDefaultName(object measureUnit)
         {
-            return Measurable.GetDefaultName((Enum)measureUnit);
+            return MeasurableHelpers.GetDefaultName((Enum)measureUnit);
         }
         #endregion
     }

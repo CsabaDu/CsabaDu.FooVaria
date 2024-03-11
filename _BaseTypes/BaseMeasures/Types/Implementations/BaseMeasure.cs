@@ -94,7 +94,7 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
         {
             if (context is not MeasureUnitCode measureUnitCode) return null;
 
-            context = GetDefaultMeasureUnit(measureUnitCode);
+            context = MeasurableHelpers.GetDefaultMeasureUnit(measureUnitCode);
         }
 
         IBaseMeasurementFactory factory = GetBaseMeasurementFactory();

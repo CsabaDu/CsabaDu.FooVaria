@@ -36,7 +36,7 @@ public static class Extensions
 
     public static Type GetMeasureUnitType(this MeasureUnitCode measureUnitCode)
     {
-        return Measurable.GetMeasureUnitType(measureUnitCode);
+        return GetMeasureUnitType(measureUnitCode);
     }
 
     public static IEnumerable<Enum> GetAllMeasureUnits(this MeasureUnitCode measureUnitCode)

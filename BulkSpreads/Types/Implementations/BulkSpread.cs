@@ -1,7 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Common;
-using System;
-
-namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations
+﻿namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations
 {
     internal abstract class BulkSpread : Spread, IBulkSpread
     {
@@ -167,7 +164,7 @@ namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations
         {
             const string paramName = nameof(spreadMeasure);
 
-            ValidateMeasureUnitCodeByDefinition(measureUnitCode, nameof(measureUnitCode));
+            MeasurableHelpers.ValidateMeasureUnitCodeByDefinition(measureUnitCode, nameof(measureUnitCode));
 
             IMeasure measure = GetValidSpreadMeasure(spreadMeasure);
 
