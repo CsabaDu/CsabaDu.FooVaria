@@ -1,3 +1,5 @@
+using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasurementsTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
@@ -29,6 +31,12 @@ public sealed class BaseMeasurementTests
 
         _measureUnitType = _measureUnit.GetType();
         _measureUnitCode = GetMeasureUnitCode(_measureUnitType);
+    }
+
+    [TestCleanup]
+    public void CleanupBaseMeasurementTests()
+    {
+        RestoreConstantExchangeRates();
     }
     #endregion
 
@@ -129,7 +137,22 @@ public sealed class BaseMeasurementTests
 
     #region bool Equals
     #region IEquatable<IBaseMeasurement>.Equals(IBaseMeasurement?)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetBaseMeasurementEqualsObjectArgArrayList), DynamicDataSourceType.Method)]
+    public void Equals_arg_object_returns_expected(bool expected, object obj, Enum measureUnit)
+    {
+        // Arrange
+        _baseMeasurement.Returns = new()
+        {
+            GetBaseMeasureUnit = measureUnit,
+        };
 
+        // Act
+        var actual = _baseMeasurement.Equals(obj);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
     #endregion
 
     #region BaseMeasurement.Equals(object?)
@@ -154,6 +177,11 @@ public sealed class BaseMeasurementTests
     private static IEnumerable<object[]> GetInvalidEnumMeasureUnitArgArrayList()
     {
         return DynamicDataSources.GetInvalidEnumMeasureUnitArgArrayList();
+    }
+
+    private static IEnumerable<object[]> GetBaseMeasurementEqualsObjectArgArrayList()
+    {
+        return DynamicDataSources.GetBaseMeasurementEqualsObjectArgArrayList();
     }
     #endregion
 }

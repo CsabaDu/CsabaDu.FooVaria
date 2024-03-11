@@ -39,6 +39,14 @@ internal class DynamicDataSources
     {
         internal override object[] ToObjectArray() => [IsTrue, Obj, MeasureUnit];
     }
+
+    #region bool, object, Enum, Enum
+    internal record Bool_Object_Enum_Enum_args(bool IsTrue, object Obj, Enum MeasureUnit, Enum OtherMeasureUnit) : Bool_Object_Enum_args(IsTrue, Obj, MeasureUnit)
+    {
+        internal override object[] ToObjectArray() => [IsTrue, Obj, MeasureUnit, OtherMeasureUnit];
+    }
+
+    #endregion
     #endregion
     #endregion
 
@@ -286,6 +294,59 @@ internal class DynamicDataSources
         object[] toObjectArray()
         {
             Enum_arg item = new(measureUnit);
+
+            return item.ToObjectArray();
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> GetBaseMeasurementEqualsObjectArgArrayList()
+    {
+        obj = null;
+        isTrue = false;
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
+        measureUnit = RandomParams.GetRandomValidMeasureUnit(measureUnitCode);
+        yield return toObjectArray();
+
+        obj = new();
+        yield return toObjectArray();
+
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
+        obj = new BaseMeasurementChild(SampleParams.rootObject, null)
+        {
+            Returns = new()
+            {
+                GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode),
+            }
+        };
+        yield return toObjectArray();
+
+        isTrue = true;
+        obj = new BaseMeasurementChild(SampleParams.rootObject, null)
+        {
+            Returns = new()
+            {
+                GetBaseMeasureUnit = measureUnit,
+            }
+        };
+        yield return toObjectArray();
+
+        measureUnit = RandomParams.GetRandomNotUsedCustomMeasureUnit();
+        _ = TrySetCustomMeasureUnit(measureUnit, decimal.One, RandomParams.GetRandomParamName());
+        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        obj = new BaseMeasurementChild(SampleParams.rootObject, null)
+        {
+            Returns = new()
+            {
+                GetBaseMeasureUnit = measureUnitCode.GetDefaultMeasureUnit(),
+            }
+        };
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            Bool_Object_Enum_args item = new(isTrue, obj, measureUnit);
 
             return item.ToObjectArray();
         }

@@ -7,3 +7,5 @@ global using CsabaDu.FooVaria.Tests.TestSupport.Params;
 global using Microsoft.VisualStudio.TestTools.UnitTesting;
 global using System.ComponentModel;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;
+global using static CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations.BaseMeasurement;
+global using CsabaDu.FooVaria.Measurements.Types.Implementations;

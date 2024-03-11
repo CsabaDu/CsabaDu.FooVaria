@@ -18,3 +18,5 @@ global using CsabaDu.FooVaria.Tests.TestSupport.Fakes.BaseTypes.Types;
 global using CsabaDu.FooVaria.Tests.TestSupport.Params;
 global using System.Reflection;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;
+global using static CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations.BaseMeasurement;
+global using static CsabaDu.FooVaria.Measurements.Types.Implementations.Measurement;
