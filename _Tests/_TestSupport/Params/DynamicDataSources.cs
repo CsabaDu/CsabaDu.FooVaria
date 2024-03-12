@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
+﻿using static CsabaDu.FooVaria.Tests.TestSupport.Params.DynamicDataSources;
+
+namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
 
 internal class DynamicDataSources
 {
@@ -28,6 +30,20 @@ internal class DynamicDataSources
         internal override object[] ToObjectArray() => [IsTrue];
     }
 
+    #region bool, Enum
+    internal record Bool_Enum_args(bool IsTrue, Enum MeasureUnit) : Bool_arg(IsTrue)
+    {
+        internal override object[] ToObjectArray() => [IsTrue, MeasureUnit];
+    }
+    #endregion
+
+
+    #region bool, Enum, IBaseMeasurement
+    internal record Bool_Enum_IBaseMeasurement_args(bool IsTrue, Enum MeasureUnit, IBaseMeasurement BaseMeasurement) : Bool_Enum_args(IsTrue, MeasureUnit)
+    {
+        internal override object[] ToObjectArray() => [IsTrue, MeasureUnit, BaseMeasurement];
+    }
+    #endregion
     #region bool, object
     internal record Bool_Object_args(bool IsTrue, object Obj) : Bool_arg(IsTrue)
     {
@@ -54,6 +70,14 @@ internal class DynamicDataSources
     internal record Bool_MeasureUnitCode_args(bool IsTrue, MeasureUnitCode MeasureUnitCode) : Bool_arg(IsTrue)
     {
         internal override object[] ToObjectArray() => [IsTrue, MeasureUnitCode];
+    }
+
+    #endregion
+
+    #region bool, MeasureUnitCode, object
+    internal record Bool_MeasureUnitCode_Object_args(bool IsTrue, MeasureUnitCode MeasureUnitCode, object Obj) : Bool_MeasureUnitCode_args(IsTrue, MeasureUnitCode)
+    {
+        internal override object[] ToObjectArray() => [IsTrue];
     }
     #endregion
     #endregion
@@ -302,15 +326,48 @@ internal class DynamicDataSources
 
     internal IEnumerable<object[]> GetBaseMeasurementEqualsObjectArgArrayList()
     {
+        // null
         obj = null;
         isTrue = false;
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
         measureUnit = RandomParams.GetRandomValidMeasureUnit(measureUnitCode);
         yield return toObjectArray();
 
+        // object
         obj = new();
         yield return toObjectArray();
 
+        // IBaseMeasurement
+        obj = new BaseMeasurementChild(SampleParams.rootObject, null)
+        {
+            Returns = new()
+            {
+                GetBaseMeasureUnit = RandomParams.GetRandomValidMeasureUnit(),
+            }
+        };
+        isTrue = measureUnitCode == (obj as IBaseMeasurement).GetMeasureUnitCode();
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            Bool_Object_Enum_args item = new(isTrue, obj, measureUnit);
+
+            return item.ToObjectArray();
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> GetBaseMeasurementEqualsBaseMeasurementArgArrayList()
+    {
+        // null
+        obj = null;
+        isTrue = false;
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
+        measureUnit = RandomParams.GetRandomValidMeasureUnit(measureUnitCode);
+        yield return toObjectArray();
+
+        // Different MeasureUnitCode
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
         obj = new BaseMeasurementChild(SampleParams.rootObject, null)
         {
@@ -321,6 +378,7 @@ internal class DynamicDataSources
         };
         yield return toObjectArray();
 
+        // Same MeasureUnit
         isTrue = true;
         obj = new BaseMeasurementChild(SampleParams.rootObject, null)
         {
@@ -331,6 +389,7 @@ internal class DynamicDataSources
         };
         yield return toObjectArray();
 
+        // Different MeasureUnit, same MeasureUnitCode and same ExhchangeRate
         measureUnit = RandomParams.GetRandomNotUsedCustomMeasureUnit();
         _ = TrySetCustomMeasureUnit(measureUnit, decimal.One, RandomParams.GetRandomParamName());
         measureUnitCode = GetMeasureUnitCode(measureUnit);
@@ -346,12 +405,13 @@ internal class DynamicDataSources
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Bool_Object_Enum_args item = new(isTrue, obj, measureUnit);
+            Bool_Enum_IBaseMeasurement_args item = new(isTrue, measureUnit, (IBaseMeasurement)obj);
 
             return item.ToObjectArray();
         }
         #endregion
     }
+
 
     //    internal IEnumerable<object[]> GetInvalidGetCustomNameArgArrayList()
     //    {
