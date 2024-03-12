@@ -3,6 +3,7 @@
 public static class ParamNames
 {
     internal const string commonBase = nameof(commonBase);
+    internal const string context = nameof(context);
     internal const string factory = nameof(factory);
     internal const string measurable = nameof(measurable);
     internal const string measureUnit = nameof(measureUnit);

@@ -15,21 +15,28 @@ public sealed class MeasurableTests
     [TestInitialize]
     public void InitializeMeasurableTests()
     {
-        _factory = null;
         _paramName = null;
         _rootObject = SampleParams.rootObject;
-        _measureUnit = RandomParams.GetRandomMeasureUnit();
+        _measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
+        _measureUnit = RandomParams.GetRandomMeasureUnit(_measureUnitCode);
         _measurable = new(_rootObject, _paramName)
         {
             Returns = new()
             {
-                GetFactory = _factory,
                 GetBaseMeasureUnit = _measureUnit,
             }
         };
 
         _measureUnitType = _measureUnit.GetType();
-        _measureUnitCode = GetMeasureUnitCode(_measureUnitType);
+    }
+
+    [TestCleanup]
+    public void CleanupMeasurableTests()
+    {
+        _factory = null;
+        _paramName = null;
+        _measureUnit = null;
+        _measurable = null;
     }
     #endregion
 

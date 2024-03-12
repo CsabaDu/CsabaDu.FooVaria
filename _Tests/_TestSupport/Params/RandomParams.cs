@@ -8,11 +8,11 @@ public class RandomParams
     private static readonly IEnumerable<MeasureUnitCode> CustomMeasureUnitCodes = MeasureUnitCodes.Where(x => x.IsCustomMeasureUnitCode());
     #endregion
 
-    private static Enum[] GetRandomMeasureUnitAndMeasureUnitCodes()
+    public Enum GetRandomMeasureUnitOrMeasureUnitCode()
     {
-        IEnumerable<Enum> measureUnits = GetAllMeasureUnits().Union([.. MeasureUnitCodes]).ToArray();
+        IEnumerable<Enum> measureUnitsAndMeasureUnitCodes = GetAllMeasureUnits().Union([.. MeasureUnitCodes]);
 
-        return GetRandomItems(measureUnits.ToArray(), ItemCount);
+        return GetRandomItem(measureUnitsAndMeasureUnitCodes);
     }
 
     #region Public methods
