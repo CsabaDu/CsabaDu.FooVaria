@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
+﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
+
+namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
 
 public class RandomParams
 {
@@ -114,6 +116,10 @@ public class RandomParams
         return GetRandomItems(MeasureUnitCodes, count);
     }
 
+    public decimal GetRandomPositiveDecimal()
+    {
+        return Convert.ToDecimal(Random.NextInt64(long.MaxValue) + Random.NextDouble());
+    }
     #region Private methods
     #region Static methods
     private static T GetRandomItem<T>(T[] items)

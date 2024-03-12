@@ -239,7 +239,27 @@ public sealed class BaseMeasurementTests
     #endregion
     #endregion
 
-    // IDictionary<object, decimal> IExchangeRateCollection.GetExchangeRateCollection()
+    #region IDictionary<object, decimal> GetExchangeRateCollection
+    #region IExchangeRateCollection.GetExchangeRateCollection()
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetExchangeRateCollectionArgArrayList), DynamicDataSourceType.Method)]
+    public void GetExchangeRateCollection_returns_expected(Enum measureUnit, MeasureUnitCode measureUnitCode)
+    {
+        // Arrange
+        SetBaseMeasurement(measureUnit, null, null);
+        IDictionary<object, decimal> expected = ExchangeRateCollection
+            .Where(x => x.Key.GetType().Name == Enum.GetName(measureUnitCode))
+            .ToDictionary(x => x.Key, x => x.Value);
+
+        // Act
+        var actual = _baseMeasurement.GetExchangeRateCollection();
+
+        // Assert
+        Assert.IsTrue(expected.SequenceEqual(actual));
+    }
+    #endregion
+    #endregion
+
     // int BaseMeasurement.GetHashCode()
     // string INamed.GetName()
     // bool IExchangeable<Enum>.IsExchangeableTo(Enum context)
@@ -262,6 +282,11 @@ public sealed class BaseMeasurementTests
     private static IEnumerable<object[]> GetBaseMeasurementEqualsBaseMeasurementArgArrayList()
     {
         return DynamicDataSources.GetBaseMeasurementEqualsBaseMeasurementArgArrayList();
+    }
+
+    private static IEnumerable<object[]> GetExchangeRateCollectionArgArrayList()
+    {
+        return DynamicDataSources.GetExchangeRateCollectionArgArrayList();
     }
 
     #endregion

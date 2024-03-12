@@ -328,8 +328,8 @@ internal class DynamicDataSources
     {
         // null
         obj = null;
-        measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
-        measureUnit = RandomParams.GetRandomValidMeasureUnit(measureUnitCode);
+        measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        measureUnitCode = GetMeasureUnitCode(measureUnit);
         isTrue = false;
         yield return toObjectArray();
 
@@ -363,8 +363,8 @@ internal class DynamicDataSources
         // null
         obj = null;
         isTrue = false;
-        measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
-        measureUnit = RandomParams.GetRandomValidMeasureUnit(measureUnitCode);
+        measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        measureUnitCode = GetMeasureUnitCode(measureUnit);
         yield return toObjectArray();
 
         // Different MeasureUnitCode
@@ -405,13 +405,35 @@ internal class DynamicDataSources
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Bool_Enum_IBaseMeasurement_args item = new(isTrue, measureUnit, (IBaseMeasurement)obj);
+            IBaseMeasurement baseMeasurement = (IBaseMeasurement)obj;
+            Bool_Enum_IBaseMeasurement_args item = new(isTrue, measureUnit, baseMeasurement);
 
             return item.ToObjectArray();
         }
         #endregion
     }
 
+    internal IEnumerable<object[]> GetExchangeRateCollectionArgArrayList()
+    {
+        measureUnit = RandomParams.GetRandomMeasureUnit();
+        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        yield return toObjectArray();
+
+        measureUnit = RandomParams.GetRandomNotUsedCustomMeasureUnit();
+        _ = TrySetCustomMeasureUnit(measureUnit, RandomParams.GetRandomPositiveDecimal(), RandomParams.GetRandomParamName());
+        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        measureUnit = measureUnitCode.GetDefaultMeasureUnit();
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            Enum_MeasureUnitCode_args item = new(measureUnit, measureUnitCode);
+
+            return item.ToObjectArray();
+        }
+        #endregion
+    }
 
     //    internal IEnumerable<object[]> GetInvalidGetCustomNameArgArrayList()
     //    {
