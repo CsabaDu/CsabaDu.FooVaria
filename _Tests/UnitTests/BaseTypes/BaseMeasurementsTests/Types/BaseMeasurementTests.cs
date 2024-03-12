@@ -236,9 +236,9 @@ public sealed class BaseMeasurementTests
         // Assert
         Assert.AreEqual(expected, actual);
     }
+    #endregion
+    #endregion
 
-    #endregion
-    #endregion
     // IDictionary<object, decimal> IExchangeRateCollection.GetExchangeRateCollection()
     // int BaseMeasurement.GetHashCode()
     // string INamed.GetName()
