@@ -27,7 +27,8 @@ public sealed class BaseMeasurementTests
         _factory = null;
         _paramName = null;
         _measureUnit = null;
-        _baseMeasurement.Returns = new();
+        _baseMeasurement = null;
+
         if (ExchangeRateCollection.Count != ConstantExchangeRateCollection.Count)
         {
             RestoreConstantExchangeRates();
@@ -177,7 +178,12 @@ public sealed class BaseMeasurementTests
     #endregion
     #endregion
 
-    // IBaseMeasurement IBaseMeasurement.GetBaseMeasurement(Enum context)
+    #region IBaseMeasurement GetBaseMeasurement
+    #region IBaseMeasurement.GetBaseMeasurement(Enum context)
+
+    #endregion
+    #endregion
+
     // IDictionary<object, decimal> IConstantExchangeRateCollection.GetConstantExchangeRateCollection()
     // decimal IExchangeRate.GetExchangeRate()
     // IDictionary<object, decimal> IExchangeRateCollection.GetExchangeRateCollection()

@@ -2,14 +2,11 @@
 
 internal sealed class BaseMeasurementFactoryObject : IBaseMeasurementFactory
 {
-    private readonly RandomParams randomParams = new();
-
-    public IBaseMeasurement CreateBaseMeasurement(Enum context) => new BaseMeasurementChild(SampleParams.rootObject, string.Empty)
+    public IBaseMeasurement CreateBaseMeasurement(Enum context) => new BaseMeasurementChild(SampleParams.rootObject, null)
     {
         Returns = new()
         {
-            GetBaseMeasureUnit = context,
-            GetName = randomParams.GetRandomParamName(),
+            GetBaseMeasureUnit = GetMeasureUnitElements(context, nameof(context)).MeasureUnit,
         }
     };
 }
