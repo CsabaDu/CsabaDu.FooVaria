@@ -16,9 +16,9 @@ public sealed class BaseMeasurementTests
     public void InitializeBaseMeasurementTests()
     {
         _rootObject = SampleParams.rootObject;
-        _measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        _measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
+        _measureUnit = RandomParams.GetRandomValidMeasureUnit(_measureUnitCode);
         _measureUnitType = _measureUnit.GetType();
-        _measureUnitCode = GetMeasureUnitCode(_measureUnitType);
     }
 
     [TestCleanup]

@@ -328,9 +328,9 @@ internal class DynamicDataSources
     {
         // null
         obj = null;
-        isTrue = false;
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
         measureUnit = RandomParams.GetRandomValidMeasureUnit(measureUnitCode);
+        isTrue = false;
         yield return toObjectArray();
 
         // object
@@ -345,7 +345,7 @@ internal class DynamicDataSources
                 GetBaseMeasureUnit = RandomParams.GetRandomValidMeasureUnit(),
             }
         };
-        isTrue = measureUnitCode == (obj as IBaseMeasurement).GetMeasureUnitCode();
+        isTrue = measureUnit.Equals((obj as IBaseMeasurement).GetBaseMeasureUnit());
         yield return toObjectArray();
 
         #region toObjectArray method
