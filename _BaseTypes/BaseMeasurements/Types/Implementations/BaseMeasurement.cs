@@ -339,7 +339,7 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
     public bool Equals(IBaseMeasurement? other)
     {
         return base.Equals(other)
-            && other.GetExchangeRate() == GetExchangeRate();
+            && GetExchangeRate() == other.GetExchangeRate();
     }
 
     public IBaseMeasurement? GetBaseMeasurement(Enum context)

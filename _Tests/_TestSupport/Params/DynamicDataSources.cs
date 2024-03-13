@@ -1,10 +1,9 @@
-﻿using static CsabaDu.FooVaria.Tests.TestSupport.Params.DynamicDataSources;
-
-namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
+﻿namespace CsabaDu.FooVaria.Tests.TestSupport.Params;
 
 internal class DynamicDataSources
 {
     #region Fields
+    private Enum context;
     private bool isTrue;
     private MeasureUnitCode measureUnitCode;
     private Enum measureUnit;
@@ -35,8 +34,13 @@ internal class DynamicDataSources
     {
         internal override object[] ToObjectArray() => [IsTrue, MeasureUnit];
     }
-    #endregion
 
+    #region bool, Enum, Enum
+    internal record Bool_Enum_Enum_args(bool IsTrue, Enum MeasureUnit, Enum Context) : Bool_Enum_args(IsTrue, MeasureUnit)
+    {
+        internal override object[] ToObjectArray() => [IsTrue, MeasureUnit, Context];
+    }
+    #endregion
 
     #region bool, Enum, IBaseMeasurement
     internal record Bool_Enum_IBaseMeasurement_args(bool IsTrue, Enum MeasureUnit, IBaseMeasurement BaseMeasurement) : Bool_Enum_args(IsTrue, MeasureUnit)
@@ -44,6 +48,8 @@ internal class DynamicDataSources
         internal override object[] ToObjectArray() => [IsTrue, MeasureUnit, BaseMeasurement];
     }
     #endregion
+    #endregion
+
     #region bool, object
     internal record Bool_Object_args(bool IsTrue, object Obj) : Bool_arg(IsTrue)
     {
@@ -72,13 +78,12 @@ internal class DynamicDataSources
         internal override object[] ToObjectArray() => [IsTrue, MeasureUnitCode];
     }
 
-    #endregion
-
     #region bool, MeasureUnitCode, object
     internal record Bool_MeasureUnitCode_Object_args(bool IsTrue, MeasureUnitCode MeasureUnitCode, object Obj) : Bool_MeasureUnitCode_args(IsTrue, MeasureUnitCode)
     {
         internal override object[] ToObjectArray() => [IsTrue];
     }
+    #endregion
     #endregion
     #endregion
 
@@ -435,432 +440,57 @@ internal class DynamicDataSources
         #endregion
     }
 
-    //    internal IEnumerable<object[]> GetInvalidGetCustomNameArgArrayList()
-    //    {
-    //        measureUnit = null;
-    //        yield return toObjectArray();
+    internal IEnumerable<object[]> GetBaseMeasurementIsExchangeableToArgArrayList()
+    {
+        // null -  false
+        isTrue = false;
+        measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        context = null;
+        yield return toObjectArray();
+
+        // Not measureUnit not MeasureUnitCode Enum - false
+        context = TypeCode.Empty;
+        yield return toObjectArray();
+
+        // other MeasureUnitCode - false
+        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        context = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
+        yield return toObjectArray();
+
+        // same type not defined measureUnit - false
+        context = SampleParams.GetNotDefinedMeasureUnit(measureUnitCode);
+        yield return toObjectArray();
+
+        // same MeasureUnitCode - true
+        isTrue = true;
+        context = measureUnitCode;
+        yield return toObjectArray();
+
+        // same type valid measureUnit - true
+        context = RandomParams.GetRandomValidMeasureUnit(measureUnitCode);
+        yield return toObjectArray();
+
+        // other type measureUnit - false
+        isTrue = false;
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
+        context = RandomParams.GetRandomMeasureUnit(measureUnitCode);
+        yield return toObjectArray();
+
+        // same type invalid measureUnit - false
+        context = RandomParams.GetRandomNotUsedCustomMeasureUnit();
+        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        measureUnit = measureUnitCode.GetDefaultMeasureUnit();
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            Bool_Enum_Enum_args item = new(isTrue, measureUnit, context);
+
+            return item.ToObjectArray();
+        }
+        #endregion
+    }
 
-    //        foreach (object[] item in GetInvalidEnumMeasureUnitArgArrayList())
-    //        {
-    //            yield return item;
-    //        }
-
-    //        measureUnit = RandomParams.GetRandomMeasureUnit();
-    //        yield return toObjectArray();
-
-    //        #region toObjectArray method
-    //        object[] toObjectArray()
-    //        {
-    //            return new Enum_arg
-    //            {
-    //                MeasureUnit = measureUnit,
-    //            }
-    //            .ToObjectArray();
-    //        }
-    //        #endregion
-    //    }
-
-    //    internal IEnumerable<object[]> GetBaseMeasurableEqualsArgsArrayList()
-    //    {
-    //        isTrue = false;
-    //        obj = null;
-    //        measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
-    //        yield return toObjectArray();
-
-    //        obj = new();
-    //        yield return toObjectArray();
-
-    //        isTrue = true;
-    //        factory = new BaseMeasurableFactoryClass();
-    //        obj = new BaseMeasurableChild((IBaseMeasurableFactory)factory, measureUnitCode);
-    //        yield return toObjectArray();
-
-    //        isTrue = false;
-    //        obj = new BaseMeasurableChild((IBaseMeasurableFactory)factory, RandomParams.GetRandomMeasureUnitCode(measureUnitCode));
-    //        yield return toObjectArray();
-
-    //        #region toObjectArray method
-    //        object[] toObjectArray()
-    //        {
-    //            return new Bool_Object_Enum_args
-    //            {
-    //                IsTrue = isTrue,
-    //                Obj = obj,
-    //                MeasureUnitCode = measureUnitCode,
-    //            }
-    //            .ToObjectArray();
-    //        }
-    //        #endregion
-    //    }
-
-    //    internal IEnumerable<object[]> GetBaseMeasurableHasMeasureUnitCodeArgArrayList()
-    //    {
-    //        isTrue = true;
-    //        measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
-    //        baseMeasurable = new BaseMeasurableChild(new BaseMeasurableFactoryClass(), measureUnitCode);
-    //        yield return toObjectArray();
-
-    //        isTrue = false;
-    //        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
-    //        yield return toObjectArray();
-
-    //        measureUnitCode = SampleParams.NotDefinedMeasureUnitCode;
-    //        yield return toObjectArray();
-
-    //        #region toObjectArray method
-    //        object[] toObjectArray()
-    //        {
-    //            return new Bool_MeasureUnitCode_IBaseMeasurable_args
-    //            {
-    //                IsTrue = isTrue,
-    //                MeasureUnitCode = measureUnitCode,
-    //                BaseMeasurable = baseMeasurable,
-    //            }
-    //            .ToObjectArray();
-    //        }
-    //        #endregion
-    //    }
-
-    //    internal IEnumerable<object[]> GetBaseMeasurableHasMeasureUnitCodeArgsArrayList()
-    //    {
-    //        isTrue = true;
-    //        measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
-    //        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
-    //        yield return toObjectArray();
-
-    //        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode, measureUnit);
-    //        yield return toObjectArray();
-
-    //        isTrue = false;
-    //        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
-    //        yield return toObjectArray();
-
-    //        measureUnit = RandomParams.GetRandomNotDefinedMeasureUnit();
-    //        yield return toObjectArray();
-
-    //        measureUnit = null;
-    //        yield return toObjectArray();
-
-    //        measureUnitCode = SampleParams.NotDefinedMeasureUnitCode;
-    //        measureUnit = RandomParams.GetRandomMeasureUnit();
-    //        yield return toObjectArray();
-
-    //        #region toObjectArray method
-    //        object[] toObjectArray()
-    //        {
-    //            return new Bool_MeasureUnitCode_Enum_args
-    //            {
-    //                IsTrue = isTrue,
-    //                MeasureUnitCode = measureUnitCode,
-    //                MeasureUnit = measureUnit,
-    //            }
-    //            .ToObjectArray();
-    //        }
-    //        #endregion
-    //    }
-
-    //    internal IEnumerable<object[]> GetBoolEnumMeasureUnitArgArrayList()
-    //    {
-    //        isTrue = false;
-    //        measureUnit = null;
-    //        yield return toObjectArray();
-
-    //        measureUnit = SampleParams.DefaultLimitMode;
-    //        yield return toObjectArray();
-
-    //        measureUnit = RandomParams.GetRandomNotDefinedMeasureUnit();
-    //        yield return toObjectArray();
-
-    //        isTrue = true;
-    //        measureUnit = RandomParams.GetRandomMeasureUnit();
-    //        yield return toObjectArray();
-
-    //        #region toObjectArray method
-    //        object[] toObjectArray()
-    //        {
-    //            return new Bool_Enum_args
-    //            {
-    //                IsTrue = isTrue,
-    //                MeasureUnit = measureUnit,
-    //            }
-    //            .ToObjectArray();
-    //        }
-    //        #endregion
-    //    }
-
-    //    internal IEnumerable<object[]> GetInvalidEnumMeasureUnitMeasureUnitCodeArgsArrayList()
-    //    {
-    //        measureUnit = SampleParams.DefaultLimitMode;
-    //        measureUnitCode = SampleParams.NotDefinedMeasureUnitCode;
-    //        name = ParamNames.measureUnit;
-    //        yield return toObjectArray();
-
-    //        measureUnit = RandomParams.GetRandomNotDefinedMeasureUnit();
-    //        measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
-    //        yield return toObjectArray();
-
-    //        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
-    //        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
-    //        yield return toObjectArray();
-
-    //        measureUnitCode = SampleParams.NotDefinedMeasureUnitCode;
-    //        name = ParamNames.measureUnitCode;
-    //        yield return toObjectArray();
-
-    //        #region toObjectArray method
-    //        object[] toObjectArray()
-    //        {
-    //            return new Enum_MeasureUnitCode_String_args
-    //            {
-    //                MeasureUnit = measureUnit,
-    //                MeasureUnitCode = measureUnitCode,
-    //                IsTrue = name,
-    //            }
-    //            .ToObjectArray();
-    //        }
-    //        #endregion
-    //    }
-
-    //    internal IEnumerable<object[]> GetMeasurableValidateInvalidArgArrayList()
-    //    {
-    //        measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
-    //        rootObject = new BaseMeasurableFactoryClass();
-    //        name = ParamNames.factory;
-    //        yield return toObjectArray();
-
-    //        rootObject = new BaseMeasurableChild((IBaseMeasurableFactory)rootObject, measureUnitCode);
-    //        name = ParamNames.other;
-    //        yield return toObjectArray();
-
-    //        rootObject = new MeasurableChild(new MeasurableFactoryClass(), RandomParams.GetRandomMeasureUnitCode(measureUnitCode));
-    //        yield return toObjectArray();
-
-    //        #region toObjectArray method
-    //        object[] toObjectArray()
-    //        {
-    //            return new IFooVariaObject_string_MeasureUnitCode_args
-    //            {
-    //                FooVariaObject = rootObject,
-    //                IsTrue = name,
-    //                MeasureUnitCode = measureUnitCode,
-    //            }
-    //            .ToObjectArray();
-    //        }
-    //        #endregion
-    //    }
-
-    //    internal IEnumerable<object[]> GetMeasurableValidateValidArgArrayList()
-    //    {
-    //        measureUnit = RandomParams.GetRandomValidMeasureUnit();
-    //        measureUnitCode = MeasureUnitTypes.GetMeasureUnitCode(measureUnit);
-    //        rootObject = new MeasurableFactoryClass();
-    //        yield return toObjectArray();
-
-    //        rootObject = new MeasurableChild((IMeasurableFactory)rootObject, measureUnitCode);
-    //        yield return toObjectArray();
-
-    //        rootObject = new BaseMeasurementFactoryClass();
-    //        yield return toObjectArray();
-
-    //        rootObject = new BaseMeasurementChild((IBaseMeasurementFactory)rootObject, measureUnit);
-    //        yield return toObjectArray();
-
-    //        #region toObjectArray method
-    //        object[] toObjectArray()
-    //        {
-    //            return new MeasureUnitCode_IFooVariaObject_args
-    //            {
-    //                MeasureUnitCode = measureUnitCode,
-    //                FooVariaObject = rootObject,
-    //            }
-    //            .ToObjectArray();
-    //        }
-    //        #endregion
-    //    }
-
-    //    internal IEnumerable<object[]> GetBaseMeasurableValidateInvalidArgArrayList()
-    //    {
-    //        factory = new BaseMeasurableFactoryClass();
-
-    //        measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
-    //        commonBase = new CommonBaseChild(factory);
-    //        yield return toObjectArray();
-
-    //        commonBase = new BaseMeasurableChild((IBaseMeasurableFactory)factory, RandomParams.GetRandomMeasureUnitCode(measureUnitCode));
-    //        yield return toObjectArray();
-
-    //        #region toObjectArray method
-    //        object[] toObjectArray()
-    //        {
-    //            return new MeasureUnitCode_ICommonBase_args
-    //            {
-    //                MeasureUnitCode = measureUnitCode,
-    //                CommonBase = commonBase,
-    //            }
-    //            .ToObjectArray();
-    //        }
-    //        #endregion
-    //    }
-
-    //    internal IEnumerable<object[]> GetCommonBaseValidateArgArrayList()
-    //    {
-    //        rootObject = new BaseMeasurableFactoryClass();
-    //        yield return toObjectArray();
-
-    //        rootObject = new CommonBaseChild((IBaseMeasurableFactory)rootObject);
-    //        yield return toObjectArray();
-
-    //        rootObject = new BaseSpreadFactoryImplementation();
-    //        yield return toObjectArray();
-
-    //        measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
-    //        rootObject = new BaseMeasurableChild((IBaseMeasurableFactory)rootObject, measureUnitCode);
-    //        yield return toObjectArray();
-
-    //        #region toObjectArray method
-    //        object[] toObjectArray()
-    //        {
-    //            return new IFooVariaObject_arg
-    //            {
-    //                FooVariaObject = rootObject,
-    //            }
-    //            .ToObjectArray();
-    //        }
-    //        #endregion
-    //    }
-
-    //    internal IEnumerable<object[]> GetBaseMeasurableValidateValidArgArrayList()
-    //    {
-    //        measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
-    //        rootObject = new BaseMeasurableFactoryClass();
-    //        yield return toObjectArray();
-
-    //        rootObject = new BaseMeasurableChild((IBaseMeasurableFactory)rootObject, measureUnitCode);
-    //        yield return toObjectArray();
-
-    //        baseMeasurable = (IBaseMeasurable)rootObject;
-    //        rootObject = new BaseSpreadFactoryImplementation();
-    //        yield return toObjectArray();
-
-    //        rootObject = new BaseSpreadChild((IBaseSpreadFactory)rootObject, baseMeasurable);
-    //        yield return toObjectArray();
-
-    //        #region toObjectArray method
-    //        object[] toObjectArray()
-    //        {
-    //            return new MeasureUnitCode_IFooVariaObject_args
-    //            {
-    //                MeasureUnitCode = measureUnitCode,
-    //                FooVariaObject = rootObject,
-    //            }
-    //            .ToObjectArray();
-    //        }
-    //        #endregion
-    //    }
-
-    //    internal IEnumerable<object[]> GetCustomNameCollectionArgArrayList()
-    //    {
-    //        nameCollection = new Dictionary<object, string>();
-    //        yield return toObjectArray();
-
-    //        measureUnit = RandomParams.GetRandomValidMeasureUnit();
-    //        name = Guid.NewGuid().ToString();
-    //        nameCollection.Add(measureUnit, name);
-    //        yield return toObjectArray();
-
-    //        measureUnit = RandomParams.GetRandomValidMeasureUnit(measureUnit);
-    //        name = Guid.NewGuid().ToString();
-    //        nameCollection.Add(measureUnit, name);
-    //        yield return toObjectArray();
-
-    //        #region toObjectArray method
-    //        object[] toObjectArray()
-    //        {
-    //            return new DictionaryObjectString_arg
-    //            {
-    //                NameCollection = nameCollection,
-    //            }
-    //            .ToObjectArray();
-    //        }
-    //        #endregion
-    //    }
-
-    //    internal IEnumerable<object[]> GetMeasureUnitCodeCustomNameCollectionArgsArrayList()
-    //    {
-    //        measureUnit = RandomParams.GetRandomValidMeasureUnit();
-    //        measureUnitCode = MeasureUnitTypes.GetMeasureUnitCode(measureUnit);
-    //        nameCollection = new Dictionary<object, string>();
-    //        yield return toObjectArray();
-
-    //        name = Guid.NewGuid().ToString();
-    //        nameCollection.Add(measureUnit, name);
-    //        yield return toObjectArray();
-
-    //        measureUnit = RandomParams.GetRandomDefaultMeasureUnit(RandomParams.GetRandomMeasureUnitCode(measureUnitCode));
-    //        name = Guid.NewGuid().ToString();
-    //        nameCollection.Add(measureUnit, name);
-    //        yield return toObjectArray();
-
-    //        #region toObjectArray method
-    //        object[] toObjectArray()
-    //        {
-    //            return new MeasureUnitCode_DictionaryObjectString_args
-    //            {
-    //                MeasureUnitCode = measureUnitCode,
-    //                NameCollection = nameCollection,
-    //            }
-    //            .ToObjectArray();
-    //        }
-    //        #endregion
-    //    }
-
-    //    internal IEnumerable<object[]> GetCustomNameCollectionMeasureUnitCodeArgArrayList()
-    //    {
-    //        measureUnit = RandomParams.GetRandomValidMeasureUnit();
-    //        measureUnitCode = MeasureUnitTypes.GetMeasureUnitCode(measureUnit);
-    //        nameCollection = new Dictionary<object, string>();
-    //        yield return toObjectArray();
-
-    //        name = Guid.NewGuid().ToString();
-    //        nameCollection.Add(measureUnit, name);
-    //        yield return toObjectArray();
-
-    //        #region toObjectArray method
-    //        object[] toObjectArray()
-    //        {
-    //            return new DictionaryObjectString_MeasureUnitCode_args
-    //            {
-    //                NameCollection = nameCollection,
-    //                MeasureUnitCode = measureUnitCode,
-    //            }
-    //            .ToObjectArray();
-    //        }
-    //        #endregion
-    //    }
-
-    //    internal IEnumerable<object[]> GetMeasurementFactoryNameArgsArrayList()
-    //    {
-    //        factory = null;
-    //        name = ParamNames.factory;
-    //        yield return toObjectArray();
-
-    //        factory = new MeasurementFactory();
-    //        name = ParamNames.measureUnit;
-    //        yield return toObjectArray();
-
-    //        #region toObjectArray method
-    //        object[] toObjectArray()
-    //        {
-    //            return new String_IMeasurementFactory_args
-    //            {
-    //                IsTrue = name,
-    //                Factory = (IMeasurementFactory)factory,
-    //            }
-    //            .ToObjectArray();
-    //        }
-
-    //        #endregion
-    //    }
-    //#endregion
     #endregion
 }

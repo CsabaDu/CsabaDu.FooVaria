@@ -1,5 +1,3 @@
-using CsabaDu.FooVaria.BaseTypes.Common.Factories;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.MeasurablesTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
@@ -284,9 +282,13 @@ public sealed class MeasurableTests
             _measurable.ValidateMeasureUnit(measureUnit, _paramName);
             returned = true;
         }
-        catch
+        catch (InvalidEnumArgumentException)
         {
             returned = false;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message, ex);
         }
 
         // Assert
@@ -350,9 +352,13 @@ public sealed class MeasurableTests
             _measurable.ValidateMeasureUnitCode(measurable, _paramName);
             returned = true;
         }
-        catch
+        catch (InvalidEnumArgumentException)
         {
             returned = false;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message, ex);
         }
 
         // Assert
@@ -393,9 +399,13 @@ public sealed class MeasurableTests
             _measurable.ValidateMeasureUnitCode(_measureUnitCode, _paramName);
             returned = true;
         }
-        catch
+        catch (InvalidEnumArgumentException)
         {
             returned = false;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message, ex);
         }
 
         // Assert

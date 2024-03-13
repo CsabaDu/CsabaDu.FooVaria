@@ -54,7 +54,7 @@ public sealed class BaseMeasurementTests
 
     #region Test methods
     #region Tested in parent classes' tests
-    // BaseMeasurement(IRootObject rootObject, string measureUnitName)
+    // BaseMeasurement(IRootObject rootObject, string paramName)
     // Enum IMeasureUnit.GetBaseMeasureUnit()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
@@ -63,8 +63,8 @@ public sealed class BaseMeasurementTests
     // Type IMeasureUnit.GetMeasureUnitType()
     // TypeCode IQuantityType.GetQuantityTypeCode()
     // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
-    // void IMeasurable.ValidateMeasureUnitCode(IMeasurable measurable, string measureUnitName)
-    // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string measureUnitName)
+    // void IMeasurable.ValidateMeasureUnitCode(IMeasurable measurable, string paramName)
+    // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
     #endregion
 
     #region int CompareTo
@@ -281,17 +281,14 @@ public sealed class BaseMeasurementTests
     #region bool IsExchangeableTo
     #region IExchangeable<Enum>.IsExchangeableTo(Enum)
     [TestMethod, TestCategory("UnitTest")]
-    public void IsExchangeableTo_returns_expected() // hibás + Dynamic kell
+    [DynamicData(nameof(GetBaseMeasurementIsExchangeableToArgArrayList), DynamicDataSourceType.Method)]
+    public void IsExchangeableTo_returns_expected(bool expected, Enum measureUnit, Enum context)
     {
         // Arrange
-
-        SetBaseMeasurementChild(_measureUnit, null, null);
-        _measureUnit = RandomParams.GetRandomMeasureUnitOrMeasureUnitCode();
-        _measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
-        var expected = GetMeasureUnitElements(_measureUnit, null).MeasureUnitCode == _measureUnitCode;
+        SetBaseMeasurementChild(measureUnit, null, null);
 
         // Act
-        var actual = _baseMeasurement.IsExchangeableTo(_measureUnitCode);
+        var actual = _baseMeasurement.IsExchangeableTo(context);
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -299,9 +296,70 @@ public sealed class BaseMeasurementTests
     #endregion
     #endregion
 
-    // decimal IProportional<IBaseMeasurement>.ProportionalTo(IBaseMeasurement other)
-    // void IExchangeRate.ValidateExchangeRate(decimal exchangeRate, string measureUnitName)
-    // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum measureUnit, string measureUnitName)
+    #region decimal ProportionalTo
+    #region IProportional<IBaseMeasurement>.ProportionalTo(IBaseMeasurement)
+    [TestMethod, TestCategory("UnitTest")]
+    public void ProportionalTo_nullArg_IBaseMeasurement_throws_ArgumentNullException()
+    {
+        // Arrange
+        SetBaseMeasurementChild(_measureUnit, null, null);
+        BaseMeasurementChild other = null;
+
+        // Act
+        void attempt() => _ = _baseMeasurement.ProportionalTo(other);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
+        Assert.AreEqual(ParamNames.other, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ProportionalTo_invalidArg_IBaseMeasurement_throws_InvalidEnumArgumentException()
+    {
+        // Arrange
+        SetBaseMeasurementChild(_measureUnit, null, null);
+        _measureUnitCode = RandomParams.GetRandomMeasureUnitCode(_measureUnitCode);
+        BaseMeasurementChild other = new(_rootObject, _paramName)
+        {
+            Returns = new()
+            {
+                GetBaseMeasureUnit = RandomParams.GetRandomValidMeasureUnit(_measureUnitCode)
+            }
+        };
+
+        // Act
+        void attempt() => _ = _baseMeasurement.ProportionalTo(other);
+
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(ParamNames.other, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ProportionalTo_validArg_IBaseMeasurement_returns_expected()
+    {
+        // Arrange
+        SetBaseMeasurementChild(_measureUnit, null, null);
+        BaseMeasurementChild other = new(_rootObject, _paramName)
+        {
+            Returns = new()
+            {
+                GetBaseMeasureUnit = RandomParams.GetRandomValidMeasureUnit(_measureUnitCode)
+            }
+        };
+        decimal expected = _baseMeasurement.GetExchangeRate() / other.GetExchangeRate();
+
+        // Act
+        var actual = _baseMeasurement.ProportionalTo(other);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    // void IExchangeRate.ValidateExchangeRate(decimal exchangeRate, string paramName)
+    // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum measureUnit, string paramName)
     #endregion
 
     #region Private methods
@@ -337,6 +395,11 @@ public sealed class BaseMeasurementTests
     private static IEnumerable<object[]> GetExchangeRateCollectionArgArrayList()
     {
         return DynamicDataSources.GetExchangeRateCollectionArgArrayList();
+    }
+
+    private static IEnumerable<object[]> GetBaseMeasurementIsExchangeableToArgArrayList()
+    {
+        return DynamicDataSources.GetBaseMeasurementIsExchangeableToArgArrayList();
     }
     #endregion
     #endregion
