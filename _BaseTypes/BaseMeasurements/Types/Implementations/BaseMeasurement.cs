@@ -87,6 +87,7 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
     //{
     //    return GetValidMeasureUnits().Where(x => x.GetType().Equals(measureUnitCode.GetMeasureUnitType()));
     //}
+
     public static IEnumerable<Enum> GetNotUsedCustomMeasureUnits(MeasureUnitCode measureUnitCode)
     {
         ValidateCustomMeasureUnitCode(measureUnitCode);
@@ -295,6 +296,37 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
     }
     #endregion
 
+    #region Abstract methods
+    public abstract string GetName();
+    #endregion
+
+    #region Override methods
+    #region Sealed methods
+    public override sealed bool Equals(object? obj)
+    {
+        return obj is IBaseMeasurement other
+            && Equals(other);
+    }
+
+    public override sealed int GetHashCode()
+    {
+        return HashCode.Combine(GetMeasureUnitCode(), GetExchangeRate());
+    }
+
+    public override sealed TypeCode GetQuantityTypeCode()
+    {
+        return base.GetQuantityTypeCode();
+    }
+
+    public override sealed void ValidateMeasureUnit(Enum? measureUnit, string paramName)
+    {
+        if (ExchangeRateCollection.ContainsKey(NullChecked(measureUnit, paramName))) return;
+
+        throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName);
+    }
+    #endregion
+    #endregion
+
     public int CompareTo(IBaseMeasurement? other)
     {
         if (other == null) return 1;
@@ -356,37 +388,6 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
     {
         ValidateExchangeRate(exchangeRate, paramName, GetBaseMeasureUnit());
     }
-
-    #region Override methods
-    #region Sealed methods
-    public override sealed bool Equals(object? obj)
-    {
-        return obj is IBaseMeasurement other
-            && Equals(other);
-    }
-
-    public override sealed int GetHashCode()
-    {
-        return HashCode.Combine(GetMeasureUnitCode(), GetExchangeRate());
-    }
-
-    public override sealed TypeCode GetQuantityTypeCode()
-    {
-        return base.GetQuantityTypeCode();
-    }
-
-    public override sealed void ValidateMeasureUnit(Enum? measureUnit, string paramName)
-    {
-        if (ExchangeRateCollection.ContainsKey(NullChecked(measureUnit, paramName))) return;
-
-        throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName);
-    }
-    #endregion
-
-    #region Abstract methods
-    public abstract string GetName();
-    #endregion
-    #endregion
     #endregion
 
     #region Internal methods

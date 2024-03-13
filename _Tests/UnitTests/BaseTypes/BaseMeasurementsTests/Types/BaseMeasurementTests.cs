@@ -1,6 +1,3 @@
-using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Factories;
-using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasurementsTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
@@ -46,8 +43,6 @@ public sealed class BaseMeasurementTests
     private string _paramName;
     private IRootObject _rootObject;
 
-    //private string _paramName;
-
     #region Readonly fields
     private readonly RandomParams RandomParams = new();
     #endregion
@@ -57,20 +52,7 @@ public sealed class BaseMeasurementTests
     #endregion
     #endregion
 
-    private void SetBaseMeasurement(Enum measureUnit, IBaseMeasurementFactory factory, string measureUnitName)
-    {
-        _baseMeasurement = new(_rootObject, _paramName)
-        {
-            Returns = new()
-            {
-                GetBaseMeasureUnit = measureUnit,
-                GetFactory = factory,
-                GetName = measureUnitName,
-            }
-        };
-    }
     #region Test methods
-
     #region Tested in parent classes' tests
     // BaseMeasurement(IRootObject rootObject, string measureUnitName)
     // Enum IMeasureUnit.GetBaseMeasureUnit()
@@ -91,7 +73,7 @@ public sealed class BaseMeasurementTests
     public void CompareTo_nullArg_IBaseMeasurement_returns_expected()
     {
         // Arrange
-        SetBaseMeasurement(_measureUnit, null, null);
+        SetBaseMeasurementChild(_measureUnit, null, null);
         IBaseMeasurement other = null;
         const int expected = 1;
 
@@ -106,7 +88,7 @@ public sealed class BaseMeasurementTests
     public void CompareTo_invalidArg_IBaseMeasurement_throws_InvalidEnumArgumentException()
     {
         // Arrange
-        SetBaseMeasurement(_measureUnit, null, null);
+        SetBaseMeasurementChild(_measureUnit, null, null);
         _measureUnitCode = RandomParams.GetRandomMeasureUnitCode(_measureUnitCode);
         IBaseMeasurement other = new BaseMeasurementChild(_rootObject, _paramName)
         {
@@ -128,7 +110,7 @@ public sealed class BaseMeasurementTests
     public void CompareTo_validArg_IBaseMeasurement_returns_expected()
     {
         // Arrange
-        SetBaseMeasurement(_measureUnit, null, null);
+        SetBaseMeasurementChild(_measureUnit, null, null);
         IBaseMeasurement other = new BaseMeasurementChild(_rootObject, _paramName)
         {
             Returns = new()
@@ -154,7 +136,7 @@ public sealed class BaseMeasurementTests
     public void Equals_arg_object_returns_expected(bool expected, object obj, Enum measureUnit)
     {
         // Arrange
-        SetBaseMeasurement(measureUnit, null, null);
+        SetBaseMeasurementChild(measureUnit, null, null);
 
         // Act
         var actual = _baseMeasurement.Equals(obj);
@@ -170,7 +152,7 @@ public sealed class BaseMeasurementTests
     public void Equals_arg_IBaseMeasurement_returns_expected(bool expected, Enum measureUnit, IBaseMeasurement other)
     {
         // Arrange
-        SetBaseMeasurement(measureUnit, null, null);
+        SetBaseMeasurementChild(measureUnit, null, null);
 
         // Act
         var actual = _baseMeasurement.Equals(other);
@@ -187,7 +169,7 @@ public sealed class BaseMeasurementTests
     public void GetBaseMeasurement_arg_creates()
     {
         // Arrange
-        SetBaseMeasurement(_measureUnit, new BaseMeasurementFactoryObject(), null);
+        SetBaseMeasurementChild(_measureUnit, new BaseMeasurementFactoryObject(), null);
         _measureUnit = RandomParams.GetRandomMeasureUnitOrMeasureUnitCode();
 
         // Act
@@ -205,7 +187,7 @@ public sealed class BaseMeasurementTests
     public void GetConstantExchangeRateCollection_returns_expected()
     {
         // Arrange
-        SetBaseMeasurement(_measureUnit, null, null);
+        SetBaseMeasurementChild(_measureUnit, null, null);
         IDictionary<object, decimal> expected = ConstantExchangeRateCollection
             .Where(x => x.Key.GetType().Name == Enum.GetName(_measureUnitCode))
             .ToDictionary(x => x.Key, x => x.Value);
@@ -225,7 +207,7 @@ public sealed class BaseMeasurementTests
     public void GetExchangeRate_returns_expected()
     {
         // Arrange
-        SetBaseMeasurement(_measureUnit, null, null);
+        SetBaseMeasurementChild(_measureUnit, null, null);
         decimal expected = ExchangeRateCollection
             .FirstOrDefault(x => x.Key.Equals(_measureUnit))
             .Value;
@@ -246,7 +228,7 @@ public sealed class BaseMeasurementTests
     public void GetExchangeRateCollection_returns_expected(Enum measureUnit, MeasureUnitCode measureUnitCode)
     {
         // Arrange
-        SetBaseMeasurement(measureUnit, null, null);
+        SetBaseMeasurementChild(measureUnit, null, null);
         IDictionary<object, decimal> expected = ExchangeRateCollection
             .Where(x => x.Key.GetType().Name == Enum.GetName(measureUnitCode))
             .ToDictionary(x => x.Key, x => x.Value);
@@ -260,13 +242,81 @@ public sealed class BaseMeasurementTests
     #endregion
     #endregion
 
-    // int BaseMeasurement.GetHashCode()
-    // string INamed.GetName()
-    // bool IExchangeable<Enum>.IsExchangeableTo(Enum context)
+    #region int GetHashCode
+    #region BaseMeasurement.GetHashCode()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetHashCode_returns_expected()
+    {
+        // Arrange
+        SetBaseMeasurementChild(_measureUnit, null, null);
+        int expected = HashCode.Combine(_baseMeasurement.GetMeasureUnitCode(), _baseMeasurement.GetExchangeRate());
+
+        // Act
+        var actual = _baseMeasurement.GetHashCode();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region string GetName
+    #region INamed.GetName()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetName_returns_expected()
+    {
+        // Arrange
+        string expected = RandomParams.GetRandomParamName();
+        SetBaseMeasurementChild(null, null, expected);
+
+        // Act
+        var actual = _baseMeasurement.GetName();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region bool IsExchangeableTo
+    #region IExchangeable<Enum>.IsExchangeableTo(Enum)
+    [TestMethod, TestCategory("UnitTest")]
+    public void IsExchangeableTo_returns_expected() // hibás + Dynamic kell
+    {
+        // Arrange
+
+        SetBaseMeasurementChild(_measureUnit, null, null);
+        _measureUnit = RandomParams.GetRandomMeasureUnitOrMeasureUnitCode();
+        _measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
+        var expected = GetMeasureUnitElements(_measureUnit, null).MeasureUnitCode == _measureUnitCode;
+
+        // Act
+        var actual = _baseMeasurement.IsExchangeableTo(_measureUnitCode);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
     // decimal IProportional<IBaseMeasurement>.ProportionalTo(IBaseMeasurement other)
     // void IExchangeRate.ValidateExchangeRate(decimal exchangeRate, string measureUnitName)
     // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum measureUnit, string measureUnitName)
     #endregion
+
+    #region Private methods
+    private void SetBaseMeasurementChild(Enum measureUnit, IBaseMeasurementFactory factory, string measureUnitName)
+    {
+        _baseMeasurement = new(_rootObject, _paramName)
+        {
+            Returns = new()
+            {
+                GetBaseMeasureUnit = measureUnit,
+                GetFactory = factory,
+                GetName = measureUnitName,
+            }
+        };
+    }
 
     #region DynamicDataSources
     private static IEnumerable<object[]> GetInvalidEnumMeasureUnitArgArrayList()
@@ -288,6 +338,6 @@ public sealed class BaseMeasurementTests
     {
         return DynamicDataSources.GetExchangeRateCollectionArgArrayList();
     }
-
+    #endregion
     #endregion
 }
