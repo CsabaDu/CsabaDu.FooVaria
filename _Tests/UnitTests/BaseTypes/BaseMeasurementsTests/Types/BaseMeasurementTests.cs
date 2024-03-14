@@ -1,3 +1,5 @@
+using CsabaDu.FooVaria.Tests.TestHelpers.DynamicDataSources;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasurementsTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
@@ -7,13 +9,12 @@ public sealed class BaseMeasurementTests
     [ClassInitialize]
     public static void InitializeBaseMeasurementTestsClass(TestContext context)
     {
-        DynamicDataSources = new();
+        DynamicDataSource = new();
     }
 
     [TestInitialize]
     public void InitializeBaseMeasurementTests()
     {
-        _rootObject = SampleParams.rootObject;
         _measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
         _measureUnit = RandomParams.GetRandomValidMeasureUnit(_measureUnitCode);
         _measureUnitType = _measureUnit.GetType();
@@ -41,14 +42,14 @@ public sealed class BaseMeasurementTests
     private MeasureUnitCode _measureUnitCode;
     private Type _measureUnitType;
     private string _paramName;
-    private IRootObject _rootObject;
 
     #region Readonly fields
     private readonly RandomParams RandomParams = new();
+    private readonly RootObject RootObject = new();
     #endregion
 
     #region Static fields
-    private static DynamicDataSources DynamicDataSources;
+    private static DynamicDataSource DynamicDataSource;
     #endregion
     #endregion
 
@@ -90,7 +91,7 @@ public sealed class BaseMeasurementTests
         // Arrange
         SetBaseMeasurementChild(_measureUnit, null, null);
         _measureUnitCode = RandomParams.GetRandomMeasureUnitCode(_measureUnitCode);
-        IBaseMeasurement other = new BaseMeasurementChild(_rootObject, _paramName)
+        IBaseMeasurement other = new BaseMeasurementChild(RootObject, _paramName)
         {
             Returns = new()
             {
@@ -111,7 +112,7 @@ public sealed class BaseMeasurementTests
     {
         // Arrange
         SetBaseMeasurementChild(_measureUnit, null, null);
-        IBaseMeasurement other = new BaseMeasurementChild(_rootObject, _paramName)
+        IBaseMeasurement other = new BaseMeasurementChild(RootObject, _paramName)
         {
             Returns = new()
             {
@@ -319,7 +320,7 @@ public sealed class BaseMeasurementTests
         // Arrange
         SetBaseMeasurementChild(_measureUnit, null, null);
         _measureUnitCode = RandomParams.GetRandomMeasureUnitCode(_measureUnitCode);
-        BaseMeasurementChild other = new(_rootObject, _paramName)
+        BaseMeasurementChild other = new(RootObject, _paramName)
         {
             Returns = new()
             {
@@ -340,7 +341,7 @@ public sealed class BaseMeasurementTests
     {
         // Arrange
         SetBaseMeasurementChild(_measureUnit, null, null);
-        BaseMeasurementChild other = new(_rootObject, _paramName)
+        BaseMeasurementChild other = new(RootObject, _paramName)
         {
             Returns = new()
             {
@@ -365,7 +366,7 @@ public sealed class BaseMeasurementTests
     #region Private methods
     private void SetBaseMeasurementChild(Enum measureUnit, IBaseMeasurementFactory factory, string measureUnitName)
     {
-        _baseMeasurement = new(_rootObject, _paramName)
+        _baseMeasurement = new(RootObject, _paramName)
         {
             Returns = new()
             {
@@ -376,30 +377,30 @@ public sealed class BaseMeasurementTests
         };
     }
 
-    #region DynamicDataSources
+    #region DynamicDataSource
     private static IEnumerable<object[]> GetInvalidEnumMeasureUnitArgArrayList()
     {
-        return DynamicDataSources.GetInvalidEnumMeasureUnitArgArrayList();
+        return DynamicDataSource.GetInvalidEnumMeasureUnitArgArrayList();
     }
 
     private static IEnumerable<object[]> GetBaseMeasurementEqualsObjectArgArrayList()
     {
-        return DynamicDataSources.GetBaseMeasurementEqualsObjectArgArrayList();
+        return DynamicDataSource.GetBaseMeasurementEqualsObjectArgArrayList();
     }
 
     private static IEnumerable<object[]> GetBaseMeasurementEqualsBaseMeasurementArgArrayList()
     {
-        return DynamicDataSources.GetBaseMeasurementEqualsBaseMeasurementArgArrayList();
+        return DynamicDataSource.GetBaseMeasurementEqualsBaseMeasurementArgArrayList();
     }
 
     private static IEnumerable<object[]> GetExchangeRateCollectionArgArrayList()
     {
-        return DynamicDataSources.GetExchangeRateCollectionArgArrayList();
+        return DynamicDataSource.GetExchangeRateCollectionArgArrayList();
     }
 
     private static IEnumerable<object[]> GetBaseMeasurementIsExchangeableToArgArrayList()
     {
-        return DynamicDataSources.GetBaseMeasurementIsExchangeableToArgArrayList();
+        return DynamicDataSource.GetBaseMeasurementIsExchangeableToArgArrayList();
     }
     #endregion
     #endregion
