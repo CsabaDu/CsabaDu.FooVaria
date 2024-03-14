@@ -427,15 +427,14 @@ public sealed class BaseMeasurementTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void ValidateMeasureUnit_validArg_Enum_arg_string_returns()
+    [DynamicData(nameof(GetBaseMeasurementValidateMeasureUnitValidArgsArrayList), DynamicDataSourceType.Method)]
+    public void ValidateMeasureUnit_validArg_Enum_arg_string_returns(Enum measureUnit, Enum context)
     {
         // Arrange
-        _measureUnit = RandomParams.GetRandomValidMeasureUnitOrMeasureUnitCode();
-        MeasureUnitElements measureunitElements = GetMeasureUnitElements(_measureUnit, null);
-        SetBaseMeasurementChild(measureunitElements.MeasureUnit, null, null);
+        SetBaseMeasurementChild(measureUnit, null, null);
 
         // Act
-        void validator() => _baseMeasurement.ValidateMeasureUnit(_measureUnit, _paramName);
+        void validator() => _baseMeasurement.ValidateMeasureUnit(context, _paramName);
 
         // Assert
         Assert.IsTrue(Returned(validator));
@@ -459,11 +458,6 @@ public sealed class BaseMeasurementTests
     }
 
     #region DynamicDataSource
-    private static IEnumerable<object[]> GetInvalidEnumMeasureUnitArgArrayList()
-    {
-        return DynamicDataSource.GetInvalidEnumMeasureUnitArgArrayList();
-    }
-
     private static IEnumerable<object[]> GetBaseMeasurementEqualsObjectArgArrayList()
     {
         return DynamicDataSource.GetBaseMeasurementEqualsObjectArgArrayList();
@@ -492,6 +486,11 @@ public sealed class BaseMeasurementTests
     private static IEnumerable<object[]> GetBaseMeasurementValidateMeasureUnitInvalidArgsArrayList()
     {
         return DynamicDataSource.GetBaseMeasurementValidateMeasureUnitInvalidArgsArrayList();
+    }
+
+    private static IEnumerable<object[]> GetBaseMeasurementValidateMeasureUnitValidArgsArrayList()
+    {
+        return DynamicDataSource.GetBaseMeasurementValidateMeasureUnitValidArgsArrayList();
     }
     #endregion
     #endregion

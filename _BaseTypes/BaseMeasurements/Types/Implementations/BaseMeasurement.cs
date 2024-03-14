@@ -324,10 +324,7 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
 
     public override sealed void ValidateMeasureUnit(Enum? measureUnit, string paramName)
     {
-        MeasureUnitElements measureUnitElements = GetMeasureUnitElements(measureUnit, paramName);
-        base.ValidateMeasureUnit(measureUnitElements.MeasureUnit, paramName);
-
-        if (ExchangeRateCollection.ContainsKey(NullChecked(measureUnit, paramName))) return;
+        if (IsExchangeableTo(NullChecked(measureUnit, paramName))) return;
 
         throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName);
     }
