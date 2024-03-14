@@ -1,5 +1,3 @@
-using CsabaDu.FooVaria.Tests.TestHelpers.DynamicDataSources;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasurementsTests.Types;
 
 [TestClass, TestCategory("UnitTest")]

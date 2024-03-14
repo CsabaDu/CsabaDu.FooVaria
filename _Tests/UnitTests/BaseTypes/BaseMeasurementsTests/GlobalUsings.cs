@@ -2,6 +2,7 @@ global using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Factories;
 global using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types;
 global using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
 global using CsabaDu.FooVaria.Tests.TestHelpers.DynamicDataSources;
+global using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Factories;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Types;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Params;
