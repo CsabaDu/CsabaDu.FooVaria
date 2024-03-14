@@ -16,120 +16,114 @@ public class DynamicDataSource
     #endregion
     #endregion
 
-    #region Records
-    #region Abstract ObjectArray
-    public abstract record ObjectArray
-    {
-        public abstract object[] ToObjectArray();
-    }
-    #endregion
+    //#region Records
 
-    #region bool
-    public record Bool_arg(bool IsTrue) : ObjectArray
-    {
-        public override object[] ToObjectArray() => [IsTrue];
-    }
+    //#region bool
+    //public record Bool_arg(bool IsTrue) : ObjectArray
+    //{
+    //    public override object[] ToObjectArray() => [IsTrue];
+    //}
 
-    #region bool, Enum
-    public record Bool_Enum_args(bool IsTrue, Enum MeasureUnit) : Bool_arg(IsTrue)
-    {
-        public override object[] ToObjectArray() => [IsTrue, MeasureUnit];
-    }
+    //#region bool, Enum
+    //public record Bool_Enum_args(bool IsTrue, Enum MeasureUnit) : Bool_arg(IsTrue)
+    //{
+    //    public override object[] ToObjectArray() => [IsTrue, MeasureUnit];
+    //}
 
-    #region bool, Enum, Enum
-    public record Bool_Enum_Enum_args(bool IsTrue, Enum MeasureUnit, Enum Context) : Bool_Enum_args(IsTrue, MeasureUnit)
-    {
-        public override object[] ToObjectArray() => [IsTrue, MeasureUnit, Context];
-    }
-    #endregion
+    //#region bool, Enum, Enum
+    //public record Bool_Enum_Enum_args(bool IsTrue, Enum MeasureUnit, Enum Context) : Bool_Enum_args(IsTrue, MeasureUnit)
+    //{
+    //    public override object[] ToObjectArray() => [IsTrue, MeasureUnit, Context];
+    //}
+    //#endregion
 
-    #region bool, Enum, IBaseMeasurement
-    public record Bool_Enum_IBaseMeasurement_args(bool IsTrue, Enum MeasureUnit, IBaseMeasurement BaseMeasurement) : Bool_Enum_args(IsTrue, MeasureUnit)
-    {
-        public override object[] ToObjectArray() => [IsTrue, MeasureUnit, BaseMeasurement];
-    }
-    #endregion
-    #endregion
+    //#region bool, Enum, IBaseMeasurement
+    //public record Bool_Enum_IBaseMeasurement_args(bool IsTrue, Enum MeasureUnit, IBaseMeasurement BaseMeasurement) : Bool_Enum_args(IsTrue, MeasureUnit)
+    //{
+    //    public override object[] ToObjectArray() => [IsTrue, MeasureUnit, BaseMeasurement];
+    //}
+    //#endregion
+    //#endregion
 
-    #region bool, object
-    public record Bool_Object_args(bool IsTrue, object Obj) : Bool_arg(IsTrue)
-    {
-        public override object[] ToObjectArray() => [IsTrue, Obj];
-    }
+    //#region bool, object
+    //public record Bool_Object_args(bool IsTrue, object Obj) : Bool_arg(IsTrue)
+    //{
+    //    public override object[] ToObjectArray() => [IsTrue, Obj];
+    //}
 
-    #region bool, object, Enum
-    public record Bool_Object_Enum_args(bool IsTrue, object Obj, Enum MeasureUnit) : Bool_Object_args(IsTrue, Obj)
-    {
-        public override object[] ToObjectArray() => [IsTrue, Obj, MeasureUnit];
-    }
+    //#region bool, object, Enum
+    //public record Bool_Object_Enum_args(bool IsTrue, object Obj, Enum MeasureUnit) : Bool_Object_args(IsTrue, Obj)
+    //{
+    //    public override object[] ToObjectArray() => [IsTrue, Obj, MeasureUnit];
+    //}
 
-    #region bool, object, Enum, Enum
-    public record Bool_Object_Enum_Enum_args(bool IsTrue, object Obj, Enum MeasureUnit, Enum OtherMeasureUnit) : Bool_Object_Enum_args(IsTrue, Obj, MeasureUnit)
-    {
-        public override object[] ToObjectArray() => [IsTrue, Obj, MeasureUnit, OtherMeasureUnit];
-    }
+    //#region bool, object, Enum, Enum
+    //public record Bool_Object_Enum_Enum_args(bool IsTrue, object Obj, Enum MeasureUnit, Enum OtherMeasureUnit) : Bool_Object_Enum_args(IsTrue, Obj, MeasureUnit)
+    //{
+    //    public override object[] ToObjectArray() => [IsTrue, Obj, MeasureUnit, OtherMeasureUnit];
+    //}
 
-    #endregion
-    #endregion
-    #endregion
+    //#endregion
+    //#endregion
+    //#endregion
 
-    #region bool, MeasureUnitCode
-    public record Bool_MeasureUnitCode_args(bool IsTrue, MeasureUnitCode MeasureUnitCode) : Bool_arg(IsTrue)
-    {
-        public override object[] ToObjectArray() => [IsTrue, MeasureUnitCode];
-    }
+    //#region bool, MeasureUnitCode
+    //public record Bool_MeasureUnitCode_args(bool IsTrue, MeasureUnitCode MeasureUnitCode) : Bool_arg(IsTrue)
+    //{
+    //    public override object[] ToObjectArray() => [IsTrue, MeasureUnitCode];
+    //}
 
-    #region bool, MeasureUnitCode, object
-    public record Bool_MeasureUnitCode_Object_args(bool IsTrue, MeasureUnitCode MeasureUnitCode, object Obj) : Bool_MeasureUnitCode_args(IsTrue, MeasureUnitCode)
-    {
-        public override object[] ToObjectArray() => [IsTrue];
-    }
-    #endregion
-    #endregion
-    #endregion
+    //#region bool, MeasureUnitCode, object
+    //public record Bool_MeasureUnitCode_Object_args(bool IsTrue, MeasureUnitCode MeasureUnitCode, object Obj) : Bool_MeasureUnitCode_args(IsTrue, MeasureUnitCode)
+    //{
+    //    public override object[] ToObjectArray() => [IsTrue];
+    //}
+    //#endregion
+    //#endregion
+    //#endregion
 
-    #region Enum
-    public record Enum_arg(Enum MeasureUnit) : ObjectArray
-    {
-        public override object[] ToObjectArray() => [MeasureUnit];
-    }
+    //#region Enum
+    //public record Enum_arg(Enum MeasureUnit) : ObjectArray
+    //{
+    //    public override object[] ToObjectArray() => [MeasureUnit];
+    //}
 
-    #region Enum, MeasureUnitCode
-    public record Enum_MeasureUnitCode_args(Enum MeasureUnit, MeasureUnitCode MeasureUnitCode) : Enum_arg(MeasureUnit)
-    {
-        public override object[] ToObjectArray() => [MeasureUnit, MeasureUnitCode];
-    }
+    //#region Enum, MeasureUnitCode
+    //public record Enum_MeasureUnitCode_args(Enum MeasureUnit, MeasureUnitCode MeasureUnitCode) : Enum_arg(MeasureUnit)
+    //{
+    //    public override object[] ToObjectArray() => [MeasureUnit, MeasureUnitCode];
+    //}
 
-    #region Enum, MeasureUnitCode, bool
-    public record Enum_MeasureUnitCode_bool_args(Enum MeasureUnit, MeasureUnitCode MeasureUnitCode, bool IsTrue) : Enum_MeasureUnitCode_args(MeasureUnit, MeasureUnitCode)
-    {
-        public override object[] ToObjectArray() => [MeasureUnit, MeasureUnitCode, IsTrue];
-    }
-    #endregion
-    #endregion
-    #endregion
+    //#region Enum, MeasureUnitCode, bool
+    //public record Enum_MeasureUnitCode_bool_args(Enum MeasureUnit, MeasureUnitCode MeasureUnitCode, bool IsTrue) : Enum_MeasureUnitCode_args(MeasureUnit, MeasureUnitCode)
+    //{
+    //    public override object[] ToObjectArray() => [MeasureUnit, MeasureUnitCode, IsTrue];
+    //}
+    //#endregion
+    //#endregion
+    //#endregion
 
-    #region MeasureUnitCode
-    public record MeasureUnitCode_arg(MeasureUnitCode MeasureUnitCode) : ObjectArray
-    {
-        public override object[] ToObjectArray() => [MeasureUnitCode];
-    }
+    //#region MeasureUnitCode
+    //public record MeasureUnitCode_arg(MeasureUnitCode MeasureUnitCode) : ObjectArray
+    //{
+    //    public override object[] ToObjectArray() => [MeasureUnitCode];
+    //}
 
-    #region MeasureUnitCode, IMeasurable
-    public record MeasureUnitCode_IMeasurable_args(MeasureUnitCode MeasureUnitCode, IMeasurable Measurable) : MeasureUnitCode_arg(MeasureUnitCode)
-    {
-        public override object[] ToObjectArray() => [MeasureUnitCode, Measurable];
-    }
+    //#region MeasureUnitCode, IMeasurable
+    //public record MeasureUnitCode_IMeasurable_args(MeasureUnitCode MeasureUnitCode, IMeasurable Measurable) : MeasureUnitCode_arg(MeasureUnitCode)
+    //{
+    //    public override object[] ToObjectArray() => [MeasureUnitCode, Measurable];
+    //}
 
-    #region MeasureUnitCode, IMeasurable, bool
-    public record MeasureUnitCode_IMeasurable_bool_args(MeasureUnitCode MeasureUnitCode, IMeasurable Measurable, bool IsTrue) : MeasureUnitCode_IMeasurable_args(MeasureUnitCode, Measurable)
-    {
-        public override object[] ToObjectArray() => [MeasureUnitCode, Measurable, IsTrue];
-    }
-    #endregion
-    #endregion
-    #endregion
-    #endregion
+    //#region MeasureUnitCode, IMeasurable, bool
+    //public record MeasureUnitCode_IMeasurable_bool_args(MeasureUnitCode MeasureUnitCode, IMeasurable Measurable, bool IsTrue) : MeasureUnitCode_IMeasurable_args(MeasureUnitCode, Measurable)
+    //{
+    //    public override object[] ToObjectArray() => [MeasureUnitCode, Measurable, IsTrue];
+    //}
+    //#endregion
+    //#endregion
+    //#endregion
+    //#endregion
 
     #region ArrayList methods
     public IEnumerable<object[]> GetInvalidEnumMeasureUnitArgArrayList()
