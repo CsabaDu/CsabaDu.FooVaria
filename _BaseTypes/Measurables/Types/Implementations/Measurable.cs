@@ -318,18 +318,9 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
 
     public virtual void ValidateMeasureUnit(Enum? measureUnit, [DisallowNull] string paramName)
     {
-        if (measureUnit is MeasureUnitCode measureUnitCode)
-        {
-            ValidateMeasureUnitCode(measureUnitCode, paramName);
-        }
-        else
-        {
-            measureUnitCode = GetMeasureUnitCode(DefinedMeasureUnit(measureUnit, paramName));
+        MeasureUnitElements measureUnitElements = GetMeasureUnitElements(measureUnit, paramName);
 
-            if (HasMeasureUnitCode(measureUnitCode)) return;
-
-            throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName);
-        }
+        ValidateMeasureUnitCode(measureUnitElements.MeasureUnitCode, paramName);
     }
 
     public virtual void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, [DisallowNull] string paramName)

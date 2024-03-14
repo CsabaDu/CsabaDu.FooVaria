@@ -5,7 +5,29 @@ public sealed class RandomParams
     #region Private fields
     private static readonly Random Random = Random.Shared;
     private static readonly IEnumerable<MeasureUnitCode> CustomMeasureUnitCodes = MeasureUnitCodes.Where(x => x.IsCustomMeasureUnitCode());
+    private static readonly IEnumerable<MeasureUnitCode> ConstantMeasureUnitCodes = MeasureUnitCodes.Where(x => !x.IsCustomMeasureUnitCode());
     #endregion
+
+    public Enum GetRandomConstantMeasureUnit(Enum excluded = null)
+    {
+        Enum measureUnit = (Enum)GetRandomItem(ConstantExchangeRateCollection.Keys);
+
+        if (excluded == null) return measureUnit;
+
+        MeasureUnitCode measureUnitCode = GetMeasureUnitCode(excluded);
+
+        while (measureUnit.Equals(excluded) || GetMeasureUnitCode(measureUnit) != measureUnitCode)
+        {
+            measureUnit = (Enum)GetRandomItem(ConstantExchangeRateCollection.Keys);
+        }
+
+        return measureUnit;
+    }
+
+    public MeasureUnitCode GetRandomConstantMeasureUnitCode()
+    {
+        return GetRandomItem(ConstantMeasureUnitCodes);
+    }
 
     public Enum GetRandomMeasureUnitOrMeasureUnitCode()
     {

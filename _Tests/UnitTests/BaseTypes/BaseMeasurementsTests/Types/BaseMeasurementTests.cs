@@ -1,3 +1,5 @@
+using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasurementsTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
@@ -373,7 +375,6 @@ public sealed class BaseMeasurementTests
         var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
         Assert.AreEqual(_paramName, ex.ParamName);
     }
-    #endregion
 
     [TestMethod, TestCategory("UnitTest")]
     public void ValidateExchangeRate_validArg_decimal_arg_string_returns()
@@ -389,8 +390,58 @@ public sealed class BaseMeasurementTests
         Assert.IsTrue(Returned(validator));
     }
     #endregion
+    #endregion
 
-    // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum measureUnit, string paramName)
+    #region void ValidateMeasureUnit
+    #region IDefaultMeasureUnit.ValidateMeasureUnit(Enum?, string)
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateMeasureUnit_nullArg_Enum_arg_string_throws_ArgumentNullException()
+    {
+        // Arrange
+        SetBaseMeasurementChild(_measureUnit, null, null);
+        _paramName = RandomParams.GetRandomParamName();
+
+        // Act
+        void attempt() => _baseMeasurement.ValidateMeasureUnit(null, _paramName);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
+        Assert.AreEqual(_paramName, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetBaseMeasurementValidateMeasureUnitInvalidArgsArrayList), DynamicDataSourceType.Method)]
+    public void ValidateMeasureUnit_invalidArg_Enum_arg_string_throws_InvalidEnumArgumentException(Enum measureUnit, MeasureUnitCode measureUnitCode)
+    {
+        // Arrange
+        _measureUnit = measureUnitCode.GetDefaultMeasureUnit();
+        _paramName = RandomParams.GetRandomParamName();
+        SetBaseMeasurementChild(_measureUnit, null, null);
+
+        // Act
+        void attempt() => _baseMeasurement.ValidateMeasureUnit(measureUnit, _paramName);
+
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(_paramName, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateMeasureUnit_validArg_Enum_arg_string_returns()
+    {
+        // Arrange
+        _measureUnit = RandomParams.GetRandomValidMeasureUnitOrMeasureUnitCode();
+        MeasureUnitElements measureunitElements = GetMeasureUnitElements(_measureUnit, null);
+        SetBaseMeasurementChild(measureunitElements.MeasureUnit, null, null);
+
+        // Act
+        void validator() => _baseMeasurement.ValidateMeasureUnit(_measureUnit, _paramName);
+
+        // Assert
+        Assert.IsTrue(Returned(validator));
+    }
+    #endregion
+    #endregion
     #endregion
 
     #region Private methods
@@ -436,6 +487,11 @@ public sealed class BaseMeasurementTests
     private static IEnumerable<object[]> GetValidateExchangeRateArgArrayList()
     {
         return DynamicDataSource.GetValidateExchangeRateArgArrayList();
+    }
+
+    private static IEnumerable<object[]> GetBaseMeasurementValidateMeasureUnitInvalidArgsArrayList()
+    {
+        return DynamicDataSource.GetBaseMeasurementValidateMeasureUnitInvalidArgsArrayList();
     }
     #endregion
     #endregion

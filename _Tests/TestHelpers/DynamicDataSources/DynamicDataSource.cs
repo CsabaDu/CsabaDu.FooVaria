@@ -398,5 +398,28 @@ public sealed class DynamicDataSource
         #endregion
     }
 
+    public IEnumerable<object[]> GetBaseMeasurementValidateMeasureUnitInvalidArgsArrayList()
+    {
+        foreach (object[] item in GetMeasurableValidateMeasureUnitInvalidArgsArrayList())
+        {
+            yield return item;
+        }
+
+        // Different type valid type different measureUnit
+        measureUnitCode = RandomParams.GetRandomConstantMeasureUnitCode();
+        measureUnit = RandomParams.GetRandomConstantMeasureUnit(measureUnitCode.GetDefaultMeasureUnit());
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            Enum_MeasureUnitCode_args item = new(measureUnit, measureUnitCode);
+
+            return item.ToObjectArray();
+        }
+        #endregion
+    }
+
     #endregion
 }

@@ -1,7 +1,3 @@
-using CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors;
-using CsabaDu.FooVaria.BaseTypes.Measurables.Types;
-using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.MeasurablesTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
