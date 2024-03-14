@@ -331,13 +331,6 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
     #endregion
     #endregion
 
-    #region Virtual methods
-    public virtual void ValidateExchangeRate(decimal exchangeRate, string paramName)
-    {
-        ValidateExchangeRate(exchangeRate, paramName, GetBaseMeasureUnit());
-    }
-    #endregion
-
     public int CompareTo(IBaseMeasurement? other)
     {
         if (other == null) return 1;
@@ -393,6 +386,11 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         if (HasMeasureUnitCode(measureUnitCode)) return GetExchangeRate() / other!.GetExchangeRate();
 
         throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
+    }
+
+    public void ValidateExchangeRate(decimal exchangeRate, string paramName)
+    {
+        ValidateExchangeRate(exchangeRate, paramName, GetBaseMeasureUnit());
     }
     #endregion
 

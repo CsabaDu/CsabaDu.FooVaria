@@ -360,11 +360,11 @@ public sealed class BaseMeasurementTests
     #region IExchangeRate.ValidateExchangeRate(decimal, string)
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetValidateExchangeRateArgArrayList), DynamicDataSourceType.Method)]
-    public void ValidateExchangeRate_invalidArg_decimal_throws_ArgumentOutOfRangeException(decimal exchangeRate)
+    public void ValidateExchangeRate_invalidArg_decimal_arg_string_throws_ArgumentOutOfRangeException(Enum measureUnit, decimal exchangeRate)
     {
         // Arrange
         _paramName = RandomParams.GetRandomParamName();
-        SetBaseMeasurementChild(_measureUnit, null, null);
+        SetBaseMeasurementChild(measureUnit, null, null);
 
         // Act
         void attempt() => _baseMeasurement.ValidateExchangeRate(exchangeRate, _paramName);
@@ -374,6 +374,20 @@ public sealed class BaseMeasurementTests
         Assert.AreEqual(_paramName, ex.ParamName);
     }
     #endregion
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateExchangeRate_validArg_decimal_arg_string_returns()
+    {
+        // Arrange
+        SetBaseMeasurementChild(_measureUnit, null, null);
+        decimal exchangeRate = GetExchangeRate(_measureUnit, null);
+
+        // Act
+        void validator() => _baseMeasurement.ValidateExchangeRate(exchangeRate, null);
+
+        // Assert
+        Assert.IsTrue(Returned(validator));
+    }
     #endregion
 
     // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum measureUnit, string paramName)

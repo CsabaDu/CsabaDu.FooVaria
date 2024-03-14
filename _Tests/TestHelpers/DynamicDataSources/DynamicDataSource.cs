@@ -380,16 +380,18 @@ public sealed class DynamicDataSource
 
     public IEnumerable<object[]> GetValidateExchangeRateArgArrayList()
     {
+        measureUnit = RandomParams.GetRandomValidMeasureUnit();
         exchangeRate = 0;
         yield return toObjectArray();
 
         exchangeRate = RandomParams.GetRandomNegativeDecimal();
         yield return toObjectArray();
 
+        exchangeRate = RandomParams.GetRandomPositiveDecimal(GetExchangeRate(measureUnit, null));
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Decimal_arg item = new(exchangeRate);
+            Enum_Decimal_args item = new(measureUnit, exchangeRate);
 
             return item.ToObjectArray();
         }

@@ -1,3 +1,7 @@
+using CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors;
+using CsabaDu.FooVaria.BaseTypes.Measurables.Types;
+using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.MeasurablesTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
@@ -270,25 +274,12 @@ public sealed class MeasurableTests
             GetBaseMeasureUnit = measureUnitCode.GetDefaultMeasureUnit(),
         };
         _paramName = RandomParams.GetRandomParamName();
-        bool returned;
 
         // Act
-        try
-        {
-            _measurable.ValidateMeasureUnit(measureUnit, _paramName);
-            returned = true;
-        }
-        catch (InvalidEnumArgumentException)
-        {
-            returned = false;
-        }
-        catch (Exception ex)
-        {
-            throw new Exception(ex.Message, ex);
-        }
+        void validator() => _measurable.ValidateMeasureUnit(measureUnit, _paramName);
 
         // Assert
-        Assert.IsTrue(returned);
+        Assert.IsTrue(Returned(validator));
     }
     #endregion
     #endregion
@@ -342,25 +333,11 @@ public sealed class MeasurableTests
         };
         _paramName = RandomParams.GetRandomParamName();
 
-        bool returned;
-
         // Act
-        try
-        {
-            _measurable.ValidateMeasureUnitCode(measurable, _paramName);
-            returned = true;
-        }
-        catch (InvalidEnumArgumentException)
-        {
-            returned = false;
-        }
-        catch (Exception ex)
-        {
-            throw new Exception(ex.Message, ex);
-        }
+        void validator() => _measurable.ValidateMeasureUnitCode(measurable, _paramName);
 
         // Assert
-        Assert.IsTrue(returned);
+        Assert.IsTrue(Returned(validator));
     }
     #endregion
 
@@ -389,25 +366,12 @@ public sealed class MeasurableTests
     {
         // Arrange
         _paramName = RandomParams.GetRandomParamName();
-        bool returned;
 
         // Act
-        try
-        {
-            _measurable.ValidateMeasureUnitCode(_measureUnitCode, _paramName);
-            returned = true;
-        }
-        catch (InvalidEnumArgumentException)
-        {
-            returned = false;
-        }
-        catch (Exception ex)
-        {
-            throw new Exception(ex.Message, ex);
-        }
+        void validator() => _measurable.ValidateMeasureUnitCode(_measureUnitCode, _paramName);
 
         // Assert
-        Assert.IsTrue(returned);
+        Assert.IsTrue(Returned(validator));
     }
     #endregion
     #endregion

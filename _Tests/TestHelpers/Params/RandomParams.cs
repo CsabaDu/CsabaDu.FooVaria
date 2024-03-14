@@ -3,7 +3,6 @@
 public sealed class RandomParams
 {
     #region Private fields
-    private const int ItemCount = 1000;
     private static readonly Random Random = Random.Shared;
     private static readonly IEnumerable<MeasureUnitCode> CustomMeasureUnitCodes = MeasureUnitCodes.Where(x => x.IsCustomMeasureUnitCode());
     #endregion
@@ -28,11 +27,11 @@ public sealed class RandomParams
     }
 
     #region Public methods
-    public MeasureUnitCode GetRandomMeasureUnitCode(MeasureUnitCode? excludedMeasureUnitCode = null)
+    public MeasureUnitCode GetRandomMeasureUnitCode(MeasureUnitCode? excluded = null)
     {
         MeasureUnitCode randomMeasureUnitCode = getRandomMeasureUnitCode();
 
-        while (randomMeasureUnitCode == excludedMeasureUnitCode)
+        while (randomMeasureUnitCode == excluded)
         {
             randomMeasureUnitCode = getRandomMeasureUnitCode();
         }
@@ -47,12 +46,12 @@ public sealed class RandomParams
         #endregion
     }
 
-    public Enum GetRandomMeasureUnit(MeasureUnitCode? measureUnitTypeCode = null, Enum excludedMeasureUnit = null)
+    public Enum GetRandomMeasureUnit(MeasureUnitCode? measureUnitTypeCode = null, Enum excluded = null)
     {
         measureUnitTypeCode ??= GetRandomMeasureUnitCode();
         Enum randomMeasureUnit = getRandomMeasureUnit();
 
-        while (randomMeasureUnit.Equals(excludedMeasureUnit))
+        while (randomMeasureUnit.Equals(excluded))
         {
             randomMeasureUnit = getRandomMeasureUnit();
         }
@@ -67,18 +66,18 @@ public sealed class RandomParams
         #endregion
     }
 
-    public Enum GetRandomNotDefinedMeasureUnit(MeasureUnitCode? excludedMeasureUnitCode = null)
+    public Enum GetRandomNotDefinedMeasureUnit(MeasureUnitCode? excluded = null)
     {
-        MeasureUnitCode measureUnitCode = GetRandomMeasureUnitCode(excludedMeasureUnitCode);
+        MeasureUnitCode measureUnitCode = GetRandomMeasureUnitCode(excluded);
 
         return SampleParams.GetNotDefinedMeasureUnit(measureUnitCode);
     }
 
-    public Enum GetRandomValidMeasureUnit(Enum excludedMeasureUnit = null)
+    public Enum GetRandomValidMeasureUnit(Enum excluded = null)
     {
         object randomMeasureUnit = getRandomValidMeasureUnit();
 
-        while (randomMeasureUnit.Equals(excludedMeasureUnit))
+        while (randomMeasureUnit.Equals(excluded))
         {
             randomMeasureUnit = getRandomValidMeasureUnit();
         }
@@ -111,7 +110,7 @@ public sealed class RandomParams
 
         Enum measureUnit = GetRandomMeasureUnit(customMeasureUnitCode);
 
-        while (BaseMeasurement.ExchangeRateCollection.ContainsKey(measureUnit))
+        while (ExchangeRateCollection.ContainsKey(measureUnit))
         {
             measureUnit = GetRandomMeasureUnit(customMeasureUnitCode);
         }
@@ -129,6 +128,18 @@ public sealed class RandomParams
     public decimal GetRandomPositiveDecimal()
     {
         return Convert.ToDecimal(Random.NextInt64(long.MaxValue) + Random.NextDouble());
+    }
+
+    public decimal GetRandomPositiveDecimal(decimal excluded)
+    {
+        decimal excchangeRate = GetRandomPositiveDecimal();
+
+        while (excchangeRate == excluded)
+        {
+            excchangeRate = GetRandomPositiveDecimal();
+        }
+
+        return excchangeRate;
     }
 
     public decimal GetRandomNegativeDecimal()
@@ -179,14 +190,14 @@ public sealed class RandomParams
     #endregion
     #endregion
 
-    //public Enum GetRandomValidMeasureUnit(Enum excludedMeasureUnit = null)
+    //public Enum GetRandomValidMeasureUnit(Enum excluded = null)
     //{
     //    IEnumerable<object> validMeasureUnits = GetValidMeasureUnits();
     //    Enum validMeasureUnit = getRandomValidMeasureUnit();
 
-    //    if (excludedMeasureUnit == null) return validMeasureUnit;
+    //    if (excluded == null) return validMeasureUnit;
 
-    //    while (validMeasureUnit.Equals(excludedMeasureUnit))
+    //    while (validMeasureUnit.Equals(excluded))
     //    {
     //        validMeasureUnit = getRandomValidMeasureUnit();
     //    }
@@ -210,7 +221,7 @@ public sealed class RandomParams
     //    return MeasureUnitTypes.GetDefaultMeasureUnit(measurementUnitTypeCode.Value);
     //}
 
-    //public Enum GetRandomNotDefaultConstantMeasureUnit(MeasureUnitCode? customMeasureUnitCode = null, Enum excludedMeasureUnit = null)
+    //public Enum GetRandomNotDefaultConstantMeasureUnit(MeasureUnitCode? customMeasureUnitCode = null, Enum excluded = null)
     //{
     //    if (!customMeasureUnitCode.HasValue)
     //    {
@@ -220,7 +231,7 @@ public sealed class RandomParams
     //    IEnumerable<object> constantMeasureUnits = GetConstantMeasureUnits()
     //        .Where(x => x.GetType().Equals(customMeasureUnitCode.Value.GetMeasureUnitType()))
     //        .Where(x => (int)x > 0)
-    //        .Where(x => !x.Equals(excludedMeasureUnit));
+    //        .Where(x => !x.Equals(excluded));
 
     //    int randomindex = Random.Next(constantMeasureUnits.Count());
 
