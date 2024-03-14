@@ -7,17 +7,16 @@ public sealed class MeasurableTests
     [ClassInitialize]
     public static void InitializeMeasurableTestsClass(TestContext context)
     {
-        DynamicDataSources = new();
+        DynamicDataSource = new();
     }
 
     [TestInitialize]
     public void InitializeMeasurableTests()
     {
         _paramName = null;
-        _rootObject = SampleParams.rootObject;
         _measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
         _measureUnit = RandomParams.GetRandomMeasureUnit(_measureUnitCode);
-        _measurable = new(_rootObject, _paramName)
+        _measurable = new(RootObject, _paramName)
         {
             Returns = new()
             {
@@ -44,15 +43,15 @@ public sealed class MeasurableTests
     private MeasureUnitCode _measureUnitCode;
     private Type _measureUnitType;
     private string _paramName;
-    private IRootObject _rootObject;
     private IFactory _factory;
 
     #region Readonly fields
     private readonly RandomParams RandomParams = new();
+    private readonly RootObject RootObject = new();
     #endregion
 
     #region Static fields
-    private static DynamicDataSources DynamicDataSources;
+    private static DynamicDataSource DynamicDataSource;
     #endregion
     #endregion
 
@@ -317,7 +316,7 @@ public sealed class MeasurableTests
     public void ValidateMeasureUnitCode_invalidArg_IMeasurable_arg_string_throws_InvalidEnumArgumentException()
     {
         // Arrange
-        MeasurableChild measurable = new(SampleParams.rootObject, _paramName);
+        MeasurableChild measurable = new(RootObject, _paramName);
         _measureUnitCode = RandomParams.GetRandomMeasureUnitCode(_measureUnitCode);
         measurable.Returns = new()
         {
@@ -337,7 +336,7 @@ public sealed class MeasurableTests
     public void ValidateMeasureUnitCode_validArg_IMeasurable_arg_string_returns()
     {
         // Arrange
-        MeasurableChild measurable = new(SampleParams.rootObject, _paramName);
+        MeasurableChild measurable = new(RootObject, _paramName);
         measurable.Returns = new()
         {
             GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(_measureUnitCode),
@@ -419,30 +418,30 @@ public sealed class MeasurableTests
     //#endregion
     #endregion
 
-    #region DynamicDataSources
+    #region DynamicDataSource
     private static IEnumerable<object[]> GetMeasurableEqualsArgsArrayList()
     {
-        return DynamicDataSources.GetMeasurableEqualsArgsArrayList();
+        return DynamicDataSource.GetMeasurableEqualsArgsArrayList();
     }
 
     private static IEnumerable<object[]> GetMeasurableValidateMeasureUnitInvalidArgsArrayList()
     {
-        return DynamicDataSources.GetMeasurableValidateMeasureUnitInvalidArgsArrayList();
+        return DynamicDataSource.GetMeasurableValidateMeasureUnitInvalidArgsArrayList();
     }
 
     private static IEnumerable<object[]> GetMeasurableValidateMeasureUnitCodeInvalidArgsArrayList()
     {
-        return DynamicDataSources.GetMeasurableValidateMeasureUnitCodeInvalidArgsArrayList();
+        return DynamicDataSource.GetMeasurableValidateMeasureUnitCodeInvalidArgsArrayList();
     }
 
     private static IEnumerable<object[]> GetHasMeasureUnitCodeArgsArrayList()
     {
-        return DynamicDataSources.GetHasMeasureUnitCodeArgsArrayList();
+        return DynamicDataSource.GetHasMeasureUnitCodeArgsArrayList();
     }
 
     private static IEnumerable<object[]> GetValidMeasureUnitArgsArrayList()
     {
-        return DynamicDataSources.GetValidMeasureUnitArgsArrayList();
+        return DynamicDataSource.GetValidMeasureUnitArgsArrayList();
     }
     #endregion
 }

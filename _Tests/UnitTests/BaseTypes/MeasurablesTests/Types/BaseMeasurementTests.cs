@@ -1,5 +1,5 @@
 ﻿//using CsabaDu.FooVaria.Common.Statics;
-//using CsabaDu.FooVaria.TestSupport.Variants.Measurables;
+//using CsabaDu.FooVaria.TestHelpers.Variants.Measurables;
 
 //namespace CsabaDu.FooVaria.Tests.MeasurablesTests.UnitTests.Types
 //{

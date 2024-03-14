@@ -6,10 +6,10 @@ public sealed class CommonBaseTests
     #region Private fields
     private CommonBaseChild _commonBase;
     private string _paramName;
-    private IRootObject _rootObject;
 
     #region Readonly fields
     private readonly RandomParams RandomParams = new();
+    private readonly IRootObject RootObject;
     #endregion
     #endregion
 
@@ -20,11 +20,10 @@ public sealed class CommonBaseTests
     public void CommonBase_nullArg_IRootObject_throws_ArgumentNullException()
     {
         // Arrange
-        _rootObject = null;
         _paramName = RandomParams.GetRandomParamName();
 
         // Act
-        void attempt() => _ = new CommonBaseChild(_rootObject, _paramName);
+        void attempt() => _ = new CommonBaseChild(null, _paramName);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
@@ -35,11 +34,10 @@ public sealed class CommonBaseTests
     public void CommonBase_validArg_IRootObject_creates()
     {
         // Arrange
-        _rootObject = SampleParams.rootObject;
         _paramName = null;
 
         // Act
-        var actual = new CommonBaseChild(_rootObject, _paramName);
+        var actual = new CommonBaseChild(RootObject, _paramName);
 
         // Assert
         Assert.IsInstanceOfType(actual, typeof(ICommonBase));
@@ -53,9 +51,8 @@ public sealed class CommonBaseTests
     public void GetFactory_returns_expected()
     {
         // Arrange
-        _rootObject = SampleParams.rootObject;
         _paramName = null;
-        _commonBase = new(_rootObject, _paramName)
+        _commonBase = new(RootObject, _paramName)
         {
             Returns = new()
             {
