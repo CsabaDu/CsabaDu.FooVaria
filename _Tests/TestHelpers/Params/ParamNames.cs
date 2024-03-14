@@ -13,7 +13,7 @@ public static class ParamNames
     public const string rootObject = nameof(rootObject);    public static IEnumerable<string> GetParamNames()
     {
         Type type = typeof(ParamNames);
-        FieldInfo[] fields = type.GetFields(BindingFlags.Static | BindingFlags.NonPublic);
+        FieldInfo[] fields = type.GetFields(BindingFlags.Static | BindingFlags.Public);
 
         return fields.Select(x => x.Name);
     }

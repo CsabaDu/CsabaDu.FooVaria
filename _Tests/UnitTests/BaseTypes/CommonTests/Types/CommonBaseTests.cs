@@ -9,7 +9,7 @@ public sealed class CommonBaseTests
 
     #region Readonly fields
     private readonly RandomParams RandomParams = new();
-    private readonly IRootObject RootObject;
+    private readonly RootObject RootObject = new();
     #endregion
     #endregion
 
