@@ -3,6 +3,7 @@
 public sealed class BaseMeasurementChild(IRootObject rootObject, string paramName) : BaseMeasurement(rootObject, paramName)
 {
     #region Members
+
     // BaseMeasurement(IRootObject rootObject, string paramName)
     // int IComparable<IBaseMeasurement>.CompareTo(IBaseMeasurement other)
     // bool IEquatable<IBaseMeasurement>.Equals(IBaseMeasurement other)
@@ -27,15 +28,16 @@ public sealed class BaseMeasurementChild(IRootObject rootObject, string paramNam
     // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum measureUnit, string paramName)
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable measurable, string paramName)
     // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
+
     #endregion
 
     #region TestHelpers
-    public BaseMeasurementReturns Returns { private get; set; } = new();
+    public BaseMeasurementReturns Return { private get; set; } = new();
     #endregion
 
-    public override Enum GetBaseMeasureUnit() => Returns.GetBaseMeasureUnit;
+    public override Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnit;
 
-    public override IFactory GetFactory() => Returns.GetFactory;
+    public override IFactory GetFactory() => Return.GetFactory;
 
-    public override string GetName() => Returns.GetName;
+    public override string GetName() => Return.GetName;
 }

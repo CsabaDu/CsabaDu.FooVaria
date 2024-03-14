@@ -15,9 +15,6 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
     #region Properties
     public IMeasurementFactory Factory { get; init; }
     public object MeasureUnit { get; init; }
-
-    #region Static properties
-    #endregion
     #endregion
 
     #region Public methods
@@ -158,6 +155,13 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
         return TrySetCustomName(GetBaseMeasureUnit(), customName);
     }
 
+    public override sealed void ValidateExchangeRate(decimal exchangeRate, string paramName)
+    {
+        if (exchangeRate == GetExchangeRate()) return;
+
+        throw DecimalArgumentOutOfRangeException(paramName, exchangeRate);
+    }
+
     public static void ValidateCustomName(string? customName)
     {
         if (IsValidCustomNameParam(NullChecked(customName, nameof(customName)))) return;
@@ -165,5 +169,4 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
         throw NameArgumentOutOfRangeException(nameof(customName), customName!);
     }
     #endregion
-
 }

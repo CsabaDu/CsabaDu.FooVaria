@@ -2,7 +2,6 @@
 {
     public class MeasurableReturns : CommonBaseReturns
     {
-        public Enum GetBaseMeasureUnit { get; set; }
+        public Enum GetBaseMeasureUnit { internal get; set; }
     }
-
 }

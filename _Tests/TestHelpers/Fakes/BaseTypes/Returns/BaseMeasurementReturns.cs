@@ -2,7 +2,6 @@
 {
     public class BaseMeasurementReturns : MeasurableReturns
     {
-        public string GetName { get; set; }
+        public string GetName { internal get; set; }
     }
-
 }

@@ -2,8 +2,7 @@
 {
     public class BaseQuantifiableReturns : MeasurableReturns
     {
-        public decimal GetDefaultQuantity { get; set; }
-        public bool? FitsIn {  get; set; }
+        public decimal GetDefaultQuantity {internal get; set; }
+        public bool? FitsIn { internal get; set; }
     }
-
 }

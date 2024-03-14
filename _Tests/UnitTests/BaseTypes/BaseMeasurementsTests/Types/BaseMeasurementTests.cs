@@ -21,12 +21,10 @@ public sealed class BaseMeasurementTests
     [TestCleanup]
     public void CleanupBaseMeasurementTests()
     {
-        _factory = null;
         _paramName = null;
-        _measureUnit = null;
         _baseMeasurement = null;
 
-        if (ExchangeRateCollection.Count != ConstantExchangeRateCollection.Count)
+        if (ExchangeRateCollection.Count != ConstantExchangeRateCount)
         {
             RestoreConstantExchangeRates();
         }
@@ -35,7 +33,6 @@ public sealed class BaseMeasurementTests
 
     #region Private fields
     private BaseMeasurementChild _baseMeasurement;
-    private BaseMeasurementFactoryObject _factory;
     private Enum _measureUnit;
     private MeasureUnitCode _measureUnitCode;
     private Type _measureUnitType;
@@ -53,6 +50,7 @@ public sealed class BaseMeasurementTests
 
     #region Test methods
     #region Tested in parent classes' tests
+
     // BaseMeasurement(IRootObject rootObject, string paramName)
     // Enum IMeasureUnit.GetBaseMeasureUnit()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
@@ -64,6 +62,7 @@ public sealed class BaseMeasurementTests
     // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable measurable, string paramName)
     // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
+
     #endregion
 
     #region int CompareTo
@@ -91,7 +90,7 @@ public sealed class BaseMeasurementTests
         _measureUnitCode = RandomParams.GetRandomMeasureUnitCode(_measureUnitCode);
         IBaseMeasurement other = new BaseMeasurementChild(RootObject, _paramName)
         {
-            Returns = new()
+            Return = new()
             {
                 GetBaseMeasureUnit = RandomParams.GetRandomValidMeasureUnit(_measureUnitCode)
             }
@@ -110,9 +109,9 @@ public sealed class BaseMeasurementTests
     {
         // Arrange
         SetBaseMeasurementChild(_measureUnit, null, null);
-        IBaseMeasurement other = new BaseMeasurementChild(RootObject, _paramName)
+        BaseMeasurementChild other = new(RootObject, _paramName)
         {
-            Returns = new()
+            Return = new()
             {
                 GetBaseMeasureUnit = RandomParams.GetRandomValidMeasureUnit(_measureUnitCode)
             }
@@ -320,7 +319,7 @@ public sealed class BaseMeasurementTests
         _measureUnitCode = RandomParams.GetRandomMeasureUnitCode(_measureUnitCode);
         BaseMeasurementChild other = new(RootObject, _paramName)
         {
-            Returns = new()
+            Return = new()
             {
                 GetBaseMeasureUnit = RandomParams.GetRandomValidMeasureUnit(_measureUnitCode)
             }
@@ -341,7 +340,7 @@ public sealed class BaseMeasurementTests
         SetBaseMeasurementChild(_measureUnit, null, null);
         BaseMeasurementChild other = new(RootObject, _paramName)
         {
-            Returns = new()
+            Return = new()
             {
                 GetBaseMeasureUnit = RandomParams.GetRandomValidMeasureUnit(_measureUnitCode)
             }
@@ -357,7 +356,26 @@ public sealed class BaseMeasurementTests
     #endregion
     #endregion
 
-    // void IExchangeRate.ValidateExchangeRate(decimal exchangeRate, string paramName)
+    #region void ValidateExchangeRate
+    #region IExchangeRate.ValidateExchangeRate(decimal, string)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetValidateExchangeRateArgArrayList), DynamicDataSourceType.Method)]
+    public void ValidateExchangeRate_invalidArg_decimal_throws_ArgumentOutOfRangeException(decimal exchangeRate)
+    {
+        // Arrange
+        _paramName = RandomParams.GetRandomParamName();
+        SetBaseMeasurementChild(_measureUnit, null, null);
+
+        // Act
+        void attempt() => _baseMeasurement.ValidateExchangeRate(exchangeRate, _paramName);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
+        Assert.AreEqual(_paramName, ex.ParamName);
+    }
+    #endregion
+    #endregion
+
     // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum measureUnit, string paramName)
     #endregion
 
@@ -366,7 +384,7 @@ public sealed class BaseMeasurementTests
     {
         _baseMeasurement = new(RootObject, _paramName)
         {
-            Returns = new()
+            Return = new()
             {
                 GetBaseMeasureUnit = measureUnit,
                 GetFactory = factory,
@@ -399,6 +417,11 @@ public sealed class BaseMeasurementTests
     private static IEnumerable<object[]> GetBaseMeasurementIsExchangeableToArgArrayList()
     {
         return DynamicDataSource.GetBaseMeasurementIsExchangeableToArgArrayList();
+    }
+
+    private static IEnumerable<object[]> GetValidateExchangeRateArgArrayList()
+    {
+        return DynamicDataSource.GetValidateExchangeRateArgArrayList();
     }
     #endregion
     #endregion

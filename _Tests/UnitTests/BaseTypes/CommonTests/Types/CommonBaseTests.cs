@@ -54,7 +54,7 @@ public sealed class CommonBaseTests
         _paramName = null;
         _commonBase = new(RootObject, _paramName)
         {
-            Returns = new()
+            Return = new()
             {
                 GetFactory = new FactoryObject(),
             }

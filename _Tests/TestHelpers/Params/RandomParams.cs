@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Params;
 
-public class RandomParams
+public sealed class RandomParams
 {
     #region Private fields
     private const int ItemCount = 1000;
@@ -86,7 +86,7 @@ public class RandomParams
         return (Enum)randomMeasureUnit;
 
         #region Local methods
-        object getRandomValidMeasureUnit()
+        static object getRandomValidMeasureUnit()
         {
             return GetRandomItem(ExchangeRateCollection.Keys);
         }
@@ -148,24 +148,14 @@ public class RandomParams
         return Random.GetItems(items, count);
     }
 
-
     private static T GetRandomItem<T>(IEnumerable<T> items)
     {
         return GetRandomItem(items.ToArray());
     }
 
-    private static IEnumerable<T> GetRandomItems<T>(IEnumerable<T> items, int count)
+    private static T[] GetRandomItems<T>(IEnumerable<T> items, int count)
     {
         return GetRandomItems(items.ToArray(), count);
-
-        //int maxValue = items.Count();
-
-        //int[] randomIndexArray = GetRandomIndexArray(maxValue, count);
-
-        //foreach (int index in randomIndexArray)
-        //{
-        //    yield return items.ElementAt(index);
-        //}
     }
 
     private static int[] GetRandomIndexArray(int maxValue, int count)

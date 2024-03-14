@@ -1,131 +1,22 @@
 ﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DynamicDataSources;
 
-public class DynamicDataSource
+public sealed class DynamicDataSource
 {
     #region Fields
     private Enum context;
+    private decimal exchangeRate;
     private bool isTrue;
     private MeasureUnitCode measureUnitCode;
     private Enum measureUnit;
     private object obj;
-    private IFactory factory;
 
     #region Readonly fields
     private readonly RandomParams RandomParams = new();
-    private RootObject RootObject = new();
+    private readonly RootObject RootObject = new();
     #endregion
     #endregion
 
-    //#region Records
-
-    //#region bool
-    //public record Bool_arg(bool IsTrue) : ObjectArray
-    //{
-    //    public override object[] ToObjectArray() => [IsTrue];
-    //}
-
-    //#region bool, Enum
-    //public record Bool_Enum_args(bool IsTrue, Enum MeasureUnit) : Bool_arg(IsTrue)
-    //{
-    //    public override object[] ToObjectArray() => [IsTrue, MeasureUnit];
-    //}
-
-    //#region bool, Enum, Enum
-    //public record Bool_Enum_Enum_args(bool IsTrue, Enum MeasureUnit, Enum Context) : Bool_Enum_args(IsTrue, MeasureUnit)
-    //{
-    //    public override object[] ToObjectArray() => [IsTrue, MeasureUnit, Context];
-    //}
-    //#endregion
-
-    //#region bool, Enum, IBaseMeasurement
-    //public record Bool_Enum_IBaseMeasurement_args(bool IsTrue, Enum MeasureUnit, IBaseMeasurement BaseMeasurement) : Bool_Enum_args(IsTrue, MeasureUnit)
-    //{
-    //    public override object[] ToObjectArray() => [IsTrue, MeasureUnit, BaseMeasurement];
-    //}
-    //#endregion
-    //#endregion
-
-    //#region bool, object
-    //public record Bool_Object_args(bool IsTrue, object Obj) : Bool_arg(IsTrue)
-    //{
-    //    public override object[] ToObjectArray() => [IsTrue, Obj];
-    //}
-
-    //#region bool, object, Enum
-    //public record Bool_Object_Enum_args(bool IsTrue, object Obj, Enum MeasureUnit) : Bool_Object_args(IsTrue, Obj)
-    //{
-    //    public override object[] ToObjectArray() => [IsTrue, Obj, MeasureUnit];
-    //}
-
-    //#region bool, object, Enum, Enum
-    //public record Bool_Object_Enum_Enum_args(bool IsTrue, object Obj, Enum MeasureUnit, Enum OtherMeasureUnit) : Bool_Object_Enum_args(IsTrue, Obj, MeasureUnit)
-    //{
-    //    public override object[] ToObjectArray() => [IsTrue, Obj, MeasureUnit, OtherMeasureUnit];
-    //}
-
-    //#endregion
-    //#endregion
-    //#endregion
-
-    //#region bool, MeasureUnitCode
-    //public record Bool_MeasureUnitCode_args(bool IsTrue, MeasureUnitCode MeasureUnitCode) : Bool_arg(IsTrue)
-    //{
-    //    public override object[] ToObjectArray() => [IsTrue, MeasureUnitCode];
-    //}
-
-    //#region bool, MeasureUnitCode, object
-    //public record Bool_MeasureUnitCode_Object_args(bool IsTrue, MeasureUnitCode MeasureUnitCode, object Obj) : Bool_MeasureUnitCode_args(IsTrue, MeasureUnitCode)
-    //{
-    //    public override object[] ToObjectArray() => [IsTrue];
-    //}
-    //#endregion
-    //#endregion
-    //#endregion
-
-    //#region Enum
-    //public record Enum_arg(Enum MeasureUnit) : ObjectArray
-    //{
-    //    public override object[] ToObjectArray() => [MeasureUnit];
-    //}
-
-    //#region Enum, MeasureUnitCode
-    //public record Enum_MeasureUnitCode_args(Enum MeasureUnit, MeasureUnitCode MeasureUnitCode) : Enum_arg(MeasureUnit)
-    //{
-    //    public override object[] ToObjectArray() => [MeasureUnit, MeasureUnitCode];
-    //}
-
-    //#region Enum, MeasureUnitCode, bool
-    //public record Enum_MeasureUnitCode_bool_args(Enum MeasureUnit, MeasureUnitCode MeasureUnitCode, bool IsTrue) : Enum_MeasureUnitCode_args(MeasureUnit, MeasureUnitCode)
-    //{
-    //    public override object[] ToObjectArray() => [MeasureUnit, MeasureUnitCode, IsTrue];
-    //}
-    //#endregion
-    //#endregion
-    //#endregion
-
-    //#region MeasureUnitCode
-    //public record MeasureUnitCode_arg(MeasureUnitCode MeasureUnitCode) : ObjectArray
-    //{
-    //    public override object[] ToObjectArray() => [MeasureUnitCode];
-    //}
-
-    //#region MeasureUnitCode, IMeasurable
-    //public record MeasureUnitCode_IMeasurable_args(MeasureUnitCode MeasureUnitCode, IMeasurable Measurable) : MeasureUnitCode_arg(MeasureUnitCode)
-    //{
-    //    public override object[] ToObjectArray() => [MeasureUnitCode, Measurable];
-    //}
-
-    //#region MeasureUnitCode, IMeasurable, bool
-    //public record MeasureUnitCode_IMeasurable_bool_args(MeasureUnitCode MeasureUnitCode, IMeasurable Measurable, bool IsTrue) : MeasureUnitCode_IMeasurable_args(MeasureUnitCode, Measurable)
-    //{
-    //    public override object[] ToObjectArray() => [MeasureUnitCode, Measurable, IsTrue];
-    //}
-    //#endregion
-    //#endregion
-    //#endregion
-    //#endregion
-
-    #region ArrayList methods
+    #region Methods
     public IEnumerable<object[]> GetInvalidEnumMeasureUnitArgArrayList()
     {
         measureUnit = RandomParams.GetRandomMeasureUnitCode();
@@ -160,7 +51,7 @@ public class DynamicDataSource
         isTrue = true;
         obj = new MeasurableChild(RootObject, string.Empty);
         measureUnit = RandomParams.GetRandomMeasureUnit();
-        (obj as MeasurableChild).Returns = new()
+        (obj as MeasurableChild).Return = new()
         {
             GetBaseMeasureUnit = measureUnit,
         };
@@ -169,7 +60,7 @@ public class DynamicDataSource
         // IMeasure different MeasureUnit with same MeasureUnitCode
         measureUnitCode = GetMeasureUnitCode(measureUnit);
         measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode, measureUnit);
-        (obj as MeasurableChild).Returns = new()
+        (obj as MeasurableChild).Return = new()
         {
             GetBaseMeasureUnit = measureUnit,
         };
@@ -340,7 +231,7 @@ public class DynamicDataSource
         // IBaseMeasurement
         obj = new BaseMeasurementChild(RootObject, null)
         {
-            Returns = new()
+            Return = new()
             {
                 GetBaseMeasureUnit = RandomParams.GetRandomValidMeasureUnit(),
             }
@@ -371,7 +262,7 @@ public class DynamicDataSource
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
         obj = new BaseMeasurementChild(RootObject, null)
         {
-            Returns = new()
+            Return = new()
             {
                 GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode),
             }
@@ -382,7 +273,7 @@ public class DynamicDataSource
         isTrue = true;
         obj = new BaseMeasurementChild(RootObject, null)
         {
-            Returns = new()
+            Return = new()
             {
                 GetBaseMeasureUnit = measureUnit,
             }
@@ -395,7 +286,7 @@ public class DynamicDataSource
         measureUnitCode = GetMeasureUnitCode(measureUnit);
         obj = new BaseMeasurementChild(RootObject, null)
         {
-            Returns = new()
+            Return = new()
             {
                 GetBaseMeasureUnit = measureUnitCode.GetDefaultMeasureUnit(),
             }
@@ -486,5 +377,24 @@ public class DynamicDataSource
         }
         #endregion
     }
+
+    public IEnumerable<object[]> GetValidateExchangeRateArgArrayList()
+    {
+        exchangeRate = 0;
+        yield return toObjectArray();
+
+        exchangeRate = RandomParams.GetRandomNegativeDecimal();
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            Decimal_arg item = new(exchangeRate);
+
+            return item.ToObjectArray();
+        }
+        #endregion
+    }
+
     #endregion
 }

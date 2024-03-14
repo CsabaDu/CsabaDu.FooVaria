@@ -3,6 +3,7 @@
 public sealed class MeasurableChild(IRootObject rootObject, string paramName) : Measurable(rootObject, paramName)
 {
     #region Members
+
     // Measurable(IRootObject rootObject, string paramName)
     // bool Measurable.Equals(object? obj)
     // Enum IMeasureUnit.GetBaseMeasureUnit()
@@ -17,13 +18,14 @@ public sealed class MeasurableChild(IRootObject rootObject, string paramName) : 
     // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum measureUnit, string paramName)
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable measurable, string paramName)
     // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
+
     #endregion
 
     #region TestHelpers
-    public MeasurableReturns Returns { private get; set; }
+    public MeasurableReturns Return { private get; set; }
     #endregion
 
-    public override Enum GetBaseMeasureUnit() => Returns.GetBaseMeasureUnit;
+    public override Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnit;
 
-    public override IFactory GetFactory() => Returns.GetFactory;
+    public override IFactory GetFactory() => Return.GetFactory;
 }

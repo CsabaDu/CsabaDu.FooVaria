@@ -4,7 +4,7 @@ public sealed class BaseMeasurementFactoryObject : IBaseMeasurementFactory
 {
     public IBaseMeasurement CreateBaseMeasurement(Enum context) => new BaseMeasurementChild(new RootObject(), null)
     {
-        Returns = new()
+        Return = new()
         {
             GetBaseMeasureUnit = GetMeasureUnitElements(context, nameof(context)).MeasureUnit,
         }

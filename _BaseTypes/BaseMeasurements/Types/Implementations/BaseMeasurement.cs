@@ -7,6 +7,9 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
     #endregion
 
     #region Static fields
+    public static readonly int ConstantExchangeRateCount;
+
+    #region Private static fields
     private static readonly decimal[] AreaExchangeRates = [100, 10000, 1000000];
     private static readonly decimal[] DistanceExchangeRates = [1000];
     private static readonly decimal[] ExtentExchangeRates = [10, 100, 1000];
@@ -14,12 +17,14 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
     private static readonly decimal[] VolumeExchangeRates = [1000, 1000000, 1000000000];
     private static readonly decimal[] WeightExchangeRates = [1000, 1000000];
     #endregion
+    #endregion
 
     #region Constructors
     #region Static constructor
     static BaseMeasurement()
     {
         ConstantExchangeRateCollection = InitConstantExchangeRateCollection();
+        ConstantExchangeRateCount = ConstantExchangeRateCollection.Count;
         ExchangeRateCollection = new(ConstantExchangeRateCollection);
         CustomNameCollection = [];
     }
@@ -249,7 +254,6 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         return ExchangeRateCollection.Keys;
     }
 
-
     public static IEnumerable<object> GetValidMeasureUnits(MeasureUnitCode measureUnitCode)
     {
         Type measureUnitType = measureUnitCode.GetMeasureUnitType();
@@ -327,6 +331,13 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
     #endregion
     #endregion
 
+    #region Virtual methods
+    public virtual void ValidateExchangeRate(decimal exchangeRate, string paramName)
+    {
+        ValidateExchangeRate(exchangeRate, paramName, GetBaseMeasureUnit());
+    }
+    #endregion
+
     public int CompareTo(IBaseMeasurement? other)
     {
         if (other == null) return 1;
@@ -382,11 +393,6 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         if (HasMeasureUnitCode(measureUnitCode)) return GetExchangeRate() / other!.GetExchangeRate();
 
         throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
-    }
-
-    public void ValidateExchangeRate(decimal exchangeRate, string paramName)
-    {
-        ValidateExchangeRate(exchangeRate, paramName, GetBaseMeasureUnit());
     }
     #endregion
 

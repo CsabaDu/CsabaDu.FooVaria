@@ -2,7 +2,6 @@
 {
     public class CommonBaseReturns
     {
-        public IFactory GetFactory { get; set; }
+        public IFactory GetFactory { internal get; set; }
     }
-
 }
