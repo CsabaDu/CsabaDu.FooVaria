@@ -4,23 +4,27 @@
     {
         #region Members
 
-        // void IBaseQuantifiable.ValidateQuantity(ValueType quantity, string paramName)
-        // void IBaseQuantifiable.ValidateQuantity(IBaseQuantifiable baseQuantifiable, string paramName)
-        // void IMeasurable.ValidateMeasureUnitCode(IMeasurable measurable, string paramName)
+        // bool Measurable.Equals(object? obj)
+        // bool? ILimitable.FitsIn(ILimiter limiter)
+        // Enum IMeasureUnit.GetBaseMeasureUnit()
         // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
         // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
-        // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum measureUnit, string paramName)
-        // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
-        // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
-        // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
-        // TypeCode IQuantityType.GetQuantityTypeCode()
-        // Type IMeasureUnit.GetMeasureUnitType()
+        // decimal IDefaultQuantity.GetDefaultQuantity()
         // IFactory ICommonBase.GetFactory()
-        // Enum IMeasureUnit.GetBaseMeasureUnit()
+        // int Measurable.GetHashCode()
+        // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
+        // Type IMeasureUnit.GetMeasureUnitType()
+        // TypeCode IQuantityType.GetQuantityTypeCode()
+        // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
+        // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum measureUnit, string paramName)
+        // void IMeasurable.ValidateMeasureUnitCode(IMeasurable measurable, string paramName)
+        // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
+        // void IBaseQuantifiable.ValidateQuantity(ValueType quantity, string paramName)
+        // void IBaseQuantifiable.ValidateQuantity(IBaseQuantifiable baseQuantifiable, string paramName)
 
         #endregion
 
-        internal BaseQuantifiableReturns Return { private get; set; }
+        public BaseQuantifiableReturns Return { private get; set; }
 
         public override bool? FitsIn(ILimiter limiter) => limiter is IBaseQuantifiable ?
             Return.FitsIn
@@ -31,5 +35,6 @@
         public override IFactory GetFactory() => Return.GetFactory;
 
         public override decimal GetDefaultQuantity() => Return.GetDefaultQuantity;
+
     }
 }

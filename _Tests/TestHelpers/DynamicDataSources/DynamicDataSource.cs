@@ -407,7 +407,7 @@ public sealed class DynamicDataSource
         yield return toObjectArray();
 
         // measureUnit
-        context = GetSameTypeValidMeasureUnit(measureUnit);
+        context = RandomParams.GetRandomSameTypeValidMeasureUnit(measureUnit);
         yield return toObjectArray();
 
         #region toObjectArray method

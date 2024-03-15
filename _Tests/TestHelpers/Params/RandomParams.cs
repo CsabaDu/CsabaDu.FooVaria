@@ -146,6 +146,25 @@ public sealed class RandomParams
 
         return GetRandomItems(MeasureUnitCodes, count);
     }
+    public  Enum GetRandomSameTypeValidMeasureUnit(Enum measureUnit)
+    {
+        if (!IsValidMeasureUnit(measureUnit)) throw InvalidMeasureUnitEnumArgumentException(measureUnit);
+
+        MeasureUnitCode measureUnitCode = GetMeasureUnitCode(measureUnit);
+        bool isCustomMeasureUnit = IsCustomMeasureUnit(measureUnit);
+
+        if (isCustomMeasureUnit)
+        {
+            string customame = GetRandomParamName();
+            decimal exchangeRate = GetRandomPositiveDecimal();
+
+            SetCustomMeasureUnit(customame, measureUnitCode, exchangeRate);
+        }
+
+        return isCustomMeasureUnit ?
+            (Enum)Enum.ToObject(measureUnit.GetType(), 1)
+            : GetRandomMeasureUnit(measureUnitCode);
+    }
 
     public decimal GetRandomPositiveDecimal()
     {

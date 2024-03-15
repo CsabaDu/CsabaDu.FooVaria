@@ -1,48 +1,27 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Params
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Params;
+
+public sealed class TestSupport
 {
-    public sealed class TestSupport
+    private static readonly RandomParams RandomParams = new();
+
+    public static void RestoreConstantExchangeRates()
     {
-        private static readonly RandomParams RandomParams = new();
-
-        public static bool Returned(Action validator)
+        if (ExchangeRateCollection.Count != ConstantExchangeRateCount)
         {
-            try
-            {
-                validator();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            BaseMeasurement.RestoreConstantExchangeRates();
         }
+    }
 
-        public static Enum GetSameTypeValidMeasureUnit(Enum measureUnit)
+    public static bool Returned(Action validator)
+    {
+        try
         {
-            if (!IsValidMeasureUnit(measureUnit)) throw InvalidMeasureUnitEnumArgumentException(measureUnit);
-
-            MeasureUnitCode measureUnitCode = GetMeasureUnitCode(measureUnit);
-            bool isCustomMeasureUnit = IsCustomMeasureUnit(measureUnit);
-
-            if (isCustomMeasureUnit)
-            {
-                string customame = RandomParams.GetRandomParamName();
-                decimal exchangeRate = RandomParams.GetRandomPositiveDecimal();
-
-                SetCustomMeasureUnit(customame, measureUnitCode, exchangeRate);
-            }
-
-            return isCustomMeasureUnit ?
-                (Enum)Enum.ToObject(measureUnit.GetType(), 1)
-                : RandomParams.GetRandomMeasureUnit(measureUnitCode);
+            validator();
+            return true;
         }
-
-        public static void RestoreConstantExchangeRates()
+        catch
         {
-            if (ExchangeRateCollection.Count != ConstantExchangeRateCount)
-            {
-                BaseMeasurement.RestoreConstantExchangeRates();
-            }
+            return false;
         }
     }
 }

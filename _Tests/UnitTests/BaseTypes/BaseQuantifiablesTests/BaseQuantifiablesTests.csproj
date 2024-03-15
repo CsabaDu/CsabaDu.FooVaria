@@ -3,17 +3,11 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
+    <Nullable>disabledis</Nullable>
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="UnitTests\Factories\**" />
-    <EmbeddedResource Remove="UnitTests\Factories\**" />
-    <None Remove="UnitTests\Factories\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
@@ -27,10 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\TestHelpers\DynamicDataSources\DynamicDataSources.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Fakes\" />
   </ItemGroup>
 
 </Project>
