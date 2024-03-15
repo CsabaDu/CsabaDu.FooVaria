@@ -32,7 +32,7 @@ internal sealed class BaseMeasurementChild(IRootObject rootObject, string paramN
     #endregion
 
     #region TestHelpers
-    public BaseMeasurementReturns Return { private get; set; } = new();
+    public BaseMeasurementReturn Return { private get; set; } = new();
     #endregion
 
     public override Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnit;

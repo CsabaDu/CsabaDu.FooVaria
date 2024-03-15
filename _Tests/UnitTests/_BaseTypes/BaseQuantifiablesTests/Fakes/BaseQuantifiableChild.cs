@@ -24,7 +24,7 @@ internal sealed class BaseQuantifiableChild(IRootObject rootObject, string param
 
     #endregion
 
-    public BaseQuantifiableReturns Return { private get; set; }
+    public BaseQuantifiableReturn Return { private get; set; }
 
     public override bool? FitsIn(ILimiter limiter) => limiter is IBaseQuantifiable ?
         Return.FitsIn

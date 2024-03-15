@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Fakes.Returns
 {
-    public class BaseMeasurementReturns : MeasurableReturns
+    public class BaseMeasurementReturn : MeasurableReturn
     {
         public string GetName { get; set; }
     }

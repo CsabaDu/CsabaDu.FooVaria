@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Fakes.Returns;
 
-public class MeasurableReturns : CommonBaseReturns
+public class MeasurableReturn : CommonBaseReturn
 {
     public Enum GetBaseMeasureUnit { get; set; }
 }

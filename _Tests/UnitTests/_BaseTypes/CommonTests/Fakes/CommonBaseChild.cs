@@ -9,7 +9,7 @@
 
         #endregion
 
-        public CommonBaseReturns Return { private get; set; }
+        public CommonBaseReturn Return { private get; set; }
 
         public override IFactory GetFactory() => Return.GetFactory;
     }

@@ -22,7 +22,7 @@ internal sealed class MeasurableChild(IRootObject rootObject, string paramName) 
     #endregion
 
     #region TestHelpers
-    public MeasurableReturns Return { private get; set; }
+    public MeasurableReturn Return { private get; set; }
     #endregion
 
     public override Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnit;
