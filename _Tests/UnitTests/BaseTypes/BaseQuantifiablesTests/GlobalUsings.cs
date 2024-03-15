@@ -1,8 +1,10 @@
-﻿global using CsabaDu.FooVaria.BaseTypes.Common;
+﻿global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
+global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types;
+global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types.Implementations;
+global using CsabaDu.FooVaria.BaseTypes.Common;
 global using CsabaDu.FooVaria.BaseTypes.Common.Factories;
 global using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Factories;
-global using CsabaDu.FooVaria.Tests.TestHelpers.DynamicDataSources;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Returns;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Params;

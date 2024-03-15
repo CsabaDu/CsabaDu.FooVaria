@@ -1,7 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
-using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types;
-using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types.Implementations;
-namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseQuantifiablesTests.Fakes;
+﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseQuantifiablesTests.Fakes;
 
 internal sealed class BaseQuantifiableChild(IRootObject rootObject, string paramName) : BaseQuantifiable(rootObject, paramName)
 {
@@ -38,5 +35,4 @@ internal sealed class BaseQuantifiableChild(IRootObject rootObject, string param
     public override IFactory GetFactory() => Return.GetFactory;
 
     public override decimal GetDefaultQuantity() => Return.GetDefaultQuantity;
-
 }
