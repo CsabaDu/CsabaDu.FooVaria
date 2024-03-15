@@ -1,3 +1,3 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Factories;
+﻿//namespace CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Factories;
 
-public sealed class FactoryObject : IFactory;
+//public sealed class FactoryObject : IFactory;

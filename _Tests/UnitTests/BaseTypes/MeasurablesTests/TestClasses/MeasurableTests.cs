@@ -339,7 +339,7 @@ public sealed class MeasurableTests
 
     #region IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode, string)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetMeasurableValidateMeasureUnitCodeInvalidArgsArrayList), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetValidateMeasureUnitCodeInvalidArgsArrayList), DynamicDataSourceType.Method)]
     public void ValidateMeasureUnitCode_invalidArg_MeasureUnitCode_arg_string_throws_InvalidEnumArgumentException(Enum measureUnit, MeasureUnitCode measureUnitCode)
     {
         // Arrange
@@ -388,9 +388,9 @@ public sealed class MeasurableTests
         return DynamicDataSource.GetMeasurableValidateMeasureUnitInvalidArgsArrayList();
     }
 
-    private static IEnumerable<object[]> GetMeasurableValidateMeasureUnitCodeInvalidArgsArrayList()
+    private static IEnumerable<object[]> GetValidateMeasureUnitCodeInvalidArgsArrayList()
     {
-        return DynamicDataSource.GetMeasurableValidateMeasureUnitCodeInvalidArgsArrayList();
+        return DynamicDataSource.GetValidateMeasureUnitCodeInvalidArgsArrayList();
     }
 
     private static IEnumerable<object[]> GetHasMeasureUnitCodeArgsArrayList()
