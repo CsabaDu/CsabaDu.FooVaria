@@ -11,5 +11,5 @@ global using CsabaDu.FooVaria.BaseTypes.Measurables.Factories;
 global using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
 global using CsabaDu.FooVaria.Measurements.Types.Implementations;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Returns;
-global using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Types;
+global using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;
