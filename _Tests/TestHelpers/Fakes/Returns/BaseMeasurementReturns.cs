@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Returns
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Fakes.Returns
 {
     public class BaseMeasurementReturns : MeasurableReturns
     {
