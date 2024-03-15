@@ -21,10 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\TestHelpers\DynamicDataSources\DynamicDataSources.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Fakes\" />
+    <ProjectReference Include="..\..\..\TestHelpers\Fakes\Fakes.csproj" />
   </ItemGroup>
 
 </Project>

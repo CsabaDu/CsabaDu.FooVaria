@@ -8,7 +8,7 @@ global using CsabaDu.FooVaria.Tests.TestHelpers.DynamicDataSources.ObjectArrayIt
 global using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Returns;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Params;
-global using CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.Fakes;
+global using CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.MeasurablesTests.Fakes;
 global using Microsoft.VisualStudio.TestTools.UnitTesting;
 global using System.ComponentModel;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;

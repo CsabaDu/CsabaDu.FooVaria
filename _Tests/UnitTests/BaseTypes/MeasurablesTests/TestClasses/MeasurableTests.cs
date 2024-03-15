@@ -61,7 +61,7 @@ public sealed class MeasurableTests
     #region bool Equals
     #region Measurable.Equals(object?)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetMeasurableEqualsArgsArrayList), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetEqualsArgsArrayList), DynamicDataSourceType.Method)]
     public void Equals_arg_object_returns_expected(bool expected, object obj, Enum measureUnit)
     {
         // Arrange
@@ -242,7 +242,7 @@ public sealed class MeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetMeasurableValidateMeasureUnitInvalidArgsArrayList), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetValidateMeasureUnitInvalidArgsArrayList), DynamicDataSourceType.Method)]
     public void ValidateMeasureUnit_invalidArg_Enum_arg_string_throws_InvalidEnumArgumentException(Enum measureUnit, MeasureUnitCode measureUnitCode)
     {
         // Arrange
@@ -378,14 +378,14 @@ public sealed class MeasurableTests
     #endregion
 
     #region DynamicDataSource
-    private static IEnumerable<object[]> GetMeasurableEqualsArgsArrayList()
+    private static IEnumerable<object[]> GetEqualsArgsArrayList()
     {
-        return DynamicDataSource.GetMeasurableEqualsArgsArrayList();
+        return DynamicDataSource.GetEqualsArgsArrayList();
     }
 
-    private static IEnumerable<object[]> GetMeasurableValidateMeasureUnitInvalidArgsArrayList()
+    private static IEnumerable<object[]> GetValidateMeasureUnitInvalidArgsArrayList()
     {
-        return DynamicDataSource.GetMeasurableValidateMeasureUnitInvalidArgsArrayList();
+        return DynamicDataSource.GetValidateMeasureUnitInvalidArgsArrayList();
     }
 
     private static IEnumerable<object[]> GetValidateMeasureUnitCodeInvalidArgsArrayList()

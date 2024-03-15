@@ -15,7 +15,7 @@ internal class DynamicDataSource
     #endregion
 
     #region Methods
-    internal IEnumerable<object[]> GetMeasurableEqualsArgsArrayList()
+    internal IEnumerable<object[]> GetEqualsArgsArrayList()
     {
         // null
         _isTrue = false;
@@ -62,7 +62,7 @@ internal class DynamicDataSource
         #endregion
     }
 
-    internal IEnumerable<object[]> GetMeasurableValidateMeasureUnitInvalidArgsArrayList()
+    internal IEnumerable<object[]> GetValidateMeasureUnitInvalidArgsArrayList()
     {
         // Not MeasureUnit type Not MeasureUnitCode enum
         _measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
