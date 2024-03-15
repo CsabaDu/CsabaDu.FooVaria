@@ -1,8 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Common;
-using CsabaDu.FooVaria.BaseTypes.Common.Types.Implementations;
-using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Returns;
-
-namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.Fakes
+﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.Fakes
 {
     internal sealed class CommonBaseChild(IRootObject rootObject, string paramName) : CommonBase(rootObject, paramName)
     {

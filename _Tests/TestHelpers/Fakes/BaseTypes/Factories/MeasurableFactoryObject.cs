@@ -1,3 +1,3 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Factories;
+﻿//namespace CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Factories;
 
-internal sealed class MeasurableFactoryObject : IMeasurableFactory;
+//internal sealed class MeasurableFactoryObject : IMeasurableFactory;
