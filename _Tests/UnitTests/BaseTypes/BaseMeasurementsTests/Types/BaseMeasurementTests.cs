@@ -1,5 +1,3 @@
-using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasurementsTests.Types;
 
 [TestClass, TestCategory("UnitTest")]
@@ -15,8 +13,8 @@ public sealed class BaseMeasurementTests
     [TestInitialize]
     public void InitializeBaseMeasurementTests()
     {
-        _measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
-        _measureUnit = RandomParams.GetRandomValidMeasureUnit(_measureUnitCode);
+        _measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        _measureUnitCode = GetMeasureUnitCode(_measureUnit);
         _measureUnitType = _measureUnit.GetType();
     }
 
@@ -26,10 +24,7 @@ public sealed class BaseMeasurementTests
         _paramName = null;
         _baseMeasurement = null;
 
-        if (ExchangeRateCollection.Count != ConstantExchangeRateCount)
-        {
-            RestoreConstantExchangeRates();
-        }
+        TestSupport.RestoreConstantExchangeRates();
     }
     #endregion
 
@@ -410,16 +405,14 @@ public sealed class BaseMeasurementTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetBaseMeasurementValidateMeasureUnitInvalidArgsArrayList), DynamicDataSourceType.Method)]
-    public void ValidateMeasureUnit_invalidArg_Enum_arg_string_throws_InvalidEnumArgumentException(Enum measureUnit, MeasureUnitCode measureUnitCode)
+    public void ValidateMeasureUnit_invalidArg_Enum_arg_string_throws_InvalidEnumArgumentException()
     {
         // Arrange
-        _measureUnit = measureUnitCode.GetDefaultMeasureUnit();
-        _paramName = RandomParams.GetRandomParamName();
         SetBaseMeasurementChild(_measureUnit, null, null);
+        Enum context = RandomParams.GetRandomValidMeasureUnit(_measureUnit);
 
         // Act
-        void attempt() => _baseMeasurement.ValidateMeasureUnit(measureUnit, _paramName);
+        void attempt() => _baseMeasurement.ValidateMeasureUnit(context, _paramName);
 
         // Assert
         var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
@@ -441,6 +434,10 @@ public sealed class BaseMeasurementTests
     }
     #endregion
     #endregion
+
+    //#region Static methods
+
+    //#endregion
     #endregion
 
     #region Private methods
@@ -481,11 +478,6 @@ public sealed class BaseMeasurementTests
     private static IEnumerable<object[]> GetValidateExchangeRateArgArrayList()
     {
         return DynamicDataSource.GetValidateExchangeRateArgArrayList();
-    }
-
-    private static IEnumerable<object[]> GetBaseMeasurementValidateMeasureUnitInvalidArgsArrayList()
-    {
-        return DynamicDataSource.GetBaseMeasurementValidateMeasureUnitInvalidArgsArrayList();
     }
 
     private static IEnumerable<object[]> GetBaseMeasurementValidateMeasureUnitValidArgsArrayList()
