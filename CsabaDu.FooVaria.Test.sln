@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BaseTypes", "BaseTypes", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Measurables", "_BaseTypes\Measurables\Measurables.csproj", "{3E1A166C-E1AF-48E8-BB8E-6F152872D142}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BaseTypes", "_BaseTypes", "{2713F936-5028-42B1-9D89-ECE3CEBC6D7B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BaseTypes", "BaseTypes", "{2713F936-5028-42B1-9D89-ECE3CEBC6D7B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{1421C086-834E-4730-9368-83D0F838A8CA}"
 EndProject
@@ -30,7 +30,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestHelpers", "TestHelpers"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Params", "_Tests\TestHelpers\Params\Params.csproj", "{DA5D883D-49CB-417B-A113-80781BD0DEC3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fakes", "_Tests\TestHelpers\Fakes\Fakes.csproj", "{40E59E32-E8FF-480B-A124-8B5DF292AA67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataTypes", "_Tests\TestHelpers\DataTypes\DataTypes.csproj", "{40E59E32-E8FF-480B-A124-8B5DF292AA67}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseQuantifiablesTests", "_Tests\UnitTests\_BaseTypes\BaseQuantifiablesTests\BaseQuantifiablesTests.csproj", "{ADE3C2CA-0B43-448E-9DC3-7645D752C60A}"
 EndProject
