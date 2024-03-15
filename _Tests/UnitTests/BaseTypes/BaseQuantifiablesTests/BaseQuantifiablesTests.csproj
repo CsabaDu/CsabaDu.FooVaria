@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disabledis</Nullable>
+    <Nullable>disable</Nullable>
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\TestHelpers\DynamicDataSources\DynamicDataSources.csproj" />
+    <ProjectReference Include="..\..\..\TestHelpers\Fakes\Fakes.csproj" />
   </ItemGroup>
 
 </Project>
