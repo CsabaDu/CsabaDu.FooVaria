@@ -409,7 +409,8 @@ public sealed class BaseMeasurementTests
     {
         // Arrange
         SetBaseMeasurementChild(_measureUnit, null, null);
-        Enum context = RandomParams.GetRandomValidMeasureUnit(_measureUnit);
+        _measureUnitCode = RandomParams.GetRandomMeasureUnitCode(_measureUnitCode);
+        Enum context = RandomParams.GetRandomMeasureUnit(_measureUnitCode);
 
         // Act
         void attempt() => _baseMeasurement.ValidateMeasureUnit(context, _paramName);
