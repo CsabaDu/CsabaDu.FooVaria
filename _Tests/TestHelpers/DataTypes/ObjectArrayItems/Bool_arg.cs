@@ -4,5 +4,4 @@
     {
         public override object[] ToObjectArray() => [IsTrue];
     }
-
 }

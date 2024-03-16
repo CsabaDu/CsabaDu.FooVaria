@@ -206,6 +206,11 @@ public sealed class RandomParams
         return Convert.ToDecimal(Random.NextInt64(long.MinValue, 1) - Random.NextDouble());
     }
 
+    public LimitMode GetRandomLimitMode()
+    {
+        return GetRandomItem(Enum.GetValues<LimitMode>());
+    }
+
     #region Private methods
     #region Static methods
     private static T GetRandomItem<T>(T[] items)

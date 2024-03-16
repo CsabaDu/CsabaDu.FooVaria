@@ -1,6 +1,7 @@
-using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Factories;
+using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
 using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Enums;
-using Moq;
+using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
+using CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors;
 
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseQuantifiablesTests.TestClasses;
 
@@ -33,6 +34,7 @@ public sealed class BaseQuantifiableTests
     #region Private fields
     private BaseQuantifiableChild _baseQuantifiable;
     private decimal _defaultQuantity;
+    private LimitMode _limitMode;
     private Enum _measureUnit;
     private MeasureUnitCode _measureUnitCode;
     private Type _measureUnitType;
@@ -87,19 +89,44 @@ public sealed class BaseQuantifiableTests
     #region bool? FitsIn
     #region ILimitable.FitsIn(ILimiter)
     [TestMethod, TestCategory("UnitTest")]
-    public void FitsIn_arg_ILimiter_returns_expected()
+    [DynamicData(nameof(GetFitsInArgsArrayList), DynamicDataSourceType.Method)]
+    public void FitsIn_invalidArg_ILimiter_returns_null(Enum measureUnit, ILimiter limiter)
+    {
+        // Arrange
+        SetBaseQuantifiableChild(measureUnit, null, _defaultQuantity);
+
+        // Act
+        var actual = _baseQuantifiable.FitsIn(limiter);
+
+        // Assert
+        Assert.IsNull(actual);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void FitsIn_vidArg_ILimiter_returns_expected()
     {
         // Arrange
         SetBaseQuantifiableChild(_measureUnit, null, _defaultQuantity);
-        Mock<ILimiter> limiter = new Mock<ILimiter>();
-        LimitMode? limitMode = limiter.Object.GetLimitMode();
+        _limitMode = RandomParams.GetRandomLimitMode();
+        decimal otherQuantity = RandomParams.GetRandomDecimal();
+        LimiterBaseQuantifiableOblect limiter = new(RootObject, null)
+        {
+            Return = new()
+            {
+                GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(_measureUnitCode),
+                GetDefaultQuantity = otherQuantity,
+            },
+            LimitMode = _limitMode,
+        };
+        bool? expected = _defaultQuantity.FitsIn(otherQuantity, _limitMode);
 
         // Act
-        var actual = _baseQuantifiable.Equals(limiter);
+        var actual = _baseQuantifiable.FitsIn(limiter);
 
-        //// Assert
-        //Assert.AreEqual(expected, actual);
+        // Assert
+        Assert.AreEqual(expected, actual);
     }
+
     #endregion
     #endregion
 
@@ -128,6 +155,11 @@ public sealed class BaseQuantifiableTests
     private static IEnumerable<object[]> GetEqualsArgsArrayList()
     {
         return DynamicDataSource.GetEqualsArgsArrayList();
+    }
+
+    private static IEnumerable<object[]> GetFitsInArgsArrayList()
+    {
+        return DynamicDataSource.GetFitsInArgsArrayList();
     }
 
     #endregion

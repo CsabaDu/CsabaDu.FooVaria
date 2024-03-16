@@ -1,4 +1,6 @@
-﻿
+﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
+using static CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics.Extensions;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseQuantifiablesTests;
 
 internal class DynamicDataSource : DynamicDataFields
@@ -61,42 +63,38 @@ internal class DynamicDataSource : DynamicDataFields
         #endregion
     }
 
-    //internal IEnumerable<object[]> GetEqualsBaseMeasurementArgArrayList()
-    //{
-    //    // Same MeasureUnit
-    //    _isTrue = true;
-    //    _obj = new BaseMeasurementChild(RootObject, null)
-    //    {
-    //        Return = new()
-    //        {
-    //            GetBaseMeasureUnit = _measureUnit,
-    //        }
-    //    };
-    //    yield return toObjectArray();
+    internal IEnumerable<object[]> GetFitsInArgsArrayList()
+    {
+        // null
+        _measureUnit = null;
+        _limiter = null;
+        yield return toObjectArray();
 
-    //    // Different MeasureUnit, same MeasureUnitCode and same ExhchangeRate
-    //    _measureUnit = RandomParams.GetRandomNotUsedCustomMeasureUnit();
-    //    _ = TrySetCustomMeasureUnit(_measureUnit, decimal.One, RandomParams.GetRandomParamName());
-    //    _measureUnitCode = GetMeasureUnitCode(_measureUnit);
-    //    _obj = new BaseMeasurementChild(RootObject, null)
-    //    {
-    //        Return = new()
-    //        {
-    //            GetBaseMeasureUnit = _measureUnitCode.GetDefaultMeasureUnit(),
-    //        }
-    //    };
-    //    yield return toObjectArray();
+        // Not IBaseQuantifiable
+        _limiter = new LimiterObject();
+        yield return toObjectArray();
 
-    //    #region toObjectArray method
-    //    object[] toObjectArray()
-    //    {
-    //        IBaseMeasurement baseMeasurement = (IBaseMeasurement)_obj;
-    //        Bool_Enum_IBaseMeasurement_args item = new(_isTrue, _measureUnit, baseMeasurement);
+        // Different MeasureUnitCode
+        _measureUnit = RandomParams.GetRandomMeasureUnit();
+        _measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode(_measureUnit));
+        _limiter = new LimiterBaseQuantifiableOblect(RootObject, null)
+        {
+            Return = new()
+            {
+                GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(GetMeasureUnitCode(_measureUnitCode)),
+            }
+        };
 
-    //        return item.ToObjectArray();
-    //    }
-    //    #endregion
-    //}
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            Enum_ILimiter_args item = new(_measureUnit, _limiter);
+
+            return item.ToObjectArray();
+        }
+        #endregion
+    }
+
 
     //internal IEnumerable<object[]> GetExchangeRateCollectionArgArrayList()
     //{
