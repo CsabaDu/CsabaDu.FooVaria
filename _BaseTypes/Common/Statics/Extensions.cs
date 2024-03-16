@@ -7,13 +7,6 @@ public static class Extensions
     {
         return exchangeRate > 0;
     }
-
-    //public static void ValidateExchangeRate(this decimal exchangeRate)
-    //{
-    //    if (exchangeRate.IsValidExchangeRate()) return;
-
-    //    throw new ArgumentOutOfRangeException(nameof(exchangeRate), exchangeRate, null);
-    //}
     #endregion
 
     public static bool IsDefined<T>(this T enumeration)

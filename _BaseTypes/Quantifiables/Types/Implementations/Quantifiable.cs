@@ -19,45 +19,52 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
 
     public override bool? FitsIn(ILimiter? limiter)
     {
-        if (limiter is not IQuantifiable quantifiable) return null;
+        if (limiter is not IQuantifiable) return null;
 
-        LimitMode? limitMode = limiter.GetLimitMode();
+        return base.FitsIn(limiter);
 
-        return FitsIn(quantifiable, limitMode);
+        //LimitMode? limitMode = limiter.GetLimitMode();
+
+        //return FitsIn(quantifiable, limitMode);
     }
 
     public virtual bool? FitsIn(IQuantifiable? other, LimitMode? limitMode)
     {
-        bool limitModeHasValue = limitMode.HasValue;
-
-        if (other == null && !limitModeHasValue) return true;
+        if (other == null && !limitMode.HasValue) return true;
 
         if (other?.HasMeasureUnitCode(GetMeasureUnitCode()) != true) return null;
 
-        if (!limitModeHasValue) return CompareTo(other) <= 0;
+        decimal defaultQuantity = GetDefaultQuantity();
+        decimal otherQuantity = other.GetDefaultQuantity();
+        limitMode ??= LimitMode.BeNotGreater;
 
-        _ = Defined(limitMode!.Value, nameof(limitMode));
+        return defaultQuantity.FitsIn(otherQuantity, limitMode);
 
-        IQuantifiable ceilingBaseMeasure = other.Round(RoundingMode.Ceiling);
-        other = limitMode switch
-        {
-            LimitMode.BeNotLess or
-            LimitMode.BeGreater => ceilingBaseMeasure,
+        //bool limitModeHasValue = limitMode.HasValue;
+        //if (!limitModeHasValue) return CompareTo(other) <= 0;
 
-            LimitMode.BeNotGreater or
-            LimitMode.BeLess or
-            LimitMode.BeEqual => other.Round(RoundingMode.Floor),
+        //_ = Defined(limitMode!.Value, nameof(limitMode));
 
-            _ => null,
-        };
+        //IQuantifiable ceilingBaseMeasure = other.Round(RoundingMode.Ceiling);
+        //other = limitMode switch
+        //{
+        //    LimitMode.BeNotLess or
+        //    LimitMode.BeGreater => ceilingBaseMeasure,
 
-        if (other == null) return null;
+        //    LimitMode.BeNotGreater or
+        //    LimitMode.BeLess or
+        //    LimitMode.BeEqual => other.Round(RoundingMode.Floor),
 
-        int comparison = CompareTo(other);
+        //    _ => null,
+        //};
 
-        if (limitMode == LimitMode.BeEqual) return comparison == 0 && ceilingBaseMeasure.Equals(other);
+        //if (other == null) return null;
 
-        return comparison.FitsIn(limitMode);
+        //int comparison = CompareTo(other);
+
+        //if (limitMode == LimitMode.BeEqual) return comparison == 0 && ceilingBaseMeasure.Equals(other);
+
+        //return comparison.FitsIn(limitMode);
     }
 
     public decimal GetDecimalQuantity()

@@ -8,6 +8,7 @@ public abstract class DynamicDataFields
     #endregion
 
     protected Enum _context;
+    protected decimal _defaultQuantity;
     protected decimal _exchangeRate;
     protected bool _isTrue;
     protected Enum _measureUnit;

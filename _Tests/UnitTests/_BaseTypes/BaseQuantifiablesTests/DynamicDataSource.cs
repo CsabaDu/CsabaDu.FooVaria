@@ -1,77 +1,68 @@
-﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseQuantifiablesTests;
+﻿
+namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseQuantifiablesTests;
 
 internal class DynamicDataSource : DynamicDataFields
 {
-    //#region Fields
-    //private Enum _context;
-    //private decimal _exchangeRate;
-    //private bool _isTrue;
-    //private MeasureUnitCode _measureUnitCode;
-    //private Enum _measureUnit;
-    //private object _obj;
+    #region Methods
+    internal IEnumerable<object[]> GetEqualsArgsArrayList()
+    {
+        // null
+        _obj = null;
+        _measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        _defaultQuantity = RandomParams.GetRandomDecimal();
+        _isTrue = false;
+        yield return toObjectArray();
 
-    //#region Readonly fields
-    //private readonly RandomParams RandomParams = new();
-    //private readonly RootObject RootObject = new();
-    //#endregion
-    //#endregion
+        // object
+        _obj = new();
+        yield return toObjectArray();
 
-    //#region Methods
-    //#region DynamicDataSource
-    //internal IEnumerable<object[]> GetEqualsObjectArgArrayList()
-    //{
-    //    // null
-    //    _obj = null;
-    //    _measureUnit = RandomParams.GetRandomValidMeasureUnit();
-    //    _measureUnitCode = GetMeasureUnitCode(_measureUnit);
-    //    _isTrue = false;
-    //    yield return toObjectArray();
+        // Different MeasureUnitCode
+        _measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode(_measureUnit));
+        _obj = new BaseQuantifiableChild(RootObject, null)
+        {
+            Return = new()
+            {
+                GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(_measureUnitCode),
+                GetDefaultQuantity = _defaultQuantity,
+            }
+        };
+        yield return toObjectArray();
 
-    //    // object
-    //    _obj = new();
-    //    yield return toObjectArray();
+        // Same MeasureUnit, different defaultQuantity
+        _obj = new BaseQuantifiableChild(RootObject, null)
+        {
+            Return = new()
+            {
+                GetBaseMeasureUnit = _measureUnit,
+                GetDefaultQuantity = RandomParams.GetRandomDecimal(_defaultQuantity),            }
+        };
+        yield return toObjectArray();
 
-    //    // IBaseMeasurement
-    //    _obj = new BaseMeasurementChild(RootObject, null)
-    //    {
-    //        Return = new()
-    //        {
-    //            GetBaseMeasureUnit = RandomParams.GetRandomValidMeasureUnit(),
-    //        }
-    //    };
-    //    _isTrue = _measureUnit.Equals((_obj as IBaseMeasurement).GetBaseMeasureUnit());
-    //    yield return toObjectArray();
+        // IBaseMeasurement
+        _obj = new BaseQuantifiableChild(RootObject, null)
+        {
+            Return = new()
+            {
+                GetBaseMeasureUnit = _measureUnit,
+                GetDefaultQuantity = _defaultQuantity,
+            }
+        };
+        _isTrue = true;
+        yield return toObjectArray();
 
-    //    #region toObjectArray method
-    //    object[] toObjectArray()
-    //    {
-    //        Bool_Object_Enum_args item = new(_isTrue, _obj, _measureUnit);
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            Bool_Object_Enum_Decimal_args item = new(_isTrue, _obj, _measureUnit, _defaultQuantity);
 
-    //        return item.ToObjectArray();
-    //    }
-    //    #endregion
-    //}
+            return item.ToObjectArray();
+        }
+        #endregion
+    }
 
     //internal IEnumerable<object[]> GetEqualsBaseMeasurementArgArrayList()
     //{
-    //    // null
-    //    _obj = null;
-    //    _isTrue = false;
-    //    _measureUnit = RandomParams.GetRandomValidMeasureUnit();
-    //    _measureUnitCode = GetMeasureUnitCode(_measureUnit);
-    //    yield return toObjectArray();
-
-    //    // Different MeasureUnitCode
-    //    _measureUnitCode = RandomParams.GetRandomMeasureUnitCode(_measureUnitCode);
-    //    _obj = new BaseMeasurementChild(RootObject, null)
-    //    {
-    //        Return = new()
-    //        {
-    //            GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(_measureUnitCode),
-    //        }
-    //    };
-    //    yield return toObjectArray();
-
     //    // Same MeasureUnit
     //    _isTrue = true;
     //    _obj = new BaseMeasurementChild(RootObject, null)
@@ -221,6 +212,5 @@ internal class DynamicDataSource : DynamicDataFields
     //    }
     //    #endregion
     //}
-    //#endregion
-    //#endregion
+    #endregion
 }

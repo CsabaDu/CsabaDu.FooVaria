@@ -23,6 +23,20 @@ public static class Extensions
     #endregion
 
     #region System.Decimal
+    public static bool? FitsIn(this decimal quantity, decimal other, LimitMode? limitMode)
+    {
+        return limitMode switch
+        {
+            LimitMode.BeNotLess => quantity >= other,
+            LimitMode.BeNotGreater => quantity <= other,
+            LimitMode.BeGreater => quantity > other,
+            LimitMode.BeLess => quantity < other,
+            LimitMode.BeEqual => quantity == other,
+
+            _ => null,
+        };
+    }
+
     public static decimal Round(this decimal quantity, RoundingMode roundingMode)
     {
         return roundingMode switch

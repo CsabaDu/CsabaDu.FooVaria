@@ -41,6 +41,19 @@ public abstract class BaseQuantifiable(IRootObject rootObject, string paramName)
     #endregion
 
     #region Virtual methods    
+    public virtual bool? FitsIn(ILimiter? limiter)
+    {
+        if (limiter is not IBaseQuantifiable other) return null;
+
+        if (!other.HasMeasureUnitCode(GetMeasureUnitCode())) return null;
+
+        decimal defaultQuantity = GetDefaultQuantity();
+        decimal otherQuantity = other.GetDefaultQuantity();
+        LimitMode? limitMode = limiter?.GetLimitMode();
+
+        return defaultQuantity.FitsIn(otherQuantity, limitMode);
+    }
+
     public virtual void ValidateQuantity(ValueType? quantity, string paramName)
     {
         _ = ConvertQuantity(quantity, paramName, GetQuantityTypeCode());
@@ -55,7 +68,6 @@ public abstract class BaseQuantifiable(IRootObject rootObject, string paramName)
     #endregion
 
     #region Abstract methods
-    public abstract bool? FitsIn(ILimiter? limiter);
     public abstract decimal GetDefaultQuantity();
     #endregion
 

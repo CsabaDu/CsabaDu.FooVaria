@@ -8,6 +8,7 @@ public sealed class RandomParams
     private static readonly IEnumerable<MeasureUnitCode> ConstantMeasureUnitCodes = MeasureUnitCodes.Where(x => !x.IsCustomMeasureUnitCode());
     #endregion
 
+    #region Public methods
     public Enum GetRandomConstantMeasureUnit(Enum excluded = null)
     {
         Enum measureUnit = (Enum)GetRandomItem(ConstantExchangeRateCollection.Keys);
@@ -48,7 +49,6 @@ public sealed class RandomParams
         return context;
     }
 
-    #region Public methods
     public MeasureUnitCode GetRandomMeasureUnitCode(MeasureUnitCode? excluded = null)
     {
         MeasureUnitCode randomMeasureUnitCode = getRandomMeasureUnitCode();
@@ -146,6 +146,7 @@ public sealed class RandomParams
 
         return GetRandomItems(MeasureUnitCodes, count);
     }
+
     public  Enum GetRandomSameTypeValidMeasureUnit(Enum measureUnit)
     {
         if (!IsValidMeasureUnit(measureUnit)) throw InvalidMeasureUnitEnumArgumentException(measureUnit);
@@ -164,6 +165,23 @@ public sealed class RandomParams
         return isCustomMeasureUnit ?
             (Enum)Enum.ToObject(measureUnit.GetType(), 1)
             : GetRandomMeasureUnit(measureUnitCode);
+    }
+
+    public decimal GetRandomDecimal()
+    {
+        return Convert.ToDecimal(Random.NextInt64(long.MinValue, long.MaxValue) + Random.NextDouble());
+    }
+
+    public decimal GetRandomDecimal(decimal excluded)
+    {
+        decimal quantity = GetRandomDecimal();
+
+        while (quantity == excluded)
+        {
+            quantity = GetRandomDecimal();
+        }
+
+        return quantity;
     }
 
     public decimal GetRandomPositiveDecimal()

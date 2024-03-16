@@ -26,10 +26,6 @@ internal sealed class BaseQuantifiableChild(IRootObject rootObject, string param
 
     public BaseQuantifiableReturn Return { private get; set; }
 
-    public override bool? FitsIn(ILimiter limiter) => limiter is IBaseQuantifiable ?
-        Return.FitsIn
-        : null;
-
     public override Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnit;
 
     public override IFactory GetFactory() => Return.GetFactory;
