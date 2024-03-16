@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Fakes.ObjectArrayItems
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ObjectArrayItems
 {
     public record Bool_arg(bool IsTrue) : ObjectArray
     {

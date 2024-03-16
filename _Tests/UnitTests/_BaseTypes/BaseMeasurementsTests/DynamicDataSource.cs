@@ -1,23 +1,8 @@
 ﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasurementsTests;
 
-internal class DynamicDataSource
+internal class DynamicDataSource : DynamicDataFields
 {
-    #region Fields
-    private Enum _context;
-    private decimal _exchangeRate;
-    private bool _isTrue;
-    private MeasureUnitCode _measureUnitCode;
-    private Enum _measureUnit;
-    private object _obj;
-
-    #region Readonly fields
-    private readonly RandomParams RandomParams = new();
-    private readonly RootObject RootObject = new();
-    #endregion
-    #endregion
-
     #region Methods
-    #region DynamicDataSource
     internal IEnumerable<object[]> GetEqualsObjectArgArrayList()
     {
         // null
@@ -221,6 +206,5 @@ internal class DynamicDataSource
         }
         #endregion
     }
-    #endregion
     #endregion
 }

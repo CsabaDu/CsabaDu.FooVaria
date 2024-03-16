@@ -1,3 +1,3 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Fakes;
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes;
 
 public sealed class RootObject : IRootObject;

@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Fakes.ObjectArrayItems;
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ObjectArrayItems;
 
 public record Enum_MeasureUnitCode_bool_args(Enum MeasureUnit, MeasureUnitCode MeasureUnitCode, bool IsTrue) : Enum_MeasureUnitCode_args(MeasureUnit, MeasureUnitCode)
 {

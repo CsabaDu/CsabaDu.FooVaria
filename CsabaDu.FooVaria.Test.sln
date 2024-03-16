@@ -34,6 +34,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataTypes", "_Tests\TestHel
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseQuantifiablesTests", "_Tests\UnitTests\_BaseTypes\BaseQuantifiablesTests\BaseQuantifiablesTests.csproj", "{ADE3C2CA-0B43-448E-9DC3-7645D752C60A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeasurementTests", "_Tests\UnitTests\MeasurementTests\MeasurementTests.csproj", "{74C87EF0-6B49-4219-BD32-BA8FE51B043A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,6 +86,10 @@ Global
 		{ADE3C2CA-0B43-448E-9DC3-7645D752C60A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADE3C2CA-0B43-448E-9DC3-7645D752C60A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADE3C2CA-0B43-448E-9DC3-7645D752C60A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74C87EF0-6B49-4219-BD32-BA8FE51B043A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74C87EF0-6B49-4219-BD32-BA8FE51B043A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74C87EF0-6B49-4219-BD32-BA8FE51B043A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74C87EF0-6B49-4219-BD32-BA8FE51B043A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,6 +108,7 @@ Global
 		{DA5D883D-49CB-417B-A113-80781BD0DEC3} = {C2C7E58A-4C46-42CF-B996-0CCD0D91E389}
 		{40E59E32-E8FF-480B-A124-8B5DF292AA67} = {C2C7E58A-4C46-42CF-B996-0CCD0D91E389}
 		{ADE3C2CA-0B43-448E-9DC3-7645D752C60A} = {2713F936-5028-42B1-9D89-ECE3CEBC6D7B}
+		{74C87EF0-6B49-4219-BD32-BA8FE51B043A} = {1421C086-834E-4730-9368-83D0F838A8CA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A90722CA-9D20-419A-AA57-5766105110BF}

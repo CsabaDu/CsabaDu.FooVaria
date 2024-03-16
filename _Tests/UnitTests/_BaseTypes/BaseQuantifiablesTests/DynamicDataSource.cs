@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseQuantifiablesTests;
 
-internal class DynamicDataSource
+internal class DynamicDataSource : DynamicDataFields
 {
     //#region Fields
     //private Enum _context;

@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Fakes.ObjectArrayItems;
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ObjectArrayItems;
 
 public record MeasureUnitCode_IMeasurable_args(MeasureUnitCode MeasureUnitCode, IMeasurable Measurable) : MeasureUnitCode_arg(MeasureUnitCode)
 {

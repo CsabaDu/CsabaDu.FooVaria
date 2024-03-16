@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Fakes.Returns
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.Returns
 {
     public class CommonBaseReturn
     {

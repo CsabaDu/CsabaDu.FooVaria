@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Fakes.ObjectArrayItems;
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ObjectArrayItems;
 
 public record Enum_Decimal_args(Enum MeasureUnit, decimal ExchangeRate) : Enum_arg(MeasureUnit)
 {

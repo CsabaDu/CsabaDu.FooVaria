@@ -1,6 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Fakes;
-
-public abstract record ObjectArray
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes
 {
-    public abstract object[] ToObjectArray();
+    public abstract record ObjectArray
+    {
+        public abstract object[] ToObjectArray();
+    }
 }

@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Fakes.ObjectArrayItems;
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ObjectArrayItems;
 
 public record Bool_Enum_IBaseMeasurement_args(bool IsTrue, Enum MeasureUnit, IBaseMeasurement BaseMeasurement) : Bool_Enum_args(IsTrue, MeasureUnit)
 {
