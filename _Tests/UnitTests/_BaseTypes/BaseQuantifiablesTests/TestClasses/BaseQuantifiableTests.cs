@@ -1,4 +1,4 @@
-namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseQuantifiablesTests.Types;
+namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseQuantifiablesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
 public sealed class BaseQuantifiableTests

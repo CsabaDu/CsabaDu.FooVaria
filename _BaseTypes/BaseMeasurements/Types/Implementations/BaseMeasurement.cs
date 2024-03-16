@@ -60,6 +60,11 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         return CustomNameCollection.FirstOrDefault(x => x.Key == measureUnit).Value;
     }
 
+    public static Dictionary<object, string> GetCustomNameCollection(MeasureUnitCode measureUnitCode)
+    {
+        return GetMeasureUnitBasedCollection(CustomNameCollection, measureUnitCode);
+    }
+
     public static string GetMeasureUnitName(Enum measureUnit)
     {
         return GetCustomName(measureUnit) ?? GetDefaultName(measureUnit);
@@ -292,6 +297,13 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         return string.Equals(name, otherName, StringComparison.OrdinalIgnoreCase);
     }
 
+    public static void ValidateCustomName(string? customName)
+    {
+        if (IsValidCustomNameParam(NullChecked(customName, nameof(customName)))) return;
+
+        throw NameArgumentOutOfRangeException(nameof(customName), customName!);
+    }
+
     public static void ValidateExchangeRate(decimal exchangeRate, string paramName, Enum measureUnit)
     {
         if (IsValidExchangeRate(exchangeRate, measureUnit)) return;
@@ -363,6 +375,16 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         Enum measureUnit = GetBaseMeasureUnit();
 
         return GetExchangeRate(measureUnit, string.Empty);
+    }
+
+    public static decimal GetExchangeRate(string name)
+    {
+        const string paramName = nameof(name);
+        Enum? measureUnit = GetMeasureUnit(NullChecked(name, paramName));
+
+        if (measureUnit != null) return GetExchangeRate(measureUnit, paramName);
+
+        throw NameArgumentOutOfRangeException(name);
     }
 
     public IDictionary<object, decimal> GetExchangeRateCollection()

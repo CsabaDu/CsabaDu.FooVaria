@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.CommonTests.Types
+﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.CommonTests.TestClasses
 {
     [TestClass, TestCategory("UnitTest")]
     public sealed class CommonBaseTests

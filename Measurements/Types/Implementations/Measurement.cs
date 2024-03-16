@@ -21,24 +21,14 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
 
     #region Override methods
     #region Sealed methods
-    public static decimal GetExchangeRate(string name)
+    public override sealed Enum GetBaseMeasureUnit()
     {
-        const string paramName = nameof(name);
-        Enum? measureUnit = GetMeasureUnit(NullChecked(name, paramName));
-
-        if (measureUnit != null) return GetExchangeRate(measureUnit, paramName);
-
-        throw NameArgumentOutOfRangeException(name);
+        return (Enum)MeasureUnit;
     }
 
     public override sealed IMeasurementFactory GetFactory()
     {
         return Factory;
-    }
-
-    public override sealed Enum GetBaseMeasureUnit()
-    {
-        return (Enum)MeasureUnit;
     }
 
     public override sealed MeasureUnitCode GetMeasureUnitCode()
@@ -60,11 +50,6 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
         Enum measureUnit = GetBaseMeasureUnit();
 
         return GetCustomName(measureUnit);
-    }
-
-    public static Dictionary<object, string> GetCustomNameCollection(MeasureUnitCode measureUnitCode)
-    {
-        return GetMeasureUnitBasedCollection(CustomNameCollection, measureUnitCode);
     }
 
     public IDictionary<object, string> GetCustomNameCollection()
@@ -153,13 +138,6 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
     public bool TrySetCustomName(string? customName)
     {
         return TrySetCustomName(GetBaseMeasureUnit(), customName);
-    }
-
-    public static void ValidateCustomName(string? customName)
-    {
-        if (IsValidCustomNameParam(NullChecked(customName, nameof(customName)))) return;
-
-        throw NameArgumentOutOfRangeException(nameof(customName), customName!);
     }
     #endregion
 }
