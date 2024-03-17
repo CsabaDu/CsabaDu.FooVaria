@@ -17,4 +17,5 @@ public abstract class DynamicDataFields
     protected MeasureUnitCode _measureUnitCode;
     protected bool? _nullableBool;
     protected object _obj;
+    protected TypeCode _typeCode;
 }

@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Params;
+﻿using System.Runtime.InteropServices;
+
+namespace CsabaDu.FooVaria.Tests.TestHelpers.Params;
 
 public sealed class RandomParams
 {
@@ -210,6 +212,7 @@ public sealed class RandomParams
     {
         return GetRandomItem(Enum.GetValues<LimitMode>());
     }
+    #endregion
 
     #region Private methods
     #region Static methods
@@ -250,6 +253,29 @@ public sealed class RandomParams
         }
 
         return randomIndexArray;
+    }
+
+    public ValueType GetRandomValueType(TypeCode typeCode)
+    {
+        return typeCode switch
+        {
+            TypeCode.Boolean => Convert.ToBoolean(Random.Next(1)),
+            TypeCode.Char => Convert.ToChar(Random.Next(char.MaxValue)),
+            TypeCode.SByte => Convert.ToSByte(Random.Next(sbyte.MaxValue)),
+            TypeCode.Byte => Convert.ToByte(Random.Next(byte.MinValue, byte.MaxValue)),
+            TypeCode.Int16 => Convert.ToInt16(Random.Next(short.MinValue, short.MaxValue)),
+            TypeCode.UInt16 => Convert.ToUInt16(Random.Next(ushort.MaxValue)),
+            TypeCode.Int32 => Random.Next(int.MinValue, int.MaxValue),
+            TypeCode.UInt32 => Convert.ToUInt32(Random.Next()),
+            TypeCode.Int64 => Random.NextInt64(long.MinValue, long.MaxValue),
+            TypeCode.UInt64 => Convert.ToUInt64(Random.NextInt64()),
+            TypeCode.Single => Random.NextSingle(),
+            TypeCode.Double => Random.NextDouble(),
+            TypeCode.Decimal => Convert.ToDecimal(Random.NextDouble()),
+            TypeCode.DateTime => DateTime.Now,
+
+            _ => throw new ArgumentOutOfRangeException(nameof(typeCode), typeCode, null),
+        };
     }
     #endregion
     #endregion
@@ -455,5 +481,5 @@ public sealed class RandomParams
     //    }
     //    #endregion
     //}
-    #endregion
+    //#endregion
 }

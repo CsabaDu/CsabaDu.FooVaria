@@ -15,4 +15,15 @@ public static class SampleParams
         return (Enum)Enum.ToObject(measureUnitType, count);
     }
 
+    public static TypeCode[] InvalidValueTypeCodes =>
+        [
+            TypeCode.Boolean,
+            TypeCode.Char,
+            TypeCode.SByte,
+            TypeCode.Byte,
+            TypeCode.Int16,
+            TypeCode.UInt16,
+            TypeCode.Single,
+            TypeCode.DateTime,
+        ];
 }

@@ -1,7 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
-using static CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics.Extensions;
-
-namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseQuantifiablesTests;
+﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseQuantifiablesTests;
 
 internal class DynamicDataSource : DynamicDataFields
 {
@@ -37,7 +34,7 @@ internal class DynamicDataSource : DynamicDataFields
             Return = new()
             {
                 GetBaseMeasureUnit = _measureUnit,
-                GetDefaultQuantity = RandomParams.GetRandomDecimal(_defaultQuantity),            }
+                GetDefaultQuantity = RandomParams.GetRandomDecimal(_defaultQuantity), }
         };
         yield return toObjectArray();
 
@@ -95,7 +92,21 @@ internal class DynamicDataSource : DynamicDataFields
         #endregion
     }
 
+    internal IEnumerable<object[]> GetValidateQuantityInvalidQuantityTypeCodeArgArrayList()
+    {
+        foreach (TypeCode item in SampleParams.InvalidValueTypeCodes)
+        {
+            yield return new TypeCode_arg(item).ToObjectArray();
+        }
+    }
 
+    internal IEnumerable<object[]> GetValidateQuantityValidQuantityTypeCodeArgArrayList()
+    {
+        foreach (TypeCode item in GetQuantityTypeCodes())
+        {
+            yield return new TypeCode_arg(item).ToObjectArray();
+        }
+    }
     //internal IEnumerable<object[]> GetExchangeRateCollectionArgArrayList()
     //{
     //    _measureUnit = RandomParams.GetRandomMeasureUnit();
