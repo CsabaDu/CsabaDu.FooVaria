@@ -1,7 +1,6 @@
 using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
 using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Enums;
 using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
-using CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors;
 
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseQuantifiablesTests.TestClasses;
 
@@ -147,7 +146,6 @@ public sealed class BaseQuantifiableTests
     }
     #endregion
     #endregion
-    //return HashCode.Combine(GetMeasureUnitCode(), GetDefaultQuantity());
 
     #region int GetHashCode
     #region Measurable.GetHashCode()
@@ -240,7 +238,6 @@ public sealed class BaseQuantifiableTests
     }
 
     #region DynamicDataSource
-
     private static IEnumerable<object[]> GetEqualsArgsArrayList()
     {
         return DynamicDataSource.GetEqualsArgsArrayList();
