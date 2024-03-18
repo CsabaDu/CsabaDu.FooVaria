@@ -20,7 +20,6 @@
         // void IMeasurable.ValidateMeasureUnitCode(IMeasurable measurable, string paramName)
         // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
         // void IBaseQuantifiable.ValidateQuantity(ValueType quantity, string paramName)
-        // void IBaseQuantifiable.ValidateQuantity(IBaseQuantifiable baseQuantifiable, string paramName)
 
         #endregion
 
