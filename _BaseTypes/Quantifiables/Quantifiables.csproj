@@ -6,6 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>TestHelpers</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\BaseMeasurements\BaseMeasurements.csproj" />
     <ProjectReference Include="..\BaseQuantifiables\BaseQuantifiables.csproj" />
