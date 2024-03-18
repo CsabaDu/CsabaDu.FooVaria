@@ -13,15 +13,15 @@ public sealed class MeasurementTests
     //[TestInitialize]
     //public void InitializeBaseMeasurementTests()
     //{
-    //    _measureUnit = RandomParams.GetRandomValidMeasureUnit();
-    //    _measureUnitCode = GetMeasureUnitCode(_measureUnit);
-    //    _measureUnitType = _measureUnit.GetType();
+    //    measureUnit = RandomParams.GetRandomValidMeasureUnit();
+    //    measureUnitCode = GetMeasureUnitCode(measureUnit);
+    //    measureUnitType = measureUnit.GetType();
     //}
 
     //[TestCleanup]
     //public void CleanupBaseMeasurementTests()
     //{
-    //    _paramName = null;
+    //    paramName = null;
     //    _baseMeasurement = null;
 
     //    TestSupport.RestoreConstantExchangeRates();
@@ -94,7 +94,7 @@ public sealed class MeasurementTests
     //#region Private methods
     //private void SetBaseMeasurementChild(Enum measureUnit, IBaseMeasurementFactory factory, string measureUnitName)
     //{
-    //    _baseMeasurement = new(RootObject, _paramName)
+    //    _baseMeasurement = new(RootObject, paramName)
     //    {
     //        Return = new()
     //        {

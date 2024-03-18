@@ -5,11 +5,12 @@
     {
         #region Private fields
         private CommonBaseChild _commonBase;
-        private string _paramName;
+        //private string paramName;
 
         #region Readonly fields
-        private readonly RandomParams RandomParams = new();
-        private readonly RootObject RootObject = new();
+        private readonly DataFields Fields = new();
+        //private readonly RandomParams = new();
+        //private readonly RootObject RootObject = new();
         #endregion
         #endregion
 
@@ -20,24 +21,24 @@
         public void CommonBase_nullArg_IRootObject_throws_ArgumentNullException()
         {
             // Arrange
-            _paramName = RandomParams.GetRandomParamName();
+            Fields.paramName = Fields.RandomParams.GetRandomParamName();
 
             // Act
-            void attempt() => _ = new CommonBaseChild(null, _paramName);
+            void attempt() => _ = new CommonBaseChild(null, Fields.paramName);
 
             // Assert
             var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-            Assert.AreEqual(_paramName, ex.ParamName);
+            Assert.AreEqual(Fields.paramName, ex.ParamName);
         }
 
         [TestMethod, TestCategory("UnitTest")]
         public void CommonBase_validArg_IRootObject_creates()
         {
             // Arrange
-            _paramName = null;
+            Fields.paramName = null;
 
             // Act
-            var actual = new CommonBaseChild(RootObject, _paramName);
+            var actual = new CommonBaseChild(Fields.RootObject, Fields.paramName);
 
             // Assert
             Assert.IsInstanceOfType(actual, typeof(ICommonBase));
@@ -51,8 +52,8 @@
         public void GetFactory_returns_expected()
         {
             // Arrange
-            _paramName = null;
-            _commonBase = new(RootObject, _paramName)
+            Fields.paramName = null;
+            _commonBase = new(Fields.RootObject, Fields.paramName)
             {
                 Return = new()
                 {

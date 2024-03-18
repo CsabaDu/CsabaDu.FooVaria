@@ -1,21 +1,24 @@
 ﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes;
 
-public abstract class DataFields
+public class DataFields
 {
     #region Readonly fields
-    protected readonly RandomParams RandomParams = new();
-    protected readonly RootObject RootObject = new();
+    public readonly RandomParams RandomParams = new();
+    public readonly RootObject RootObject = new();
     #endregion
 
-    protected Enum _context;
-    protected decimal _defaultQuantity;
-    protected decimal _exchangeRate;
-    protected bool _isTrue;
-    protected ILimiter _limiter;
-    protected LimitMode? _limitMode;
-    protected Enum _measureUnit;
-    protected MeasureUnitCode _measureUnitCode;
-    protected bool? _nullableBool;
-    protected object _obj;
-    protected TypeCode _typeCode;
+    public Enum context;
+    public decimal defaultQuantity;
+    public decimal exchangeRate;
+    public bool isTrue;
+    public ILimiter limiter;
+    public LimitMode? limitMode;
+    public Enum measureUnit;
+    public MeasureUnitCode measureUnitCode;
+    public bool? nullableBool;
+    public object obj;
+    public TypeCode typeCode;
+    public Type measureUnitType;
+    public string paramName;
+
 }

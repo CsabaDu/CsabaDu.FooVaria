@@ -125,7 +125,7 @@ public sealed class QuantifiableTests
     //public void FitsIn_invalidArg_ILimiter_returns_null(Enum measureUnit, ILimiter limiter)
     //{
     //    // Arrange
-    //    SetBaseQuantifiableChild(measureUnit, null, _defaultQuantity);
+    //    SetBaseQuantifiableChild(measureUnit, null, defaultQuantity);
 
     //    // Act
     //    var actual = _baseQuantifiable.FitsIn(limiter);
@@ -138,19 +138,19 @@ public sealed class QuantifiableTests
     //public void FitsIn_validArg_ILimiter_returns_expected()
     //{
     //    // Arrange
-    //    SetBaseQuantifiableChild(_measureUnit, null, _defaultQuantity);
-    //    _limitMode = RandomParams.GetRandomLimitMode();
+    //    SetBaseQuantifiableChild(measureUnit, null, defaultQuantity);
+    //    limitMode = RandomParams.GetRandomLimitMode();
     //    decimal otherQuantity = RandomParams.GetRandomDecimal();
     //    LimiterBaseQuantifiableOblect limiter = new(RootObject, null)
     //    {
     //        Return = new()
     //        {
-    //            GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(_measureUnitCode),
+    //            GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode),
     //            GetDefaultQuantity = otherQuantity,
     //        },
-    //        LimitMode = _limitMode,
+    //        LimitMode = limitMode,
     //    };
-    //    bool? expected = _defaultQuantity.FitsIn(otherQuantity, _limitMode);
+    //    bool? expected = defaultQuantity.FitsIn(otherQuantity, limitMode);
 
     //    // Act
     //    var actual = _baseQuantifiable.FitsIn(limiter);
@@ -168,7 +168,7 @@ public sealed class QuantifiableTests
     //public void GetDefaultQuantity_returns_expected()
     //{
     //    // Arrange
-    //    decimal expected = _defaultQuantity;
+    //    decimal expected = defaultQuantity;
     //    SetBaseQuantifiableChild(null, null, expected);
 
     //    // Act
@@ -186,8 +186,8 @@ public sealed class QuantifiableTests
     //public void GetHashCode_returns_expected()
     //{
     //    // Arrange
-    //    SetBaseQuantifiableChild(_measureUnit, null, _defaultQuantity);
-    //    var expected = HashCode.Combine(_measureUnitCode, _defaultQuantity);
+    //    SetBaseQuantifiableChild(measureUnit, null, defaultQuantity);
+    //    var expected = HashCode.Combine(measureUnitCode, defaultQuantity);
 
     //    // Act
     //    var actual = _baseQuantifiable.GetHashCode();
@@ -204,16 +204,16 @@ public sealed class QuantifiableTests
     //public void ValidateQuantity_nullArg_ValueType_arg_string_throws_ArgumentNullException()
     //{
     //    // Arrange
-    //    SetBaseQuantifiableChild(_measureUnit, null, _defaultQuantity);
-    //    _paramName = RandomParams.GetRandomParamName();
+    //    SetBaseQuantifiableChild(measureUnit, null, defaultQuantity);
+    //    paramName = RandomParams.GetRandomParamName();
     //    ValueType quantity = null;
 
     //    // Act
-    //    void attempt() => _baseQuantifiable.ValidateQuantity(quantity, _paramName);
+    //    void attempt() => _baseQuantifiable.ValidateQuantity(quantity, paramName);
 
     //    // Assert
     //    var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-    //    Assert.AreEqual(_paramName, ex.ParamName);
+    //    Assert.AreEqual(paramName, ex.ParamName);
     //}
 
     //[TestMethod, TestCategory("UnitTest")]
@@ -221,16 +221,16 @@ public sealed class QuantifiableTests
     //public void ValidateQuantity_invalidArg_ValueType_arg_string_throws_ArgumentOutOfRangeException(TypeCode typeCode)
     //{
     //    // Arrange
-    //    SetBaseQuantifiableChild(_measureUnit, null, _defaultQuantity);
+    //    SetBaseQuantifiableChild(measureUnit, null, defaultQuantity);
     //    ValueType quantity = RandomParams.GetRandomValueType(typeCode);
-    //    _paramName = RandomParams.GetRandomParamName();
+    //    paramName = RandomParams.GetRandomParamName();
 
     //    // Act
-    //    void attempt() => _baseQuantifiable.ValidateQuantity(quantity, _paramName);
+    //    void attempt() => _baseQuantifiable.ValidateQuantity(quantity, paramName);
 
     //    // Assert
     //    var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
-    //    Assert.AreEqual(_paramName, ex.ParamName);
+    //    Assert.AreEqual(paramName, ex.ParamName);
     //}
 
     //[TestMethod, TestCategory("UnitTest")]
@@ -238,7 +238,7 @@ public sealed class QuantifiableTests
     //public void ValidateQuantity_validArg_ValueType_arg_string_returns_expected(TypeCode typeCode)
     //{
     //    // Arrange
-    //    SetBaseQuantifiableChild(_measureUnit, null, _defaultQuantity);
+    //    SetBaseQuantifiableChild(measureUnit, null, defaultQuantity);
     //    ValueType quantity = RandomParams.GetRandomValueType(typeCode);
 
     //    // Act
@@ -254,7 +254,7 @@ public sealed class QuantifiableTests
     //#region Private methods
     //private void SetBaseQuantifiableChild(Enum measureUnit, IBaseMeasurementFactory factory, decimal defaultQuantity)
     //{
-    //    _baseQuantifiable = new(RootObject, _paramName)
+    //    _baseQuantifiable = new(RootObject, paramName)
     //    {
     //        Return = new()
     //        {

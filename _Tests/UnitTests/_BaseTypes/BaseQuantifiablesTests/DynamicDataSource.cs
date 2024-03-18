@@ -6,54 +6,54 @@ internal class DynamicDataSource : DataFields
     internal IEnumerable<object[]> GetEqualsArgsArrayList()
     {
         // null
-        _obj = null;
-        _measureUnit = RandomParams.GetRandomValidMeasureUnit();
-        _defaultQuantity = RandomParams.GetRandomDecimal();
-        _isTrue = false;
+        obj = null;
+        measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        defaultQuantity = RandomParams.GetRandomDecimal();
+        isTrue = false;
         yield return toObjectArray();
 
         // object
-        _obj = new();
+        obj = new();
         yield return toObjectArray();
 
         // Different MeasureUnitCode
-        _measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode(_measureUnit));
-        _obj = new BaseQuantifiableChild(RootObject, null)
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode(measureUnit));
+        obj = new BaseQuantifiableChild(RootObject, null)
         {
             Return = new()
             {
-                GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(_measureUnitCode),
-                GetDefaultQuantity = _defaultQuantity,
+                GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode),
+                GetDefaultQuantity = defaultQuantity,
             }
         };
         yield return toObjectArray();
 
         // Same MeasureUnit, different defaultQuantity
-        _obj = new BaseQuantifiableChild(RootObject, null)
+        obj = new BaseQuantifiableChild(RootObject, null)
         {
             Return = new()
             {
-                GetBaseMeasureUnit = _measureUnit,
-                GetDefaultQuantity = RandomParams.GetRandomDecimal(_defaultQuantity), }
+                GetBaseMeasureUnit = measureUnit,
+                GetDefaultQuantity = RandomParams.GetRandomDecimal(defaultQuantity), }
         };
         yield return toObjectArray();
 
         // IBaseMeasurement
-        _obj = new BaseQuantifiableChild(RootObject, null)
+        obj = new BaseQuantifiableChild(RootObject, null)
         {
             Return = new()
             {
-                GetBaseMeasureUnit = _measureUnit,
-                GetDefaultQuantity = _defaultQuantity,
+                GetBaseMeasureUnit = measureUnit,
+                GetDefaultQuantity = defaultQuantity,
             }
         };
-        _isTrue = true;
+        isTrue = true;
         yield return toObjectArray();
 
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Bool_Object_Enum_Decimal_args item = new(_isTrue, _obj, _measureUnit, _defaultQuantity);
+            Bool_Object_Enum_Decimal_args item = new(isTrue, obj, measureUnit, defaultQuantity);
 
             return item.ToObjectArray();
         }
@@ -63,29 +63,29 @@ internal class DynamicDataSource : DataFields
     internal IEnumerable<object[]> GetFitsInArgsArrayList()
     {
         // null
-        _measureUnit = null;
-        _limiter = null;
+        measureUnit = null;
+        limiter = null;
         yield return toObjectArray();
 
         // Not IBaseQuantifiable
-        _limiter = new LimiterObject();
+        limiter = new LimiterObject();
         yield return toObjectArray();
 
         // Different MeasureUnitCode
-        _measureUnit = RandomParams.GetRandomMeasureUnit();
-        _measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode(_measureUnit));
-        _limiter = new LimiterBaseQuantifiableOblect(RootObject, null)
+        measureUnit = RandomParams.GetRandomMeasureUnit();
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode(measureUnit));
+        limiter = new LimiterBaseQuantifiableOblect(RootObject, null)
         {
             Return = new()
             {
-                GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(GetMeasureUnitCode(_measureUnitCode)),
+                GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(GetMeasureUnitCode(measureUnitCode)),
             }
         };
 
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Enum_ILimiter_args item = new(_measureUnit, _limiter);
+            Enum_ILimiter_args item = new(measureUnit, limiter);
 
             return item.ToObjectArray();
         }
@@ -109,20 +109,20 @@ internal class DynamicDataSource : DataFields
     }
     //internal IEnumerable<object[]> GetExchangeRateCollectionArgArrayList()
     //{
-    //    _measureUnit = RandomParams.GetRandomMeasureUnit();
-    //    _measureUnitCode = GetMeasureUnitCode(_measureUnit);
+    //    measureUnit = RandomParams.GetRandomMeasureUnit();
+    //    measureUnitCode = GetMeasureUnitCode(measureUnit);
     //    yield return toObjectArray();
 
-    //    _measureUnit = RandomParams.GetRandomNotUsedCustomMeasureUnit();
-    //    _ = TrySetCustomMeasureUnit(_measureUnit, RandomParams.GetRandomPositiveDecimal(), RandomParams.GetRandomParamName());
-    //    _measureUnitCode = GetMeasureUnitCode(_measureUnit);
-    //    _measureUnit = _measureUnitCode.GetDefaultMeasureUnit();
+    //    measureUnit = RandomParams.GetRandomNotUsedCustomMeasureUnit();
+    //    _ = TrySetCustomMeasureUnit(measureUnit, RandomParams.GetRandomPositiveDecimal(), RandomParams.GetRandomParamName());
+    //    measureUnitCode = GetMeasureUnitCode(measureUnit);
+    //    measureUnit = measureUnitCode.GetDefaultMeasureUnit();
     //    yield return toObjectArray();
 
     //    #region toObjectArray method
     //    object[] toObjectArray()
     //    {
-    //        Enum_MeasureUnitCode_args item = new(_measureUnit, _measureUnitCode);
+    //        Enum_MeasureUnitCode_args item = new(measureUnit, measureUnitCode);
 
     //        return item.ToObjectArray();
     //    }
@@ -132,49 +132,49 @@ internal class DynamicDataSource : DataFields
     //internal IEnumerable<object[]> GetIsExchangeableToArgArrayList()
     //{
     //    // null -  false
-    //    _isTrue = false;
-    //    _measureUnit = RandomParams.GetRandomValidMeasureUnit();
-    //    _context = null;
+    //    isTrue = false;
+    //    measureUnit = RandomParams.GetRandomValidMeasureUnit();
+    //    context = null;
     //    yield return toObjectArray();
 
-    //    // Not _measureUnit not MeasureUnitCode Enum - false
-    //    _context = TypeCode.Empty;
+    //    // Not measureUnit not MeasureUnitCode Enum - false
+    //    context = TypeCode.Empty;
     //    yield return toObjectArray();
 
     //    // other MeasureUnitCode - false
-    //    _measureUnitCode = GetMeasureUnitCode(_measureUnit);
-    //    _context = RandomParams.GetRandomMeasureUnitCode(_measureUnitCode);
+    //    measureUnitCode = GetMeasureUnitCode(measureUnit);
+    //    context = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
     //    yield return toObjectArray();
 
-    //    // same type not defined _measureUnit - false
-    //    _context = SampleParams.GetNotDefinedMeasureUnit(_measureUnitCode);
+    //    // same type not defined measureUnit - false
+    //    context = SampleParams.GetNotDefinedMeasureUnit(measureUnitCode);
     //    yield return toObjectArray();
 
     //    // same MeasureUnitCode - true
-    //    _isTrue = true;
-    //    _context = _measureUnitCode;
+    //    isTrue = true;
+    //    context = measureUnitCode;
     //    yield return toObjectArray();
 
-    //    // same type valid _measureUnit - true
-    //    _context = RandomParams.GetRandomValidMeasureUnit(_measureUnitCode);
+    //    // same type valid measureUnit - true
+    //    context = RandomParams.GetRandomValidMeasureUnit(measureUnitCode);
     //    yield return toObjectArray();
 
-    //    // other type _measureUnit - false
-    //    _isTrue = false;
-    //    _measureUnitCode = RandomParams.GetRandomMeasureUnitCode(_measureUnitCode);
-    //    _context = RandomParams.GetRandomMeasureUnit(_measureUnitCode);
+    //    // other type measureUnit - false
+    //    isTrue = false;
+    //    measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
+    //    context = RandomParams.GetRandomMeasureUnit(measureUnitCode);
     //    yield return toObjectArray();
 
-    //    // same type invalid _measureUnit - false
-    //    _context = RandomParams.GetRandomNotUsedCustomMeasureUnit();
-    //    _measureUnitCode = GetMeasureUnitCode(_measureUnit);
-    //    _measureUnit = _measureUnitCode.GetDefaultMeasureUnit();
+    //    // same type invalid measureUnit - false
+    //    context = RandomParams.GetRandomNotUsedCustomMeasureUnit();
+    //    measureUnitCode = GetMeasureUnitCode(measureUnit);
+    //    measureUnit = measureUnitCode.GetDefaultMeasureUnit();
     //    yield return toObjectArray();
 
     //    #region toObjectArray method
     //    object[] toObjectArray()
     //    {
-    //        Bool_Enum_Enum_args item = new(_isTrue, _measureUnit, _context);
+    //        Bool_Enum_Enum_args item = new(isTrue, measureUnit, context);
 
     //        return item.ToObjectArray();
     //    }
@@ -183,18 +183,18 @@ internal class DynamicDataSource : DataFields
 
     //internal IEnumerable<object[]> GetValidateExchangeRateArgArrayList()
     //{
-    //    _measureUnit = RandomParams.GetRandomValidMeasureUnit();
-    //    _exchangeRate = 0;
+    //    measureUnit = RandomParams.GetRandomValidMeasureUnit();
+    //    exchangeRate = 0;
     //    yield return toObjectArray();
 
-    //    _exchangeRate = RandomParams.GetRandomNegativeDecimal();
+    //    exchangeRate = RandomParams.GetRandomNegativeDecimal();
     //    yield return toObjectArray();
 
-    //    _exchangeRate = RandomParams.GetRandomPositiveDecimal(GetExchangeRate(_measureUnit, null));
+    //    exchangeRate = RandomParams.GetRandomPositiveDecimal(GetExchangeRate(measureUnit, null));
     //    #region toObjectArray method
     //    object[] toObjectArray()
     //    {
-    //        Enum_Decimal_args item = new(_measureUnit, _exchangeRate);
+    //        Enum_Decimal_args item = new(measureUnit, exchangeRate);
 
     //        return item.ToObjectArray();
     //    }
@@ -204,18 +204,18 @@ internal class DynamicDataSource : DataFields
     //internal IEnumerable<object[]> GetValidateMeasureUnitValidArgsArrayList()
     //{
     //    // MeasureUnitCode
-    //    _measureUnit = RandomParams.GetRandomValidMeasureUnit();
-    //    _context = GetMeasureUnitCode(_measureUnit);
+    //    measureUnit = RandomParams.GetRandomValidMeasureUnit();
+    //    context = GetMeasureUnitCode(measureUnit);
     //    yield return toObjectArray();
 
-    //    // _measureUnit
-    //    _context = RandomParams.GetRandomSameTypeValidMeasureUnit(_measureUnit);
+    //    // measureUnit
+    //    context = RandomParams.GetRandomSameTypeValidMeasureUnit(measureUnit);
     //    yield return toObjectArray();
 
     //    #region toObjectArray method
     //    object[] toObjectArray()
     //    {
-    //        Enum_Enum_args item = new(_measureUnit, _context);
+    //        Enum_Enum_args item = new(measureUnit, context);
 
     //        return item.ToObjectArray();
     //    }
