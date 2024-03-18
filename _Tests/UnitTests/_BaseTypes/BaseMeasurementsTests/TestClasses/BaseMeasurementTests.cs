@@ -30,15 +30,9 @@ public sealed class BaseMeasurementTests
 
     #region Private fields
     private BaseMeasurementChild _baseMeasurement;
-    //private Enum measureUnit;
-    //private MeasureUnitCode measureUnitCode;
-    //private Type measureUnitType;
-    //private string paramName;
 
     #region Readonly fields
     private readonly DataFields Fields = new();
-    //private readonly RandomParams RandomParams = new();
-    //private readonly RootObject RootObject = new();
     #endregion
 
     #region Static fields

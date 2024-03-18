@@ -15,10 +15,8 @@ public class DataFields
     public LimitMode? limitMode;
     public Enum measureUnit;
     public MeasureUnitCode measureUnitCode;
-    public bool? nullableBool;
     public object obj;
     public TypeCode typeCode;
     public Type measureUnitType;
     public string paramName;
-
 }

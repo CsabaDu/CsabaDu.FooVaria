@@ -1,5 +1,4 @@
-﻿
-namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.Fakes
+﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.Fakes
 {
     internal class QuantifiableChild(IRootObject rootObject, string paramName) : Quantifiable(rootObject, paramName)
     {
@@ -36,34 +35,33 @@ namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.Fakes
 
         #endregion
 
-        public override IQuantifiable ExchangeTo(Enum context) // abstract
+        public QuantifiableReturn Return { private get; set; }
+
+        public override IQuantifiable ExchangeTo(Enum context)
         {
-            throw new NotImplementedException();
+            MeasureUnitCode measureUnitCode = GetMeasureUnitCode(context);
+            QuantifiableFactoryObject factory = new();
+
+            return factory.CreateQuantifiable(measureUnitCode, Return.GetDefaultQuantity);
         }
 
-        public override Enum GetBaseMeasureUnit()
+        public override Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnit;
+
+        public override ValueType GetBaseQuantity()
         {
-            throw new NotImplementedException();
+            return (ValueType)Return.GetDefaultQuantity.ToQuantity(GetQuantityTypeCode());
         }
 
-        public override ValueType GetBaseQuantity() // abstract
-        {
-            throw new NotImplementedException();
-        }
+        public override decimal GetDefaultQuantity() => Return.GetDefaultQuantity;
 
-        public override decimal GetDefaultQuantity()
-        {
-            throw new NotImplementedException();
-        }
+        public override IFactory GetFactory() => Return.GetFactory;
 
-        public override IFactory GetFactory()
+        public override IQuantifiable Round(RoundingMode roundingMode)
         {
-            throw new NotImplementedException();
-        }
+            object quantity = Return.GetDefaultQuantity.Round(roundingMode);
+            QuantifiableFactoryObject factory = new();
 
-        public override IQuantifiable Round(RoundingMode roundingMode) // abstract
-        {
-            throw new NotImplementedException();
+            return factory.CreateQuantifiable(GetMeasureUnitCode(), (decimal)quantity);
         }
     }
 }

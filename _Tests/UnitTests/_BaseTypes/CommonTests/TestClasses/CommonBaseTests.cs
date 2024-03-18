@@ -5,12 +5,9 @@
     {
         #region Private fields
         private CommonBaseChild _commonBase;
-        //private string paramName;
 
         #region Readonly fields
         private readonly DataFields Fields = new();
-        //private readonly RandomParams = new();
-        //private readonly RootObject RootObject = new();
         #endregion
         #endregion
 

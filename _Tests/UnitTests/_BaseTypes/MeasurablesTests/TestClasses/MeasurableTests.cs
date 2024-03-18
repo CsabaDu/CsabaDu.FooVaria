@@ -35,15 +35,9 @@ public sealed class MeasurableTests
 
     #region Private fields
     private MeasurableChild _measurable;
-    //private Enum measureUnit;
-    //private MeasureUnitCode measureUnitCode;
-    //private Type measureUnitType;
-    //private string paramName;
 
     #region Readonly fields
     private readonly DataFields Fields = new();
-    //private readonly RandomParams RandomParams = new();
-    //private readonly RootObject RootObject = new();
     #endregion
 
     #region Static fields

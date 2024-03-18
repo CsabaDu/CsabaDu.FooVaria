@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-namespace CsabaDu.FooVaria.Tests.TestHelpers.Params;
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Params;
 
 public sealed class RandomParams
 {
@@ -261,8 +259,8 @@ public sealed class RandomParams
         {
             TypeCode.Boolean => Convert.ToBoolean(Random.Next(1)),
             TypeCode.Char => Convert.ToChar(Random.Next(char.MaxValue)),
-            TypeCode.SByte => Convert.ToSByte(Random.Next(sbyte.MaxValue)),
-            TypeCode.Byte => Convert.ToByte(Random.Next(byte.MinValue, byte.MaxValue)),
+            TypeCode.SByte => Convert.ToSByte(Random.Next(sbyte.MinValue, sbyte.MaxValue)),
+            TypeCode.Byte => Convert.ToByte(Random.Next(byte.MaxValue)),
             TypeCode.Int16 => Convert.ToInt16(Random.Next(short.MinValue, short.MaxValue)),
             TypeCode.UInt16 => Convert.ToUInt16(Random.Next(ushort.MaxValue)),
             TypeCode.Int32 => Random.Next(int.MinValue, int.MaxValue),
@@ -277,209 +275,13 @@ public sealed class RandomParams
             _ => throw new ArgumentOutOfRangeException(nameof(typeCode), typeCode, null),
         };
     }
+
+    public ValueType GetRandomValidValueType()
+    {
+        TypeCode typeCode = GetRandomItem(GetQuantityTypeCodes());
+
+        return GetRandomValueType(typeCode);
+    }
     #endregion
     #endregion
-
-    //public Enum GetRandomValidMeasureUnit(Enum excluded = null)
-    //{
-    //    IEnumerable<object> validMeasureUnits = GetValidMeasureUnits();
-    //    Enum validMeasureUnit = getRandomValidMeasureUnit();
-
-    //    if (excluded == null) return validMeasureUnit;
-
-    //    while (validMeasureUnit.Equals(excluded))
-    //    {
-    //        validMeasureUnit = getRandomValidMeasureUnit();
-    //    }
-
-    //    return validMeasureUnit;
-
-    //    #region Local methods
-    //    Enum getRandomValidMeasureUnit()
-    //    {
-    //        int randomIndex = Random.Next(validMeasureUnits.Count());
-
-    //        return (Enum)validMeasureUnits.ElementAt(randomIndex);
-    //    }
-    //    #endregion
-    //}
-
-    //public Enum GetRandomDefaultMeasureUnit(MeasureUnitCode? measurementUnitTypeCode = null)
-    //{
-    //    measurementUnitTypeCode = GetRandomMeasureUnitCode(measurementUnitTypeCode);
-
-    //    return MeasureUnitTypes.GetDefaultMeasureUnit(measurementUnitTypeCode.Value);
-    //}
-
-    //public Enum GetRandomNotDefaultConstantMeasureUnit(MeasureUnitCode? customMeasureUnitCode = null, Enum excluded = null)
-    //{
-    //    if (!customMeasureUnitCode.HasValue)
-    //    {
-    //        customMeasureUnitCode = GetRandomMeasureUnitCode();
-    //    }
-
-    //    IEnumerable<object> constantMeasureUnits = GetConstantMeasureUnits()
-    //        .Where(x => x.GetType().Equals(customMeasureUnitCode.Value.GetMeasureUnitType()))
-    //        .Where(x => (int)x > 0)
-    //        .Where(x => !x.Equals(excluded));
-
-    //    int randomindex = Random.Next(constantMeasureUnits.Count());
-
-    //    return (Enum)constantMeasureUnits.ElementAt(randomindex);
-    //}
-
-    //public Type GetRandomMeasureUnitType(out MeasureUnitCode customMeasureUnitCode)
-    //{
-    //    customMeasureUnitCode = GetRandomMeasureUnitCode();
-
-    //    return MeasureUnitTypes.GetMeasureUnitType(customMeasureUnitCode);
-    //}
-
-    //public IMeasurableFactory GetRandomMeasurableFactory()
-    //{
-    //    IMeasurementFactory measurementFactory = new MeasurementFactory();
-
-    //    int randomIndex = Random.Next(3);
-
-    //    return randomIndex switch
-    //    {
-    //        0 => measurementFactory,
-    //        1 => GetRandomBaseMeasureFactory(measurementFactory),
-    //        2 => GetRandomRateFactory(measurementFactory),
-
-    //        _ => throw new InvalidOperationException(null),
-    //    };
-    //}
-
-    //public Enum GetRandomNotUsedCustomMeasureUnit(MeasureUnitCode? customMeasureUnitCode = null)
-    //{
-    //    int randomIndex;
-
-    //    if (!customMeasureUnitCode.HasValue)
-    //    {
-    //        randomIndex = Random.Next(2);
-    //        customMeasureUnitCode = randomIndex switch
-    //        {
-    //            0 => MeasureUnitCode.Currency,
-    //            1 => MeasureUnitCode.Pieces,
-
-    //            _ => throw new InvalidOperationException(null),
-    //        };
-    //    }
-
-    //    object randomMeasureUnit;
-
-    //    do
-    //    {
-    //        Type measureUnitType = MeasureUnitTypes.GetMeasureUnitType(customMeasureUnitCode.Value);
-    //        randomIndex = Random.Next(1, 1000);
-
-    //        randomMeasureUnit = Enum.ToObject(measureUnitType, randomIndex);
-    //    }
-    //    while (GetValidMeasureUnits().Contains(randomMeasureUnit));
-
-    //    return (Enum)randomMeasureUnit;
-    //}
-
-    //public IBaseMeasureFactory GetRandomBaseMeasureFactory(IMeasurementFactory measurementFactory)
-    //{
-    //    int randomIndex = Random.Next(3);
-
-    //    return randomIndex switch
-    //    {
-    //        0 => new DenominatorFactory(measurementFactory),
-    //        1 => new LimitFactory(measurementFactory),
-    //        2 => new MeasureFactory(measurementFactory),
-
-    //        _ => throw new InvalidOperationException(null),
-    //    };
-    //}
-
-    //public IRateFactory GetRandomRateFactory(IMeasurementFactory measurementFactory)
-    //{
-    //    int randomIndex = Random.Next(2);
-    //    IDenominatorFactory denominatorFactory = new DenominatorFactory(measurementFactory);
-    //    ILimitFactory limitFactory = new LimitFactory(measurementFactory);
-
-    //    return randomIndex switch
-    //    {
-    //        0 => new FlatRateFactory(denominatorFactory),
-    //        1 => new LimitedRateFactory(denominatorFactory, limitFactory),
-
-    //        _ => throw new InvalidOperationException(null),
-    //    };
-    //}
-
-    //private IRate GetDefaultRate(IRateFactory rateFactory, MeasureUnitCode denominatorMeasureUnitCode)
-    //{
-    //    Enum denominatorDefaultMeasureUnit = denominatorMeasureUnitCode.GetDefaultMeasureUnit();
-
-    //    return rateFactory switch
-    //    {
-    //        FlatRateFactory factory => factory.Create(getDefaultNumerator(), denominatorDefaultMeasureUnit),
-    //        LimitedRateFactory factory => factory.Create(getDefaultNumerator(), denominatorDefaultMeasureUnit, getDefaultLimit()),
-
-    //        _ => throw new InvalidOperationException(null),
-    //    };
-
-    //    #region Local methods
-    //    IMeasure getDefaultNumerator()
-    //    {
-    //        IDenominatorFactory denominatorFactory = rateFactory.DenominatorFactory;
-    //        IMeasurementFactory measurementFactory = denominatorFactory.MeasurementFactory;
-    //        MeasureUnitCode numeratorMeasureUnitCode = GetRandomMeasureUnitCode(denominatorMeasureUnitCode);
-
-    //        return new MeasureFactory(measurementFactory).CreateDefault(numeratorMeasureUnitCode);
-    //    }
-
-    //    ILimit getDefaultLimit()
-    //    {
-    //        MeasureUnitCode limitMeasureUnitCode = GetRandomMeasureUnitCode();
-
-    //        return ((ILimitedRateFactory)rateFactory).LimitFactory.CreateDefault(limitMeasureUnitCode);
-    //    }
-    //    #endregion
-    //}
-
-    //private IBaseMeasure GetDefaultBaseMeasure(IBaseMeasureFactory baseMeasureFactory, MeasureUnitCode customMeasureUnitCode)
-    //{
-    //    return baseMeasureFactory switch
-    //    {
-    //        DenominatorFactory denominatorFactory => denominatorFactory.CreateDefault(customMeasureUnitCode),
-    //        MeasureFactory measureFactory => measureFactory.CreateDefault(customMeasureUnitCode),
-    //        LimitFactory limitFactory => limitFactory.CreateDefault(customMeasureUnitCode),
-
-    //        _ => throw new InvalidOperationException(null),
-    //    };
-    //}
-
-    //public IMeasurable GetRandomDefaultMeasurable(MeasureUnitCode customMeasureUnitCode, IMeasurable excludedMeasurable = null)
-    //{
-    //    IMeasurableFactory measurableFactory = GetRandomMeasurableFactory();
-    //    IMeasurable randomDefaultMeasurable = getDefaultMeasurable();
-
-    //    if (excludedMeasurable == null) return randomDefaultMeasurable;
-
-    //    while (excludedMeasurable.GetType() == randomDefaultMeasurable.GetType())
-    //    {
-    //        randomDefaultMeasurable = getDefaultMeasurable();
-    //    }
-
-    //    return randomDefaultMeasurable;
-
-    //    #region Local methods
-    //    IMeasurable getDefaultMeasurable()
-    //    {
-    //        return measurableFactory switch
-    //        {
-    //            MeasurementFactory measurementFactory => measurementFactory.CreateDefault(customMeasureUnitCode),
-    //            BaseMeasureFactory baseMeasureFactory => GetDefaultBaseMeasure(baseMeasureFactory, customMeasureUnitCode),
-    //            RateFactory rateFactory => GetDefaultRate(rateFactory, customMeasureUnitCode),
-
-    //            _ => throw new InvalidOperationException(null),
-    //        };
-    //    }
-    //    #endregion
-    //}
-    //#endregion
 }

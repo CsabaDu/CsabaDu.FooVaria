@@ -50,31 +50,24 @@ public sealed class QuantifiableTests
     [TestInitialize]
     public void InitializeBaseQuantifiableTests()
     {
-        _measureUnit = RandomParams.GetRandomMeasureUnit(_measureUnitCode);
-        _measureUnitCode = GetMeasureUnitCode(_measureUnit);
-        _measureUnitType = _measureUnit.GetType();
-        _defaultQuantity = RandomParams.GetRandomDecimal();
+        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        Fields.measureUnitCode = GetMeasureUnitCode(Fields.measureUnit);
+        Fields.measureUnitType = Fields.measureUnit.GetType();
+        Fields.defaultQuantity = Fields.RandomParams.GetRandomDecimal();
     }
 
     [TestCleanup]
     public void CleanupBaseQuantifiableTests()
     {
-        _paramName = null;
+        Fields.paramName = null;
     }
     #endregion
 
     #region Private fields
     private QuantifiableChild _quantifiable;
-    private decimal _defaultQuantity;
-    private LimitMode _limitMode;
-    private Enum _measureUnit;
-    private MeasureUnitCode _measureUnitCode;
-    private Type _measureUnitType;
-    private string _paramName;
 
     #region Readonly fields
-    private readonly RandomParams RandomParams = new();
-    private readonly RootObject RootObject = new();
+    private readonly DataFields Fields = new();
     #endregion
 
     #region Static fields
@@ -139,13 +132,13 @@ public sealed class QuantifiableTests
     //{
     //    // Arrange
     //    SetBaseQuantifiableChild(measureUnit, null, defaultQuantity);
-    //    limitMode = RandomParams.GetRandomLimitMode();
-    //    decimal otherQuantity = RandomParams.GetRandomDecimal();
+    //    limitMode = Fields.RandomParams.GetRandomLimitMode();
+    //    decimal otherQuantity = Fields.RandomParams.GetRandomDecimal();
     //    LimiterBaseQuantifiableOblect limiter = new(RootObject, null)
     //    {
     //        Return = new()
     //        {
-    //            GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode),
+    //            GetBaseMeasureUnit = Fields.RandomParams.GetRandomMeasureUnit(measureUnitCode),
     //            GetDefaultQuantity = otherQuantity,
     //        },
     //        LimitMode = limitMode,
@@ -205,7 +198,7 @@ public sealed class QuantifiableTests
     //{
     //    // Arrange
     //    SetBaseQuantifiableChild(measureUnit, null, defaultQuantity);
-    //    paramName = RandomParams.GetRandomParamName();
+    //    paramName = Fields.RandomParams.GetRandomParamName();
     //    ValueType quantity = null;
 
     //    // Act
@@ -222,8 +215,8 @@ public sealed class QuantifiableTests
     //{
     //    // Arrange
     //    SetBaseQuantifiableChild(measureUnit, null, defaultQuantity);
-    //    ValueType quantity = RandomParams.GetRandomValueType(typeCode);
-    //    paramName = RandomParams.GetRandomParamName();
+    //    ValueType quantity = Fields.RandomParams.GetRandomValueType(typeCode);
+    //    paramName = Fields.RandomParams.GetRandomParamName();
 
     //    // Act
     //    void attempt() => _baseQuantifiable.ValidateQuantity(quantity, paramName);
@@ -239,7 +232,7 @@ public sealed class QuantifiableTests
     //{
     //    // Arrange
     //    SetBaseQuantifiableChild(measureUnit, null, defaultQuantity);
-    //    ValueType quantity = RandomParams.GetRandomValueType(typeCode);
+    //    ValueType quantity = Fields.RandomParams.GetRandomValueType(typeCode);
 
     //    // Act
     //    void attempt() => _baseQuantifiable.ValidateQuantity(quantity, null);

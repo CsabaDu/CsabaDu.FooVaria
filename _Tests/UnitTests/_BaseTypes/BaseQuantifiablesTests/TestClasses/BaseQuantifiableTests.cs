@@ -1,7 +1,3 @@
-using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
-using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Enums;
-using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseQuantifiablesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -32,17 +28,9 @@ public sealed class BaseQuantifiableTests
 
     #region Private fields
     private BaseQuantifiableChild _baseQuantifiable;
-    //private decimal defaultQuantity;
-    //private LimitMode limitMode;
-    //private Enum measureUnit;
-    //private MeasureUnitCode measureUnitCode;
-    //private Type measureUnitType;
-    //private string paramName;
 
     #region Readonly fields
     private readonly DataFields Fields = new();
-    //private readonly RandomParams RandomParams = new();
-    //private readonly RootObject RootObject = new();
     #endregion
 
     #region Static fields
