@@ -131,11 +131,11 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
         return exchanged != null;
     }
 
-    public void ValidateQuantifiable(IBaseQuantifiable? baseQuantifiable,[DisallowNull] string paramName)
-    {
-        ValidateMeasureUnitCode(baseQuantifiable, paramName);
-        ValidateQuantity(baseQuantifiable, paramName);
-    }
+    //public void ValidateQuantifiable(IBaseQuantifiable? baseQuantifiable,[DisallowNull] string paramName)
+    //{
+    //    ValidateMeasureUnitCode(baseQuantifiable, paramName);
+    //    ValidateQuantity(baseQuantifiable, paramName);
+    //}
 
     #region Override methods
     #region Sealed methods

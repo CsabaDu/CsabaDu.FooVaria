@@ -70,15 +70,15 @@ public abstract class Spread(IRootObject rootObject, string paramName) : Quantif
         return base.GetQuantityTypeCode();
     }
 
-    public override sealed void ValidateQuantity(IBaseQuantifiable? baseQuantifiable, string paramName)
-    {
-        if (NullChecked(baseQuantifiable, paramName) is ISpread spread)
-        {
-            ValidateQuantity(spread.GetQuantity(), paramName);
-        }
+    //public override sealed void ValidateQuantity(IBaseQuantifiable? baseQuantifiable, string paramName)
+    //{
+    //    if (NullChecked(baseQuantifiable, paramName) is ISpread spread)
+    //    {
+    //        ValidateQuantity(spread.GetQuantity(), paramName);
+    //    }
 
-        throw ArgumentTypeOutOfRangeException(paramName, baseQuantifiable!);
-    }
+    //    throw ArgumentTypeOutOfRangeException(paramName, baseQuantifiable!);
+    //}
     #endregion
     #endregion
 

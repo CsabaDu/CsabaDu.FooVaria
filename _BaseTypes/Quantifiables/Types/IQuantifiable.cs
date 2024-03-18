@@ -4,5 +4,5 @@ public interface IQuantifiable : IBaseQuantifiable, IExchange<IQuantifiable, Enu
 {
     IQuantifiable GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity);
 
-    void ValidateQuantifiable(IBaseQuantifiable? baseQuantifiable, string paramName);
+    //void ValidateQuantifiable(IBaseQuantifiable? baseQuantifiable, string paramName);
 }

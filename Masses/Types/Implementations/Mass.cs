@@ -221,10 +221,10 @@ internal abstract class Mass : BaseQuantifiable, IMass
         ValidatePositiveQuantity(quantity, paramName);
     }
 
-    public override sealed void ValidateQuantity(IBaseQuantifiable? baseQuantifiable, string paramName)
-    {
-        base.ValidateQuantity(baseQuantifiable, paramName);
-    }
+    //public override sealed void ValidateQuantity(IBaseQuantifiable? baseQuantifiable, string paramName)
+    //{
+    //    base.ValidateQuantity(baseQuantifiable, paramName);
+    //}
     #endregion
     #endregion
 

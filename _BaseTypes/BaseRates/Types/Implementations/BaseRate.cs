@@ -156,10 +156,10 @@
             ValidateMeasureUnitCode(this, measureUnitCode, paramName);
         }
 
-        public override sealed void ValidateQuantity(IBaseQuantifiable? baseQuantifiable, string paramName)
-        {
-            base.ValidateQuantity(baseQuantifiable, paramName);
-        }
+        //public override sealed void ValidateQuantity(IBaseQuantifiable? baseQuantifiable, string paramName)
+        //{
+        //    base.ValidateQuantity(baseQuantifiable, paramName);
+        //}
 
         public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
         {

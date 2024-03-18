@@ -214,7 +214,6 @@ public sealed class BaseQuantifiableTests
         // Assert
         Assert.IsTrue(Returned(attempt));
     }
-
     #endregion
 
     #region IBaseQuantifiable.ValidateQuantity(IBaseQuantifiable?, string)

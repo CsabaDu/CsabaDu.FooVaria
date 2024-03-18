@@ -120,17 +120,17 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
         return GetDefaultQuantity(GetBaseQuantity(), GetExchangeRate());
     }
 
-    public override sealed void ValidateQuantity(IBaseQuantifiable? baseQuantifiable, string paramName)
-    {
-        if (NullChecked(baseQuantifiable, paramName) is not IBaseMeasure baseMeasure)
-        {
-            throw ArgumentTypeOutOfRangeException(paramName, baseQuantifiable!);
-        }
+    //public override sealed void ValidateQuantity(IBaseQuantifiable? baseQuantifiable, string paramName)
+    //{
+    //    if (NullChecked(baseQuantifiable, paramName) is not IBaseMeasure baseMeasure)
+    //    {
+    //        throw ArgumentTypeOutOfRangeException(paramName, baseQuantifiable!);
+    //    }
 
-        ValueType quantity = baseMeasure.GetBaseQuantity();
+    //    ValueType quantity = baseMeasure.GetBaseQuantity();
 
-        ValidateQuantity(quantity, paramName);
-    }
+    //    ValidateQuantity(quantity, paramName);
+    //}
 
     #endregion
     #endregion

@@ -3,5 +3,5 @@
 public interface IBaseQuantifiable : IMeasurable, IDefaultQuantity, ILimitable
 {
     void ValidateQuantity(ValueType? quantity, string paramName);
-    void ValidateQuantity(IBaseQuantifiable? baseQuantifiable, string paramName);
+    //void ValidateQuantity(IBaseQuantifiable? baseQuantifiable, string paramName);
 }
