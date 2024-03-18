@@ -22,10 +22,6 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
         if (limiter is not IQuantifiable) return null;
 
         return base.FitsIn(limiter);
-
-        //LimitMode? limitMode = limiter.GetLimitMode();
-
-        //return FitsIn(quantifiable, limitMode);
     }
 
     public virtual bool? FitsIn(IQuantifiable? other, LimitMode? limitMode)
@@ -39,32 +35,6 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
         limitMode ??= LimitMode.BeNotGreater;
 
         return defaultQuantity.FitsIn(otherQuantity, limitMode);
-
-        //bool limitModeHasValue = limitMode.HasValue;
-        //if (!limitModeHasValue) return CompareTo(other) <= 0;
-
-        //_ = Defined(limitMode!.Value, nameof(limitMode));
-
-        //IQuantifiable ceilingBaseMeasure = other.Round(RoundingMode.Ceiling);
-        //other = limitMode switch
-        //{
-        //    LimitMode.BeNotLess or
-        //    LimitMode.BeGreater => ceilingBaseMeasure,
-
-        //    LimitMode.BeNotGreater or
-        //    LimitMode.BeLess or
-        //    LimitMode.BeEqual => other.Round(RoundingMode.Floor),
-
-        //    _ => null,
-        //};
-
-        //if (other == null) return null;
-
-        //int comparison = CompareTo(other);
-
-        //if (limitMode == LimitMode.BeEqual) return comparison == 0 && ceilingBaseMeasure.Equals(other);
-
-        //return comparison.FitsIn(limitMode);
     }
 
     public decimal GetDecimalQuantity()
@@ -130,12 +100,6 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
 
         return exchanged != null;
     }
-
-    //public void ValidateQuantifiable(IBaseQuantifiable? baseQuantifiable,[DisallowNull] string paramName)
-    //{
-    //    ValidateMeasureUnitCode(baseQuantifiable, paramName);
-    //    ValidateQuantity(baseQuantifiable, paramName);
-    //}
 
     #region Override methods
     #region Sealed methods

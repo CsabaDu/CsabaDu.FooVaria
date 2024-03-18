@@ -58,13 +58,6 @@ public abstract class BaseQuantifiable(IRootObject rootObject, string paramName)
     {
         _ = ConvertQuantity(quantity, paramName, GetQuantityTypeCode());
     }
-
-    //public virtual void ValidateQuantity(IBaseQuantifiable? baseQuantifiable, string paramName)
-    //{
-    //    decimal quantity = TypeChecked(baseQuantifiable, paramName, GetType())!.GetDefaultQuantity();
-
-    //    ValidatePositiveQuantity(quantity, paramName);
-    //}
     #endregion
 
     #region Abstract methods

@@ -118,11 +118,6 @@
         }
 
         #region Override methods
-        //public override IBaseRateFactory GetFactory()
-        //{
-        //    return (IBaseRateFactory)Factory;
-        //}
-
         #region Sealed methods
         public override sealed bool Equals(object? obj)
         {
