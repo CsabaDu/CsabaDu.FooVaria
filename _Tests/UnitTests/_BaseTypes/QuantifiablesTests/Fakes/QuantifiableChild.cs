@@ -49,7 +49,11 @@
 
         public override ValueType GetBaseQuantity()
         {
-            return (ValueType)Return.GetDefaultQuantity.ToQuantity(GetQuantityTypeCode());
+            ValueType quantity = Return.GetDefaultQuantity;
+            RandomParams randomParams = new();
+            TypeCode quantityTypeCode = randomParams.GetRandomQuantityTypeCode();
+
+            return (ValueType)quantity.ToQuantity(quantityTypeCode);
         }
 
         public override decimal GetDefaultQuantity() => Return.GetDefaultQuantity;
@@ -58,7 +62,7 @@
 
         public override IQuantifiable Round(RoundingMode roundingMode)
         {
-            object quantity = Return.GetDefaultQuantity.Round(roundingMode);
+            object quantity = GetQuantity(roundingMode);
             QuantifiableFactoryObject factory = new();
 
             return factory.CreateQuantifiable(GetMeasureUnitCode(), (decimal)quantity);

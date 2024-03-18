@@ -3,6 +3,7 @@
 public static class Extensions
 {
     #region Constants
+    private const int SinglePrecisionDecimals = 4;
     private const int DoublePrecisionDecimals = 8;
     #endregion
 
@@ -77,6 +78,7 @@ public static class Extensions
             RoundingMode.Ceiling => Math.Ceiling(quantity),
             RoundingMode.Floor => Math.Floor(quantity),
             RoundingMode.Half => getHalfQuantity(),
+            RoundingMode.SinglePrecision => Math.Round(quantity, SinglePrecisionDecimals),
             RoundingMode.DoublePrecision => Math.Round(quantity, DoublePrecisionDecimals),
 
             _ => throw InvalidRoundingModeEnumArgumentException(roundingMode),
@@ -171,6 +173,19 @@ public static class Extensions
             };
         }
         #endregion
+    }
+
+    public static object? Round(this ValueType quantity, RoundingMode roundingMode)
+    {
+        if (!quantity.IsValidTypeQuantity()) return null;
+
+        return quantity switch
+        {
+            double doubleType => doubleType.Round(roundingMode),
+            decimal decimalType => decimalType.Round(roundingMode),
+
+            _ => quantity,
+        };
     }
 
     public static bool IsValidTypeQuantity(this ValueType quantity)

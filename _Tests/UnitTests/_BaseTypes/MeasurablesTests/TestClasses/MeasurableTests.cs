@@ -3,6 +3,13 @@ namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.MeasurablesTests.TestClasse
 [TestClass, TestCategory("UnitTest")]
 public sealed class MeasurableTests
 {
+    #region Tested in parent classes' tests
+
+    // Measurable(IRootObject rootObject, string paramName)
+    // IFactory ICommonBase.GetFactory()
+
+    #endregion
+
     #region Initialize
     [ClassInitialize]
     public static void InitializeMeasurableTestsClass(TestContext context)
@@ -46,13 +53,6 @@ public sealed class MeasurableTests
     #endregion
 
     #region Test methods
-    #region Tested in parent classes' tests
-
-    // Measurable(IRootObject rootObject, string paramName)
-    // IFactory ICommonBase.GetFactory()
-
-    #endregion
-
     #region bool Equals
     #region Measurable.Equals(object?)
     [TestMethod, TestCategory("UnitTest")]

@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Params;
+﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
+
+namespace CsabaDu.FooVaria.Tests.TestHelpers.Params;
 
 public sealed class RandomParams
 {
@@ -169,7 +171,7 @@ public sealed class RandomParams
 
     public decimal GetRandomDecimal()
     {
-        return Convert.ToDecimal(Random.NextInt64(long.MinValue, long.MaxValue) + Random.NextDouble());
+        return (decimal)GetRandomValueType(TypeCode.Decimal);
     }
 
     public decimal GetRandomDecimal(decimal excluded)
@@ -264,16 +266,18 @@ public sealed class RandomParams
             TypeCode.Int16 => Convert.ToInt16(Random.Next(short.MinValue, short.MaxValue)),
             TypeCode.UInt16 => Convert.ToUInt16(Random.Next(ushort.MaxValue)),
             TypeCode.Int32 => Random.Next(int.MinValue, int.MaxValue),
-            TypeCode.UInt32 => Convert.ToUInt32(Random.Next()),
-            TypeCode.Int64 => Random.NextInt64(long.MinValue, long.MaxValue),
-            TypeCode.UInt64 => Convert.ToUInt64(Random.NextInt64()),
-            TypeCode.Single => Random.NextSingle(),
-            TypeCode.Double => Random.NextDouble(),
-            TypeCode.Decimal => Convert.ToDecimal(Random.NextDouble()),
+            TypeCode.UInt32 => Convert.ToUInt32(Random.Next()) + Random.Next(),
+            TypeCode.Int64 => randomNextInt64() + randomNextInt64(),
+            TypeCode.UInt64 => Convert.ToUInt64(Random.NextInt64()) + Convert.ToUInt64(Random.NextInt64()),
+            TypeCode.Single => Random.NextSingle() + randomNextInt64(),
+            TypeCode.Double => Random.NextDouble() + randomNextInt64(),
+            TypeCode.Decimal => Convert.ToDecimal(Random.NextDouble() + randomNextInt64()),
             TypeCode.DateTime => DateTime.Now,
 
             _ => throw new ArgumentOutOfRangeException(nameof(typeCode), typeCode, null),
         };
+
+        long randomNextInt64() => Random.NextInt64(long.MinValue, long.MaxValue);
     }
 
     public ValueType GetRandomValidValueType()
@@ -282,6 +286,35 @@ public sealed class RandomParams
 
         return GetRandomValueType(typeCode);
     }
+
+    public TypeCode GetRandomQuantityTypeCode(TypeCode? excluded = null)
+    {
+        IEnumerable<TypeCode> quantityTypeCodes = GetQuantityTypeCodes();
+        TypeCode typeCode = GetRandomItem(quantityTypeCodes);
+
+        while (typeCode == excluded)
+        {
+            typeCode = GetRandomItem(GetQuantityTypeCodes());
+        }
+
+        return typeCode;
+    }
+
+    public TypeCode GetRandomInvalidQuantityTypeCode()
+    {
+        IEnumerable<TypeCode> quantityTypeCodes = GetQuantityTypeCodes();
+        IEnumerable<int> quantityTypeCodeValues = quantityTypeCodes.Select(x => (int)(object)x);
+        int maxValue = Enum.GetNames(typeof(TypeCode)).Length;
+        int typeCodeValue = Random.Next(maxValue);
+
+        while (quantityTypeCodeValues.Contains(typeCodeValue))
+        {
+            typeCodeValue = Random.Next(maxValue);
+        }
+
+        return (TypeCode)typeCodeValue;
+    }
+
     #endregion
     #endregion
 }

@@ -4,6 +4,13 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
 {
     #region Public methods
     #region Override methods
+    public override bool? FitsIn(ILimiter? limiter)
+    {
+        if (limiter is not IQuantifiable) return null;
+
+        return base.FitsIn(limiter);
+    }
+
     #region Sealed methods
     public override sealed MeasureUnitCode GetMeasureUnitCode()
     {
@@ -31,20 +38,6 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
     {
         return base.Equals(other);
     }
-    #endregion
-
-    #region Abstract methods
-    public abstract IQuantifiable? ExchangeTo(Enum? context);
-    public abstract ValueType GetBaseQuantity();
-    public abstract IQuantifiable Round(RoundingMode roundingMode);
-    #endregion
-
-    public override bool? FitsIn(ILimiter? limiter)
-    {
-        if (limiter is not IQuantifiable) return null;
-
-        return base.FitsIn(limiter);
-    }
 
     public virtual bool? FitsIn(IQuantifiable? other, LimitMode? limitMode)
     {
@@ -58,6 +51,13 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
 
         return defaultQuantity.FitsIn(otherQuantity, limitMode);
     }
+    #endregion
+
+    #region Abstract methods
+    public abstract IQuantifiable? ExchangeTo(Enum? context);
+    public abstract ValueType GetBaseQuantity();
+    public abstract IQuantifiable Round(RoundingMode roundingMode);
+    #endregion
 
     public decimal GetDecimalQuantity()
     {
@@ -73,20 +73,16 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
 
     public object GetQuantity(RoundingMode roundingMode)
     {
-        ValueType baseQuantity = GetBaseQuantity();
+        ValueType quantity = GetBaseQuantity();
 
-        return baseQuantity switch
-        {
-            double quantity => quantity.Round(roundingMode),
-            decimal quantity => quantity.Round(roundingMode),
-
-            _ => baseQuantity,
-        };
+        return quantity.Round(roundingMode)!;
     }
 
     public object GetQuantity(TypeCode quantityTypeCode)
     {
-        return GetBaseQuantity().ToQuantity(quantityTypeCode) ?? throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
+        ValueType quantity = GetBaseQuantity();
+
+        return quantity.ToQuantity(quantityTypeCode) ?? throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
     }
 
     public bool IsExchangeableTo(Enum? context)

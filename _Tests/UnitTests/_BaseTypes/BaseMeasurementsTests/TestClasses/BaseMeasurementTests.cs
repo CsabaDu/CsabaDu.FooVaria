@@ -3,6 +3,22 @@ namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasurementsTests.TestC
 [TestClass, TestCategory("UnitTest")]
 public sealed class BaseMeasurementTests
 {
+    #region Tested in parent classes' tests
+
+    // BaseMeasurement(IRootObject rootObject, string paramName)
+    // Enum IMeasureUnit.GetBaseMeasureUnit()
+    // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
+    // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
+    // IFactory ICommonBase.GetFactory()
+    // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
+    // Type IMeasureUnit.GetMeasureUnitType()
+    // TypeCode IQuantityType.GetQuantityTypeCode()
+    // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
+    // void IMeasurable.ValidateMeasureUnitCode(IMeasurable measurable, string paramName)
+    // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
+
+    #endregion
+
     #region Initialize
     [ClassInitialize]
     public static void InitializeBaseMeasurementTestsClass(TestContext context)
@@ -41,22 +57,6 @@ public sealed class BaseMeasurementTests
     #endregion
 
     #region Test methods
-    #region Tested in parent classes' tests
-
-    // BaseMeasurement(IRootObject rootObject, string paramName)
-    // Enum IMeasureUnit.GetBaseMeasureUnit()
-    // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
-    // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
-    // IFactory ICommonBase.GetFactory()
-    // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
-    // Type IMeasureUnit.GetMeasureUnitType()
-    // TypeCode IQuantityType.GetQuantityTypeCode()
-    // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
-    // void IMeasurable.ValidateMeasureUnitCode(IMeasurable measurable, string paramName)
-    // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
-
-    #endregion
-
     #region int CompareTo
     #region IComparable<IBaseMeasurement>.CompareTo(IBaseMeasurement?)
     [TestMethod, TestCategory("UnitTest")]
@@ -84,7 +84,7 @@ public sealed class BaseMeasurementTests
         {
             Return = new()
             {
-                GetBaseMeasureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode)
+                GetBaseMeasureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode),
             }
         };
 
@@ -101,11 +101,11 @@ public sealed class BaseMeasurementTests
     {
         // Arrange
         SetBaseMeasurementChild(Fields.measureUnit, null, null);
-        BaseMeasurementChild other = new(Fields.RootObject, Fields.paramName)
+        IBaseMeasurement other = new BaseMeasurementChild(Fields.RootObject, Fields.paramName)
         {
             Return = new()
             {
-                GetBaseMeasureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode)
+                GetBaseMeasureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode),
             }
         };
         int expected = _baseMeasurement.GetExchangeRate().CompareTo(other.GetExchangeRate());

@@ -3,6 +3,22 @@ namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseQuantifiablesTests.Test
 [TestClass, TestCategory("UnitTest")]
 public sealed class BaseQuantifiableTests
 {
+    #region Tested in parent classes' tests
+
+    // Enum IMeasureUnit.GetBaseMeasureUnit()
+    // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
+    // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
+    // IFactory ICommonBase.GetFactory()
+    // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
+    // Type IMeasureUnit.GetMeasureUnitType()
+    // TypeCode IQuantityType.GetQuantityTypeCode()
+    // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
+    // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum measureUnit, string paramName)
+    // void IMeasurable.ValidateMeasureUnitCode(IMeasurable measurable, string paramName)
+    // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
+
+    #endregion
+
     #region Initialize
     [ClassInitialize]
     public static void InitializeBaseQuantifiableTestsClass(TestContext context)
@@ -39,23 +55,6 @@ public sealed class BaseQuantifiableTests
     #endregion
 
     #region Test methods
-
-    #region Tested in parent classes' tests
-
-    // Enum IMeasureUnit.GetBaseMeasureUnit()
-    // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
-    // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
-    // IFactory ICommonBase.GetFactory()
-    // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
-    // Type IMeasureUnit.GetMeasureUnitType()
-    // TypeCode IQuantityType.GetQuantityTypeCode()
-    // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
-    // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum measureUnit, string paramName)
-    // void IMeasurable.ValidateMeasureUnitCode(IMeasurable measurable, string paramName)
-    // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
-
-    #endregion
-
     #region bool Equals
     #region BaseQuantifiable.Equals(object?)
     [TestMethod, TestCategory("UnitTest")]
@@ -208,7 +207,7 @@ public sealed class BaseQuantifiableTests
     #endregion
 
     #region Private methods
-    private void SetBaseQuantifiableChild(Enum measureUnit, IBaseMeasurementFactory factory, decimal defaultQuantity)
+    private void SetBaseQuantifiableChild(Enum measureUnit, IBaseQuantifiableFactory factory, decimal defaultQuantity)
     {
         _baseQuantifiable = new(Fields.RootObject, Fields.paramName)
         {
