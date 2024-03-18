@@ -294,11 +294,6 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
             && GetMeasureUnitCode().Equals(other.GetMeasureUnitCode());
     }
 
-    //public override IMeasurableFactory GetFactory()
-    //{
-    //    return (IMeasurableFactory)Factory;
-    //}
-
     public override int GetHashCode()
     {
         return GetMeasureUnitCode().GetHashCode();

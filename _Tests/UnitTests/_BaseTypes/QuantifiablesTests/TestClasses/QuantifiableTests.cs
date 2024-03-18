@@ -1,7 +1,3 @@
-using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types;
-using CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.Fakes;
-using System.ComponentModel;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -9,6 +5,7 @@ public sealed class QuantifiableTests
 {
     #region Tested in parent classes' tests
 
+    // bool IEquatable<IQuantifiable>.Equals(IQuantifiable? other)
     // Enum IMeasureUnit.GetBaseMeasureUnit()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
@@ -124,8 +121,24 @@ public sealed class QuantifiableTests
     #endregion
     #endregion
 
-    // bool IEquatable<IQuantifiable>.Equals(IQuantifiable? other)
-    // IQuantifiable IExchange<IQuantifiable, Enum>.ExchangeTo(Enum? context)
+    #region IQuantifiable? ExchangeTo
+    #region IExchange<IQuantifiable, Enum>.ExchangeTo(Enum? context)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetExchangeToArgsArrayList), DynamicDataSourceType.Method)]
+    public void ExchangeTo_arg_returns_expected(Enum measureUnit, Enum context, IQuantifiable expected)
+    {
+        // Arrange
+        SetQuantifiableChild(measureUnit, null, Fields.defaultQuantity);
+
+        // Act
+        var actual = _quantifiable.ExchangeTo(context);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
     // bool? ILimitable.FitsIn(ILimiter limiter)
     // bool? IFit<IQuantifiable>.FitsIn(IQuantifiable other, LimitMode? limitMode)
     // ValueType IQuantity.GetBaseQuantity()
@@ -159,6 +172,10 @@ public sealed class QuantifiableTests
 
     #region DynamicDataSource
 
+    private static IEnumerable <object[]> GetExchangeToArgsArrayList()
+    {
+        return DynamicDataSource.GetExchangeToArgsArrayList();
+    }
     #endregion
     #endregion
 }

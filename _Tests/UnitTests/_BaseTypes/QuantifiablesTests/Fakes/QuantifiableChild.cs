@@ -39,7 +39,12 @@
 
         public override IQuantifiable ExchangeTo(Enum context)
         {
+            if (context == null) return null;
+
             MeasureUnitCode measureUnitCode = GetMeasureUnitCode(context);
+
+            if (!HasMeasureUnitCode(measureUnitCode)) return null;
+
             QuantifiableFactoryObject factory = new();
 
             return factory.CreateQuantifiable(measureUnitCode, Return.GetDefaultQuantity);
