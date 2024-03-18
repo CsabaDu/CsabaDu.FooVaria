@@ -1,10 +1,13 @@
-namespace  CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests;
-
-[TestClass]
-public class GlobalUsings
-{
-    [TestMethod]
-    public void TestMethod1()
-    {
-    }
-}
+global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
+global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Enums;
+global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types;
+global using CsabaDu.FooVaria.BaseTypes.Common;
+global using CsabaDu.FooVaria.BaseTypes.Common.Factories;
+global using CsabaDu.FooVaria.BaseTypes.Common.Types;
+global using CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors;
+global using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
+global using CsabaDu.FooVaria.BaseTypes.Measurables.Types;
+global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
+global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
+global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes;
+global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.Implementations;

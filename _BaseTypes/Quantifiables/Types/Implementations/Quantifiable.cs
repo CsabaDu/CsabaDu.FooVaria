@@ -3,6 +3,21 @@
 public abstract class Quantifiable(IRootObject rootObject, string paramName) : BaseQuantifiable(rootObject, paramName), IQuantifiable
 {
     #region Public methods
+    #region Override methods
+    #region Sealed methods
+    public override sealed MeasureUnitCode GetMeasureUnitCode()
+    {
+        return base.GetMeasureUnitCode();
+    }
+
+    public override sealed void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
+    {
+        base.ValidateMeasureUnitCode(measureUnitCode, paramName);
+    }
+    #endregion
+    #endregion
+
+    #region Virtual methods
     public virtual int CompareTo(IQuantifiable? other)
     {
         if (other == null) return 1;
@@ -16,6 +31,13 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
     {
         return base.Equals(other);
     }
+    #endregion
+
+    #region Abstract methods
+    public abstract IQuantifiable? ExchangeTo(Enum? context);
+    public abstract ValueType GetBaseQuantity();
+    public abstract IQuantifiable Round(RoundingMode roundingMode);
+    #endregion
 
     public override bool? FitsIn(ILimiter? limiter)
     {
@@ -100,25 +122,5 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
 
         return exchanged != null;
     }
-
-    #region Override methods
-    #region Sealed methods
-    public override sealed MeasureUnitCode GetMeasureUnitCode()
-    {
-        return base.GetMeasureUnitCode();
-    }
-
-    public override sealed void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
-    {
-        base.ValidateMeasureUnitCode(measureUnitCode, paramName);
-    }
-    #endregion
-    #endregion
-
-    #region Abstract methods
-    public abstract IQuantifiable? ExchangeTo(Enum? context);
-    public abstract ValueType GetBaseQuantity();
-    public abstract IQuantifiable Round(RoundingMode roundingMode);
-    #endregion
     #endregion
 }
