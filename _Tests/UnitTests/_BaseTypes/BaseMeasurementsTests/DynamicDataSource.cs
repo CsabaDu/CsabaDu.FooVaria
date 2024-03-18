@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasurementsTests;
 
-internal class DynamicDataSource : DynamicDataFields
+internal class DynamicDataSource : DataFields
 {
     #region Methods
     internal IEnumerable<object[]> GetEqualsObjectArgArrayList()

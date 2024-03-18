@@ -40,47 +40,47 @@ public sealed class QuantifiableTests
 
     #endregion
 
-    //#region Initialize
-    //[ClassInitialize]
-    //public static void InitializeBaseQuantifiableTestsClass(TestContext context)
-    //{
-    //    DynamicDataSource = new();
-    //}
+    #region Initialize
+    [ClassInitialize]
+    public static void InitializeBaseQuantifiableTestsClass(TestContext context)
+    {
+        DynamicDataSource = new();
+    }
 
-    //[TestInitialize]
-    //public void InitializeBaseQuantifiableTests()
-    //{
-    //    _measureUnit = RandomParams.GetRandomMeasureUnit(_measureUnitCode);
-    //    _measureUnitCode = GetMeasureUnitCode(_measureUnit);
-    //    _measureUnitType = _measureUnit.GetType();
-    //    _defaultQuantity = RandomParams.GetRandomDecimal();
-    //}
+    [TestInitialize]
+    public void InitializeBaseQuantifiableTests()
+    {
+        _measureUnit = RandomParams.GetRandomMeasureUnit(_measureUnitCode);
+        _measureUnitCode = GetMeasureUnitCode(_measureUnit);
+        _measureUnitType = _measureUnit.GetType();
+        _defaultQuantity = RandomParams.GetRandomDecimal();
+    }
 
-    //[TestCleanup]
-    //public void CleanupBaseQuantifiableTests()
-    //{
-    //    _paramName = null;
-    //}
-    //#endregion
+    [TestCleanup]
+    public void CleanupBaseQuantifiableTests()
+    {
+        _paramName = null;
+    }
+    #endregion
 
-    //#region Private fields
-    //private BaseQuantifiableChild _baseQuantifiable;
-    //private decimal _defaultQuantity;
-    //private LimitMode _limitMode;
-    //private Enum _measureUnit;
-    //private MeasureUnitCode _measureUnitCode;
-    //private Type _measureUnitType;
-    //private string _paramName;
+    #region Private fields
+    private QuantifiableChild _quantifiable;
+    private decimal _defaultQuantity;
+    private LimitMode _limitMode;
+    private Enum _measureUnit;
+    private MeasureUnitCode _measureUnitCode;
+    private Type _measureUnitType;
+    private string _paramName;
 
-    //#region Readonly fields
-    //private readonly RandomParams RandomParams = new();
-    //private readonly RootObject RootObject = new();
-    //#endregion
+    #region Readonly fields
+    private readonly RandomParams RandomParams = new();
+    private readonly RootObject RootObject = new();
+    #endregion
 
-    //#region Static fields
-    //private static DynamicDataSource DynamicDataSource;
-    //#endregion
-    //#endregion
+    #region Static fields
+    private static DynamicDataSource DynamicDataSource;
+    #endregion
+    #endregion
 
     //#region Test methods
 

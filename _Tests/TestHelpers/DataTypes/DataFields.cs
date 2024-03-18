@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes;
 
-public abstract class DynamicDataFields
+public abstract class DataFields
 {
     #region Readonly fields
     protected readonly RandomParams RandomParams = new();

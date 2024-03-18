@@ -1,13 +1,11 @@
-global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
 global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Enums;
-global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types;
 global using CsabaDu.FooVaria.BaseTypes.Common;
 global using CsabaDu.FooVaria.BaseTypes.Common.Factories;
-global using CsabaDu.FooVaria.BaseTypes.Common.Types;
-global using CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors;
 global using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
-global using CsabaDu.FooVaria.BaseTypes.Measurables.Types;
-global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
-global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.Implementations;
+global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes;
+global using CsabaDu.FooVaria.Tests.TestHelpers.Params;
+global using CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.Fakes;
+global using Microsoft.VisualStudio.TestTools.UnitTesting;
+global using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;
