@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Measures.Factories.Implementations;
+﻿using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;
+
+namespace CsabaDu.FooVaria.Measures.Factories.Implementations;
 
 public sealed class MeasureFactory(IMeasurementFactory measurementFactory) : IMeasureFactory
 {

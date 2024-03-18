@@ -20,4 +20,5 @@ global using CsabaDu.FooVaria.DryBodies.Types.Implementations;
 global using CsabaDu.FooVaria.Measures.Types;
 global using CsabaDu.FooVaria.PlaneShapes.Factories;
 global using CsabaDu.FooVaria.PlaneShapes.Types;
+global using System.Diagnostics.CodeAnalysis;
 global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.ExceptionMethods;

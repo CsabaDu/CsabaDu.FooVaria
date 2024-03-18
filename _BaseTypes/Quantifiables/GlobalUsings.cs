@@ -10,4 +10,5 @@ global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Factories;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
 global using System.Diagnostics.CodeAnalysis;
 global using static CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics.ExceptionMethods;
+global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Statics.ExceptionMethods;

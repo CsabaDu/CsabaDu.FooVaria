@@ -16,7 +16,7 @@ public abstract class RateComponentFactory : IRateComponentFactory
     public TypeCode QuantityTypeCode => Type.GetTypeCode(DefaultRateComponentQuantity.GetType());
 
     #region Abstract properties
-    public abstract object DefaultRateComponentQuantity { get; }
+    public abstract object DefaultRateComponentQuantity {  get; }
     public abstract RateComponentCode RateComponentCode { get; }
     #endregion
     #endregion
