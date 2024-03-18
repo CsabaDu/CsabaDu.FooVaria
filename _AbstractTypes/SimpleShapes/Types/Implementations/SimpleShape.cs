@@ -45,7 +45,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
 
     public ISimpleShape GetSimpleShape(params IExtent[] shapeExtents)
     {
-        ValidateShapeExtents(shapeExtents, nameof (shapeExtents));
+        ValidateShapeExtents(shapeExtents, nameof(shapeExtents));
 
         return (ISimpleShape)GetShape(shapeExtents)!;
     }
@@ -101,7 +101,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
 
     public void ValidateShapeExtent(IExtent? shapeExtent, string paramName)
     {
-        decimal quantity =  NullChecked(shapeExtent, paramName).GetDecimalQuantity();
+        decimal quantity = NullChecked(shapeExtent, paramName).GetDecimalQuantity();
 
         if (quantity > 0) return;
 

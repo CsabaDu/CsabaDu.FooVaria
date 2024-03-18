@@ -23,7 +23,7 @@ internal sealed class LimitedRate : Rate, ILimitedRate
     #endregion
 
     #region Properties
-    public ILimit Limit { get ; init; }
+    public ILimit Limit { get; init; }
     public ILimitedRateFactory Factory { get; init; }
     #endregion
 

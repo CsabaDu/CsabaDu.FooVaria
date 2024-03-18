@@ -141,7 +141,7 @@ internal abstract class Rate : BaseRate, IRate
             BaseMeasure or
             BaseMeasurement => context!.HasMeasureUnitCode(GetMeasureUnitCode()),
 
-           _ => false,
+            _ => false,
         };
     }
 
