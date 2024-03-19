@@ -4,4 +4,9 @@
     {
         public override object[] ToObjectArray() => [IsTrue];
     }
+
+    public record ILimiter_arg(ILimiter Limiter) : ObjectArray
+    {
+        public override object[] ToObjectArray() => [Limiter];
+    }
 }

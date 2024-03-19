@@ -2,8 +2,10 @@
 
 public static class SampleParams
 {
-    public const LimitMode DefaultLimitMode = default;
+    private static readonly int LimitModeCount = Enum.GetNames<LimitMode>().Length;
 
+    public const LimitMode DefaultLimitMode = default;
+    public static readonly LimitMode NotDefinedLimitMode = (LimitMode)LimitModeCount;
     public static readonly int MeasureUnitCodeCount = MeasureUnitCodes.Length;
     public static readonly MeasureUnitCode NotDefinedMeasureUnitCode = (MeasureUnitCode)MeasureUnitCodeCount;
 

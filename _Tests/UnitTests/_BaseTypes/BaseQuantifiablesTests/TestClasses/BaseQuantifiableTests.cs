@@ -62,7 +62,7 @@ public sealed class BaseQuantifiableTests
     public void Equals_arg_object_returns_expected(bool expected, object obj, Enum measureUnit, decimal defaultQuantity)
     {
         // Arrange
-        SetBaseQuantifiableChild(measureUnit, null, defaultQuantity);
+        SetBaseQuantifiableChild(measureUnit, defaultQuantity);
 
         // Act
         var actual = _baseQuantifiable.Equals(obj);
@@ -76,24 +76,11 @@ public sealed class BaseQuantifiableTests
     #region bool? FitsIn
     #region ILimitable.FitsIn(ILimiter?)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetFitsInArgs), DynamicDataSourceType.Method)]
-    public void FitsIn_invalidArg_ILimiter_returns_null(Enum measureUnit, ILimiter limiter)
-    {
-        // Arrange
-        SetBaseQuantifiableChild(measureUnit, null, Fields.defaultQuantity);
-
-        // Act
-        var actual = _baseQuantifiable.FitsIn(limiter);
-
-        // Assert
-        Assert.IsNull(actual);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
     public void FitsIn_nullArg_ILimiter_returns_expected()
     {
         // Arrange
-        SetBaseQuantifiableChild(Fields.measureUnit, null, Fields.defaultQuantity);
+        SetBaseQuantifiableChild(Fields.measureUnit, Fields.defaultQuantity);
+
         ILimiter limiter = null;
 
         // Act
@@ -104,17 +91,33 @@ public sealed class BaseQuantifiableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetFitsInArgs), DynamicDataSourceType.Method)]
+    public void FitsIn_invalidArg_ILimiter_returns_null(ILimiter limiter)
+    {
+        // Arrange
+        SetBaseQuantifiableChild(null, Fields.defaultQuantity);
+
+        // Act
+        var actual = _baseQuantifiable.FitsIn(limiter);
+
+        // Assert
+        Assert.IsNull(actual);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
     public void FitsIn_validArg_ILimiter_returns_expected()
     {
         // Arrange
-        SetBaseQuantifiableChild(Fields.measureUnit, null, Fields.defaultQuantity);
+        SetBaseQuantifiableChild(Fields.measureUnit, Fields.defaultQuantity);
+
         Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
         decimal otherQuantity = Fields.RandomParams.GetRandomDecimal();
+        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
         LimiterBaseQuantifiableOblect limiter = new(Fields.RootObject, null)
         {
             Return = new()
             {
-                GetBaseMeasureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode),
+                GetBaseMeasureUnit = Fields.measureUnit,
                 GetDefaultQuantity = otherQuantity,
             },
             LimitMode = Fields.limitMode,
@@ -138,7 +141,8 @@ public sealed class BaseQuantifiableTests
     {
         // Arrange
         decimal expected = Fields.defaultQuantity;
-        SetBaseQuantifiableChild(null, null, expected);
+
+        SetBaseQuantifiableChild(null, expected);
 
         // Act
         var actual = _baseQuantifiable.GetDefaultQuantity();
@@ -155,7 +159,8 @@ public sealed class BaseQuantifiableTests
     public void GetHashCode_returns_expected()
     {
         // Arrange
-        SetBaseQuantifiableChild(Fields.measureUnit, null, Fields.defaultQuantity);
+        SetBaseQuantifiableChild(Fields.measureUnit, Fields.defaultQuantity);
+
         var expected = HashCode.Combine(Fields.measureUnitCode, Fields.defaultQuantity);
 
         // Act
@@ -173,7 +178,8 @@ public sealed class BaseQuantifiableTests
     public void ValidateQuantity_nullArg_ValueType_arg_string_throws_ArgumentNullException()
     {
         // Arrange
-        SetBaseQuantifiableChild(Fields.measureUnit, null, Fields.defaultQuantity);
+        SetBaseQuantifiableChild(Fields.measureUnit, Fields.defaultQuantity);
+
         Fields.paramName = Fields.RandomParams.GetRandomParamName();
         ValueType quantity = null;
 
@@ -186,11 +192,12 @@ public sealed class BaseQuantifiableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetValidateQuantityInvalidQuantityTypeCodeArg), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetInvalidQuantityTypeCodeArg), DynamicDataSourceType.Method)]
     public void ValidateQuantity_invalidArg_ValueType_arg_string_throws_ArgumentOutOfRangeException(TypeCode typeCode)
     {
         // Arrange
-        SetBaseQuantifiableChild(Fields.measureUnit, null, Fields.defaultQuantity);
+        SetBaseQuantifiableChild(Fields.measureUnit, Fields.defaultQuantity);
+
         ValueType quantity = Fields.RandomParams.GetRandomValueType(typeCode);
         Fields.paramName = Fields.RandomParams.GetRandomParamName();
 
@@ -203,11 +210,12 @@ public sealed class BaseQuantifiableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetValidateQuantityValidQuantityTypeCodeArg), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetValidQuantityTypeCodeArg), DynamicDataSourceType.Method)]
     public void ValidateQuantity_validArg_ValueType_arg_string_returns_expected(TypeCode typeCode)
     {
         // Arrange
-        SetBaseQuantifiableChild(Fields.measureUnit, null, Fields.defaultQuantity);
+        SetBaseQuantifiableChild(Fields.measureUnit, Fields.defaultQuantity);
+
         ValueType quantity = Fields.RandomParams.GetRandomValueType(typeCode);
 
         // Act
@@ -221,15 +229,15 @@ public sealed class BaseQuantifiableTests
     #endregion
 
     #region Private methods
-    private void SetBaseQuantifiableChild(Enum measureUnit, IBaseQuantifiableFactory factory, decimal defaultQuantity)
+    private void SetBaseQuantifiableChild(Enum measureUnit, decimal defaultQuantity, IBaseQuantifiableFactory factory = null)
     {
         _baseQuantifiable = new(Fields.RootObject, Fields.paramName)
         {
             Return = new()
             {
                 GetBaseMeasureUnit = measureUnit,
-                GetFactory = factory,
                 GetDefaultQuantity = defaultQuantity,
+                GetFactory = factory,
             }
         };
     }
@@ -245,14 +253,14 @@ public sealed class BaseQuantifiableTests
         return DynamicDataSource.GetFitsInArgs();
     }
 
-    private static IEnumerable<object[]> GetValidateQuantityInvalidQuantityTypeCodeArg()
+    private static IEnumerable<object[]> GetInvalidQuantityTypeCodeArg()
     {
-        return DynamicDataSource.GetValidateQuantityInvalidQuantityTypeCodeArg();
+        return DynamicDataSource.GetInvalidQuantityTypeCodeArg();
     }
 
-    private static IEnumerable<object[]> GetValidateQuantityValidQuantityTypeCodeArg()
+    private static IEnumerable<object[]> GetValidQuantityTypeCodeArg()
     {
-        return DynamicDataSource.GetValidateQuantityValidQuantityTypeCodeArg();
+        return DynamicDataSource.GetValidQuantityTypeCodeArg();
     }
     #endregion
     #endregion

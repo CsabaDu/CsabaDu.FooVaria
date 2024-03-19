@@ -102,22 +102,17 @@ internal class DynamicDataSource : DataFields
         #endregion
     }
 
-
     internal IEnumerable<object[]> GetFitsInILimiterArgs()
     {
-        // Not IBaseQuantifiable
-        measureUnit = RandomParams.GetRandomMeasureUnit();
+        // Not IQuantifiable
         limiter = new LimiterObject();
         yield return toObjectArray();
 
         // Different MeasureUnitCode
-        measureUnit = RandomParams.GetRandomMeasureUnit();
-        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode(measureUnit));
         limiter = new LimiterQuantifiableOblect(RootObject, null)
         {
             Return = new()
             {
-                GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(GetMeasureUnitCode(measureUnitCode)),
                 GetDefaultQuantity = RandomParams.GetRandomDecimal(),
             }
         };
@@ -125,46 +120,48 @@ internal class DynamicDataSource : DataFields
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Enum_ILimiter_args item = new(measureUnit, limiter);
+            ILimiter_arg item = new(limiter);
 
             return item.ToObjectArray();
         }
         #endregion
     }
 
-    //internal IEnumerable<object[]> GetFitsInOtherLimitModeArgs()
-    //{
-    //    // null, null
-    //    IQuantifiable quantifiable = null;
-    //    limitMode = null;
-    //    yield return toObjectArray();
+    internal IEnumerable<object[]> GetFitsInIQuantifiableLimitModeArgs()
+    {
+        // IQuantifiable, Not defined limitMode
+        limitMode = SampleParams.NotDefinedLimitMode;
+        measureUnit = RandomParams.GetRandomMeasureUnit();
+        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        IQuantifiable quantifiable = new QuantifiableChild(RootObject, null)
+        {
+            Return = new()
+            {
+                GetBaseMeasureUnit = measureUnit,
+                GetDefaultQuantity = RandomParams.GetRandomDecimal(),
+            }
+        };
+        yield return toObjectArray();
 
-    //    // Not IBaseQuantifiable
-    //    measureUnit = null;
-    //    limiter = new LimiterObject();
-    //    yield return toObjectArray();
+        // Different IQuantifiable, valid LimitMode
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
+        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
+        limitMode = RandomParams.GetRandomLimitMode();
+        yield return toObjectArray();
 
-    //    // Different MeasureUnitCode
-    //    measureUnit = RandomParams.GetRandomMeasureUnit();
-    //    measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode(measureUnit));
-    //    limiter = new LimiterQuantifiableOblect(RootObject, null)
-    //    {
-    //        Return = new()
-    //        {
-    //            GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(GetMeasureUnitCode(measureUnitCode)),
-    //            GetDefaultQuantity = RandomParams.GetRandomDecimal(),
-    //        }
-    //    };
+        // null, valid LimitMode
+        quantifiable = null;
+        yield return toObjectArray();
 
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            Enum_LimitMode_IQuantifiable_arg item = new(measureUnit, limitMode, quantifiable);
 
-    //    #region toObjectArray method
-    //    object[] toObjectArray()
-    //    {
-    //        Enum_LimitMode_IQuantifiable_arg item = new(measureUnit, limitMode, quantifiable);
+            return item.ToObjectArray();
+        }
+        #endregion
+    }
 
-    //        return item.ToObjectArray();
-    //    }
-    //    #endregion
-    //}
     #endregion
 }

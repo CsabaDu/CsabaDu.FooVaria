@@ -2,8 +2,6 @@
 
 public sealed class TestSupport
 {
-    private static readonly RandomParams RandomParams = new();
-
     public static void RestoreConstantExchangeRates()
     {
         if (ExchangeRateCollection.Count != ConstantExchangeRateCount)

@@ -62,7 +62,7 @@ public sealed class BaseMeasurementTests
     public void CompareTo_nullArg_IBaseMeasurement_returns_expected()
     {
         // Arrange
-        SetBaseMeasurementChild(Fields.measureUnit, null, null);
+        SetBaseMeasurementChild(Fields.measureUnit);
         IBaseMeasurement other = null;
         const int expected = 1;
 
@@ -77,7 +77,7 @@ public sealed class BaseMeasurementTests
     public void CompareTo_invalidArg_IBaseMeasurement_throws_InvalidEnumArgumentException()
     {
         // Arrange
-        SetBaseMeasurementChild(Fields.measureUnit, null, null);
+        SetBaseMeasurementChild(Fields.measureUnit);
         Fields.measureUnitCode = Fields.RandomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
         IBaseMeasurement other = new BaseMeasurementChild(Fields.RootObject, Fields.paramName)
         {
@@ -99,7 +99,7 @@ public sealed class BaseMeasurementTests
     public void CompareTo_validArg_IBaseMeasurement_returns_expected()
     {
         // Arrange
-        SetBaseMeasurementChild(Fields.measureUnit, null, null);
+        SetBaseMeasurementChild(Fields.measureUnit);
         IBaseMeasurement other = new BaseMeasurementChild(Fields.RootObject, Fields.paramName)
         {
             Return = new()
@@ -125,7 +125,7 @@ public sealed class BaseMeasurementTests
     public void Equals_arg_object_returns_expected(bool expected, object obj, Enum measureUnit)
     {
         // Arrange
-        SetBaseMeasurementChild(measureUnit, null, null);
+        SetBaseMeasurementChild(measureUnit);
 
         // Act
         var actual = _baseMeasurement.Equals(obj);
@@ -141,7 +141,7 @@ public sealed class BaseMeasurementTests
     public void Equals_arg_IBaseMeasurement_returns_expected(bool expected, Enum measureUnit, IBaseMeasurement other)
     {
         // Arrange
-        SetBaseMeasurementChild(measureUnit, null, null);
+        SetBaseMeasurementChild(measureUnit);
 
         // Act
         var actual = _baseMeasurement.Equals(other);
@@ -158,7 +158,7 @@ public sealed class BaseMeasurementTests
     public void GetBaseMeasurement_arg_creates()
     {
         // Arrange
-        SetBaseMeasurementChild(Fields.measureUnit, new BaseMeasurementFactoryObject(), null);
+        SetBaseMeasurementChild(Fields.measureUnit, new BaseMeasurementFactoryObject());
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnitOrMeasureUnitCode();
 
         // Act
@@ -176,7 +176,7 @@ public sealed class BaseMeasurementTests
     public void GetConstantExchangeRateCollection_returns_expected()
     {
         // Arrange
-        SetBaseMeasurementChild(Fields.measureUnit, null, null);
+        SetBaseMeasurementChild(Fields.measureUnit);
         IDictionary<object, decimal> expected = ConstantExchangeRateCollection
             .Where(x => x.Key.GetType().Name == Enum.GetName(Fields.measureUnitCode))
             .ToDictionary(x => x.Key, x => x.Value);
@@ -196,7 +196,7 @@ public sealed class BaseMeasurementTests
     public void GetExchangeRate_returns_expected()
     {
         // Arrange
-        SetBaseMeasurementChild(Fields.measureUnit, null, null);
+        SetBaseMeasurementChild(Fields.measureUnit);
         decimal expected = ExchangeRateCollection
             .FirstOrDefault(x => x.Key.Equals(Fields.measureUnit))
             .Value;
@@ -217,7 +217,7 @@ public sealed class BaseMeasurementTests
     public void GetExchangeRateCollection_returns_expected(Enum measureUnit, MeasureUnitCode measureUnitCode)
     {
         // Arrange
-        SetBaseMeasurementChild(measureUnit, null, null);
+        SetBaseMeasurementChild(measureUnit);
         IDictionary<object, decimal> expected = ExchangeRateCollection
             .Where(x => x.Key.GetType().Name == Enum.GetName(measureUnitCode))
             .ToDictionary(x => x.Key, x => x.Value);
@@ -237,7 +237,7 @@ public sealed class BaseMeasurementTests
     public void GetHashCode_returns_expected()
     {
         // Arrange
-        SetBaseMeasurementChild(Fields.measureUnit, null, null);
+        SetBaseMeasurementChild(Fields.measureUnit);
         int expected = HashCode.Combine(_baseMeasurement.GetMeasureUnitCode(), _baseMeasurement.GetExchangeRate());
 
         // Act
@@ -273,7 +273,7 @@ public sealed class BaseMeasurementTests
     public void GetQuantityTypeCode_returns_expected()
     {
         // Arrange
-        SetBaseMeasurementChild (Fields.measureUnit, null, null);
+        SetBaseMeasurementChild(Fields.measureUnit);
         TypeCode expected = Fields.measureUnitCode.GetQuantityTypeCode();
 
         // Act
@@ -292,7 +292,7 @@ public sealed class BaseMeasurementTests
     public void IsExchangeableTo_returns_expected(bool expected, Enum measureUnit, Enum context)
     {
         // Arrange
-        SetBaseMeasurementChild(measureUnit, null, null);
+        SetBaseMeasurementChild(measureUnit);
 
         // Act
         var actual = _baseMeasurement.IsExchangeableTo(context);
@@ -309,7 +309,7 @@ public sealed class BaseMeasurementTests
     public void ProportionalTo_nullArg_IBaseMeasurement_throws_ArgumentNullException()
     {
         // Arrange
-        SetBaseMeasurementChild(Fields.measureUnit, null, null);
+        SetBaseMeasurementChild(Fields.measureUnit);
         BaseMeasurementChild other = null;
 
         // Act
@@ -324,7 +324,7 @@ public sealed class BaseMeasurementTests
     public void ProportionalTo_invalidArg_IBaseMeasurement_throws_InvalidEnumArgumentException()
     {
         // Arrange
-        SetBaseMeasurementChild(Fields.measureUnit, null, null);
+        SetBaseMeasurementChild(Fields.measureUnit);
         Fields.measureUnitCode = Fields.RandomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
         BaseMeasurementChild other = new(Fields.RootObject, Fields.paramName)
         {
@@ -346,7 +346,7 @@ public sealed class BaseMeasurementTests
     public void ProportionalTo_validArg_IBaseMeasurement_returns_expected()
     {
         // Arrange
-        SetBaseMeasurementChild(Fields.measureUnit, null, null);
+        SetBaseMeasurementChild(Fields.measureUnit);
         BaseMeasurementChild other = new(Fields.RootObject, Fields.paramName)
         {
             Return = new()
@@ -373,7 +373,7 @@ public sealed class BaseMeasurementTests
     {
         // Arrange
         Fields.paramName = Fields.RandomParams.GetRandomParamName();
-        SetBaseMeasurementChild(measureUnit, null, null);
+        SetBaseMeasurementChild(measureUnit);
 
         // Act
         void attempt() => _baseMeasurement.ValidateExchangeRate(exchangeRate, Fields.paramName);
@@ -387,7 +387,7 @@ public sealed class BaseMeasurementTests
     public void ValidateExchangeRate_validArg_decimal_arg_string_returns()
     {
         // Arrange
-        SetBaseMeasurementChild(Fields.measureUnit, null, null);
+        SetBaseMeasurementChild(Fields.measureUnit);
         decimal exchangeRate = GetExchangeRate(Fields.measureUnit, null);
 
         // Act
@@ -405,7 +405,7 @@ public sealed class BaseMeasurementTests
     public void ValidateMeasureUnit_nullArg_Enum_arg_string_throws_ArgumentNullException()
     {
         // Arrange
-        SetBaseMeasurementChild(Fields.measureUnit, null, null);
+        SetBaseMeasurementChild(Fields.measureUnit);
         Fields.paramName = Fields.RandomParams.GetRandomParamName();
 
         // Act
@@ -420,7 +420,7 @@ public sealed class BaseMeasurementTests
     public void ValidateMeasureUnit_invalidArg_Enum_arg_string_throws_InvalidEnumArgumentException()
     {
         // Arrange
-        SetBaseMeasurementChild(Fields.measureUnit, null, null);
+        SetBaseMeasurementChild(Fields.measureUnit);
         Fields.measureUnitCode = Fields.RandomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
         Enum context = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
 
@@ -437,7 +437,7 @@ public sealed class BaseMeasurementTests
     public void ValidateMeasureUnit_validArg_Enum_arg_string_returns(Enum measureUnit, Enum context)
     {
         // Arrange
-        SetBaseMeasurementChild(measureUnit, null, null);
+        SetBaseMeasurementChild(measureUnit);
 
         // Act
         void validator() => _baseMeasurement.ValidateMeasureUnit(context, Fields.paramName);
@@ -454,7 +454,7 @@ public sealed class BaseMeasurementTests
     #endregion
 
     #region Private methods
-    private void SetBaseMeasurementChild(Enum measureUnit, IBaseMeasurementFactory factory, string measureUnitName)
+    private void SetBaseMeasurementChild(Enum measureUnit, IBaseMeasurementFactory factory = null, string measureUnitName = null)
     {
         _baseMeasurement = new(Fields.RootObject, Fields.paramName)
         {

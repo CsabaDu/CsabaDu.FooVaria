@@ -47,9 +47,12 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
 
         if (other?.HasMeasureUnitCode(GetMeasureUnitCode()) != true) return null;
 
+        limitMode ??= LimitMode.BeNotGreater;
+
+        if (!Enum.IsDefined(limitMode.Value)) return null;
+
         decimal defaultQuantity = GetDefaultQuantity();
         decimal otherQuantity = other.GetDefaultQuantity();
-        limitMode ??= LimitMode.BeNotGreater;
 
         return defaultQuantity.FitsIn(otherQuantity, limitMode);
     }
