@@ -54,11 +54,9 @@ internal class QuantifiableChild(IRootObject rootObject, string paramName) : Qua
 
     public override sealed Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnit;
 
-    public override ValueType GetBaseQuantity()
+    public override sealed ValueType GetBaseQuantity()
     {
         ValueType quantity = Return.GetDefaultQuantity;
-        RandomParams randomParams = new();
-        //TypeCode quantityTypeCode = randomParams.GetRandomQuantityTypeCode();
 
         return (ValueType)quantity.ToQuantity(GetQuantityTypeCode());
     }

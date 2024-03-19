@@ -222,7 +222,7 @@ public sealed class QuantifiableTests
     public void FitsIn_nullArgs_IQuantifiable_LimitMode_returns_expected()
     {
         // Arrange
-        SetQuantifiableChild(Fields.defaultQuantity, Fields.measureUnit);
+        SetQuantifiableChild(Fields.defaultQuantity);
 
         ILimiter limiter = null;
 
@@ -274,11 +274,47 @@ public sealed class QuantifiableTests
     #endregion
     #endregion
 
-    // ValueType IQuantity.GetBaseQuantity()
-    // ValueType IQuantity.GetBaseQuantity()
+    #region ValueType GetBaseQuantity
+    #region IQuantity.GetBaseQuantity()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetBaseQuantity_returns_expected()
+    {
+        // Arrange
+        SetQuantifiableChild(Fields.defaultQuantity, Fields.measureUnit);
+
+        TypeCode typeCode = Fields.measureUnitCode.GetQuantityTypeCode();
+        ValueType expected = (ValueType)Fields.defaultQuantity.ToQuantity(typeCode);
+
+        // Act
+        var actual = _quantifiable.GetBaseQuantity();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region decimal GetDecimalQuantity
+    #region IDecimalQuantity.GetDecimalQuantity()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetDecimalQuantity_returns_expected()
+    {
+        // Arrange
+        SetQuantifiableChild(Fields.defaultQuantity, Fields.measureUnit);
+
+        ValueType quantity = _quantifiable.GetBaseQuantity();
+        decimal expected = (decimal)quantity.ToQuantity(TypeCode.Decimal);
+
+        // Act
+        var actual = _quantifiable.GetDecimalQuantity();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
 
 
-    // decimal IDecimalQuantity.GetDecimalQuantity()
     // IQuantifiable IQuantifiable.GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
     // object IRound<IQuantifiable>.GetQuantity(RoundingMode roundingMode)
     // object IQuantity.GetQuantity(TypeCode quantityTypeCode)
