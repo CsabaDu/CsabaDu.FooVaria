@@ -74,7 +74,9 @@ internal sealed class ProportionLimit : SimpleRate, IProportionLimit
 
     public bool? Includes(IBaseRate? limitable)
     {
-        return limitable?.FitsIn(this);
+        return limitable == null ?
+            false
+            : limitable?.FitsIn(this);
     }
 
     #region Override methods

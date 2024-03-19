@@ -70,7 +70,9 @@ public sealed class ShapeLimit : SimpleShape, IShapeLimit
     }
     public bool? Includes(IShape? limitable)
     {
-        return limitable?.FitsIn(this, LimitMode);
+        return limitable == null ?
+            false
+            : limitable?.FitsIn(this);
     }
 
     public ISimpleShapeFactory GetSimpleShapeFactory()

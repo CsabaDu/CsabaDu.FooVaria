@@ -81,7 +81,9 @@ internal sealed class Limit(ILimitFactory factory, IMeasurement measurement, ulo
 
     public bool? Includes(IBaseMeasure? limitable)
     {
-        return limitable?.FitsIn(this) ?? false;
+        return limitable == null ?
+            false
+            : limitable?.FitsIn(this);
     }
 
     #region Override methods

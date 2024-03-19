@@ -90,7 +90,9 @@ internal sealed class LimitedRate : Rate, ILimitedRate
 
     public bool? Includes(IBaseMeasure? limitable)
     {
-        return Limit.Includes(limitable);
+        return limitable == null ?
+            false
+            : limitable?.FitsIn(this);
     }
 
     #region Override methods

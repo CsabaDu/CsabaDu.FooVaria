@@ -20,6 +20,8 @@
 
         public override sealed bool? FitsIn(ILimiter? limiter)
         {
+            if (limiter == null) return true;
+
             if (limiter is not IBaseRate baseRate) return null;
 
             return FitsIn(baseRate, limiter?.GetLimitMode());

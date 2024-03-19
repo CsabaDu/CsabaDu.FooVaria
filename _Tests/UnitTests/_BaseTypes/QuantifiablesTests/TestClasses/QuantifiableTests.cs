@@ -1,5 +1,3 @@
-using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -201,7 +199,43 @@ public sealed class QuantifiableTests
     #endregion
 
     #region IFit<IQuantifiable>.FitsIn(IQuantifiable?, LimitMode?)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetFitsInOtherLimitModeArgs), DynamicDataSourceType.Method)]
+    public void FitsIn_invalidArgs_IQuantifiable_LimitMode_returns_null(Enum measureUnit, LimitMode? limitMode, IQuantifiable other)
+    {
+        // Arrange
+        SetQuantifiableChild(measureUnit, null, Fields.defaultQuantity);
 
+        // Act
+        var actual = _quantifiable.FitsIn(other, limitMode);
+
+        // Assert
+        Assert.IsNull(actual);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void FitsIn_validArgs_IQuantifiable_LimitMode_returns_expected()
+    {
+        // Arrange
+        SetQuantifiableChild(Fields.measureUnit, null, Fields.defaultQuantity);
+        decimal otherQuantity = Fields.RandomParams.GetRandomDecimal();
+        QuantifiableChild quantifiable = new(Fields.RootObject, null)
+        {
+            Return = new()
+            {
+                GetBaseMeasureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode),
+                GetDefaultQuantity = otherQuantity,
+            },
+        };
+        Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
+        bool? expected = Fields.defaultQuantity.FitsIn(otherQuantity, Fields.limitMode);
+
+        // Act
+        var actual = _quantifiable.FitsIn(quantifiable, Fields.limitMode);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
     #endregion
     #endregion
 
@@ -250,6 +284,11 @@ public sealed class QuantifiableTests
     private static IEnumerable<object[]> GetFitsInILimiterArgs()
     {
         return DynamicDataSource.GetFitsInILimiterArgs();
+    }
+
+    private static IEnumerable<object[]> GetFitsInOtherLimitModeArgs()
+    {
+        return DynamicDataSource.GetFitsInOtherLimitModeArgs();
     }
     #endregion
     #endregion

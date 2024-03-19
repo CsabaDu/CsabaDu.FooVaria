@@ -285,7 +285,7 @@ internal abstract class Mass : BaseQuantifiable, IMass
 
     public override bool? FitsIn(ILimiter? limiter)
     {
-        if (limiter == null) return null;
+        if (limiter == null) return true;
 
         LimitMode? limitMode = limiter.GetLimitMode();
 

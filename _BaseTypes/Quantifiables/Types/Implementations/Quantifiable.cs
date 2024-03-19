@@ -6,6 +6,8 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
     #region Override methods
     public override bool? FitsIn(ILimiter? limiter)
     {
+        if (limiter == null) return true;
+
         if (limiter is not IQuantifiable) return null;
 
         return base.FitsIn(limiter);
