@@ -56,7 +56,7 @@ public sealed class MeasurableTests
     #region bool Equals
     #region Measurable.Equals(object?)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetEqualsArgsArrayList), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method)]
     public void Equals_arg_object_returns_expected(bool expected, object obj, Enum measureUnit)
     {
         // Arrange
@@ -202,7 +202,7 @@ public sealed class MeasurableTests
     #region bool HasMeasureUnitCode
     #region IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetHasMeasureUnitCodeArgsArrayList), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetHasMeasureUnitCodeArgs), DynamicDataSourceType.Method)]
     public void HasMeasureUnitCode_arg_MeasureUnitCode_returns_expected(Enum measureUnit, MeasureUnitCode measureUnitCode, bool expected)
     {
         // Arrange
@@ -237,7 +237,7 @@ public sealed class MeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetValidateMeasureUnitInvalidArgsArrayList), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetValidateMeasureUnitInvalidArgs), DynamicDataSourceType.Method)]
     public void ValidateMeasureUnit_invalidArg_Enum_arg_string_throws_InvalidEnumArgumentException(Enum measureUnit, MeasureUnitCode measureUnitCode)
     {
         // Arrange
@@ -256,7 +256,7 @@ public sealed class MeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetValidMeasureUnitArgsArrayList), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetValidMeasureUnitArgs), DynamicDataSourceType.Method)]
     public void ValidateMeasureUnit_validArg_Enum_arg_string_returns(Enum measureUnit, MeasureUnitCode measureUnitCode)
     {
         // Arrange
@@ -334,7 +334,7 @@ public sealed class MeasurableTests
 
     #region IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode, string)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetValidateMeasureUnitCodeInvalidArgsArrayList), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetValidateMeasureUnitCodeInvalidArgs), DynamicDataSourceType.Method)]
     public void ValidateMeasureUnitCode_invalidArg_MeasureUnitCode_arg_string_throws_InvalidEnumArgumentException(Enum measureUnit, MeasureUnitCode measureUnitCode)
     {
         // Arrange
@@ -373,29 +373,29 @@ public sealed class MeasurableTests
     #endregion
 
     #region DynamicDataSource
-    private static IEnumerable<object[]> GetEqualsArgsArrayList()
+    private static IEnumerable<object[]> GetEqualsArgs()
     {
-        return DynamicDataSource.GetEqualsArgsArrayList();
+        return DynamicDataSource.GetEqualsArgs();
     }
 
-    private static IEnumerable<object[]> GetValidateMeasureUnitInvalidArgsArrayList()
+    private static IEnumerable<object[]> GetValidateMeasureUnitInvalidArgs()
     {
-        return DynamicDataSource.GetValidateMeasureUnitInvalidArgsArrayList();
+        return DynamicDataSource.GetValidateMeasureUnitInvalidArgs();
     }
 
-    private static IEnumerable<object[]> GetValidateMeasureUnitCodeInvalidArgsArrayList()
+    private static IEnumerable<object[]> GetValidateMeasureUnitCodeInvalidArgs()
     {
-        return DynamicDataSource.GetValidateMeasureUnitCodeInvalidArgsArrayList();
+        return DynamicDataSource.GetValidateMeasureUnitCodeInvalidArgs();
     }
 
-    private static IEnumerable<object[]> GetHasMeasureUnitCodeArgsArrayList()
+    private static IEnumerable<object[]> GetHasMeasureUnitCodeArgs()
     {
-        return DynamicDataSource.GetHasMeasureUnitCodeArgsArrayList();
+        return DynamicDataSource.GetHasMeasureUnitCodeArgs();
     }
 
-    private static IEnumerable<object[]> GetValidMeasureUnitArgsArrayList()
+    private static IEnumerable<object[]> GetValidMeasureUnitArgs()
     {
-        return DynamicDataSource.GetValidMeasureUnitArgsArrayList();
+        return DynamicDataSource.GetValidMeasureUnitArgs();
     }
     #endregion
 }

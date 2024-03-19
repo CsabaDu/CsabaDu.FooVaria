@@ -58,7 +58,7 @@ public sealed class BaseQuantifiableTests
     #region bool Equals
     #region BaseQuantifiable.Equals(object?)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetEqualsArgsArrayList), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method)]
     public void Equals_arg_object_returns_expected(bool expected, object obj, Enum measureUnit, decimal defaultQuantity)
     {
         // Arrange
@@ -76,7 +76,7 @@ public sealed class BaseQuantifiableTests
     #region bool? FitsIn
     #region ILimitable.FitsIn(ILimiter?)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetFitsInArgsArrayList), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetFitsInArgs), DynamicDataSourceType.Method)]
     public void FitsIn_invalidArg_ILimiter_returns_null(Enum measureUnit, ILimiter limiter)
     {
         // Arrange
@@ -172,7 +172,7 @@ public sealed class BaseQuantifiableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetValidateQuantityInvalidQuantityTypeCodeArgArrayList), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetValidateQuantityInvalidQuantityTypeCodeArg), DynamicDataSourceType.Method)]
     public void ValidateQuantity_invalidArg_ValueType_arg_string_throws_ArgumentOutOfRangeException(TypeCode typeCode)
     {
         // Arrange
@@ -189,7 +189,7 @@ public sealed class BaseQuantifiableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetValidateQuantityValidQuantityTypeCodeArgArrayList), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetValidateQuantityValidQuantityTypeCodeArg), DynamicDataSourceType.Method)]
     public void ValidateQuantity_validArg_ValueType_arg_string_returns_expected(TypeCode typeCode)
     {
         // Arrange
@@ -221,24 +221,24 @@ public sealed class BaseQuantifiableTests
     }
 
     #region DynamicDataSource
-    private static IEnumerable<object[]> GetEqualsArgsArrayList()
+    private static IEnumerable<object[]> GetEqualsArgs()
     {
-        return DynamicDataSource.GetEqualsArgsArrayList();
+        return DynamicDataSource.GetEqualsArgs();
     }
 
-    private static IEnumerable<object[]> GetFitsInArgsArrayList()
+    private static IEnumerable<object[]> GetFitsInArgs()
     {
-        return DynamicDataSource.GetFitsInArgsArrayList();
+        return DynamicDataSource.GetFitsInArgs();
     }
 
-    private static IEnumerable<object[]> GetValidateQuantityInvalidQuantityTypeCodeArgArrayList()
+    private static IEnumerable<object[]> GetValidateQuantityInvalidQuantityTypeCodeArg()
     {
-        return DynamicDataSource.GetValidateQuantityInvalidQuantityTypeCodeArgArrayList();
+        return DynamicDataSource.GetValidateQuantityInvalidQuantityTypeCodeArg();
     }
 
-    private static IEnumerable<object[]> GetValidateQuantityValidQuantityTypeCodeArgArrayList()
+    private static IEnumerable<object[]> GetValidateQuantityValidQuantityTypeCodeArg()
     {
-        return DynamicDataSource.GetValidateQuantityValidQuantityTypeCodeArgArrayList();
+        return DynamicDataSource.GetValidateQuantityValidQuantityTypeCodeArg();
     }
     #endregion
     #endregion

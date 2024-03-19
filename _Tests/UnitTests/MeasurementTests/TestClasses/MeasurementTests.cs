@@ -101,34 +101,34 @@ public sealed class MeasurementTests
     //}
 
     //#region DynamicDataSource
-    //private static IEnumerable<object[]> GetEqualsObjectArgArrayList()
+    //private static IEnumerable<object[]> GetEqualsObjectArg()
     //{
-    //    return DynamicDataSource.GetEqualsObjectArgArrayList();
+    //    return DynamicDataSource.GetEqualsObjectArg();
     //}
 
-    //private static IEnumerable<object[]> GetEqualsBaseMeasurementArgArrayList()
+    //private static IEnumerable<object[]> GetEqualsBaseMeasurementArg()
     //{
-    //    return DynamicDataSource.GetEqualsBaseMeasurementArgArrayList();
+    //    return DynamicDataSource.GetEqualsBaseMeasurementArg();
     //}
 
-    //private static IEnumerable<object[]> GetExchangeRateCollectionArgArrayList()
+    //private static IEnumerable<object[]> GetExchangeRateCollectionArg()
     //{
-    //    return DynamicDataSource.GetExchangeRateCollectionArgArrayList();
+    //    return DynamicDataSource.GetExchangeRateCollectionArg();
     //}
 
-    //private static IEnumerable<object[]> GetIsExchangeableToArgArrayList()
+    //private static IEnumerable<object[]> GetIsExchangeableToArg()
     //{
-    //    return DynamicDataSource.GetIsExchangeableToArgArrayList();
+    //    return DynamicDataSource.GetIsExchangeableToArg();
     //}
 
-    //private static IEnumerable<object[]> GetValidateExchangeRateArgArrayList()
+    //private static IEnumerable<object[]> GetValidateExchangeRateArg()
     //{
-    //    return DynamicDataSource.GetValidateExchangeRateArgArrayList();
+    //    return DynamicDataSource.GetValidateExchangeRateArg();
     //}
 
-    //private static IEnumerable<object[]> GetValidateMeasureUnitValidArgsArrayList()
+    //private static IEnumerable<object[]> GetValidateMeasureUnitValidArgs()
     //{
-    //    return DynamicDataSource.GetValidateMeasureUnitValidArgsArrayList();
+    //    return DynamicDataSource.GetValidateMeasureUnitValidArgs();
     //}
     //#endregion
     //#endregion

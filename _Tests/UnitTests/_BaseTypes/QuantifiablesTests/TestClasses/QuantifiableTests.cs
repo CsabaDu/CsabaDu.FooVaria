@@ -125,7 +125,7 @@ public sealed class QuantifiableTests
     #region bool Equals
     #region IEquatable<IQuantifiable>.Equals(IQuantifiable?)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetEqualsArgsArrayList), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method)]
     public void Equals_arg_object_returns_expected(Enum measureUnit, decimal defaultQuantity, bool expected, IQuantifiable other)
     {
         // Arrange
@@ -143,7 +143,7 @@ public sealed class QuantifiableTests
     #region IQuantifiable? ExchangeTo
     #region IExchange<IQuantifiable, Enum>.ExchangeTo(Enum? context)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetExchangeToArgsArrayList), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetExchangeToArgs), DynamicDataSourceType.Method)]
     public void ExchangeTo_arg_returns_expected(Enum measureUnit, Enum context, IQuantifiable expected)
     {
         // Arrange
@@ -161,7 +161,7 @@ public sealed class QuantifiableTests
     #region bool? FitsIn
     #region ILimitable.FitsIn(ILimiter?)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetFitsInILimiterArgsArrayList), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetFitsInILimiterArgs), DynamicDataSourceType.Method)]
     public void FitsIn_invalidArg_ILimiter_returns_null(Enum measureUnit, ILimiter limiter)
     {
         // Arrange
@@ -237,19 +237,19 @@ public sealed class QuantifiableTests
     }
 
     #region DynamicDataSource
-    private static IEnumerable<object[]> GetEqualsArgsArrayList()
+    private static IEnumerable<object[]> GetEqualsArgs()
     {
-        return DynamicDataSource.GetEqualsArgsArrayList();
+        return DynamicDataSource.GetEqualsArgs();
     }
 
-    private static IEnumerable <object[]> GetExchangeToArgsArrayList()
+    private static IEnumerable <object[]> GetExchangeToArgs()
     {
-        return DynamicDataSource.GetExchangeToArgsArrayList();
+        return DynamicDataSource.GetExchangeToArgs();
     }
 
-    private static IEnumerable<object[]> GetFitsInILimiterArgsArrayList()
+    private static IEnumerable<object[]> GetFitsInILimiterArgs()
     {
-        return DynamicDataSource.GetFitsInILimiterArgsArrayList();
+        return DynamicDataSource.GetFitsInILimiterArgs();
     }
     #endregion
     #endregion

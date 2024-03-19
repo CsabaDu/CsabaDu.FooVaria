@@ -3,7 +3,7 @@
 internal class DynamicDataSource : DataFields
 {
     #region Methods
-    internal IEnumerable<object[]> GetEqualsArgsArrayList()
+    internal IEnumerable<object[]> GetEqualsArgs()
     {
         // null
         isTrue = false;
@@ -50,7 +50,7 @@ internal class DynamicDataSource : DataFields
         #endregion
     }
 
-    internal IEnumerable<object[]> GetValidateMeasureUnitInvalidArgsArrayList()
+    internal IEnumerable<object[]> GetValidateMeasureUnitInvalidArgs()
     {
         // Not MeasureUnit type Not MeasureUnitCode enum
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
@@ -80,7 +80,7 @@ internal class DynamicDataSource : DataFields
         #endregion
     }
 
-    internal IEnumerable<object[]> GetValidateMeasureUnitCodeInvalidArgsArrayList()
+    internal IEnumerable<object[]> GetValidateMeasureUnitCodeInvalidArgs()
     {
         measureUnit = RandomParams.GetRandomMeasureUnit();
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode(measureUnit));
@@ -99,7 +99,7 @@ internal class DynamicDataSource : DataFields
         #endregion
     }
 
-    internal IEnumerable<object[]> GetHasMeasureUnitCodeArgsArrayList()
+    internal IEnumerable<object[]> GetHasMeasureUnitCodeArgs()
     {
         measureUnit = RandomParams.GetRandomMeasureUnit();
         measureUnitCode = GetMeasureUnitCode(measureUnit);
@@ -120,7 +120,7 @@ internal class DynamicDataSource : DataFields
         #endregion
     }
 
-    internal IEnumerable<object[]> GetValidMeasureUnitArgsArrayList()
+    internal IEnumerable<object[]> GetValidMeasureUnitArgs()
     {
         measureUnit = RandomParams.GetRandomMeasureUnit();
         measureUnitCode = GetMeasureUnitCode(measureUnit);

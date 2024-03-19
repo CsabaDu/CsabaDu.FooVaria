@@ -3,7 +3,7 @@
 internal class DynamicDataSource : DataFields
 {
     #region Methods
-    internal IEnumerable<object[]> GetEqualsArgsArrayList()
+    internal IEnumerable<object[]> GetEqualsArgs()
     {
         // null
         obj = null;
@@ -61,7 +61,7 @@ internal class DynamicDataSource : DataFields
         #endregion
     }
 
-    internal IEnumerable<object[]> GetFitsInArgsArrayList()
+    internal IEnumerable<object[]> GetFitsInArgs()
     {
         // null
         measureUnit = null;
@@ -93,7 +93,7 @@ internal class DynamicDataSource : DataFields
         #endregion
     }
 
-    internal IEnumerable<object[]> GetValidateQuantityInvalidQuantityTypeCodeArgArrayList()
+    internal IEnumerable<object[]> GetValidateQuantityInvalidQuantityTypeCodeArg()
     {
         foreach (TypeCode item in SampleParams.InvalidValueTypeCodes)
         {
@@ -101,7 +101,7 @@ internal class DynamicDataSource : DataFields
         }
     }
 
-    internal IEnumerable<object[]> GetValidateQuantityValidQuantityTypeCodeArgArrayList()
+    internal IEnumerable<object[]> GetValidateQuantityValidQuantityTypeCodeArg()
     {
         foreach (TypeCode item in GetQuantityTypeCodes())
         {
@@ -109,7 +109,7 @@ internal class DynamicDataSource : DataFields
         }
     }
 
-    //internal IEnumerable<object[]> GetExchangeRateCollectionArgArrayList()
+    //internal IEnumerable<object[]> GetExchangeRateCollectionArg()
     //{
     //    measureUnit = RandomParams.GetRandomMeasureUnit();
     //    measureUnitCode = GetMeasureUnitCode(measureUnit);
@@ -131,7 +131,7 @@ internal class DynamicDataSource : DataFields
     //    #endregion
     //}
 
-    //internal IEnumerable<object[]> GetIsExchangeableToArgArrayList()
+    //internal IEnumerable<object[]> GetIsExchangeableToArg()
     //{
     //    // null -  false
     //    isTrue = false;
@@ -183,7 +183,7 @@ internal class DynamicDataSource : DataFields
     //    #endregion
     //}
 
-    //internal IEnumerable<object[]> GetValidateExchangeRateArgArrayList()
+    //internal IEnumerable<object[]> GetValidateExchangeRateArg()
     //{
     //    measureUnit = RandomParams.GetRandomValidMeasureUnit();
     //    exchangeRate = 0;
@@ -203,7 +203,7 @@ internal class DynamicDataSource : DataFields
     //    #endregion
     //}
 
-    //internal IEnumerable<object[]> GetValidateMeasureUnitValidArgsArrayList()
+    //internal IEnumerable<object[]> GetValidateMeasureUnitValidArgs()
     //{
     //    // MeasureUnitCode
     //    measureUnit = RandomParams.GetRandomValidMeasureUnit();

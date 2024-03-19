@@ -3,7 +3,7 @@
 internal class DynamicDataSource : DataFields
 {
     #region Methods
-    internal IEnumerable<object[]> GetEqualsArgsArrayList()
+    internal IEnumerable<object[]> GetEqualsArgs()
     {
         // null
         IQuantifiable quantifiable = null;
@@ -57,7 +57,7 @@ internal class DynamicDataSource : DataFields
         #endregion
     }
 
-    internal IEnumerable<object[]> GetExchangeToArgsArrayList()
+    internal IEnumerable<object[]> GetExchangeToArgs()
     {
         // null
         measureUnit = RandomParams.GetRandomMeasureUnit();
@@ -103,7 +103,7 @@ internal class DynamicDataSource : DataFields
     }
 
 
-    internal IEnumerable<object[]> GetFitsInILimiterArgsArrayList()
+    internal IEnumerable<object[]> GetFitsInILimiterArgs()
     {
         // null
         measureUnit = null;

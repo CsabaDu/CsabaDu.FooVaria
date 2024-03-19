@@ -121,7 +121,7 @@ public sealed class BaseMeasurementTests
     #region bool Equals
     #region IEquatable<IBaseMeasurement>.Equals(object?)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetEqualsObjectArgArrayList), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetEqualsObjectArg), DynamicDataSourceType.Method)]
     public void Equals_arg_object_returns_expected(bool expected, object obj, Enum measureUnit)
     {
         // Arrange
@@ -137,7 +137,7 @@ public sealed class BaseMeasurementTests
 
     #region BaseMeasurement.Equals(IBaseMeasurement?)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetEqualsBaseMeasurementArgArrayList), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetEqualsBaseMeasurementArg), DynamicDataSourceType.Method)]
     public void Equals_arg_IBaseMeasurement_returns_expected(bool expected, Enum measureUnit, IBaseMeasurement other)
     {
         // Arrange
@@ -213,7 +213,7 @@ public sealed class BaseMeasurementTests
     #region IDictionary<object, decimal> GetExchangeRateCollection
     #region IExchangeRateCollection.GetExchangeRateCollection()
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetExchangeRateCollectionArgArrayList), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetExchangeRateCollectionArg), DynamicDataSourceType.Method)]
     public void GetExchangeRateCollection_returns_expected(Enum measureUnit, MeasureUnitCode measureUnitCode)
     {
         // Arrange
@@ -288,7 +288,7 @@ public sealed class BaseMeasurementTests
     #region bool IsExchangeableTo
     #region IExchangeable<Enum>.IsExchangeableTo(Enum)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetIsExchangeableToArgArrayList), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetIsExchangeableToArg), DynamicDataSourceType.Method)]
     public void IsExchangeableTo_returns_expected(bool expected, Enum measureUnit, Enum context)
     {
         // Arrange
@@ -368,7 +368,7 @@ public sealed class BaseMeasurementTests
     #region void ValidateExchangeRate
     #region IExchangeRate.ValidateExchangeRate(decimal, string)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetValidateExchangeRateArgArrayList), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetValidateExchangeRateArg), DynamicDataSourceType.Method)]
     public void ValidateExchangeRate_invalidArg_decimal_arg_string_throws_ArgumentOutOfRangeException(Enum measureUnit, decimal exchangeRate)
     {
         // Arrange
@@ -433,7 +433,7 @@ public sealed class BaseMeasurementTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetValidateMeasureUnitValidArgsArrayList), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetValidateMeasureUnitValidArgs), DynamicDataSourceType.Method)]
     public void ValidateMeasureUnit_validArg_Enum_arg_string_returns(Enum measureUnit, Enum context)
     {
         // Arrange
@@ -468,34 +468,34 @@ public sealed class BaseMeasurementTests
     }
 
     #region DynamicDataSource
-    private static IEnumerable<object[]> GetEqualsObjectArgArrayList()
+    private static IEnumerable<object[]> GetEqualsObjectArg()
     {
-        return DynamicDataSource.GetEqualsObjectArgArrayList();
+        return DynamicDataSource.GetEqualsObjectArg();
     }
 
-    private static IEnumerable<object[]> GetEqualsBaseMeasurementArgArrayList()
+    private static IEnumerable<object[]> GetEqualsBaseMeasurementArg()
     {
-        return DynamicDataSource.GetEqualsBaseMeasurementArgArrayList();
+        return DynamicDataSource.GetEqualsBaseMeasurementArg();
     }
 
-    private static IEnumerable<object[]> GetExchangeRateCollectionArgArrayList()
+    private static IEnumerable<object[]> GetExchangeRateCollectionArg()
     {
-        return DynamicDataSource.GetExchangeRateCollectionArgArrayList();
+        return DynamicDataSource.GetExchangeRateCollectionArg();
     }
 
-    private static IEnumerable<object[]> GetIsExchangeableToArgArrayList()
+    private static IEnumerable<object[]> GetIsExchangeableToArg()
     {
-        return DynamicDataSource.GetIsExchangeableToArgArrayList();
+        return DynamicDataSource.GetIsExchangeableToArg();
     }
 
-    private static IEnumerable<object[]> GetValidateExchangeRateArgArrayList()
+    private static IEnumerable<object[]> GetValidateExchangeRateArg()
     {
-        return DynamicDataSource.GetValidateExchangeRateArgArrayList();
+        return DynamicDataSource.GetValidateExchangeRateArg();
     }
 
-    private static IEnumerable<object[]> GetValidateMeasureUnitValidArgsArrayList()
+    private static IEnumerable<object[]> GetValidateMeasureUnitValidArgs()
     {
-        return DynamicDataSource.GetValidateMeasureUnitValidArgsArrayList();
+        return DynamicDataSource.GetValidateMeasureUnitValidArgs();
     }
     #endregion
     #endregion
