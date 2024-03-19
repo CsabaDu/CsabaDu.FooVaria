@@ -70,7 +70,11 @@ internal class DynamicDataSource : DataFields
         context = TypeCode.Empty;
         yield return toObjectArray();
 
-        // same type measureUnit
+        // same type not defined measureUnit
+        context = SampleParams.GetNotDefinedMeasureUnit(measureUnitCode);
+        yield return toObjectArray();
+
+        // same type defined measureUnit
         context = RandomParams.GetRandomMeasureUnit(measureUnitCode);
         quantifiable = new QuantifiableChild(RootObject, paramName)
         {
