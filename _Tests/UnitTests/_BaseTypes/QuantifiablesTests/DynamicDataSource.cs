@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests;
+﻿using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.BehaviorObjects;
+
+namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests;
 
 internal class DynamicDataSource : DataFields
 {
@@ -101,5 +103,40 @@ internal class DynamicDataSource : DataFields
         }
         #endregion
     }
+
+
+    internal IEnumerable<object[]> GetFitsInArgsArrayList()
+    {
+        // null
+        measureUnit = null;
+        limiter = null;
+        yield return toObjectArray();
+
+        // Not IBaseQuantifiable
+        limiter = new LimiterObject();
+        yield return toObjectArray();
+
+        // Different MeasureUnitCode
+        measureUnit = RandomParams.GetRandomMeasureUnit();
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode(measureUnit));
+        limiter = new LimiterQuantifiableOblect(RootObject, null)
+        {
+            Return = new()
+            {
+                GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(GetMeasureUnitCode(measureUnitCode)),
+                GetDefaultQuantity = RandomParams.GetRandomDecimal(),
+            }
+        };
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            Enum_ILimiter_args item = new(measureUnit, limiter);
+
+            return item.ToObjectArray();
+        }
+        #endregion
+    }
+
     #endregion
 }

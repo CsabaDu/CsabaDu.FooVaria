@@ -108,6 +108,7 @@ internal class DynamicDataSource : DataFields
             yield return new TypeCode_arg(item).ToObjectArray();
         }
     }
+
     //internal IEnumerable<object[]> GetExchangeRateCollectionArgArrayList()
     //{
     //    measureUnit = RandomParams.GetRandomMeasureUnit();

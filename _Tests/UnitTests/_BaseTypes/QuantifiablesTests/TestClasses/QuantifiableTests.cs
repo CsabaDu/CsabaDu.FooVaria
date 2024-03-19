@@ -1,3 +1,5 @@
+using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -156,8 +158,55 @@ public sealed class QuantifiableTests
     #endregion
     #endregion
 
-    // bool? ILimitable.FitsIn(ILimiter limiter)
-    // bool? IFit<IQuantifiable>.FitsIn(IQuantifiable other, LimitMode? limitMode)
+    #region bool? FitsIn
+    #region ILimitable.FitsIn(ILimiter?)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetFitsInArgsArrayList), DynamicDataSourceType.Method)]
+    public void FitsIn_invalidArg_ILimiter_returns_null(Enum measureUnit, ILimiter limiter)
+    {
+        // Arrange
+        SetQuantifiableChild(measureUnit, null, Fields.defaultQuantity);
+
+        // Act
+        var actual = _quantifiable.FitsIn(limiter);
+
+        // Assert
+        Assert.IsNull(actual);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void FitsIn_validArg_ILimiter_returns_expected()
+    {
+        // Arrange
+        SetQuantifiableChild(Fields.measureUnit, null, Fields.defaultQuantity);
+        Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
+        decimal otherQuantity = Fields.RandomParams.GetRandomDecimal();
+        LimiterQuantifiableOblect limiter = new(Fields.RootObject, null)
+        {
+            Return = new()
+            {
+                GetBaseMeasureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode),
+                GetDefaultQuantity = otherQuantity,
+            },
+            LimitMode = Fields.limitMode,
+        };
+        bool? expected = Fields.defaultQuantity.FitsIn(otherQuantity, Fields.limitMode);
+
+        // Act
+        var actual = _quantifiable.FitsIn(limiter);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+
+    #region IFit<IQuantifiable>.FitsIn(IQuantifiable?, LimitMode?)
+
+    #endregion
+    #endregion
+
+
+
     // ValueType IQuantity.GetBaseQuantity()
     // decimal IDecimalQuantity.GetDecimalQuantity()
     // IQuantifiable IQuantifiable.GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
@@ -196,6 +245,11 @@ public sealed class QuantifiableTests
     private static IEnumerable <object[]> GetExchangeToArgsArrayList()
     {
         return DynamicDataSource.GetExchangeToArgsArrayList();
+    }
+
+    private static IEnumerable<object[]> GetFitsInArgsArrayList()
+    {
+        return DynamicDataSource.GetFitsInArgsArrayList();
     }
     #endregion
     #endregion
