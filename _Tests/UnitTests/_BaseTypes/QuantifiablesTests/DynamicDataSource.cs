@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.BehaviorObjects;
-
-namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests;
+﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests;
 
 internal class DynamicDataSource : DataFields
 {
@@ -105,7 +103,7 @@ internal class DynamicDataSource : DataFields
     }
 
 
-    internal IEnumerable<object[]> GetFitsInArgsArrayList()
+    internal IEnumerable<object[]> GetFitsInILimiterArgsArrayList()
     {
         // null
         measureUnit = null;

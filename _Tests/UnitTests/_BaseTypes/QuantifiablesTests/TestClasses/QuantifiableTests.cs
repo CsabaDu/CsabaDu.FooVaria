@@ -161,7 +161,7 @@ public sealed class QuantifiableTests
     #region bool? FitsIn
     #region ILimitable.FitsIn(ILimiter?)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetFitsInArgsArrayList), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetFitsInILimiterArgsArrayList), DynamicDataSourceType.Method)]
     public void FitsIn_invalidArg_ILimiter_returns_null(Enum measureUnit, ILimiter limiter)
     {
         // Arrange
@@ -247,9 +247,9 @@ public sealed class QuantifiableTests
         return DynamicDataSource.GetExchangeToArgsArrayList();
     }
 
-    private static IEnumerable<object[]> GetFitsInArgsArrayList()
+    private static IEnumerable<object[]> GetFitsInILimiterArgsArrayList()
     {
-        return DynamicDataSource.GetFitsInArgsArrayList();
+        return DynamicDataSource.GetFitsInILimiterArgsArrayList();
     }
     #endregion
     #endregion
