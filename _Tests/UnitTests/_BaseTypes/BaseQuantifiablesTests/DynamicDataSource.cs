@@ -63,12 +63,8 @@ internal class DynamicDataSource : DataFields
 
     internal IEnumerable<object[]> GetFitsInArgs()
     {
-        // null
-        measureUnit = null;
-        limiter = null;
-        yield return toObjectArray();
-
         // Not IBaseQuantifiable
+        measureUnit = null;
         limiter = new LimiterObject();
         yield return toObjectArray();
 

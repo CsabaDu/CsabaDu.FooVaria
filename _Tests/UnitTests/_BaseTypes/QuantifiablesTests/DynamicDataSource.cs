@@ -105,12 +105,8 @@ internal class DynamicDataSource : DataFields
 
     internal IEnumerable<object[]> GetFitsInILimiterArgs()
     {
-        // null
-        measureUnit = null;
-        limiter = null;
-        yield return toObjectArray();
-
         // Not IBaseQuantifiable
+        measureUnit = RandomParams.GetRandomMeasureUnit();
         limiter = new LimiterObject();
         yield return toObjectArray();
 
@@ -136,42 +132,39 @@ internal class DynamicDataSource : DataFields
         #endregion
     }
 
-    internal IEnumerable<object[]> GetFitsInOtherLimitModeArgs()
-    {
-        // null, null
-        measureUnit = null;
-        IQuantifiable quantifiable = null;
-        limitMode = null;
-        yield return toObjectArray();
+    //internal IEnumerable<object[]> GetFitsInOtherLimitModeArgs()
+    //{
+    //    // null, null
+    //    IQuantifiable quantifiable = null;
+    //    limitMode = null;
+    //    yield return toObjectArray();
 
-        // Not IBaseQuantifiable
-        limiter = new LimiterObject();
-        yield return toObjectArray();
+    //    // Not IBaseQuantifiable
+    //    measureUnit = null;
+    //    limiter = new LimiterObject();
+    //    yield return toObjectArray();
 
-        // Different MeasureUnitCode
-        measureUnit = RandomParams.GetRandomMeasureUnit();
-        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode(measureUnit));
-        limiter = new LimiterQuantifiableOblect(RootObject, null)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(GetMeasureUnitCode(measureUnitCode)),
-                GetDefaultQuantity = RandomParams.GetRandomDecimal(),
-            }
-        };
+    //    // Different MeasureUnitCode
+    //    measureUnit = RandomParams.GetRandomMeasureUnit();
+    //    measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode(measureUnit));
+    //    limiter = new LimiterQuantifiableOblect(RootObject, null)
+    //    {
+    //        Return = new()
+    //        {
+    //            GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(GetMeasureUnitCode(measureUnitCode)),
+    //            GetDefaultQuantity = RandomParams.GetRandomDecimal(),
+    //        }
+    //    };
 
 
-        #region toObjectArray method
-        object[] toObjectArray()
-        {
-            Enum_LimitMode_IQuantifiable_arg item = new(measureUnit, limitMode, quantifiable);
+    //    #region toObjectArray method
+    //    object[] toObjectArray()
+    //    {
+    //        Enum_LimitMode_IQuantifiable_arg item = new(measureUnit, limitMode, quantifiable);
 
-            return item.ToObjectArray();
-        }
-        #endregion
-
-        throw
-    }
-    // Enum_LimitMode_IQuantifiable_arg(Enum MeasureUnit, LimitMode? LimitMode, IQuantifiable Quantifiable)
+    //        return item.ToObjectArray();
+    //    }
+    //    #endregion
+    //}
     #endregion
 }

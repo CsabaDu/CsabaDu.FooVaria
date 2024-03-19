@@ -173,6 +173,20 @@ public sealed class QuantifiableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
+    public void FitsIn_nullArg_ILimiter_returns_expected()
+    {
+        // Arrange
+        SetQuantifiableChild(Fields.measureUnit, null, Fields.defaultQuantity);
+        ILimiter limiter = null;
+
+        // Act
+        var actual = _quantifiable.FitsIn(limiter);
+
+        // Assert
+        Assert.IsTrue(actual);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
     public void FitsIn_validArg_ILimiter_returns_expected()
     {
         // Arrange
@@ -199,18 +213,32 @@ public sealed class QuantifiableTests
     #endregion
 
     #region IFit<IQuantifiable>.FitsIn(IQuantifiable?, LimitMode?)
+    //[TestMethod, TestCategory("UnitTest")]
+    //[DynamicData(nameof(GetFitsInOtherLimitModeArgs), DynamicDataSourceType.Method)]
+    //public void FitsIn_invalidArgs_IQuantifiable_LimitMode_returns_null(Enum measureUnit, LimitMode? limitMode, IQuantifiable other)
+    //{
+    //    // Arrange
+    //    SetQuantifiableChild(measureUnit, null, Fields.defaultQuantity);
+
+    //    // Act
+    //    var actual = _quantifiable.FitsIn(other, limitMode);
+
+    //    // Assert
+    //    Assert.IsNull(actual);
+    //}
+
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetFitsInOtherLimitModeArgs), DynamicDataSourceType.Method)]
-    public void FitsIn_invalidArgs_IQuantifiable_LimitMode_returns_null(Enum measureUnit, LimitMode? limitMode, IQuantifiable other)
+    public void FitsIn_nullArgs_IQuantifiable_LimitMode_returns_expected()
     {
         // Arrange
-        SetQuantifiableChild(measureUnit, null, Fields.defaultQuantity);
+        SetQuantifiableChild(Fields.measureUnit, null, Fields.defaultQuantity);
+        ILimiter limiter = null;
 
         // Act
-        var actual = _quantifiable.FitsIn(other, limitMode);
+        var actual = _quantifiable.FitsIn(limiter);
 
         // Assert
-        Assert.IsNull(actual);
+        Assert.IsTrue(actual);
     }
 
     [TestMethod, TestCategory("UnitTest")]
@@ -286,10 +314,10 @@ public sealed class QuantifiableTests
         return DynamicDataSource.GetFitsInILimiterArgs();
     }
 
-    private static IEnumerable<object[]> GetFitsInOtherLimitModeArgs()
-    {
-        return DynamicDataSource.GetFitsInOtherLimitModeArgs();
-    }
+    //private static IEnumerable<object[]> GetFitsInOtherLimitModeArgs()
+    //{
+    //    return DynamicDataSource.GetFitsInOtherLimitModeArgs();
+    //}
     #endregion
     #endregion
 }

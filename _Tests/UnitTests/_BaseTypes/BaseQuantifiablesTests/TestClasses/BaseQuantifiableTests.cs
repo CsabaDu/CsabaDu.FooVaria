@@ -90,6 +90,20 @@ public sealed class BaseQuantifiableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
+    public void FitsIn_nullArg_ILimiter_returns_expected()
+    {
+        // Arrange
+        SetBaseQuantifiableChild(Fields.measureUnit, null, Fields.defaultQuantity);
+        ILimiter limiter = null;
+
+        // Act
+        var actual = _baseQuantifiable.FitsIn(limiter);
+
+        // Assert
+        Assert.IsTrue(actual);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
     public void FitsIn_validArg_ILimiter_returns_expected()
     {
         // Arrange
