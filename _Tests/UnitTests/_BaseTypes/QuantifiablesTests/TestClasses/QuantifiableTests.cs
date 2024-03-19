@@ -30,7 +30,7 @@ public sealed class QuantifiableTests
     [TestInitialize]
     public void InitializeBaseQuantifiableTests()
     {
-        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit();
         Fields.measureUnitCode = GetMeasureUnitCode(Fields.measureUnit);
         Fields.measureUnitType = Fields.measureUnit.GetType();
         Fields.defaultQuantity = Fields.RandomParams.GetRandomDecimal();
@@ -83,7 +83,7 @@ public sealed class QuantifiableTests
         {
             Return = new()
             {
-                GetBaseMeasureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode),
+                GetBaseMeasureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode),
                 GetDefaultQuantity = Fields.RandomParams.GetRandomDecimal(),
             }
         };
@@ -105,7 +105,7 @@ public sealed class QuantifiableTests
         {
             Return = new()
             {
-                GetBaseMeasureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode),
+                GetBaseMeasureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode),
                 GetDefaultQuantity = Fields.RandomParams.GetRandomDecimal(),
             }
         };
@@ -122,7 +122,19 @@ public sealed class QuantifiableTests
 
     #region bool Equals
     #region IEquatable<IQuantifiable>.Equals(IQuantifiable?)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetEqualsArgsArrayList), DynamicDataSourceType.Method)]
+    public void Equals_arg_object_returns_expected(Enum measureUnit, decimal defaultQuantity, bool expected, IQuantifiable other)
+    {
+        // Arrange
+        SetQuantifiableChild(measureUnit, null, defaultQuantity);
 
+        // Act
+        var actual = _quantifiable.Equals(other);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
     #endregion
     #endregion
 
@@ -176,6 +188,10 @@ public sealed class QuantifiableTests
     }
 
     #region DynamicDataSource
+    private static IEnumerable<object[]> GetEqualsArgsArrayList()
+    {
+        return DynamicDataSource.GetEqualsArgsArrayList();
+    }
 
     private static IEnumerable <object[]> GetExchangeToArgsArrayList()
     {

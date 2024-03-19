@@ -34,11 +34,12 @@ internal class DynamicDataSource : DataFields
             Return = new()
             {
                 GetBaseMeasureUnit = measureUnit,
-                GetDefaultQuantity = RandomParams.GetRandomDecimal(defaultQuantity), }
+                GetDefaultQuantity = RandomParams.GetRandomDecimal(defaultQuantity),
+            }
         };
         yield return toObjectArray();
 
-        // IBaseMeasurement
+        // Same MeasureUnit, same defaultQuantity
         obj = new BaseQuantifiableChild(RootObject, null)
         {
             Return = new()

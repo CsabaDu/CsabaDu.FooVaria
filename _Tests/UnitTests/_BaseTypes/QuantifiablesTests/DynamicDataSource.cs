@@ -3,6 +3,60 @@
 internal class DynamicDataSource : DataFields
 {
     #region Methods
+    internal IEnumerable<object[]> GetEqualsArgsArrayList()
+    {
+        // null
+        IQuantifiable quantifiable = null;
+        measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        defaultQuantity = RandomParams.GetRandomDecimal();
+        isTrue = false;
+        yield return toObjectArray();
+
+        // Different MeasureUnitCode
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode(measureUnit));
+        quantifiable = new QuantifiableChild(RootObject, null)
+        {
+            Return = new()
+            {
+                GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode),
+                GetDefaultQuantity = defaultQuantity,
+            }
+        };
+        yield return toObjectArray();
+
+        // Same MeasureUnit, different defaultQuantity
+        quantifiable = new QuantifiableChild(RootObject, null)
+        {
+            Return = new()
+            {
+                GetBaseMeasureUnit = measureUnit,
+                GetDefaultQuantity = RandomParams.GetRandomDecimal(defaultQuantity),
+            }
+        };
+        yield return toObjectArray();
+
+        // Same MeasureUnit, same defaultQuantity
+        quantifiable = new QuantifiableChild(RootObject, null)
+        {
+            Return = new()
+            {
+                GetBaseMeasureUnit = measureUnit,
+                GetDefaultQuantity = defaultQuantity,
+            }
+        };
+        isTrue = true;
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            Enum_Decimal_Bool_IQuantifiable_args item = new(measureUnit, defaultQuantity, isTrue, quantifiable);
+
+            return item.ToObjectArray();
+        }
+        #endregion
+    }
+
     internal IEnumerable<object[]> GetExchangeToArgsArrayList()
     {
         // null
