@@ -41,6 +41,8 @@
         {
             if (context == null) return null;
 
+            if (!IsDefinedMeasureUnit(context)) return null;
+            
             MeasureUnitCode measureUnitCode = GetMeasureUnitCode(context);
 
             if (!HasMeasureUnitCode(measureUnitCode)) return null;

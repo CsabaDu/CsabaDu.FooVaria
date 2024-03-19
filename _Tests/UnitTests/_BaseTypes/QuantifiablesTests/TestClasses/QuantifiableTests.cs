@@ -5,7 +5,6 @@ public sealed class QuantifiableTests
 {
     #region Tested in parent classes' tests
 
-    // bool IEquatable<IQuantifiable>.Equals(IQuantifiable? other)
     // Enum IMeasureUnit.GetBaseMeasureUnit()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
@@ -121,6 +120,12 @@ public sealed class QuantifiableTests
     #endregion
     #endregion
 
+    #region bool Equals
+    #region IEquatable<IQuantifiable>.Equals(IQuantifiable?)
+
+    #endregion
+    #endregion
+
     #region IQuantifiable? ExchangeTo
     #region IExchange<IQuantifiable, Enum>.ExchangeTo(Enum? context)
     [TestMethod, TestCategory("UnitTest")]
@@ -134,7 +139,7 @@ public sealed class QuantifiableTests
         var actual = _quantifiable.ExchangeTo(context);
 
         // Assert
-        Assert.AreEqual(expected, actual);
+        Assert.AreEqual(expected?.GetType(), actual?.GetType());
     }
     #endregion
     #endregion

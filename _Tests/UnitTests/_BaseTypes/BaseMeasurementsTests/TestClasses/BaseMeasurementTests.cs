@@ -12,7 +12,6 @@ public sealed class BaseMeasurementTests
     // IFactory ICommonBase.GetFactory()
     // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()
-    // TypeCode IQuantityType.GetQuantityTypeCode()
     // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable measurable, string paramName)
     // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
@@ -261,6 +260,24 @@ public sealed class BaseMeasurementTests
 
         // Act
         var actual = _baseMeasurement.GetName();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region TypeCode GetQuantityTypeCode
+    #region IQuantityType.GetQuantityTypeCode()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetQuantityTypeCode_returns_expected()
+    {
+        // Arrange
+        SetBaseMeasurementChild (Fields.measureUnit, null, null);
+        TypeCode expected = Fields.measureUnitCode.GetQuantityTypeCode();
+
+        // Act
+        var actual = _baseMeasurement.GetQuantityTypeCode();
 
         // Assert
         Assert.AreEqual(expected, actual);
