@@ -1,7 +1,7 @@
 ﻿
 namespace CsabaDu.FooVaria.Rates.Types;
 
-public interface IRate : IBaseRate, ITryExchange<IRate, IMeasurable>, IDenominate<IMeasure, IQuantifiable>, IEqualityComparer<IRate>, ITryExchange<IRate, Enum>
+public interface IRate : IBaseRate, ITryExchange<IRate, IMeasurement>, ITryExchange<IRate, IBaseMeasure>, IDenominate<IMeasure, IQuantifiable>, IEqualityComparer<IRate>
 {
     IDenominator Denominator { get; init; }
     IMeasure Numerator { get; init; }

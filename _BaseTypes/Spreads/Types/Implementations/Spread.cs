@@ -51,10 +51,9 @@ public abstract class Spread(IRootObject rootObject, string paramName) : Quantif
     }
 
     #region Sealed methods
-    public ISpread Round(RoundingMode roundingMode)
+    public override sealed ISpread Round(RoundingMode roundingMode)
     {
         IBaseMeasure baseMeasure = (IBaseMeasure)GetSpreadMeasure();
-
         ISpreadMeasure spreadMeasure = (ISpreadMeasure)baseMeasure.Round(roundingMode);
 
         return GetSpread(spreadMeasure);

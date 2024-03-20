@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
+
+namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations;
 
 public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Quantifiable(rootObject, paramName), IBaseMeasure
 {
@@ -67,7 +69,7 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
         return baseMeasurement.GetBaseMeasureUnit();
     }
 
-    public IBaseMeasure Round(RoundingMode roundingMode)
+    public override sealed IBaseMeasure Round(RoundingMode roundingMode)
     {
         ValueType quantity = (ValueType)GetQuantity(roundingMode);
         IBaseMeasurement baseMeasurement = GetBaseMeasurement();
@@ -203,11 +205,6 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
         if (GetQuantityTypeCodes().Contains(quantityTypeCode)) return quantityTypeCode;
 
         return null;
-    }
-
-    public object GetQuantity(RoundingMode roundingMode)
-    {
-        throw new NotImplementedException();
     }
     #endregion
     #endregion

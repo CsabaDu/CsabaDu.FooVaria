@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations;
 
@@ -47,16 +48,6 @@ internal sealed class BulkSurface : BulkSpread<IBulkSurface, IArea, AreaUnit>, I
         if (NullChecked(baseSppread, nameof(baseSppread)) is ISurface surface) return GetBulkSpread(surface.GetSpreadMeasure());
 
         throw ArgumentTypeOutOfRangeException(nameof(baseSppread), baseSppread);
-    }
-
-    public ISurface? ExchangeTo(AreaUnit context)
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool TryExchangeTo(AreaUnit context, [NotNullWhen(true)] out ISurface? exchanged)
-    {
-        throw new NotImplementedException();
     }
     #endregion
     #endregion

@@ -1,5 +1,4 @@
 ﻿
-
 namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
 {
     internal abstract class DryBody : SimpleShape, IDryBody
@@ -113,14 +112,22 @@ namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
             return (IDryBodyFactory)GetFactory();
         }
 
-        public IBody? ExchangeTo(VolumeUnit context)
+        public override sealed bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable? exchanged)
         {
-            throw new NotImplementedException();
-        }
+            exchanged = null;
 
-        public bool TryExchangeTo(VolumeUnit context, [NotNullWhen(true)] out IBody? exchanged)
-        {
-            throw new NotImplementedException();
+            if (!IsExchangeableTo(context)) return false;
+
+            MeasureUnitElements measureUnitElements = GetMeasureUnitElements(context, nameof(context));
+            exchanged = measureUnitElements.MeasureUnit switch
+            {
+                ExtentUnit extentUnit => ExchangeTo(extentUnit),
+                VolumeUnit volumeUnit => GetSpread(Volume.ExchangeTo(volumeUnit)!),
+
+                _ => null,
+            };
+
+            return exchanged != null;
         }
         #endregion
     }

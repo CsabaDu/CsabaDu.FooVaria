@@ -151,41 +151,6 @@ public abstract class SimpleShape : Shape, ISimpleShape
             && base.Equals(simpleShape);
     }
 
-    public override sealed ISpread? ExchangeTo(Enum? context)
-    {
-        if (context is not ExtentUnit extentUnit)
-        {
-            if (context is not MeasureUnitCode measureUnitCode
-                || measureUnitCode != MeasureUnitCode.ExtentUnit)
-            {
-                return base.ExchangeTo(context);
-            }
-
-            extentUnit = (ExtentUnit)measureUnitCode.GetDefaultMeasureUnit()!;
-        }
-
-        IEnumerable<IExtent> exchangedShapeExtents = getExchangedShapeExtents();
-
-        if (exchangedShapeExtents.Count() != GetShapeExtents().Count()) return null;
-
-        return GetSimpleShape(exchangedShapeExtents.ToArray());
-
-        #region Local methods
-        IEnumerable<IExtent> getExchangedShapeExtents()
-        {
-            foreach (IBaseMeasure item in GetShapeExtents())
-            {
-                IQuantifiable? exchanged = item.ExchangeTo(extentUnit);
-
-                if (exchanged is IExtent shapeExtent)
-                {
-                    yield return shapeExtent;
-                }
-            }
-        }
-        #endregion
-    }
-
     public override sealed bool? FitsIn(IShape? other, LimitMode? limitMode)
     {
         if (other == null) return null;
@@ -325,6 +290,16 @@ public abstract class SimpleShape : Shape, ISimpleShape
         }
 
         return comparison;
+    }
+
+    public ISimpleShape? ExchangeTo(ExtentUnit extentUnit)
+    {
+        if (!IsValidMeasureUnit(extentUnit)) return null;
+
+        IEnumerable<IExtent> shapeExtents = GetShapeExtents();
+        shapeExtents = shapeExtents.Select(x => x.ExchangeTo(extentUnit)!);
+
+        return (ISimpleShape?)GetShape(shapeExtents.ToArray());
     }
     #endregion
     #endregion

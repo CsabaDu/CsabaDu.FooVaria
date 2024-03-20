@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.BaseTypes.Spreads.Types;
 
-public interface IBody : ISpread, IExchange<IBody, VolumeUnit>
+public interface IBody : ISpread
 {
     IBody GetBody();
 }

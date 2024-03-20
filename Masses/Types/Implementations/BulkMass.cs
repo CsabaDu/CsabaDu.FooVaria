@@ -1,4 +1,5 @@
-﻿
+﻿using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
+
 namespace CsabaDu.FooVaria.Masses.Types.Implementations;
 
 internal sealed class BulkMass : Mass, IBulkMass
@@ -52,6 +53,32 @@ internal sealed class BulkMass : Mass, IBulkMass
     public override IBulkMassFactory GetFactory()
     {
         return Factory;
+    }
+
+    public override bool TryExchangeTo(Enum? context, [NotNullWhen(true)] out IMass? exchanged)
+    {
+        if (Weight.IsExchangeableTo(context)) return base.TryExchangeTo(context, out exchanged);
+
+        exchanged = null;
+
+        if (!BulkBody.IsExchangeableTo(context)) return false;
+
+        MeasureUnitElements measureUnitElements = GetMeasureUnitElements(context, nameof(context));
+
+        if (measureUnitElements.MeasureUnit is not VolumeUnit volumeUnit) return false;
+
+        exchanged = ExchangeTo(volumeUnit);
+
+        return exchanged != null;
+    }
+
+    public IBulkMass? ExchangeTo(VolumeUnit volumeUnit)
+    {
+        IBody? body = BulkBody.ExchangeTo(volumeUnit);
+
+        if (body == null) return null;
+
+        return GetBulkMass(Weight, body);
     }
     #endregion
     #endregion

@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;
-
-namespace CsabaDu.FooVaria.Masses.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Masses.Types.Implementations;
 
 internal abstract class Mass : BaseQuantifiable, IMass
 {
@@ -137,22 +135,20 @@ internal abstract class Mass : BaseQuantifiable, IMass
 
     public bool IsExchangeableTo(Enum? context)
     {
-        if (context is MeasureUnitCode measureUnitCode) return hasMeasureUnitCode(measureUnitCode);
+        if (context is MeasureUnitCode measureUnitCode) return HasMeasureUnitCode(measureUnitCode);
 
-        return BaseMeasurement.IsValidMeasureUnit(context)
-            && hasMeasureUnitCode(GetDefinedMeasureUnitCode(context));
-
-        #region Local methods
-        bool hasMeasureUnitCode(MeasureUnitCode measureUnitCode)
-        {
-            return GetMeasureUnitCodes().Contains(measureUnitCode);
-        }
-        #endregion
+        return IsValidMeasureUnit(context)
+            && HasMeasureUnitCode(GetMeasureUnitCode(context));
     }
 
-    public bool TryExchangeTo(Enum? context, [NotNullWhen(true)] out IMass? exchanged)
+    public virtual bool TryExchangeTo(Enum? context, [NotNullWhen(true)] out IMass? exchanged)
     {
-        exchanged = ExchangeTo(context);
+        exchanged = null;
+
+        if (!Weight.IsExchangeableTo(context)) return false;
+
+        MeasureUnitElements measureUnitElements = GetMeasureUnitElements(context, nameof(context));
+        exchanged = ExchangeTo((WeightUnit)measureUnitElements.MeasureUnit);
 
         return exchanged != null;
     }
@@ -211,6 +207,11 @@ internal abstract class Mass : BaseQuantifiable, IMass
         return base.GetQuantityTypeCode();
     }
 
+    public override sealed bool HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
+    {
+        return GetMeasureUnitCodes().Contains(measureUnitCode);
+    }
+
     public override sealed void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
     {
         ValidateMeasureUnitCode(this, measureUnitCode, paramName);
@@ -236,40 +237,49 @@ internal abstract class Mass : BaseQuantifiable, IMass
             && Weight.Equals(mass.Weight);
     }
 
-    public virtual IMass? ExchangeTo(Enum? measureUnit)
+    public IMass? ExchangeTo(WeightUnit weightUnit)
     {
-        if (measureUnit == null) return null;
+        IWeight? weight = Weight.ExchangeTo(weightUnit);
 
-        MeasureUnitCode measureUnitCode = GetDefinedMeasureUnitCode(measureUnit);
+        if (weight == null) return null;
 
-        if (!GetMeasureUnitCodes().Contains(measureUnitCode)) return null;
-
-        return measureUnitCode switch
-        {
-            MeasureUnitCode.VolumeUnit => exchangeVolume(),
-            MeasureUnitCode.WeightUnit => exchangeWeight(),
-
-            _ => null,
-        };
-
-        IMass? exchangeVolume()
-        {
-            IQuantifiable? exchanged = GetBody().ExchangeTo(measureUnit);
-
-            if (exchanged is not IBody body) return null;
-
-            return GetMass(Weight, body);
-        }
-
-        IMass? exchangeWeight()
-        {
-            IQuantifiable? exchanged = Weight.ExchangeTo(measureUnit);
-
-            if (exchanged is not IWeight weight) return null;
-
-            return GetMass(weight, GetBody());
-        }
+        return GetMass(weight, GetBody());
     }
+
+    //public virtual IMass? ExchangeTo(Enum? measureUnit)
+    //{
+    //    if (measureUnit == null) return null;
+
+    //    MeasureUnitCode measureUnitCode = GetDefinedMeasureUnitCode(measureUnit);
+
+    //    if (!GetMeasureUnitCodes().Contains(measureUnitCode)) return null;
+
+    //    return measureUnitCode switch
+    //    {
+    //        MeasureUnitCode.VolumeUnit => exchangeVolume(),
+    //        MeasureUnitCode.WeightUnit => exchangeWeight(),
+
+    //        _ => null,
+    //    };
+
+    //    IMass? exchangeVolume()
+    //    {
+    //        IQuantifiable? exchanged = GetBody().ExchangeTo(measureUnit);
+
+    //        if (exchanged is not IBody body) return null;
+
+    //        return GetMass(Weight, body);
+    //    }
+
+    //    IMass? exchangeWeight()
+    //    {
+    //        IQuantifiable? exchanged = Weight.ExchangeTo(measureUnit);
+
+    //        if (exchanged is not IWeight weight) return null;
+
+    //        return GetMass(weight, GetBody());
+    //    }
+    //}
 
     public virtual bool? FitsIn(IMass? other, LimitMode? limitMode)
     {
@@ -333,7 +343,9 @@ internal abstract class Mass : BaseQuantifiable, IMass
     {
         if (IsWeightNotLess(volumeWeight)) return Weight;
 
-        return (IWeight)volumeWeight.ExchangeTo(GetBaseMeasureUnit())!;
+        WeightUnit weightUnit = Weight.GetMeasureUnit();
+
+        return volumeWeight.ExchangeTo(weightUnit)!;
     }
 
     private IMassFactory GetMassFactory()

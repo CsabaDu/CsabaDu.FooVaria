@@ -64,14 +64,14 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
     #endregion
 
     //public abstract IQuantifiable? ExchangeTo(Enum? context);
-    //public abstract IQuantifiable Round(RoundingMode roundingMode);
+    public abstract IQuantifiable Round(RoundingMode roundingMode);
 
-    //public object GetQuantity(RoundingMode roundingMode)
-    //{
-    //    ValueType quantity = GetBaseQuantity();
+    public object GetQuantity(RoundingMode roundingMode)
+    {
+        ValueType quantity = GetBaseQuantity();
 
-    //    return quantity.Round(roundingMode)!;
-    //}
+        return quantity.Round(roundingMode)!;
+    }
 
     public decimal GetDecimalQuantity()
     {

@@ -8,6 +8,7 @@ global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types;
 global using CsabaDu.FooVaria.BaseTypes.Common.Enums;
 global using CsabaDu.FooVaria.BaseTypes.Common.Types;
 global using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
+global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
 global using CsabaDu.FooVaria.BaseTypes.Shapes.Enums;
 global using CsabaDu.FooVaria.BaseTypes.Shapes.Types;
 global using CsabaDu.FooVaria.BaseTypes.Spreads.Factories;

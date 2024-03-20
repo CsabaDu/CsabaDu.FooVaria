@@ -3,5 +3,5 @@
 public interface IExchangeable<in TContext>
     where TContext : notnull
 {
-    bool IsExchangeableTo(TContext context);
+    bool IsExchangeableTo(TContext? context);
 }

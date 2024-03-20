@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.BulkSpreads.Types
+﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
+
+namespace CsabaDu.FooVaria.BulkSpreads.Types
 {
     public interface IBulkSpread : ISpread, IValidShapeExtents
     {
@@ -16,7 +18,7 @@
         TSelf GetBulkSpread(TSMeasure spreadMeasure);
     }
 
-    public interface IBulkSpread<TSelf, TSMeasure, TEnum> : IBulkSpread<TSelf, TSMeasure>, ISpreadMeasure<TSMeasure, TEnum>
+    public interface IBulkSpread<TSelf, TSMeasure, TEnum> : IBulkSpread<TSelf, TSMeasure>, ISpreadMeasure<TSMeasure, TEnum>, IExchange<TSelf, TEnum>
         where TSelf : class, IBulkSpread
         where TSMeasure : class, IMeasure<TSMeasure, double, TEnum>, ISpreadMeasure
         where TEnum : struct, Enum

@@ -74,6 +74,12 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
 
         return hashCode.ToHashCode();
     }
+
+    public override sealed bool HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
+    {
+        return GetMeasureUnitCodes().Contains(measureUnitCode);
+    }
+
     #endregion
     #endregion
 
