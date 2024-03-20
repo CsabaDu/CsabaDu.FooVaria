@@ -1,4 +1,6 @@
 ﻿using CsabaDu.FooVaria.BaseTypes.Common;
+using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
+using System;
 
 namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
 {
@@ -98,6 +100,25 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
         protected TSelf GetRateComponent(ValueType quantity)
         {
             return (TSelf)GetBaseMeasure(Measurement, quantity);
+        }
+
+        public override sealed bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable? exchanged)
+        {
+            exchanged = null;
+
+            if (!IsExchangeableTo(context)) return false;
+
+            MeasureUnitElements measureUnitElements = GetMeasureUnitElements(context, nameof(context));
+            exchanged = ExchangeTo(measureUnitElements.MeasureUnit);
+
+            return exchanged != null;
+        }
+
+        public TSelf? ExchangeTo(Enum measureUnit)
+        {
+            if (!IsExchangeableTo(measureUnit)) return null;
+
+            return (TSelf)GetBaseMeasure(measureUnit);
         }
         #endregion
     }

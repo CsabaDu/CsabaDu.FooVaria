@@ -1,6 +1,8 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.Spreads.Types;
+﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
 
-public interface ISurface : ISpread
+namespace CsabaDu.FooVaria.BaseTypes.Spreads.Types;
+
+public interface ISurface : ISpread, IExchange<ISurface, AreaUnit>
 {
     ISurface GetSurface();
 }

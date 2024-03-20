@@ -1,6 +1,8 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.Spreads.Types;
+﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
 
-public interface IBody : ISpread
+namespace CsabaDu.FooVaria.BaseTypes.Spreads.Types;
+
+public interface IBody : ISpread, IExchange<IBody, VolumeUnit>
 {
     IBody GetBody();
 }

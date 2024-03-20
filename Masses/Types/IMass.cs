@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Masses.Types;
 
-public interface IMass : IBaseQuantifiable, IDensity, IVolumeWeightRatio, IFit<IMass>, IExchange<IMass, Enum>, ISpreadMeasure/*, ILimitable*/, IMeasureUnitCodes
+public interface IMass : IBaseQuantifiable, IDensity, IVolumeWeightRatio, IFit<IMass>, IExchange<IMass, WeightUnit>, IExchange<IMass, VolumeUnit>, ISpreadMeasure/*, ILimitable*/, IMeasureUnitCodes
 {
     IWeight Weight { get; init; }
     IBody GetBody();

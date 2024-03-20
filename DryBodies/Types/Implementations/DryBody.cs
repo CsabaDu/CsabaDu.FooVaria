@@ -1,4 +1,5 @@
 ﻿
+
 namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
 {
     internal abstract class DryBody : SimpleShape, IDryBody
@@ -110,6 +111,16 @@ namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
         private IDryBodyFactory GetDryBodyFactory()
         {
             return (IDryBodyFactory)GetFactory();
+        }
+
+        public IBody? ExchangeTo(VolumeUnit context)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool TryExchangeTo(VolumeUnit context, [NotNullWhen(true)] out IBody? exchanged)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

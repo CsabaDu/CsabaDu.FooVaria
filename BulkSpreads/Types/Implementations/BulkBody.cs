@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations;
 
 internal sealed class BulkBody : BulkSpread<IBulkBody, IVolume, VolumeUnit>, IBulkBody
 {
@@ -45,6 +47,16 @@ internal sealed class BulkBody : BulkSpread<IBulkBody, IVolume, VolumeUnit>, IBu
         if (NullChecked(baseSppread, nameof(baseSppread)) is IBody body) return GetBulkSpread(body.GetSpreadMeasure());
 
         throw ArgumentTypeOutOfRangeException(nameof(baseSppread), baseSppread);
+    }
+
+    public IBody? ExchangeTo(VolumeUnit context)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool TryExchangeTo(VolumeUnit context, [NotNullWhen(true)] out IBody? exchanged)
+    {
+        throw new NotImplementedException();
     }
     #endregion
     #endregion
