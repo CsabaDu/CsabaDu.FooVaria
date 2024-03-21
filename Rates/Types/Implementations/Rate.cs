@@ -41,17 +41,17 @@ internal abstract class Rate : BaseRate, IRate
         return base.CompareTo(other);
     }
 
-    public IMeasure Denominate(IQuantifiable denominator)
+    public IMeasure Denominate(IMeasurable denominator)
     {
-        const string paramName = nameof(denominator);
-        MeasureUnitCode measureUnitCode = NullChecked(denominator, paramName).GetMeasureUnitCode();
+        ValidateDenominator(denominator, nameof(denominator));
 
-        if (!HasMeasureUnitCode(measureUnitCode))
+        decimal divisor = denominator switch
         {
-            throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
-        }
+            BaseMeasurement baseMeasurement => Denominator.Measurement.ProportionalTo(baseMeasurement) * Denominator.GetDefaultQuantity(),
+            Quantifiable quantifiable => Denominator.ProportionalTo(quantifiable),
 
-        decimal divisor = Denominator.ProportionalTo(denominator);
+            _ => throw new InvalidOperationException(null),
+        };
 
         return Numerator.Divide(divisor);
     }
@@ -76,19 +76,19 @@ internal abstract class Rate : BaseRate, IRate
 
     //public IRate? ExchangeTo(IMeasurable? measurable)
     //{
-    //    if (measurable is IMeasurement measureUnit) return exchangeToMeasurement(measureUnit);
+    //    if (measurable is IMeasurement context) return exchangeToMeasurement(context);
 
     //    if (measurable is IBaseMeasure baseMeasure) return exchangeToBaseMeasure(baseMeasure);
 
     //    return null;
 
     //    #region Local methods
-    //    IRate? exchangeToMeasurement(IMeasurement? measureUnit)
+    //    IRate? exchangeToMeasurement(IMeasurement? context)
     //    {
-    //        if (IsExchangeableTo(measureUnit)) return null;
+    //        if (IsExchangeableTo(context)) return null;
 
-    //        IDenominator denominator = Denominator.GetDenominator(measureUnit);
-    //        decimal proportionQuantity = denominator.Measurement.ProportionalTo(measureUnit);
+    //        IDenominator denominator = Denominator.GetDenominator(context);
+    //        decimal proportionQuantity = denominator.Measurement.ProportionalTo(context);
 
     //        return exchange(denominator, proportionQuantity);
     //    }
@@ -134,20 +134,11 @@ internal abstract class Rate : BaseRate, IRate
 
     public bool IsExchangeableTo(Enum? context)
     {
-        return Denominator.IsExchangeableTo(context);
-    }
+        if (context == null) return false;
 
-    public bool IsExchangeableTo(IMeasurable? measurable)
-    {
-        return measurable switch
-        {
-            BaseRate baseRate => base.IsExchangeableTo(baseRate),
-
-            BaseMeasure or
-            BaseMeasurement => measurable!.HasMeasureUnitCode(GetMeasureUnitCode()),
-
-           _ => false,
-        };
+        return Denominator.IsExchangeableTo(context)
+            || Numerator.IsExchangeableTo(context)
+            || GetLimit()?.IsExchangeableTo(context) == true;
     }
 
     public decimal ProportionalTo(IRate? other)
@@ -155,30 +146,31 @@ internal abstract class Rate : BaseRate, IRate
         return base.ProportionalTo(other);
     }
 
-    public bool TryExchangeTo(Enum? measureUnit, [NotNullWhen(true)] out IRate? exchanged)
+    public bool TryExchangeTo(Enum? context, [NotNullWhen(true)] out IRate? exchanged)
     {
         exchanged = null;
 
-        if (!IsExchangeableTo(measureUnit)) return false;
+        if (!IsExchangeableTo(context)) return false;
 
-        IDenominator denominator = Denominator.GetDenominator(measureUnit!);
-        decimal proportionQuantity = denominator.GetExchangeRate() / GetExchangeRate(measureUnit, nameof(measureUnit));
+        MeasureUnitElements measureUnitElements = GetMeasureUnitElements(context, nameof(context));
 
-        exchanged = DivideRate(denominator, proportionQuantity);
+        foreach (var item in GetRateComponentCodes())
+        {
+            IBaseMeasure? rateComponent = GetRateComponent(item);
 
-        return exchanged != null;
-    }
+            if (rateComponent?.GetMeasureUnitCode() == measureUnitElements.MeasureUnitCode
+                && rateComponent!.TryExchangeTo(measureUnitElements.MeasureUnit, out IQuantifiable? exchangedRateComponent))
+            {
+                exchanged = item switch
+                {
+                    RateComponentCode.Denominator => GetRate(Numerator, (IDenominator)exchangedRateComponent!, GetLimit()!),
+                    RateComponentCode.Numerator => GetRate((IMeasure)exchangedRateComponent!, Denominator, GetLimit()!),
+                    RateComponentCode.Limit => GetRate(Numerator, Denominator, (ILimit)exchangedRateComponent!),
 
-    public bool TryExchangeTo(IMeasurement? measurement, [NotNullWhen(true)] out IRate? exchanged)
-    {
-        exchanged = null;
-
-        if (!IsExchangeableTo(measurement)) return false;
-
-        IDenominator denominator = Denominator.GetDenominator(measurement!);
-        decimal proportionQuantity = denominator.Measurement.ProportionalTo(measurement);
-
-        exchanged = DivideRate(denominator, proportionQuantity);
+                    _ => null,
+                };
+            }
+        }
 
         return exchanged != null;
     }
@@ -192,16 +184,26 @@ internal abstract class Rate : BaseRate, IRate
         IDenominator denominator = Denominator.GetBaseMeasure(baseMeasure!);
         decimal proportionQuantity = denominator.ProportionalTo(baseMeasure);
 
-        exchanged = DivideRate(denominator, proportionQuantity);
+        IMeasure numerator = Numerator.Divide(proportionQuantity);
+        ILimit? limit = GetLimit();
+
+        exchanged = GetRate(numerator, denominator, limit!);
 
         return exchanged != null;
     }
 
-    public void ValidateDenominator(IQuantifiable denominator)
+    public void ValidateDenominator(IMeasurable denominator, string paramName)
     {
-        if (GetBaseMeasure(RateComponentCode.Denominator).Equals(denominator)) return;
+        MeasureUnitCode measureUnitCode = NullChecked(denominator, paramName).GetMeasureUnitCode();
 
-        throw new ArgumentOutOfRangeException(nameof(denominator), denominator, null);
+        if (!HasMeasureUnitCode(measureUnitCode))
+        {
+            throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
+        }
+
+        if (denominator is IQuantifiable or IBaseMeasurement) return;
+
+        ArgumentTypeOutOfRangeException(paramName, denominator);
     }
 
     #region Override methods
@@ -257,17 +259,5 @@ internal abstract class Rate : BaseRate, IRate
         return baseMeasure?.IsExchangeableTo(GetMeasureUnitCode()) != true;
     }
     #endregion
-    #endregion
-
-    #region Private methods
-    private IRate? DivideRate(IDenominator denominator, decimal proportionQuantity)
-    {
-        IMeasure numerator = Numerator.Divide(proportionQuantity);
-        ILimit? limit = GetLimit();
-
-        return limit == null ?
-            GetRate(numerator, denominator)
-            : GetRate(numerator, denominator, limit);
-    }
     #endregion
 }

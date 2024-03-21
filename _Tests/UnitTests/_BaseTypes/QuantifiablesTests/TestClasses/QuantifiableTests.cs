@@ -315,7 +315,12 @@ public sealed class QuantifiableTests
     #endregion
 
 
-    // IQuantifiable IQuantifiable.GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
+    #region IQuantifiable GetQuantifiable
+    #region IQuantifiable.GetQuantifiable(MeasureUnitCode, decimal)
+
+    #endregion
+    #endregion
+
     // object IRound<IQuantifiable>.GetQuantity(RoundingMode roundingMode)
     // object IQuantity.GetQuantity(TypeCode quantityTypeCode)
     // bool IExchangeable<Enum>.IsExchangeableTo(Enum? context)

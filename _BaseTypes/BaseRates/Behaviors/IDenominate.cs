@@ -11,6 +11,6 @@
     {
         TNumerator Denominate(TDenominator denominator);
 
-        void ValidateDenominator(TDenominator denominator);
+        void ValidateDenominator(TDenominator denominator, string paramName);
     }
 }

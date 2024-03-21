@@ -56,7 +56,7 @@ public sealed class FlatRateFactory(IDenominatorFactory denominatorFactory) : Ra
         const string paramName = nameof(rateComponents);
         int count = rateComponents?.Length ?? 0;
 
-        if (count != 2) throw QuantityArgumentOutOfRangeException(paramName, count);
+        if (count < 2 || count > 3) throw QuantityArgumentOutOfRangeException(paramName, count);
 
         IMeasure numerator = GetValidNumerator(rateComponents![0], paramName);
         IBaseMeasure baseMeasure = rateComponents[1];

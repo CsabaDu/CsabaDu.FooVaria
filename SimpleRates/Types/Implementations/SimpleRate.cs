@@ -77,9 +77,9 @@ public abstract class SimpleRate : BaseRate, ISimpleRate
         return DefaultQuantity / numeratorExchangeRate * denominatorExchangeRate;
     }
 
-    public void ValidateDenominator(Enum denominator)
+    public void ValidateDenominator(Enum denominator, string paramName)
     {
-        _ = GetValidMeasurementElements(denominator, RateComponentCode.Denominator, nameof(denominator));
+        _ = GetValidMeasurementElements(denominator, RateComponentCode.Denominator, paramName);
     }
 
     #region Override methods
