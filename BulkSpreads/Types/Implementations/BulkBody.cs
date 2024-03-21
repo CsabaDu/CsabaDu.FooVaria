@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
+using System.Diagnostics.CodeAnalysis;
+
+namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations;
 
 internal sealed class BulkBody : BulkSpread<IBulkBody, IVolume, VolumeUnit>, IBulkBody
 {

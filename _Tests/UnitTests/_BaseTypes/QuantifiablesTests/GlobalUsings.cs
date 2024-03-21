@@ -16,4 +16,6 @@ global using CsabaDu.FooVaria.Tests.TestHelpers.Params;
 global using CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.Fakes;
 global using Microsoft.VisualStudio.TestTools.UnitTesting;
 global using System.ComponentModel;
+global using System.Diagnostics.CodeAnalysis;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;
+

@@ -1,4 +1,8 @@
-﻿namespace CsabaDu.FooVaria.ShapeLimits.Types.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
+using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
+using CsabaDu.FooVaria.Measures.Types;
+
+namespace CsabaDu.FooVaria.ShapeLimits.Types.Implementations;
 
 public sealed class ShapeLimit : SimpleShape, IShapeLimit
 {
@@ -126,5 +130,33 @@ public sealed class ShapeLimit : SimpleShape, IShapeLimit
     public override ITangentShapeFactory GetTangentShapeFactory()
     {
         return SimpleShape.GetTangentShapeFactory();
+    }
+
+    public override bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable? exchanged)
+    {
+        exchanged = null;
+
+        if (!IsExchangeableTo(context)) return false;
+
+        MeasureUnitElements measureUnitElements = GetMeasureUnitElements(context, nameof(context));
+        exchanged = measureUnitElements.MeasureUnit switch
+        {
+            AreaUnit areaUnit => exchangeTo<IArea, AreaUnit>(areaUnit),
+            ExtentUnit extentUnit => ExchangeTo(extentUnit),
+            VolumeUnit volumeUnit => exchangeTo<IVolume, VolumeUnit>(volumeUnit),
+
+            _ => null,
+        };
+
+        return exchanged != null;
+
+        #region Local methods
+        IQuantifiable? exchangeTo<TSMeasure, TEnum>(TEnum measureUnit)
+            where TSMeasure : class, IMeasure<TSMeasure, double, TEnum>, ISpreadMeasure
+            where TEnum : struct, Enum
+        {
+            return GetSpreadMeasure() is TSMeasure spreadMeasure ? GetSpread(spreadMeasure.ExchangeTo(measureUnit)!) : null;
+        }
+        #endregion
     }
 }

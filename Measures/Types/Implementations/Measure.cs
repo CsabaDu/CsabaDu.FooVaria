@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Measures.Types.Implementations
+﻿using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;
+using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
+
+namespace CsabaDu.FooVaria.Measures.Types.Implementations
 {
     internal abstract class Measure : BaseMeasure, IMeasure
     {
@@ -105,7 +108,7 @@
             Enum measureUnit = GetBaseMeasureUnit();
             decimal quantity = getQuantity();
 
-            return (IMeasure)GetBaseMeasure(quantity).ExchangeTo(measureUnit)!;
+            return GetBaseMeasure(measureUnit, quantity);
 
             #region Local methods
             decimal getQuantity()
@@ -243,7 +246,11 @@
 
         public TSelf GetMeasure(TEnum measureUnit)
         {
-            return (TSelf)(ExchangeTo(measureUnit) ?? throw InvalidMeasureUnitEnumArgumentException(measureUnit));
+            decimal defaultQuantity = GetDefaultQuantity();
+            defaultQuantity /= BaseMeasurement.GetExchangeRate(measureUnit, nameof(measureUnit));
+            TNum quantity = (TNum?)defaultQuantity.ToQuantity(typeof(TNum)) ?? throw new InvalidOperationException(null);
+
+            return GetMeasure(measureUnit, quantity);
         }
 
         public TEnum GetMeasureUnit()
@@ -289,6 +296,25 @@
             if (quantity > 0) return;
 
             throw QuantityArgumentOutOfRangeException(paramName, quantity);
+        }
+
+        public TSelf? ExchangeTo(TEnum measureUnit)
+        {
+            if (!IsExchangeableTo(measureUnit)) return null;
+
+            return GetMeasure(measureUnit);
+        }
+
+        public override sealed bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable? exchanged)
+        {
+            exchanged = null;
+
+            if (!IsExchangeableTo(context)) return false;
+
+            MeasureUnitElements measureUnitElements = GetMeasureUnitElements(context, nameof(context));
+            exchanged = ExchangeTo((TEnum)measureUnitElements.MeasureUnit);
+
+            return exchanged != null;
         }
         #endregion
     }

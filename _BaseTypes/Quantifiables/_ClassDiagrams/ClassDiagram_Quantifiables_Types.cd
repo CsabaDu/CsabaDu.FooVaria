@@ -3,16 +3,12 @@
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.IQuantifiable" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="4" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAACAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
       <FileName>Types\IQuantifiable.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types.IBaseQuantifiable" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="4" Y="1.5" Width="1.5" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IExchange&lt;TSelf, TContext&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="5.75" Y="1.5" Width="2.25" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IProportional&lt;TSelf&gt;" Collapsed="true">
@@ -24,7 +20,7 @@
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IFit&lt;TSelf&gt;" Collapsed="true">
-    <Position X="8.25" Y="1.5" Width="1.25" />
+    <Position X="8.5" Y="1.5" Width="1.25" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IRound&lt;TSelf&gt;" Collapsed="true">
@@ -43,6 +39,10 @@
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IQuantity" Collapsed="true">
     <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.ITryExchange&lt;TSelf, TContext&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="1.5" Width="2.5" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />

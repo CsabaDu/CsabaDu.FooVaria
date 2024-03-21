@@ -111,6 +111,24 @@ namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
         {
             return (IDryBodyFactory)GetFactory();
         }
+
+        public override sealed bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable? exchanged)
+        {
+            exchanged = null;
+
+            if (!IsExchangeableTo(context)) return false;
+
+            MeasureUnitElements measureUnitElements = GetMeasureUnitElements(context, nameof(context));
+            exchanged = measureUnitElements.MeasureUnit switch
+            {
+                ExtentUnit extentUnit => ExchangeTo(extentUnit),
+                VolumeUnit volumeUnit => GetSpread(Volume.ExchangeTo(volumeUnit)!),
+
+                _ => null,
+            };
+
+            return exchanged != null;
+        }
         #endregion
     }
 

@@ -5,7 +5,7 @@
         object GetDefaultRateComponentQuantity();
     }
 
-    public interface IRateComponent<TSelf> : IRateComponent, IDefaultMeasurable<TSelf>
+    public interface IRateComponent<TSelf> : IRateComponent, IDefaultMeasurable<TSelf>, IExchange<TSelf, Enum>
         where TSelf : class, IRateComponent
     {
         IMeasurement Measurement { get; init; }

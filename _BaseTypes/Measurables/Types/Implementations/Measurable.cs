@@ -275,7 +275,7 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
         return MeasureUnitTypeCollection[GetMeasureUnitCode()];
     }
 
-    public bool HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
+    public virtual bool HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
     {
         return measureUnitCode == GetMeasureUnitCode();
     }

@@ -1,9 +1,8 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
 
-public interface IExchange<TSelf, in TContext> : IProportional<TSelf>, IExchangeable<TContext>
+public interface IExchange<TSelf, in TEnum>
     where TSelf : class, IBaseQuantifiable
-    where TContext : notnull
+    where TEnum : Enum
 {
-    TSelf? ExchangeTo(TContext? context);
-    bool TryExchangeTo(TContext? context, [NotNullWhen(true)] out TSelf? exchanged);
+    TSelf? ExchangeTo(TEnum measureUnit);
 }

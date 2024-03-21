@@ -49,6 +49,24 @@ internal abstract class PlaneShape : SimpleShape, IPlaneShape
     {
         return Area;
     }
+
+    public override sealed bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable? exchanged)
+    {
+        exchanged = null;
+
+        if (!IsExchangeableTo(context)) return false;
+
+        MeasureUnitElements measureUnitElements = GetMeasureUnitElements(context, nameof(context));
+        exchanged = measureUnitElements.MeasureUnit switch
+        {
+            AreaUnit areaUnit => GetSpread(Area.ExchangeTo(areaUnit)!),
+            ExtentUnit extentUnit => ExchangeTo(extentUnit),
+
+            _ => null,
+        };
+
+        return exchanged != null;
+    }
     #endregion
     #endregion
     #endregion

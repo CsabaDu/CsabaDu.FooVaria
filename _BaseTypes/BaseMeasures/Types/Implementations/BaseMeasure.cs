@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
+
+namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations;
 
 public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Quantifiable(rootObject, paramName), IBaseMeasure
 {
@@ -67,7 +69,7 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
         return baseMeasurement.GetBaseMeasureUnit();
     }
 
-    public override IBaseMeasure Round(RoundingMode roundingMode)
+    public override sealed IBaseMeasure Round(RoundingMode roundingMode)
     {
         ValueType quantity = (ValueType)GetQuantity(roundingMode);
         IBaseMeasurement baseMeasurement = GetBaseMeasurement();
@@ -86,24 +88,24 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
         return base.Equals(other);
     }
 
-    public override sealed IBaseMeasure? ExchangeTo(Enum? context)
-    {
-        if (!IsExchangeableTo(context)) return null;
+    //public override sealed IBaseMeasure? ExchangeTo(Enum? context)
+    //{
+    //    if (!IsExchangeableTo(context)) return null;
 
-        if (!IsValidMeasureUnit(context))
-        {
-            if (context is not MeasureUnitCode measureUnitCode) return null;
+    //    if (!IsValidMeasureUnit(context))
+    //    {
+    //        if (context is not MeasureUnitCode measureUnitCode) return null;
 
-            context = measureUnitCode.GetDefaultMeasureUnit();
-        }
+    //        context = measureUnitCode.GetDefaultMeasureUnit();
+    //    }
 
-        IBaseMeasurementFactory factory = GetBaseMeasurementFactory();
-        IBaseMeasurement baseMeasurement = factory.CreateBaseMeasurement(context!)!;
-        decimal defaultQuantity = GetDefaultQuantity();
-        defaultQuantity /= BaseMeasurement.GetExchangeRate(context, nameof(context));
+    //    IBaseMeasurementFactory factory = GetBaseMeasurementFactory();
+    //    IBaseMeasurement baseMeasurement = factory.CreateBaseMeasurement(context!)!;
+    //    decimal defaultQuantity = GetDefaultQuantity();
+    //    defaultQuantity /= BaseMeasurement.GetExchangeRate(context, nameof(context));
 
-        return GetBaseMeasure(baseMeasurement, defaultQuantity);
-    }
+    //    return GetBaseMeasure(baseMeasurement, defaultQuantity);
+    //}
 
     public override sealed bool? FitsIn(IQuantifiable? other, LimitMode? limitMode)
     {

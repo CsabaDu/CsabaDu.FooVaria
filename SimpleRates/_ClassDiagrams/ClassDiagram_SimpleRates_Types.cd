@@ -17,22 +17,22 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Types\IProportion.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.SimpleRates.Types.IProportionLimit" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="4.5" Y="4" Width="1.5" />
+    <Position X="4.25" Y="4" Width="1.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.SimpleRates.Types.ISimpleRate" FixedFromPoint="true">
       <Path>
         <Point X="4.375" Y="3.441" />
         <Point X="4.375" Y="3.7" />
-        <Point X="5.25" Y="3.7" />
-        <Point X="5.25" Y="4" />
+        <Point X="5" Y="3.7" />
+        <Point X="5" Y="4" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAIIAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Types\IProportionLimit.cs</FileName>
     </TypeIdentifier>
   </Interface>

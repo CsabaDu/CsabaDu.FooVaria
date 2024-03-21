@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations
+﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
+using System.Diagnostics.CodeAnalysis;
+
+namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations
 {
     internal abstract class BulkSpread : Spread, IBulkSpread
     {
@@ -27,11 +30,6 @@
 
         #region Override methods
         #region Sealed methods
-        public override sealed ISpread? ExchangeTo(Enum? context)
-        {
-            return base.ExchangeTo(context);
-        }
-
         public override sealed MeasureUnitCode GetSpreadMeasureUnitCode()
         {
             return base.GetSpreadMeasureUnitCode();
@@ -396,6 +394,35 @@
             throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName);
         }
         #endregion
+        #endregion
+        #endregion
+
+        #region Protected methods
+        #region Static methods
+        public TSelf? ExchangeTo(TEnum measureUnit)
+        {
+            ISpreadMeasure? exchanged = SpreadMeasure.ExchangeTo(measureUnit);
+
+            if (exchanged == null) return null;
+
+            return GetBulkSpread(exchanged);
+        }
+
+        public override sealed bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable? exchanged)
+        {
+            exchanged = null;
+
+            if (!IsExchangeableTo(context)) return false;
+
+            MeasureUnitElements measureUnitElements = GetMeasureUnitElements(context, nameof(context));
+
+            if (measureUnitElements.MeasureUnit is TEnum measureUnit)
+            {
+                exchanged = ExchangeTo(measureUnit);
+            }
+
+            return exchanged != null;
+        }
         #endregion
         #endregion
 

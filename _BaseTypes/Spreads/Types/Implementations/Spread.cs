@@ -24,14 +24,14 @@ public abstract class Spread(IRootObject rootObject, string paramName) : Quantif
     }
 
     #region Virtual methods
-    public override ISpread? ExchangeTo(Enum? context)
-    {
-        IQuantifiable? exchanged = (GetSpreadMeasure() as IQuantifiable)?.ExchangeTo(context);
+    //public override ISpread? ExchangeTo(Enum? context)
+    //{
+    //    IQuantifiable? exchanged = (GetSpreadMeasure() as IQuantifiable)?.ExchangeTo(context);
 
-        if (exchanged is not ISpreadMeasure spreadMeasure) return null;
+    //    if (exchanged is not ISpreadMeasure spreadMeasure) return null;
 
-        return GetSpread(spreadMeasure);
-    }
+    //    return GetSpread(spreadMeasure);
+    //}
 
     public virtual MeasureUnitCode GetSpreadMeasureUnitCode()
     {
@@ -54,7 +54,6 @@ public abstract class Spread(IRootObject rootObject, string paramName) : Quantif
     public override sealed ISpread Round(RoundingMode roundingMode)
     {
         IBaseMeasure baseMeasure = (IBaseMeasure)GetSpreadMeasure();
-
         ISpreadMeasure spreadMeasure = (ISpreadMeasure)baseMeasure.Round(roundingMode);
 
         return GetSpread(spreadMeasure);

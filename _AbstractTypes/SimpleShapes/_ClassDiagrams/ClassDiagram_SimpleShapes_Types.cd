@@ -66,28 +66,28 @@
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Behaviors.IDimensions" Collapsed="true">
-    <Position X="5" Y="2.75" Width="1.25" />
+    <Position X="7.25" Y="2.75" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
       <FileName>Behaviors\IDimensions.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Behaviors.IDiagonal" Collapsed="true">
-    <Position X="8.25" Y="2.75" Width="1.25" />
+    <Position X="10.5" Y="2.75" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
       <FileName>Behaviors\IDiagonal.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Behaviors.IShapeExtents" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="6.5" Y="2.75" Width="1.5" />
+    <Position X="8.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAAAAAAAAACAAAAAAAAAAAAQAAAAAAAAAAQAA=</HashCode>
       <FileName>Behaviors\IShapeExtents.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Behaviors.IShapeExtentType" Collapsed="true">
-    <Position X="5.75" Y="1.5" Width="1.5" />
+    <Position X="8" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
       <FileName>Behaviors\IShapeExtentType.cs</FileName>
@@ -133,7 +133,7 @@
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Behaviors.IShapeExtent" Collapsed="true">
-    <Position X="7.5" Y="1.5" Width="1.25" />
+    <Position X="9.75" Y="1.5" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAACAAA=</HashCode>
       <FileName>Behaviors\IShapeExtent.cs</FileName>
@@ -149,6 +149,10 @@
       <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Behaviors\IHorizontalRotation.cs</FileName>
     </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IExchange&lt;TSelf, TEnum&gt;" Collapsed="true">
+    <Position X="5" Y="2.75" Width="2" />
+    <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

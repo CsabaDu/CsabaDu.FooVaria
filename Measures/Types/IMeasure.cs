@@ -13,7 +13,7 @@
         TSelf GetMeasure(IMeasurement measurement, TNum quantity);
     }
 
-    public interface IMeasure<TSelf, TNum, TEnum> : IMeasure<TSelf, TNum>, IMeasureUnit<TEnum>
+    public interface IMeasure<TSelf, TNum, TEnum> : IMeasure<TSelf, TNum>, IMeasureUnit<TEnum>, IExchange<TSelf, TEnum>
         where TSelf : class, IMeasure
         where TNum : struct
         where TEnum : struct, Enum

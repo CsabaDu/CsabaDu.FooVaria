@@ -27,30 +27,29 @@ internal class QuantifiableChild(IRootObject rootObject, string paramName) : Qua
     // bool IExchangeable<Enum>.IsExchangeableTo(Enum context)
     // decimal IProportional<IQuantifiable>.ProportionalTo(IQuantifiable other)
     // IQuantifiable IRound<IQuantifiable>.Round(RoundingMode roundingMode)
-    // bool IExchange<IQuantifiable, Enum>.TryExchangeTo(Enum context, out IQuantifiable exchanged)
+    // bool ITryExchange<IQuantifiable, Enum>.TryExchangeTo(Enum context, out IQuantifiable exchanged)
     // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum measureUnit, string paramName)
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable measurable, string paramName)
     // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
     // void IBaseQuantifiable.ValidateQuantity(ValueType quantity, string paramName)
-
     #endregion
 
     public QuantifiableReturn Return { private get; set; }
 
-    public override sealed IQuantifiable ExchangeTo(Enum context)
-    {
-        if (context == null) return null;
+    //public IQuantifiable ExchangeTo(Enum context)
+    //{
+    //    if (context == null) return null;
 
-        if (!IsDefinedMeasureUnit(context)) return null;
-        
-        MeasureUnitCode measureUnitCode = GetMeasureUnitCode(context);
+    //    if (!IsDefinedMeasureUnit(context)) return null;
 
-        if (!HasMeasureUnitCode(measureUnitCode)) return null;
+    //    MeasureUnitCode measureUnitCode = GetMeasureUnitCode(context);
 
-        QuantifiableFactoryObject factory = new();
+    //    if (!HasMeasureUnitCode(measureUnitCode)) return null;
 
-        return factory.CreateQuantifiable(measureUnitCode, Return.GetDefaultQuantity);
-    }
+    //    QuantifiableFactoryObject factory = new();
+
+    //    return factory.CreateQuantifiable(measureUnitCode, Return.GetDefaultQuantity);
+    //}
 
     public override sealed Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnit;
 
@@ -71,5 +70,22 @@ internal class QuantifiableChild(IRootObject rootObject, string paramName) : Qua
         QuantifiableFactoryObject factory = new();
 
         return factory.CreateQuantifiable(GetMeasureUnitCode(), (decimal)quantity);
+    }
+
+    public override bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable exchanged)
+    {
+        exchanged = null;
+
+        if (!IsDefinedMeasureUnit(context) && !Enum.IsDefined(typeof(MeasureUnitCode), context)) return false;
+
+        MeasureUnitCode measureUnitCode = GetMeasureUnitElements(context, nameof(context)).MeasureUnitCode;
+
+        if (!HasMeasureUnitCode(measureUnitCode)) return false;
+
+        QuantifiableFactoryObject factory = new();
+
+        exchanged = factory.CreateQuantifiable(measureUnitCode, Return.GetDefaultQuantity);
+
+        return true;
     }
 }

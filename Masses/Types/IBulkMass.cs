@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Masses.Types;
 
-public interface IBulkMass : IMass, ICommonBase<IBulkMass>
+public interface IBulkMass : IMass, ICommonBase<IBulkMass>, IExchange<IBulkMass, VolumeUnit>
 {
     IBulkBody BulkBody { get; init; }
     IBulkMassFactory Factory { get; init; }

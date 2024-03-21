@@ -141,23 +141,23 @@ public sealed class QuantifiableTests
     #endregion
     #endregion
 
-    #region IQuantifiable? ExchangeTo
-    #region IExchange<IQuantifiable, Enum>.ExchangeTo(Enum? context)
-    [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetExchangeToArgs), DynamicDataSourceType.Method)]
-    public void ExchangeTo_arg_returns_expected(Enum measureUnit, Enum context, IQuantifiable expected)
-    {
-        // Arrange
-        SetQuantifiableChild(Fields.defaultQuantity, measureUnit);
+    //#region IQuantifiable? ExchangeTo
+    //#region IExchange<IQuantifiable, Enum>.ExchangeTo(Enum? context)
+    //[TestMethod, TestCategory("UnitTest")]
+    //[DynamicData(nameof(GetExchangeToArgs), DynamicDataSourceType.Method)]
+    //public void ExchangeTo_arg_returns_expected(Enum measureUnit, Enum context, IQuantifiable expected)
+    //{
+    //    // Arrange
+    //    SetQuantifiableChild(Fields.defaultQuantity, measureUnit);
 
-        // Act
-        var actual = _quantifiable.ExchangeTo(context);
+    //    // Act
+    //    var actual = _quantifiable.ExchangeTo(context);
 
-        // Assert
-        Assert.AreEqual(expected?.GetType(), actual?.GetType());
-    }
-    #endregion
-    #endregion
+    //    // Assert
+    //    Assert.AreEqual(expected?.GetType(), actual?.GetType());
+    //}
+    //#endregion
+    //#endregion
 
     #region bool? FitsIn
     #region ILimitable.FitsIn(ILimiter?)
@@ -318,11 +318,11 @@ public sealed class QuantifiableTests
     // IQuantifiable IQuantifiable.GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
     // object IRound<IQuantifiable>.GetQuantity(RoundingMode roundingMode)
     // object IQuantity.GetQuantity(TypeCode quantityTypeCode)
-    // bool IExchangeable<Enum>.IsExchangeableTo(Enum context)
-    // decimal IProportional<IQuantifiable>.ProportionalTo(IQuantifiable other)
+    // bool IExchangeable<Enum>.IsExchangeableTo(Enum? context)
+    // decimal IProportional<IQuantifiable>.ProportionalTo(IQuantifiable? other)
     // IQuantifiable IRound<IQuantifiable>.Round(RoundingMode roundingMode)
-    // bool IExchange<IQuantifiable, Enum>.TryExchangeTo(Enum context, out IQuantifiable exchanged)
-    // void IMeasurable.ValidateMeasureUnitCode(IMeasurable measurable, string paramName)
+    // bool ITryExchange<IQuantifiable, Enum>.TryExchangeTo(Enum? context, out IQuantifiable? exchanged)
+    // void IMeasurable.ValidateMeasureUnitCode(IMeasurable? measurable, string paramName)
 
     #endregion
 

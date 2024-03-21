@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types
 {
-    public interface ISimpleShape : IShape, IShapeExtents, IDimensions, IDiagonal, IShapeComponent, IShapeComponents<IExtent>
+    public interface ISimpleShape : IShape, IShapeExtents, IDimensions, IDiagonal, IShapeComponent, IShapeComponents<IExtent>, IExchange<ISimpleShape, ExtentUnit>
     {
         ISimpleShape GetSimpleShape(ExtentUnit measureUnit);
         ISimpleShape GetSimpleShape(params IExtent[] shapeExtents);

@@ -143,6 +143,11 @@
             return Type.GetTypeCode(quantityType);
         }
 
+        public override sealed bool HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
+        {
+            return GetMeasureUnitCodes().Contains(measureUnitCode);
+        }
+
         public override sealed void ValidateMeasureUnit(Enum? measureUnit, string paramName)
         {
             base.ValidateMeasureUnit(measureUnit, paramName);

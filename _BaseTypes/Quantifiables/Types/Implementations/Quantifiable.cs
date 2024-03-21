@@ -59,10 +59,19 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
     #endregion
 
     #region Abstract methods
-    public abstract IQuantifiable? ExchangeTo(Enum? context);
     public abstract ValueType GetBaseQuantity();
-    public abstract IQuantifiable Round(RoundingMode roundingMode);
+    public abstract bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable? exchanged);
     #endregion
+
+    //public abstract IQuantifiable? ExchangeTo(Enum? context);
+    public abstract IQuantifiable Round(RoundingMode roundingMode);
+
+    public object GetQuantity(RoundingMode roundingMode)
+    {
+        ValueType quantity = GetBaseQuantity();
+
+        return quantity.Round(roundingMode)!;
+    }
 
     public decimal GetDecimalQuantity()
     {
@@ -76,13 +85,6 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
         return factory.CreateQuantifiable(measureUnitCode, defaultQuantity);
     }
 
-    public object GetQuantity(RoundingMode roundingMode)
-    {
-        ValueType quantity = GetBaseQuantity();
-
-        return quantity.Round(roundingMode)!;
-    }
-
     public object GetQuantity(TypeCode quantityTypeCode)
     {
         ValueType quantity = GetBaseQuantity();
@@ -90,7 +92,7 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
         return quantity.ToQuantity(quantityTypeCode) ?? throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
     }
 
-    public bool IsExchangeableTo(Enum? context)
+    public virtual bool IsExchangeableTo(Enum? context) // To override with valid measureUnit
     {
         if (context == null) return false;
 
@@ -115,13 +117,6 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
         if (defaultQuantity != 0) return Math.Abs(GetDefaultQuantity() / defaultQuantity);
 
         throw QuantityArgumentOutOfRangeException(paramName, defaultQuantity);
-    }
-
-    public bool TryExchangeTo(Enum? context, [NotNullWhen(true)] out IQuantifiable? exchanged)
-    {
-        exchanged = ExchangeTo(context);
-
-        return exchanged != null;
     }
     #endregion
 }

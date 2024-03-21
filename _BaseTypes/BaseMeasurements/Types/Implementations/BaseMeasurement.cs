@@ -334,6 +334,11 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         return base.GetQuantityTypeCode();
     }
 
+    public override sealed bool HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
+    {
+        return base.HasMeasureUnitCode(measureUnitCode);
+    }
+
     public override sealed void ValidateMeasureUnit(Enum? measureUnit, string paramName)
     {
         if (IsExchangeableTo(NullChecked(measureUnit, paramName))) return;

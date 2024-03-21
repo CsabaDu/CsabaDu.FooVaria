@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Masses.Types;
 
-public interface IDryMass : IMass, ICommonBase<IDryMass>
+public interface IDryMass : IMass, ICommonBase<IDryMass>, IExchange<IDryMass, ExtentUnit>
 {
     IDryBody DryBody { get; init; }
     IDryMassFactory Factory { get; init; }

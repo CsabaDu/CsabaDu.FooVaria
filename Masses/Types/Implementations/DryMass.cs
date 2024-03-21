@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Masses.Types.Implementations;
+﻿using CsabaDu.FooVaria.BulkSpreads.Types;
+
+namespace CsabaDu.FooVaria.Masses.Types.Implementations;
 
 internal sealed class DryMass : Mass, IDryMass
 {
@@ -73,15 +75,30 @@ internal sealed class DryMass : Mass, IDryMass
             && DryBody.Equals(dryBody);
     }
 
-    public override IMass? ExchangeTo(Enum? context)
+    public override bool TryExchangeTo(Enum? context, [NotNullWhen(true)] out IMass? exchanged)
     {
-        if (context is not ExtentUnit extentUnit) return base.ExchangeTo(context);
+        if (Weight.IsExchangeableTo(context)) return base.TryExchangeTo(context, out exchanged);
 
-        IQuantifiable? exchanged = (DryBody as ISimpleShape)!.ExchangeTo(extentUnit);
+        exchanged = null;
 
-        return exchanged is IDryBody dyBody ?
-            GetDryMass(Weight, dyBody)
-            : null;
+        if (!DryBody.IsExchangeableTo(context)) return false;
+
+        MeasureUnitElements measureUnitElements = GetMeasureUnitElements(context, nameof(context));
+
+        if (measureUnitElements.MeasureUnit is not ExtentUnit extentUnit) return false;
+
+        exchanged = ExchangeTo(extentUnit);
+
+        return exchanged != null;
+    }
+
+    public IDryMass? ExchangeTo(ExtentUnit extentUnit)
+    {
+        ISimpleShape? simpleShape = DryBody.ExchangeTo(extentUnit);
+
+        if (simpleShape is not IDryBody dryBody) return null;
+
+        return GetDryMass(Weight, dryBody);
     }
 
     public override bool? FitsIn(IMass? other, LimitMode? limitMode)
