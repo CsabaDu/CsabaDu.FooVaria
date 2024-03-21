@@ -314,12 +314,24 @@ public sealed class QuantifiableTests
     #endregion
     #endregion
 
-
     #region IQuantifiable GetQuantifiable
     #region IQuantifiable.GetQuantifiable(MeasureUnitCode, decimal)
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetQuantifiable_invalidArg_MeasureUnitCode_arg_decimal_throws_InvalidEnumArgumentException()
+    {
+        // Arrange
+        QuantifiableFactoryObject factory = new();
+        SetQuantifiableChild(Fields.defaultQuantity, Fields.measureUnit, factory);
 
+        // Act
+        var actual = _quantifiable.GetQuantifiable(Fields.measureUnitCode, Fields.defaultQuantity);
+
+        // Assert
+        Assert.IsInstanceOfType<IQuantifiable>(actual);
+    }
     #endregion
     #endregion
+
 
     // object IRound<IQuantifiable>.GetQuantity(RoundingMode roundingMode)
     // object IQuantity.GetQuantity(TypeCode quantityTypeCode)
@@ -366,6 +378,11 @@ public sealed class QuantifiableTests
     private static IEnumerable<object[]> GetFitsInIQuantifiableLimitModeArgs()
     {
         return DynamicDataSource.GetFitsInIQuantifiableLimitModeArgs();
+    }
+
+    private static IEnumerable<object[]> GetQuantifiableInvalidArgs()
+    {
+        return DynamicDataSource.GetQuantifiableInvalidArgs();
     }
     #endregion
     #endregion

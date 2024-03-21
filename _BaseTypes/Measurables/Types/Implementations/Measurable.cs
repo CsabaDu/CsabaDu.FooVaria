@@ -275,11 +275,6 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
         return MeasureUnitTypeCollection[GetMeasureUnitCode()];
     }
 
-    public virtual bool HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
-    {
-        return measureUnitCode == GetMeasureUnitCode();
-    }
-
     public void ValidateMeasureUnitCode(IMeasurable? measurable, [DisallowNull] string paramName)
     {
         MeasureUnitCode measureUnitCode = NullChecked(measurable, paramName).GetMeasureUnitCode();
@@ -309,6 +304,11 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
     public virtual TypeCode GetQuantityTypeCode()
     {
         return GetMeasureUnitCode().GetQuantityTypeCode();
+    }
+
+    public virtual bool HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
+    {
+        return measureUnitCode == GetMeasureUnitCode();
     }
 
     public virtual void ValidateMeasureUnit(Enum? measureUnit, [DisallowNull] string paramName)

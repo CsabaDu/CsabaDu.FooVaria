@@ -56,7 +56,7 @@ public sealed class BaseQuantifiableTests
 
     #region Test methods
     #region bool Equals
-    #region BaseQuantifiable.Equals(object?)
+    #region override BaseQuantifiable.Equals(object?)
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method)]
     public void Equals_arg_object_returns_expected(bool expected, object obj, Enum measureUnit, decimal defaultQuantity)
@@ -74,7 +74,7 @@ public sealed class BaseQuantifiableTests
     #endregion
 
     #region bool? FitsIn
-    #region ILimitable.FitsIn(ILimiter?)
+    #region virtual ILimitable.FitsIn(ILimiter?)
     [TestMethod, TestCategory("UnitTest")]
     public void FitsIn_nullArg_ILimiter_returns_expected()
     {
@@ -131,11 +131,10 @@ public sealed class BaseQuantifiableTests
         Assert.AreEqual(expected, actual);
     }
     #endregion
-
     #endregion
 
     #region decimal GetDefaultQuantity
-    #region IDefaultQuantity.GetDefaultQuantity()
+    #region abstract IDefaultQuantity.GetDefaultQuantity()
     [TestMethod, TestCategory("UnitTest")]
     public void GetDefaultQuantity_returns_expected()
     {
@@ -154,7 +153,7 @@ public sealed class BaseQuantifiableTests
     #endregion
 
     #region int GetHashCode
-    #region Measurable.GetHashCode()
+    #region override Measurable.GetHashCode()
     [TestMethod, TestCategory("UnitTest")]
     public void GetHashCode_returns_expected()
     {
@@ -173,7 +172,7 @@ public sealed class BaseQuantifiableTests
     #endregion
 
     #region void ValidateQuantity
-    #region IBaseQuantifiable.ValidateQuantity(ValueType?, string)
+    #region virtual IBaseQuantifiable.ValidateQuantity(ValueType?, string)
     [TestMethod, TestCategory("UnitTest")]
     public void ValidateQuantity_nullArg_ValueType_arg_string_throws_ArgumentNullException()
     {

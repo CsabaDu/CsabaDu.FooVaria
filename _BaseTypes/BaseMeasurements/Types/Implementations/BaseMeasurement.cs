@@ -65,6 +65,16 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         return GetMeasureUnitBasedCollection(CustomNameCollection, measureUnitCode);
     }
 
+    public static decimal GetExchangeRate(string name)
+    {
+        const string paramName = nameof(name);
+        Enum? measureUnit = GetMeasureUnit(NullChecked(name, paramName));
+
+        if (measureUnit != null) return GetExchangeRate(measureUnit, paramName);
+
+        throw NameArgumentOutOfRangeException(name);
+    }
+
     public static string GetMeasureUnitName(Enum measureUnit)
     {
         return GetCustomName(measureUnit) ?? GetDefaultName(measureUnit);
@@ -380,16 +390,6 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         Enum measureUnit = GetBaseMeasureUnit();
 
         return GetExchangeRate(measureUnit, string.Empty);
-    }
-
-    public static decimal GetExchangeRate(string name)
-    {
-        const string paramName = nameof(name);
-        Enum? measureUnit = GetMeasureUnit(NullChecked(name, paramName));
-
-        if (measureUnit != null) return GetExchangeRate(measureUnit, paramName);
-
-        throw NameArgumentOutOfRangeException(name);
     }
 
     public IDictionary<object, decimal> GetExchangeRateCollection()

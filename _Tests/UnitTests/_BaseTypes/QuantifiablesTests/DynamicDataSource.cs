@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests;
+﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.Implementations;
+
+namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests;
 
 internal class DynamicDataSource : DataFields
 {
@@ -163,5 +165,24 @@ internal class DynamicDataSource : DataFields
         #endregion
     }
 
+    internal IEnumerable<object[]> GetQuantifiableInvalidArgs()
+    {
+        measureUnit = RandomParams.GetRandomMeasureUnit();
+        measureUnitCode = SampleParams.NotDefinedMeasureUnitCode;
+        yield return toObjectArray();
+
+        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            Enum_MeasureUnitCode_args item = new(measureUnit, measureUnitCode);
+
+            return item.ToObjectArray();
+        }
+        #endregion
+    }
     #endregion
 }

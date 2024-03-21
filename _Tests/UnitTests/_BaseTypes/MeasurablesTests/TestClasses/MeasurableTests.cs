@@ -54,7 +54,7 @@ public sealed class MeasurableTests
 
     #region Test methods
     #region bool Equals
-    #region Measurable.Equals(object?)
+    #region override Measurable.Equals(object?)
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method)]
     public void Equals_arg_object_returns_expected(bool expected, object obj, Enum measureUnit)
@@ -75,7 +75,7 @@ public sealed class MeasurableTests
     #endregion
 
     #region Enum GetBaseMeasureUnit
-    #region IMeasureUnit.GetBaseMeasureUnit()
+    #region abstract IMeasureUnit.GetBaseMeasureUnit()
     [TestMethod, TestCategory("UnitTest")]
     public void GetBaseMeasureUnit_returns_expected()
     {
@@ -132,7 +132,7 @@ public sealed class MeasurableTests
     #endregion
 
     #region int GetHashCode
-    #region Measurable.GetHashCode()
+    #region override Measurable.GetHashCode()
     [TestMethod, TestCategory("UnitTest")]
     public void GetHashCode_returns_expected()
     {
@@ -149,7 +149,7 @@ public sealed class MeasurableTests
     #endregion
 
     #region MeasureUnitCode GetMeasureUnitCode
-    #region IMeasureUnitCode.GetMeasureUnitCode()
+    #region virtual IMeasureUnitCode.GetMeasureUnitCode()
     [TestMethod, TestCategory("UnitTest")]
     public void GetMeasureUnitCode_returns_expected()
     {
@@ -183,7 +183,7 @@ public sealed class MeasurableTests
     #endregion
 
     #region TypeCode GetQuantityTypeCode
-    #region IQuantityType.GetQuantityTypeCode()
+    #region virtual IQuantityType.GetQuantityTypeCode()
     [TestMethod, TestCategory("UnitTest")]
     public void GetQuantityTypeCode_returns_expected()
     {
@@ -200,7 +200,7 @@ public sealed class MeasurableTests
     #endregion
 
     #region bool HasMeasureUnitCode
-    #region IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode)
+    #region virtual IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode)
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetHasMeasureUnitCodeArgs), DynamicDataSourceType.Method)]
     public void HasMeasureUnitCode_arg_MeasureUnitCode_returns_expected(Enum measureUnit, MeasureUnitCode measureUnitCode, bool expected)
@@ -221,7 +221,7 @@ public sealed class MeasurableTests
     #endregion
 
     #region void ValidateMeasureUnit
-    #region IDefaultMeasureUnit.ValidateMeasureUnit(Enum?, string)
+    #region virtual IDefaultMeasureUnit.ValidateMeasureUnit(Enum?, string)
     [TestMethod, TestCategory("UnitTest")]
     public void ValidateMeasureUnit_nullArg_Enum_arg_string_throws_ArgumentNullException()
     {
@@ -332,7 +332,7 @@ public sealed class MeasurableTests
     }
     #endregion
 
-    #region IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode, string)
+    #region virtual IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode, string)
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetValidateMeasureUnitCodeInvalidArgs), DynamicDataSourceType.Method)]
     public void ValidateMeasureUnitCode_invalidArg_MeasureUnitCode_arg_string_throws_InvalidEnumArgumentException(Enum measureUnit, MeasureUnitCode measureUnitCode)

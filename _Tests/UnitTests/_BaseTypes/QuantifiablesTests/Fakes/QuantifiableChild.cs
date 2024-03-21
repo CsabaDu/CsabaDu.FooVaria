@@ -36,21 +36,6 @@ internal class QuantifiableChild(IRootObject rootObject, string paramName) : Qua
 
     public QuantifiableReturn Return { private get; set; }
 
-    //public IQuantifiable ExchangeTo(Enum context)
-    //{
-    //    if (context == null) return null;
-
-    //    if (!IsDefinedMeasureUnit(context)) return null;
-
-    //    MeasureUnitCode measureUnitCode = GetMeasureUnitCode(context);
-
-    //    if (!HasMeasureUnitCode(measureUnitCode)) return null;
-
-    //    QuantifiableFactoryObject factory = new();
-
-    //    return factory.CreateQuantifiable(measureUnitCode, Return.GetDefaultQuantity);
-    //}
-
     public override sealed Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnit;
 
     public override sealed ValueType GetBaseQuantity()

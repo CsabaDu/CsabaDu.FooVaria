@@ -12,7 +12,7 @@ public sealed class CommonBaseTests
     #endregion
 
     #region Test methods
-    #region Constructors
+    #region CommonBase
     #region CommonBase(IRootObject)
     [TestMethod, TestCategory("UnitTest")]
     public void CommonBase_nullArg_IRootObject_throws_ArgumentNullException()
@@ -43,8 +43,8 @@ public sealed class CommonBaseTests
     #endregion
     #endregion
 
-    #region GetFactory
-    #region GetFactory()
+    #region IFactory GetFactory
+    #region abstract ICommonBase.GetFactory()
     [TestMethod, TestCategory("UnitTest")]
     public void GetFactory_returns_expected()
     {
