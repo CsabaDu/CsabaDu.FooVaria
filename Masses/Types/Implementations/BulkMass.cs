@@ -55,6 +55,11 @@ internal sealed class BulkMass : Mass, IBulkMass
         return Factory;
     }
 
+    public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
+    {
+        return base.GetMeasureUnitCodes().Append(MeasureUnitCode.VolumeUnit);
+    }
+
     public override bool TryExchangeTo(Enum? context, [NotNullWhen(true)] out IMass? exchanged)
     {
         if (Weight.IsExchangeableTo(context)) return base.TryExchangeTo(context, out exchanged);

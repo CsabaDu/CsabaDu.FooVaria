@@ -227,7 +227,7 @@ internal abstract class Mass : BaseQuantifiable, IMass
     #region Virtual methods
     public virtual IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
     {
-        return MeasureUnitCodes.Where(x => this[x] is not null);
+        yield return GetMeasureUnitCode();
     }
 
     public virtual bool Equals(IMass? other)

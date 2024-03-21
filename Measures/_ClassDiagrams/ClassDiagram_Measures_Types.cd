@@ -87,7 +87,7 @@
   <Interface Name="CsabaDu.FooVaria.Measures.Types.IMeasure" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="3" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Types\IMeasure.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -101,7 +101,7 @@
   <Interface Name="CsabaDu.FooVaria.Measures.Types.IMeasure&lt;TSelf, TNum, TEnum&gt;" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="1.25" Y="6.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
       <FileName>Types\IMeasure.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -230,11 +230,11 @@
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IMeasureUnit" Collapsed="true">
-    <Position X="4.75" Y="3.25" Width="1.5" />
+    <Position X="6.25" Y="3.25" Width="1.5" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IMeasureUnit&lt;TEnum&gt;" Collapsed="true">
-    <Position X="4.5" Y="4.25" Width="2" />
+    <Position X="6" Y="4.25" Width="2" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.IBaseMeasure&lt;TSelf&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
@@ -304,6 +304,10 @@
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IMultiply&lt;TSelf, TOperand&gt;" Collapsed="true">
     <Position X="9.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IExchange&lt;TSelf, TEnum&gt;" Collapsed="true">
+    <Position X="3.75" Y="4.25" Width="2" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />
