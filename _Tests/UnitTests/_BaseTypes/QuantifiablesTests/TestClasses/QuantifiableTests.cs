@@ -1,3 +1,5 @@
+using CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -418,7 +420,65 @@ public sealed class QuantifiableTests
 
     #region decimal ProportionalTo
     #region IProportional<IQuantifiable>.ProportionalTo(IQuantifiable?)
+    [TestMethod, TestCategory("UnitTest")]
+    public void ProportionalTo_nullArg_IQuantifiable_throws_ArgumentNullException()
+    {
+        // Arrange
+        SetQuantifiableChild(Fields.defaultQuantity, Fields.measureUnit);
+        QuantifiableChild other = null;
 
+        // Act
+        void attempt() => _ = _quantifiable.ProportionalTo(other);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
+        Assert.AreEqual(ParamNames.other, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ProportionalTo_invalidArg_IQuantifiable_throws_InvalidEnumArgumentException()
+    {
+        // Arrange
+        SetQuantifiableChild(Fields.defaultQuantity, Fields.measureUnit);
+        Fields.measureUnitCode = Fields.RandomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
+        QuantifiableChild other = new(Fields.RootObject, Fields.paramName)
+        {
+            Return = new()
+            {
+                GetBaseMeasureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode),
+                GetDefaultQuantity = Fields.RandomParams.GetRandomDecimal(),
+            }
+        };
+
+        // Act
+        void attempt() => _ = _quantifiable.ProportionalTo(other);
+
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(ParamNames.other, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ProportionalTo_validArg_IQuantifiable_returns_expected()
+    {
+        // Arrange
+        SetQuantifiableChild(Fields.defaultQuantity, Fields.measureUnit);
+        QuantifiableChild other = new(Fields.RootObject, Fields.paramName)
+        {
+            Return = new()
+            {
+                GetBaseMeasureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode),
+                GetDefaultQuantity = Fields.RandomParams.GetRandomDecimal(),
+            }
+        };
+        decimal expected = Math.Abs(_quantifiable.GetDefaultQuantity() / other.GetDefaultQuantity());
+
+        // Act
+        var actual = _quantifiable.ProportionalTo(other);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
     #endregion
     #endregion
 
