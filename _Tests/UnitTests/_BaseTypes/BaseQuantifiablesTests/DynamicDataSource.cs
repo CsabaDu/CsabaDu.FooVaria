@@ -95,17 +95,20 @@ internal class DynamicDataSource : DataFields
 
     internal IEnumerable<object[]> GetValidQuantityTypeCodeArg()
     {
-        IEnumerable<TypeCode> typeCodes = GetQuantityTypeCodes();
+        TypeCode ulongTypeCode = TypeCode.UInt64;
+        IEnumerable<TypeCode> typeCodes = GetQuantityTypeCodes()
+            .Where(x => x != ulongTypeCode)
+            .Append(ulongTypeCode);
 
         return GetQuantityTypeCodeArg(typeCodes);
     }
 
     private static IEnumerable<object[]> GetQuantityTypeCodeArg(IEnumerable<TypeCode> typeCodes)
     {
-        return typeCodes.Select(typeCodeToObjectArray);
+        return typeCodes.Select(toObjectArray);
 
         #region Local methods
-        static object[] typeCodeToObjectArray(TypeCode typeCode)
+        static object[] toObjectArray(TypeCode typeCode)
         {
             TypeCode_arg item = new(typeCode);
 

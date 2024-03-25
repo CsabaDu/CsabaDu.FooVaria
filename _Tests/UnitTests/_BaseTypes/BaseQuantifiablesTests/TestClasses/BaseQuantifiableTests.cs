@@ -192,7 +192,7 @@ public sealed class BaseQuantifiableTests
 
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetInvalidQuantityTypeCodeArg), DynamicDataSourceType.Method)]
-    public void ValidateQuantity_invalidArg_ValueType_arg_string_throws_ArgumentOutOfRangeException(TypeCode typeCode)
+    public void ValidateQuantity_invalidArg_ValueType_arg_string_throws_ArgumentOutOfRangeException(TypeCode typeCode) // negative!
     {
         // Arrange
         SetBaseQuantifiableChild(Fields.measureUnit, Fields.defaultQuantity);
@@ -213,6 +213,10 @@ public sealed class BaseQuantifiableTests
     public void ValidateQuantity_validArg_ValueType_arg_string_returns_expected(TypeCode typeCode)
     {
         // Arrange
+        if (typeCode == TypeCode.UInt64 && Fields.defaultQuantity < 0)
+        {
+            Fields.defaultQuantity = Fields.RandomParams.GetRandomPositiveDecimal();
+        }
         SetBaseQuantifiableChild(Fields.measureUnit, Fields.defaultQuantity);
 
         ValueType quantity = Fields.RandomParams.GetRandomValueType(typeCode);

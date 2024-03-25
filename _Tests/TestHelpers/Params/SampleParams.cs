@@ -1,11 +1,18 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Params;
+﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types.Implementations;
+
+namespace CsabaDu.FooVaria.Tests.TestHelpers.Params;
 
 public static class SampleParams
 {
     private static readonly int LimitModeCount = Enum.GetNames<LimitMode>().Length;
+    private static readonly int RoundingModeCount = Enum.GetNames<RoundingMode>().Length;
+    private static readonly int NotDefinedTypeCodeCount = Enum.GetNames<TypeCode>().Length;
 
     public const LimitMode DefaultLimitMode = default;
     public static readonly LimitMode NotDefinedLimitMode = (LimitMode)LimitModeCount;
+    public static readonly RoundingMode NotDefinedRoundingMode = (RoundingMode)RoundingModeCount;
+    public static readonly TypeCode NotDefinedTypeCode = (TypeCode)NotDefinedTypeCodeCount;
+
     public static readonly int MeasureUnitCodeCount = MeasureUnitCodes.Length;
     public static readonly MeasureUnitCode NotDefinedMeasureUnitCode = (MeasureUnitCode)MeasureUnitCodeCount;
 
@@ -28,4 +35,9 @@ public static class SampleParams
             TypeCode.Single,
             TypeCode.DateTime,
         ];
+
+    public static IEnumerable<TypeCode> GetInvalidQuantityTypeCodes()
+    {
+        return Enum.GetValues<TypeCode>().Except(GetQuantityTypeCodes());
+    }
 }

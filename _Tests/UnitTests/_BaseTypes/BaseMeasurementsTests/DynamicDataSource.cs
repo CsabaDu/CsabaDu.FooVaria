@@ -169,17 +169,17 @@ internal class DynamicDataSource : DataFields
     internal IEnumerable<object[]> GetValidateExchangeRateArg()
     {
         measureUnit = RandomParams.GetRandomValidMeasureUnit();
-        exchangeRate = 0;
+        decimalQuantity = 0;
         yield return toObjectArray();
 
-        exchangeRate = RandomParams.GetRandomNegativeDecimal();
+        decimalQuantity = RandomParams.GetRandomNegativeDecimal();
         yield return toObjectArray();
 
-        exchangeRate = RandomParams.GetRandomPositiveDecimal(GetExchangeRate(measureUnit, null));
+        decimalQuantity = RandomParams.GetRandomPositiveDecimal(GetExchangeRate(measureUnit, null));
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Enum_Decimal_args item = new(measureUnit, exchangeRate);
+            Enum_Decimal_args item = new(measureUnit, decimalQuantity);
 
             return item.ToObjectArray();
         }

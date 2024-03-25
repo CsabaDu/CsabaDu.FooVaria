@@ -24,7 +24,7 @@ internal sealed class BaseMeasurementChild(IRootObject rootObject, string paramN
     // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
     // bool IExchangeable<Enum>.IsExchangeableTo(Enum context)
     // decimal IProportional<IBaseMeasurement>.ProportionalTo(IBaseMeasurement other)
-    // void IExchangeRate.ValidateExchangeRate(decimal exchangeRate, string paramName)
+    // void IExchangeRate.ValidateExchangeRate(decimal decimalQuantity, string paramName)
     // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum measureUnit, string paramName)
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable measurable, string paramName)
     // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)

@@ -40,6 +40,8 @@ public sealed class QuantifiableTests
     public void CleanupBaseQuantifiableTests()
     {
         Fields.paramName = null;
+
+        TestSupport.RestoreConstantExchangeRates();
     }
     #endregion
 
@@ -57,7 +59,7 @@ public sealed class QuantifiableTests
 
     #region Test methods
     #region int CompareTo
-    #region IComparable<IQuantifiable>.CompareTo(IQuantifiable?)
+    #region virtual IComparable<IQuantifiable>.CompareTo(IQuantifiable?)
     [TestMethod, TestCategory("UnitTest")]
     public void CompareTo_nullArg_IQuantifiable_returns_expected()
     {
@@ -124,7 +126,7 @@ public sealed class QuantifiableTests
     #endregion
 
     #region bool Equals
-    #region IEquatable<IQuantifiable>.Equals(IQuantifiable?)
+    #region virtual IEquatable<IQuantifiable>.Equals(IQuantifiable?)
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method)]
     public void Equals_arg_object_returns_expected(Enum measureUnit, decimal defaultQuantity, bool expected, IQuantifiable other)
@@ -160,7 +162,7 @@ public sealed class QuantifiableTests
     //#endregion
 
     #region bool? FitsIn
-    #region ILimitable.FitsIn(ILimiter?)
+    #region override ILimitable.FitsIn(ILimiter?)
     [TestMethod, TestCategory("UnitTest")]
     public void FitsIn_nullArg_ILimiter_returns_expected()
     {
@@ -217,7 +219,7 @@ public sealed class QuantifiableTests
     }
     #endregion
 
-    #region IFit<IQuantifiable>.FitsIn(IQuantifiable?, LimitMode?)
+    #region virtual IFit<IQuantifiable>.FitsIn(IQuantifiable?, LimitMode?)
     [TestMethod, TestCategory("UnitTest")]
     public void FitsIn_nullArgs_IQuantifiable_LimitMode_returns_expected()
     {
@@ -332,12 +334,74 @@ public sealed class QuantifiableTests
     #endregion
     #endregion
 
+    #region object? GetQuantity
+    #region IRound<IQuantifiable>.GetQuantity(RoundingMode)
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetQuantity_invalidArg_RoundingMode_throws_InvalidEnumArgumentException()
+    {
+        // Arrange
+        SetQuantifiableChild(Fields.defaultQuantity, Fields.measureUnit);
 
-    // object IRound<IQuantifiable>.GetQuantity(RoundingMode roundingMode)
-    // object IQuantity.GetQuantity(TypeCode quantityTypeCode)
+        // Act
+        void attempt() => _ = _quantifiable.GetQuantity(SampleParams.NotDefinedRoundingMode);
+
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(ParamNames.roundingMode, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory ("UnitTest")]
+    [DynamicData(nameof(GetGetQuantityRoundinModeArgs), DynamicDataSourceType.Method)]
+    public void GetQuantity_arg_RoundingMode_returns_expected(Enum measureUnit, decimal defaultQuantity, object expected, RoundingMode roundingMode)
+    {
+        // Arrange
+        SetQuantifiableChild(defaultQuantity, measureUnit);
+
+        // Act
+        var actual = _quantifiable.GetQuantity(roundingMode);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    #endregion
+
+    #region IQuantity.GetQuantity(TypeCode)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetGetQuantityInvalidTypeCodeArgs), DynamicDataSourceType.Method)]
+    public void GetQuantity_invalidArg_TypeCode_throws_InvalidEnumArgumentException(TypeCode typeCode)
+    {
+        // Arrange
+        SetQuantifiableChild(Fields.defaultQuantity, Fields.measureUnit);
+
+        // Act
+        void attempt() => _ = _quantifiable.GetQuantity(typeCode);
+
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(ParamNames.quantityTypeCode, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetGetQuantityValidTypeCodeArgs), DynamicDataSourceType.Method)]
+    public void GetQuantity_arg_TypeCode_returns_expected(Enum measureUnit, decimal defaultQuantity, object expected, TypeCode quantityTypeCode)
+    {
+        // Arrange
+        SetQuantifiableChild(defaultQuantity, measureUnit);
+
+        // Act
+        var actual = _quantifiable.GetQuantity(quantityTypeCode);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+
     // bool IExchangeable<Enum>.IsExchangeableTo(Enum? context)
     // decimal IProportional<IQuantifiable>.ProportionalTo(IQuantifiable? other)
-    // IQuantifiable IRound<IQuantifiable>.Round(RoundingMode roundingMode)
+    // IQuantifiable IRound<IQuantifiable>.Round(TypeCode quantityTypeCode)
     // bool ITryExchange<IQuantifiable, Enum>.TryExchangeTo(Enum? context, out IQuantifiable? exchanged)
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable? measurable, string paramName)
 
@@ -383,6 +447,21 @@ public sealed class QuantifiableTests
     private static IEnumerable<object[]> GetQuantifiableInvalidArgs()
     {
         return DynamicDataSource.GetQuantifiableInvalidArgs();
+    }
+
+    private static IEnumerable<object[]> GetGetQuantityRoundinModeArgs()
+    {
+        return DynamicDataSource.GetGetQuantityRoundinModeArgs();
+    }
+
+    private static IEnumerable<object[]> GetGetQuantityInvalidTypeCodeArgs()
+    {
+        return DynamicDataSource.GetGetQuantityInvalidTypeCodeArgs();
+    }
+
+    private static IEnumerable<object[]> GetGetQuantityValidTypeCodeArgs()
+    {
+        return DynamicDataSource.GetGetQuantityValidTypeCodeArgs();
     }
     #endregion
     #endregion

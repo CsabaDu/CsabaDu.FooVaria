@@ -4,15 +4,6 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
 {
     #region Public methods
     #region Override methods
-    public override bool? FitsIn(ILimiter? limiter)
-    {
-        if (limiter == null) return true;
-
-        if (limiter is not IQuantifiable) return null;
-
-        return base.FitsIn(limiter);
-    }
-
     #region Sealed methods
     public override sealed MeasureUnitCode GetMeasureUnitCode()
     {
@@ -24,6 +15,15 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
         base.ValidateMeasureUnitCode(measureUnitCode, paramName);
     }
     #endregion
+
+    public override bool? FitsIn(ILimiter? limiter)
+    {
+        if (limiter == null) return true;
+
+        if (limiter is not IQuantifiable) return null;
+
+        return base.FitsIn(limiter);
+    }
     #endregion
 
     #region Virtual methods
@@ -56,41 +56,6 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
 
         return defaultQuantity.FitsIn(otherQuantity, limitMode);
     }
-    #endregion
-
-    #region Abstract methods
-    public abstract ValueType GetBaseQuantity();
-    public abstract bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable? exchanged);
-    #endregion
-
-    //public abstract IQuantifiable? ExchangeTo(Enum? context);
-    public abstract IQuantifiable Round(RoundingMode roundingMode);
-
-    public object GetQuantity(RoundingMode roundingMode)
-    {
-        ValueType quantity = GetBaseQuantity();
-
-        return quantity.Round(roundingMode)!;
-    }
-
-    public decimal GetDecimalQuantity()
-    {
-        return (decimal)GetQuantity(TypeCode.Decimal);
-    }
-
-    public IQuantifiable GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
-    {
-        IQuantifiableFactory factory = (IQuantifiableFactory)GetFactory();
-
-        return factory.CreateQuantifiable(measureUnitCode, defaultQuantity);
-    }
-
-    public object GetQuantity(TypeCode quantityTypeCode)
-    {
-        ValueType quantity = GetBaseQuantity();
-
-        return quantity.ToQuantity(quantityTypeCode) ?? throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
-    }
 
     public virtual bool IsExchangeableTo(Enum? context) // To override with valid measureUnit
     {
@@ -104,6 +69,39 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
         }
 
         return HasMeasureUnitCode(measureUnitCode);
+    }
+    #endregion
+
+    #region Abstract methods
+    public abstract ValueType GetBaseQuantity();
+    public abstract IQuantifiable Round(RoundingMode roundingMode);
+    public abstract bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable? exchanged);
+    #endregion
+
+    public decimal GetDecimalQuantity()
+    {
+        return (decimal)GetQuantity(TypeCode.Decimal);
+    }
+
+    public IQuantifiable GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
+    {
+        IQuantifiableFactory factory = (IQuantifiableFactory)GetFactory();
+
+        return factory.CreateQuantifiable(measureUnitCode, defaultQuantity);
+    }
+
+    public object GetQuantity(RoundingMode roundingMode)
+    {
+        ValueType quantity = GetBaseQuantity();
+
+        return quantity.Round(roundingMode)!;
+    }
+
+    public object GetQuantity(TypeCode quantityTypeCode)
+    {
+        ValueType quantity = GetBaseQuantity();
+
+        return quantity.ToQuantity(quantityTypeCode) ?? throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
     }
 
     public decimal ProportionalTo(IQuantifiable? other)

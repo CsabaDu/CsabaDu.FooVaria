@@ -8,8 +8,8 @@ public abstract class BaseQuantifiable(IRootObject rootObject, string paramName)
     {
         QuantityTypeSet =
         [
-            typeof(int),
-            typeof(uint),
+            //typeof(int),
+            //typeof(uint),
             typeof(long),
             typeof(ulong),
             typeof(double),

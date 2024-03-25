@@ -32,6 +32,12 @@ public sealed class RandomParams
         return GetRandomItem(ConstantMeasureUnitCodes);
     }
 
+    public MeasureUnitCode GetRandomCustomMeasureUnitCode()
+    {
+        return GetRandomItem(CustomMeasureUnitCodes);
+
+    }
+
     public Enum GetRandomMeasureUnitOrMeasureUnitCode()
     {
         IEnumerable<Enum> measureUnitsAndMeasureUnitCodes = GetAllMeasureUnits().Union([.. MeasureUnitCodes]);
@@ -208,6 +214,11 @@ public sealed class RandomParams
         return Convert.ToDecimal(Random.NextInt64(long.MinValue, 1) - Random.NextDouble());
     }
 
+    public double GetRandomDouble()
+    {
+        return (double)GetRandomValueType(TypeCode.Double);
+    }
+
     public LimitMode GetRandomLimitMode()
     {
         return GetRandomItem(Enum.GetValues<LimitMode>());
@@ -268,10 +279,10 @@ public sealed class RandomParams
             TypeCode.Int32 => Random.Next(int.MinValue, int.MaxValue),
             TypeCode.UInt32 => Convert.ToUInt32(Random.Next()) + Random.Next(),
             TypeCode.Int64 => randomNextInt64() + randomNextInt64(),
-            TypeCode.UInt64 => Convert.ToUInt64(Random.NextInt64()) + Convert.ToUInt64(Random.NextInt64()),
-            TypeCode.Single => Random.NextSingle() + randomNextInt64(),
-            TypeCode.Double => Random.NextDouble() + randomNextInt64(),
-            TypeCode.Decimal => Convert.ToDecimal(Random.NextDouble() + randomNextInt64()),
+            TypeCode.UInt64 => Convert.ToUInt64(Random.NextInt64() + Random.Next()),
+            TypeCode.Single => Convert.ToSingle(randomNextInt64()) + Random.NextSingle(),
+            TypeCode.Double => Convert.ToDouble(randomNextInt64()) + Random.NextDouble(),
+            TypeCode.Decimal => Convert.ToDecimal(randomNextInt64()) + Convert.ToDecimal(Random.NextDouble()),
             TypeCode.DateTime => DateTime.Now,
 
             _ => throw new ArgumentOutOfRangeException(nameof(typeCode), typeCode, null),

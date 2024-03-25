@@ -20,13 +20,13 @@ internal class QuantifiableChild(IRootObject rootObject, string paramName) : Qua
     // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()
     // IQuantifiable IQuantifiable.GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
-    // object IRound<IQuantifiable>.GetQuantity(RoundingMode roundingMode)
+    // object IRound<IQuantifiable>.GetQuantity(TypeCode roundingMode)
     // object IQuantity.GetQuantity(TypeCode quantityTypeCode)
     // TypeCode IQuantityType.GetQuantityTypeCode()
     // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
     // bool IExchangeable<Enum>.IsExchangeableTo(Enum context)
     // decimal IProportional<IQuantifiable>.ProportionalTo(IQuantifiable other)
-    // IQuantifiable IRound<IQuantifiable>.Round(RoundingMode roundingMode)
+    // IQuantifiable IRound<IQuantifiable>.Round(TypeCode roundingMode)
     // bool ITryExchange<IQuantifiable, Enum>.TryExchangeTo(Enum context, out IQuantifiable exchanged)
     // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum measureUnit, string paramName)
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable measurable, string paramName)
@@ -41,8 +41,9 @@ internal class QuantifiableChild(IRootObject rootObject, string paramName) : Qua
     public override sealed ValueType GetBaseQuantity()
     {
         ValueType quantity = Return.GetDefaultQuantity;
+        TypeCode typeCode = GetQuantityTypeCode();
 
-        return (ValueType)quantity.ToQuantity(GetQuantityTypeCode());
+        return (ValueType)quantity.ToQuantity(typeCode);
     }
 
     public override sealed decimal GetDefaultQuantity() => Return.GetDefaultQuantity;

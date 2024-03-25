@@ -10,7 +10,11 @@ public static class ParamNames
     public const string measureUnitCode = nameof(measureUnitCode);
     public const string other = nameof(other);
     public const string paramName = nameof(paramName);
-    public const string rootObject = nameof(rootObject);    public static IEnumerable<string> GetParamNames()
+    public const string quantityTypeCode = nameof(quantityTypeCode);
+    public const string rootObject = nameof(rootObject);
+    public const string roundingMode = nameof(roundingMode);
+
+    public static IEnumerable<string> GetParamNames()
     {
         Type type = typeof(ParamNames);
         FieldInfo[] fields = type.GetFields(BindingFlags.Static | BindingFlags.Public);

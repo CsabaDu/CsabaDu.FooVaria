@@ -7,22 +7,6 @@ public static class Extensions
     private const int DoublePrecisionDecimals = 8;
     #endregion
 
-    #region System.Int32
-    public static bool? FitsIn(this int comparison, LimitMode? limitMode)
-    {
-        return limitMode switch
-        {
-            LimitMode.BeNotLess => comparison >= 0,
-            LimitMode.BeNotGreater => comparison <= 0,
-            LimitMode.BeGreater => comparison > 0,
-            LimitMode.BeLess => comparison < 0,
-            LimitMode.BeEqual => comparison == 0,
-
-            _ => null,
-        };
-    }
-    #endregion
-
     #region System.Decimal
     public static bool? FitsIn(this decimal quantity, decimal other, LimitMode? limitMode)
     {
@@ -38,7 +22,7 @@ public static class Extensions
         };
     }
 
-    public static decimal Round(this decimal quantity, RoundingMode roundingMode)
+    public static decimal Round(this decimal quantity, RoundingMode roundingMode = RoundingMode.General)
     {
         return roundingMode switch
         {
@@ -46,6 +30,7 @@ public static class Extensions
             RoundingMode.Ceiling => decimal.Ceiling(quantity),
             RoundingMode.Floor => decimal.Floor(quantity),
             RoundingMode.Half => getHalfQuantity(),
+            RoundingMode.SinglePrecision => decimal.Round(quantity, SinglePrecisionDecimals),
             RoundingMode.DoublePrecision => decimal.Round(quantity, DoublePrecisionDecimals),
 
             _ => throw InvalidRoundingModeEnumArgumentException(roundingMode),
@@ -70,7 +55,7 @@ public static class Extensions
     #endregion
 
     #region System.Double
-    public static double Round(this double quantity, RoundingMode roundingMode)
+    public static double Round(this double quantity, RoundingMode roundingMode = RoundingMode.General)
     {
         return roundingMode switch
         {
@@ -102,6 +87,22 @@ public static class Extensions
     }
     #endregion
 
+    #region System.Int32
+    public static bool? FitsIn(this int comparison, LimitMode? limitMode)
+    {
+        return limitMode switch
+        {
+            LimitMode.BeNotLess => comparison >= 0,
+            LimitMode.BeNotGreater => comparison <= 0,
+            LimitMode.BeGreater => comparison > 0,
+            LimitMode.BeLess => comparison < 0,
+            LimitMode.BeEqual => comparison == 0,
+
+            _ => null,
+        };
+    }
+    #endregion
+
     #region System.ValueType
     public static TypeCode? GetQuantityTypeCode(this ValueType quantity)
     {
@@ -129,9 +130,9 @@ public static class Extensions
         {
             return conversionTypeCode switch
             {
-                TypeCode.Int32 => Convert.ToInt32(quantity),
+                //TypeCode.Int32 or /*=> Convert.ToInt32(quantity),*/
                 TypeCode.Int64 => Convert.ToInt64(quantity),
-                TypeCode.UInt32 or
+                //TypeCode.UInt32 or
                 TypeCode.UInt64 => getRoundedUIntQuantityOrNull(),
                 TypeCode.Double or
                 TypeCode.Decimal => getRoundedQuantity(),
@@ -145,21 +146,17 @@ public static class Extensions
         }
         catch (Exception ex)
         {
-            throw new InvalidOperationException(ex.Message, ex.InnerException);
+            throw new InvalidOperationException(ex.Message, ex);
         }
 
         #region Local methods
         object? getRoundedUIntQuantityOrNull()
         {
-            if (Convert.ToDouble(quantity) < 0) return null;
+            double converted = Convert.ToDouble(quantity);
 
-            return conversionTypeCode switch
-            {
-                TypeCode.UInt32 => Convert.ToUInt32(quantity),
-                TypeCode.UInt64 => Convert.ToUInt64(quantity),
+            if (converted < 0 || converted >= ulong.MaxValue) return null;
 
-                _ => null,
-            };
+            return Convert.ToUInt64(quantity);
         }
 
         object getRoundedQuantity()
@@ -175,16 +172,18 @@ public static class Extensions
         #endregion
     }
 
-    public static object? Round(this ValueType quantity, RoundingMode roundingMode)
+    public static object? Round(this ValueType quantity, RoundingMode roundingMode = RoundingMode.General)
     {
-        if (!quantity.IsValidTypeQuantity()) return null;
-
         return quantity switch
         {
-            double doubleType => doubleType.Round(roundingMode),
-            decimal decimalType => decimalType.Round(roundingMode),
+            //int or
+            //uint or
+            long or
+            ulong => quantity,
+            double doubleQuyantity => doubleQuyantity.Round(roundingMode),
+            decimal decimalQuyantity => decimalQuyantity.Round(roundingMode),
 
-            _ => quantity,
+            _ => null,
         };
     }
 
