@@ -351,7 +351,7 @@ public sealed class QuantifiableTests
     }
 
     [TestMethod, TestCategory ("UnitTest")]
-    [DynamicData(nameof(GetGetQuantityRoundinModeArgs), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetGetQuantityRoundingModeArgs), DynamicDataSourceType.Method)]
     public void GetQuantity_arg_RoundingMode_returns_expected(Enum measureUnit, decimal defaultQuantity, object expected, RoundingMode roundingMode)
     {
         // Arrange
@@ -372,7 +372,8 @@ public sealed class QuantifiableTests
     public void GetQuantity_invalidArg_TypeCode_throws_InvalidEnumArgumentException(TypeCode typeCode)
     {
         // Arrange
-        SetQuantifiableChild(Fields.defaultQuantity, Fields.measureUnit);
+        decimal quantity = typeCode == TypeCode.UInt64 ? Fields.RandomParams.GetRandomNegativeDecimal() : Fields.defaultQuantity;
+        SetQuantifiableChild(quantity, Fields.measureUnit);
 
         // Act
         void attempt() => _ = _quantifiable.GetQuantity(typeCode);
@@ -449,9 +450,9 @@ public sealed class QuantifiableTests
         return DynamicDataSource.GetQuantifiableInvalidArgs();
     }
 
-    private static IEnumerable<object[]> GetGetQuantityRoundinModeArgs()
+    private static IEnumerable<object[]> GetGetQuantityRoundingModeArgs()
     {
-        return DynamicDataSource.GetGetQuantityRoundinModeArgs();
+        return DynamicDataSource.GetGetQuantityRoundingModeArgs();
     }
 
     private static IEnumerable<object[]> GetGetQuantityInvalidTypeCodeArgs()

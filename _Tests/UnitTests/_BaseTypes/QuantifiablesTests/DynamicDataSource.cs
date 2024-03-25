@@ -185,7 +185,7 @@ internal class DynamicDataSource : DataFields
         #endregion
     }
 
-    internal IEnumerable<object[]> GetGetQuantityRoundinModeArgs()
+    internal IEnumerable<object[]> GetGetQuantityRoundingModeArgs()
     {
         // double
         measureUnitCode = RandomParams.GetRandomConstantMeasureUnitCode();
@@ -225,7 +225,8 @@ internal class DynamicDataSource : DataFields
     {
         return SampleParams.GetInvalidQuantityTypeCodes()
             .Select(toObjectArray)
-            .Append(toObjectArray(SampleParams.NotDefinedTypeCode));
+            .Append(toObjectArray(SampleParams.NotDefinedTypeCode))
+            .Append(toObjectArray(TypeCode.UInt64));
 
         #region toObjectArray method
         static object[] toObjectArray(TypeCode typeCode)
