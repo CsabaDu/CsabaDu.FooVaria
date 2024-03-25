@@ -352,7 +352,7 @@ public sealed class QuantifiableTests
 
     [TestMethod, TestCategory ("UnitTest")]
     [DynamicData(nameof(GetGetQuantityRoundingModeArgs), DynamicDataSourceType.Method)]
-    public void GetQuantity_arg_RoundingMode_returns_expected(Enum measureUnit, decimal defaultQuantity, object expected, RoundingMode roundingMode)
+    public void GetQuantity_validArg_RoundingMode_returns_expected(Enum measureUnit, decimal defaultQuantity, object expected, RoundingMode roundingMode)
     {
         // Arrange
         SetQuantifiableChild(defaultQuantity, measureUnit);
@@ -363,7 +363,6 @@ public sealed class QuantifiableTests
         // Assert
         Assert.AreEqual(expected, actual);
     }
-
     #endregion
 
     #region IQuantity.GetQuantity(TypeCode)
@@ -385,7 +384,7 @@ public sealed class QuantifiableTests
 
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetGetQuantityValidTypeCodeArgs), DynamicDataSourceType.Method)]
-    public void GetQuantity_arg_TypeCode_returns_expected(Enum measureUnit, decimal defaultQuantity, object expected, TypeCode quantityTypeCode)
+    public void GetQuantity_validArg_TypeCode_returns_expected(Enum measureUnit, decimal defaultQuantity, object expected, TypeCode quantityTypeCode)
     {
         // Arrange
         SetQuantifiableChild(defaultQuantity, measureUnit);
@@ -399,9 +398,30 @@ public sealed class QuantifiableTests
     #endregion
     #endregion
 
+    #region bool IsExchangeableTo
+    #region IExchangeable<Enum>.IsExchangeableTo(Enum?)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetIsExchangeableToArg), DynamicDataSourceType.Method)]
+    public void IsExchangeableTo_arg_Enum_returns_expected(bool expected, Enum measureUnit, Enum context)
+    {
+        // Arrange
+        SetQuantifiableChild(Fields.defaultQuantity, measureUnit);
 
-    // bool IExchangeable<Enum>.IsExchangeableTo(Enum? context)
-    // decimal IProportional<IQuantifiable>.ProportionalTo(IQuantifiable? other)
+        // Act
+        var actual = _quantifiable.IsExchangeableTo(context);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region decimal ProportionalTo
+    #region IProportional<IQuantifiable>.ProportionalTo(IQuantifiable?)
+
+    #endregion
+    #endregion
+
     // IQuantifiable IRound<IQuantifiable>.Round(TypeCode quantityTypeCode)
     // bool ITryExchange<IQuantifiable, Enum>.TryExchangeTo(Enum? context, out IQuantifiable? exchanged)
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable? measurable, string paramName)
@@ -463,6 +483,11 @@ public sealed class QuantifiableTests
     private static IEnumerable<object[]> GetGetQuantityValidTypeCodeArgs()
     {
         return DynamicDataSource.GetGetQuantityValidTypeCodeArgs();
+    }
+
+    private static IEnumerable<object[]> GetIsExchangeableToArg()
+    {
+        return DynamicDataSource.GetIsExchangeableToArg();
     }
     #endregion
     #endregion

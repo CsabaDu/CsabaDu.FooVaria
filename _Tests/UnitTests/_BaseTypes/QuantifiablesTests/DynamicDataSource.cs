@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
-
-namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests;
+﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests;
 
 internal class DynamicDataSource : DataFields
 {
@@ -283,6 +281,58 @@ internal class DynamicDataSource : DataFields
         object convertDefaultQuantity()
         {
             return defaultQuantity.ToQuantity(typeCode);
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> GetIsExchangeableToArg()
+    {
+        // null -  false
+        isTrue = false;
+        measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        context = null;
+        yield return toObjectArray();
+
+        // Not measureUnit not MeasureUnitCode Enum - false
+        context = TypeCode.Empty;
+        yield return toObjectArray();
+
+        // other MeasureUnitCode - false
+        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        context = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
+        yield return toObjectArray();
+
+        // same type not defined measureUnit - false
+        context = SampleParams.GetNotDefinedMeasureUnit(measureUnitCode);
+        yield return toObjectArray();
+
+        // same MeasureUnitCode - true
+        isTrue = true;
+        context = measureUnitCode;
+        yield return toObjectArray();
+
+        // same type valid measureUnit - true
+        context = RandomParams.GetRandomValidMeasureUnit(measureUnitCode);
+        yield return toObjectArray();
+
+        // other type measureUnit - false
+        isTrue = false;
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
+        context = RandomParams.GetRandomMeasureUnit(measureUnitCode);
+        yield return toObjectArray();
+
+        // same type invalid measureUnit - false
+        context = RandomParams.GetRandomNotUsedCustomMeasureUnit();
+        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        measureUnit = measureUnitCode.GetDefaultMeasureUnit();
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            Bool_Enum_Enum_args item = new(isTrue, measureUnit, context);
+
+            return item.ToObjectArray();
         }
         #endregion
     }

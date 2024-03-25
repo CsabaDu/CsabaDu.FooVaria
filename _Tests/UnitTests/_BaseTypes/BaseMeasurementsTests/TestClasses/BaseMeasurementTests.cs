@@ -289,7 +289,7 @@ public sealed class BaseMeasurementTests
     #region IExchangeable<Enum>.IsExchangeableTo(Enum)
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetIsExchangeableToArg), DynamicDataSourceType.Method)]
-    public void IsExchangeableTo_returns_expected(bool expected, Enum measureUnit, Enum context)
+    public void IsExchangeableTo_arg_Enum_returns_expected(bool expected, Enum measureUnit, Enum context)
     {
         // Arrange
         SetBaseMeasurementChild(measureUnit);
