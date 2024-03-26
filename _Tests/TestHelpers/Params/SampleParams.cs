@@ -33,7 +33,7 @@ public static class SampleParams
             TypeCode.Int16,
             TypeCode.UInt16,
             TypeCode.Int32,
-            //TypeCode.UInt32, // TODO Check why?
+            //TypeCode.UInt32, // TODO Check why wrong?
             TypeCode.Single,
             TypeCode.DateTime,
         ];
