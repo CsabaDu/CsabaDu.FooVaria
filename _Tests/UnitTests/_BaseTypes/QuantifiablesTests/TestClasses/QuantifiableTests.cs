@@ -1,4 +1,5 @@
 using CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors;
+using CsabaDu.FooVaria.Tests.TestHelpers.Params;
 
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.TestClasses;
 
@@ -146,16 +147,16 @@ public sealed class QuantifiableTests
     #endregion
 
     //#region IQuantifiable? ExchangeTo
-    //#region IExchange<IQuantifiable, Enum>.ExchangeTo(Enum? context)
+    //#region IExchange<IQuantifiable, Enum>.ExchangeTo(Enum? otherMeasureUnit)
     //[TestMethod, TestCategory("UnitTest")]
     //[DynamicData(nameof(GetExchangeToArgs), DynamicDataSourceType.Method)]
-    //public void ExchangeTo_arg_returns_expected(Enum measureUnit, Enum context, IQuantifiable expected)
+    //public void ExchangeTo_arg_returns_expected(Enum measureUnit, Enum otherMeasureUnit, IQuantifiable expected)
     //{
     //    // Arrange
     //    SetQuantifiableChild(Fields.defaultQuantity, measureUnit);
 
     //    // Act
-    //    var actual = _quantifiable.ExchangeTo(context);
+    //    var actual = _quantifiable.ExchangeTo(otherMeasureUnit);
 
     //    // Assert
     //    Assert.AreEqual(expected?.GetType(), actual?.GetType());
@@ -445,7 +446,7 @@ public sealed class QuantifiableTests
         {
             Return = new()
             {
-                GetBaseMeasureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode),
+                GetBaseMeasureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode),
                 GetDefaultQuantity = Fields.RandomParams.GetRandomDecimal(),
             }
         };
@@ -455,6 +456,28 @@ public sealed class QuantifiableTests
 
         // Assert
         var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(ParamNames.other, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ProportionalTo_invalidArg_IQuantifiable_throws_ArgumentOutOfRangeException()
+    {
+        // Arrange
+        SetQuantifiableChild(Fields.defaultQuantity, Fields.measureUnit);
+        QuantifiableChild other = new(Fields.RootObject, Fields.paramName)
+        {
+            Return = new()
+            {
+                GetBaseMeasureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode),
+                GetDefaultQuantity = 0,
+            }
+        };
+
+        // Act
+        void attempt() => _ = _quantifiable.ProportionalTo(other);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
         Assert.AreEqual(ParamNames.other, ex.ParamName);
     }
 
@@ -483,7 +506,7 @@ public sealed class QuantifiableTests
     #endregion
 
     // IQuantifiable IRound<IQuantifiable>.Round(TypeCode quantityTypeCode)
-    // bool ITryExchange<IQuantifiable, Enum>.TryExchangeTo(Enum? context, out IQuantifiable? exchanged)
+    // bool ITryExchange<IQuantifiable, Enum>.TryExchangeTo(Enum? otherMeasureUnit, out IQuantifiable? exchanged)
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable? measurable, string paramName)
 
     #endregion
@@ -548,6 +571,11 @@ public sealed class QuantifiableTests
     private static IEnumerable<object[]> GetIsExchangeableToArg()
     {
         return DynamicDataSource.GetIsExchangeableToArg();
+    }
+
+    private static IEnumerable<object[]> GetProportionalToInvalidArg()
+    {
+        return DynamicDataSource.GetProportionalToInvalidArg();
     }
     #endregion
     #endregion

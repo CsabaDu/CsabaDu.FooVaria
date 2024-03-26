@@ -3,25 +3,37 @@
 public abstract class Spread(IRootObject rootObject, string paramName) : Quantifiable(rootObject, paramName), ISpread
 {
     #region Public methods
-    public override sealed ValueType GetBaseQuantity()
+    #region Override methods
+    public override Enum GetBaseMeasureUnit()
     {
-        return GetQuantity();
+        return (GetSpreadMeasure() as IMeasurable)!.GetBaseMeasureUnit();
     }
 
-    public void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)
+    #region Sealed methods
+    public override sealed decimal GetDefaultQuantity()
     {
-        IBaseMeasure? baseMeasure = NullChecked(spreadMeasure, paramName).GetSpreadMeasure() as IBaseMeasure;
-
-        MeasureUnitCode measureUnitCode = baseMeasure?.GetMeasureUnitCode() ?? throw new InvalidOperationException(null);
-
-        if (!HasMeasureUnitCode(measureUnitCode)) throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
-
-        decimal quantity = baseMeasure.GetDefaultQuantity();
-
-        if (quantity > 0) return;
-
-        throw QuantityArgumentOutOfRangeException(paramName, quantity);
+        return (GetSpreadMeasure() as IBaseQuantifiable)!.GetDefaultQuantity();
     }
+
+    public override sealed TypeCode GetQuantityTypeCode()
+    {
+        return base.GetQuantityTypeCode();
+    }
+
+    public override sealed bool IsExchangeableTo(Enum? context)
+    {
+        return (GetSpreadMeasure() as IBaseMeasure)!.IsExchangeableTo(context);
+    }
+
+    public override sealed ISpread Round(RoundingMode roundingMode)
+    {
+        IBaseMeasure baseMeasure = (IBaseMeasure)GetSpreadMeasure();
+        ISpreadMeasure spreadMeasure = (ISpreadMeasure)baseMeasure.Round(roundingMode);
+
+        return GetSpread(spreadMeasure);
+    }
+    #endregion
+    #endregion
 
     #region Virtual methods
     //public override ISpread? ExchangeTo(Enum? context)
@@ -44,36 +56,29 @@ public abstract class Spread(IRootObject rootObject, string paramName) : Quantif
     }
     #endregion
 
-    #region Override methods
-    public override Enum GetBaseMeasureUnit()
-    {
-        return (GetSpreadMeasure() as IMeasurable)!.GetBaseMeasureUnit();
-    }
-
-    #region Sealed methods
-    public override sealed ISpread Round(RoundingMode roundingMode)
-    {
-        IBaseMeasure baseMeasure = (IBaseMeasure)GetSpreadMeasure();
-        ISpreadMeasure spreadMeasure = (ISpreadMeasure)baseMeasure.Round(roundingMode);
-
-        return GetSpread(spreadMeasure);
-    }
-
-    public override sealed decimal GetDefaultQuantity()
-    {
-        return (GetSpreadMeasure() as IBaseQuantifiable)!.GetDefaultQuantity();
-    }
-
-    public override sealed TypeCode GetQuantityTypeCode()
-    {
-        return base.GetQuantityTypeCode();
-    }
-    #endregion
-    #endregion
-
     #region Abstract methods
     public abstract ISpread GetSpread(ISpreadMeasure spreadMeasure);
     public abstract ISpreadMeasure GetSpreadMeasure();
     #endregion
+
+    public override sealed ValueType GetBaseQuantity()
+    {
+        return GetQuantity();
+    }
+
+    public void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)
+    {
+        IBaseMeasure? baseMeasure = NullChecked(spreadMeasure, paramName).GetSpreadMeasure() as IBaseMeasure;
+
+        MeasureUnitCode measureUnitCode = baseMeasure?.GetMeasureUnitCode() ?? throw new InvalidOperationException(null);
+
+        if (!HasMeasureUnitCode(measureUnitCode)) throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
+
+        decimal quantity = baseMeasure.GetDefaultQuantity();
+
+        if (quantity > 0) return;
+
+        throw QuantityArgumentOutOfRangeException(paramName, quantity);
+    }
     #endregion
 }

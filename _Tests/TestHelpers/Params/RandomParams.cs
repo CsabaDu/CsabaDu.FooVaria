@@ -138,6 +138,13 @@ public sealed class RandomParams
     {
         MeasureUnitCode customMeasureUnitCode = GetRandomItem(CustomMeasureUnitCodes);
 
+        return GetRandomNotUsedCustomMeasureUnit(customMeasureUnitCode);
+    }
+
+    public Enum GetRandomNotUsedCustomMeasureUnit(MeasureUnitCode customMeasureUnitCode)
+    {
+        if (!CustomMeasureUnitCodes.Contains(customMeasureUnitCode)) throw new InvalidOperationException("Not custom MeaureUnitCode: " + Enum.GetName(customMeasureUnitCode));
+
         Enum measureUnit = GetRandomMeasureUnit(customMeasureUnitCode);
 
         while (ExchangeRateCollection.ContainsKey(measureUnit))

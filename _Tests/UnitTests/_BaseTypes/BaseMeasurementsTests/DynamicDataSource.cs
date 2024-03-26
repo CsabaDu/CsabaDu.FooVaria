@@ -151,9 +151,11 @@ internal class DynamicDataSource : DataFields
         yield return toObjectArray();
 
         // same type invalid measureUnit - false
-        context = RandomParams.GetRandomNotUsedCustomMeasureUnit();
-        measureUnitCode = GetMeasureUnitCode(measureUnit);
-        measureUnit = measureUnitCode.GetDefaultMeasureUnit();
+        measureUnitCode = RandomParams.GetRandomCustomMeasureUnitCode();
+        paramName = RandomParams.GetRandomParamName();
+        SetCustomMeasureUnit(paramName, measureUnitCode, RandomParams.GetRandomPositiveDecimal());
+        measureUnit = GetMeasureUnit(paramName);
+        context = RandomParams.GetRandomNotUsedCustomMeasureUnit(measureUnitCode);
         yield return toObjectArray();
 
         #region toObjectArray method

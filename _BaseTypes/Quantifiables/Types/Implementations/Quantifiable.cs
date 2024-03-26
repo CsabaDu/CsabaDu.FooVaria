@@ -57,7 +57,7 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
         return defaultQuantity.FitsIn(otherQuantity, limitMode);
     }
 
-    public virtual bool IsExchangeableTo(Enum? context) // To override with valid measureUnit
+    public virtual bool IsExchangeableTo(Enum? context)
     {
         if (context == null) return false;
 

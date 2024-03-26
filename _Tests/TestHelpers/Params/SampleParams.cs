@@ -10,7 +10,7 @@ public static class SampleParams
 
     public const LimitMode DefaultLimitMode = default;
     public static readonly LimitMode NotDefinedLimitMode = (LimitMode)LimitModeCount;
-    public static readonly RoundingMode NotDefinedRoundingMode = (RoundingMode)RoundingModeCount;
+    public static readonly RoundingMode NotDefinedRoundingMode = (RoundingMode)(RoundingModeCount + 1);
     public static readonly TypeCode NotDefinedTypeCode = (TypeCode)NotDefinedTypeCodeCount;
 
     public static readonly int MeasureUnitCodeCount = MeasureUnitCodes.Length;

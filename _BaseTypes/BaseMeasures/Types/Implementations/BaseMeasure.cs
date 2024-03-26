@@ -5,6 +5,97 @@ namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations;
 public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Quantifiable(rootObject, paramName), IBaseMeasure
 {
     #region Public methods
+    #region Static methods
+    public static void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramName)
+    {
+        Type quantityType = NullChecked(quantity, paramName).GetType();
+
+        ValidateQuantityTypeCode(quantityTypeCode, nameof(quantityTypeCode));
+
+        if (quantityTypeCode == Type.GetTypeCode(quantityType)) return;
+
+        throw ArgumentTypeOutOfRangeException(paramName, quantity!);
+    }
+
+    public static void ValidateQuantityTypeCode(TypeCode quantityTypeCode, string paramName)
+    {
+        if (GetValidQuantityTypeCodeOrNull(quantityTypeCode) != null) return;
+
+        throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode, paramName);
+    }
+    #endregion
+
+    #region Override methods
+    public override Enum GetBaseMeasureUnit()
+    {
+        IBaseMeasurement baseMeasurement = GetBaseMeasurement();
+
+        return baseMeasurement.GetBaseMeasureUnit();
+    }
+
+    public override sealed IBaseMeasure Round(RoundingMode roundingMode)
+    {
+        ValueType quantity = (ValueType)GetQuantity(roundingMode);
+        IBaseMeasurement baseMeasurement = GetBaseMeasurement();
+
+        return GetBaseMeasure(baseMeasurement, quantity);
+    }
+
+    #region Sealed methods
+    public override sealed int CompareTo(IQuantifiable? other)
+    {
+        return base.CompareTo(other);
+    }
+
+    public override sealed bool Equals(IQuantifiable? other)
+    {
+        return base.Equals(other);
+    }
+
+    public override sealed bool? FitsIn(IQuantifiable? other, LimitMode? limitMode)
+    {
+        return base.FitsIn(other, limitMode);
+    }
+
+    public override sealed bool? FitsIn(ILimiter? limiter)
+    {
+        return base.FitsIn(limiter);
+    }
+
+    public override sealed bool IsExchangeableTo(Enum? context)
+    {
+        return base.IsExchangeableTo(context)
+            && IsValidMeasureUnit(getMeasureUnit());
+
+        #region Local methods
+        Enum getMeasureUnit()
+        {
+            MeasureUnitElements measureUnitElements = GetMeasureUnitElements(context, nameof(context));
+
+            return measureUnitElements.MeasureUnit;
+        }
+        #endregion
+    }
+
+    public override sealed decimal GetDefaultQuantity()
+    {
+        return GetDefaultQuantity(GetBaseQuantity(), GetExchangeRate());
+    }
+    #endregion
+    #endregion
+
+    #region Virtual methods
+    public virtual LimitMode? GetLimitMode()
+    {
+        return null;
+    }
+    #endregion
+
+    #region Abstract methods
+    public abstract IBaseMeasurement GetBaseMeasurement();
+    public abstract IBaseMeasurementFactory GetBaseMeasurementFactory();
+    #endregion
+
     public bool Equals(IBaseMeasure? x, IBaseMeasure? y)
     {
         if (x == null && y == null) return true;
@@ -60,101 +151,6 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
 
         baseMeasurement.ValidateExchangeRate(exchangeRate, paramName);
     }
-
-    #region Override methods
-    public override Enum GetBaseMeasureUnit()
-    {
-        IBaseMeasurement baseMeasurement = GetBaseMeasurement();
-
-        return baseMeasurement.GetBaseMeasureUnit();
-    }
-
-    public override sealed IBaseMeasure Round(RoundingMode roundingMode)
-    {
-        ValueType quantity = (ValueType)GetQuantity(roundingMode);
-        IBaseMeasurement baseMeasurement = GetBaseMeasurement();
-
-        return GetBaseMeasure(baseMeasurement, quantity);
-    }
-
-    #region Sealed methods
-    public override sealed int CompareTo(IQuantifiable? other)
-    {
-        return base.CompareTo(other);
-    }
-
-    public override sealed bool Equals(IQuantifiable? other)
-    {
-        return base.Equals(other);
-    }
-
-    //public override sealed IBaseMeasure? ExchangeTo(Enum? context)
-    //{
-    //    if (!IsExchangeableTo(context)) return null;
-
-    //    if (!IsValidMeasureUnit(context))
-    //    {
-    //        if (context is not MeasureUnitCode measureUnitCode) return null;
-
-    //        context = measureUnitCode.GetDefaultMeasureUnit();
-    //    }
-
-    //    IBaseMeasurementFactory factory = GetBaseMeasurementFactory();
-    //    IBaseMeasurement baseMeasurement = factory.CreateBaseMeasurement(context!)!;
-    //    decimal defaultQuantity = GetDefaultQuantity();
-    //    defaultQuantity /= BaseMeasurement.GetExchangeRate(context, nameof(context));
-
-    //    return GetBaseMeasure(baseMeasurement, defaultQuantity);
-    //}
-
-    public override sealed bool? FitsIn(IQuantifiable? other, LimitMode? limitMode)
-    {
-        return base.FitsIn(other, limitMode);
-    }
-
-    public override sealed bool? FitsIn(ILimiter? limiter)
-    {
-        return base.FitsIn(limiter);
-    }
-
-    public override sealed decimal GetDefaultQuantity()
-    {
-        return GetDefaultQuantity(GetBaseQuantity(), GetExchangeRate());
-    }
-    #endregion
-    #endregion
-
-    #region Virtual methods
-    public virtual LimitMode? GetLimitMode()
-    {
-        return null;
-    }
-    #endregion
-
-    #region Abstract methods
-    public abstract IBaseMeasurement GetBaseMeasurement();
-    public abstract IBaseMeasurementFactory GetBaseMeasurementFactory();
-    #endregion
-
-    #region Static methods
-    public static void ValidateQuantity(ValueType? quantity, TypeCode quantityTypeCode, string paramName)
-    {
-        Type quantityType = NullChecked(quantity, paramName).GetType();
-
-        ValidateQuantityTypeCode(quantityTypeCode, nameof(quantityTypeCode));
-
-        if (quantityTypeCode == Type.GetTypeCode(quantityType)) return;
-
-        throw ArgumentTypeOutOfRangeException(paramName, quantity!);
-    }
-
-    public static void ValidateQuantityTypeCode(TypeCode quantityTypeCode, string paramName)
-    {
-        if (GetValidQuantityTypeCodeOrNull(quantityTypeCode) != null) return;
-
-        throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode, paramName);
-    }
-    #endregion
     #endregion
 
     #region Protected methods

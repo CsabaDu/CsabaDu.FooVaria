@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests;
+﻿using CsabaDu.FooVaria.Tests.TestHelpers.Params;
+
+namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests;
 
 internal class DynamicDataSource : DataFields
 {
@@ -287,44 +289,38 @@ internal class DynamicDataSource : DataFields
 
     internal IEnumerable<object[]> GetIsExchangeableToArg()
     {
-        // null -  false
+        // 1. null -  false
         isTrue = false;
         measureUnit = RandomParams.GetRandomValidMeasureUnit();
         context = null;
         yield return toObjectArray();
 
-        // Not measureUnit not MeasureUnitCode Enum - false
+        // 2. Not measureUnit not MeasureUnitCode Enum - false
         context = TypeCode.Empty;
         yield return toObjectArray();
 
-        // other MeasureUnitCode - false
+        // 3. other MeasureUnitCode - false
         measureUnitCode = GetMeasureUnitCode(measureUnit);
         context = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
         yield return toObjectArray();
 
-        // same type not defined measureUnit - false
+        // 4. same type not defined measureUnit - false
         context = SampleParams.GetNotDefinedMeasureUnit(measureUnitCode);
         yield return toObjectArray();
 
-        // same MeasureUnitCode - true
+        // 5. same MeasureUnitCode - true
         isTrue = true;
         context = measureUnitCode;
         yield return toObjectArray();
 
-        // same type valid measureUnit - true
+        // 6. same type valid measureUnit - true
         context = RandomParams.GetRandomValidMeasureUnit(measureUnitCode);
         yield return toObjectArray();
 
-        // other type measureUnit - false
+        // 7. other type measureUnit - false
         isTrue = false;
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
         context = RandomParams.GetRandomMeasureUnit(measureUnitCode);
-        yield return toObjectArray();
-
-        // same type invalid measureUnit - false
-        context = RandomParams.GetRandomNotUsedCustomMeasureUnit();
-        measureUnitCode = GetMeasureUnitCode(measureUnit);
-        measureUnit = measureUnitCode.GetDefaultMeasureUnit();
         yield return toObjectArray();
 
         #region toObjectArray method
@@ -337,5 +333,42 @@ internal class DynamicDataSource : DataFields
         #endregion
     }
 
+    internal IEnumerable<object[]> GetProportionalToInvalidArg()
+    {
+        // quantity = 0
+        measureUnit = RandomParams.GetRandomMeasureUnit();
+        defaultQuantity = RandomParams.GetRandomDecimal();
+        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        QuantifiableChild quantifiable = new(RootObject, paramName)
+        {
+            Return = new()
+            {
+                GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode),
+                GetDefaultQuantity = 0,
+            }
+        };
+        yield return toObjectArray();
+
+        // Different MeasureUnitCode
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
+        quantifiable = new(RootObject, paramName)
+        {
+            Return = new()
+            {
+                GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode),
+                GetDefaultQuantity = RandomParams.GetRandomDecimal(),
+            }
+        };
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            Enum_Decimal_IQuantifiable_args item = new(measureUnit, defaultQuantity, quantifiable);
+
+            return item.ToObjectArray();
+        }
+        #endregion
+    }
     #endregion
 }
