@@ -198,7 +198,7 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
     #region Static methods
     private static TypeCode? GetValidQuantityTypeCodeOrNull(TypeCode quantityTypeCode)
     {
-        if (GetQuantityTypeCodes().Contains(quantityTypeCode)) return quantityTypeCode;
+        if (QuantityTypeCodes.Contains(quantityTypeCode)) return quantityTypeCode;
 
         return null;
     }

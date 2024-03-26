@@ -15,6 +15,8 @@ public abstract class BaseQuantifiable(IRootObject rootObject, string paramName)
             typeof(double),
             typeof(decimal),
         ];
+
+        QuantityTypeCodes = QuantityTypeSet.Select(Type.GetTypeCode);
     }
     #endregion
     #endregion
@@ -22,6 +24,7 @@ public abstract class BaseQuantifiable(IRootObject rootObject, string paramName)
     #region Properties
     #region Static properties
     public static HashSet<Type> QuantityTypeSet { get; }
+    public static IEnumerable<TypeCode> QuantityTypeCodes {  get; }
     #endregion
     #endregion
 
@@ -83,10 +86,7 @@ public abstract class BaseQuantifiable(IRootObject rootObject, string paramName)
 
     public static IEnumerable<TypeCode> GetQuantityTypeCodes()
     {
-        foreach (Type item in QuantityTypeSet)
-        {
-            yield return Type.GetTypeCode(item);
-        }
+        return QuantityTypeSet.Select(Type.GetTypeCode);
     }
     #endregion
     #endregion

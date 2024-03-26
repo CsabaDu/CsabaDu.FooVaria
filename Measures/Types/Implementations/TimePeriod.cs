@@ -1,4 +1,5 @@
-﻿namespace CsabaDu.FooVaria.Measures.Types.Implementations;
+﻿
+namespace CsabaDu.FooVaria.Measures.Types.Implementations;
 
 internal sealed class TimePeriod(IMeasureFactory factory, TimePeriodUnit timePeriodUnit, double quantity)
     : Measure<ITimePeriod, double, TimePeriodUnit>(factory, timePeriodUnit, quantity), ITimePeriod

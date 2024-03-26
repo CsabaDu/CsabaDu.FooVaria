@@ -32,12 +32,14 @@ public static class SampleParams
             TypeCode.Byte,
             TypeCode.Int16,
             TypeCode.UInt16,
+            TypeCode.Int32,
+            //TypeCode.UInt32, // TODO Check why?
             TypeCode.Single,
             TypeCode.DateTime,
         ];
 
     public static IEnumerable<TypeCode> GetInvalidQuantityTypeCodes()
     {
-        return Enum.GetValues<TypeCode>().Except(GetQuantityTypeCodes());
+        return Enum.GetValues<TypeCode>().Except(QuantityTypeCodes);
     }
 }

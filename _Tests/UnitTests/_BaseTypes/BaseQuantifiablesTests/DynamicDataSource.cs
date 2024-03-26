@@ -96,7 +96,7 @@ internal class DynamicDataSource : DataFields
     internal IEnumerable<object[]> GetValidQuantityTypeCodeArg()
     {
         TypeCode ulongTypeCode = TypeCode.UInt64;
-        IEnumerable<TypeCode> typeCodes = GetQuantityTypeCodes()
+        IEnumerable<TypeCode> typeCodes = QuantityTypeCodes
             .Where(x => x != ulongTypeCode)
             .Append(ulongTypeCode);
 

@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
-
-namespace CsabaDu.FooVaria.Tests.TestHelpers.Params;
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Params;
 
 public sealed class RandomParams
 {
@@ -300,19 +298,18 @@ public sealed class RandomParams
 
     public ValueType GetRandomValidValueType()
     {
-        TypeCode typeCode = GetRandomItem(GetQuantityTypeCodes());
+        TypeCode typeCode = GetRandomItem(QuantityTypeCodes);
 
         return GetRandomValueType(typeCode);
     }
 
     public TypeCode GetRandomQuantityTypeCode(TypeCode? excluded = null)
     {
-        IEnumerable<TypeCode> quantityTypeCodes = GetQuantityTypeCodes();
-        TypeCode typeCode = GetRandomItem(quantityTypeCodes);
+        TypeCode typeCode = GetRandomItem(QuantityTypeCodes);
 
         while (typeCode == excluded)
         {
-            typeCode = GetRandomItem(GetQuantityTypeCodes());
+            typeCode = GetRandomItem(QuantityTypeCodes);
         }
 
         return typeCode;
@@ -320,8 +317,7 @@ public sealed class RandomParams
 
     public TypeCode GetRandomInvalidQuantityTypeCode()
     {
-        IEnumerable<TypeCode> quantityTypeCodes = GetQuantityTypeCodes();
-        IEnumerable<int> quantityTypeCodeValues = quantityTypeCodes.Select(x => (int)(object)x);
+        IEnumerable<int> quantityTypeCodeValues = QuantityTypeCodes.Select(x => (int)(object)x);
         int maxValue = Enum.GetNames(typeof(TypeCode)).Length;
         int typeCodeValue = Random.Next(maxValue);
 

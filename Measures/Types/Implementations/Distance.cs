@@ -24,6 +24,11 @@ internal sealed class Distance(IMeasureFactory factory, DistanceUnit distanceUni
         return ConvertMeasure().Equals(other);
     }
 
+    public IExtent? ExchangeTo(ExtentUnit extentUnit)
+    {
+        return ConvertMeasure().ExchangeTo(extentUnit);
+    }
+
     public decimal ProportionalTo(IExtent? other)
     {
         return ConvertMeasure().ProportionalTo(other);

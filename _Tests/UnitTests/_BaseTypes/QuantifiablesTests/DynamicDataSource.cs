@@ -246,7 +246,7 @@ internal class DynamicDataSource : DataFields
         quantity = RandomParams.GetRandomDouble();
         defaultQuantity = (decimal)quantity.ToQuantity(TypeCode.Decimal);
 
-        foreach (var item in GetQuantityTypeCodes())
+        foreach (var item in QuantityTypeCodes)
         {
             if (item is not (TypeCode.Int64 or TypeCode.UInt64))
             {
