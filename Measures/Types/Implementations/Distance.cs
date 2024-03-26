@@ -4,6 +4,11 @@ internal sealed class Distance(IMeasureFactory factory, DistanceUnit distanceUni
     : Measure<IDistance, double, DistanceUnit>(factory, distanceUnit, quantity), IDistance
 {
     #region Public methods
+    public int CompareTo(IExtent? other)
+    {
+        return ConvertMeasure().CompareTo(other);
+    }
+
     public IDistance ConvertFrom(IExtent extent)
     {
         return NullChecked(extent, nameof(extent)).ConvertMeasure();
@@ -12,6 +17,16 @@ internal sealed class Distance(IMeasureFactory factory, DistanceUnit distanceUni
     public IExtent ConvertMeasure()
     {
         return ConvertMeasure<IExtent>(MeasureOperationMode.Multiply);
+    }
+
+    public bool Equals(IExtent? other)
+    {
+        return ConvertMeasure().Equals(other);
+    }
+
+    public decimal ProportionalTo(IExtent? other)
+    {
+        return ConvertMeasure().ProportionalTo(other);
     }
     #endregion
 }

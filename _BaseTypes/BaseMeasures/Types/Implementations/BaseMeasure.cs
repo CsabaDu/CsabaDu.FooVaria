@@ -178,8 +178,8 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
     //    #endregion
     //}
 
-    //protected static TSelf ConvertToLimitable<TSelf>(IBaseMeasure<TSelf> limitable, ILimiter limiter)
-    //    where TSelf : class, IBaseMeasure
+    //protected static TComparable ConvertToLimitable<TComparable>(IBaseMeasure<TComparable> limitable, ILimiter limiter)
+    //    where TComparable : class, IBaseMeasure
     //{
     //    string paramName = nameof(limiter);
 

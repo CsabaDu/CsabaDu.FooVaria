@@ -18,14 +18,14 @@
         TSelf GetBaseMeasure(IBaseMeasure baseMeasure);
 
         //#region Default implementations
-        //public bool TryGetBaseMeasure(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName, [NotNullWhen(true)] out TSelf? baseMeasure)
+        //public bool TryGetBaseMeasure(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName, [NotNullWhen(true)] out TComparable? baseMeasure)
         //{
         //    baseMeasure = GetBaseMeasure(measureUnit, exchangeRate, quantity, customName);
 
         //    return baseMeasure != null;
         //}
 
-        //public bool TryGetBaseMeasure(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity, [NotNullWhen(true)] out TSelf? baseMeasure)
+        //public bool TryGetBaseMeasure(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity, [NotNullWhen(true)] out TComparable? baseMeasure)
         //{
         //    baseMeasure = GetBaseMeasure(customName, measureUnitCode, exchangeRate, quantity);
 

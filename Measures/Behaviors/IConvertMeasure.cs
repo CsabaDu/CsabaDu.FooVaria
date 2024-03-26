@@ -2,7 +2,7 @@
 {
     public interface IConvertMeasure;
 
-    public interface IConvertMeasure<TSelf, TOther> : IConvertMeasure
+    public interface IConvertMeasure<TSelf, TOther> : IConvertMeasure, IProportional<TOther>
         where TSelf : class, IMeasure
         where TOther : notnull
     {

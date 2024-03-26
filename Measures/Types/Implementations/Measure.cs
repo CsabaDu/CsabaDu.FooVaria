@@ -239,6 +239,13 @@ namespace CsabaDu.FooVaria.Measures.Types.Implementations
         #endregion
 
         #region Public methods
+        public TSelf? ExchangeTo(TEnum measureUnit)
+        {
+            if (!IsExchangeableTo(measureUnit)) return null;
+
+            return GetMeasure(measureUnit);
+        }
+
         public TSelf GetMeasure(TEnum measureUnit, TNum quantity)
         {
             return (TSelf)GetBaseMeasure(measureUnit, quantity);
@@ -261,6 +268,18 @@ namespace CsabaDu.FooVaria.Measures.Types.Implementations
         public override sealed IMeasurement GetBaseMeasurement()
         {
             return Measurement;
+        }
+
+        public override sealed bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable? exchanged)
+        {
+            exchanged = null;
+
+            if (!IsExchangeableTo(context)) return false;
+
+            MeasureUnitElements measureUnitElements = GetMeasureUnitElements(context, nameof(context));
+            exchanged = ExchangeTo((TEnum)measureUnitElements.MeasureUnit);
+
+            return exchanged != null;
         }
         #endregion
 
@@ -296,25 +315,6 @@ namespace CsabaDu.FooVaria.Measures.Types.Implementations
             if (quantity > 0) return;
 
             throw QuantityArgumentOutOfRangeException(paramName, quantity);
-        }
-
-        public TSelf? ExchangeTo(TEnum measureUnit)
-        {
-            if (!IsExchangeableTo(measureUnit)) return null;
-
-            return GetMeasure(measureUnit);
-        }
-
-        public override sealed bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable? exchanged)
-        {
-            exchanged = null;
-
-            if (!IsExchangeableTo(context)) return false;
-
-            MeasureUnitElements measureUnitElements = GetMeasureUnitElements(context, nameof(context));
-            exchanged = ExchangeTo((TEnum)measureUnitElements.MeasureUnit);
-
-            return exchanged != null;
         }
         #endregion
     }
