@@ -92,6 +92,8 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
 
     public object GetQuantity(RoundingMode roundingMode)
     {
+        if (!Enum.IsDefined(typeof(RoundingMode), roundingMode)) throw InvalidRoundingModeEnumArgumentException(roundingMode);
+
         ValueType quantity = GetBaseQuantity();
 
         return quantity.Round(roundingMode)!;

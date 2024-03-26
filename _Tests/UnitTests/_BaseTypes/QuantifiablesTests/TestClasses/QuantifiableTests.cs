@@ -490,7 +490,7 @@ public sealed class QuantifiableTests
         {
             Return = new()
             {
-                GetBaseMeasureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode),
+                GetBaseMeasureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode),
                 GetDefaultQuantity = Fields.RandomParams.GetRandomDecimal(),
             }
         };
@@ -505,13 +505,16 @@ public sealed class QuantifiableTests
     #endregion
     #endregion
 
-    // IQuantifiable IRound<IQuantifiable>.Round(TypeCode quantityTypeCode)
+    #region IQuantifiable IRound<IQuantifiable>.Round
+    #region IRound<IQuantifiable>.Round(RoundingMode)
+
+    #endregion
+    #endregion
+
     // bool ITryExchange<IQuantifiable, Enum>.TryExchangeTo(Enum? otherMeasureUnit, out IQuantifiable? exchanged)
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable? measurable, string paramName)
 
     #endregion
-
-
 
     #region Private methods
     private void SetQuantifiableChild(decimal defaultQuantity, Enum measureUnit = null, IQuantifiableFactory factory = null)

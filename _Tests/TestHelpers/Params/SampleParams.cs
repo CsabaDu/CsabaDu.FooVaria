@@ -5,16 +5,16 @@ namespace CsabaDu.FooVaria.Tests.TestHelpers.Params;
 public static class SampleParams
 {
     private static readonly int LimitModeCount = Enum.GetNames<LimitMode>().Length;
+    private static readonly int MeasureUnitCodeCount = MeasureUnitCodes.Length;
     private static readonly int RoundingModeCount = Enum.GetNames<RoundingMode>().Length;
-    private static readonly int NotDefinedTypeCodeCount = Enum.GetNames<TypeCode>().Length;
+    private static readonly int TypeCodeCount = Enum.GetNames<TypeCode>().Length;
+
+    public static readonly LimitMode NotDefinedLimitMode = (LimitMode)LimitModeCount;
+    public static readonly MeasureUnitCode NotDefinedMeasureUnitCode = (MeasureUnitCode)MeasureUnitCodeCount;
+    public static readonly RoundingMode NotDefinedRoundingMode = (RoundingMode)RoundingModeCount;
+    public static readonly TypeCode NotDefinedTypeCode = (TypeCode)TypeCodeCount;
 
     public const LimitMode DefaultLimitMode = default;
-    public static readonly LimitMode NotDefinedLimitMode = (LimitMode)LimitModeCount;
-    public static readonly RoundingMode NotDefinedRoundingMode = (RoundingMode)(RoundingModeCount + 1);
-    public static readonly TypeCode NotDefinedTypeCode = (TypeCode)NotDefinedTypeCodeCount;
-
-    public static readonly int MeasureUnitCodeCount = MeasureUnitCodes.Length;
-    public static readonly MeasureUnitCode NotDefinedMeasureUnitCode = (MeasureUnitCode)MeasureUnitCodeCount;
 
     public static Enum GetNotDefinedMeasureUnit(MeasureUnitCode measureUnitCode)
     {

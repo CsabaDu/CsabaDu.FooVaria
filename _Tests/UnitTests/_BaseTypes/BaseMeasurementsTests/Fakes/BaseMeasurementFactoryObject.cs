@@ -2,7 +2,9 @@
 
 internal sealed class BaseMeasurementFactoryObject : IBaseMeasurementFactory
 {
-    public IBaseMeasurement CreateBaseMeasurement(Enum context) => new BaseMeasurementChild(new RootObject(), null)
+    DataFields Fields = new();
+
+    public IBaseMeasurement CreateBaseMeasurement(Enum context) => new BaseMeasurementChild(Fields.RootObject, Fields.paramName)
     {
         Return = new()
         {
