@@ -65,7 +65,7 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
         {
             if (!IsDefinedMeasureUnit(context)) return false;
 
-            measureUnitCode = GetDefinedMeasureUnitCode(context);
+            measureUnitCode = GetMeasureUnitCode(context);
         }
 
         return HasMeasureUnitCode(measureUnitCode);

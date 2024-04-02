@@ -17,5 +17,7 @@ global using CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.Fakes
 global using Microsoft.VisualStudio.TestTools.UnitTesting;
 global using System.ComponentModel;
 global using System.Diagnostics.CodeAnalysis;
-global using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;
 global using static CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types.Implementations.BaseQuantifiable;
+global using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;
+global using static CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.Fakes.QuantifiableChild;
+global using static CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.Fakes.LimiterQuantifiableObject;

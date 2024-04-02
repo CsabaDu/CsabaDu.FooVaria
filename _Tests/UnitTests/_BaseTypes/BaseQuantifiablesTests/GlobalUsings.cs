@@ -16,3 +16,5 @@ global using Microsoft.VisualStudio.TestTools.UnitTesting;
 global using static CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types.Implementations.BaseQuantifiable;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;
 global using static CsabaDu.FooVaria.Tests.TestHelpers.Params.TestSupport;
+global using static CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseQuantifiablesTests.Fakes.BaseQuantifiableChild;
+global using static CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseQuantifiablesTests.Fakes.LimiterBaseQuantifiableObject;

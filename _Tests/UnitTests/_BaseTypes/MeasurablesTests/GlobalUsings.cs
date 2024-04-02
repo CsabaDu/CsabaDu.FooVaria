@@ -1,3 +1,4 @@
+global using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Factories;
 global using CsabaDu.FooVaria.BaseTypes.Common;
 global using CsabaDu.FooVaria.BaseTypes.Common.Factories;
 global using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
@@ -13,3 +14,4 @@ global using Microsoft.VisualStudio.TestTools.UnitTesting;
 global using System.ComponentModel;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;
 global using static CsabaDu.FooVaria.Tests.TestHelpers.Params.TestSupport;
+global using static CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.MeasurablesTests.Fakes.MeasurableChild;

@@ -21,8 +21,22 @@ internal sealed class MeasurableChild(IRootObject rootObject, string paramName) 
 
     #endregion
 
-    #region TestHelpers
+    #region Test helpers
     public MeasurableReturn Return { private get; set; }
+
+    internal static MeasurableChild GetMeasurableChild(Enum measureUnit, IMeasurableFactory factory = null)
+    {
+        DataFields fields = new();
+
+        return new(fields.RootObject, fields.paramName)
+        {
+            Return = new()
+            {
+                GetBaseMeasureUnit = measureUnit,
+                GetFactory = factory,
+            }
+        };
+    }
     #endregion
 
     public override Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnit;

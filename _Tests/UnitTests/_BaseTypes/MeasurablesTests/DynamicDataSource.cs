@@ -17,21 +17,14 @@ internal class DynamicDataSource : DataFields
 
         // IMeasure with same MeasureUnit
         isTrue = true;
-        obj = new MeasurableChild(RootObject, string.Empty);
         measureUnit = RandomParams.GetRandomMeasureUnit();
-        (obj as MeasurableChild).Return = new()
-        {
-            GetBaseMeasureUnit = measureUnit,
-        };
+        obj = GetMeasurableChild(measureUnit);
         yield return toObjectArray();
 
         // IMeasure different MeasureUnit with same MeasureUnitCode
         measureUnitCode = GetMeasureUnitCode(measureUnit);
         measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode, measureUnit);
-        (obj as MeasurableChild).Return = new()
-        {
-            GetBaseMeasureUnit = measureUnit,
-        };
+        obj = GetMeasurableChild(measureUnit);
         yield return toObjectArray();
 
         // IMeasure with different MeasureUnitCode

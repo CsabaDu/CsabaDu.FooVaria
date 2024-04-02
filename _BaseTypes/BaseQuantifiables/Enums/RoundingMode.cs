@@ -2,10 +2,10 @@
 
 public enum RoundingMode
 {
-    General,
-    Ceiling,
-    Floor,
-    Half,
-    SinglePrecision,
+    //General,
     DoublePrecision,
+    SinglePrecision,
+    Floor,
+    Ceiling,
+    Half,
 }

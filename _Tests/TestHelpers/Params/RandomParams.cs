@@ -74,9 +74,9 @@ public sealed class RandomParams
         #endregion
     }
 
-    public Enum GetRandomMeasureUnit(MeasureUnitCode? measureUnitTypeCode = null, Enum excluded = null)
+    public Enum GetRandomMeasureUnit(MeasureUnitCode? measureUnutCode = null, Enum excluded = null)
     {
-        measureUnitTypeCode ??= GetRandomMeasureUnitCode();
+        measureUnutCode ??= GetRandomMeasureUnitCode();
         Enum randomMeasureUnit = getRandomMeasureUnit();
 
         while (randomMeasureUnit.Equals(excluded))
@@ -89,7 +89,7 @@ public sealed class RandomParams
         #region Local methods
         Enum getRandomMeasureUnit()
         {
-            return GetRandomItem(measureUnitTypeCode.Value.GetAllMeasureUnits());
+            return GetRandomItem(measureUnutCode.Value.GetAllMeasureUnits());
         }
         #endregion
     }
@@ -227,6 +227,11 @@ public sealed class RandomParams
     public LimitMode GetRandomLimitMode()
     {
         return GetRandomItem(Enum.GetValues<LimitMode>());
+    }
+
+    public RoundingMode GetRandomRoundingMode()
+    {
+        return GetRandomItem(Enum.GetValues<RoundingMode>());
     }
     #endregion
 

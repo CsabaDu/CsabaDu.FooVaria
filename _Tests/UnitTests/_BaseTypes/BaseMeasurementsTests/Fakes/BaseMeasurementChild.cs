@@ -31,8 +31,23 @@ internal sealed class BaseMeasurementChild(IRootObject rootObject, string paramN
 
     #endregion
 
-    #region TestHelpers
+    #region Test helpers
     public BaseMeasurementReturn Return { private get; set; } = new();
+
+    internal static BaseMeasurementChild GetBaseMeasurementChild(Enum measureUnit, IBaseMeasurementFactory factory = null, string measureUnitName = null)
+    {
+        DataFields fields = new();
+
+        return new(fields.RootObject, fields.paramName)
+        {
+            Return = new()
+            {
+                GetBaseMeasureUnit = measureUnit,
+                GetFactory = factory,
+                GetName = measureUnitName,
+            }
+        };
+    }
     #endregion
 
     public override Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnit;

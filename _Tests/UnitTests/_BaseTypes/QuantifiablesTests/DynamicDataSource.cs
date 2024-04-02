@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Tests.TestHelpers.Params;
-
-namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests;
+﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests;
 
 internal class DynamicDataSource : DataFields
 {
@@ -16,36 +14,15 @@ internal class DynamicDataSource : DataFields
 
         // Different MeasureUnitCode
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode(measureUnit));
-        quantifiable = new QuantifiableChild(RootObject, null)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode),
-                GetDefaultQuantity = defaultQuantity,
-            }
-        };
+        quantifiable = GetQuantifiableChild(defaultQuantity, RandomParams.GetRandomMeasureUnit(measureUnitCode));
         yield return toObjectArray();
 
         // Same MeasureUnit, different defaultQuantity
-        quantifiable = new QuantifiableChild(RootObject, null)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = measureUnit,
-                GetDefaultQuantity = RandomParams.GetRandomDecimal(defaultQuantity),
-            }
-        };
+        quantifiable = GetQuantifiableChild(RandomParams.GetRandomDecimal(defaultQuantity), measureUnit);
         yield return toObjectArray();
 
         // Same MeasureUnit, same defaultQuantity
-        quantifiable = new QuantifiableChild(RootObject, null)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = measureUnit,
-                GetDefaultQuantity = defaultQuantity,
-            }
-        };
+        quantifiable = GetQuantifiableChild(defaultQuantity, measureUnit);
         isTrue = true;
         yield return toObjectArray();
 
@@ -78,14 +55,7 @@ internal class DynamicDataSource : DataFields
 
         // same type defined measureUnit
         context = RandomParams.GetRandomMeasureUnit(measureUnitCode);
-        quantifiable = new QuantifiableChild(RootObject, paramName)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = context,
-                GetDefaultQuantity = RandomParams.GetRandomDecimal(),
-            }
-        };
+        quantifiable = GetQuantifiableChild(RandomParams.GetRandomDecimal(), context);
         yield return toObjectArray();
 
         // different type measureUnit
@@ -106,23 +76,20 @@ internal class DynamicDataSource : DataFields
 
     internal IEnumerable<object[]> GetFitsInILimiterArgs()
     {
-        // Not IQuantifiable
+        // Not IBaseQuantifiable
+        measureUnit = RandomParams.GetRandomMeasureUnit();
         limiter = new LimiterObject();
         yield return toObjectArray();
 
         // Different MeasureUnitCode
-        limiter = new LimiterQuantifiableOblect(RootObject, null)
-        {
-            Return = new()
-            {
-                GetDefaultQuantity = RandomParams.GetRandomDecimal(),
-            }
-        };
+        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        limiter = GetLimiterQuantifiableObject(null, RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity);
+        yield return toObjectArray();
 
         #region toObjectArray method
         object[] toObjectArray()
         {
-            ILimiter_arg item = new(limiter);
+            Enum_ILimiter_args item = new(measureUnit, limiter);
 
             return item.ToObjectArray();
         }
@@ -135,14 +102,7 @@ internal class DynamicDataSource : DataFields
         limitMode = SampleParams.NotDefinedLimitMode;
         measureUnit = RandomParams.GetRandomMeasureUnit();
         measureUnitCode = GetMeasureUnitCode(measureUnit);
-        IQuantifiable quantifiable = new QuantifiableChild(RootObject, null)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = measureUnit,
-                GetDefaultQuantity = RandomParams.GetRandomDecimal(),
-            }
-        };
+        IQuantifiable quantifiable = GetQuantifiableChild(RandomParams.GetRandomDecimal(), measureUnit);
         yield return toObjectArray();
 
         // Different IQuantifiable, valid LimitMode
@@ -339,26 +299,12 @@ internal class DynamicDataSource : DataFields
         measureUnit = RandomParams.GetRandomMeasureUnit();
         defaultQuantity = RandomParams.GetRandomDecimal();
         measureUnitCode = GetMeasureUnitCode(measureUnit);
-        QuantifiableChild quantifiable = new(RootObject, paramName)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode),
-                GetDefaultQuantity = 0,
-            }
-        };
+        IQuantifiable quantifiable = GetQuantifiableChild(0, RandomParams.GetRandomMeasureUnit(measureUnitCode));
         yield return toObjectArray();
 
         // Different MeasureUnitCode
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
-        quantifiable = new(RootObject, paramName)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode),
-                GetDefaultQuantity = RandomParams.GetRandomDecimal(),
-            }
-        };
+        quantifiable = GetQuantifiableChild(RandomParams.GetRandomDecimal(), RandomParams.GetRandomMeasureUnit(measureUnitCode));
         yield return toObjectArray();
 
         #region toObjectArray method

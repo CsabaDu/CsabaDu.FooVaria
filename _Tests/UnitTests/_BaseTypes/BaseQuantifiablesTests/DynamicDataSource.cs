@@ -18,36 +18,15 @@ internal class DynamicDataSource : DataFields
 
         // Different MeasureUnitCode
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode(measureUnit));
-        obj = new BaseQuantifiableChild(RootObject, null)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode),
-                GetDefaultQuantity = defaultQuantity,
-            }
-        };
+        obj = GetBaseQuantifiableChild(RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity);
         yield return toObjectArray();
 
         // Same MeasureUnit, different defaultQuantity
-        obj = new BaseQuantifiableChild(RootObject, null)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = measureUnit,
-                GetDefaultQuantity = RandomParams.GetRandomDecimal(defaultQuantity),
-            }
-        };
+        obj = GetBaseQuantifiableChild(measureUnit, RandomParams.GetRandomDecimal(defaultQuantity));
         yield return toObjectArray();
 
         // Same MeasureUnit, same defaultQuantity
-        obj = new BaseQuantifiableChild(RootObject, null)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = measureUnit,
-                GetDefaultQuantity = defaultQuantity,
-            }
-        };
+        obj = GetBaseQuantifiableChild(measureUnit, defaultQuantity);
         isTrue = true;
         yield return toObjectArray();
 
@@ -64,22 +43,19 @@ internal class DynamicDataSource : DataFields
     internal IEnumerable<object[]> GetFitsInArgs()
     {
         // Not IBaseQuantifiable
+        measureUnit = RandomParams.GetRandomMeasureUnit();
         limiter = new LimiterObject();
         yield return toObjectArray();
 
         // Different MeasureUnitCode
-        limiter = new LimiterBaseQuantifiableOblect(RootObject, null)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(),
-            }
-        };
+        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        limiter = GetLimiterBaseQuantifiableObject(null, RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity);
+        yield return toObjectArray();
 
         #region toObjectArray method
         object[] toObjectArray()
         {
-            ILimiter_arg item = new(limiter);
+            Enum_ILimiter_args item = new(measureUnit, limiter);
 
             return item.ToObjectArray();
         }

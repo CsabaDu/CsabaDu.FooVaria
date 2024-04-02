@@ -2,7 +2,7 @@
 
 internal sealed class QuantifiableFactoryObject : IQuantifiableFactory
 {
-    DataFields Fields = new();
+    readonly DataFields Fields = new();
 
     public IQuantifiable CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity) => new QuantifiableChild(Fields.RootObject, Fields.paramName)
     {

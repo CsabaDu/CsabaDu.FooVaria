@@ -23,7 +23,24 @@ internal class BaseQuantifiableChild(IRootObject rootObject, string paramName) :
 
     #endregion
 
+    #region Test helpers
     public BaseQuantifiableReturn Return { private get; set; }
+
+    internal static BaseQuantifiableChild GetBaseQuantifiableChild(Enum measureUnit, decimal defaultQuantity, IBaseQuantifiableFactory factory = null)
+    {
+        DataFields fields = new();
+
+        return new(fields.RootObject, fields.paramName)
+        {
+            Return = new()
+            {
+                GetBaseMeasureUnit = measureUnit,
+                GetDefaultQuantity = defaultQuantity,
+                GetFactory = factory,
+            }
+        };
+    }
+    #endregion
 
     public override sealed Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnit;
 

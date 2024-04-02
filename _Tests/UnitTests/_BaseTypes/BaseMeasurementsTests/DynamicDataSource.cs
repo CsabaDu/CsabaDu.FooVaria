@@ -17,13 +17,7 @@ internal class DynamicDataSource : DataFields
         yield return toObjectArray();
 
         // IBaseMeasurement
-        obj = new BaseMeasurementChild(RootObject, null)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = RandomParams.GetRandomValidMeasureUnit(),
-            }
-        };
+        obj = GetBaseMeasurementChild(RandomParams.GetRandomValidMeasureUnit());
         isTrue = measureUnit.Equals((obj as IBaseMeasurement).GetBaseMeasureUnit());
         yield return toObjectArray();
 
@@ -48,37 +42,19 @@ internal class DynamicDataSource : DataFields
 
         // Different MeasureUnitCode
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
-        obj = new BaseMeasurementChild(RootObject, null)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode),
-            }
-        };
+        obj = GetBaseMeasurementChild(RandomParams.GetRandomMeasureUnit(measureUnitCode));
         yield return toObjectArray();
 
         // Same MeasureUnit
         isTrue = true;
-        obj = new BaseMeasurementChild(RootObject, null)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = measureUnit,
-            }
-        };
+        obj = GetBaseMeasurementChild(measureUnit);
         yield return toObjectArray();
 
         // Different MeasureUnit, same MeasureUnitCode and same ExhchangeRate
         measureUnit = RandomParams.GetRandomNotUsedCustomMeasureUnit();
         _ = TrySetCustomMeasureUnit(measureUnit, decimal.One, RandomParams.GetRandomParamName());
         measureUnitCode = GetMeasureUnitCode(measureUnit);
-        obj = new BaseMeasurementChild(RootObject, null)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = measureUnitCode.GetDefaultMeasureUnit(),
-            }
-        };
+        obj = GetBaseMeasurementChild(measureUnitCode.GetDefaultMeasureUnit());
         yield return toObjectArray();
 
         #region toObjectArray method

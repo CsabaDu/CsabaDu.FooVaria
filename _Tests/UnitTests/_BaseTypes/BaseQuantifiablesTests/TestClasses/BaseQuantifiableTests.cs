@@ -92,10 +92,10 @@ public sealed class BaseQuantifiableTests
 
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetFitsInArgs), DynamicDataSourceType.Method)]
-    public void FitsIn_invalidArg_ILimiter_returns_null(ILimiter limiter)
+    public void FitsIn_invalidArg_ILimiter_returns_null(Enum measureUnit, ILimiter limiter)
     {
         // Arrange
-        SetBaseQuantifiableChild(null, Fields.defaultQuantity);
+        SetBaseQuantifiableChild(measureUnit, Fields.defaultQuantity);
 
         // Act
         var actual = _baseQuantifiable.FitsIn(limiter);
@@ -113,15 +113,7 @@ public sealed class BaseQuantifiableTests
         Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
         decimal otherQuantity = Fields.RandomParams.GetRandomDecimal();
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        LimiterBaseQuantifiableOblect limiter = new(Fields.RootObject, null)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = Fields.measureUnit,
-                GetDefaultQuantity = otherQuantity,
-            },
-            LimitMode = Fields.limitMode,
-        };
+        ILimiter limiter = GetLimiterBaseQuantifiableObject(Fields.limitMode, Fields.measureUnit, otherQuantity);
         bool? expected = Fields.defaultQuantity.FitsIn(otherQuantity, Fields.limitMode);
 
         // Act
@@ -234,15 +226,7 @@ public sealed class BaseQuantifiableTests
     #region Private methods
     private void SetBaseQuantifiableChild(Enum measureUnit, decimal defaultQuantity, IBaseQuantifiableFactory factory = null)
     {
-        _baseQuantifiable = new(Fields.RootObject, Fields.paramName)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = measureUnit,
-                GetDefaultQuantity = defaultQuantity,
-                GetFactory = factory,
-            }
-        };
+        _baseQuantifiable = GetBaseQuantifiableChild(measureUnit, defaultQuantity, factory);
     }
 
     #region DynamicDataSource

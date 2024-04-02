@@ -1,7 +1,23 @@
 ﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.Fakes;
 
-internal sealed class LimiterQuantifiableOblect(IRootObject rootObject, string paramName) : QuantifiableChild(rootObject, paramName), ILimiter
+internal sealed class LimiterQuantifiableObject(IRootObject rootObject, string paramName) : QuantifiableChild(rootObject, paramName), ILimiter
 {
+    internal static LimiterQuantifiableObject GetLimiterQuantifiableObject(LimitMode? limitMode, Enum measureUnit, decimal defaultQuantity, IBaseQuantifiableFactory factory = null)
+    {
+        DataFields fields = new();
+
+        return new(fields.RootObject, fields.paramName)
+        {
+            LimitMode = limitMode,
+            Return = new()
+            {
+                GetBaseMeasureUnit = measureUnit,
+                GetDefaultQuantity = defaultQuantity,
+                GetFactory = factory,
+            }
+        };
+    }
+
     public LimitMode? LimitMode { private get; set; }
 
     public decimal GetLimiterDefaultQuantity() => GetDefaultQuantity();

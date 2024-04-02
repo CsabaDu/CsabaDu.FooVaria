@@ -22,11 +22,11 @@ public static class Extensions
         };
     }
 
-    public static decimal Round(this decimal quantity, RoundingMode roundingMode = RoundingMode.General)
+    public static decimal Round(this decimal quantity, RoundingMode roundingMode = default)
     {
         return roundingMode switch
         {
-            RoundingMode.General => decimal.Round(quantity),
+            //RoundingMode.General => decimal.Round(quantity),
             RoundingMode.Ceiling => decimal.Ceiling(quantity),
             RoundingMode.Floor => decimal.Floor(quantity),
             RoundingMode.Half => getHalfQuantity(),
@@ -55,11 +55,11 @@ public static class Extensions
     #endregion
 
     #region System.Double
-    public static double Round(this double quantity, RoundingMode roundingMode = RoundingMode.General)
+    public static double Round(this double quantity, RoundingMode roundingMode = default)
     {
         return roundingMode switch
         {
-            RoundingMode.General => Math.Round(quantity),
+            //RoundingMode.General => Math.Round(quantity),
             RoundingMode.Ceiling => Math.Ceiling(quantity),
             RoundingMode.Floor => Math.Floor(quantity),
             RoundingMode.Half => getHalfQuantity(),
@@ -172,7 +172,7 @@ public static class Extensions
         #endregion
     }
 
-    public static object? Round(this ValueType quantity, RoundingMode roundingMode = RoundingMode.General)
+    public static object? Round(this ValueType quantity, RoundingMode roundingMode = default)
     {
         return quantity switch
         {

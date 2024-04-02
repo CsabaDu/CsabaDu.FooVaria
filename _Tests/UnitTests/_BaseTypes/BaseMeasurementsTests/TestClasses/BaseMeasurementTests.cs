@@ -79,13 +79,8 @@ public sealed class BaseMeasurementTests
         // Arrange
         SetBaseMeasurementChild(Fields.measureUnit);
         Fields.measureUnitCode = Fields.RandomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
-        IBaseMeasurement other = new BaseMeasurementChild(Fields.RootObject, Fields.paramName)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode),
-            }
-        };
+        Fields.measureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode);
+        IBaseMeasurement other = GetBaseMeasurementChild(Fields.measureUnit);
 
         // Act
         void attempt() => _ = _baseMeasurement.CompareTo(other);
@@ -100,13 +95,8 @@ public sealed class BaseMeasurementTests
     {
         // Arrange
         SetBaseMeasurementChild(Fields.measureUnit);
-        IBaseMeasurement other = new BaseMeasurementChild(Fields.RootObject, Fields.paramName)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode),
-            }
-        };
+        Fields.measureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode);
+        IBaseMeasurement other = GetBaseMeasurementChild(Fields.measureUnit);
         int expected = _baseMeasurement.GetExchangeRate().CompareTo(other.GetExchangeRate());
 
         // Act
@@ -326,13 +316,8 @@ public sealed class BaseMeasurementTests
         // Arrange
         SetBaseMeasurementChild(Fields.measureUnit);
         Fields.measureUnitCode = Fields.RandomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
-        BaseMeasurementChild other = new(Fields.RootObject, Fields.paramName)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode)
-            }
-        };
+        Fields.measureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode);
+        IBaseMeasurement other = GetBaseMeasurementChild(Fields.measureUnit);
 
         // Act
         void attempt() => _ = _baseMeasurement.ProportionalTo(other);
@@ -347,13 +332,8 @@ public sealed class BaseMeasurementTests
     {
         // Arrange
         SetBaseMeasurementChild(Fields.measureUnit);
-        BaseMeasurementChild other = new(Fields.RootObject, Fields.paramName)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode)
-            }
-        };
+        Fields.measureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode);
+        IBaseMeasurement other = GetBaseMeasurementChild(Fields.measureUnit);
         decimal expected = _baseMeasurement.GetExchangeRate() / other.GetExchangeRate();
 
         // Act
@@ -456,15 +436,7 @@ public sealed class BaseMeasurementTests
     #region Private methods
     private void SetBaseMeasurementChild(Enum measureUnit, IBaseMeasurementFactory factory = null, string measureUnitName = null)
     {
-        _baseMeasurement = new(Fields.RootObject, Fields.paramName)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = measureUnit,
-                GetFactory = factory,
-                GetName = measureUnitName,
-            }
-        };
+        _baseMeasurement = GetBaseMeasurementChild(measureUnit, factory, measureUnitName);
     }
 
     #region DynamicDataSource

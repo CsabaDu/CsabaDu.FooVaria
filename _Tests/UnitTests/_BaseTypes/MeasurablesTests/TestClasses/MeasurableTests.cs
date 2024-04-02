@@ -1,3 +1,5 @@
+using CsabaDu.FooVaria.BaseTypes.Measurables.Types;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.MeasurablesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -21,15 +23,8 @@ public sealed class MeasurableTests
     public void InitializeMeasurableTests()
     {
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        SetMeasurableChild(Fields.measureUnit);
         Fields.measureUnitCode = GetMeasureUnitCode(Fields.measureUnit);
-        _measurable = new(Fields.RootObject, Fields.paramName)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = Fields.measureUnit,
-            }
-        };
-
         Fields.measureUnitType = Fields.measureUnit.GetType();
     }
 
@@ -60,10 +55,7 @@ public sealed class MeasurableTests
     public void Equals_arg_object_returns_expected(bool expected, object obj, Enum measureUnit)
     {
         // Arrange
-        _measurable.Return = new()
-        {
-            GetBaseMeasureUnit = measureUnit,
-        };
+        SetMeasurableChild(measureUnit);
 
         // Act
         var actual = _measurable.Equals(obj);
@@ -81,10 +73,8 @@ public sealed class MeasurableTests
     {
         // Arrange
         Enum expected = Fields.RandomParams.GetRandomMeasureUnit();
-        _measurable.Return = new()
-        {
-            GetBaseMeasureUnit = expected,
-        };
+
+        SetMeasurableChild(expected);
 
         // Act
         var actual = _measurable.GetBaseMeasureUnit();
@@ -206,10 +196,7 @@ public sealed class MeasurableTests
     public void HasMeasureUnitCode_arg_MeasureUnitCode_returns_expected(Enum measureUnit, MeasureUnitCode measureUnitCode, bool expected)
     {
         // Arrange
-        _measurable.Return = new()
-        {
-            GetBaseMeasureUnit = measureUnit,
-        };
+        SetMeasurableChild(measureUnit);
 
         // Act
         var actual = _measurable.HasMeasureUnitCode(measureUnitCode);
@@ -241,11 +228,10 @@ public sealed class MeasurableTests
     public void ValidateMeasureUnit_invalidArg_Enum_arg_string_throws_InvalidEnumArgumentException(Enum measureUnit, MeasureUnitCode measureUnitCode)
     {
         // Arrange
-        _measurable.Return = new()
-        {
-            GetBaseMeasureUnit = measureUnitCode.GetDefaultMeasureUnit(),
-        };
+        Fields.measureUnit = measureUnitCode.GetDefaultMeasureUnit();
         Fields.paramName = Fields.RandomParams.GetRandomParamName();
+
+        SetMeasurableChild(Fields.measureUnit);
 
         // Act
         void attempt() => _measurable.ValidateMeasureUnit(measureUnit, Fields.paramName);
@@ -260,11 +246,10 @@ public sealed class MeasurableTests
     public void ValidateMeasureUnit_validArg_Enum_arg_string_returns(Enum measureUnit, MeasureUnitCode measureUnitCode)
     {
         // Arrange
-        _measurable.Return = new()
-        {
-            GetBaseMeasureUnit = measureUnitCode.GetDefaultMeasureUnit(),
-        };
+        Fields.measureUnit = measureUnitCode.GetDefaultMeasureUnit();
         Fields.paramName = Fields.RandomParams.GetRandomParamName();
+
+        SetMeasurableChild(Fields.measureUnit);
 
         // Act
         void validator() => _measurable.ValidateMeasureUnit(measureUnit, Fields.paramName);
@@ -295,13 +280,10 @@ public sealed class MeasurableTests
     public void ValidateMeasureUnitCode_invalidArg_IMeasurable_arg_string_throws_InvalidEnumArgumentException()
     {
         // Arrange
-        MeasurableChild measurable = new(Fields.RootObject, Fields.paramName);
         Fields.measureUnitCode = Fields.RandomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
-        measurable.Return = new()
-        {
-            GetBaseMeasureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode),
-        };
+        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
         Fields.paramName = Fields.RandomParams.GetRandomParamName();
+        IMeasurable measurable = GetMeasurableChild(Fields.measureUnit);
 
         // Act
         void attempt() => _measurable.ValidateMeasureUnitCode(measurable, Fields.paramName);
@@ -315,13 +297,8 @@ public sealed class MeasurableTests
     public void ValidateMeasureUnitCode_validArg_IMeasurable_arg_string_returns()
     {
         // Arrange
-        MeasurableChild measurable = new(Fields.RootObject, Fields.paramName)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode),
-            }
-        };
+        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        MeasurableChild measurable = GetMeasurableChild(Fields.measureUnit);
         Fields.paramName = Fields.RandomParams.GetRandomParamName();
 
         // Act
@@ -338,11 +315,9 @@ public sealed class MeasurableTests
     public void ValidateMeasureUnitCode_invalidArg_MeasureUnitCode_arg_string_throws_InvalidEnumArgumentException(Enum measureUnit, MeasureUnitCode measureUnitCode)
     {
         // Arrange
-        _measurable.Return = new()
-        {
-            GetBaseMeasureUnit = measureUnit,
-        };
         Fields.paramName = Fields.RandomParams.GetRandomParamName();
+
+        SetMeasurableChild(measureUnit);
 
         // Act
         void attempt() => _measurable.ValidateMeasureUnitCode(measureUnitCode, Fields.paramName);
@@ -372,6 +347,12 @@ public sealed class MeasurableTests
     //#endregion
     #endregion
 
+    #region Private methods
+    private void SetMeasurableChild(Enum measureUnit, IBaseMeasurementFactory factory = null)
+    {
+        _measurable = GetMeasurableChild(measureUnit, factory);
+    }
+
     #region DynamicDataSource
     private static IEnumerable<object[]> GetEqualsArgs()
     {
@@ -397,5 +378,6 @@ public sealed class MeasurableTests
     {
         return DynamicDataSource.GetValidMeasureUnitArgs();
     }
+    #endregion
     #endregion
 }

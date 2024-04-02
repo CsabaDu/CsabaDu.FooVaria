@@ -34,7 +34,24 @@ internal class QuantifiableChild(IRootObject rootObject, string paramName) : Qua
     // void IBaseQuantifiable.ValidateQuantity(ValueType quantity, string paramName)
     #endregion
 
+    #region Test helpers
     public QuantifiableReturn Return { private get; set; }
+
+    internal static QuantifiableChild GetQuantifiableChild(decimal defaultQuantity, Enum measureUnit = null, IQuantifiableFactory factory = null)
+    {
+        DataFields fields = new();
+
+        return new(fields.RootObject, fields.paramName)
+        {
+            Return = new()
+            {
+                GetDefaultQuantity = defaultQuantity,
+                GetBaseMeasureUnit = measureUnit,
+                GetFactory = factory,
+            }
+        };
+    }
+    #endregion
 
     public override sealed Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnit;
 
@@ -52,25 +69,19 @@ internal class QuantifiableChild(IRootObject rootObject, string paramName) : Qua
 
     public override sealed IQuantifiable Round(RoundingMode roundingMode)
     {
-        object quantity = GetQuantity(roundingMode);
-        QuantifiableFactoryObject factory = new();
+        decimal quantity = GetDefaultQuantity().Round(roundingMode);
 
-        return factory.CreateQuantifiable(GetMeasureUnitCode(), (decimal)quantity);
+        return GetQuantifiableChild(quantity, GetMeasureUnitCode());
     }
 
     public override bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable exchanged)
     {
         exchanged = null;
 
-        if (!IsDefinedMeasureUnit(context) && !Enum.IsDefined(typeof(MeasureUnitCode), context)) return false;
+        if (!IsExchangeableTo(context)) return false;
 
-        MeasureUnitCode measureUnitCode = GetMeasureUnitElements(context, nameof(context)).MeasureUnitCode;
-
-        if (!HasMeasureUnitCode(measureUnitCode)) return false;
-
-        QuantifiableFactoryObject factory = new();
-
-        exchanged = factory.CreateQuantifiable(measureUnitCode, Return.GetDefaultQuantity);
+        Enum measureUnit = GetMeasureUnitElements(context, nameof(context)).MeasureUnit;
+        exchanged = GetQuantifiableChild(Return.GetDefaultQuantity, measureUnit);
 
         return true;
     }
