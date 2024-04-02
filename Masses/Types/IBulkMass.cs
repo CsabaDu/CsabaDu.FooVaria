@@ -7,4 +7,6 @@ public interface IBulkMass : IMass, ICommonBase<IBulkMass>, IExchange<IBulkMass,
 
     IBulkMass GetBulkMass(IWeight weight, IBody body);
     IBulkMass GetBulkMass(IWeight weight, IVolume volume);
+    IBulkMass GetBulkMass(IWeight weight, IProportion density);
+    IBulkMass GetBulkMass(IVolume volume, IProportion density);
 }

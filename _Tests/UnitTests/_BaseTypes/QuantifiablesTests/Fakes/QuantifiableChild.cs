@@ -74,7 +74,7 @@ internal class QuantifiableChild(IRootObject rootObject, string paramName) : Qua
         return GetQuantifiableChild(quantity, GetMeasureUnitCode());
     }
 
-    public override bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable exchanged)
+    public override sealed bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable exchanged)
     {
         exchanged = null;
 

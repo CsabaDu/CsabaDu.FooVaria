@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
-
-namespace CsabaDu.FooVaria.Masses.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Masses.Types.Implementations;
 
 internal sealed class BulkMass : Mass, IBulkMass
 {
@@ -24,27 +22,12 @@ internal sealed class BulkMass : Mass, IBulkMass
     #endregion
 
     #region Public methods
+    #region Override methods
     public override IBulkBody GetBody()
     {
         return BulkBody;
     }
 
-    public IBulkMass GetBulkMass(IWeight weight, IVolume volume)
-    {
-        return Factory.Create(weight, volume);
-    }
-
-    public IBulkMass GetBulkMass(IWeight weight, IBody body)
-    {
-        return (IBulkMass)Factory.Create(weight, body);
-    }
-
-    public IBulkMass GetNew(IBulkMass other)
-    {
-        return Factory.CreateNew(other);
-    }
-
-    #region Override methods
     public override IBulkBodyFactory GetBodyFactory()
     {
         return (IBulkBodyFactory)Factory.GetBodyFactory();
@@ -55,9 +38,9 @@ internal sealed class BulkMass : Mass, IBulkMass
         return Factory;
     }
 
-    public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
+    public override IMass GetMass(IBody body, IProportion density)
     {
-        return base.GetMeasureUnitCodes().Append(MeasureUnitCode.VolumeUnit);
+        return GetMass(this, body, density);
     }
 
     public override bool TryExchangeTo(Enum? context, [NotNullWhen(true)] out IMass? exchanged)
@@ -76,6 +59,7 @@ internal sealed class BulkMass : Mass, IBulkMass
 
         return exchanged != null;
     }
+    #endregion
 
     public IBulkMass? ExchangeTo(VolumeUnit volumeUnit)
     {
@@ -85,6 +69,44 @@ internal sealed class BulkMass : Mass, IBulkMass
 
         return GetBulkMass(Weight, body);
     }
-    #endregion
+
+    public IBulkMass GetBulkMass(IWeight weight, IProportion density)
+    {
+        decimal defaultQuantity = NullChecked(weight, nameof(weight)).GetDefaultQuantity();
+
+        ValidateDensity(density, nameof(density));
+
+        defaultQuantity *= density.DefaultQuantity;
+        IVolume volume = (IVolume)GetVolume().GetBaseMeasure(default(VolumeUnit), defaultQuantity);
+
+        return GetBulkMass(weight, volume);
+    }
+
+    public IBulkMass GetBulkMass(IVolume volume, IProportion density)
+    {
+        decimal defaultQuantity = NullChecked(volume, nameof(volume)).GetDefaultQuantity();
+
+        ValidateDensity(density, nameof(density));
+
+        defaultQuantity *= density.DefaultQuantity;
+        IWeight weight = (IWeight)Weight.GetBaseMeasure(default(WeightUnit), defaultQuantity);
+
+        return GetBulkMass(weight, volume);
+    }
+
+    public IBulkMass GetBulkMass(IWeight weight, IVolume volume)
+    {
+        return Factory.Create(weight, volume);
+    }
+
+    public IBulkMass GetBulkMass(IWeight weight, IBody body)
+    {
+        return (IBulkMass)Factory.Create(weight, body);
+    }
+
+    public IBulkMass GetNew(IBulkMass other)
+    {
+        return Factory.CreateNew(other);
+    }
     #endregion
 }

@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BulkSpreads.Types;
-
-namespace CsabaDu.FooVaria.Masses.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Masses.Types.Implementations;
 
 internal sealed class DryMass : Mass, IDryMass
 {
@@ -47,26 +45,6 @@ internal sealed class DryMass : Mass, IDryMass
     #endregion
 
     #region Public methods
-    public IDryMass GetDryMass(IWeight weight, IDryBody dryBody)
-    {
-        return Factory.Create(weight, dryBody);
-    }
-
-    public IDryMass GetDryMass(IWeight weight, IPlaneShape baseFace, IExtent height)
-    {
-        return Factory.Create(weight, baseFace, height);
-    }
-
-    public IDryMass GetDryMass(IWeight weight, params IExtent[] shapeExtents)
-    {
-        return Factory.Create(weight, shapeExtents);
-    }
-
-    public IDryMass GetNew(IDryMass other)
-    {
-        return Factory.CreateNew(other);
-    }
-
     #region Override methods
     public override bool Equals(IMass? other)
     {
@@ -92,15 +70,6 @@ internal sealed class DryMass : Mass, IDryMass
         return exchanged != null;
     }
 
-    public IDryMass? ExchangeTo(ExtentUnit extentUnit)
-    {
-        ISimpleShape? simpleShape = DryBody.ExchangeTo(extentUnit);
-
-        if (simpleShape is not IDryBody dryBody) return null;
-
-        return GetDryMass(Weight, dryBody);
-    }
-
     public override bool? FitsIn(IMass? other, LimitMode? limitMode)
     {
         bool? baseFitsIn = base.FitsIn(other, limitMode);
@@ -124,6 +93,11 @@ internal sealed class DryMass : Mass, IDryMass
         return (IDryBodyFactory)Factory.GetBodyFactory();
     }
 
+    public IDryMass GetDryMass(IDryBody dryBody, IProportion density)
+    {
+        return (IDryMass)GetMass(dryBody, density);
+    }
+
     public override IDryMassFactory GetFactory()
     {
         return Factory;
@@ -138,6 +112,42 @@ internal sealed class DryMass : Mass, IDryMass
     {
         return DryBody;
     }
+
+    public override IMass GetMass(IBody body, IProportion density)
+    {
+        if (body is IDryBody dryBody) return GetMass(this, dryBody, density);
+
+        throw ArgumentTypeOutOfRangeException(nameof(body), body);
+    }
     #endregion
+
+    public IDryMass? ExchangeTo(ExtentUnit extentUnit)
+    {
+        ISimpleShape? simpleShape = DryBody.ExchangeTo(extentUnit);
+
+        if (simpleShape is not IDryBody dryBody) return null;
+
+        return GetDryMass(Weight, dryBody);
+    }
+
+    public IDryMass GetDryMass(IWeight weight, IDryBody dryBody)
+    {
+        return Factory.Create(weight, dryBody);
+    }
+
+    public IDryMass GetDryMass(IWeight weight, IPlaneShape baseFace, IExtent height)
+    {
+        return Factory.Create(weight, baseFace, height);
+    }
+
+    public IDryMass GetDryMass(IWeight weight, params IExtent[] shapeExtents)
+    {
+        return Factory.Create(weight, shapeExtents);
+    }
+
+    public IDryMass GetNew(IDryMass other)
+    {
+        return Factory.CreateNew(other);
+    }
     #endregion
 }

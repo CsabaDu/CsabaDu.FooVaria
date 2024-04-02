@@ -3,4 +3,5 @@
 public interface IDensity
 {
     IProportion GetDensity();
+    void ValidateDensity(IProportion density, string paramName);
 }

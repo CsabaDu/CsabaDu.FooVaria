@@ -8,6 +8,7 @@ public interface IMass : IBaseQuantifiable, IDensity, IVolumeWeightRatio, IFit<I
 
     IVolume GetVolume();
     IMass GetMass(IWeight weight, IBody body);
+    IMass GetMass(IBody body, IProportion density);
     IBodyFactory GetBodyFactory();
 
     void ValidateMassComponent(IBaseQuantifiable? massComponent, string paramName);
