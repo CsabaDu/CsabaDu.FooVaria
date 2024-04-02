@@ -40,8 +40,6 @@ public sealed class QuantifiableTests
     public void CleanupBaseQuantifiableTests()
     {
         Fields.paramName = null;
-
-        TestSupport.RestoreConstantExchangeRates();
     }
     #endregion
 
@@ -484,27 +482,29 @@ public sealed class QuantifiableTests
     #endregion
     #endregion
 
-    //#region IQuantifiable? ExchangeTo
-    //#region IExchange<IQuantifiable, Enum>.ExchangeTo(Enum? otherMeasureUnit)
-    //[TestMethod, TestCategory("UnitTest")]
-    //[DynamicData(nameof(GetExchangeToArgs), DynamicDataSourceType.Method)]
-    //public void ExchangeTo_arg_returns_expected(Enum measureUnit, Enum otherMeasureUnit, IQuantifiable expected)
-    //{
-    //    // Arrange
-    //    SetQuantifiableChild(Fields.defaultQuantity, measureUnit);
-
-    //    // Act
-    //    var actual = _quantifiable.ExchangeTo(otherMeasureUnit);
-
-    //    // Assert
-    //    Assert.AreEqual(expected?.GetType(), actual?.GetType());
-    //}
-    //#endregion
-    //#endregion
-
     #region bool TryExchangeTo
     #region abstract ITryExchange<IQuantifiable, Enum>.TryExchangeTo(Enum?, out IQuantifiable?)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetTryExchangeToArgs), DynamicDataSourceType.Method)]
+    public void TryExchangeTo_arg_returns_success_out_expected(Enum measureUnit, Enum otherMeasureUnit, IQuantifiable expected)
+    {
+        // Arrange
+        SetQuantifiableChild(Fields.defaultQuantity, measureUnit);
 
+        // Act
+        var success = _quantifiable.TryExchangeTo(otherMeasureUnit, out IQuantifiable? actual);
+
+        // Assert
+        if (actual is null)
+        {
+            Assert.IsFalse(success);
+        }
+        else
+        {
+            Assert.IsTrue(success);
+        }
+        Assert.AreEqual(expected?.GetType(), actual?.GetType());
+    }
     #endregion
     #endregion
 
@@ -522,11 +522,6 @@ public sealed class QuantifiableTests
     private static IEnumerable<object[]> GetEqualsArgs()
     {
         return DynamicDataSource.GetEqualsArgs();
-    }
-
-    private static IEnumerable <object[]> GetExchangeToArgs()
-    {
-        return DynamicDataSource.GetExchangeToArgs();
     }
 
     private static IEnumerable<object[]> GetFitsInILimiterArgs()
@@ -564,9 +559,9 @@ public sealed class QuantifiableTests
         return DynamicDataSource.GetIsExchangeableToArg();
     }
 
-    private static IEnumerable<object[]> GetProportionalToInvalidArg()
+    private static IEnumerable<object[]> GetTryExchangeToArgs()
     {
-        return DynamicDataSource.GetProportionalToInvalidArg();
+        return DynamicDataSource.GetTryExchangeToArgs();
     }
     #endregion
     #endregion

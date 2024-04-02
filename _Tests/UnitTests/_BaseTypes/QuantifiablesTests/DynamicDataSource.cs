@@ -36,44 +36,6 @@ internal class DynamicDataSource : DataFields
         #endregion
     }
 
-    internal IEnumerable<object[]> GetExchangeToArgs()
-    {
-        // null
-        measureUnit = RandomParams.GetRandomMeasureUnit();
-        measureUnitCode = GetMeasureUnitCode(measureUnit);
-        context = null;
-        IQuantifiable quantifiable = null;
-        yield return toObjectArray();
-
-        // not measureUnit Enum
-        context = TypeCode.Empty;
-        yield return toObjectArray();
-
-        // same type not defined measureUnit
-        context = SampleParams.GetNotDefinedMeasureUnit(measureUnitCode);
-        yield return toObjectArray();
-
-        // same type defined measureUnit
-        context = RandomParams.GetRandomMeasureUnit(measureUnitCode);
-        quantifiable = GetQuantifiableChild(RandomParams.GetRandomDecimal(), context);
-        yield return toObjectArray();
-
-        // different type measureUnit
-        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
-        context = RandomParams.GetRandomMeasureUnit(measureUnitCode);
-        quantifiable = null;
-        yield return toObjectArray();
-
-        #region toObjectArray method
-        object[] toObjectArray()
-        {
-            Enum_Enum_IQuantifiable_args item = new(measureUnit, context, quantifiable);
-
-            return item.ToObjectArray();
-        }
-        #endregion
-    }
-
     internal IEnumerable<object[]> GetFitsInILimiterArgs()
     {
         // Not IBaseQuantifiable
@@ -293,24 +255,38 @@ internal class DynamicDataSource : DataFields
         #endregion
     }
 
-    internal IEnumerable<object[]> GetProportionalToInvalidArg()
+    internal IEnumerable<object[]> GetTryExchangeToArgs()
     {
-        // quantity = 0
+        // null
         measureUnit = RandomParams.GetRandomMeasureUnit();
-        defaultQuantity = RandomParams.GetRandomDecimal();
         measureUnitCode = GetMeasureUnitCode(measureUnit);
-        IQuantifiable quantifiable = GetQuantifiableChild(0, RandomParams.GetRandomMeasureUnit(measureUnitCode));
+        context = null;
+        IQuantifiable quantifiable = null;
         yield return toObjectArray();
 
-        // Different MeasureUnitCode
+        // not measureUnit Enum
+        context = TypeCode.Empty;
+        yield return toObjectArray();
+
+        // same type not defined measureUnit
+        context = SampleParams.GetNotDefinedMeasureUnit(measureUnitCode);
+        yield return toObjectArray();
+
+        // same type defined measureUnit
+        context = RandomParams.GetRandomMeasureUnit(measureUnitCode);
+        quantifiable = GetQuantifiableChild(RandomParams.GetRandomDecimal(), context);
+        yield return toObjectArray();
+
+        // different type measureUnit
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
-        quantifiable = GetQuantifiableChild(RandomParams.GetRandomDecimal(), RandomParams.GetRandomMeasureUnit(measureUnitCode));
+        context = RandomParams.GetRandomMeasureUnit(measureUnitCode);
+        quantifiable = null;
         yield return toObjectArray();
 
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Enum_Decimal_IQuantifiable_args item = new(measureUnit, defaultQuantity, quantifiable);
+            Enum_Enum_IQuantifiable_args item = new(measureUnit, context, quantifiable);
 
             return item.ToObjectArray();
         }
