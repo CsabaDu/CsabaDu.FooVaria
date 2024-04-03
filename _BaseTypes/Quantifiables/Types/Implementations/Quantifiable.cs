@@ -4,6 +4,15 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
 {
     #region Public methods
     #region Override methods
+    public override bool? FitsIn(ILimiter? limiter)
+    {
+        if (limiter == null) return true;
+
+        if (limiter is not IQuantifiable) return null;
+
+        return base.FitsIn(limiter);
+    }
+
     #region Sealed methods
     public override sealed MeasureUnitCode GetMeasureUnitCode()
     {
@@ -15,15 +24,6 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
         base.ValidateMeasureUnitCode(measureUnitCode, paramName);
     }
     #endregion
-
-    public override bool? FitsIn(ILimiter? limiter)
-    {
-        if (limiter == null) return true;
-
-        if (limiter is not IQuantifiable) return null;
-
-        return base.FitsIn(limiter);
-    }
     #endregion
 
     #region Virtual methods

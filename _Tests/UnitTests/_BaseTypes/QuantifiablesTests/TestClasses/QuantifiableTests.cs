@@ -507,9 +507,6 @@ public sealed class QuantifiableTests
     }
     #endregion
     #endregion
-
-    // void IMeasurable.ValidateMeasureUnitCode(IMeasurable? measurable, string paramName)
-
     #endregion
 
     #region Private methods
@@ -532,11 +529,6 @@ public sealed class QuantifiableTests
     private static IEnumerable<object[]> GetFitsInIQuantifiableLimitModeArgs()
     {
         return DynamicDataSource.GetFitsInIQuantifiableLimitModeArgs();
-    }
-
-    private static IEnumerable<object[]> GetQuantifiableInvalidArgs()
-    {
-        return DynamicDataSource.GetQuantifiableInvalidArgs();
     }
 
     private static IEnumerable<object[]> GetGetQuantityRoundingModeArgs()
