@@ -374,7 +374,7 @@ public sealed class BaseMeasurementTests
         void validator() => _baseMeasurement.ValidateExchangeRate(exchangeRate, null);
 
         // Assert
-        Assert.IsTrue(Returned(validator));
+        Assert.IsTrue(DoesNotThrowException(validator));
     }
     #endregion
     #endregion
@@ -423,7 +423,7 @@ public sealed class BaseMeasurementTests
         void validator() => _baseMeasurement.ValidateMeasureUnit(context, Fields.paramName);
 
         // Assert
-        Assert.IsTrue(Returned(validator));
+        Assert.IsTrue(DoesNotThrowException(validator));
     }
     #endregion
     #endregion

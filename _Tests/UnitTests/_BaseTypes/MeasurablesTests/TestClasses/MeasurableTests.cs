@@ -255,7 +255,7 @@ public sealed class MeasurableTests
         void validator() => _measurable.ValidateMeasureUnit(measureUnit, Fields.paramName);
 
         // Assert
-        Assert.IsTrue(Returned(validator));
+        Assert.IsTrue(DoesNotThrowException(validator));
     }
     #endregion
     #endregion
@@ -305,7 +305,7 @@ public sealed class MeasurableTests
         void validator() => _measurable.ValidateMeasureUnitCode(measurable, Fields.paramName);
 
         // Assert
-        Assert.IsTrue(Returned(validator));
+        Assert.IsTrue(DoesNotThrowException(validator));
     }
     #endregion
 
@@ -337,7 +337,7 @@ public sealed class MeasurableTests
         void validator() => _measurable.ValidateMeasureUnitCode(Fields.measureUnitCode, Fields.paramName);
 
         // Assert
-        Assert.IsTrue(Returned(validator));
+        Assert.IsTrue(DoesNotThrowException(validator));
     }
     #endregion
     #endregion

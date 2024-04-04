@@ -233,6 +233,11 @@ public sealed class RandomParams
     {
         return GetRandomItem(Enum.GetValues<RoundingMode>());
     }
+
+    public RateComponentCode GetRandomRateComponentCode()
+    {
+        return GetRandomItem(Enum.GetValues<RateComponentCode>());
+    }
     #endregion
 
     #region Private methods

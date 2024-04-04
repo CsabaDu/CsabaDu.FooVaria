@@ -217,7 +217,7 @@ public sealed class BaseQuantifiableTests
         void attempt() => _baseQuantifiable.ValidateQuantity(quantity, null);
 
         // Assert
-        Assert.IsTrue(Returned(attempt));
+        Assert.IsTrue(DoesNotThrowException(attempt));
     }
     #endregion
     #endregion

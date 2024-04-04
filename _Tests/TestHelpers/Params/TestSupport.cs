@@ -10,7 +10,7 @@ public sealed class TestSupport
         }
     }
 
-    public static bool Returned(Action validator)
+    public static bool DoesNotThrowException(Action validator)
     {
         try
         {
@@ -21,5 +21,12 @@ public sealed class TestSupport
         {
             return false;
         }
+    }
+
+    public static bool DoesSucceedAsExpected(bool success, object obj)
+    {
+        if (obj != null) return success == true;
+
+        return success == false;
     }
 }

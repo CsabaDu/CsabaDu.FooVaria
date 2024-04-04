@@ -2,13 +2,18 @@
 
 internal sealed class BaseMeasurementFactoryObject : IBaseMeasurementFactory
 {
-    DataFields Fields = new();
+    private readonly DataFields Fields = new();
 
-    public IBaseMeasurement CreateBaseMeasurement(Enum context) => new BaseMeasurementChild(Fields.RootObject, Fields.paramName)
+    public IBaseMeasurement CreateBaseMeasurement(Enum context)
     {
-        Return = new()
+        Enum measureUnit = GetMeasureUnitElements(context, nameof(context)).MeasureUnit;
+
+        return new BaseMeasurementChild(Fields.RootObject, Fields.paramName)
         {
-            GetBaseMeasureUnit = GetMeasureUnitElements(context, nameof(context)).MeasureUnit,
-        }
-    };
+            Return = new()
+            {
+                GetBaseMeasureUnit = measureUnit,
+            }
+        };
+    }
 }

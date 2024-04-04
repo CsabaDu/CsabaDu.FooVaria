@@ -492,17 +492,10 @@ public sealed class QuantifiableTests
         SetQuantifiableChild(Fields.defaultQuantity, measureUnit);
 
         // Act
-        var success = _quantifiable.TryExchangeTo(otherMeasureUnit, out IQuantifiable? actual);
+        var success = _quantifiable.TryExchangeTo(otherMeasureUnit, out IQuantifiable actual);
 
         // Assert
-        if (actual is null)
-        {
-            Assert.IsFalse(success);
-        }
-        else
-        {
-            Assert.IsTrue(success);
-        }
+        Assert.IsTrue(DoesSucceedAsExpected(success, actual));
         Assert.AreEqual(expected?.GetType(), actual?.GetType());
     }
     #endregion

@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
-
-namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations;
 
 public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Quantifiable(rootObject, paramName), IBaseMeasure
 {
@@ -26,21 +24,6 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
     #endregion
 
     #region Override methods
-    public override Enum GetBaseMeasureUnit()
-    {
-        IBaseMeasurement baseMeasurement = GetBaseMeasurement();
-
-        return baseMeasurement.GetBaseMeasureUnit();
-    }
-
-    public override sealed IBaseMeasure Round(RoundingMode roundingMode)
-    {
-        ValueType quantity = (ValueType)GetQuantity(roundingMode);
-        IBaseMeasurement baseMeasurement = GetBaseMeasurement();
-
-        return GetBaseMeasure(baseMeasurement, quantity);
-    }
-
     #region Sealed methods
     public override sealed int CompareTo(IQuantifiable? other)
     {
@@ -62,6 +45,18 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
         return base.FitsIn(limiter);
     }
 
+    public override sealed Enum GetBaseMeasureUnit()
+    {
+        IBaseMeasurement baseMeasurement = GetBaseMeasurement();
+
+        return baseMeasurement.GetBaseMeasureUnit();
+    }
+
+    public override sealed decimal GetDefaultQuantity()
+    {
+        return GetDefaultQuantity(GetBaseQuantity(), GetExchangeRate());
+    }
+
     public override sealed bool IsExchangeableTo(Enum? context)
     {
         return base.IsExchangeableTo(context)
@@ -77,9 +72,12 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
         #endregion
     }
 
-    public override sealed decimal GetDefaultQuantity()
+    public override sealed IBaseMeasure Round(RoundingMode roundingMode)
     {
-        return GetDefaultQuantity(GetBaseQuantity(), GetExchangeRate());
+        ValueType quantity = (ValueType)GetQuantity(roundingMode);
+        IBaseMeasurement baseMeasurement = GetBaseMeasurement();
+
+        return GetBaseMeasure(baseMeasurement, quantity);
     }
     #endregion
     #endregion
