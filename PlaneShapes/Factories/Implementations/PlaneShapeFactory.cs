@@ -49,7 +49,7 @@
             {
                 IEnumerable<IExtent>? shapeExtents = GetShapeExtents(shapeComponents);
 
-                return shapeExtents != null ?
+                return shapeExtents is not null ?
                     rectangleFactory.Create(shapeExtents.First(), shapeExtents.Last())
                     : null;
             }

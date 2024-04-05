@@ -122,7 +122,7 @@ public static class Extensions
     {
         TypeCode? quantityTypeCode = quantity.GetQuantityTypeCode();
 
-        if (quantityTypeCode == null) return null;
+        if (quantityTypeCode is null) return null;
 
         if (quantityTypeCode == conversionTypeCode) return getRoundedQuantity();
 

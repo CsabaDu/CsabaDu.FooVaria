@@ -90,7 +90,7 @@ internal sealed class LimitedRate : Rate, ILimitedRate
 
     public bool? Includes(IBaseMeasure? limitable)
     {
-        return limitable == null ?
+        return limitable is null ?
             false
             : limitable?.FitsIn(this);
     }

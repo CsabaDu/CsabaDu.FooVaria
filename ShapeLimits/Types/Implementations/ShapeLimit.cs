@@ -30,10 +30,10 @@ public sealed class ShapeLimit : SimpleShape, IShapeLimit
 
     public bool Equals(IShapeLimit? x, IShapeLimit? y)
     {
-        if (x == null && y == null) return true;
+        if (x is null && y is null) return true;
 
-        return x != null
-            && y != null
+        return x is not null
+            && y is not null
             && x.LimitMode == y.LimitMode
             && x.Equals(y);
     }
@@ -74,7 +74,7 @@ public sealed class ShapeLimit : SimpleShape, IShapeLimit
     }
     public bool? Includes(IShape? limitable)
     {
-        return limitable == null ?
+        return limitable is null ?
             false
             : limitable?.FitsIn(this);
     }
@@ -148,7 +148,7 @@ public sealed class ShapeLimit : SimpleShape, IShapeLimit
             _ => null,
         };
 
-        return exchanged != null;
+        return exchanged is not null;
 
         #region Local methods
         IQuantifiable? exchangeTo<TSMeasure, TEnum>(TEnum measureUnit)

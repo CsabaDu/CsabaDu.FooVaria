@@ -189,7 +189,7 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
 
     public static bool IsDefinedMeasureUnit(Enum? measureUnit)
     {
-        if (measureUnit == null) return false;
+        if (measureUnit is null) return false;
 
         Type measureUnitType = measureUnit.GetType();
 

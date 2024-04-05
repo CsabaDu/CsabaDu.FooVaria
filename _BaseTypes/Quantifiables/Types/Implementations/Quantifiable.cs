@@ -6,7 +6,7 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
     #region Override methods
     public override bool? FitsIn(ILimiter? limiter)
     {
-        if (limiter == null) return true;
+        if (limiter is null) return true;
 
         if (limiter is not IQuantifiable) return null;
 
@@ -29,7 +29,7 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
     #region Virtual methods
     public virtual int CompareTo(IQuantifiable? other)
     {
-        if (other == null) return 1;
+        if (other is null) return 1;
 
         ValidateMeasureUnitCode(other.GetMeasureUnitCode(), nameof(other));
 
@@ -43,7 +43,7 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
 
     public virtual bool? FitsIn(IQuantifiable? other, LimitMode? limitMode)
     {
-        if (other == null && !limitMode.HasValue) return true;
+        if (other is null && !limitMode.HasValue) return true;
 
         if (other?.HasMeasureUnitCode(GetMeasureUnitCode()) != true) return null;
 
@@ -59,7 +59,7 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
 
     public virtual bool IsExchangeableTo(Enum? context)
     {
-        if (context == null) return false;
+        if (context is null) return false;
 
         if (context is not MeasureUnitCode measureUnitCode)
         {

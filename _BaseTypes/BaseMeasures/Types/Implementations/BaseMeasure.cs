@@ -17,7 +17,7 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
 
     public static void ValidateQuantityTypeCode(TypeCode quantityTypeCode, string paramName)
     {
-        if (GetValidQuantityTypeCodeOrNull(quantityTypeCode) != null) return;
+        if (GetValidQuantityTypeCodeOrNull(quantityTypeCode) is not null) return;
 
         throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode, paramName);
     }
@@ -96,10 +96,10 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
 
     public bool Equals(IBaseMeasure? x, IBaseMeasure? y)
     {
-        if (x == null && y == null) return true;
+        if (x is null && y is null) return true;
 
-        return x != null
-            && y != null
+        return x is not null
+            && y is not null
             && x.GetRateComponentCode() == y.GetRateComponentCode()
             && x.GetLimitMode() == y.GetLimitMode()
             && x.Equals(y);
@@ -169,7 +169,7 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
     //    #region Local methods
     //    object? getValidDenominatorQuantity()
     //    {
-    //        if (quantity == null || (decimal)quantity <= 0) return null;
+    //        if (quantity is null || (decimal)quantity <= 0) return null;
 
     //        return quantity;
     //    }

@@ -24,10 +24,10 @@ internal sealed class ProportionLimit : SimpleRate, IProportionLimit
     #region Public methods
     public bool Equals(IProportionLimit? x, IProportionLimit? y)
     {
-        if (x == null && y == null) return true;
+        if (x is null && y is null) return true;
 
-        return x != null
-            && y != null
+        return x is not null
+            && y is not null
             && x.GetLimitMode()!.Value == y.GetLimitMode()!.Value
             && x.Equals(y);
     }
@@ -74,7 +74,7 @@ internal sealed class ProportionLimit : SimpleRate, IProportionLimit
 
     public bool? Includes(IBaseRate? limitable)
     {
-        return limitable == null ?
+        return limitable is null ?
             false
             : limitable?.FitsIn(this);
     }

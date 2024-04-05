@@ -403,7 +403,7 @@ namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations
         {
             ISpreadMeasure? exchanged = SpreadMeasure.ExchangeTo(measureUnit);
 
-            if (exchanged == null) return null;
+            if (exchanged is null) return null;
 
             return GetBulkSpread(exchanged);
         }
@@ -421,7 +421,7 @@ namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations
                 exchanged = ExchangeTo(measureUnit);
             }
 
-            return exchanged != null;
+            return exchanged is not null;
         }
         #endregion
         #endregion

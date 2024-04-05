@@ -127,7 +127,7 @@ namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
                 _ => null,
             };
 
-            return exchanged != null;
+            return exchanged is not null;
         }
         #endregion
     }

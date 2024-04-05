@@ -123,7 +123,7 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
 
     public bool TryGetMeasurement(decimal exchangeRate, [NotNullWhen(true)] out IMeasurement? measurement)
     {
-        if (TryGetMeasureUnit(GetMeasureUnitCode(), exchangeRate, out Enum? measureUnit) && measureUnit != null)
+        if (TryGetMeasureUnit(GetMeasureUnitCode(), exchangeRate, out Enum? measureUnit) && measureUnit is not null)
         {
             measurement = GetMeasurement(measureUnit);
 

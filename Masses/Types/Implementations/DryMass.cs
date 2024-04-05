@@ -67,7 +67,7 @@ internal sealed class DryMass : Mass, IDryMass
 
         exchanged = ExchangeTo(extentUnit);
 
-        return exchanged != null;
+        return exchanged is not null;
     }
 
     public override bool? FitsIn(IMass? other, LimitMode? limitMode)

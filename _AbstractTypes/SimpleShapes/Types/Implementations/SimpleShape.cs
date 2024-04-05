@@ -75,7 +75,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
 
     public IEnumerable<ShapeExtentCode> GetShapeExtentCodes()
     {
-        return Enum.GetValues<ShapeExtentCode>().Where(x => this[x] != null);
+        return Enum.GetValues<ShapeExtentCode>().Where(x => this[x] is not null);
     }
 
     public IEnumerable<IExtent> GetSortedDimensions()
@@ -92,7 +92,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
     {
         shapeExtentCode = null;
 
-        if (shapeExtent != null || !GetShapeExtents().Contains(shapeExtent)) return false;
+        if (shapeExtent is not null || !GetShapeExtents().Contains(shapeExtent)) return false;
 
         shapeExtentCode = GetShapeExtentCodes().FirstOrDefault(x => this[x] == shapeExtent);
 
@@ -131,7 +131,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
     #region Sealed methods
     public override sealed int CompareTo(IShape? other)
     {
-        if (other == null) return 1;
+        if (other is null) return 1;
 
         const string paramName = nameof(other);
 
@@ -153,7 +153,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
 
     public override sealed bool? FitsIn(IShape? other, LimitMode? limitMode)
     {
-        if (other == null) return null;
+        if (other is null) return null;
 
         if (other is not ISimpleShape simpleShape)
         {
@@ -267,7 +267,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
     #region Static methods
     private static int? Compare(SimpleShape simpleShape, ISimpleShape? other)
     {
-        if (other == null) return null;
+        if (other is null) return null;
 
         int comparison = 0;
 

@@ -15,7 +15,7 @@ public sealed class RandomParams
     {
         Enum measureUnit = (Enum)GetRandomItem(ConstantExchangeRateCollection.Keys);
 
-        if (excluded == null) return measureUnit;
+        if (excluded is null) return measureUnit;
 
         MeasureUnitCode measureUnitCode = GetMeasureUnitCode(excluded);
 

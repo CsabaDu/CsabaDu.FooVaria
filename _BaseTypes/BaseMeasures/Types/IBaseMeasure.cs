@@ -22,14 +22,14 @@
         //{
         //    baseMeasure = GetBaseMeasure(measureUnit, exchangeRate, quantity, customName);
 
-        //    return baseMeasure != null;
+        //    return baseMeasure is not null;
         //}
 
         //public bool TryGetBaseMeasure(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity, [NotNullWhen(true)] out TComparable? baseMeasure)
         //{
         //    baseMeasure = GetBaseMeasure(customName, measureUnitCode, exchangeRate, quantity);
 
-        //    return baseMeasure != null;
+        //    return baseMeasure is not null;
         //}
         //#endregion
     }

@@ -46,7 +46,7 @@ public abstract class BaseQuantifiable(IRootObject rootObject, string paramName)
     #region Virtual methods    
     public virtual bool? FitsIn(ILimiter? limiter)
     {
-        if (limiter == null) return true;
+        if (limiter is null) return true;
 
         if (limiter is not IBaseQuantifiable other) return null;
 

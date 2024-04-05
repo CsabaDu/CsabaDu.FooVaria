@@ -134,7 +134,7 @@ namespace CsabaDu.FooVaria.Measures.Types.Implementations
 
         private IMeasure GetSum(IMeasure? other, SummingMode summingMode)
         {
-            if (other == null) return GetBaseMeasure(this);
+            if (other is null) return GetBaseMeasure(this);
 
             if (other.IsExchangeableTo(GetMeasureUnitCode())) return getMeasure();
 
@@ -279,7 +279,7 @@ namespace CsabaDu.FooVaria.Measures.Types.Implementations
             MeasureUnitElements measureUnitElements = GetMeasureUnitElements(context, nameof(context));
             exchanged = ExchangeTo((TEnum)measureUnitElements.MeasureUnit);
 
-            return exchanged != null;
+            return exchanged is not null;
         }
         #endregion
 

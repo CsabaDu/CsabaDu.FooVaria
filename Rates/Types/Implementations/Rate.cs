@@ -63,9 +63,9 @@ internal abstract class Rate : BaseRate, IRate
 
     public bool Equals(IRate? x, IRate? y)
     {
-        if (x == null && y == null) return true;
+        if (x is null && y is null) return true;
 
-        if (x == null || y == null) return false;
+        if (x is null || y is null) return false;
 
         if (!x.Equals(y)) return false;
 
@@ -108,7 +108,7 @@ internal abstract class Rate : BaseRate, IRate
     //        IMeasure numerator = Numerator.Divide(proportionQuantity);
     //        ILimit? limit = GetLimit();
 
-    //        return limit == null ?
+    //        return limit is null ?
     //            GetRate(numerator, denominator)
     //            : GetRate(numerator, denominator, limit);
     //    }
@@ -134,7 +134,7 @@ internal abstract class Rate : BaseRate, IRate
 
     public bool IsExchangeableTo(Enum? context)
     {
-        if (context == null) return false;
+        if (context is null) return false;
 
         return Denominator.IsExchangeableTo(context)
             || Numerator.IsExchangeableTo(context)
@@ -172,7 +172,7 @@ internal abstract class Rate : BaseRate, IRate
             }
         }
 
-        return exchanged != null;
+        return exchanged is not null;
     }
 
     public bool TryExchangeTo(IBaseMeasure? baseMeasure, [NotNullWhen(true)] out IRate? exchanged)
@@ -189,7 +189,7 @@ internal abstract class Rate : BaseRate, IRate
 
         exchanged = GetRate(numerator, denominator, limit!);
 
-        return exchanged != null;
+        return exchanged is not null;
     }
 
     public void ValidateDenominator(IMeasurable denominator, string paramName)

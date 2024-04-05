@@ -38,7 +38,7 @@ public sealed class MeasureFactory(IMeasurementFactory measurementFactory) : IMe
     {
         IMeasurement? measurement = MeasurementFactory.Create(measureUnit, exchangeRate, customName);
 
-        if (measurement == null) return null;
+        if (measurement is null) return null;
 
         return CreateMeasure(measurement, quantity);
     }
@@ -47,7 +47,7 @@ public sealed class MeasureFactory(IMeasurementFactory measurementFactory) : IMe
     {
         IMeasurement? measurement = MeasurementFactory.Create(customName, measureUnitCode, exchangeRate);
 
-        if (measurement == null) return null;
+        if (measurement is null) return null;
 
         return CreateMeasure(measurement, quantity);
     }

@@ -25,7 +25,7 @@ public sealed class TestSupport
 
     public static bool DoesSucceedAsExpected(bool success, object obj)
     {
-        if (obj != null) return success == true;
+        if (obj is not null) return success == true;
 
         return success == false;
     }

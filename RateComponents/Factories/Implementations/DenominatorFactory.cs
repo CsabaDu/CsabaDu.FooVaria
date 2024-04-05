@@ -71,7 +71,7 @@ public sealed class DenominatorFactory(IMeasurementFactory measurementFactory)
     {
         IMeasurement? measurement = MeasurementFactory.Create(measureUnit, exchangeRate, customName);
 
-        if (measurement == null) return null;
+        if (measurement is null) return null;
 
         return GetOrCreateStoredDenominator(measurement, quantity);
     }
@@ -80,7 +80,7 @@ public sealed class DenominatorFactory(IMeasurementFactory measurementFactory)
     {
         IMeasurement? measurement = MeasurementFactory.Create(customName, measureUnitCode, exchangeRate);
 
-        if (measurement == null) return null;
+        if (measurement is null) return null;
 
         return GetOrCreateStoredDenominator(measurement, quantity);
     }
@@ -112,7 +112,7 @@ public sealed class DenominatorFactory(IMeasurementFactory measurementFactory)
     {
         IMeasurement? measurement = (IMeasurement?)MeasurementFactory.CreateDefault(measureUnitCode);
 
-        if (measurement == null) return null;
+        if (measurement is null) return null;
 
         return GetOrCreateStoredDenominator(measurement);
     }

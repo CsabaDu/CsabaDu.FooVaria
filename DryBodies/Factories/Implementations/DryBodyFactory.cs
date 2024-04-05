@@ -120,7 +120,7 @@
             {
                 IEnumerable<IExtent>? shapeExtents = GetShapeExtents(shapeComponents);
 
-                return shapeExtents != null ?
+                return shapeExtents is not null ?
                     cuboidFactory.Create(shapeExtents.First(), shapeExtents.ElementAt(1), shapeExtents.Last())
                     : null;
             }

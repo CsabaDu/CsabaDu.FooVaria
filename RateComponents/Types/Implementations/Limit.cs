@@ -81,7 +81,7 @@ internal sealed class Limit(ILimitFactory factory, IMeasurement measurement, ulo
 
     public bool? Includes(IBaseMeasure? limitable)
     {
-        return limitable == null ?
+        return limitable is null ?
             false
             : limitable?.FitsIn(this);
     }

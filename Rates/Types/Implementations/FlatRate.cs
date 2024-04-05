@@ -109,7 +109,7 @@ internal sealed class FlatRate : Rate, IFlatRate
     #region Private methods
     private IFlatRate GetSum(IFlatRate? other, SummingMode summingMode)
     {
-        if (other == null) return GetRate(this);
+        if (other is null) return GetRate(this);
 
         if (!other.TryExchangeTo(Denominator, out IRate? exchanged))
         {

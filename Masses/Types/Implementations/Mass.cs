@@ -41,7 +41,7 @@ internal abstract class Mass : BaseQuantifiable, IMass
     {
         IWeight? weight = Weight.ExchangeTo(weightUnit);
 
-        if (weight == null) return null;
+        if (weight is null) return null;
 
         return GetMass(weight, GetBody());
     }
@@ -207,7 +207,7 @@ internal abstract class Mass : BaseQuantifiable, IMass
     #region Override methods
     public override bool? FitsIn(ILimiter? limiter)
     {
-        if (limiter == null) return true;
+        if (limiter is null) return true;
 
         LimitMode? limitMode = limiter.GetLimitMode();
 
@@ -279,9 +279,9 @@ internal abstract class Mass : BaseQuantifiable, IMass
 
     public virtual bool? FitsIn(IMass? other, LimitMode? limitMode)
     {
-        if (other == null || limitMode == null) return true;
+        if (other is null || limitMode is null) return true;
 
-        if (other == null) return null;
+        if (other is null) return null;
 
         bool? bodyFitsIn = GetBody().FitsIn(other.GetBody(), limitMode);
         bool? weightFitsIn = Weight.FitsIn(other.Weight, limitMode);
@@ -298,7 +298,7 @@ internal abstract class Mass : BaseQuantifiable, IMass
         MeasureUnitElements measureUnitElements = GetMeasureUnitElements(context, nameof(context));
         exchanged = ExchangeTo((WeightUnit)measureUnitElements.MeasureUnit);
 
-        return exchanged != null;
+        return exchanged is not null;
     }
     #endregion
 
@@ -313,7 +313,7 @@ internal abstract class Mass : BaseQuantifiable, IMass
     #region Static methods
     protected static bool? BothFitIn(bool? bodyFitsIn, bool? weightFitsIn)
     {
-        if (bodyFitsIn == null || weightFitsIn == null) return null;
+        if (bodyFitsIn is null || weightFitsIn is null) return null;
 
         if (bodyFitsIn != weightFitsIn) return false;
 

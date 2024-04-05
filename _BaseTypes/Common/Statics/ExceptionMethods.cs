@@ -159,12 +159,12 @@ public static class ExceptionMethods
     #region ArgumentNullException
     public static T NullChecked<T>(T? param, string? paramName)
     {
-        if (param == null) throw new ArgumentNullException(paramName);
+        if (param is null) throw new ArgumentNullException(paramName);
 
         if (param is not IEnumerable enumerable) return param;
 
-        if (enumerable.GetEnumerator() == null
-            || enumerable.Cast<object>().All(x => x == null))
+        if (enumerable.GetEnumerator() is null
+            || enumerable.Cast<object>().All(x => x is null))
         {
             throw new ArgumentNullException(paramName);
         }

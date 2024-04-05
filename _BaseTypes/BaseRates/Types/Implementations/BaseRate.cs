@@ -5,7 +5,7 @@
         #region Public methods
         public int CompareTo(IBaseRate? other)
         {
-            if (other == null) return 1;
+            if (other is null) return 1;
 
             ValidateMeasureUnitCodes(other, nameof(other));
 
@@ -20,7 +20,7 @@
 
         public override sealed bool? FitsIn(ILimiter? limiter)
         {
-            if (limiter == null) return true;
+            if (limiter is null) return true;
 
             if (limiter is not IBaseRate baseRate) return null;
 
@@ -29,7 +29,7 @@
 
         public bool? FitsIn(IBaseRate? other, LimitMode? limitMode)
         {
-            if (other == null && !limitMode.HasValue) return true;
+            if (other is null && !limitMode.HasValue) return true;
 
             if (!IsExchangeableTo(other)) return null;
 
@@ -73,7 +73,7 @@
         {
             object? quantity = GetQuantity().ToQuantity(Defined(quantityTypeCode, nameof(quantityTypeCode)));
 
-            if (quantity != null) return quantity;
+            if (quantity is not null) return quantity;
 
             throw new InvalidOperationException(null);
         }
@@ -114,7 +114,7 @@
         {
             object? rateComponent = GetRateComponent(Defined(rateComponentCode, paramName));
 
-            if (rateComponent != null) return;
+            if (rateComponent is not null) return;
 
             throw InvalidRateComponentCodeArgumentException(rateComponentCode);
         }

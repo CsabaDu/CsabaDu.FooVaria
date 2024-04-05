@@ -39,7 +39,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
 
     public IMeasurement? Create(Enum measureUnit, decimal exchangeRate, string customName)
     {
-        if (measureUnit == null) return null;
+        if (measureUnit is null) return null;
 
         MeasureUnitElements measureUnitElements = GetMeasureUnitElements(measureUnit, nameof(measureUnit));
         measureUnit = measureUnitElements.MeasureUnit;
@@ -156,7 +156,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
 
     private static IMeasurement? GetStoredMeasurementOrNull(Enum? measureUnit, bool success)
     {
-        return measureUnit != null && success ?
+        return measureUnit is not null && success ?
             MeasurementCollection.FirstOrDefault(x => x.Key == measureUnit).Value
             : null;
     }

@@ -111,7 +111,7 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
             MeasureUnitElements measureUnitElements = GetMeasureUnitElements(context, nameof(context));
             exchanged = ExchangeTo(measureUnitElements.MeasureUnit);
 
-            return exchanged != null;
+            return exchanged is not null;
         }
 
         public TSelf? ExchangeTo(Enum measureUnit)

@@ -26,7 +26,7 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
 
     public void ValidateShapeComponent(IBaseQuantifiable? shapeComponent, string paramName)
     {
-        if (GetValidShapeComponent(NullChecked(shapeComponent, paramName)) != null) return;
+        if (GetValidShapeComponent(NullChecked(shapeComponent, paramName)) is not null) return;
 
         throw ArgumentTypeOutOfRangeException(paramName, shapeComponent!);
     }

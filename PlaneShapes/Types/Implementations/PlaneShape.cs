@@ -65,7 +65,7 @@ internal abstract class PlaneShape : SimpleShape, IPlaneShape
             _ => null,
         };
 
-        return exchanged != null;
+        return exchanged is not null;
     }
     #endregion
     #endregion

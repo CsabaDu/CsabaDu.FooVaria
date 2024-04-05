@@ -15,7 +15,7 @@ public sealed class ShapeLimitFactory(ISimpleShapeFactory simpleShapeFactory) : 
 
         ISimpleShape? simpleShape = CreateShape(shapeComponents);
 
-        if (simpleShape == null) return null;
+        if (simpleShape is null) return null;
 
         return Create(simpleShape, limitMode);
     }

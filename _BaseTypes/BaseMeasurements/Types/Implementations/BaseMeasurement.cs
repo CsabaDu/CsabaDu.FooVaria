@@ -70,7 +70,7 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         const string paramName = nameof(name);
         Enum? measureUnit = GetMeasureUnit(NullChecked(name, paramName));
 
-        if (measureUnit != null) return GetExchangeRate(measureUnit, paramName);
+        if (measureUnit is not null) return GetExchangeRate(measureUnit, paramName);
 
         throw NameArgumentOutOfRangeException(name);
     }
@@ -165,14 +165,14 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
     {
         measureUnit = GetMeasureUnit(name);
 
-        return measureUnit != null;
+        return measureUnit is not null;
     }
 
     public static bool TryGetMeasureUnit(MeasureUnitCode measureUnitCode, decimal exchangeRate, [NotNullWhen(true)] out Enum? measureUnit)
     {
         measureUnit = (Enum)GetExchangeRateCollection(measureUnitCode).FirstOrDefault(x => x.Value == exchangeRate).Key;
 
-        return measureUnit != null;
+        return measureUnit is not null;
     }
 
     public static bool TrySetCustomMeasureUnit(Enum measureUnit, decimal exchangeRate, string customName)
@@ -203,9 +203,9 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
 
     public static bool TrySetCustomName(Enum? measureUnit, string? customName)
     {
-        if (measureUnit == null) return false;
+        if (measureUnit is null) return false;
 
-        if (customName == null) return false;
+        if (customName is null) return false;
 
         if (!IsValidMeasureUnit(measureUnit)) return false;
 
@@ -292,13 +292,13 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
 
     public static bool IsValidMeasureUnit(Enum? measureUnit)
     {
-        return measureUnit != null
+        return measureUnit is not null
             && GetValidMeasureUnits().Contains(measureUnit);
     }
 
     public static bool IsValidMeasureUnit(Enum? measureUnit, MeasureUnitCode measureUnitCode)
     {
-        return measureUnit != null
+        return measureUnit is not null
             && GetValidMeasureUnits(measureUnitCode).Contains(measureUnit);
     }
 
@@ -360,7 +360,7 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
 
     public int CompareTo(IBaseMeasurement? other)
     {
-        if (other == null) return 1;
+        if (other is null) return 1;
 
         other.ValidateMeasureUnitCode(GetMeasureUnitCode(), nameof(other));
 

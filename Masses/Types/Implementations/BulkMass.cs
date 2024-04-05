@@ -57,7 +57,7 @@ internal sealed class BulkMass : Mass, IBulkMass
 
         exchanged = ExchangeTo(volumeUnit);
 
-        return exchanged != null;
+        return exchanged is not null;
     }
     #endregion
 
@@ -65,7 +65,7 @@ internal sealed class BulkMass : Mass, IBulkMass
     {
         IBody? body = BulkBody.ExchangeTo(volumeUnit);
 
-        if (body == null) return null;
+        if (body is null) return null;
 
         return GetBulkMass(Weight, body);
     }

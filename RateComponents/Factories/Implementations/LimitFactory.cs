@@ -47,7 +47,7 @@ public sealed class LimitFactory(IMeasurementFactory measurementFactory)
     {
         IMeasurement? measurement = MeasurementFactory.Create(measureUnit, exchangeRate, customName);
 
-        if (measurement == null) return null;
+        if (measurement is null) return null;
 
         return GetOrCreateStoredLimit(measurement, quantity, limitMode);
     }
@@ -56,7 +56,7 @@ public sealed class LimitFactory(IMeasurementFactory measurementFactory)
     {
         IMeasurement? measurement = MeasurementFactory.Create(customName, measureUnitCode, exchangeRate);
 
-        if (measurement == null) return null;
+        if (measurement is null) return null;
 
         return GetOrCreateStoredLimit(measurement, quantity, limitMode);
     }
@@ -94,7 +94,7 @@ public sealed class LimitFactory(IMeasurementFactory measurementFactory)
     {
         IMeasurement? measurement = (IMeasurement?)MeasurementFactory.CreateDefault(measureUnitCode);
 
-        if (measurement == null) return null;
+        if (measurement is null) return null;
 
         return CreateBaseMeasure(measurement, (ValueType)DefaultRateComponentQuantity);
     }

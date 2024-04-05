@@ -65,12 +65,12 @@ public sealed class BaseMeasureTests
 
     #region bool Equals
     #region IEqualityComparer<IBaseMeasure>.Equals(IBaseMeasure?, IBaseMeasure?)
-    [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method)]
-    public void Equals_args_IBaseMeasure_IBaseMeasure_returns_expected()
-    {
+    //[TestMethod, TestCategory("UnitTest")]
+    //[DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method)]
+    //public void Equals_args_IBaseMeasure_IBaseMeasure_returns_expected()
+    //{
 
-    }
+    //}
     #endregion
     #endregion
 
