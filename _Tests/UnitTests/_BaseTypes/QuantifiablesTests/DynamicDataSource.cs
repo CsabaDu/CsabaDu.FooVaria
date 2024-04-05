@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests;
+﻿using System.Runtime.CompilerServices;
+
+namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests;
 
 internal class DynamicDataSource : DataFields
 {
@@ -159,7 +161,6 @@ internal class DynamicDataSource : DataFields
         }
         #endregion
     }
-
     internal IEnumerable<object[]> GetGetQuantityValidTypeCodeArgs()
     {
         measureUnitCode = RandomParams.GetRandomConstantMeasureUnitCode();
@@ -172,23 +173,22 @@ internal class DynamicDataSource : DataFields
         {
             if (item is not (TypeCode.Int64 or TypeCode.UInt64))
             {
-                typeCode = item;
+                quantityTypeCode = item;
                 obj = convertDefaultQuantity();
                 yield return toObjectArray();
             }
         }
-
         measureUnit = MeasureUnitCode.Currency.GetDefaultMeasureUnit();
-        typeCode = TypeCode.Double;
+        quantityTypeCode = TypeCode.Double;
         obj = convertDefaultQuantity();
         yield return toObjectArray();
 
-        typeCode = TypeCode.Int64;
+        quantityTypeCode = TypeCode.Int64;
         obj = convertDefaultQuantity();
         yield return toObjectArray();
 
         defaultQuantity = RandomParams.GetRandomPositiveDecimal();
-        typeCode = TypeCode.UInt64;
+        quantityTypeCode = TypeCode.UInt64;
         obj = convertDefaultQuantity();
         yield return toObjectArray();
 
@@ -196,7 +196,7 @@ internal class DynamicDataSource : DataFields
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Enum_Decimal_Object_TypeCode_args item = new(measureUnit, defaultQuantity, obj, typeCode);
+            Enum_Decimal_Object_TypeCode_args item = new(measureUnit, defaultQuantity, obj, quantityTypeCode);
 
             return item.ToObjectArray();
         }
@@ -204,7 +204,7 @@ internal class DynamicDataSource : DataFields
 
         object convertDefaultQuantity()
         {
-            return defaultQuantity.ToQuantity(typeCode);
+            return defaultQuantity.ToQuantity(quantityTypeCode);
         }
         #endregion
     }

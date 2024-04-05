@@ -32,7 +32,6 @@ public sealed class QuantifiableTests
     {
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit();
         Fields.measureUnitCode = GetMeasureUnitCode(Fields.measureUnit);
-        Fields.measureUnitType = Fields.measureUnit.GetType();
         Fields.defaultQuantity = Fields.RandomParams.GetRandomDecimal();
     }
 

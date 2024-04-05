@@ -1,6 +1,9 @@
-﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.Fakes;
+﻿
+using CsabaDu.FooVaria.Tests.TestHelpers.Params;
 
-internal class BaseMeasureChild(IRootObject rootObject, string paramName) : BaseMeasure(rootObject, paramName)
+namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.Fakes;
+
+internal sealed class BaseMeasureChild(IRootObject rootObject, string paramName) : BaseMeasure(rootObject, paramName)
 {
     #region Members
 
@@ -49,8 +52,8 @@ internal class BaseMeasureChild(IRootObject rootObject, string paramName) : Base
 
     internal static BaseMeasureChild GetBaseMeasureChild(Enum measureUnit, ValueType quantity, IBaseMeasureFactory factory = null)
     {
-        IBaseMeasurement baseMeasurement = BaseMeasurementFactory.CreateBaseMeasurement(measureUnit);
         DataFields fields = new();
+        IBaseMeasurement baseMeasurement = BaseMeasurementFactory.CreateBaseMeasurement(measureUnit);
 
         return new(fields.RootObject, fields.paramName)
         {
@@ -71,6 +74,13 @@ internal class BaseMeasureChild(IRootObject rootObject, string paramName) : Base
     public override ValueType GetBaseQuantity() => Return.GetBaseQuantity;
 
     public override IFactory GetFactory() => Return.GetFactory;
+
+    public override LimitMode? GetLimitMode()
+    {
+        return GetRateComponentCode() == RateComponentCode.Limit ?
+            new DataFields().RandomParams.GetRandomLimitMode()
+            : null;
+    }
 
     public override bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable exchanged)
     {

@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Params;
+﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
+
+namespace CsabaDu.FooVaria.Tests.TestHelpers.Params;
 
 public sealed class RandomParams
 {
@@ -237,6 +239,49 @@ public sealed class RandomParams
     public RateComponentCode GetRandomRateComponentCode()
     {
         return GetRandomItem(Enum.GetValues<RateComponentCode>());
+    }
+
+
+    public TypeCode GetRandomQuantityTypeCode()
+    {
+        return GetRandomItem(QuantityTypeCodes);
+    }
+
+    public object GetRandomQuantity(TypeCode? quantityTypeCode = null, ValueType excluded = null)
+    {
+        quantityTypeCode ??= GetRandomQuantityTypeCode();
+        bool isUlong = quantityTypeCode.Value == TypeCode.UInt64;
+        decimal quantity = getRandomDecimal();
+
+        if (excluded is null) return getQuantity();
+
+        object excludedDecimal = convertToDecimal(excluded);
+
+        while (excludedDecimal.Equals(convertToDecimal(quantity)))
+        {
+            quantity = getRandomDecimal();
+        }
+
+        return getQuantity();
+
+        #region Local methods
+        decimal getRandomDecimal()
+        {
+            return isUlong ?
+                GetRandomPositiveDecimal()
+                : GetRandomDecimal();
+        }
+
+        object convertToDecimal(ValueType quantity)
+        {
+            return quantity.ToQuantity(TypeCode.Decimal);
+        }
+
+        object getQuantity()
+        {
+            return quantity.ToQuantity(quantityTypeCode.Value);
+        }
+        #endregion
     }
     #endregion
 

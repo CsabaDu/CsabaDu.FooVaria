@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types;
-
-namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.Fakes;
+﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.Fakes;
 
 internal sealed class QuantifiableFactoryObject : IQuantifiableFactory
 {
@@ -8,11 +6,13 @@ internal sealed class QuantifiableFactoryObject : IQuantifiableFactory
 
     public IQuantifiable CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
     {
+        Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
+
         return new QuantifiableChild(Fields.RootObject, Fields.paramName)
         {
             Return = new()
             {
-                GetBaseMeasureUnit = measureUnitCode.GetDefaultMeasureUnit(),
+                GetBaseMeasureUnit = measureUnit,
                 GetDefaultQuantity = defaultQuantity,
             }
         };

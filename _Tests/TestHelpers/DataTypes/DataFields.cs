@@ -20,6 +20,7 @@ public class DataFields
     public string paramName;
     public ValueType quantity;
     public TypeCode quantityTypeCode;
+    public RateComponentCode rateComponentCode;
     public RoundingMode roundingMode;
-    public TypeCode typeCode;
+    //public TypeCode typeCode;
 }
