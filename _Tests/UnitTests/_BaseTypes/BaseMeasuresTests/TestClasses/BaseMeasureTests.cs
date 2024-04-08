@@ -5,10 +5,6 @@ public sealed class BaseMeasureTests
 {
     #region Tested in parent classes' tests
 
-    // int IComparable<IQuantifiable>.CompareTo(IQuantifiable? baseMeasure)
-    // bool IEquatable<IQuantifiable>.Equals(IQuantifiable? baseMeasure)
-    // bool? ILimitable.FitsIn(ILimiter? limiter)
-    // bool? IFit<IQuantifiable>.FitsIn(IQuantifiable? baseMeasure, LimitMode? limitMode)
     // decimal IDecimalQuantity.GetDecimalQuantity()
     // IFactory ICommonBase.GetFactory()
     // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
@@ -65,8 +61,17 @@ public sealed class BaseMeasureTests
     #endregion
 
     #region Test methods
+    #region int CompareTo
+    #region override sealed IComparable<IQuantifiable>.CompareTo(IQuantifiable?)
+
+    #endregion
+    #endregion
 
     #region bool Equals
+    #region override sealed IEquatable<IQuantifiable>.Equals(IQuantifiable?)
+
+    #endregion
+
     #region IEqualityComparer<IBaseMeasure>.Equals(IBaseMeasure?, IBaseMeasure?)
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetEqualsArg), DynamicDataSourceType.Method)]
@@ -96,6 +101,16 @@ public sealed class BaseMeasureTests
         // Assert
         Assert.AreEqual(expected, actual);
     }
+    #endregion
+
+    #region bool? FitsIn
+    #region override sealed ILimitable.FitsIn(ILimiter?)
+
+    #endregion
+
+    #region override sealed IFit<IQuantifiable>.FitsIn(IQuantifiable?, LimitMode?)
+
+    #endregion
     #endregion
     #endregion
 

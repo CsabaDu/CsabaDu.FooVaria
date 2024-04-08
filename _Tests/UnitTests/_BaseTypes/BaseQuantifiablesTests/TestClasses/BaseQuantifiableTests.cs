@@ -79,7 +79,7 @@ public sealed class BaseQuantifiableTests
     public void FitsIn_nullArg_ILimiter_returns_expected()
     {
         // Arrange
-        SetBaseQuantifiableChild(Fields.measureUnit, Fields.defaultQuantity);
+        SetBaseQuantifiableChild();
 
         ILimiter limiter = null;
 
@@ -108,7 +108,7 @@ public sealed class BaseQuantifiableTests
     public void FitsIn_validArg_ILimiter_returns_expected()
     {
         // Arrange
-        SetBaseQuantifiableChild(Fields.measureUnit, Fields.defaultQuantity);
+        SetBaseQuantifiableChild();
 
         Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
         decimal otherQuantity = Fields.RandomParams.GetRandomDecimal();
@@ -150,7 +150,7 @@ public sealed class BaseQuantifiableTests
     public void GetHashCode_returns_expected()
     {
         // Arrange
-        SetBaseQuantifiableChild(Fields.measureUnit, Fields.defaultQuantity);
+        SetBaseQuantifiableChild();
 
         var expected = HashCode.Combine(Fields.measureUnitCode, Fields.defaultQuantity);
 
@@ -169,7 +169,7 @@ public sealed class BaseQuantifiableTests
     public void ValidateQuantity_nullArg_ValueType_arg_string_throws_ArgumentNullException()
     {
         // Arrange
-        SetBaseQuantifiableChild(Fields.measureUnit, Fields.defaultQuantity);
+        SetBaseQuantifiableChild();
 
         Fields.paramName = Fields.RandomParams.GetRandomParamName();
         ValueType quantity = null;
@@ -187,7 +187,7 @@ public sealed class BaseQuantifiableTests
     public void ValidateQuantity_invalidArg_ValueType_arg_string_throws_ArgumentOutOfRangeException(TypeCode typeCode) // negative!
     {
         // Arrange
-        SetBaseQuantifiableChild(Fields.measureUnit, Fields.defaultQuantity);
+        SetBaseQuantifiableChild();
 
         ValueType quantity = Fields.RandomParams.GetRandomValueType(typeCode);
         Fields.paramName = Fields.RandomParams.GetRandomParamName();
@@ -209,7 +209,7 @@ public sealed class BaseQuantifiableTests
         {
             Fields.defaultQuantity = Fields.RandomParams.GetRandomPositiveDecimal();
         }
-        SetBaseQuantifiableChild(Fields.measureUnit, Fields.defaultQuantity);
+        SetBaseQuantifiableChild();
 
         ValueType quantity = Fields.RandomParams.GetRandomValueType(typeCode);
 
@@ -227,6 +227,11 @@ public sealed class BaseQuantifiableTests
     private void SetBaseQuantifiableChild(Enum measureUnit, decimal defaultQuantity, IBaseQuantifiableFactory factory = null)
     {
         _baseQuantifiable = GetBaseQuantifiableChild(measureUnit, defaultQuantity, factory);
+    }
+
+    private void SetBaseQuantifiableChild()
+    {
+        SetBaseQuantifiableChild(Fields.measureUnit, Fields.defaultQuantity);
     }
 
     #region DynamicDataSource

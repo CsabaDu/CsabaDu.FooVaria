@@ -23,7 +23,7 @@ public sealed class MeasurableTests
     public void InitializeMeasurableTests()
     {
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        SetMeasurableChild(Fields.measureUnit);
+        SetMeasurableChild();
         Fields.measureUnitCode = GetMeasureUnitCode(Fields.measureUnit);
         Fields.measureUnitType = Fields.measureUnit.GetType();
     }
@@ -231,7 +231,7 @@ public sealed class MeasurableTests
         Fields.measureUnit = measureUnitCode.GetDefaultMeasureUnit();
         Fields.paramName = Fields.RandomParams.GetRandomParamName();
 
-        SetMeasurableChild(Fields.measureUnit);
+        SetMeasurableChild();
 
         // Act
         void attempt() => _measurable.ValidateMeasureUnit(measureUnit, Fields.paramName);
@@ -249,7 +249,7 @@ public sealed class MeasurableTests
         Fields.measureUnit = measureUnitCode.GetDefaultMeasureUnit();
         Fields.paramName = Fields.RandomParams.GetRandomParamName();
 
-        SetMeasurableChild(Fields.measureUnit);
+        SetMeasurableChild();
 
         // Act
         void validator() => _measurable.ValidateMeasureUnit(measureUnit, Fields.paramName);
@@ -351,6 +351,11 @@ public sealed class MeasurableTests
     private void SetMeasurableChild(Enum measureUnit, IBaseMeasurementFactory factory = null)
     {
         _measurable = GetMeasurableChild(measureUnit, factory);
+    }
+
+    private void SetMeasurableChild()
+    {
+        SetMeasurableChild(Fields.measureUnit);
     }
 
     #region DynamicDataSource
