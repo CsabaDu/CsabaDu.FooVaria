@@ -13,6 +13,7 @@ internal sealed class BaseMeasurementFactoryObject : IBaseMeasurementFactory
             Return = new()
             {
                 GetBaseMeasureUnit = measureUnit,
+                GetFactory = this,
             }
         };
     }

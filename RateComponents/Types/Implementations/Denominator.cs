@@ -1,4 +1,5 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
+﻿
+namespace CsabaDu.FooVaria.RateComponents.Types.Implementations;
 
 internal sealed class Denominator(IDenominatorFactory factory, IMeasurement measurement, decimal quantity) : RateComponent<IDenominator>(factory, measurement), IDenominator
 {
@@ -47,6 +48,11 @@ internal sealed class Denominator(IDenominatorFactory factory, IMeasurement meas
     public override IDenominatorFactory GetFactory()
     {
         return Factory;
+    }
+
+    public override LimitMode? GetLimitMode()
+    {
+        return default;
     }
 
     public override void ValidateQuantity(ValueType? quantity, string paramName)

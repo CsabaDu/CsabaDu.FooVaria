@@ -86,7 +86,7 @@ namespace CsabaDu.FooVaria.Measures.Types.Implementations
 
         public override sealed LimitMode? GetLimitMode()
         {
-            return base.GetLimitMode();
+            return default;
         }
 
         public override sealed TypeCode GetQuantityTypeCode()

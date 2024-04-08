@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.MeasurablesTests;
 
-internal class DynamicDataSource : DataFields
+internal class DynamicDataSource : CommonDynamicDataSource
 {
     #region Methods
     internal IEnumerable<object[]> GetEqualsArgs()
@@ -73,47 +73,7 @@ internal class DynamicDataSource : DataFields
         #endregion
     }
 
-    internal IEnumerable<object[]> GetValidateMeasureUnitCodeInvalidArgs()
-    {
-        measureUnit = RandomParams.GetRandomMeasureUnit();
-        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode(measureUnit));
-        yield return toObjectArray();
-
-        measureUnitCode = SampleParams.NotDefinedMeasureUnitCode;
-        yield return toObjectArray();
-
-        #region toObjectArray method
-        object[] toObjectArray()
-        {
-            Enum_MeasureUnitCode_args item = new(measureUnit, measureUnitCode);
-
-            return item.ToObjectArray();
-        }
-        #endregion
-    }
-
-    internal IEnumerable<object[]> GetHasMeasureUnitCodeArgs()
-    {
-        measureUnit = RandomParams.GetRandomMeasureUnit();
-        measureUnitCode = GetMeasureUnitCode(measureUnit);
-        isTrue = true;
-        yield return toObjectArray();
-
-        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
-        isTrue = false;
-        yield return toObjectArray();
-
-        #region toObjectArray method
-        object[] toObjectArray()
-        {
-            Enum_MeasureUnitCode_bool_args item = new(measureUnit, measureUnitCode, isTrue);
-
-            return item.ToObjectArray();
-        }
-        #endregion
-    }
-
-    internal IEnumerable<object[]> GetValidMeasureUnitArgs()
+    internal IEnumerable<object[]> GetValidateMeasureUnitValidArgs()
     {
         measureUnit = RandomParams.GetRandomMeasureUnit();
         measureUnitCode = GetMeasureUnitCode(measureUnit);
@@ -131,5 +91,25 @@ internal class DynamicDataSource : DataFields
         }
         #endregion
     }
+
+    //internal IEnumerable<object[]> GetValidateMeasureUnitCodeInvalidArgs()
+    //{
+    //    measureUnit = RandomParams.GetRandomMeasureUnit();
+    //    measureUnitCode = SampleParams.NotDefinedMeasureUnitCode;
+    //    yield return toObjectArray();
+
+    //    measureUnitCode = GetMeasureUnitCode(measureUnit);
+    //    measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
+    //    yield return toObjectArray();
+
+    //    #region toObjectArray method
+    //    object[] toObjectArray()
+    //    {
+    //        Enum_MeasureUnitCode_args item = new(measureUnit, measureUnitCode);
+
+    //        return item.ToObjectArray();
+    //    }
+    //    #endregion
+    //}
     #endregion
 }

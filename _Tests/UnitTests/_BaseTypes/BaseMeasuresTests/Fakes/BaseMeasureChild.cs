@@ -1,7 +1,4 @@
-﻿
-using CsabaDu.FooVaria.Tests.TestHelpers.Params;
-
-namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.Fakes;
+﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.Fakes;
 
 internal sealed class BaseMeasureChild(IRootObject rootObject, string paramName) : BaseMeasure(rootObject, paramName)
 {
@@ -50,7 +47,7 @@ internal sealed class BaseMeasureChild(IRootObject rootObject, string paramName)
     #region Test helpers
     public BaseMeasureReturn Return { private get; set; }
 
-    internal static BaseMeasureChild GetBaseMeasureChild(Enum measureUnit, ValueType quantity, IBaseMeasureFactory factory = null)
+    internal static BaseMeasureChild GetBaseMeasureChild(Enum measureUnit, ValueType quantity, RateComponentCode? rateComponentCode = null)
     {
         DataFields fields = new();
         IBaseMeasurement baseMeasurement = BaseMeasurementFactory.CreateBaseMeasurement(measureUnit);
@@ -61,9 +58,16 @@ internal sealed class BaseMeasureChild(IRootObject rootObject, string paramName)
             {
                 GetBaseMeasurement = baseMeasurement,
                 GetBaseQuantity = quantity,
-                GetFactory = factory,
+                GetFactory = getBaseMeasureFactoryObjectOrNull(),
             }
         };
+
+        BaseMeasureFactoryObject getBaseMeasureFactoryObjectOrNull()
+        {
+            return rateComponentCode.HasValue ?
+                GetBaseMeasureFactoryObject(rateComponentCode.Value)
+                : null;
+        }
     }
     #endregion
 
@@ -77,9 +81,11 @@ internal sealed class BaseMeasureChild(IRootObject rootObject, string paramName)
 
     public override LimitMode? GetLimitMode()
     {
-        return GetRateComponentCode() == RateComponentCode.Limit ?
-            new DataFields().RandomParams.GetRandomLimitMode()
-            : null;
+        if (GetRateComponentCode() != RateComponentCode.Limit) return default;
+
+        DataFields fields = new();
+
+        return fields.RandomParams.GetRandomLimitMode();
     }
 
     public override bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable exchanged)

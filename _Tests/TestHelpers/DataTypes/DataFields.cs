@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes;
+﻿using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types;
+
+namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes;
 
 public class DataFields
 {
@@ -7,6 +9,7 @@ public class DataFields
     public readonly RootObject RootObject = new();
     #endregion
 
+    //public IBaseMeasure baseMeasure;
     public Enum context;
     public decimal defaultQuantity;
     public decimal decimalQuantity;
@@ -22,5 +25,5 @@ public class DataFields
     public TypeCode quantityTypeCode;
     public RateComponentCode rateComponentCode;
     public RoundingMode roundingMode;
-    //public TypeCode typeCode;
+    public TypeCode? typeCode;
 }

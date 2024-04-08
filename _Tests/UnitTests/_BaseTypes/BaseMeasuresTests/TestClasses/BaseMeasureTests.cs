@@ -5,10 +5,10 @@ public sealed class BaseMeasureTests
 {
     #region Tested in parent classes' tests
 
-    // int IComparable<IQuantifiable>.CompareTo(IQuantifiable? other)
-    // bool IEquatable<IQuantifiable>.Equals(IQuantifiable? other)
+    // int IComparable<IQuantifiable>.CompareTo(IQuantifiable? baseMeasure)
+    // bool IEquatable<IQuantifiable>.Equals(IQuantifiable? baseMeasure)
     // bool? ILimitable.FitsIn(ILimiter? limiter)
-    // bool? IFit<IQuantifiable>.FitsIn(IQuantifiable? other, LimitMode? limitMode)
+    // bool? IFit<IQuantifiable>.FitsIn(IQuantifiable? baseMeasure, LimitMode? limitMode)
     // decimal IDecimalQuantity.GetDecimalQuantity()
     // IFactory ICommonBase.GetFactory()
     // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
@@ -17,7 +17,7 @@ public sealed class BaseMeasureTests
     // object IRound<IQuantifiable>.GetQuantity(RoundingMode roundingMode)
     // object IQuantity.GetQuantity(TypeCode quantityTypeCode)
     // TypeCode IQuantityType.GetQuantityTypeCode()
-    // decimal IProportional<IQuantifiable>.ProportionalTo(IQuantifiable? other)
+    // decimal IProportional<IQuantifiable>.ProportionalTo(IQuantifiable? baseMeasure)
     // bool ITryExchange<IQuantifiable, Enum>.TryExchangeTo(Enum context, out IQuantifiable? exchanged)
     // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum? measureUnit, string paramName)
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable? measurable, string paramName)
@@ -38,7 +38,8 @@ public sealed class BaseMeasureTests
     {
         Fields.measureUnit = Fields.RandomParams.GetRandomValidMeasureUnit();
         Fields.measureUnitCode = GetMeasureUnitCode(Fields.measureUnit);
-        Fields.quantityTypeCode = Fields.RandomParams.GetRandomQuantityTypeCode();
+        Fields.rateComponentCode = Fields.RandomParams.GetRandomRateComponentCode();
+        Fields.quantityTypeCode = Fields.RandomParams.GetRandomQuantityTypeCode(Fields.rateComponentCode);
         Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity(Fields.quantityTypeCode);
     }
 
@@ -46,6 +47,8 @@ public sealed class BaseMeasureTests
     public void CleanupBaseQuantifiableTests()
     {
         Fields.paramName = null;
+
+        RestoreConstantExchangeRates();
     }
     #endregion
 
@@ -65,12 +68,34 @@ public sealed class BaseMeasureTests
 
     #region bool Equals
     #region IEqualityComparer<IBaseMeasure>.Equals(IBaseMeasure?, IBaseMeasure?)
-    //[TestMethod, TestCategory("UnitTest")]
-    //[DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method)]
-    //public void Equals_args_IBaseMeasure_IBaseMeasure_returns_expected()
-    //{
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetEqualsArg), DynamicDataSourceType.Method)]
+    public void Equals_nullArg_IBaseMeasure_arg_IBaseMeasure_returns_expected(IBaseMeasure baseMeasure)
+    {
+        // Arrange
+        SetBaseMeasureChild();
+        bool expected = baseMeasure is null;
 
-    //}
+        // Act
+        var actual = _baseMeasure.Equals(null, baseMeasure);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod, TestCategory("UnitTest"), Ignore]
+    [DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method)]
+    public void Equals_args_IBaseMeasure_IBaseMeasure_returns_expected(bool expected, Enum measureUnit, ValueType quantity, RateComponentCode rateComponentCode, IBaseMeasure other)
+    {
+        // Arrange
+        SetBaseMeasureChild(measureUnit, quantity, rateComponentCode);
+
+        // Act
+        var actual = _baseMeasure.Equals(_baseMeasure, other);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
     #endregion
     #endregion
 
@@ -96,12 +121,22 @@ public sealed class BaseMeasureTests
     #endregion
 
     #region Private methods
-    private void SetBaseMeasureChild(Enum measureUnit, ValueType quantity, IBaseMeasureFactory factory = null)
+    private void SetBaseMeasureChild(Enum measureUnit, ValueType quantity, RateComponentCode? rateComponentCode = null)
     {
-        _baseMeasure = GetBaseMeasureChild(measureUnit, quantity, factory);
+        _baseMeasure = GetBaseMeasureChild(measureUnit, quantity, rateComponentCode);
+    }
+
+    private void SetBaseMeasureChild()
+    {
+        SetBaseMeasureChild(Fields.measureUnit, Fields.quantity);
     }
 
     #region DynamicDataSource
+    private static IEnumerable<object[]> GetEqualsArg()
+    {
+        return DynamicDataSource.GetEqualsArg();
+    }
+
     private static IEnumerable<object[]> GetEqualsArgs()
     {
         return DynamicDataSource.GetEqualsArgs();

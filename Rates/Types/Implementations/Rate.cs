@@ -63,57 +63,11 @@ internal abstract class Rate : BaseRate, IRate
 
     public bool Equals(IRate? x, IRate? y)
     {
-        if (x is null && y is null) return true;
-
-        if (x is null || y is null) return false;
-
-        if (!x.Equals(y)) return false;
-
-        ILimit? xLimit = x.GetLimit();
-
-        return xLimit?.Equals(xLimit, y.GetLimit()) == true;
+        return x is null == y is null
+            && x?.GetLimit() is null == y?.GetLimit() is null
+            && x?.Equals(y) != false
+            && x?.Numerator.Equals(x.GetLimit(), y?.GetLimit()) != false;
     }
-
-    //public IRate? ExchangeTo(IMeasurable? measurable)
-    //{
-    //    if (measurable is IMeasurement context) return exchangeToMeasurement(context);
-
-    //    if (measurable is IBaseMeasure baseMeasure) return exchangeToBaseMeasure(baseMeasure);
-
-    //    return null;
-
-    //    #region Local methods
-    //    IRate? exchangeToMeasurement(IMeasurement? context)
-    //    {
-    //        if (IsExchangeableTo(context)) return null;
-
-    //        IDenominator denominator = Denominator.GetDenominator(context);
-    //        decimal proportionQuantity = denominator.Measurement.ProportionalTo(context);
-
-    //        return exchange(denominator, proportionQuantity);
-    //    }
-
-    //    IRate? exchangeToBaseMeasure(IBaseMeasure? baseMeasure)
-    //    {
-    //        if (baseMeasure?.IsExchangeableTo(GetMeasureUnitCode()) != true) return null;
-
-    //        IDenominator denominator = Denominator.GetBaseMeasure(baseMeasure);
-    //        decimal proportionQuantity = denominator.ProportionalTo(baseMeasure);
-
-    //        return exchange(denominator, proportionQuantity);
-    //    }
-
-    //    IRate? exchange(IDenominator denominator, decimal proportionQuantity)
-    //    {
-    //        IMeasure numerator = Numerator.Divide(proportionQuantity);
-    //        ILimit? limit = GetLimit();
-
-    //        return limit is null ?
-    //            GetRate(numerator, denominator)
-    //            : GetRate(numerator, denominator, limit);
-    //    }
-    //    #endregion
-    //}
 
     public int GetHashCode([DisallowNull] IRate rate)
     {

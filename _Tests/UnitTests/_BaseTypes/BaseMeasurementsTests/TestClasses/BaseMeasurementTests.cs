@@ -12,7 +12,6 @@ public sealed class BaseMeasurementTests
     // IFactory ICommonBase.GetFactory()
     // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()
-    // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable measurable, string paramName)
     // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
 
@@ -275,6 +274,24 @@ public sealed class BaseMeasurementTests
     #endregion
     #endregion
 
+    #region bool HasMeasureUnitCode
+    #region override sealed IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetHasMeasureUnitCodeArgs), DynamicDataSourceType.Method)]
+    public void HasMeasureUnitCode_arg_MeasureUnitCode_returns_expected(Enum measureUnit, MeasureUnitCode measureUnitCode, bool expected)
+    {
+        // Arrange
+        SetBaseMeasurementChild(measureUnit);
+
+        // Act
+        var actual = _baseMeasurement.HasMeasureUnitCode(measureUnitCode);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
     #region bool IsExchangeableTo
     #region IExchangeable<Enum>.IsExchangeableTo(Enum)
     [TestMethod, TestCategory("UnitTest")]
@@ -458,6 +475,11 @@ public sealed class BaseMeasurementTests
     private static IEnumerable<object[]> GetIsExchangeableToArg()
     {
         return DynamicDataSource.GetIsExchangeableToArg();
+    }
+
+    private static IEnumerable<object[]> GetHasMeasureUnitCodeArgs()
+    {
+        return DynamicDataSource.GetHasMeasureUnitCodeArgs();
     }
 
     private static IEnumerable<object[]> GetValidateExchangeRateArg()

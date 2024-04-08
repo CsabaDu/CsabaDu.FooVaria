@@ -82,27 +82,18 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
     #endregion
     #endregion
 
-    #region Virtual methods
-    public virtual LimitMode? GetLimitMode()
-    {
-        return null;
-    }
-    #endregion
-
     #region Abstract methods
     public abstract IBaseMeasurement GetBaseMeasurement();
     public abstract IBaseMeasurementFactory GetBaseMeasurementFactory();
+    public abstract LimitMode? GetLimitMode();
     #endregion
 
     public bool Equals(IBaseMeasure? x, IBaseMeasure? y)
     {
-        if (x is null && y is null) return true;
-
-        return x is not null
-            && y is not null
-            && x.GetRateComponentCode() == y.GetRateComponentCode()
-            && x.GetLimitMode() == y.GetLimitMode()
-            && x.Equals(y);
+        return x is null == y is null
+            && x?.GetRateComponentCode() == y?.GetRateComponentCode()
+            && x?.GetLimitMode() == y?.GetLimitMode()
+            && x?.Equals(y) != false;
     }
 
     public IBaseMeasure GetBaseMeasure(ValueType quantity)

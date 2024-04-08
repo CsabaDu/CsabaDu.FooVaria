@@ -1,41 +1,48 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests;
+﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests;
 
 internal class DynamicDataSource : DataFields
 {
     #region Methods
+    internal IEnumerable<object[]> GetEqualsArg()
+    {
+        IBaseMeasure baseMeasure = null;
+        yield return toObjectArray();
+
+        measureUnit = RandomParams.GetRandomMeasureUnit();
+        quantity = (ValueType)RandomParams.GetRandomQuantity();
+        baseMeasure = GetBaseMeasureChild(measureUnit, quantity);
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            IBaseMeasure_arg item = new(baseMeasure);
+
+            return item.ToObjectArray();
+        }
+        #endregion
+    }
+
     internal IEnumerable<object[]> GetEqualsArgs()
     {
-        //// null
-        //IQuantifiable quantifiable = null;
-        //measureUnit = RandomParams.GetRandomValidMeasureUnit();
-        //defaultQuantity = RandomParams.GetRandomDecimal();
-        //isTrue = false;
-        //yield return toObjectArray();
+        // null
+        IBaseMeasure baseMeasure = null;
+        measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        quantity = (ValueType)RandomParams.GetRandomQuantity();
+        rateComponentCode = RandomParams.GetRandomRateComponentCode();
+        isTrue = false;
+        yield return toObjectArray();
 
-        //// Different MeasureUnitCode
-        //measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode(measureUnit));
-        //quantifiable = GetQuantifiableChild(defaultQuantity, RandomParams.GetRandomMeasureUnit(measureUnitCode));
-        //yield return toObjectArray();
+        // Different MeasureUnitCode
 
-        //// Same MeasureUnit, different defaultQuantity
-        //quantifiable = GetQuantifiableChild(RandomParams.GetRandomDecimal(defaultQuantity), measureUnit);
-        //yield return toObjectArray();
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            Bool_Enum_ValueType_RateComponentCode_IBaseMeasure_args item = new(isTrue, measureUnit, quantity, rateComponentCode, baseMeasure);
 
-        //// Same MeasureUnit, same defaultQuantity
-        //quantifiable = GetQuantifiableChild(defaultQuantity, measureUnit);
-        //isTrue = true;
-        //yield return toObjectArray();
-
-        //#region toObjectArray method
-        //object[] toObjectArray()
-        //{
-        //    Enum_Decimal_Bool_IQuantifiable_args item = new(measureUnit, defaultQuantity, isTrue, quantifiable);
-
-        //    return item.ToObjectArray();
-        //}
-        //#endregion
+            return item.ToObjectArray();
+        }
+        #endregion
 
         throw new NotImplementedException();
     }

@@ -14,6 +14,7 @@ internal sealed class QuantifiableFactoryObject : IQuantifiableFactory
             {
                 GetBaseMeasureUnit = measureUnit,
                 GetDefaultQuantity = defaultQuantity,
+                GetFactory = this,
             }
         };
     }

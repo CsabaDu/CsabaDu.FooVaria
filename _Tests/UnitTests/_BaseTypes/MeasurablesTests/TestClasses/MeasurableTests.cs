@@ -242,7 +242,7 @@ public sealed class MeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetValidMeasureUnitArgs), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetValidateMeasureUnitValidArgs), DynamicDataSourceType.Method)]
     public void ValidateMeasureUnit_validArg_Enum_arg_string_returns(Enum measureUnit, MeasureUnitCode measureUnitCode)
     {
         // Arrange
@@ -374,9 +374,9 @@ public sealed class MeasurableTests
         return DynamicDataSource.GetHasMeasureUnitCodeArgs();
     }
 
-    private static IEnumerable<object[]> GetValidMeasureUnitArgs()
+    private static IEnumerable<object[]> GetValidateMeasureUnitValidArgs()
     {
-        return DynamicDataSource.GetValidMeasureUnitArgs();
+        return DynamicDataSource.GetValidateMeasureUnitValidArgs();
     }
     #endregion
     #endregion

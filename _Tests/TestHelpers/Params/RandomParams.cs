@@ -1,4 +1,5 @@
 ﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
+using System;
 
 namespace CsabaDu.FooVaria.Tests.TestHelpers.Params;
 
@@ -241,6 +242,10 @@ public sealed class RandomParams
         return GetRandomItem(Enum.GetValues<RateComponentCode>());
     }
 
+    public TypeCode GetRandomTypeCode()
+    {
+        return GetRandomItem(Enum.GetValues<TypeCode>());
+    }
 
     public TypeCode GetRandomQuantityTypeCode()
     {
@@ -250,8 +255,7 @@ public sealed class RandomParams
     public object GetRandomQuantity(TypeCode? quantityTypeCode = null, ValueType excluded = null)
     {
         quantityTypeCode ??= GetRandomQuantityTypeCode();
-        bool isUlong = quantityTypeCode.Value == TypeCode.UInt64;
-        decimal quantity = getRandomDecimal();
+        ValueType quantity = getRandomValueType();
 
         if (excluded is null) return getQuantity();
 
@@ -259,22 +263,20 @@ public sealed class RandomParams
 
         while (excludedDecimal.Equals(convertToDecimal(quantity)))
         {
-            quantity = getRandomDecimal();
+            quantity = getRandomValueType();
         }
 
         return getQuantity();
 
         #region Local methods
-        decimal getRandomDecimal()
-        {
-            return isUlong ?
-                GetRandomPositiveDecimal()
-                : GetRandomDecimal();
-        }
-
         object convertToDecimal(ValueType quantity)
         {
             return quantity.ToQuantity(TypeCode.Decimal);
+        }
+
+        ValueType getRandomValueType()
+        {
+            return GetRandomValueType(quantityTypeCode.Value);
         }
 
         object getQuantity()
@@ -353,35 +355,40 @@ public sealed class RandomParams
 
     public ValueType GetRandomValidValueType()
     {
-        TypeCode typeCode = GetRandomItem(QuantityTypeCodes);
+        TypeCode quantityTypeCode = GetRandomQuantityTypeCode();
 
-        return GetRandomValueType(typeCode);
+        return GetRandomValueType(quantityTypeCode);
     }
 
     public TypeCode GetRandomQuantityTypeCode(TypeCode? excluded = null)
     {
-        TypeCode typeCode = GetRandomItem(QuantityTypeCodes);
+        TypeCode quantityTypeCode = GetRandomItem(QuantityTypeCodes);
 
-        while (typeCode == excluded)
+        while (quantityTypeCode == excluded)
         {
-            typeCode = GetRandomItem(QuantityTypeCodes);
+            quantityTypeCode = GetRandomItem(QuantityTypeCodes);
         }
 
-        return typeCode;
+        return quantityTypeCode;
+    }
+
+    public TypeCode GetRandomQuantityTypeCode(RateComponentCode rateComponentCode)
+    {
+        return rateComponentCode == RateComponentCode.Limit ?
+            TypeCode.UInt64
+            : GetRandomQuantityTypeCode(TypeCode.UInt64);
     }
 
     public TypeCode GetRandomInvalidQuantityTypeCode()
     {
-        IEnumerable<int> quantityTypeCodeValues = QuantityTypeCodes.Select(x => (int)(object)x);
-        int maxValue = Enum.GetNames(typeof(TypeCode)).Length;
-        int typeCodeValue = Random.Next(maxValue);
+        TypeCode typeCode = GetRandomTypeCode();
 
-        while (quantityTypeCodeValues.Contains(typeCodeValue))
+        while (QuantityTypeCodes.Contains(typeCode))
         {
-            typeCodeValue = Random.Next(maxValue);
+            typeCode = GetRandomTypeCode();
         }
 
-        return (TypeCode)typeCodeValue;
+        return typeCode;
     }
 
     #endregion
