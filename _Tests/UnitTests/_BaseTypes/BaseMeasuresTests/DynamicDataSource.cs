@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests;
+﻿using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;
+using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
+
+namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests;
 
 internal class DynamicDataSource : CommonDynamicDataSource
 {
@@ -26,25 +29,69 @@ internal class DynamicDataSource : CommonDynamicDataSource
     internal IEnumerable<object[]> GetEqualsArgs()
     {
         // null
+        isTrue = false;
         IBaseMeasure baseMeasure = null;
         measureUnit = RandomParams.GetRandomValidMeasureUnit();
         quantity = (ValueType)RandomParams.GetRandomQuantity();
         rateComponentCode = RandomParams.GetRandomRateComponentCode();
-        isTrue = false;
+        limitMode = RandomParams.GetRandomNullableLimitMode();
         yield return toObjectArray();
 
-        // Different MeasureUnitCode
+        // same
+        isTrue = true;
+        baseMeasure = getBaseMeasureChild();
+        yield return toObjectArray();
+
+        // Different LimitMode
+        isTrue = false;
+        baseMeasure = getBaseMeasureChild();
+        limitMode = RandomParams.GetRandomNullableLimitMode(limitMode);
+        yield return toObjectArray();
+
+        // Different RateComponentCode
+        baseMeasure = getBaseMeasureChild();
+        rateComponentCode = RandomParams.GetRandomRateComponentCode(rateComponentCode);
+        yield return toObjectArray();
+
+        // Different measureUnit
+        baseMeasure = getBaseMeasureChild();
+        measureUnit = RandomParams.GetRandomValidMeasureUnit(measureUnit);
+        yield return toObjectArray();
+
+        // Different quantity
+        baseMeasure = getBaseMeasureChild();
+        quantityTypeCode = Type.GetTypeCode(quantity.GetType());
+        quantity = (ValueType)RandomParams.GetRandomQuantity(quantityTypeCode, quantity);
+        yield return toObjectArray();
+
+        // Equals when exchanged
+        isTrue = true;
+        decimalQuantity = RandomParams.GetRandomDecimal();
+        quantity = decimalQuantity;
+        baseMeasure = getBaseMeasureChild();
+        decimalQuantity *= BaseMeasurement.GetExchangeRate(measureUnit, nameof(measureUnit));
+        measureUnit = RandomParams.GetRandomSameTypeValidMeasureUnit(measureUnit);
+        decimalQuantity /= BaseMeasurement.GetExchangeRate(measureUnit, nameof(measureUnit));
+        quantity = decimalQuantity;
+        yield return toObjectArray();
+
+        #region Local methods
+        BaseMeasureChild getBaseMeasureChild()
+        {
+            return GetBaseMeasureChild(measureUnit, quantity, rateComponentCode, limitMode);
+        }
 
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Bool_Enum_ValueType_RateComponentCode_IBaseMeasure_args item = new(isTrue, measureUnit, quantity, rateComponentCode, baseMeasure);
+            Bool_Enum_ValueType_RateComponentCode_IBaseMeasure_NullableLimitMode_args item = new(isTrue, measureUnit, quantity, rateComponentCode, baseMeasure, limitMode);
 
             return item.ToObjectArray();
         }
         #endregion
+        #endregion
 
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     //internal IEnumerable<object[]> GetFitsInILimiterArgs()

@@ -237,9 +237,25 @@ public sealed class RandomParams
         return GetRandomItem(Enum.GetValues<RoundingMode>());
     }
 
-    public RateComponentCode GetRandomRateComponentCode()
+    public RateComponentCode GetRandomRateComponentCode(RateComponentCode? excluded = null)
     {
-        return GetRandomItem(Enum.GetValues<RateComponentCode>());
+        RateComponentCode rateComponentCode = getRandomRateComponentCode();
+
+        if (!excluded.HasValue) return rateComponentCode;
+
+        while (rateComponentCode == excluded.Value)
+        {
+            rateComponentCode = getRandomRateComponentCode();
+        }
+
+        return rateComponentCode;
+
+        #region
+        RateComponentCode getRandomRateComponentCode()
+        {
+            return GetRandomItem(Enum.GetValues<RateComponentCode>());
+        }
+        #endregion
     }
 
     public TypeCode GetRandomTypeCode()
@@ -285,6 +301,23 @@ public sealed class RandomParams
         }
         #endregion
     }
+
+    public LimitMode? GetRandomNullableLimitMode(LimitMode? excluded)
+    {
+        LimitMode? limitMode = GetRandomNullableLimitMode();
+
+        while (limitMode == excluded)
+        {
+            limitMode = GetRandomNullableLimitMode();
+        }
+
+        return limitMode;
+    }
+
+    public LimitMode? GetRandomNullableLimitMode()
+    {
+        return GetRandomItemOrNull(Enum.GetValues<LimitMode>());
+    }
     #endregion
 
     #region Private methods
@@ -307,6 +340,14 @@ public sealed class RandomParams
     private static T[] GetRandomItems<T>(IEnumerable<T> items, int count)
     {
         return GetRandomItems(items.ToArray(), count);
+    }
+
+    private static T? GetRandomItemOrNull<T>(T[] items)
+        where T : struct
+    {
+        T randomItem = GetRandomItem(items);
+
+        return GetRandomItem([default(T?), randomItem]);
     }
 
     private static int[] GetRandomIndexArray(int maxValue, int count)
@@ -350,7 +391,7 @@ public sealed class RandomParams
             _ => throw new ArgumentOutOfRangeException(nameof(typeCode), typeCode, null),
         };
 
-        long randomNextInt64() => Random.NextInt64(long.MinValue, long.MaxValue);
+        static long randomNextInt64() => Random.NextInt64(long.MinValue, long.MaxValue);
     }
 
     public ValueType GetRandomValidValueType()
@@ -390,7 +431,6 @@ public sealed class RandomParams
 
         return typeCode;
     }
-
     #endregion
     #endregion
 }

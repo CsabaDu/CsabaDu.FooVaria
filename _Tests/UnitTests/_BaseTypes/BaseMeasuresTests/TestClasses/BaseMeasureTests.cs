@@ -88,15 +88,15 @@ public sealed class BaseMeasureTests
         Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod, TestCategory("UnitTest"), Ignore]
+    [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method)]
-    public void Equals_args_IBaseMeasure_IBaseMeasure_returns_expected(bool expected, Enum measureUnit, ValueType quantity, RateComponentCode rateComponentCode, IBaseMeasure other)
+    public void Equals_args_IBaseMeasure_IBaseMeasure_returns_expected(bool expected, Enum measureUnit, ValueType quantity, RateComponentCode rateComponentCode, IBaseMeasure baseMeasure, LimitMode? limitMode)
     {
         // Arrange
-        SetBaseMeasureChild(measureUnit, quantity, rateComponentCode);
+        SetBaseMeasureChild(measureUnit, quantity, rateComponentCode, limitMode);
 
         // Act
-        var actual = _baseMeasure.Equals(_baseMeasure, other);
+        var actual = _baseMeasure.Equals(_baseMeasure, baseMeasure);
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -136,9 +136,9 @@ public sealed class BaseMeasureTests
     #endregion
 
     #region Private methods
-    private void SetBaseMeasureChild(Enum measureUnit, ValueType quantity, RateComponentCode? rateComponentCode = null)
+    private void SetBaseMeasureChild(Enum measureUnit, ValueType quantity, RateComponentCode? rateComponentCode = null, LimitMode? limitMode = null)
     {
-        _baseMeasure = GetBaseMeasureChild(measureUnit, quantity, rateComponentCode);
+        _baseMeasure = GetBaseMeasureChild(measureUnit, quantity, rateComponentCode, limitMode);
     }
 
     private void SetBaseMeasureChild()

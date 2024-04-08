@@ -46,8 +46,7 @@ internal sealed class BaseMeasureChild(IRootObject rootObject, string paramName)
 
     #region Test helpers
     public BaseMeasureReturn Return { private get; set; }
-
-    internal static BaseMeasureChild GetBaseMeasureChild(Enum measureUnit, ValueType quantity, RateComponentCode? rateComponentCode = null)
+    internal static BaseMeasureChild GetBaseMeasureChild(Enum measureUnit, ValueType quantity, RateComponentCode? rateComponentCode = null, LimitMode? limitMode = null)
     {
         DataFields fields = new();
         IBaseMeasurement baseMeasurement = BaseMeasurementFactory.CreateBaseMeasurement(measureUnit);
@@ -58,16 +57,12 @@ internal sealed class BaseMeasureChild(IRootObject rootObject, string paramName)
             {
                 GetBaseMeasurement = baseMeasurement,
                 GetBaseQuantity = quantity,
-                GetFactory = getBaseMeasureFactoryObjectOrNull(),
+                GetFactory = rateComponentCode.HasValue ?
+                    GetBaseMeasureFactoryObject(rateComponentCode.Value)
+                    : null,
+                GetLimitMode = limitMode,
             }
         };
-
-        BaseMeasureFactoryObject getBaseMeasureFactoryObjectOrNull()
-        {
-            return rateComponentCode.HasValue ?
-                GetBaseMeasureFactoryObject(rateComponentCode.Value)
-                : null;
-        }
     }
     #endregion
 
@@ -79,24 +74,19 @@ internal sealed class BaseMeasureChild(IRootObject rootObject, string paramName)
 
     public override IFactory GetFactory() => Return.GetFactory;
 
-    public override LimitMode? GetLimitMode()
-    {
-        if (GetRateComponentCode() != RateComponentCode.Limit) return default;
-
-        DataFields fields = new();
-
-        return fields.RandomParams.GetRandomLimitMode();
-    }
+    public override LimitMode? GetLimitMode() => Return.GetLimitMode;
 
     public override bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable exchanged)
     {
-        exchanged = null;
+        throw new NotImplementedException();
 
-        if (!IsExchangeableTo(context)) return false;
+        //exchanged = null;
 
-        Enum measureUnit = GetMeasureUnitElements(context, nameof(context)).MeasureUnit;
-        exchanged = GetBaseMeasureChild(measureUnit, GetBaseQuantity());
+        //if (!IsExchangeableTo(context)) return false;
 
-        return true;
+        //Enum measureUnit = GetMeasureUnitElements(context, nameof(context)).MeasureUnit;
+        //exchanged = GetBaseMeasureChild(measureUnit, GetBaseQuantity());
+
+        //return true;
     }
 }
