@@ -4,9 +4,7 @@ internal sealed class LimiterBaseQuantifiableObject(IRootObject rootObject, stri
 {
     internal static LimiterBaseQuantifiableObject GetLimiterBaseQuantifiableObject(LimitMode? limitMode, Enum measureUnit, decimal defaultQuantity, IBaseQuantifiableFactory factory = null)
     {
-        DataFields fields = new();
-
-        return new(fields.RootObject, fields.paramName)
+        return new(Fields.RootObject, Fields.paramName)
         {
             LimitMode = limitMode,
             Return = new()

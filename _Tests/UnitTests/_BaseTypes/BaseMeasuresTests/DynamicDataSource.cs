@@ -2,46 +2,67 @@
 
 internal class DynamicDataSource : CommonDynamicDataSource
 {
+    #region Fields
+    IBaseMeasure baseMeasure;
+    IBaseMeasure other;
+    #endregion
+
     #region Methods
-    //internal IEnumerable<object[]> GetCompareToInvalidArgs()
-    //{
-    //    measureUnitCode = RandomParams.GetRandomCustomMeasureUnitCode();
-    //    measureUnit = measureUnitCode.GetDefaultMeasureUnit();
-    //    quantity = (ValueType)RandomParams.GetRandomQuantity();
-    //    IBaseMeasure baseMeasure = GetBaseMeasureChild(measureUnit, quantity);
-    //    measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
-    //    yield return toObjectArray();
-
-    //    measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
-    //    measureUnit = RandomParams.GetRandomValidMeasureUnit(measureUnitCode);
-    //    yield return toObjectArray();
-
-    //    #region toObjectArray method
-    //    object[] toObjectArray()
-    //    {
-    //        IBaseMeasure_Enum_arg item = new(baseMeasure, measureUnit);
-
-    //        return item.ToObjectArray();
-    //    }
-    //    #endregion
-    //}
-
     internal IEnumerable<object[]> GetEqualsArg()
     {
-        IBaseMeasure baseMeasure = null;
-        yield return toObjectArray();
-
-        measureUnit = RandomParams.GetRandomMeasureUnit();
+        // null
+        isTrue = false;
+        measureUnit = RandomParams.GetRandomValidMeasureUnit();
         quantity = (ValueType)RandomParams.GetRandomQuantity();
-        baseMeasure = GetBaseMeasureChild(measureUnit, quantity);
+        baseMeasure = null;
         yield return toObjectArray();
 
+        // Same
+        isTrue = true;
+        baseMeasure = getBaseMeasureChild();
+        yield return toObjectArray();
+
+        // Different MeasureUnitCode
+        isTrue = false;
+        measureUnitCode = RandomParams.GetRandomConstantMeasureUnitCode(measureUnitCode);
+        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
+        yield return toObjectArray();
+
+        // Same MeasureUnitCode, different measureUnit
+        baseMeasure = getBaseMeasureChild();
+        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode, measureUnit);
+        yield return toObjectArray();
+
+        // Different quantity
+        baseMeasure = getBaseMeasureChild();
+        quantityTypeCode = Type.GetTypeCode(quantity.GetType());
+        quantity = (ValueType)RandomParams.GetRandomQuantity(quantityTypeCode, quantity);
+        yield return toObjectArray();
+
+        // Equals when exchanged
+        isTrue = true;
+        decimalQuantity = RandomParams.GetRandomDecimal();
+        quantity = decimalQuantity;
+        baseMeasure = getBaseMeasureChild();
+        decimalQuantity *= GetExchangeRate();
+        measureUnit = RandomParams.GetRandomSameTypeValidMeasureUnit(measureUnit);
+        decimalQuantity /= GetExchangeRate();
+        quantity = decimalQuantity;
+        yield return toObjectArray();
+
+        #region Local methods
         #region toObjectArray method
         object[] toObjectArray()
         {
-            IBaseMeasure_arg item = new(baseMeasure);
+            bool_Enum_ValueType_IQuantifiable_args item = new(isTrue, measureUnit, quantity, baseMeasure);
 
             return item.ToObjectArray();
+        }
+        #endregion
+
+        BaseMeasureChild getBaseMeasureChild()
+        {
+            return GetBaseMeasureChild(measureUnit, quantity);
         }
         #endregion
     }
@@ -50,8 +71,8 @@ internal class DynamicDataSource : CommonDynamicDataSource
     {
         // null - null
         isTrue = true;
-        IBaseMeasure leftBaseMeasure = null;
-        IBaseMeasure rightBaseMeasure = null;
+        baseMeasure = null;
+        other = null;
         yield return toObjectArray();
 
         // not null - null
@@ -60,78 +81,76 @@ internal class DynamicDataSource : CommonDynamicDataSource
         quantity = (ValueType)RandomParams.GetRandomQuantity();
         rateComponentCode = RandomParams.GetRandomRateComponentCode();
         limitMode = RandomParams.GetRandomNullableLimitMode();
-        leftBaseMeasure = getBaseMeasureChild();
+        baseMeasure = getBaseMeasureChild();
         yield return toObjectArray();
 
         // null - not null
-        leftBaseMeasure = null;
-        rightBaseMeasure = getBaseMeasureChild();
+        baseMeasure = null;
+        other = getBaseMeasureChild();
         yield return toObjectArray();
 
-        // same
+        // Same
         isTrue = true;
-        leftBaseMeasure = getBaseMeasureChild();
+        baseMeasure = getBaseMeasureChild();
         yield return toObjectArray();
 
         // Different LimitMode
         isTrue = false;
         limitMode = RandomParams.GetRandomNullableLimitMode(limitMode);
-        rightBaseMeasure = getBaseMeasureChild();
+        other = getBaseMeasureChild();
         yield return toObjectArray();
 
         // Different RateComponentCode
-        leftBaseMeasure = getBaseMeasureChild();
+        baseMeasure = getBaseMeasureChild();
         rateComponentCode = RandomParams.GetRandomRateComponentCode(rateComponentCode);
-        rightBaseMeasure = getBaseMeasureChild();
+        other = getBaseMeasureChild();
         yield return toObjectArray();
 
         // Different quantity
-        leftBaseMeasure = getBaseMeasureChild();
+        baseMeasure = getBaseMeasureChild();
         quantityTypeCode = Type.GetTypeCode(quantity.GetType());
         quantity = (ValueType)RandomParams.GetRandomQuantity(quantityTypeCode, quantity);
-        rightBaseMeasure = getBaseMeasureChild();
+        other = getBaseMeasureChild();
         yield return toObjectArray();
 
         // Different measureUnit
-        leftBaseMeasure = getBaseMeasureChild();
+        baseMeasure = getBaseMeasureChild();
         measureUnit = RandomParams.GetRandomValidMeasureUnit(measureUnit);
-        rightBaseMeasure = getBaseMeasureChild();
+        other = getBaseMeasureChild();
         yield return toObjectArray();
 
         // Equals when exchanged
         isTrue = true;
         decimalQuantity = RandomParams.GetRandomDecimal();
         quantity = decimalQuantity;
-        leftBaseMeasure = getBaseMeasureChild();
-        decimalQuantity *= getExchangeRate();
+        baseMeasure = getBaseMeasureChild();
+        decimalQuantity *= GetExchangeRate();
         measureUnit = RandomParams.GetRandomSameTypeValidMeasureUnit(measureUnit);
-        decimalQuantity /= getExchangeRate();
+        decimalQuantity /= GetExchangeRate();
         quantity = decimalQuantity;
-        rightBaseMeasure = getBaseMeasureChild();
+        other = getBaseMeasureChild();
         yield return toObjectArray();
 
         #region Local methods
-        decimal getExchangeRate()
+        #region toObjectArray method
+        object[] toObjectArray()
         {
-            return GetExchangeRate(measureUnit, nameof(measureUnit));
+            IBaseMeasure_bool_IBaseMeasure_arg item = new(baseMeasure, isTrue, other);
+
+            return item.ToObjectArray();
         }
 
         BaseMeasureChild getBaseMeasureChild()
         {
             return GetBaseMeasureChild(measureUnit, quantity, rateComponentCode, limitMode);
         }
-
-        #region toObjectArray method
-        object[] toObjectArray()
-        {
-            IBaseMeasure_bool_IBaseMeasure_arg item = new(leftBaseMeasure, isTrue, rightBaseMeasure);
-
-            return item.ToObjectArray();
-        }
         #endregion
         #endregion
+    }
 
-        //throw new NotImplementedException();
+    private decimal GetExchangeRate()
+    {
+        return BaseMeasurement.GetExchangeRate(measureUnit, nameof(measureUnit));
     }
 
     //internal IEnumerable<object[]> GetFitsInILimiterArgs()

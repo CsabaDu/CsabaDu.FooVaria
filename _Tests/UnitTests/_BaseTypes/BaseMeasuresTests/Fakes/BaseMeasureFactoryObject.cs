@@ -3,13 +3,11 @@
 internal sealed class BaseMeasureFactoryObject(RateComponentCode rateComponentCode) : IBaseMeasureFactory
 {
     #region Test helpers
-    private readonly DataFields Fields = new();
     internal static readonly BaseMeasurementFactoryObject BaseMeasurementFactory = new();
 
     public static BaseMeasureFactoryObject GetBaseMeasureFactoryObject()
     {
-        DataFields fields = new();
-        RateComponentCode rateComponentCode = fields.RandomParams.GetRandomRateComponentCode();
+        RateComponentCode rateComponentCode = Fields.RandomParams.GetRandomRateComponentCode();
 
         return GetBaseMeasureFactoryObject(rateComponentCode);
     }

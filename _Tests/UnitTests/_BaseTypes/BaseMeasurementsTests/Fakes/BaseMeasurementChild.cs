@@ -33,12 +33,11 @@ internal sealed class BaseMeasurementChild(IRootObject rootObject, string paramN
 
     #region Test helpers
     public BaseMeasurementReturn Return { private get; set; } = new();
+    internal static DataFields Fields = new();
 
     internal static BaseMeasurementChild GetBaseMeasurementChild(Enum measureUnit, IBaseMeasurementFactory factory = null, string measureUnitName = null)
     {
-        DataFields fields = new();
-
-        return new(fields.RootObject, fields.paramName)
+        return new(Fields.RootObject, Fields.paramName)
         {
             Return = new()
             {

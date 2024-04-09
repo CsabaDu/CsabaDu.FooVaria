@@ -36,12 +36,11 @@ internal class QuantifiableChild(IRootObject rootObject, string paramName) : Qua
 
     #region Test helpers
     public QuantifiableReturn Return { private get; set; }
+    internal static DataFields Fields = new();
 
     internal static QuantifiableChild GetQuantifiableChild(decimal defaultQuantity, Enum measureUnit = null, IQuantifiableFactory factory = null)
     {
-        DataFields fields = new();
-
-        return new(fields.RootObject, fields.paramName)
+        return new(Fields.RootObject, Fields.paramName)
         {
             Return = new()
             {

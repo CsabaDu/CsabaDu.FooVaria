@@ -25,12 +25,11 @@ internal class BaseQuantifiableChild(IRootObject rootObject, string paramName) :
 
     #region Test helpers
     public BaseQuantifiableReturn Return { private get; set; }
+    internal static DataFields Fields = new();
 
     internal static BaseQuantifiableChild GetBaseQuantifiableChild(Enum measureUnit, decimal defaultQuantity, IBaseQuantifiableFactory factory = null)
     {
-        DataFields fields = new();
-
-        return new(fields.RootObject, fields.paramName)
+        return new(Fields.RootObject, Fields.paramName)
         {
             Return = new()
             {

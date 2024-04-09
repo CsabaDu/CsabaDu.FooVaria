@@ -2,8 +2,6 @@
 
 internal sealed class QuantifiableFactoryObject : IQuantifiableFactory
 {
-    private readonly DataFields Fields = new();
-
     public IQuantifiable CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
     {
         Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();

@@ -12,6 +12,18 @@ public sealed class MeasurableTests
 
     #endregion
 
+    #region Private fields
+    private MeasurableChild _measurable;
+
+    #region Readonly fields
+    private readonly DataFields Fields = new();
+    #endregion
+
+    #region Static fields
+    private static DynamicDataSource DynamicDataSource;
+    #endregion
+    #endregion
+
     #region Initialize
     [ClassInitialize]
     public static void InitializeMeasurableTestsClass(TestContext context)
@@ -33,18 +45,6 @@ public sealed class MeasurableTests
     {
         Fields.paramName = null;
     }
-    #endregion
-
-    #region Private fields
-    private MeasurableChild _measurable;
-
-    #region Readonly fields
-    private readonly DataFields Fields = new();
-    #endregion
-
-    #region Static fields
-    private static DynamicDataSource DynamicDataSource;
-    #endregion
     #endregion
 
     #region Test methods

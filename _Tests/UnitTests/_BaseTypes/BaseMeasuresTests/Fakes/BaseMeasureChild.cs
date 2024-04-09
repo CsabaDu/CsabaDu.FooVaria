@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.Fakes;
 
-internal sealed class BaseMeasureChild(IRootObject rootObject, string paramName) : BaseMeasure(rootObject, paramName)
+internal class BaseMeasureChild(IRootObject rootObject, string paramName) : BaseMeasure(rootObject, paramName)
 {
     #region Members
 
@@ -46,12 +46,13 @@ internal sealed class BaseMeasureChild(IRootObject rootObject, string paramName)
 
     #region Test helpers
     public BaseMeasureReturn Return { private get; set; }
+    internal static DataFields Fields = new();
+
     internal static BaseMeasureChild GetBaseMeasureChild(Enum measureUnit, ValueType quantity, RateComponentCode? rateComponentCode = null, LimitMode? limitMode = null)
     {
-        DataFields fields = new();
         IBaseMeasurement baseMeasurement = BaseMeasurementFactory.CreateBaseMeasurement(measureUnit);
 
-        return new(fields.RootObject, fields.paramName)
+        return new(Fields.RootObject, Fields.paramName)
         {
             Return = new()
             {
@@ -66,17 +67,17 @@ internal sealed class BaseMeasureChild(IRootObject rootObject, string paramName)
     }
     #endregion
 
-    public override IBaseMeasurement GetBaseMeasurement() => Return.GetBaseMeasurement;
+    public override sealed IBaseMeasurement GetBaseMeasurement() => Return.GetBaseMeasurement;
 
-    public override IBaseMeasurementFactory GetBaseMeasurementFactory() => BaseMeasurementFactory;
+    public override sealed IBaseMeasurementFactory GetBaseMeasurementFactory() => BaseMeasurementFactory;
 
-    public override ValueType GetBaseQuantity() => Return.GetBaseQuantity;
+    public override sealed ValueType GetBaseQuantity() => Return.GetBaseQuantity;
 
-    public override IFactory GetFactory() => Return.GetFactory;
+    public override sealed IFactory GetFactory() => Return.GetFactory;
 
-    public override LimitMode? GetLimitMode() => Return.GetLimitMode;
+    public override sealed LimitMode? GetLimitMode() => Return.GetLimitMode;
 
-    public override bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable exchanged)
+    public override sealed bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable exchanged)
     {
         throw new NotImplementedException();
 
@@ -85,7 +86,7 @@ internal sealed class BaseMeasureChild(IRootObject rootObject, string paramName)
         //if (!IsExchangeableTo(context)) return false;
 
         //Enum measureUnit = GetMeasureUnitElements(context, nameof(context)).MeasureUnit;
-        //exchanged = GetBaseMeasureChild(measureUnit, GetBaseQuantity());
+        //exchanged = getBaseMeasureChild(measureUnit, GetBaseQuantity());
 
         //return true;
     }

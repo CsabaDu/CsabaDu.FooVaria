@@ -114,7 +114,7 @@ public sealed class QuantifiableTests
     #region virtual IEquatable<IQuantifiable>.Equals(IQuantifiable?)
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method)]
-    public void Equals_arg_object_returns_expected(Enum measureUnit, decimal defaultQuantity, bool expected, IQuantifiable other)
+    public void Equals_arg_IQuantifiable_returns_expected(Enum measureUnit, decimal defaultQuantity, bool expected, IQuantifiable other)
     {
         // Arrange
         SetQuantifiableChild(defaultQuantity, measureUnit);

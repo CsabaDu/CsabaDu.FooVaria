@@ -13,13 +13,25 @@ public sealed class BaseMeasureTests
     // object IRound<IQuantifiable>.GetQuantity(RoundingMode roundingMode)
     // object IQuantity.GetQuantity(TypeCode quantityTypeCode)
     // TypeCode IQuantityType.GetQuantityTypeCode()
-    // decimal IProportional<IQuantifiable>.ProportionalTo(IQuantifiable? rightBaseMeasure)
+    // decimal IProportional<IQuantifiable>.ProportionalTo(IQuantifiable? right)
     // bool ITryExchange<IQuantifiable, Enum>.TryExchangeTo(Enum context, out IQuantifiable? exchanged)
     // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum? measureUnit, string paramName)
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable? measurable, string paramName)
     // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
     // void IBaseQuantifiable.ValidateQuantity(ValueType? quantity, string paramName)
 
+    #endregion
+
+    #region Private fields
+    private BaseMeasureChild _baseMeasure;
+
+    #region Readonly fields
+    private readonly DataFields Fields = new();
+    #endregion
+
+    #region Static fields
+    private static DynamicDataSource DynamicDataSource;
+    #endregion
     #endregion
 
     #region Initialize
@@ -47,18 +59,6 @@ public sealed class BaseMeasureTests
 
         RestoreConstantExchangeRates();
     }
-    #endregion
-
-    #region Private fields
-    private BaseMeasureChild _baseMeasure;
-
-    #region Readonly fields
-    private readonly DataFields Fields = new();
-    #endregion
-
-    #region Static fields
-    private static DynamicDataSource DynamicDataSource;
-    #endregion
     #endregion
 
     #region Test methods
@@ -120,19 +120,31 @@ public sealed class BaseMeasureTests
 
     #region bool Equals
     #region override sealed IEquatable<IQuantifiable>.Equals(IQuantifiable?)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetEqualsArg), DynamicDataSourceType.Method)]
+    public void Equals_arg_IQuantifiable_returns_expected(bool expected, Enum measureUnit, ValueType quantity, IQuantifiable other)
+    {
+        // Arrange
+        SetBaseMeasureChild(measureUnit, quantity);
 
+        // Act
+        var actual = _baseMeasure.Equals(other);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
     #endregion
 
     #region IEqualityComparer<IBaseMeasure>.Equals(IBaseMeasure?, IBaseMeasure?)
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method)]
-    public void Equals_args_IBaseMeasure_IBaseMeasure_returns_expected(IBaseMeasure leftBaseMeasure, bool expected, IBaseMeasure rightBaseMeasure)
+    public void Equals_args_IBaseMeasure_IBaseMeasure_returns_expected(IBaseMeasure left, bool expected, IBaseMeasure right)
     {
         // Arrange
         SetBaseMeasureChild();
 
         // Act
-        var actual = _baseMeasure.Equals(leftBaseMeasure, rightBaseMeasure);
+        var actual = _baseMeasure.Equals(left, right);
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -183,6 +195,11 @@ public sealed class BaseMeasureTests
     }
 
     #region DynamicDataSource
+    private static IEnumerable<object[]> GetEqualsArg()
+    {
+        return DynamicDataSource.GetEqualsArg();
+    }
+
     private static IEnumerable<object[]> GetEqualsArgs()
     {
         return DynamicDataSource.GetEqualsArgs();

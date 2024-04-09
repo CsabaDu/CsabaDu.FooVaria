@@ -2,8 +2,6 @@
 
 internal sealed class BaseMeasurementFactoryObject : IBaseMeasurementFactory
 {
-    private readonly DataFields Fields = new();
-
     public IBaseMeasurement CreateBaseMeasurement(Enum context)
     {
         Enum measureUnit = GetMeasureUnitElements(context, nameof(context)).MeasureUnit;

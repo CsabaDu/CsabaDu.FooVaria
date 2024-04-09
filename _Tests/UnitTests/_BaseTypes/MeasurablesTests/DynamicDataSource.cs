@@ -91,25 +91,5 @@ internal class DynamicDataSource : CommonDynamicDataSource
         }
         #endregion
     }
-
-    //internal IEnumerable<object[]> GetValidateMeasureUnitCodeInvalidArgs()
-    //{
-    //    measureUnit = RandomParams.GetRandomMeasureUnit();
-    //    measureUnitCode = SampleParams.NotDefinedMeasureUnitCode;
-    //    yield return toObjectArray();
-
-    //    measureUnitCode = GetMeasureUnitCode(measureUnit);
-    //    measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
-    //    yield return toObjectArray();
-
-    //    #region toObjectArray method
-    //    object[] toObjectArray()
-    //    {
-    //        Enum_MeasureUnitCode_args item = new(measureUnit, measureUnitCode);
-
-    //        return item.ToObjectArray();
-    //    }
-    //    #endregion
-    //}
     #endregion
 }

@@ -19,6 +19,18 @@ public sealed class BaseQuantifiableTests
 
     #endregion
 
+    #region Private fields
+    private BaseQuantifiableChild _baseQuantifiable;
+
+    #region Readonly fields
+    private readonly DataFields Fields = new();
+    #endregion
+
+    #region Static fields
+    private static DynamicDataSource DynamicDataSource;
+    #endregion
+    #endregion
+
     #region Initialize
     [ClassInitialize]
     public static void InitializeBaseQuantifiableTestsClass(TestContext context)
@@ -40,18 +52,6 @@ public sealed class BaseQuantifiableTests
     {
         Fields.paramName = null;
     }
-    #endregion
-
-    #region Private fields
-    private BaseQuantifiableChild _baseQuantifiable;
-
-    #region Readonly fields
-    private readonly DataFields Fields = new();
-    #endregion
-
-    #region Static fields
-    private static DynamicDataSource DynamicDataSource;
-    #endregion
     #endregion
 
     #region Test methods

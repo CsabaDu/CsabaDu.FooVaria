@@ -1,7 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
-using System;
-
-namespace CsabaDu.FooVaria.Tests.TestHelpers.Params;
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Params;
 
 public sealed class RandomParams
 {
@@ -30,28 +27,12 @@ public sealed class RandomParams
 
     public MeasureUnitCode GetRandomConstantMeasureUnitCode(MeasureUnitCode? excluded = null)
     {
-        MeasureUnitCode measureUnitCode = getRandomConstantMeasureUnitCode();
-
-        if (!excluded.HasValue) return measureUnitCode;
-
-        while (measureUnitCode == excluded.Value)
-        {
-            measureUnitCode = getRandomConstantMeasureUnitCode();
-        }
-
-        return measureUnitCode;
-
-        #region Local methods
-        MeasureUnitCode getRandomConstantMeasureUnitCode()
-        {
-            return GetRandomItem(ConstantMeasureUnitCodes);
-        }
-        #endregion
+        return GetRandomItem(ConstantMeasureUnitCodes, excluded);
     }
 
-    public MeasureUnitCode GetRandomCustomMeasureUnitCode()
+    public MeasureUnitCode GetRandomCustomMeasureUnitCode(MeasureUnitCode? excluded = null)
     {
-        return GetRandomItem(CustomMeasureUnitCodes);
+        return GetRandomItem(CustomMeasureUnitCodes, excluded);
 
     }
 
@@ -76,21 +57,7 @@ public sealed class RandomParams
 
     public MeasureUnitCode GetRandomMeasureUnitCode(MeasureUnitCode? excluded = null)
     {
-        MeasureUnitCode randomMeasureUnitCode = getRandomMeasureUnitCode();
-
-        while (randomMeasureUnitCode == excluded)
-        {
-            randomMeasureUnitCode = getRandomMeasureUnitCode();
-        }
-
-        return randomMeasureUnitCode;
-
-        #region Local methods
-        static MeasureUnitCode getRandomMeasureUnitCode()
-        {
-            return GetRandomItem(MeasureUnitCodes);
-        }
-        #endregion
+        return GetRandomItem(MeasureUnitCodes, excluded);
     }
 
     public Enum GetRandomMeasureUnit(MeasureUnitCode? measureUnutCode = null, Enum excluded = null)
@@ -255,23 +222,7 @@ public sealed class RandomParams
 
     public RateComponentCode GetRandomRateComponentCode(RateComponentCode? excluded = null)
     {
-        RateComponentCode rateComponentCode = getRandomRateComponentCode();
-
-        if (!excluded.HasValue) return rateComponentCode;
-
-        while (rateComponentCode == excluded.Value)
-        {
-            rateComponentCode = getRandomRateComponentCode();
-        }
-
-        return rateComponentCode;
-
-        #region
-        RateComponentCode getRandomRateComponentCode()
-        {
-            return GetRandomItem(Enum.GetValues<RateComponentCode>());
-        }
-        #endregion
+        return GetRandomItem(Enum.GetValues<RateComponentCode>(), excluded);
     }
 
     public TypeCode GetRandomTypeCode()
@@ -389,7 +340,7 @@ public sealed class RandomParams
     {
         return typeCode switch
         {
-            TypeCode.Boolean => Convert.ToBoolean(Random.Next(1)),
+            TypeCode.Boolean => Convert.ToBoolean(Random.Next(2)),
             TypeCode.Char => Convert.ToChar(Random.Next(char.MaxValue)),
             TypeCode.SByte => Convert.ToSByte(Random.Next(sbyte.MinValue, sbyte.MaxValue)),
             TypeCode.Byte => Convert.ToByte(Random.Next(byte.MaxValue)),
@@ -397,7 +348,7 @@ public sealed class RandomParams
             TypeCode.UInt16 => Convert.ToUInt16(Random.Next(ushort.MaxValue)),
             TypeCode.Int32 => Random.Next(int.MinValue, int.MaxValue),
             TypeCode.UInt32 => Convert.ToUInt32(Random.Next()) + Random.Next(),
-            TypeCode.Int64 => randomNextInt64() + randomNextInt64(),
+            TypeCode.Int64 => randomNextInt64(),
             TypeCode.UInt64 => Convert.ToUInt64(Random.NextInt64() + Random.Next()),
             TypeCode.Single => Convert.ToSingle(randomNextInt64()) + Random.NextSingle(),
             TypeCode.Double => Convert.ToDouble(randomNextInt64()) + Random.NextDouble(),
@@ -419,14 +370,7 @@ public sealed class RandomParams
 
     public TypeCode GetRandomQuantityTypeCode(TypeCode? excluded = null)
     {
-        TypeCode quantityTypeCode = GetRandomItem(QuantityTypeCodes);
-
-        while (quantityTypeCode == excluded)
-        {
-            quantityTypeCode = GetRandomItem(QuantityTypeCodes);
-        }
-
-        return quantityTypeCode;
+        return GetRandomItem(QuantityTypeCodes, excluded);
     }
 
     public TypeCode GetRandomQuantityTypeCode(RateComponentCode rateComponentCode)
@@ -447,6 +391,35 @@ public sealed class RandomParams
 
         return typeCode;
     }
+
+    private static T GetRandomItem<T>(T[] items, T? excluded = null)
+        where T : struct
+    {
+        T randomItem = getRandomItem();
+
+        if (!excluded.HasValue) return randomItem;
+
+        while (randomItem.Equals(excluded.Value))
+        {
+            randomItem = getRandomItem();
+        }
+
+        return randomItem;
+
+        #region Local methods
+        T getRandomItem()
+        {
+            return GetRandomItem(items);
+        }
+        #endregion
+    }
+
+    private static T GetRandomItem<T>(IEnumerable<T> items, T? excluded = null)
+        where T : struct
+    {
+        return GetRandomItem(items.ToArray(), excluded);
+    }
+
     #endregion
-    #endregion
+        #endregion
 }

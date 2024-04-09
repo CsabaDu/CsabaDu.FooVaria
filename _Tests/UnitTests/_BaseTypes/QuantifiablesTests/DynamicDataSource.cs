@@ -1,14 +1,16 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests;
+﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests;
 
 internal class DynamicDataSource : CommonDynamicDataSource
 {
+    #region Fields
+    IQuantifiable quantifiable;
+    #endregion
+
     #region Methods
     internal IEnumerable<object[]> GetEqualsArgs()
     {
         // null
-        IQuantifiable quantifiable = null;
+        quantifiable = null;
         measureUnit = RandomParams.GetRandomValidMeasureUnit();
         defaultQuantity = RandomParams.GetRandomDecimal();
         isTrue = false;
@@ -66,7 +68,7 @@ internal class DynamicDataSource : CommonDynamicDataSource
         limitMode = SampleParams.NotDefinedLimitMode;
         measureUnit = RandomParams.GetRandomMeasureUnit();
         measureUnitCode = GetMeasureUnitCode(measureUnit);
-        IQuantifiable quantifiable = GetQuantifiableChild(RandomParams.GetRandomDecimal(), measureUnit);
+        quantifiable = GetQuantifiableChild(RandomParams.GetRandomDecimal(), measureUnit);
         yield return toObjectArray();
 
         // Different IQuantifiable, valid LimitMode
@@ -261,7 +263,7 @@ internal class DynamicDataSource : CommonDynamicDataSource
         measureUnit = RandomParams.GetRandomMeasureUnit();
         measureUnitCode = GetMeasureUnitCode(measureUnit);
         context = null;
-        IQuantifiable quantifiable = null;
+        quantifiable = null;
         yield return toObjectArray();
 
         // not measureUnit Enum
