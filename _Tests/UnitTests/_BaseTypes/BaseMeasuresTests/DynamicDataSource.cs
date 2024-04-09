@@ -12,7 +12,7 @@ internal class DynamicDataSource : CommonDynamicDataSource
     {
         // null
         isTrue = false;
-        measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        measureUnit = RandomParams.GetRandomConstantMeasureUnit();
         quantity = (ValueType)RandomParams.GetRandomQuantity();
         baseMeasure = null;
         yield return toObjectArray();

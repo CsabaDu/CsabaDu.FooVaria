@@ -358,7 +358,7 @@ public sealed class RandomParams
             _ => throw new ArgumentOutOfRangeException(nameof(typeCode), typeCode, null),
         };
 
-        static long randomNextInt64() => Random.NextInt64(long.MinValue, long.MaxValue);
+        static long randomNextInt64() => Random.NextInt64(int.MinValue, uint.MaxValue);
     }
 
     public ValueType GetRandomValidValueType()
@@ -421,5 +421,5 @@ public sealed class RandomParams
     }
 
     #endregion
-        #endregion
+    #endregion
 }

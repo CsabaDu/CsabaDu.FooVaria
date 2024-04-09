@@ -26,13 +26,13 @@ public sealed class MeasurableTests
 
     #region Initialize
     [ClassInitialize]
-    public static void InitializeMeasurableTestsClass(TestContext context)
+    public static void ClassInitialize(TestContext context)
     {
         DynamicDataSource = new();
     }
 
     [TestInitialize]
-    public void InitializeMeasurableTests()
+    public void TestInitialize()
     {
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
         SetMeasurableChild();
@@ -41,7 +41,7 @@ public sealed class MeasurableTests
     }
 
     [TestCleanup]
-    public void CleanupMeasurableTests()
+    public void TestCleanup()
     {
         Fields.paramName = null;
     }
@@ -348,16 +348,6 @@ public sealed class MeasurableTests
     #endregion
 
     #region Private methods
-    private void SetMeasurableChild(Enum measureUnit, IBaseMeasurementFactory factory = null)
-    {
-        _measurable = GetMeasurableChild(measureUnit, factory);
-    }
-
-    private void SetMeasurableChild()
-    {
-        SetMeasurableChild(Fields.measureUnit);
-    }
-
     #region DynamicDataSource
     private static IEnumerable<object[]> GetEqualsArgs()
     {
@@ -384,5 +374,15 @@ public sealed class MeasurableTests
         return DynamicDataSource.GetValidateMeasureUnitValidArgs();
     }
     #endregion
+
+    private void SetMeasurableChild(Enum measureUnit, IBaseMeasurementFactory factory = null)
+    {
+        _measurable = GetMeasurableChild(measureUnit, factory);
+    }
+
+    private void SetMeasurableChild()
+    {
+        SetMeasurableChild(Fields.measureUnit);
+    }
     #endregion
 }

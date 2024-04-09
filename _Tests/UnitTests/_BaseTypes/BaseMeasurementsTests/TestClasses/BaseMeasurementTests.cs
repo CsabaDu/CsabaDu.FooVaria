@@ -33,13 +33,13 @@ public sealed class BaseMeasurementTests
 
     #region Initialize
     [ClassInitialize]
-    public static void InitializeBaseMeasurementTestsClass(TestContext context)
+    public static void ClassInitialize(TestContext context)
     {
         DynamicDataSource = new();
     }
 
     [TestInitialize]
-    public void InitializeBaseMeasurementTests()
+    public void TestInitialize()
     {
         Fields.measureUnit = Fields.RandomParams.GetRandomValidMeasureUnit();
         Fields.measureUnitCode = GetMeasureUnitCode(Fields.measureUnit);
@@ -47,7 +47,7 @@ public sealed class BaseMeasurementTests
     }
 
     [TestCleanup]
-    public void CleanupBaseMeasurementTests()
+    public void TestCleanup()
     {
         Fields.paramName = null;
 
