@@ -15,7 +15,7 @@ public sealed class CommonBaseTests
     #region CommonBase
     #region CommonBase(IRootObject)
     [TestMethod, TestCategory("UnitTest")]
-    public void CommonBase_nullArg_IRootObject_throws_ArgumentNullException()
+    public void CommonBase_nullArg_IRootobject_throws_ArgumentNullException()
     {
         // Arrange
         Fields.paramName = Fields.RandomParams.GetRandomParamName();
@@ -29,7 +29,7 @@ public sealed class CommonBaseTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void CommonBase_validArg_IRootObject_creates()
+    public void CommonBase_validArg_IRootobject_creates()
     {
         // Arrange
         Fields.paramName = null;

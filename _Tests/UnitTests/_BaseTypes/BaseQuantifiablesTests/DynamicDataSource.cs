@@ -33,7 +33,7 @@ internal class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Bool_Object_Enum_Decimal_args item = new(isTrue, obj, measureUnit, defaultQuantity);
+            bool_object_Enum_decimal_args item = new(isTrue, obj, measureUnit, defaultQuantity);
 
             return item.ToObjectArray();
         }

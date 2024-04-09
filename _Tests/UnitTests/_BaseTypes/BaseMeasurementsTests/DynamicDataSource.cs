@@ -24,7 +24,7 @@ internal class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Bool_Object_Enum_args item = new(isTrue, obj, measureUnit);
+            bool_object_Enum_args item = new(isTrue, obj, measureUnit);
 
             return item.ToObjectArray();
         }
@@ -61,7 +61,7 @@ internal class DynamicDataSource : CommonDynamicDataSource
         object[] toObjectArray()
         {
             IBaseMeasurement baseMeasurement = (IBaseMeasurement)obj;
-            Bool_Enum_IBaseMeasurement_args item = new(isTrue, measureUnit, baseMeasurement);
+            bool_Enum_IBaseMeasurement_args item = new(isTrue, measureUnit, baseMeasurement);
 
             return item.ToObjectArray();
         }
@@ -137,7 +137,7 @@ internal class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Bool_Enum_Enum_args item = new(isTrue, measureUnit, context);
+            bool_Enum_Enum_args item = new(isTrue, measureUnit, context);
 
             return item.ToObjectArray();
         }
@@ -157,7 +157,7 @@ internal class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Enum_Decimal_args item = new(measureUnit, decimalQuantity);
+            Enum_decimal_args item = new(measureUnit, decimalQuantity);
 
             return item.ToObjectArray();
         }

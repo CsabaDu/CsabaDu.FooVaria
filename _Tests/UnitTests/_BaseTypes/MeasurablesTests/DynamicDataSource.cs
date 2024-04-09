@@ -36,7 +36,7 @@ internal class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Bool_Object_Enum_args item = new(isTrue, obj, measureUnit);
+            bool_object_Enum_args item = new(isTrue, obj, measureUnit);
 
             return item.ToObjectArray();
         }

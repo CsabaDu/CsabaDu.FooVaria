@@ -31,7 +31,7 @@ internal class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Enum_Decimal_Bool_IQuantifiable_args item = new(measureUnit, defaultQuantity, isTrue, quantifiable);
+            Enum_decimal_bool_IQuantifiable_args item = new(measureUnit, defaultQuantity, isTrue, quantifiable);
 
             return item.ToObjectArray();
         }
@@ -138,7 +138,7 @@ internal class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Enum_Decimal_Object_RoundingMode_args item = new(measureUnit, defaultQuantity, obj, roundingMode);
+            Enum_decimal_object_RoundingMode_args item = new(measureUnit, defaultQuantity, obj, roundingMode);
 
             return item.ToObjectArray();
         }
@@ -196,7 +196,7 @@ internal class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Enum_Decimal_Object_TypeCode_args item = new(measureUnit, defaultQuantity, obj, quantityTypeCode);
+            Enum_decimal_object_TypeCode_args item = new(measureUnit, defaultQuantity, obj, quantityTypeCode);
 
             return item.ToObjectArray();
         }
@@ -248,7 +248,7 @@ internal class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Bool_Enum_Enum_args item = new(isTrue, measureUnit, context);
+            bool_Enum_Enum_args item = new(isTrue, measureUnit, context);
 
             return item.ToObjectArray();
         }

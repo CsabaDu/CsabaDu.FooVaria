@@ -31,7 +31,7 @@ internal class QuantifiableChild(IRootObject rootObject, string paramName) : Qua
     // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum measureUnit, string paramName)
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable measurable, string paramName)
     // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
-    // void IBaseQuantifiable.ValidateQuantity(ValueType quantity, string paramName)
+    // void IBaseQuantifiable.ValidateQuantity(ValueType defaultQuantity, string paramName)
     #endregion
 
     #region Test helpers
@@ -69,9 +69,10 @@ internal class QuantifiableChild(IRootObject rootObject, string paramName) : Qua
 
     public override sealed IQuantifiable Round(RoundingMode roundingMode)
     {
-        decimal quantity = GetDefaultQuantity().Round(roundingMode);
+        decimal defaultQuantity = GetDefaultQuantity().Round(roundingMode);
+        MeasureUnitCode measureUnitCode = GetMeasureUnitCode();
 
-        return GetQuantifiableChild(quantity, GetMeasureUnitCode());
+        return GetQuantifiableChild(defaultQuantity, measureUnitCode.GetDefaultMeasureUnit());
     }
 
     public override sealed bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable exchanged)

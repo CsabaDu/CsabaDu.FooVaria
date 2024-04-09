@@ -13,7 +13,7 @@ public sealed class BaseMeasureTests
     // object IRound<IQuantifiable>.GetQuantity(RoundingMode roundingMode)
     // object IQuantity.GetQuantity(TypeCode quantityTypeCode)
     // TypeCode IQuantityType.GetQuantityTypeCode()
-    // decimal IProportional<IQuantifiable>.ProportionalTo(IQuantifiable? baseMeasure)
+    // decimal IProportional<IQuantifiable>.ProportionalTo(IQuantifiable? rightBaseMeasure)
     // bool ITryExchange<IQuantifiable, Enum>.TryExchangeTo(Enum context, out IQuantifiable? exchanged)
     // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum? measureUnit, string paramName)
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable? measurable, string paramName)
@@ -34,9 +34,10 @@ public sealed class BaseMeasureTests
     {
         Fields.measureUnit = Fields.RandomParams.GetRandomValidMeasureUnit();
         Fields.measureUnitCode = GetMeasureUnitCode(Fields.measureUnit);
-        Fields.rateComponentCode = Fields.RandomParams.GetRandomRateComponentCode();
         Fields.quantityTypeCode = Fields.RandomParams.GetRandomQuantityTypeCode(Fields.rateComponentCode);
         Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity(Fields.quantityTypeCode);
+        Fields.rateComponentCode = Fields.RandomParams.GetRandomRateComponentCode();
+        Fields.limitMode = Fields.RandomParams.GetRandomNullableLimitMode();
     }
 
     [TestCleanup]
@@ -63,7 +64,57 @@ public sealed class BaseMeasureTests
     #region Test methods
     #region int CompareTo
     #region override sealed IComparable<IQuantifiable>.CompareTo(IQuantifiable?)
+    [TestMethod, TestCategory("UnitTest")]
+    public void CompareTo_nullArg_IQuantifiable_returns_expected()
+    {
+        // Arrange
+        SetBaseMeasureChild();
 
+        IQuantifiable other = null;
+        const int expected = 1;
+
+        // Act
+        var actual = _baseMeasure.CompareTo(other);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void CompareTo_invalidArg_IQuantifiable_throws_InvalidEnumArgumentException()
+    {
+        // Arrange
+        SetBaseMeasureChild();
+
+        Fields.measureUnitCode = Fields.RandomParams.GetRandomConstantMeasureUnitCode(Fields.measureUnitCode);
+        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        IQuantifiable other = GetBaseMeasureChild(Fields.measureUnit, Fields.quantity);
+
+        // Act
+        void attempt() => _ = _baseMeasure.CompareTo(other);
+
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(ParamNames.other, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void CompareTo_validArg_IQuantifiable_returns_expected()
+    {
+        // Arrange
+        SetBaseMeasureChild();
+
+        Fields.measureUnit = Fields.RandomParams.GetRandomSameTypeValidMeasureUnit(Fields.measureUnit);
+        Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity(Fields.quantityTypeCode, Fields.quantity);
+        IQuantifiable other = GetBaseMeasureChild(Fields.measureUnit, Fields.quantity);
+        int expected = _baseMeasure.GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
+
+        // Act
+        var actual = _baseMeasure.CompareTo(other);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
     #endregion
     #endregion
 
@@ -74,29 +125,14 @@ public sealed class BaseMeasureTests
 
     #region IEqualityComparer<IBaseMeasure>.Equals(IBaseMeasure?, IBaseMeasure?)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetEqualsArg), DynamicDataSourceType.Method)]
-    public void Equals_nullArg_IBaseMeasure_arg_IBaseMeasure_returns_expected(IBaseMeasure baseMeasure)
+    [DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method)]
+    public void Equals_args_IBaseMeasure_IBaseMeasure_returns_expected(IBaseMeasure leftBaseMeasure, bool expected, IBaseMeasure rightBaseMeasure)
     {
         // Arrange
         SetBaseMeasureChild();
-        bool expected = baseMeasure is null;
 
         // Act
-        var actual = _baseMeasure.Equals(null, baseMeasure);
-
-        // Assert
-        Assert.AreEqual(expected, actual);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method)]
-    public void Equals_args_IBaseMeasure_IBaseMeasure_returns_expected(bool expected, Enum measureUnit, ValueType quantity, RateComponentCode rateComponentCode, IBaseMeasure baseMeasure, LimitMode? limitMode)
-    {
-        // Arrange
-        SetBaseMeasureChild(measureUnit, quantity, rateComponentCode, limitMode);
-
-        // Act
-        var actual = _baseMeasure.Equals(_baseMeasure, baseMeasure);
+        var actual = _baseMeasure.Equals(leftBaseMeasure, rightBaseMeasure);
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -147,11 +183,6 @@ public sealed class BaseMeasureTests
     }
 
     #region DynamicDataSource
-    private static IEnumerable<object[]> GetEqualsArg()
-    {
-        return DynamicDataSource.GetEqualsArg();
-    }
-
     private static IEnumerable<object[]> GetEqualsArgs()
     {
         return DynamicDataSource.GetEqualsArgs();

@@ -28,9 +28,25 @@ public sealed class RandomParams
         return measureUnit;
     }
 
-    public MeasureUnitCode GetRandomConstantMeasureUnitCode()
+    public MeasureUnitCode GetRandomConstantMeasureUnitCode(MeasureUnitCode? excluded = null)
     {
-        return GetRandomItem(ConstantMeasureUnitCodes);
+        MeasureUnitCode measureUnitCode = getRandomConstantMeasureUnitCode();
+
+        if (!excluded.HasValue) return measureUnitCode;
+
+        while (measureUnitCode == excluded.Value)
+        {
+            measureUnitCode = getRandomConstantMeasureUnitCode();
+        }
+
+        return measureUnitCode;
+
+        #region Local methods
+        MeasureUnitCode getRandomConstantMeasureUnitCode()
+        {
+            return GetRandomItem(ConstantMeasureUnitCodes);
+        }
+        #endregion
     }
 
     public MeasureUnitCode GetRandomCustomMeasureUnitCode()
