@@ -1,8 +1,8 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Params;
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods;
 
 public sealed class TestSupport
 {
-    public static void RestoreConstantExchangeRates()
+    internal static void RestoreConstantExchangeRates()
     {
         if (ExchangeRateCollection.Count != ConstantExchangeRateCount)
         {

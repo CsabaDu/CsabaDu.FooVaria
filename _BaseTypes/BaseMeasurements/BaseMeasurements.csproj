@@ -8,13 +8,7 @@
 
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>Params</_Parameter1>
-    </AssemblyAttribute>
-  </ItemGroup>
-
-  <ItemGroup>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>BaseMeasurementsTests</_Parameter1>
+      <_Parameter1>HelperMethods</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
 

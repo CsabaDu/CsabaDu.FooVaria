@@ -14,5 +14,5 @@ global using Microsoft.VisualStudio.TestTools.UnitTesting;
 global using System.ComponentModel;
 global using static CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations.BaseMeasurement;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;
-global using static CsabaDu.FooVaria.Tests.TestHelpers.Params.TestSupport;
+global using static CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods.TestSupport;
 global using static CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasurementsTests.Fakes.BaseMeasurementChild;

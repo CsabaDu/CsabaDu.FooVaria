@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\TestHelpers\DataTypes\DataTypes.csproj" />
+    <ProjectReference Include="..\..\..\TestHelpers\HelperMethods\HelperMethods.csproj" />
     <ProjectReference Include="..\BaseMeasurementsTests\BaseMeasurementsTests.csproj" />
     <ProjectReference Include="..\QuantifiablesTests\QuantifiablesTests.csproj" />
   </ItemGroup>
