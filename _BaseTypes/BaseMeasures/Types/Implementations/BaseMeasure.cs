@@ -101,10 +101,6 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
 
     public IBaseMeasure GetBaseMeasure(ValueType quantity)
     {
-        //Enum measureUnit = GetBaseMeasureUnit();
-        //IBaseMeasurementFactory factory = GetBaseMeasurementFactory();
-        //IBaseMeasurement baseMeasurement = factory.CreateBaseMeasurement(measureUnit)!;
-
         IBaseMeasurement baseMeasurement = GetBaseMeasurement();
 
         return GetBaseMeasure(baseMeasurement, quantity);
@@ -112,6 +108,9 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
 
     public IBaseMeasure GetBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity)
     {
+        _ = NullChecked(baseMeasurement, nameof(baseMeasurement));
+        ValidateQuantity(quantity, nameof(quantity));
+
         IBaseMeasureFactory factory = GetBaseMeasureFactory();
 
         return factory.CreateBaseMeasure(baseMeasurement, quantity);
@@ -147,43 +146,6 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
 
         baseMeasurement.ValidateExchangeRate(exchangeRate, paramName);
     }
-    #endregion
-
-    #region Protected methods
-    #region Static methods
-    //protected static object? GetValidQuantityOrNull(IBaseMeasure baseMeasure, object? quantity)
-    //{
-    //    quantity = ((ValueType?)quantity)?.ToQuantity(baseMeasure.GetQuantityTypeCode());
-
-    //    return baseMeasure.GetRateComponentCode() switch
-    //    {
-    //        RateComponentCode.Denominator => getValidDenominatorQuantity(),
-    //        RateComponentCode.Numerator or
-    //        RateComponentCode.Limit => quantity,
-
-    //        _ => throw new InvalidOperationException(null),
-    //    };
-
-    //    #region Local methods
-    //    object? getValidDenominatorQuantity()
-    //    {
-    //        if (quantity is null || (decimal)quantity <= 0) return null;
-
-    //        return quantity;
-    //    }
-    //    #endregion
-    //}
-
-    //protected static TComparable ConvertToLimitable<TComparable>(IBaseMeasure<TComparable> limitable, ILimiter limiter)
-    //    where TComparable : class, IBaseMeasure
-    //{
-    //    string paramName = nameof(limiter);
-
-    //    if (NullChecked(limiter, paramName) is IBaseMeasure baseMeasure) return limitable.GetBaseMeasure(baseMeasure);
-
-    //    throw ArgumentTypeOutOfRangeException(paramName, limiter);
-    //}
-    #endregion
     #endregion
 
     #region Private methods

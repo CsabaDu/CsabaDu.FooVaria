@@ -7,7 +7,7 @@ internal class BaseMeasureChild(IRootObject rootObject, string paramName) : Base
     // int IComparable<IQuantifiable>.CompareTo(IQuantifiable? other)
     // bool IEquatable<IQuantifiable>.Equals(IQuantifiable? other)
     // bool IEqualityComparer<IBaseMeasure>.Equals(IBaseMeasure? x, IBaseMeasure? y)
-    // bool? ILimitable.FitsIn(ILimiter? limiter)
+    // bool? ILimitable.FitsIn(ILimiter? _limiter)
     // bool? IFit<IQuantifiable>.FitsIn(IQuantifiable? other, LimitMode? limitMode)
     // IBaseMeasure IBaseMeasure.GetBaseMeasure(ValueType quantity)
     // IBaseMeasure IBaseMeasure.GetBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity)

@@ -32,7 +32,8 @@ public sealed class BaseMeasureTests
     #endregion
 
     private BaseMeasureChild _baseMeasure;
-    private ILimiter limiter;
+    private IBaseMeasurement _baseMeasurement;
+    private ILimiter _limiter;
     #endregion
 
     #region Initialize
@@ -60,7 +61,8 @@ public sealed class BaseMeasureTests
     public void TestCleanup()
     {
         Fields.paramName = null;
-        limiter = null;
+        _baseMeasurement = null;
+        _limiter = null;
 
         RestoreConstantExchangeRates();
     }
@@ -165,10 +167,10 @@ public sealed class BaseMeasureTests
         // Arrange
         SetBaseMeasureChild();
 
-        limiter = null;
+        _limiter = null;
 
         // Act
-        var actual = _baseMeasure.FitsIn(limiter);
+        var actual = _baseMeasure.FitsIn(_limiter);
 
         // Assert
         Assert.IsTrue(actual);
@@ -197,11 +199,11 @@ public sealed class BaseMeasureTests
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
         Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity();
         Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
-        limiter = GetLimiterBaseMeasureObject(Fields.measureUnit, Fields.quantity, Fields.limitMode.Value);
-        bool? expected = Fields.defaultQuantity.FitsIn(limiter.GetLimiterDefaultQuantity(), Fields.limitMode);
+        _limiter = GetLimiterBaseMeasureObject(Fields.measureUnit, Fields.quantity, Fields.limitMode.Value);
+        bool? expected = Fields.defaultQuantity.FitsIn(_limiter.GetLimiterDefaultQuantity(), Fields.limitMode);
 
         // Act
-        var actual = _baseMeasure.FitsIn(limiter);
+        var actual = _baseMeasure.FitsIn(_limiter);
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -215,10 +217,10 @@ public sealed class BaseMeasureTests
         // Arrange
         SetBaseMeasureChild();
 
-        limiter = null;
+        _limiter = null;
 
         // Act
-        var actual = _baseMeasure.FitsIn(limiter);
+        var actual = _baseMeasure.FitsIn(_limiter);
 
         // Assert
         Assert.IsTrue(actual);
@@ -261,16 +263,137 @@ public sealed class BaseMeasureTests
 
     #region IBaseMeasure GetBaseMeasure
     #region IBaseMeasure.GetBaseMeasure(ValueType)
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetBaseMeasure_nullArg_ValueType_thorws_ArgumentNullException()
+    {
+        // Arrange
+        SetBaseMeasureChild();
 
+        Fields.quantity = null;
+
+        // Act
+        void attempt() => _ = _baseMeasure.GetBaseMeasure(Fields.quantity);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
+        Assert.AreEqual(ParamNames.quantity, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetBaseMeasure_invalidArg_ValueType_thorws_ArgumentOutOfRangeException()
+    {
+        // Arrange
+        SetBaseMeasureChild();
+
+        Fields.quantityTypeCode = Fields.RandomParams.GetRandomInvalidQuantityTypeCode();
+        Fields.quantity = Fields.RandomParams.GetRandomValueType(Fields.quantityTypeCode);
+
+        // Act
+        void attempt() => _ = _baseMeasure.GetBaseMeasure(Fields.quantity);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
+        Assert.AreEqual(ParamNames.quantity, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetBaseMeasure_validArg_ValueType_returns_expected()
+    {
+        // Arrange
+        SetCompleteBaseMeasureChild();
+
+        Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity();
+        IBaseMeasure expected = GetBaseMeasureChild(Fields.measureUnit, Fields.quantity, Fields.rateComponentCode, Fields.limitMode);
+
+        // Act
+        var actual = _baseMeasure.GetBaseMeasure(Fields.quantity);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
     #endregion
 
     #region IBaseMeasure.GetBaseMeasure(IBaseMeasurement, ValueType)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetBaseBeasureNullCheckArgs), DynamicDataSourceType.Method)]
+    public void GetBaseMeasure_nullArgs_IBaseMeasurement_ValueType_thorws_ArgumentNullException(string paramName, IBaseMeasurement baseMeasurement)
+    {
+        // Arrange
+        SetBaseMeasureChild();
+
+        Fields.quantity = null;
+
+        // Act
+        void attempt() => _ = _baseMeasure.GetBaseMeasure(baseMeasurement, Fields.quantity);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
+        Assert.AreEqual(paramName, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetBaseMeasure_arg_IBaseMeasurement_invalidArg_ValueType_thorws_ArgumentOutOfRangeException()
+    {
+        // Arrange
+        SetBaseMeasureChild();
+
+        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit();
+        _baseMeasurement = BaseMeasurementChild.GetBaseMeasurementChild(Fields.measureUnit);
+        Fields.quantityTypeCode = Fields.RandomParams.GetRandomInvalidQuantityTypeCode();
+        Fields.quantity = Fields.RandomParams.GetRandomValueType(Fields.quantityTypeCode);
+
+        // Act
+        void attempt() => _ = _baseMeasure.GetBaseMeasure(Fields.quantity);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
+        Assert.AreEqual(ParamNames.quantity, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetBaseMeasure_validArgs_IBaseMeasurement_ValueType_returns_expected()
+    {
+        // Arrange
+        SetCompleteBaseMeasureChild();
+
+        Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity();
+        IBaseMeasure expected = GetBaseMeasureChild(Fields.measureUnit, Fields.quantity, Fields.rateComponentCode, Fields.limitMode);
+        _baseMeasurement = BaseMeasurementChild.GetBaseMeasurementChild(Fields.measureUnit);
+
+        // Act
+        var actual = _baseMeasure.GetBaseMeasure(_baseMeasurement, Fields.quantity);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region IBaseMeasurement GetBaseMeasurement
+    #region abstract IBaseMeasure.GetBaseMeasurement()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetBaseMeasurement_returns_expected()
+    {
+        // Arrange
+        SetCompleteBaseMeasureChild();
+
+        IBaseMeasurement expected = BaseMeasurementChild.GetBaseMeasurementChild(Fields.measureUnit);
+
+        // Act
+        var actual = _baseMeasure.GetBaseMeasurement();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region IBaseMeasurementFactory GetBaseMeasurementFactory
+    #region abstract IBaseMeasure.GetBaseMeasurementFactory()
 
     #endregion
     #endregion
 
-    // IBaseMeasurement IBaseMeasure.GetBaseMeasurement()
-    // IBaseMeasurementFactory IBaseMeasure.GetBaseMeasurementFactory()
     // Enum IMeasureUnit.GetBaseMeasureUnit()
     // ValueType IQuantity.GetBaseQuantity()
     // decimal IDefaultQuantity.GetDefaultQuantity()
@@ -299,6 +422,11 @@ public sealed class BaseMeasureTests
         SetBaseMeasureChild(Fields.measureUnit, Fields.quantity);
     }
 
+    private void SetCompleteBaseMeasureChild()
+    {
+        SetBaseMeasureChild(Fields.measureUnit, Fields.quantity, Fields.rateComponentCode, Fields.limitMode);
+    }
+
     #region DynamicDataSource
     private static IEnumerable<object[]> GetEqualsArg()
     {
@@ -318,6 +446,11 @@ public sealed class BaseMeasureTests
     private static IEnumerable<object[]> GetFitsInIQuantifiableLimitModeArgs()
     {
         return DynamicDataSource.GetFitsInIQuantifiableLimitModeArgs();
+    }
+
+    private static IEnumerable<object[]> GetBaseBeasureNullCheckArgs()
+    {
+        return DynamicDataSource.GetBaseBeasureNullCheckArgs();
     }
 
     //private static IEnumerable<object[]> GetEqualsArgs()

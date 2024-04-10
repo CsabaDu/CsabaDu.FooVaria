@@ -2,6 +2,7 @@
 
 public static class ParamNames
 {
+    public const string baseMeasurement = nameof(baseMeasurement);
     public const string commonBase = nameof(commonBase);
     public const string context = nameof(context);
     public const string factory = nameof(factory);
@@ -10,6 +11,7 @@ public static class ParamNames
     public const string measureUnitCode = nameof(measureUnitCode);
     public const string other = nameof(other);
     public const string paramName = nameof(paramName);
+    public const string quantity = nameof(quantity);
     public const string quantityTypeCode = nameof(quantityTypeCode);
     public const string rootObject = nameof(rootObject);
     public const string roundingMode = nameof(roundingMode);

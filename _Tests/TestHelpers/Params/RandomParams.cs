@@ -387,7 +387,7 @@ public sealed class RandomParams
             : GetRandomQuantityTypeCode(TypeCode.UInt64);
     }
 
-    public TypeCode GetRandomInvalidQuantityTypeCode()
+    public TypeCode GetRandomInvalidTypeCode()
     {
         TypeCode typeCode = GetRandomTypeCode();
 
@@ -398,6 +398,19 @@ public sealed class RandomParams
 
         return typeCode;
     }
+
+    public TypeCode GetRandomInvalidQuantityTypeCode()
+    {
+        TypeCode typeCode = GetRandomItem(SampleParams.InvalidValueTypeCodes);
+
+        while (QuantityTypeCodes.Contains(typeCode))
+        {
+            typeCode = GetRandomTypeCode();
+        }
+
+        return typeCode;
+    }
+
 
     private static T GetRandomItem<T>(T[] items, T? excluded = null)
         where T : struct

@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types;
-
-namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes;
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes;
 
 public class DataFields
 {
