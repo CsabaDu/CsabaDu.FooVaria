@@ -45,10 +45,13 @@ public sealed class BaseMeasureTests
     [TestInitialize]
     public void TestInitialize()
     {
-        Fields.measureUnit = Fields.RandomParams.GetRandomValidMeasureUnit();
-        Fields.measureUnitCode = GetMeasureUnitCode(Fields.measureUnit);
+        Fields.measureUnitCode = Fields.RandomParams.GetRandomConstantMeasureUnitCode();
+        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
         Fields.quantityTypeCode = Fields.RandomParams.GetRandomQuantityTypeCode(Fields.rateComponentCode);
-        Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity(Fields.quantityTypeCode);
+        Fields.quantity = Fields.RandomParams.GetRandomValueType(Fields.quantityTypeCode);
+        Fields.defaultQuantity = (Convert.ToDecimal(Fields.quantity)
+            * BaseMeasurement.GetExchangeRate(Fields.measureUnit, nameof(Fields.measureUnit)))
+            .Round(RoundingMode.DoublePrecision);
         Fields.rateComponentCode = Fields.RandomParams.GetRandomRateComponentCode();
         Fields.limitMode = Fields.RandomParams.GetRandomNullableLimitMode();
     }
@@ -152,6 +155,7 @@ public sealed class BaseMeasureTests
         Assert.AreEqual(expected, actual);
     }
     #endregion
+    #endregion
 
     #region bool? FitsIn
     #region override sealed ILimitable.FitsIn(ILimiter?)
@@ -188,18 +192,13 @@ public sealed class BaseMeasureTests
     public void FitsIn_validArg_ILimiter_returns_expected()
     {
         // Arrange
-        Fields.measureUnit = Fields.RandomParams.GetRandomConstantMeasureUnit();
-
         SetBaseMeasureChild();
 
-        Fields.measureUnitCode = GetMeasureUnitCode(Fields.measureUnit);
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
         Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity();
         Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
         limiter = GetLimiterBaseMeasureObject(Fields.measureUnit, Fields.quantity, Fields.limitMode.Value);
-        Fields.defaultQuantity = _baseMeasure.GetDefaultQuantity();
-        Fields.decimalQuantity = limiter.GetLimiterDefaultQuantity();
-        bool? expected = Fields.defaultQuantity.FitsIn(Fields.decimalQuantity, Fields.limitMode);
+        bool? expected = Fields.defaultQuantity.FitsIn(limiter.GetLimiterDefaultQuantity(), Fields.limitMode);
 
         // Act
         var actual = _baseMeasure.FitsIn(limiter);
@@ -243,17 +242,13 @@ public sealed class BaseMeasureTests
     public void FitsIn_validArgs_IQuantifiable_LimitMode_returns_expected()
     {
         // Arrange
-        Fields.measureUnit = Fields.RandomParams.GetRandomConstantMeasureUnit();
-
         SetBaseMeasureChild();
 
-        Fields.measureUnitCode = GetMeasureUnitCode(Fields.measureUnit);
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
         Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity();
         IQuantifiable quantifiable = GetBaseMeasureChild(Fields.measureUnit, Fields.quantity);
         Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
-        Fields.decimalQuantity = quantifiable.GetDefaultQuantity();
-        bool? expected = Fields.defaultQuantity.FitsIn(Fields.decimalQuantity, Fields.limitMode);
+        bool? expected = Fields.defaultQuantity.FitsIn(quantifiable.GetDefaultQuantity(), Fields.limitMode);
 
         // Act
         var actual = _baseMeasure.FitsIn(quantifiable, Fields.limitMode);
@@ -263,10 +258,17 @@ public sealed class BaseMeasureTests
     }
     #endregion
     #endregion
+
+    #region IBaseMeasure GetBaseMeasure
+    #region IBaseMeasure.GetBaseMeasure(ValueType)
+
     #endregion
 
-    // IBaseMeasure IBaseMeasure.GetBaseMeasure(ValueType quantity)
-    // IBaseMeasure IBaseMeasure.GetBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity)
+    #region IBaseMeasure.GetBaseMeasure(IBaseMeasurement, ValueType)
+
+    #endregion
+    #endregion
+
     // IBaseMeasurement IBaseMeasure.GetBaseMeasurement()
     // IBaseMeasurementFactory IBaseMeasure.GetBaseMeasurementFactory()
     // Enum IMeasureUnit.GetBaseMeasureUnit()

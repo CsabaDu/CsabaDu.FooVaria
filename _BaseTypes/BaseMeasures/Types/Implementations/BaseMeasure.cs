@@ -54,7 +54,10 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
 
     public override sealed decimal GetDefaultQuantity()
     {
-        return GetDefaultQuantity(GetBaseQuantity(), GetExchangeRate());
+        object quantity = GetBaseQuantity();
+        decimal exchangeRate = GetExchangeRate();
+
+        return GetDefaultQuantity(quantity, exchangeRate);
     }
 
     public override sealed bool IsExchangeableTo(Enum? context)
@@ -98,16 +101,20 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
 
     public IBaseMeasure GetBaseMeasure(ValueType quantity)
     {
-        Enum measureUnit = GetBaseMeasureUnit();
-        IBaseMeasurementFactory factory = GetBaseMeasurementFactory();
-        IBaseMeasurement baseMeasurement = factory.CreateBaseMeasurement(measureUnit)!;
+        //Enum measureUnit = GetBaseMeasureUnit();
+        //IBaseMeasurementFactory factory = GetBaseMeasurementFactory();
+        //IBaseMeasurement baseMeasurement = factory.CreateBaseMeasurement(measureUnit)!;
+
+        IBaseMeasurement baseMeasurement = GetBaseMeasurement();
 
         return GetBaseMeasure(baseMeasurement, quantity);
     }
 
     public IBaseMeasure GetBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity)
     {
-        return GetBaseMeasureFactory().CreateBaseMeasure(baseMeasurement, quantity);
+        IBaseMeasureFactory factory = GetBaseMeasureFactory();
+
+        return factory.CreateBaseMeasure(baseMeasurement, quantity);
     }
 
     public decimal GetExchangeRate()
@@ -184,6 +191,7 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
     {
         return (IBaseMeasureFactory)GetFactory();
     }
+
     #region Static methods
     private static TypeCode? GetValidQuantityTypeCodeOrNull(TypeCode quantityTypeCode)
     {
