@@ -13,6 +13,7 @@ global using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
 global using CsabaDu.FooVaria.BaseTypes.Measurables.Statics;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
 global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes;
+global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.BehaviorObjects;
 global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ObjectArrayItems;
 global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.Returns;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Params;
@@ -24,4 +25,4 @@ global using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations
 global using static CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods.TestSupport;
 global using static CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.Fakes.BaseMeasureChild;
 global using static CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.Fakes.BaseMeasureFactoryObject;
-global using static CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations.BaseMeasurement;
+global using static CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.Fakes.LimiterBaseMeasureObject;

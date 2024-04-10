@@ -1,5 +1,3 @@
-using CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasurementsTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]

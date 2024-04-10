@@ -19,22 +19,23 @@ internal class DynamicDataSource : CommonDynamicDataSource
 
         // Same
         isTrue = true;
-        baseMeasure = getBaseMeasureChild();
+        baseMeasure = GetBaseMeasureChild();
         yield return toObjectArray();
 
         // Different MeasureUnitCode
         isTrue = false;
         measureUnitCode = RandomParams.GetRandomConstantMeasureUnitCode(measureUnitCode);
-        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
+        measureUnit = measureUnitCode.GetDefaultMeasureUnit();
+        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode, measureUnit);
         yield return toObjectArray();
 
         // Same MeasureUnitCode, different measureUnit
-        baseMeasure = getBaseMeasureChild();
+        baseMeasure = GetBaseMeasureChild();
         measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode, measureUnit);
         yield return toObjectArray();
 
         // Different quantity
-        baseMeasure = getBaseMeasureChild();
+        baseMeasure = GetBaseMeasureChild();
         quantityTypeCode = Type.GetTypeCode(quantity.GetType());
         quantity = (ValueType)RandomParams.GetRandomQuantity(quantityTypeCode, quantity);
         yield return toObjectArray();
@@ -43,26 +44,19 @@ internal class DynamicDataSource : CommonDynamicDataSource
         isTrue = true;
         decimalQuantity = RandomParams.GetRandomDecimal();
         quantity = decimalQuantity;
-        baseMeasure = getBaseMeasureChild();
+        baseMeasure = GetBaseMeasureChild();
         decimalQuantity *= GetExchangeRate();
         measureUnit = RandomParams.GetRandomSameTypeValidMeasureUnit(measureUnit);
         decimalQuantity /= GetExchangeRate();
         quantity = decimalQuantity;
         yield return toObjectArray();
 
-        #region Local methods
         #region toObjectArray method
         object[] toObjectArray()
         {
             bool_Enum_ValueType_IQuantifiable_args item = new(isTrue, measureUnit, quantity, baseMeasure);
 
             return item.ToObjectArray();
-        }
-        #endregion
-
-        BaseMeasureChild getBaseMeasureChild()
-        {
-            return GetBaseMeasureChild(measureUnit, quantity);
         }
         #endregion
     }
@@ -139,18 +133,78 @@ internal class DynamicDataSource : CommonDynamicDataSource
 
             return item.ToObjectArray();
         }
+        #endregion
 
         BaseMeasureChild getBaseMeasureChild()
         {
-            return GetBaseMeasureChild(measureUnit, quantity, rateComponentCode, limitMode);
+            return BaseMeasureChild.GetBaseMeasureChild(measureUnit, quantity, rateComponentCode, limitMode);
         }
         #endregion
+    }
+
+    internal IEnumerable<object[]> GetFitsInILimiterArgs()
+    {
+        // Not IBaseQuantifiable
+        measureUnit = RandomParams.GetRandomMeasureUnit();
+        limiter = new LimiterObject();
+        yield return toObjectArray();
+
+        // Different MeasureUnitCode
+        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        measureUnitCode = RandomParams.GetRandomCustomMeasureUnitCode(measureUnitCode);
+        limitMode = RandomParams.GetRandomLimitMode();
+        limiter = GetLimiterBaseMeasureObject(RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity, limitMode.Value);
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            Enum_ILimiter_args item = new(measureUnit, limiter);
+
+            return item.ToObjectArray();
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> GetFitsInIQuantifiableLimitModeArgs()
+    {
+        // IQuantifiable, Not defined limitMode
+        limitMode = SampleParams.NotDefinedLimitMode;
+        measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        quantity = (ValueType)RandomParams.GetRandomQuantity();
+        baseMeasure = GetBaseMeasureChild();
+        yield return toObjectArray();
+
+        // Different IQuantifiable, valid LimitMode
+        measureUnitCode = RandomParams.GetRandomConstantMeasureUnitCode(measureUnitCode);
+        measureUnit = measureUnitCode.GetDefaultMeasureUnit();
+        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode, measureUnit);
+        limitMode = RandomParams.GetRandomLimitMode();
+        yield return toObjectArray();
+
+        // null, valid LimitMode
+        baseMeasure = null;
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            Enum_LimitMode_IQuantifiable_arg item = new(measureUnit, limitMode, baseMeasure);
+
+            return item.ToObjectArray();
+        }
         #endregion
     }
 
     private decimal GetExchangeRate()
     {
         return BaseMeasurement.GetExchangeRate(measureUnit, nameof(measureUnit));
+    }
+
+    private BaseMeasureChild GetBaseMeasureChild()
+    {
+        return BaseMeasureChild.GetBaseMeasureChild(measureUnit, quantity);
     }
 
     //internal IEnumerable<object[]> GetFitsInILimiterArgs()
@@ -162,7 +216,7 @@ internal class DynamicDataSource : CommonDynamicDataSource
 
     //    // Different MeasureUnitCode
     //    measureUnitCode = GetMeasureUnitCode(measureUnit);
-    //    limiter = GetLimiterQuantifiableObject(null, RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity);
+    //    limiter = GetLimiterBaseMeasureObject(null, RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity);
     //    yield return toObjectArray();
 
     //    #region toObjectArray method

@@ -49,7 +49,9 @@ internal class DynamicDataSource : CommonDynamicDataSource
 
         // Different MeasureUnitCode
         measureUnitCode = GetMeasureUnitCode(measureUnit);
-        limiter = GetLimiterQuantifiableObject(null, RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity);
+        measureUnitCode = RandomParams.GetRandomCustomMeasureUnitCode(measureUnitCode);
+        limitMode = RandomParams.GetRandomLimitMode();
+        limiter = GetLimiterQuantifiableObject(limitMode.Value, RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity);
         yield return toObjectArray();
 
         #region toObjectArray method

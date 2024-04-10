@@ -2,7 +2,7 @@
 
 internal sealed class LimiterQuantifiableObject(IRootObject rootObject, string paramName) : QuantifiableChild(rootObject, paramName), ILimiter
 {
-    internal static LimiterQuantifiableObject GetLimiterQuantifiableObject(LimitMode? limitMode, Enum measureUnit, decimal defaultQuantity, IBaseQuantifiableFactory factory = null)
+    internal static LimiterQuantifiableObject GetLimiterQuantifiableObject(LimitMode limitMode, Enum measureUnit, decimal defaultQuantity, IBaseQuantifiableFactory factory = null)
     {
         return new(Fields.RootObject, Fields.paramName)
         {
@@ -16,7 +16,7 @@ internal sealed class LimiterQuantifiableObject(IRootObject rootObject, string p
         };
     }
 
-    public LimitMode? LimitMode { private get; set; }
+    public LimitMode LimitMode { private get; set; }
 
     public decimal GetLimiterDefaultQuantity() => GetDefaultQuantity();
 

@@ -41,8 +41,6 @@ public sealed class QuantifiableTests
     #endregion
 
     #region Private fields
-    private QuantifiableChild _quantifiable;
-
     #region Readonly fields
     private readonly DataFields Fields = new();
     #endregion
@@ -50,6 +48,9 @@ public sealed class QuantifiableTests
     #region Static fields
     private static DynamicDataSource DynamicDataSource;
     #endregion
+
+    private QuantifiableChild _quantifiable;
+    private ILimiter limiter;
     #endregion
 
     #region Test methods
@@ -136,7 +137,7 @@ public sealed class QuantifiableTests
         // Arrange
         SetQuantifiableChild();
 
-        ILimiter limiter = null;
+        limiter = null;
 
         // Act
         var actual = _quantifiable.FitsIn(limiter);
@@ -168,7 +169,7 @@ public sealed class QuantifiableTests
         Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
         decimal otherQuantity = Fields.RandomParams.GetRandomDecimal();
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        ILimiter limiter = GetLimiterQuantifiableObject(Fields.limitMode, Fields.measureUnit, otherQuantity);
+        limiter = GetLimiterQuantifiableObject(Fields.limitMode.Value, Fields.measureUnit, otherQuantity);
         bool? expected = Fields.defaultQuantity.FitsIn(otherQuantity, Fields.limitMode);
 
         // Act
@@ -184,7 +185,7 @@ public sealed class QuantifiableTests
     public void FitsIn_nullArgs_IQuantifiable_LimitMode_returns_expected()
     {
         // Arrange
-        SetQuantifiableChild(Fields.defaultQuantity);
+        SetQuantifiableChild();
 
         ILimiter limiter = null;
 
@@ -322,7 +323,7 @@ public sealed class QuantifiableTests
         Assert.AreEqual(ParamNames.roundingMode, ex.ParamName);
     }
 
-    [TestMethod, TestCategory ("UnitTest")]
+    [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetGetQuantityRoundingModeArgs), DynamicDataSourceType.Method)]
     public void GetQuantity_validArg_RoundingMode_returns_expected(Enum measureUnit, decimal defaultQuantity, object expected, RoundingMode roundingMode)
     {
@@ -553,16 +554,6 @@ public sealed class QuantifiableTests
     #endregion
 
     #region Private methods
-    private void SetQuantifiableChild(decimal defaultQuantity, Enum measureUnit = null, IQuantifiableFactory factory = null)
-    {
-        _quantifiable = GetQuantifiableChild(defaultQuantity, measureUnit, factory);
-    }
-
-    private void SetQuantifiableChild()
-    {
-        SetQuantifiableChild(Fields.defaultQuantity, Fields.measureUnit);
-    }
-
     #region DynamicDataSource
     private static IEnumerable<object[]> GetEqualsArgs()
     {
@@ -609,5 +600,15 @@ public sealed class QuantifiableTests
         return DynamicDataSource.GetValidateMeasureUnitCodeInvalidArgs();
     }
     #endregion
+
+    private void SetQuantifiableChild(decimal defaultQuantity, Enum measureUnit = null, IQuantifiableFactory factory = null)
+    {
+        _quantifiable = GetQuantifiableChild(defaultQuantity, measureUnit, factory);
+    }
+
+    private void SetQuantifiableChild()
+    {
+        SetQuantifiableChild(Fields.defaultQuantity, Fields.measureUnit);
+    }
     #endregion
 }
