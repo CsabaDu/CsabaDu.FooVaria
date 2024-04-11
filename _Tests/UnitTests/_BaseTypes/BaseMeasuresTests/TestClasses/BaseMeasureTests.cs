@@ -1,5 +1,3 @@
-using static CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations.BaseMeasurement;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -203,6 +201,7 @@ public sealed class BaseMeasureTests
 
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
         Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity();
+        Fields.rateComponentCode = Fields.RandomParams.GetRandomRateComponentCode();
         Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
         _limiter = GetLimiterBaseMeasureObject(Fields.measureUnit, Fields.quantity, Fields.limitMode.Value);
         bool? expected = Fields.defaultQuantity.FitsIn(_limiter.GetLimiterDefaultQuantity(), Fields.limitMode);
@@ -469,11 +468,46 @@ public sealed class BaseMeasureTests
 
     #region int GetHashCode
     #region IEqualityComparer<IBaseMeasure>.GetHashCode(IBaseMeasure)
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetHashCode_arg_IBaseMeasure_returns_expected()
+    {
+        // Arrange
+        SetBaseMeasureChild();
 
+        Fields.measureUnit = Fields.RandomParams.GetRandomConstantMeasureUnit();
+        Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity();
+        IBaseMeasure baseMeasure = GetBaseMeasureChild(Fields.measureUnit, Fields.quantity, Fields.rateComponentCode, Fields.limitMode);
+        int expected = HashCode.Combine(Fields.rateComponentCode, Fields.limitMode, baseMeasure.GetHashCode());
+
+        // Act
+        var actual = _baseMeasure.GetHashCode(baseMeasure);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
     #endregion
     #endregion
 
-    // LimitMode? ILimitMode.GetLimitMode()
+    #region LimitMode? GetLimitMode
+    #region abstract ILimitMode.GetLimitMode()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetLimitMode_returns_expected()
+    {
+        // Arrange
+        SetCompleteBaseMeasureChild();
+        LimitMode? expected = Fields.limitMode;
+
+        // Act
+        var actual = _baseMeasure.GetLimitMode();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+
+
     // TypeCode? IQuantityTypeCode.GetQuantityTypeCode(object quantity)
     // RateComponentCode IRateComponentCode.GetRateComponentCode()
     // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
