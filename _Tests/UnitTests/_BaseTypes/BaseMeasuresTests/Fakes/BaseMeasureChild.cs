@@ -79,15 +79,13 @@ internal class BaseMeasureChild(IRootObject rootObject, string paramName) : Base
 
     public override sealed bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable exchanged)
     {
-        throw new NotImplementedException();
+        exchanged = null;
 
-        //exchanged = null;
+        if (!IsExchangeableTo(context)) return false;
 
-        //if (!IsExchangeableTo(context)) return false;
+        Enum measureUnit = GetMeasureUnitElements(context, nameof(context)).MeasureUnit;
+        exchanged = GetBaseMeasureChild(measureUnit, GetBaseQuantity());
 
-        //Enum measureUnit = GetMeasureUnitElements(context, nameof(context)).MeasureUnit;
-        //exchanged = getBaseMeasureChild(measureUnit, GetBaseQuantity());
-
-        //return true;
+        return true;
     }
 }

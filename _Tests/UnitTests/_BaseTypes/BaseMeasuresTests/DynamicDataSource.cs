@@ -221,7 +221,7 @@ internal class DynamicDataSource : CommonDynamicDataSource
 
     private decimal GetExchangeRate()
     {
-        return BaseMeasurement.GetExchangeRate(measureUnit, nameof(measureUnit));
+        return ExchangeRateCollection[measureUnit];
     }
 
     private BaseMeasureChild GetBaseMeasureChild()

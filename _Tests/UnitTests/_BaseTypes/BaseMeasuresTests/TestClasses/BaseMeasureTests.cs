@@ -1,3 +1,5 @@
+using static CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations.BaseMeasurement;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -5,7 +7,10 @@ public sealed class BaseMeasureTests
 {
     #region Tested in parent classes' tests
 
+    // ValueType IQuantity.GetBaseQuantity()
     // decimal IDecimalQuantity.GetDecimalQuantity()
+    // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
+    // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
     // IFactory ICommonBase.GetFactory()
     // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()
@@ -51,7 +56,7 @@ public sealed class BaseMeasureTests
         Fields.quantityTypeCode = Fields.RandomParams.GetRandomQuantityTypeCode(Fields.rateComponentCode);
         Fields.quantity = Fields.RandomParams.GetRandomValueType(Fields.quantityTypeCode);
         Fields.defaultQuantity = (Convert.ToDecimal(Fields.quantity)
-            * BaseMeasurement.GetExchangeRate(Fields.measureUnit, nameof(Fields.measureUnit)))
+            * GetExchangeRate(Fields.measureUnit, nameof(Fields.measureUnit)))
             .Round(RoundingMode.DoublePrecision);
         Fields.rateComponentCode = Fields.RandomParams.GetRandomRateComponentCode();
         Fields.limitMode = Fields.RandomParams.GetRandomNullableLimitMode();
@@ -390,17 +395,84 @@ public sealed class BaseMeasureTests
 
     #region IBaseMeasurementFactory GetBaseMeasurementFactory
     #region abstract IBaseMeasure.GetBaseMeasurementFactory()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetBaseMeasurementFactory_returns_expected()
+    {
+        // Arrange
+        SetCompleteBaseMeasureChild();
+
+        // Act
+        var actual = _baseMeasure.GetBaseMeasurementFactory();
+
+        // Assert
+        Assert.IsInstanceOfType<IBaseMeasurementFactory>(actual);
+    }
+    #endregion
+    #endregion
+
+    #region Enum GetBaseMeasureUnit
+    #region override sealed IMeasureUnit.GetBaseMeasureUnit()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetBaseMeasureUnit_returns_expected()
+    {
+        // Arrange
+        SetCompleteBaseMeasureChild();
+
+        Enum expected = Fields.measureUnit;
+
+        // Act
+        var actual = _baseMeasure.GetBaseMeasureUnit();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region decimal GetDefaultQuantity
+    #region override sealed IDefaultQuantity.GetDefaultQuantity()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetDefaultQuantity_returns_expected()
+    {
+        // Arrange
+        SetBaseMeasureChild();
+
+        decimal expected = Fields.defaultQuantity;
+
+        // Act
+        var actual = _baseMeasure.GetDefaultQuantity();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region decimal GetExchangeRate
+    #region IExchangeRate.GetExchangeRate()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetExchangeRate_returns_expected()
+    {
+        // Arrange
+        SetCompleteBaseMeasureChild();
+
+        decimal expected = ExchangeRateCollection[Fields.measureUnit];
+
+        // Act
+        var actual = _baseMeasure.GetExchangeRate();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region int GetHashCode
+    #region IEqualityComparer<IBaseMeasure>.GetHashCode(IBaseMeasure)
 
     #endregion
     #endregion
 
-    // Enum IMeasureUnit.GetBaseMeasureUnit()
-    // ValueType IQuantity.GetBaseQuantity()
-    // decimal IDefaultQuantity.GetDefaultQuantity()
-    // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
-    // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
-    // decimal IExchangeRate.GetExchangeRate()
-    // int IEqualityComparer<IBaseMeasure>.GetHashCode(IBaseMeasure obj)
     // LimitMode? ILimitMode.GetLimitMode()
     // TypeCode? IQuantityTypeCode.GetQuantityTypeCode(object quantity)
     // RateComponentCode IRateComponentCode.GetRateComponentCode()

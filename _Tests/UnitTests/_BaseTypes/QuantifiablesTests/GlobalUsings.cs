@@ -14,7 +14,7 @@ global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ObjectArrayItems;
 global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.Returns;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Params;
 global using CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.Fakes;
-global using Microsoft.VisualStudio.TestTools.UnitTesting;
+//global using Microsoft.VisualStudio.TestTools.UnitTesting;
 global using System.ComponentModel;
 global using System.Diagnostics.CodeAnalysis;
 global using static CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types.Implementations.BaseQuantifiable;
@@ -22,4 +22,3 @@ global using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations
 global using static CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods.TestSupport;
 global using static CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.Fakes.LimiterQuantifiableObject;
 global using static CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.Fakes.QuantifiableChild;
-

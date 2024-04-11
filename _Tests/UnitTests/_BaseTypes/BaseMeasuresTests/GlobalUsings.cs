@@ -21,6 +21,7 @@ global using CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasurementsTests.Fa
 global using CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.Fakes;
 global using System.ComponentModel;
 global using System.Diagnostics.CodeAnalysis;
+global using static CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations.BaseMeasurement;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;
 global using static CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods.TestSupport;
 global using static CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.Fakes.BaseMeasureChild;

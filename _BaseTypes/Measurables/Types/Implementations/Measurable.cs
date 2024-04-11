@@ -69,10 +69,6 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
     #region Static methods
     public static Enum? GetMeasureUnit(MeasureUnitCode measureUnitCode, int value)
     {
-        //Type measureUnitType = measureUnitCode.GetMeasureUnitType();
-
-        //return DefinedMeasureUnit((Enum)Enum.ToObject(measureUnitType, value), nameof(value));
-
         return GetAllMeasureUnits()
             .Where(itemTypeNameEqualsMeasureUnitCodeName)
             .FirstOrDefault(itemValueEqualsValue);
