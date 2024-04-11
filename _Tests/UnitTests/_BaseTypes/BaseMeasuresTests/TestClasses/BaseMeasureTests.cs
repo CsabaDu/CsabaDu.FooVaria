@@ -16,6 +16,7 @@ public sealed class BaseMeasureTests
     // object IRound<IQuantifiable>.GetQuantity(RoundingMode roundingMode)
     // object IQuantity.GetQuantity(TypeCode quantityTypeCode)
     // TypeCode IQuantityType.GetQuantityTypeCode()
+    // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
     // decimal IProportional<IQuantifiable>.ProportionalTo(IQuantifiable? right)
     // bool ITryExchange<IQuantifiable, Enum>.TryExchangeTo(Enum context, out IQuantifiable? exchanged)
     // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum? measureUnit, string paramName)
@@ -509,7 +510,7 @@ public sealed class BaseMeasureTests
     #region TypeCode GetQuantityTypeCode
     #region IQuantityTypeCode.GetQuantityTypeCode(object?)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetGetQuantityTypeCodeArg), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetGetQuantityTypeCodeArgs), DynamicDataSourceType.Method)]
     public void GetQuantityTypeCode_arg_object_returns_expected(TypeCode expected, object quantity)
     {
         // Arrange
@@ -524,10 +525,45 @@ public sealed class BaseMeasureTests
     #endregion
     #endregion
 
+    #region RateComponentCode IRateComponentCode
+    #region IRateComponentCode.GetRateComponentCode()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetRateComponentCode_returns_expected()
+    {
+        // Arrange
+        SetCompleteBaseMeasureChild();
 
-    // RateComponentCode IRateComponentCode.GetRateComponentCode()
-    // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
-    // bool IExchangeable<Enum>.IsExchangeableTo(Enum? context)
+        RateComponentCode expected = Fields.rateComponentCode;
+
+        // Act
+        var actual = _baseMeasure.GetRateComponentCode();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region bool IsExchangeableTo
+    #region override sealed IExchangeable<Enum>.IsExchangeableTo(Enum?)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetIsExchangeableToArgs), DynamicDataSourceType.Method)]
+    public void IsExchangeableTo_arg_Enum_returns_expected(bool expected, Enum measureUnit, Enum context)
+    {
+        // Arrange
+        SetBaseMeasureChild(measureUnit, Fields.quantity);
+
+        // Act
+        var actual = _baseMeasure.IsExchangeableTo(context);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+
+
     // IQuantifiable IRound<IQuantifiable>.Round(RoundingMode roundingMode)
     // void IExchangeRate.ValidateExchangeRate(decimal exchangeRate, string paramName)
 
@@ -575,9 +611,14 @@ public sealed class BaseMeasureTests
         return DynamicDataSource.GetGetBaseMeasureNullCheckArgs();
     }
 
-    private static IEnumerable<object[]> GetGetQuantityTypeCodeArg()
+    private static IEnumerable<object[]> GetGetQuantityTypeCodeArgs()
     {
-        return DynamicDataSource.GetGetQuantityTypeCodeArg();
+        return DynamicDataSource.GetGetQuantityTypeCodeArgs();
+    }
+
+    private static IEnumerable<object[]> GetIsExchangeableToArgs()
+    {
+        return DynamicDataSource.GetIsExchangeableToArgs();
     }
 
     //private static IEnumerable<object[]> GetEqualsArgs()

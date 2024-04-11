@@ -23,5 +23,5 @@ public class DataFields
     public TypeCode quantityTypeCode;
     public RateComponentCode rateComponentCode;
     public RoundingMode roundingMode;
-    public TypeCode? typeCode;
+    public TypeCode typeCode;
 }

@@ -64,8 +64,9 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
 
     public override sealed bool IsExchangeableTo(Enum? context)
     {
-        return base.IsExchangeableTo(context)
-            && IsValidMeasureUnit(getMeasureUnit());
+        if (!base.IsExchangeableTo(context)) return false;
+
+        return IsValidMeasureUnit(getMeasureUnit());
 
         #region Local methods
         Enum getMeasureUnit()

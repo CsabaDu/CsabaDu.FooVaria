@@ -1,5 +1,6 @@
 ﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types.Implementations;
 using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
+using System;
 
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests;
 
@@ -234,7 +235,7 @@ internal class DynamicDataSource : CommonDynamicDataSource
         #endregion
     }
 
-    internal IEnumerable<object[]> GetGetQuantityTypeCodeArg()
+    internal IEnumerable<object[]> GetGetQuantityTypeCodeArgs()
     {
         typeCode = TypeCode.Empty;
         obj = null;
@@ -260,7 +261,51 @@ internal class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            TypeCode_object_arg item = new(typeCode.Value, obj);
+            TypeCode_object_arg item = new(typeCode, obj);
+
+            return item.ToObjectArray();
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> GetIsExchangeableToArgs()
+    {
+        // 1
+        measureUnit = RandomParams.GetRandomConstantMeasureUnit();
+        isTrue = false;
+        context = null;
+        yield return toObjectArray();
+
+        // 2
+        context = SampleParams.DefaultLimitMode;
+        yield return toObjectArray();
+
+        // 3
+        isTrue = true;
+        context = GetMeasureUnitCode(measureUnit);
+        yield return toObjectArray();
+
+        // 4
+        context = RandomParams.GetRandomMeasureUnit((MeasureUnitCode)context);
+        yield return toObjectArray();
+
+        // 5
+        isTrue = false;
+        context = RandomParams.GetRandomConstantMeasureUnitCode((MeasureUnitCode)context);
+        yield return toObjectArray();
+
+        // 6
+        context = RandomParams.GetRandomMeasureUnit((MeasureUnitCode)context, measureUnit);
+        yield return toObjectArray();
+
+        int count = Enum.GetNames(measureUnit.GetType()).Length;
+        context = (Enum)Enum.ToObject(measureUnit.GetType(), count);
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            bool_Enum_Enum_args item = new(isTrue, measureUnit, context);
 
             return item.ToObjectArray();
         }

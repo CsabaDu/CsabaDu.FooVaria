@@ -11,13 +11,11 @@ public sealed class RandomParams
     #region Public methods
     public Enum GetRandomConstantMeasureUnit(Enum excluded = null)
     {
+        MeasureUnitCode constantMeasureUnitCode = GetRandomConstantMeasureUnitCode();
+
         Enum measureUnit = getRandomConstantMeasureUnit();
 
-        if (excluded is null) return measureUnit;
-
-        MeasureUnitCode measureUnitCode = GetMeasureUnitCode(excluded);
-
-        while (measureUnit.Equals(excluded) || GetMeasureUnitCode(measureUnit) != measureUnitCode)
+        while (measureUnit.Equals(excluded))
         {
             measureUnit = getRandomConstantMeasureUnit();
         }
@@ -27,7 +25,7 @@ public sealed class RandomParams
         #region Local methods
         Enum getRandomConstantMeasureUnit()
         {
-            return (Enum)GetRandomItem(ConstantExchangeRateCollection.Keys);
+            return GetRandomMeasureUnit(constantMeasureUnitCode);
         }
         #endregion
     }

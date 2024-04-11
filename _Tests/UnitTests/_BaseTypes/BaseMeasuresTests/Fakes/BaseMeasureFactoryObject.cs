@@ -37,7 +37,7 @@ internal sealed class BaseMeasureFactoryObject(RateComponentCode rateComponentCo
     {
         IBaseMeasurement baseMeasurement = BaseMeasurementFactory.CreateBaseMeasurement(measureUnitCode);
         Fields.typeCode = measureUnitCode.GetQuantityTypeCode();
-        Fields.quantity = (ValueType)defaultQuantity.ToQuantity(Fields.typeCode.Value);
+        Fields.quantity = (ValueType)defaultQuantity.ToQuantity(Fields.typeCode);
 
         return CreateBaseMeasure(baseMeasurement, Fields.quantity);
     }
