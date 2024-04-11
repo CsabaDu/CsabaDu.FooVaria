@@ -282,22 +282,25 @@ internal class DynamicDataSource : CommonDynamicDataSource
 
         // 3
         isTrue = true;
-        context = GetMeasureUnitCode(measureUnit);
+        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        context = measureUnitCode;
         yield return toObjectArray();
 
         // 4
-        context = RandomParams.GetRandomMeasureUnit((MeasureUnitCode)context);
+        context = RandomParams.GetRandomMeasureUnit(measureUnitCode);
         yield return toObjectArray();
 
         // 5
         isTrue = false;
-        context = RandomParams.GetRandomConstantMeasureUnitCode((MeasureUnitCode)context);
+        measureUnitCode = RandomParams.GetRandomConstantMeasureUnitCode(measureUnitCode);
+        context = measureUnitCode;
         yield return toObjectArray();
 
         // 6
-        context = RandomParams.GetRandomMeasureUnit((MeasureUnitCode)context, measureUnit);
+        context = RandomParams.GetRandomMeasureUnit(measureUnitCode, measureUnit);
         yield return toObjectArray();
 
+        // 7
         int count = Enum.GetNames(measureUnit.GetType()).Length;
         context = (Enum)Enum.ToObject(measureUnit.GetType(), count);
         yield return toObjectArray();
