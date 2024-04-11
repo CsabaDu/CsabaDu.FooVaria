@@ -544,10 +544,10 @@ public sealed class QuantifiableTests
         Fields.paramName = Fields.RandomParams.GetRandomParamName();
 
         // Act
-        void validator() => _quantifiable.ValidateMeasureUnitCode(Fields.measureUnitCode, Fields.paramName);
+        void attempt() => _quantifiable.ValidateMeasureUnitCode(Fields.measureUnitCode, Fields.paramName);
 
         // Assert
-        Assert.IsTrue(DoesNotThrowException(validator));
+        Assert.IsTrue(DoesNotThrowException(attempt));
     }
     #endregion
     #endregion

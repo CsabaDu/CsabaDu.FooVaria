@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Params;
+﻿using System;
+
+namespace CsabaDu.FooVaria.Tests.TestHelpers.Params;
 
 public sealed class RandomParams
 {
@@ -161,7 +163,7 @@ public sealed class RandomParams
         if (isCustomMeasureUnit)
         {
             string customame = GetRandomParamName();
-            decimal exchangeRate = GetRandomPositiveDecimal();
+            decimal exchangeRate = GetRandomNotNegativeDecimal();
 
             SetCustomMeasureUnit(customame, measureUnitCode, exchangeRate);
         }
@@ -171,43 +173,78 @@ public sealed class RandomParams
             : GetRandomMeasureUnit(measureUnitCode);
     }
 
-    public decimal GetRandomDecimal()
+    public decimal GetRandomDecimal(decimal? excluded = null)
     {
-        return (decimal)GetRandomValueType(TypeCode.Decimal);
-    }
-
-    public decimal GetRandomDecimal(decimal excluded)
-    {
-        decimal quantity = GetRandomDecimal();
+        decimal quantity = getRandomDecimal();
 
         while (quantity == excluded)
         {
-            quantity = GetRandomDecimal();
+            quantity = getRandomDecimal();
         }
 
         return quantity;
-    }
 
-    public decimal GetRandomPositiveDecimal()
-    {
-        return Convert.ToDecimal(Random.NextInt64(long.MaxValue) + Random.NextDouble());
-    }
-
-    public decimal GetRandomPositiveDecimal(decimal excluded)
-    {
-        decimal excchangeRate = GetRandomPositiveDecimal();
-
-        while (excchangeRate == excluded)
+        decimal getRandomDecimal()
         {
-            excchangeRate = GetRandomPositiveDecimal();
+            return (decimal)GetRandomValueType(TypeCode.Decimal);
+        }
+    }
+
+    public decimal GetRandomPositiveDecimal(decimal? excluded = null)
+    {
+        decimal positiveDecimal = getRandomPositiveDecimal();
+
+        while (positiveDecimal == 0 || positiveDecimal == excluded)
+        {
+            positiveDecimal = getRandomPositiveDecimal();
         }
 
-        return excchangeRate;
+        return positiveDecimal;
+
+        #region Local methods
+        decimal getRandomPositiveDecimal()
+        {
+            return Convert.ToDecimal(Random.NextInt64(uint.MaxValue)) + Convert.ToDecimal(Random.NextDouble());
+        }
+        #endregion
     }
 
-    public decimal GetRandomNegativeDecimal()
+    public decimal GetRandomNotNegativeDecimal(decimal? excluded = null)
     {
-        return Convert.ToDecimal(Random.NextInt64(long.MinValue, 1) - Random.NextDouble());
+        decimal notNegativeDecimal = getRandomNotNegativeDecimal();
+
+        while (notNegativeDecimal == excluded)
+        {
+            notNegativeDecimal = getRandomNotNegativeDecimal();
+        }
+
+        return notNegativeDecimal;
+
+        #region Local methods
+        decimal getRandomNotNegativeDecimal()
+        {
+            return Convert.ToDecimal(Random.NextInt64(uint.MaxValue)) + Convert.ToDecimal(Random.NextDouble());
+        }
+        #endregion
+    }
+
+    public decimal GetRandomNegativeDecimal(decimal? excluded = null)
+    {
+        decimal negativeDecimal = getRandomNegativeDecimal();
+
+        while (negativeDecimal == excluded)
+        {
+            negativeDecimal = getRandomNegativeDecimal();
+        }
+
+        return negativeDecimal;
+
+        #region Local methods
+        decimal getRandomNegativeDecimal()
+        {
+            return Convert.ToDecimal(Random.NextInt64(int.MinValue, 1)) - Convert.ToDecimal(Random.NextDouble());
+        }
+        #endregion
     }
 
     public double GetRandomDouble()

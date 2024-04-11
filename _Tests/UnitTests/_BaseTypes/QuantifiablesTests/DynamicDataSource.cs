@@ -191,7 +191,7 @@ internal class DynamicDataSource : CommonDynamicDataSource
         obj = convertDefaultQuantity();
         yield return toObjectArray();
 
-        defaultQuantity = RandomParams.GetRandomPositiveDecimal();
+        defaultQuantity = RandomParams.GetRandomNotNegativeDecimal();
         quantityTypeCode = TypeCode.UInt64;
         obj = convertDefaultQuantity();
         yield return toObjectArray();

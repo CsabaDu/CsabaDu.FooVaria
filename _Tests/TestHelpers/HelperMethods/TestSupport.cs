@@ -10,11 +10,11 @@ public sealed class TestSupport
         }
     }
 
-    public static bool DoesNotThrowException(Action validator)
+    public static bool DoesNotThrowException(Action attempt)
     {
         try
         {
-            validator();
+            attempt();
             return true;
         }
         catch

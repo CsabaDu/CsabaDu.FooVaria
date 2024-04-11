@@ -75,7 +75,7 @@ internal class DynamicDataSource : CommonDynamicDataSource
         yield return toObjectArray();
 
         measureUnit = RandomParams.GetRandomNotUsedCustomMeasureUnit();
-        _ = TrySetCustomMeasureUnit(measureUnit, RandomParams.GetRandomPositiveDecimal(), RandomParams.GetRandomParamName());
+        _ = TrySetCustomMeasureUnit(measureUnit, RandomParams.GetRandomNotNegativeDecimal(), RandomParams.GetRandomParamName());
         measureUnitCode = GetMeasureUnitCode(measureUnit);
         measureUnit = measureUnitCode.GetDefaultMeasureUnit();
         yield return toObjectArray();
@@ -129,7 +129,7 @@ internal class DynamicDataSource : CommonDynamicDataSource
         // same type invalid measureUnit - false
         measureUnitCode = RandomParams.GetRandomCustomMeasureUnitCode();
         paramName = RandomParams.GetRandomParamName();
-        SetCustomMeasureUnit(paramName, measureUnitCode, RandomParams.GetRandomPositiveDecimal());
+        SetCustomMeasureUnit(paramName, measureUnitCode, RandomParams.GetRandomNotNegativeDecimal());
         measureUnit = GetMeasureUnit(paramName);
         context = RandomParams.GetRandomNotUsedCustomMeasureUnit(measureUnitCode);
         yield return toObjectArray();
@@ -153,7 +153,7 @@ internal class DynamicDataSource : CommonDynamicDataSource
         decimalQuantity = RandomParams.GetRandomNegativeDecimal();
         yield return toObjectArray();
 
-        decimalQuantity = RandomParams.GetRandomPositiveDecimal(GetExchangeRate(measureUnit, null));
+        decimalQuantity = RandomParams.GetRandomNotNegativeDecimal(GetExchangeRate(measureUnit, null));
         #region toObjectArray method
         object[] toObjectArray()
         {

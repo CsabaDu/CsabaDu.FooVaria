@@ -311,5 +311,25 @@ internal class DynamicDataSource : CommonDynamicDataSource
         }
         #endregion
     }
+
+    internal IEnumerable<object[]> GetValidateExchangeRateArgs()
+    {
+        decimalQuantity = 0;
+        measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        yield return toObjectArray();
+
+        decimalQuantity = RandomParams.GetRandomDecimal();
+        paramName = RandomParams.GetRandomParamName();
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            Enum_decimal_args item = new(measureUnit, decimalQuantity);
+
+            return item.ToObjectArray();
+        }
+        #endregion
+    }
     #endregion
 }

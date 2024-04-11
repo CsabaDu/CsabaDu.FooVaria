@@ -252,10 +252,10 @@ public sealed class MeasurableTests
         SetMeasurableChild();
 
         // Act
-        void validator() => _measurable.ValidateMeasureUnit(measureUnit, Fields.paramName);
+        void attempt() => _measurable.ValidateMeasureUnit(measureUnit, Fields.paramName);
 
         // Assert
-        Assert.IsTrue(DoesNotThrowException(validator));
+        Assert.IsTrue(DoesNotThrowException(attempt));
     }
     #endregion
     #endregion
@@ -302,10 +302,10 @@ public sealed class MeasurableTests
         Fields.paramName = Fields.RandomParams.GetRandomParamName();
 
         // Act
-        void validator() => _measurable.ValidateMeasureUnitCode(measurable, Fields.paramName);
+        void attempt() => _measurable.ValidateMeasureUnitCode(measurable, Fields.paramName);
 
         // Assert
-        Assert.IsTrue(DoesNotThrowException(validator));
+        Assert.IsTrue(DoesNotThrowException(attempt));
     }
     #endregion
 
@@ -334,10 +334,10 @@ public sealed class MeasurableTests
         Fields.paramName = Fields.RandomParams.GetRandomParamName();
 
         // Act
-        void validator() => _measurable.ValidateMeasureUnitCode(Fields.measureUnitCode, Fields.paramName);
+        void attempt() => _measurable.ValidateMeasureUnitCode(Fields.measureUnitCode, Fields.paramName);
 
         // Assert
-        Assert.IsTrue(DoesNotThrowException(validator));
+        Assert.IsTrue(DoesNotThrowException(attempt));
     }
     #endregion
     #endregion

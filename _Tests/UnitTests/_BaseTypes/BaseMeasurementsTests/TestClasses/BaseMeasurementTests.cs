@@ -387,10 +387,10 @@ public sealed class BaseMeasurementTests
         decimal exchangeRate = GetExchangeRate(Fields.measureUnit, null);
 
         // Act
-        void validator() => _baseMeasurement.ValidateExchangeRate(exchangeRate, null);
+        void attempt() => _baseMeasurement.ValidateExchangeRate(exchangeRate, null);
 
         // Assert
-        Assert.IsTrue(DoesNotThrowException(validator));
+        Assert.IsTrue(DoesNotThrowException(attempt));
     }
     #endregion
     #endregion
@@ -436,10 +436,10 @@ public sealed class BaseMeasurementTests
         SetBaseMeasurementChild(measureUnit);
 
         // Act
-        void validator() => _baseMeasurement.ValidateMeasureUnit(context, Fields.paramName);
+        void attempt() => _baseMeasurement.ValidateMeasureUnit(context, Fields.paramName);
 
         // Assert
-        Assert.IsTrue(DoesNotThrowException(validator));
+        Assert.IsTrue(DoesNotThrowException(attempt));
     }
     #endregion
     #endregion

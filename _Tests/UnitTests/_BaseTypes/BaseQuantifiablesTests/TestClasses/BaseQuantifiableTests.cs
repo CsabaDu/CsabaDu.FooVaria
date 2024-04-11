@@ -207,7 +207,7 @@ public sealed class BaseQuantifiableTests
         // Arrange
         if (typeCode == TypeCode.UInt64 && Fields.defaultQuantity < 0)
         {
-            Fields.defaultQuantity = Fields.RandomParams.GetRandomPositiveDecimal();
+            Fields.defaultQuantity = Fields.RandomParams.GetRandomNotNegativeDecimal();
         }
         SetBaseQuantifiableChild();
 

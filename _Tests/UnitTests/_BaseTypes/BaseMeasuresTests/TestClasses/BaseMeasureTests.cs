@@ -1,3 +1,5 @@
+using CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -99,7 +101,7 @@ public sealed class BaseMeasureTests
 
         Fields.measureUnitCode = Fields.RandomParams.GetRandomConstantMeasureUnitCode(Fields.measureUnitCode);
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        IQuantifiable other = GetBaseMeasureChild(Fields.measureUnit, Fields.quantity);
+        IQuantifiable other = GetBaseMeasureChild();
 
         // Act
         void attempt() => _ = _baseMeasure.CompareTo(other);
@@ -117,7 +119,7 @@ public sealed class BaseMeasureTests
 
         Fields.measureUnit = Fields.RandomParams.GetRandomSameTypeValidMeasureUnit(Fields.measureUnit);
         Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity(Fields.quantityTypeCode, Fields.quantity);
-        IQuantifiable other = GetBaseMeasureChild(Fields.measureUnit, Fields.quantity);
+        IQuantifiable other = GetBaseMeasureChild();
         int expected = _baseMeasure.GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
 
         // Act
@@ -253,7 +255,7 @@ public sealed class BaseMeasureTests
 
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
         Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity();
-        IQuantifiable quantifiable = GetBaseMeasureChild(Fields.measureUnit, Fields.quantity);
+        IQuantifiable quantifiable = GetBaseMeasureChild();
         Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
         bool? expected = Fields.defaultQuantity.FitsIn(quantifiable.GetDefaultQuantity(), Fields.limitMode);
 
@@ -308,7 +310,7 @@ public sealed class BaseMeasureTests
         SetCompleteBaseMeasureChild();
 
         Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity();
-        IBaseMeasure expected = GetBaseMeasureChild(Fields.measureUnit, Fields.quantity, Fields.rateComponentCode, Fields.limitMode);
+        IBaseMeasure expected = GetCompleteBaseMeasureChild();
 
         // Act
         var actual = _baseMeasure.GetBaseMeasure(Fields.quantity);
@@ -362,7 +364,7 @@ public sealed class BaseMeasureTests
         SetCompleteBaseMeasureChild();
 
         Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity();
-        IBaseMeasure expected = GetBaseMeasureChild(Fields.measureUnit, Fields.quantity, Fields.rateComponentCode, Fields.limitMode);
+        IBaseMeasure expected = GetCompleteBaseMeasureChild();
         _baseMeasurement = BaseMeasurementChild.GetBaseMeasurementChild(Fields.measureUnit);
 
         // Act
@@ -477,7 +479,7 @@ public sealed class BaseMeasureTests
 
         Fields.measureUnit = Fields.RandomParams.GetRandomConstantMeasureUnit();
         Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity();
-        IBaseMeasure baseMeasure = GetBaseMeasureChild(Fields.measureUnit, Fields.quantity, Fields.rateComponentCode, Fields.limitMode);
+        IBaseMeasure baseMeasure = GetCompleteBaseMeasureChild();
         int expected = HashCode.Combine(Fields.rateComponentCode, Fields.limitMode, baseMeasure.GetHashCode());
 
         // Act
@@ -562,17 +564,86 @@ public sealed class BaseMeasureTests
     #endregion
     #endregion
 
+    #region IQuantifiable Round
+    #region override sealed IRound<IQuantifiable>.Round(RoundingMode roundingMode)
+    [TestMethod, TestCategory("UnitTest")]
+    public void Round_invalidArg_RoundingMode_throws_InvalidEnumArgumentException()
+    {
+        // Arrange
+        SetBaseMeasureChild();
+
+        Fields.roundingMode = SampleParams.NotDefinedRoundingMode;
+
+        // Act
+        void attempt() => _ = _baseMeasure.Round(Fields.roundingMode);
+
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(ParamNames.roundingMode, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void Round_validArg_RoundingMode_returns_expected()
+    {
+        // Arrange
+        SetCompleteBaseMeasureChild();
+
+        Fields.roundingMode = Fields.RandomParams.GetRandomRoundingMode();
+        Fields.quantity = (ValueType)Fields.quantity.Round(Fields.roundingMode);
+        IQuantifiable expected = GetCompleteBaseMeasureChild();
+
+        // Act
+        var actual = _baseMeasure.Round(Fields.roundingMode);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region void ValidateExchangeRate
+    #region IExchangeRate.ValidateExchangeRate(decimal, string)
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateExchangeRate_invalidArg_decimal_arg_string_throws_ArgumentOutOfRangeException()
+    {
+        // Arrange
+        SetBaseMeasureChild();
+
+        Fields.decimalQuantity = GetExchangeRate(Fields.measureUnit, Fields.paramName);
+        Fields.decimalQuantity = Fields.RandomParams.GetRandomDecimal(Fields.decimalQuantity);
+        Fields.paramName = Fields.RandomParams.GetRandomParamName();
+
+        // Act
+        void attempt() => _baseMeasure.ValidateExchangeRate(Fields.decimalQuantity, Fields.paramName);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
+        Assert.AreEqual(Fields.paramName, ex.ParamName);
+    }
 
 
-    // IQuantifiable IRound<IQuantifiable>.Round(RoundingMode roundingMode)
-    // void IExchangeRate.ValidateExchangeRate(decimal exchangeRate, string paramName)
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateExchangeRate_validArg_decimal_arg_returns()
+    {
+        // Arrange
+        SetBaseMeasureChild();
 
+        Fields.decimalQuantity = GetExchangeRate(Fields.measureUnit, Fields.paramName);
+
+        // Act
+        void attempt() => _baseMeasure.ValidateExchangeRate(Fields.decimalQuantity, Fields.paramName);
+
+        // Assert
+        Assert.IsTrue(DoesNotThrowException(attempt));
+    }
+    #endregion
+    #endregion
     #endregion
 
     #region Private methods
     private void SetBaseMeasureChild(Enum measureUnit, ValueType quantity, RateComponentCode? rateComponentCode = null, LimitMode? limitMode = null)
     {
-        _baseMeasure = GetBaseMeasureChild(measureUnit, quantity, rateComponentCode, limitMode);
+        _baseMeasure = BaseMeasureChild.GetBaseMeasureChild(measureUnit, quantity, rateComponentCode, limitMode);
     }
 
     private void SetBaseMeasureChild()
@@ -583,6 +654,17 @@ public sealed class BaseMeasureTests
     private void SetCompleteBaseMeasureChild()
     {
         SetBaseMeasureChild(Fields.measureUnit, Fields.quantity, Fields.rateComponentCode, Fields.limitMode);
+    }
+
+    private BaseMeasureChild GetBaseMeasureChild()
+    {
+        return BaseMeasureChild.GetBaseMeasureChild(Fields.measureUnit, Fields.quantity);
+    }
+
+
+    private BaseMeasureChild GetCompleteBaseMeasureChild()
+    {
+        return BaseMeasureChild.GetBaseMeasureChild(Fields.measureUnit, Fields.quantity, Fields.rateComponentCode, Fields.limitMode);
     }
 
     #region DynamicDataSource
@@ -621,25 +703,10 @@ public sealed class BaseMeasureTests
         return DynamicDataSource.GetIsExchangeableToArgs();
     }
 
-    //private static IEnumerable<object[]> GetEqualsArgs()
-    //{
-    //    return DynamicDataSource.GetEqualsArgs();
-    //}
-
-    //private static IEnumerable<object[]> GetFitsInArgs()
-    //{
-    //    return DynamicDataSource.GetFitsInArgs();
-    //}
-
-    //private static IEnumerable<object[]> GetInvalidQuantityTypeCodeArg()
-    //{
-    //    return DynamicDataSource.GetInvalidQuantityTypeCodeArg();
-    //}
-
-    //private static IEnumerable<object[]> GetValidQuantityTypeCodeArg()
-    //{
-    //    return DynamicDataSource.GetValidQuantityTypeCodeArg();
-    //}
+    private static IEnumerable<object[]> GetValidateExchangeRateArgs()
+    {
+        return DynamicDataSource.GetValidateExchangeRateArgs();
+    }
     #endregion
     #endregion
 }
