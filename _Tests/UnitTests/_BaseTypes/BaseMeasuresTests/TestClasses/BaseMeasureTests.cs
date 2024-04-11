@@ -319,7 +319,7 @@ public sealed class BaseMeasureTests
 
     #region IBaseMeasure.GetBaseMeasure(IBaseMeasurement, ValueType)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetBaseBeasureNullCheckArgs), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetGetBaseMeasureNullCheckArgs), DynamicDataSourceType.Method)]
     public void GetBaseMeasure_nullArgs_IBaseMeasurement_ValueType_thorws_ArgumentNullException(string paramName, IBaseMeasurement baseMeasurement)
     {
         // Arrange
@@ -506,9 +506,25 @@ public sealed class BaseMeasureTests
     #endregion
     #endregion
 
+    #region TypeCode GetQuantityTypeCode
+    #region IQuantityTypeCode.GetQuantityTypeCode(object?)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetGetQuantityTypeCodeArg), DynamicDataSourceType.Method)]
+    public void GetQuantityTypeCode_arg_object_returns_expected(TypeCode expected, object quantity)
+    {
+        // Arrange
+        SetBaseMeasureChild();
+
+        // Act
+        var actual = _baseMeasure.GetQuantityTypeCode(quantity);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
 
 
-    // TypeCode? IQuantityTypeCode.GetQuantityTypeCode(object quantity)
     // RateComponentCode IRateComponentCode.GetRateComponentCode()
     // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
     // bool IExchangeable<Enum>.IsExchangeableTo(Enum? context)
@@ -554,9 +570,14 @@ public sealed class BaseMeasureTests
         return DynamicDataSource.GetFitsInIQuantifiableLimitModeArgs();
     }
 
-    private static IEnumerable<object[]> GetBaseBeasureNullCheckArgs()
+    private static IEnumerable<object[]> GetGetBaseMeasureNullCheckArgs()
     {
-        return DynamicDataSource.GetBaseBeasureNullCheckArgs();
+        return DynamicDataSource.GetGetBaseMeasureNullCheckArgs();
+    }
+
+    private static IEnumerable<object[]> GetGetQuantityTypeCodeArg()
+    {
+        return DynamicDataSource.GetGetQuantityTypeCodeArg();
     }
 
     //private static IEnumerable<object[]> GetEqualsArgs()
@@ -581,3 +602,4 @@ public sealed class BaseMeasureTests
     #endregion
     #endregion
 }
+

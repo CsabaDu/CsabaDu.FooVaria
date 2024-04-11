@@ -2,5 +2,5 @@
 
 public interface IQuantityTypeCode
 {
-    TypeCode? GetQuantityTypeCode(object quantity);
+    TypeCode GetQuantityTypeCode(object? quantity);
 }

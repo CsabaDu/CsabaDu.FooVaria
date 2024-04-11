@@ -401,14 +401,7 @@ public sealed class RandomParams
 
     public TypeCode GetRandomInvalidQuantityTypeCode()
     {
-        TypeCode typeCode = GetRandomItem(SampleParams.InvalidValueTypeCodes);
-
-        while (QuantityTypeCodes.Contains(typeCode))
-        {
-            typeCode = GetRandomTypeCode();
-        }
-
-        return typeCode;
+        return GetRandomItem(SampleParams.InvalidValueTypeCodes);
     }
 
 

@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.Common.Statics;
+
+namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations;
 
 public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Quantifiable(rootObject, paramName), IBaseMeasure
 {
@@ -17,7 +19,7 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
 
     public static void ValidateQuantityTypeCode(TypeCode quantityTypeCode, string paramName)
     {
-        if (GetValidQuantityTypeCodeOrNull(quantityTypeCode) is not null) return;
+        if (GetQuantityTypeCode(quantityTypeCode) > TypeCode.Object) return;
 
         throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode, paramName);
     }
@@ -128,11 +130,11 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
         return HashCode.Combine(other.GetRateComponentCode(), other.GetLimitMode(), other.GetHashCode());
     }
 
-    public TypeCode? GetQuantityTypeCode(object quantity)
+    public TypeCode GetQuantityTypeCode(object? quantity)
     {
         TypeCode quantityTypeCode = Type.GetTypeCode(quantity?.GetType());
 
-        return GetValidQuantityTypeCodeOrNull(quantityTypeCode);
+        return GetQuantityTypeCode(quantityTypeCode);
     }
 
     public RateComponentCode GetRateComponentCode()
@@ -155,11 +157,16 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
     }
 
     #region Static methods
-    private static TypeCode? GetValidQuantityTypeCodeOrNull(TypeCode quantityTypeCode)
+    private static TypeCode GetQuantityTypeCode(TypeCode quantityTypeCode)
     {
-        if (QuantityTypeCodes.Contains(quantityTypeCode)) return quantityTypeCode;
+        if (quantityTypeCode == TypeCode.Empty || QuantityTypeCodes.Contains(quantityTypeCode))
+        {
+            return quantityTypeCode;
+        }
 
-        return null;
+        if (quantityTypeCode.IsDefined()) return TypeCode.Object;
+
+        throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
     }
     #endregion
     #endregion

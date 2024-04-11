@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests;
+﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types.Implementations;
+using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
+
+namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests;
 
 internal class DynamicDataSource : CommonDynamicDataSource
 {
@@ -9,6 +12,18 @@ internal class DynamicDataSource : CommonDynamicDataSource
     #endregion
 
     #region Methods
+    #region Private methods
+    private decimal GetExchangeRate()
+    {
+        return ExchangeRateCollection[measureUnit];
+    }
+
+    private BaseMeasureChild GetBaseMeasureChild()
+    {
+        return BaseMeasureChild.GetBaseMeasureChild(measureUnit, quantity);
+    }
+    #endregion
+
     internal IEnumerable<object[]> GetEqualsArg()
     {
         // null
@@ -198,7 +213,7 @@ internal class DynamicDataSource : CommonDynamicDataSource
         #endregion
     }
 
-    internal IEnumerable<object[]> GetBaseBeasureNullCheckArgs()
+    internal IEnumerable<object[]> GetGetBaseMeasureNullCheckArgs()
     {
         paramName = ParamNames.baseMeasurement;
         baseMeasurement = null;
@@ -219,15 +234,37 @@ internal class DynamicDataSource : CommonDynamicDataSource
         #endregion
     }
 
-    private decimal GetExchangeRate()
+    internal IEnumerable<object[]> GetGetQuantityTypeCodeArg()
     {
-        return ExchangeRateCollection[measureUnit];
-    }
+        typeCode = TypeCode.Empty;
+        obj = null;
+        yield return toObjectArray();
 
-    private BaseMeasureChild GetBaseMeasureChild()
-    {
-        return BaseMeasureChild.GetBaseMeasureChild(measureUnit, quantity);
-    }
+        typeCode = TypeCode.Object;
+        obj = new();
+        yield return toObjectArray();
 
+        foreach (TypeCode item in SampleParams.InvalidValueTypeCodes)
+        {
+            obj = RandomParams.GetRandomValueType(item);
+            yield return toObjectArray();
+        }
+
+        foreach (var item in BaseQuantifiable.QuantityTypeCodes)
+        {
+            typeCode = item;
+            obj = RandomParams.GetRandomValueType(item);
+            yield return toObjectArray();
+        }
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            TypeCode_object_arg item = new(typeCode.Value, obj);
+
+            return item.ToObjectArray();
+        }
+        #endregion
+    }
     #endregion
 }
