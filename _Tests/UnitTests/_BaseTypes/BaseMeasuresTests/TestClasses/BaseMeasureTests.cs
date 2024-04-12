@@ -203,10 +203,10 @@ public sealed class BaseMeasureTests
         SetBaseMeasureChild();
 
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity();
+        Fields.decimalQuantity = Fields.RandomParams.GetRandomDecimal();
         Fields.rateComponentCode = Fields.RandomParams.GetRandomRateComponentCode();
         Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
-        _limiter = GetLimiterBaseMeasureObject(Fields.measureUnit, Fields.quantity, Fields.limitMode.Value);
+        _limiter = LimiterQuantifiableObject.GetLimiterQuantifiableObject(Fields.limitMode.Value, Fields.measureUnit, Fields.decimalQuantity);
         bool? expected = Fields.defaultQuantity.FitsIn(_limiter.GetLimiterDefaultQuantity(), Fields.limitMode);
 
         // Act

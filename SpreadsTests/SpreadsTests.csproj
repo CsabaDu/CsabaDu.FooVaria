@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -20,14 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>SpreadsTests</_Parameter1>
-    </AssemblyAttribute>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\BaseMeasurementsTests\BaseMeasurementsTests.csproj" />
-    <ProjectReference Include="..\QuantifiablesTests\QuantifiablesTests.csproj" />
+    <ProjectReference Include="..\_Tests\TestHelpers\HelperMethods\HelperMethods.csproj" />
+    <ProjectReference Include="..\_Tests\UnitTests\_BaseTypes\BaseMeasuresTests\BaseMeasuresTests.csproj" />
   </ItemGroup>
 
   <ItemGroup>

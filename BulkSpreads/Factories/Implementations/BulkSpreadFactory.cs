@@ -28,6 +28,7 @@ namespace CsabaDu.FooVaria.BulkSpreads.Factories.Implementations
         #region Abstract methods
         public abstract ISpread CreateSpread(ISpreadMeasure spreadMeasure);
         public abstract IBulkSpread Create(params IExtent[] shapeExtents);
+        public abstract ISpreadMeasure? CreateSpreadMeasure(Enum measureUnit, ValueType quantity);
         #endregion
         #endregion
     }
@@ -74,6 +75,19 @@ namespace CsabaDu.FooVaria.BulkSpreads.Factories.Implementations
         #endregion
 
         #region Public methods
+        #region Override methods
+        #region Sealed methods
+        public override sealed TSMeasure? CreateSpreadMeasure(Enum measureUnit, ValueType quantity)
+        {
+            if (measureUnit is not TEnum spreadMeasureUnit) return null;
+
+            if (quantity?.ToQuantity(TypeCode.Double) is not double spreadQuantity || spreadQuantity <= 0) return null;
+
+            return (TSMeasure)MeasureFactory.Create(spreadMeasureUnit, spreadQuantity);
+        }
+        #endregion
+        #endregion
+
         #region Abstract methods
         public abstract T Create(TEnum measureUnit, double quantity);
         #endregion

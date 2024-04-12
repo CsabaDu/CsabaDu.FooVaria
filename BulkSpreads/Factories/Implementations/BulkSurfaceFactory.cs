@@ -23,7 +23,7 @@ public sealed class BulkSurfaceFactory(IMeasureFactory measureFactory) : BulkSpr
 
     public override IBulkSurface Create(AreaUnit areaUnit, double quantity)
     {
-        IArea area = (IArea)MeasureFactory.Create(areaUnit, quantity);
+        IArea area = CreateSpreadMeasure(areaUnit, quantity) ?? throw QuantityArgumentOutOfRangeException(quantity);
 
         return Create(area);
     }

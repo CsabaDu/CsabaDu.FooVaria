@@ -15,11 +15,16 @@ public abstract class SimpleShapeFactory : ISimpleShapeFactory
 
     public IExtent CreateShapeExtent(ExtentUnit extentUnit, ValueType quantity)
     {
-        IExtent extent = (IExtent)GetMeasureFactory().Create(extentUnit, quantity);
+        IMeasure measure = GetMeasureFactory().Create(extentUnit, quantity);
 
-        if (extent.GetDefaultQuantity() > 0) return (IExtent)extent;
+        if (measure.GetDefaultQuantity() > 0) return (IExtent)measure;
 
         throw QuantityArgumentOutOfRangeException(quantity);
+    }
+
+    public ISpreadMeasure? CreateSpreadMeasure(Enum measureUnit, ValueType quantity)
+    {
+        return GetBulkSpreadFactory().CreateSpreadMeasure(measureUnit, quantity);
     }
 
     public IMeasureFactory GetMeasureFactory()

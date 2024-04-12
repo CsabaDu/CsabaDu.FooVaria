@@ -23,7 +23,7 @@ public sealed class BulkBodyFactory(IMeasureFactory measureFactory) : BulkSpread
 
     public override IBulkBody Create(VolumeUnit volumeUnit, double quantity)
     {
-        IVolume volume = (IVolume)MeasureFactory.Create(volumeUnit, quantity);
+        IVolume volume = CreateSpreadMeasure(volumeUnit, quantity) ?? throw QuantityArgumentOutOfRangeException(quantity);
 
         return Create(volume);
     }

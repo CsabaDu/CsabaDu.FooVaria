@@ -2,6 +2,6 @@
 
 public interface ISpreadFactory : IQuantifiableFactory
 {
-    //ISpread CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity);
+    ISpreadMeasure? CreateSpreadMeasure(Enum measureUnit, ValueType quantity);
     ISpread CreateSpread(ISpreadMeasure spreadMeasure);
 }

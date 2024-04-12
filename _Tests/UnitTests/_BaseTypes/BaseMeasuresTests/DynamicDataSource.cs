@@ -1,8 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types.Implementations;
-using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
-using System;
-
-namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests;
+﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests;
 
 internal class DynamicDataSource : CommonDynamicDataSource
 {
@@ -170,7 +166,7 @@ internal class DynamicDataSource : CommonDynamicDataSource
         measureUnitCode = GetMeasureUnitCode(measureUnit);
         measureUnitCode = RandomParams.GetRandomCustomMeasureUnitCode(measureUnitCode);
         limitMode = RandomParams.GetRandomLimitMode();
-        limiter = GetLimiterBaseMeasureObject(RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity, limitMode.Value);
+        limiter = LimiterQuantifiableObject.GetLimiterQuantifiableObject(limitMode.Value, RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity);
         yield return toObjectArray();
 
         #region toObjectArray method

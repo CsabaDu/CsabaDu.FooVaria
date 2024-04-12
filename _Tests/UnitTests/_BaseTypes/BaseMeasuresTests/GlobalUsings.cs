@@ -1,12 +1,12 @@
 global using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Factories;
 global using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types;
-global using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;
 global using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Factories;
 global using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types;
 global using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations;
 global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
 global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Enums;
 global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
+global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types.Implementations;
 global using CsabaDu.FooVaria.BaseTypes.Common;
 global using CsabaDu.FooVaria.BaseTypes.Common.Factories;
 global using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
@@ -19,6 +19,7 @@ global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.Returns;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Params;
 global using CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasurementsTests.Fakes;
 global using CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.Fakes;
+global using CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.Fakes;
 global using System.ComponentModel;
 global using System.Diagnostics.CodeAnalysis;
 global using static CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations.BaseMeasurement;
@@ -26,4 +27,4 @@ global using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations
 global using static CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods.TestSupport;
 global using static CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.Fakes.BaseMeasureChild;
 global using static CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.Fakes.BaseMeasureFactoryObject;
-global using static CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.Fakes.LimiterBaseMeasureObject;
+//global using static CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.Fakes.LimiterBaseMeasureObject;
