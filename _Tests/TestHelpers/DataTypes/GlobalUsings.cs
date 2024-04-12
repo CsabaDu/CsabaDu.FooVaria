@@ -2,6 +2,7 @@
 global using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types;
 global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
 global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Enums;
+global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
 global using CsabaDu.FooVaria.BaseTypes.Common;
 global using CsabaDu.FooVaria.BaseTypes.Common.Factories;
 global using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
@@ -9,3 +10,5 @@ global using CsabaDu.FooVaria.BaseTypes.Measurables.Types;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Params;
+global using System.ComponentModel;
+global using System.Diagnostics.CodeAnalysis;
