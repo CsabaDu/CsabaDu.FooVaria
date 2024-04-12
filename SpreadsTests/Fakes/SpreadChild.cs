@@ -1,12 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types;
-using CsabaDu.FooVaria.BaseTypes.Common.Types;
-using CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors;
-using CsabaDu.FooVaria.BaseTypes.Measurables.Types;
-using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
-using CsabaDu.FooVaria.BaseTypes.Spreads.Types;
-using CsabaDu.FooVaria.BaseTypes.Spreads.Types.Implementations;
-
-namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasurementsTests.Fakes;
+﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasurementsTests.Fakes;
 
 internal sealed class SpreadChild(IRootObject rootObject, string paramName) : Spread(rootObject, paramName)
 {
@@ -48,40 +40,49 @@ internal sealed class SpreadChild(IRootObject rootObject, string paramName) : Sp
     #endregion
 
     #region Test helpers
-    public BaseMeasurementReturn Return { private get; set; } = new();
+    public SpreadReturn Return { private get; set; } = new();
     internal static DataFields Fields = new();
 
-    internal static SpreadChild GetBaseMeasurementChild(Enum measureUnit, IBaseMeasurementFactory factory = null, string measureUnitName = null)
+    internal static SpreadChild GetSpreadChild(Enum measureUnit, ValueType quantity, ISpreadFactory factory = null, RateComponentCode? rateComponentCode = null)
     {
         return new(Fields.RootObject, Fields.paramName)
         {
             Return = new()
             {
-                GetBaseMeasureUnit = measureUnit,
                 GetFactory = factory,
-                GetName = measureUnitName,
+                GetSpreadMeasure = GetSpreadMeasureBaseMeasureObject(measureUnit, quantity, rateComponentCode),
+            }
+        };
+    }
+    #endregion
+
+    public override IFactory GetFactory() => Return.GetFactory;
+
+    public override ISpread GetSpread(ISpreadMeasure spreadMeasure)
+    {
+        return new SpreadChild(Fields.RootObject, Fields.paramName)
+        {
+            Return = new()
+            {
+                GetFactory = GetFactory(),
+                GetSpreadMeasure = spreadMeasure,
             }
         };
     }
 
-    public override ISpread GetSpread(ISpreadMeasure spreadMeasure)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override ISpreadMeasure GetSpreadMeasure()
-    {
-        throw new NotImplementedException();
-    }
+    public override ISpreadMeasure GetSpreadMeasure() => Return.GetSpreadMeasure;
 
     public override bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable? exchanged)
     {
-        throw new NotImplementedException();
-    }
+        return FakeMethods.TryExchange(this, getSpreadChild, context, out exchanged);
 
-    public override IFactory GetFactory()
-    {
-        throw new NotImplementedException();
+        #region Local methods
+        IQuantifiable getSpreadChild()
+        {
+            Enum measureUnit = GetMeasureUnitElements(context, nameof(context)).MeasureUnit;
+
+            return GetSpreadChild(measureUnit, GetBaseQuantity());
+        }
+        #endregion
     }
-    #endregion
 }

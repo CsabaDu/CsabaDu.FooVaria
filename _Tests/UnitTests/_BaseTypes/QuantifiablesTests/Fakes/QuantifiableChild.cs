@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.Fakes;
+﻿using CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods;
+
+namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.Fakes;
 
 internal class QuantifiableChild(IRootObject rootObject, string paramName) : Quantifiable(rootObject, paramName)
 {
@@ -76,13 +78,15 @@ internal class QuantifiableChild(IRootObject rootObject, string paramName) : Qua
 
     public override sealed bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable exchanged)
     {
-        exchanged = null;
+        return FakeMethods.TryExchange(this, qetQuantifiableChild, context, out exchanged);
 
-        if (!IsExchangeableTo(context)) return false;
+        #region Local methods
+        QuantifiableChild qetQuantifiableChild()
+        {
+            Enum measureUnit = GetMeasureUnitElements(context, nameof(context)).MeasureUnit;
 
-        Enum measureUnit = GetMeasureUnitElements(context, nameof(context)).MeasureUnit;
-        exchanged = GetQuantifiableChild(Return.GetDefaultQuantity, measureUnit);
-
-        return true;
+            return GetQuantifiableChild(Return.GetDefaultQuantity, measureUnit);
+        }
+        #endregion
     }
 }

@@ -1,30 +1,31 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods;
-
-public sealed class TestSupport
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods
 {
-    internal static void RestoreConstantExchangeRates()
+    public sealed class TestSupport
     {
-        if (ExchangeRateCollection.Count != ConstantExchangeRateCount)
+        internal static void RestoreConstantExchangeRates()
         {
-            BaseMeasurement.RestoreConstantExchangeRates();
+            if (ExchangeRateCollection.Count != ConstantExchangeRateCount)
+            {
+                BaseMeasurement.RestoreConstantExchangeRates();
+            }
         }
-    }
 
-    public static bool DoesNotThrowException(Action attempt)
-    {
-        try
+        public static bool DoesNotThrowException(Action attempt)
         {
-            attempt();
-            return true;
+            try
+            {
+                attempt();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
-        catch
-        {
-            return false;
-        }
-    }
 
-    public static bool DoesSucceedAsExpected(bool success, object obj)
-    {
-        return obj is not null == success;
+        public static bool DoesSucceedAsExpected(bool success, object obj)
+        {
+            return obj is not null == success;
+        }
     }
 }

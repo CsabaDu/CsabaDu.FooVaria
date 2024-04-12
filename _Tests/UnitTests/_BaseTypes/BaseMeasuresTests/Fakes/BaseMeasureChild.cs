@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.Fakes;
+﻿using CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods;
+
+namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.Fakes;
 
 internal class BaseMeasureChild(IRootObject rootObject, string paramName) : BaseMeasure(rootObject, paramName)
 {
@@ -79,13 +81,15 @@ internal class BaseMeasureChild(IRootObject rootObject, string paramName) : Base
 
     public override sealed bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable exchanged)
     {
-        exchanged = null;
+        return FakeMethods.TryExchange(this, getBaseMeasureChild, context, out exchanged);
 
-        if (!IsExchangeableTo(context)) return false;
+        #region Local methods
+        IQuantifiable getBaseMeasureChild()
+        {
+            Enum measureUnit = GetMeasureUnitElements(context, nameof(context)).MeasureUnit;
 
-        Enum measureUnit = GetMeasureUnitElements(context, nameof(context)).MeasureUnit;
-        exchanged = GetBaseMeasureChild(measureUnit, GetBaseQuantity());
-
-        return true;
+            return GetBaseMeasureChild(measureUnit, GetBaseQuantity());
+        }
+        #endregion
     }
 }

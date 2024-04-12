@@ -1,27 +1,11 @@
-﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasurementsTests.Fakes;
-
-internal sealed class SpreadFactoryObject : ISpreadFactory
+﻿internal sealed class SpreadFactoryObject : ISpreadFactory
 {
-    //public IBaseMeasurement CreateBaseMeasurement(Enum context)
-    //{
-    //    Enum measureUnit = GetMeasureUnitElements(context, nameof(context)).MeasureUnit;
-
-    //    return new BaseMeasurementChild(Fields.RootObject, Fields.paramName)
-    //    {
-    //        Return = new()
-    //        {
-    //            GetBaseMeasureUnit = measureUnit,
-    //            GetFactory = this,
-    //        }
-    //    };
-    //}
-
     public IQuantifiable CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
     {
         if (!measureUnitCode.IsSpreadMeasureUnitCode()) throw InvalidMeasureUnitEnumArgumentException(measureUnitCode);
 
-        BaseMeasureFactoryObject factory = new(RateComponentCode.Numerator);
-        ISpreadMeasure spreadMeasure = factory.CreateQuantifiable(measureUnitCode, defaultQuantity) as ISpreadMeasure;
+        Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
+        ISpreadMeasure spreadMeasure = CreateSpreadMeasure(measureUnit, defaultQuantity);
 
         return CreateSpread(spreadMeasure);
     }
@@ -33,6 +17,6 @@ internal sealed class SpreadFactoryObject : ISpreadFactory
 
     public ISpreadMeasure CreateSpreadMeasure(Enum measureUnit, ValueType quantity)
     {
-        throw new NotImplementedException();
+        return GetSpreadMeasureBaseMeasureObject(measureUnit, quantity);
     }
 }

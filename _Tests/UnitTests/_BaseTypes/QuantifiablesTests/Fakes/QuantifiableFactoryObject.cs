@@ -6,14 +6,6 @@ internal sealed class QuantifiableFactoryObject : IQuantifiableFactory
     {
         Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
 
-        return new QuantifiableChild(Fields.RootObject, Fields.paramName)
-        {
-            Return = new()
-            {
-                GetBaseMeasureUnit = measureUnit,
-                GetDefaultQuantity = defaultQuantity,
-                GetFactory = this,
-            }
-        };
+        return GetQuantifiableChild(defaultQuantity, measureUnit, this);
     }
 }
