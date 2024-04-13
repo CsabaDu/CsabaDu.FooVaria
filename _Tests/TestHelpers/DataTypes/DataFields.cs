@@ -36,6 +36,7 @@ public class DataFields
 
     public void SetDoubleQuantity(double quantity)
     {
+        quantityTypeCode = TypeCode.Double;
         this.quantity
             = doubleQuantity
             = quantity;
@@ -64,5 +65,11 @@ public class DataFields
         quantity = RandomParams.GetRandomValueType(quantityTypeCode);
 
         SetDefaultQuantity();
+    }
+
+    public void SetBaseMeasureFields(MeasureUnitCode measureUnitCode, double quantity)
+    {
+        SetMeasureUnit(measureUnitCode);
+        SetDoubleQuantity(quantity);
     }
 }

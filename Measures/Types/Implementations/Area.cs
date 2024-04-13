@@ -4,10 +4,10 @@ internal sealed class Area(IMeasureFactory factory, AreaUnit areaUnit, double qu
     : Measure<IArea, double, AreaUnit>(factory, areaUnit, quantity), IArea
 {
     #region Public methods
-    public MeasureUnitCode GetSpreadMeasureUnitCode()
-    {
-        return GetMeasureUnitCode();
-    }
+    //public MeasureUnitCode GetSpreadMeasureUnitCode()
+    //{
+    //    return GetMeasureUnitCode();
+    //}
 
     public ISpreadMeasure GetSpreadMeasure()
     {

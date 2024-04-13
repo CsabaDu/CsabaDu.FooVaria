@@ -17,13 +17,11 @@ public sealed class SpreadMeasureObject : ISpreadMeasure
 
     public ISpreadMeasure GetSpreadMeasure() => this;
 
-    public MeasureUnitCode GetSpreadMeasureUnitCode() => GetMeasureUnitCode(MeasureUnit);
-
     public void ValidateSpreadMeasure(ISpreadMeasure spreadMeasure, [DisallowNull] string paramName)
     {
         _ = spreadMeasure ?? throw new ArgumentNullException(paramName);
 
-        if (spreadMeasure.GetSpreadMeasureUnitCode() == GetSpreadMeasureUnitCode()) return;
+        if (spreadMeasure.GetMeasureUnitType() == GetMeasureUnitType()) return;
 
         throw new InvalidEnumArgumentException(paramName);
     }

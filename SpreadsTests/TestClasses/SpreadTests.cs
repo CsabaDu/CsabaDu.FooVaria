@@ -31,6 +31,7 @@ public sealed class SpreadTests
 
     #region Private fields
     private SpreadChild _spread;
+    private ISpreadMeasure _spreadMeasure;
 
     #region Readonly fields
     private readonly DataFields Fields = new();
@@ -51,21 +52,22 @@ public sealed class SpreadTests
     [TestInitialize]
     public void TestInitialize()
     {
-        Fields.SetMeasureUnit(Fields.RandomParams.GetRandomSpreadMeasureUnitCode());
-        Fields.SetDoubleQuantity(Fields.RandomParams.GetRandomPositiveDouble());
+        Fields.SetBaseMeasureFields(
+            Fields.RandomParams.GetRandomSpreadMeasureUnitCode(),
+            Fields.RandomParams.GetRandomPositiveDouble());
     }
 
     [TestCleanup]
     public void TestCleanup()
     {
         Fields.paramName = null;
+        _spreadMeasure = null;
     }
     #endregion
 
     #region Test methods
-
     #region Enum GetBaseMeasureUnit
-    #region IMeasureUnit.GetBaseMeasureUnit()
+    #region override IMeasureUnit.GetBaseMeasureUnit()
     [TestMethod, TestCategory("UnitTest")]
     public void GetBaseMeasureUnit_returns_expected()
     {
@@ -83,16 +85,131 @@ public sealed class SpreadTests
     #endregion
     #endregion
 
+    #region ValueType GetBaseQuantity
+    #region override sealed IQuantity.GetBaseQuantity()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetBaseQuantity_returns_expected()
+    {
+        // Arrange
+        SetSpreadChild();
+
+        ValueType expected = Fields.quantity;
+
+        // Act
+        var actual = _spread.GetBaseQuantity();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region double GetQuantity
+    #region virtual IQuantity<double>.GetQuantity()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetQuantity_returns_expected()
+    {
+        // Arrange
+        SetSpreadChild();
+
+        double expected = Fields.doubleQuantity;
+
+        // Act
+        var actual = _spread.GetQuantity();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region TypeCode GetQuantityTypeCode
+    #region IQuantityType.GetQuantityTypeCode()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetQuantityTypeCode_returns_expected()
+    {
+        // Arrange
+        SetSpreadChild();
+
+        TypeCode expected = Fields.quantityTypeCode;
+
+        // Act
+        var actual = _spread.GetQuantityTypeCode();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region ISpread GetSpread
+    #region abstract ISpread.GetSpread(ISpreadMeasure)
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetSpread_arg_ISpreadMeasure_returns_expected()
+    {
+        // Arrange
+        SetCompleteSpreadChild();
+
+        _spreadMeasure = GetSpreadMeasureBaseMeasureObject(Fields.measureUnit, Fields.quantity);
+        SpreadFactoryObject factory = new();
+        ISpread expected = GetSpreadChild(Fields.measureUnit, Fields.quantity, factory);
+
+        // Act
+        var actual = _spread.GetSpread(_spreadMeasure);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region ISpreadMeasure GetSpreadMeasure
+    #region abstract ISpreadMeasure.GetSpreadMeasure()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetSpreadMeasure_returns_expected()
+    {
+        // Arrange
+        SetSpreadChild();
+
+        ISpreadMeasure expected = GetSpreadMeasureBaseMeasureObject(Fields.measureUnit, Fields.quantity);
+
+        // Act
+        var actual = _spread.GetSpreadMeasure();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region bool IsExchangeableTo
+    #region override sealed IExchangeable<Enum>.IsExchangeableTo(Enum?)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetIsExchangeableToArgs), DynamicDataSourceType.Method)]
+    public void IsExchangeableTo_arg_Enum_returns_expected(bool expected, Enum measureUnit, Enum context)
+    {
+        // Arrange
+        SetSpreadChild(measureUnit, Fields.quantity);
+
+        // Act
+        var actual = _spread.IsExchangeableTo(context);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region IQuantifiable Round
+    #region override sealed IRound<IQuantifiable>.Round(RoundingMode)
+
+    #endregion
+    #endregion
 
 
-    // ValueType IQuantity.GetBaseQuantity()
-    // double IQuantity<double>.GetQuantity()
-    // TypeCode IQuantityType.GetQuantityTypeCode()
-    // ISpread ISpread.GetSpread(ISpreadMeasure spreadMeasure)
-    // ISpreadMeasure ISpreadMeasure.GetSpreadMeasure()
-    // MeasureUnitCode ISpreadMeasure.GetSpreadMeasureUnitCode()
-    // bool IExchangeable<Enum>.IsExchangeableTo(Enum? context)
-    // IQuantifiable IRound<IQuantifiable>.Round(RoundingMode roundingMode)
+
+
+
     // void ISpreadMeasure.ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)
 
     #endregion
@@ -127,40 +244,11 @@ public sealed class SpreadTests
     }
 
     #region DynamicDataSource
-    //private static IEnumerable<object[]> GetEqualsObjectArg()
-    //{
-    //    return DynamicDataSource.GetEqualsObjectArg();
-    //}
+    private static IEnumerable<object[]> GetIsExchangeableToArgs()
+    {
+        return DynamicDataSource.GetIsExchangeableToArgs();
+    }
 
-    //private static IEnumerable<object[]> GetEqualsBaseMeasurementArg()
-    //{
-    //    return DynamicDataSource.GetEqualsBaseMeasurementArg();
-    //}
-
-    //private static IEnumerable<object[]> GetExchangeRateCollectionArg()
-    //{
-    //    return DynamicDataSource.GetExchangeRateCollectionArg();
-    //}
-
-    //private static IEnumerable<object[]> GetIsExchangeableToArg()
-    //{
-    //    return DynamicDataSource.GetIsExchangeableToArg();
-    //}
-
-    //private static IEnumerable<object[]> GetHasMeasureUnitCodeArgs()
-    //{
-    //    return DynamicDataSource.GetHasMeasureUnitCodeArgs();
-    //}
-
-    //private static IEnumerable<object[]> GetValidateExchangeRateArg()
-    //{
-    //    return DynamicDataSource.GetValidateExchangeRateArg();
-    //}
-
-    //private static IEnumerable<object[]> GetValidateMeasureUnitValidArgs()
-    //{
-    //    return DynamicDataSource.GetValidateMeasureUnitValidArgs();
-    //}
     #endregion
     #endregion
 }

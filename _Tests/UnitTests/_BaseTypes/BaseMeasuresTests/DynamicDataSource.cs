@@ -38,8 +38,8 @@ internal class DynamicDataSource : CommonDynamicDataSource
         // Different MeasureUnitCode
         isTrue = false;
         measureUnitCode = RandomParams.GetRandomConstantMeasureUnitCode(measureUnitCode);
-        measureUnit = measureUnitCode.GetDefaultMeasureUnit();
-        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode, measureUnit);
+        context = measureUnitCode.GetDefaultMeasureUnit();
+        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode, context);
         yield return toObjectArray();
 
         // Same MeasureUnitCode, different measureUnit
@@ -266,49 +266,51 @@ internal class DynamicDataSource : CommonDynamicDataSource
 
     internal IEnumerable<object[]> GetIsExchangeableToArgs()
     {
-        // 1
-        measureUnit = RandomParams.GetRandomConstantMeasureUnit();
-        isTrue = false;
-        context = null;
-        yield return toObjectArray();
+        return GetIsExchangeableToArgs(RandomParams.GetRandomConstantMeasureUnit());
 
-        // 2
-        context = SampleParams.DefaultLimitMode;
-        yield return toObjectArray();
+        //// 1
+        //measureUnit = RandomParams.GetRandomConstantMeasureUnit();
+        //isTrue = false;
+        //context = null;
+        //yield return toObjectArray();
 
-        // 3
-        isTrue = true;
-        measureUnitCode = GetMeasureUnitCode(measureUnit);
-        context = measureUnitCode;
-        yield return toObjectArray();
+        //// 2
+        //context = SampleParams.DefaultLimitMode;
+        //yield return toObjectArray();
 
-        // 4
-        context = RandomParams.GetRandomMeasureUnit(measureUnitCode);
-        yield return toObjectArray();
+        //// 3
+        //isTrue = true;
+        //measureUnitCode = GetMeasureUnitCode(measureUnit);
+        //context = measureUnitCode;
+        //yield return toObjectArray();
 
-        // 5
-        isTrue = false;
-        measureUnitCode = RandomParams.GetRandomConstantMeasureUnitCode(measureUnitCode);
-        context = measureUnitCode;
-        yield return toObjectArray();
+        //// 4
+        //context = RandomParams.GetRandomMeasureUnit(measureUnitCode);
+        //yield return toObjectArray();
 
-        // 6
-        context = RandomParams.GetRandomMeasureUnit(measureUnitCode, measureUnit);
-        yield return toObjectArray();
+        //// 5
+        //isTrue = false;
+        //measureUnitCode = RandomParams.GetRandomConstantMeasureUnitCode(measureUnitCode);
+        //context = measureUnitCode;
+        //yield return toObjectArray();
 
-        // 7
-        int count = Enum.GetNames(measureUnit.GetType()).Length;
-        context = (Enum)Enum.ToObject(measureUnit.GetType(), count);
-        yield return toObjectArray();
+        //// 6
+        //context = RandomParams.GetRandomMeasureUnit(measureUnitCode, measureUnit);
+        //yield return toObjectArray();
 
-        #region toObjectArray method
-        object[] toObjectArray()
-        {
-            bool_Enum_Enum_args item = new(isTrue, measureUnit, context);
+        //// 7
+        //int count = Enum.GetNames(measureUnit.GetType()).Length;
+        //context = (Enum)Enum.ToObject(measureUnit.GetType(), count);
+        //yield return toObjectArray();
 
-            return item.ToObjectArray();
-        }
-        #endregion
+        //#region toObjectArray method
+        //object[] toObjectArray()
+        //{
+        //    bool_Enum_Enum_args item = new(isTrue, measureUnit, context);
+
+        //    return item.ToObjectArray();
+        //}
+        //#endregion
     }
 
     internal IEnumerable<object[]> GetValidateExchangeRateArgs()

@@ -117,12 +117,12 @@ internal abstract class Mass : BaseQuantifiable, IMass
         return body.GetSpreadMeasure();
     }
 
-    public MeasureUnitCode GetSpreadMeasureUnitCode()
-    {
-        IBody body = GetBody();
+    //public MeasureUnitCode GetSpreadMeasureUnitCode()
+    //{
+    //    IBody body = GetBody();
 
-        return body.GetSpreadMeasureUnitCode();
-    }
+    //    return body.GetSpreadMeasureUnitCode();
+    //}
 
     public IVolume GetVolume()
     {

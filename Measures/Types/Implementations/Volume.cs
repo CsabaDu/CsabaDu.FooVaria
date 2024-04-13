@@ -24,10 +24,10 @@ internal sealed class Volume(IMeasureFactory factory, VolumeUnit volumeUnit, dou
         return ConvertMeasure().Equals(other);
     }
 
-    public MeasureUnitCode GetSpreadMeasureUnitCode()
-    {
-        return GetMeasureUnitCode();
-    }
+    //public MeasureUnitCode GetSpreadMeasureUnitCode()
+    //{
+    //    return GetMeasureUnitCode();
+    //}
 
     public ISpreadMeasure GetSpreadMeasure()
     {

@@ -6,14 +6,12 @@ internal sealed class SpreadMeasureBaseMeasureObject(IRootObject rootObject, str
     {
         if (measureUnit is null || !GetMeasureUnitCode(measureUnit).IsSpreadMeasureUnitCode()) return null;
 
-        if (quantity.ToQuantity(TypeCode.Double) is not double spreadQuantity) return null;
-
         return new(Fields.RootObject, Fields.paramName)
         {
             Return = new()
             {
                 GetBaseMeasurement = BaseMeasurementFactory.CreateBaseMeasurement(measureUnit),
-                GetBaseQuantity = spreadQuantity,
+                GetBaseQuantity = quantity is double ? quantity : (ValueType)quantity.ToQuantity(TypeCode.Double),
                 GetFactory = GetBaseMeasureFactoryObject(rateComponentCode ?? RateComponentCode.Numerator),
             }
         };
@@ -22,8 +20,6 @@ internal sealed class SpreadMeasureBaseMeasureObject(IRootObject rootObject, str
     public double GetQuantity() => (double)GetBaseQuantity();
 
     public ISpreadMeasure GetSpreadMeasure() => this;
-
-    public MeasureUnitCode GetSpreadMeasureUnitCode() => GetMeasureUnitCode();
 
     public void ValidateSpreadMeasure(ISpreadMeasure spreadMeasure, [DisallowNull] string paramName)
     {

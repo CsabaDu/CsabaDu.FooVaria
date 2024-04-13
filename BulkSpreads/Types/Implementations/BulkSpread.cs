@@ -31,10 +31,10 @@ namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations
 
         #region Override methods
         #region Sealed methods
-        public override sealed MeasureUnitCode GetSpreadMeasureUnitCode()
-        {
-            return base.GetSpreadMeasureUnitCode();
-        }
+        //public override sealed MeasureUnitCode GetSpreadMeasureUnitCode()
+        //{
+        //    return base.GetSpreadMeasureUnitCode();
+        //}
 
         public override sealed double GetQuantity()
         {

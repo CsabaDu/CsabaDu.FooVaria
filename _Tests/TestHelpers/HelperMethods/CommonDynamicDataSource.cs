@@ -43,4 +43,50 @@ public abstract class CommonDynamicDataSource : DataFields
         #endregion
     }
 
+    public IEnumerable<object[]> GetIsExchangeableToArgs(Enum measureUnit)
+    {
+        // 1
+        this.measureUnit = measureUnit;
+        isTrue = false;
+        context = null;
+        yield return toObjectArray();
+
+        // 2
+        context = SampleParams.DefaultLimitMode;
+        yield return toObjectArray();
+
+        // 3
+        isTrue = true;
+        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        context = measureUnitCode;
+        yield return toObjectArray();
+
+        // 4
+        context = RandomParams.GetRandomMeasureUnit(measureUnitCode);
+        yield return toObjectArray();
+
+        // 5
+        isTrue = false;
+        measureUnitCode = RandomParams.GetRandomConstantMeasureUnitCode(measureUnitCode);
+        context = measureUnitCode;
+        yield return toObjectArray();
+
+        // 6
+        context = RandomParams.GetRandomMeasureUnit(measureUnitCode, measureUnit);
+        yield return toObjectArray();
+
+        // 7
+        int count = Enum.GetNames(measureUnit.GetType()).Length;
+        context = (Enum)Enum.ToObject(measureUnit.GetType(), count);
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            bool_Enum_Enum_args item = new(isTrue, measureUnit, context);
+
+            return item.ToObjectArray();
+        }
+        #endregion
+    }
 }

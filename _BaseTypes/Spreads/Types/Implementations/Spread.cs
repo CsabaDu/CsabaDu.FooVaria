@@ -12,6 +12,11 @@ public abstract class Spread(IRootObject rootObject, string paramName) : Quantif
     }
 
     #region Sealed methods
+    public override sealed ValueType GetBaseQuantity()
+    {
+        return GetQuantity();
+    }
+
     public override sealed decimal GetDefaultQuantity()
     {
         return (GetSpreadMeasure() as IBaseQuantifiable)!.GetDefaultQuantity();
@@ -38,10 +43,10 @@ public abstract class Spread(IRootObject rootObject, string paramName) : Quantif
     #endregion
 
     #region Virtual methods
-    public virtual MeasureUnitCode GetSpreadMeasureUnitCode()
-    {
-        return GetMeasureUnitCode();
-    }
+    //public virtual MeasureUnitCode GetSpreadMeasureUnitCode()
+    //{
+    //    return GetMeasureUnitCode();
+    //}
 
     public virtual double GetQuantity()
     {
@@ -53,11 +58,6 @@ public abstract class Spread(IRootObject rootObject, string paramName) : Quantif
     public abstract ISpread GetSpread(ISpreadMeasure spreadMeasure);
     public abstract ISpreadMeasure GetSpreadMeasure();
     #endregion
-
-    public override sealed ValueType GetBaseQuantity()
-    {
-        return GetQuantity();
-    }
 
     public void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)
     {
