@@ -1,8 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
-using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
-using CsabaDu.FooVaria.Measures.Types;
-
-namespace CsabaDu.FooVaria.ShapeLimits.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.ShapeLimits.Types.Implementations;
 
 public sealed class ShapeLimit : SimpleShape, IShapeLimit
 {

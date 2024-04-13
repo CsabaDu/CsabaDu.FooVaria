@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
-
-namespace CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods;
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods;
 
 public static class FakeMethods
 {

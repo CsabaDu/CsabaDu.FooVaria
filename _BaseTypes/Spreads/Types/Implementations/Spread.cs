@@ -6,7 +6,9 @@ public abstract class Spread(IRootObject rootObject, string paramName) : Quantif
     #region Override methods
     public override Enum GetBaseMeasureUnit()
     {
-        return (GetSpreadMeasure() as IMeasurable)!.GetBaseMeasureUnit();
+        ISpreadMeasure spreadMeasure = GetSpreadMeasure();
+
+        return spreadMeasure.GetBaseMeasureUnit();
     }
 
     #region Sealed methods
@@ -36,15 +38,6 @@ public abstract class Spread(IRootObject rootObject, string paramName) : Quantif
     #endregion
 
     #region Virtual methods
-    //public override ISpread? ExchangeTo(Enum? context)
-    //{
-    //    IQuantifiable? exchanged = (GetSpreadMeasure() as IQuantifiable)?.ExchangeTo(context);
-
-    //    if (exchanged is not ISpreadMeasure spreadMeasure) return null;
-
-    //    return GetSpread(spreadMeasure);
-    //}
-
     public virtual MeasureUnitCode GetSpreadMeasureUnitCode()
     {
         return GetMeasureUnitCode();

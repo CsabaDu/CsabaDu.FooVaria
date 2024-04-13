@@ -1,4 +1,5 @@
 global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Enums;
+global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
 global using CsabaDu.FooVaria.BaseTypes.Common;
 global using CsabaDu.FooVaria.BaseTypes.Common.Factories;
 global using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
@@ -11,6 +12,10 @@ global using CsabaDu.FooVaria.BaseTypes.Spreads.Types.Implementations;
 global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes;
 global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.Returns;
 global using CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods;
+global using CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.SpreadsTests.Fakes;
 global using System.Diagnostics.CodeAnalysis;
+global using static CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations.BaseMeasurement;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Statics.ExceptionMethods;
+global using static CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods.TestSupport;
 global using static CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.Fakes.SpreadMeasureBaseMeasureObject;
+global using static CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.SpreadsTests.Fakes.SpreadChild;

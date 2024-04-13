@@ -39,7 +39,7 @@ public sealed class BaseMeasurementTests
     [TestInitialize]
     public void TestInitialize()
     {
-        Fields.measureUnit = Fields.RandomParams.GetRandomValidMeasureUnit();
+        Fields.measureUnit = Fields.RandomParams.GetRandomConstantMeasureUnit();
         Fields.measureUnitCode = GetMeasureUnitCode(Fields.measureUnit);
         Fields.measureUnitType = Fields.measureUnit.GetType();
     }

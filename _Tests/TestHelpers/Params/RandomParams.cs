@@ -8,6 +8,7 @@ public sealed class RandomParams
     private static readonly Random Random = Random.Shared;
     private static readonly IEnumerable<MeasureUnitCode> CustomMeasureUnitCodes = MeasureUnitCodes.Where(x => x.IsCustomMeasureUnitCode());
     private static readonly IEnumerable<MeasureUnitCode> ConstantMeasureUnitCodes = MeasureUnitCodes.Where(x => !x.IsCustomMeasureUnitCode());
+    private static readonly IEnumerable<MeasureUnitCode> SpreadMeasureUnitCodes = MeasureUnitCodes.Where(x => x.IsSpreadMeasureUnitCode());
     #endregion
 
     #region Public methods
@@ -223,7 +224,9 @@ public sealed class RandomParams
         #region Local methods
         decimal getRandomNotNegativeDecimal()
         {
-            return Convert.ToDecimal(Random.NextInt64(uint.MaxValue)) + Convert.ToDecimal(Random.NextDouble());
+            decimal randomDecimal = GetRandomDecimal();
+
+            return randomDecimal < 0 ? 0 : randomDecimal;
         }
         #endregion
     }
@@ -250,6 +253,25 @@ public sealed class RandomParams
     public double GetRandomDouble()
     {
         return (double)GetRandomValueType(TypeCode.Double);
+    }
+
+    public double GetRandomPositiveDouble(double? excluded = null)
+    {
+        double positiveDecimal = getRandomPositiveDouble();
+
+        while (positiveDecimal == 0 || positiveDecimal == excluded)
+        {
+            positiveDecimal = getRandomPositiveDouble();
+        }
+
+        return positiveDecimal;
+
+        #region Local methods
+        double getRandomPositiveDouble()
+        {
+            return Convert.ToDouble(Random.NextInt64(uint.MaxValue)) + Random.NextDouble();
+        }
+        #endregion
     }
 
     public LimitMode GetRandomLimitMode()
@@ -326,6 +348,11 @@ public sealed class RandomParams
     public LimitMode? GetRandomNullableLimitMode()
     {
         return GetRandomItemOrNull(Enum.GetValues<LimitMode>());
+    }
+
+    public MeasureUnitCode GetRandomSpreadMeasureUnitCode()
+    {
+        return GetRandomItem(SpreadMeasureUnitCodes);
     }
     #endregion
 

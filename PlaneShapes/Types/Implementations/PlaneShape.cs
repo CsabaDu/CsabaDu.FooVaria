@@ -26,6 +26,11 @@ internal abstract class PlaneShape : SimpleShape, IPlaneShape
 
     #region Override methods
     #region Sealed methods
+    public override sealed Enum GetBaseMeasureUnit()
+    {
+        return Area.GetMeasureUnit();
+    }
+
     public override sealed IShapeComponent? GetValidShapeComponent(IBaseQuantifiable? shapeComponent)
     {
         if (shapeComponent is not IExtent extent) return null;

@@ -76,13 +76,13 @@ internal class DynamicDataSource : CommonDynamicDataSource
 
     internal IEnumerable<object[]> GetEqualsArgs()
     {
-        // null - null
+        // 1. null - null
         isTrue = true;
         baseMeasure = null;
         other = null;
         yield return toObjectArray();
 
-        // not null - null
+        // 2. not null - null
         isTrue = false;
         measureUnit = RandomParams.GetRandomValidMeasureUnit();
         quantity = (ValueType)RandomParams.GetRandomQuantity();
@@ -91,42 +91,42 @@ internal class DynamicDataSource : CommonDynamicDataSource
         baseMeasure = getBaseMeasureChild();
         yield return toObjectArray();
 
-        // null - not null
+        // 3. null - not null
         baseMeasure = null;
         other = getBaseMeasureChild();
         yield return toObjectArray();
 
-        // Same
+        // 4. Same
         isTrue = true;
         baseMeasure = getBaseMeasureChild();
         yield return toObjectArray();
 
-        // Different LimitMode
+        // 5. Different LimitMode
         isTrue = false;
         limitMode = RandomParams.GetRandomNullableLimitMode(limitMode);
         other = getBaseMeasureChild();
         yield return toObjectArray();
 
-        // Different RateComponentCode
+        // 6. Different RateComponentCode
         baseMeasure = getBaseMeasureChild();
         rateComponentCode = RandomParams.GetRandomRateComponentCode(rateComponentCode);
         other = getBaseMeasureChild();
         yield return toObjectArray();
 
-        // Different quantity
+        // 7. Different quantity
         baseMeasure = getBaseMeasureChild();
         quantityTypeCode = Type.GetTypeCode(quantity.GetType());
         quantity = (ValueType)RandomParams.GetRandomQuantity(quantityTypeCode, quantity);
         other = getBaseMeasureChild();
         yield return toObjectArray();
 
-        // Different measureUnit
+        // 8. Different measureUnit
         baseMeasure = getBaseMeasureChild();
         measureUnit = RandomParams.GetRandomValidMeasureUnit(measureUnit);
         other = getBaseMeasureChild();
         yield return toObjectArray();
 
-        // Equals when exchanged
+        // 9. Equals when exchanged
         isTrue = true;
         decimalQuantity = RandomParams.GetRandomDecimal();
         quantity = decimalQuantity;

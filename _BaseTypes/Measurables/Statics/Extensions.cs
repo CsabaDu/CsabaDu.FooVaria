@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.Measurables.Statics;
+﻿using CsabaDu.FooVaria.BaseTypes.Common.Statics;
+
+namespace CsabaDu.FooVaria.BaseTypes.Measurables.Statics;
 
 public static class Extensions
 {
@@ -60,7 +62,7 @@ public static class Extensions
 
     public static bool IsCustomMeasureUnitCode(this MeasureUnitCode measureUnitCode)
     {
-        if (!Enum.IsDefined(measureUnitCode)) return false;
+        if (!measureUnitCode.IsDefined()) return false;
 
         Type measureUnitType = measureUnitCode.GetMeasureUnitType();
         string? defaultMeasureUnitName = Enum.GetName(measureUnitType, default(int));

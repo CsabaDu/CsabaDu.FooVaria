@@ -94,7 +94,7 @@ internal class DynamicDataSource : CommonDynamicDataSource
     {
         // null -  false
         isTrue = false;
-        measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        measureUnit = RandomParams.GetRandomConstantMeasureUnit();
         context = null;
         yield return toObjectArray();
 
@@ -104,7 +104,7 @@ internal class DynamicDataSource : CommonDynamicDataSource
 
         // other MeasureUnitCode - false
         measureUnitCode = GetMeasureUnitCode(measureUnit);
-        context = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
+        context = RandomParams.GetRandomConstantMeasureUnitCode(measureUnitCode);
         yield return toObjectArray();
 
         // same type not defined measureUnit - false
@@ -129,7 +129,7 @@ internal class DynamicDataSource : CommonDynamicDataSource
         // same type invalid measureUnit - false
         measureUnitCode = RandomParams.GetRandomCustomMeasureUnitCode();
         paramName = RandomParams.GetRandomParamName();
-        SetCustomMeasureUnit(paramName, measureUnitCode, RandomParams.GetRandomNotNegativeDecimal());
+        SetCustomMeasureUnit(paramName, measureUnitCode, RandomParams.GetRandomPositiveDecimal());
         measureUnit = GetMeasureUnit(paramName);
         context = RandomParams.GetRandomNotUsedCustomMeasureUnit(measureUnitCode);
         yield return toObjectArray();
@@ -167,12 +167,13 @@ internal class DynamicDataSource : CommonDynamicDataSource
     internal IEnumerable<object[]> GetValidateMeasureUnitValidArgs()
     {
         // MeasureUnitCode
-        measureUnit = RandomParams.GetRandomValidMeasureUnit();
-        context = GetMeasureUnitCode(measureUnit);
+        measureUnit = RandomParams.GetRandomConstantMeasureUnit();
+        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        context = measureUnitCode;
         yield return toObjectArray();
 
         // measureUnit
-        context = RandomParams.GetRandomSameTypeValidMeasureUnit(measureUnit);
+        context = RandomParams.GetRandomMeasureUnit(measureUnitCode);
         yield return toObjectArray();
 
         #region toObjectArray method

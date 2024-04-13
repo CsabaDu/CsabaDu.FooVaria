@@ -1,4 +1,5 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
+﻿using CsabaDu.FooVaria.BaseTypes.Measurables.Types;
+using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
 using System.Diagnostics.CodeAnalysis;
 
 namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations
@@ -343,6 +344,11 @@ namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations
         #endregion
 
         #region Public methods
+        public override sealed Enum GetBaseMeasureUnit()
+        {
+            return GetMeasureUnit();
+        }
+
         public TEnum GetMeasureUnit()
         {
             return SpreadMeasure.GetMeasureUnit();

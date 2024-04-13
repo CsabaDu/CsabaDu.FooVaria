@@ -1,4 +1,6 @@
 ﻿
+using CsabaDu.FooVaria.Measures.Types;
+
 namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
 {
     internal abstract class DryBody : SimpleShape, IDryBody
@@ -75,6 +77,11 @@ namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
 
         #region Override methods
         #region Sealed methods
+        public override sealed Enum GetBaseMeasureUnit()
+        {
+            return Volume.GetMeasureUnit();
+        }
+
         public override sealed IVolume GetSpreadMeasure()
         {
             return Volume;

@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasurementsTests.Fakes;
+﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.SpreadsTests.Fakes;
 
 internal sealed class SpreadChild(IRootObject rootObject, string paramName) : Spread(rootObject, paramName)
 {
@@ -36,12 +36,11 @@ internal sealed class SpreadChild(IRootObject rootObject, string paramName) : Sp
     // ValueType IQuantity.GetBaseQuantity()
     // object IQuantity.GetQuantity(TypeCode quantityTypeCode)
 
-
     #endregion
 
     #region Test helpers
     public SpreadReturn Return { private get; set; } = new();
-    internal static DataFields Fields = new();
+    private static DataFields Fields = new();
 
     internal static SpreadChild GetSpreadChild(Enum measureUnit, ValueType quantity, ISpreadFactory factory = null, RateComponentCode? rateComponentCode = null)
     {
@@ -54,20 +53,25 @@ internal sealed class SpreadChild(IRootObject rootObject, string paramName) : Sp
             }
         };
     }
+
+    internal static SpreadChild GetSpreadChild(ISpreadMeasure spreadMeasure, ISpreadFactory factory = null)
+    {
+        return new(Fields.RootObject, Fields.paramName)
+        {
+            Return = new()
+            {
+                GetFactory = factory,
+                GetSpreadMeasure = spreadMeasure,
+            }
+        };
+    }
     #endregion
 
     public override IFactory GetFactory() => Return.GetFactory;
 
     public override ISpread GetSpread(ISpreadMeasure spreadMeasure)
     {
-        return new SpreadChild(Fields.RootObject, Fields.paramName)
-        {
-            Return = new()
-            {
-                GetFactory = GetFactory(),
-                GetSpreadMeasure = spreadMeasure,
-            }
-        };
+        return GetSpreadChild(spreadMeasure, (ISpreadFactory)GetFactory());
     }
 
     public override ISpreadMeasure GetSpreadMeasure() => Return.GetSpreadMeasure;

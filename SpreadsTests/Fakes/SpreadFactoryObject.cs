@@ -1,4 +1,6 @@
-﻿internal sealed class SpreadFactoryObject : ISpreadFactory
+﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.SpreadsTests.Fakes;
+
+internal sealed class SpreadFactoryObject : ISpreadFactory
 {
     public IQuantifiable CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
     {

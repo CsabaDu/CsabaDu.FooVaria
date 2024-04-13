@@ -1,7 +1,6 @@
-﻿
-namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
+﻿namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
 
-public interface ISpreadMeasure : IQuantity<double>
+public interface ISpreadMeasure : IQuantity<double>, IMeasureUnit
 {
     ISpreadMeasure GetSpreadMeasure();
     MeasureUnitCode GetSpreadMeasureUnitCode();

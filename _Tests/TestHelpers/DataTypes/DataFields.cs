@@ -11,6 +11,7 @@ public class DataFields
     public Enum context;
     public decimal defaultQuantity;
     public decimal decimalQuantity;
+    public double doubleQuantity;
     public bool isTrue;
     public ILimiter limiter;
     public LimitMode? limitMode;
@@ -23,5 +24,6 @@ public class DataFields
     public TypeCode quantityTypeCode;
     public RateComponentCode rateComponentCode;
     public RoundingMode roundingMode;
+    public ISpreadMeasure spreadMeasure;
     public TypeCode typeCode;
 }
