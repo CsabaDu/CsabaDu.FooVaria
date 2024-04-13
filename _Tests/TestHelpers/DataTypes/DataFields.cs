@@ -26,4 +26,43 @@ public class DataFields
     public RoundingMode roundingMode;
     public ISpreadMeasure spreadMeasure;
     public TypeCode typeCode;
+
+    public void SetDefaultQuantity()
+    {
+        defaultQuantity = Convert.ToDecimal(quantity);
+        defaultQuantity *= GetExchangeRate(measureUnit, nameof(measureUnit));
+        defaultQuantity = defaultQuantity.Round(RoundingMode.DoublePrecision);
+    }
+
+    public void SetDoubleQuantity(double quantity)
+    {
+        this.quantity
+            = doubleQuantity
+            = quantity;
+
+        SetDefaultQuantity();
+    }
+
+    public void SetMeasureUnitCode(Enum measureUnit)
+    {
+        this.measureUnit = measureUnit;
+        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        measureUnitType = measureUnit.GetType();
+
+    }
+
+    public void SetMeasureUnit(MeasureUnitCode measureUnitCode)
+    {
+        this.measureUnitCode = measureUnitCode;
+        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
+        measureUnitType = measureUnit.GetType();
+    }
+
+    public void SetQuantity(TypeCode quantityTypeCode)
+    {
+        this.quantityTypeCode = quantityTypeCode;
+        quantity = RandomParams.GetRandomValueType(quantityTypeCode);
+
+        SetDefaultQuantity();
+    }
 }

@@ -34,10 +34,8 @@ public sealed class MeasurableTests
     [TestInitialize]
     public void TestInitialize()
     {
-        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        Fields.SetMeasureUnitCode(Fields.RandomParams.GetRandomMeasureUnit());
         SetMeasurableChild();
-        Fields.measureUnitCode = GetMeasureUnitCode(Fields.measureUnit);
-        Fields.measureUnitType = Fields.measureUnit.GetType();
     }
 
     [TestCleanup]

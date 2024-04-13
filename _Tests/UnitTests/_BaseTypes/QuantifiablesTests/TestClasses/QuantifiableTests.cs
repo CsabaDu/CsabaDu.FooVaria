@@ -28,8 +28,8 @@ public sealed class QuantifiableTests
     [TestInitialize]
     public void TestInitialize()
     {
-        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit();
-        Fields.measureUnitCode = GetMeasureUnitCode(Fields.measureUnit);
+        Fields.SetMeasureUnitCode(Fields.RandomParams.GetRandomMeasureUnit());
+
         Fields.defaultQuantity = Fields.RandomParams.GetRandomDecimal();
     }
 

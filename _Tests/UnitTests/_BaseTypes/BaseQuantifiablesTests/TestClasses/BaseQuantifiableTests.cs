@@ -41,10 +41,9 @@ public sealed class BaseQuantifiableTests
     [TestInitialize]
     public void TestInitialize()
     {
-        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit();
-        Fields.measureUnitCode = GetMeasureUnitCode(Fields.measureUnit);
-        Fields.measureUnitType = Fields.measureUnit.GetType();
         Fields.defaultQuantity = Fields.RandomParams.GetRandomDecimal();
+
+        Fields.SetMeasureUnitCode(Fields.RandomParams.GetRandomMeasureUnit());
     }
 
     [TestCleanup]

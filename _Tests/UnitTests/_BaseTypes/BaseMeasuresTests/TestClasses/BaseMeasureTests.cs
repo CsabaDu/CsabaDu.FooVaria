@@ -50,13 +50,9 @@ public sealed class BaseMeasureTests
     [TestInitialize]
     public void TestInitialize()
     {
-        Fields.measureUnitCode = Fields.RandomParams.GetRandomConstantMeasureUnitCode();
-        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        Fields.quantityTypeCode = Fields.RandomParams.GetRandomQuantityTypeCode(Fields.rateComponentCode);
-        Fields.quantity = Fields.RandomParams.GetRandomValueType(Fields.quantityTypeCode);
-        Fields.defaultQuantity = (Convert.ToDecimal(Fields.quantity)
-            * GetExchangeRate(Fields.measureUnit, nameof(Fields.measureUnit)))
-            .Round(RoundingMode.DoublePrecision);
+        Fields.SetMeasureUnit(Fields.RandomParams.GetRandomConstantMeasureUnitCode());
+        Fields.SetQuantity(Fields.RandomParams.GetRandomQuantityTypeCode());
+
         Fields.rateComponentCode = Fields.RandomParams.GetRandomRateComponentCode();
         Fields.limitMode = Fields.RandomParams.GetRandomNullableLimitMode();
     }

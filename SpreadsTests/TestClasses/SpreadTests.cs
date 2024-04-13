@@ -51,14 +51,8 @@ public sealed class SpreadTests
     [TestInitialize]
     public void TestInitialize()
     {
-        Fields.measureUnitCode = Fields.RandomParams.GetRandomSpreadMeasureUnitCode();
-        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        Fields.doubleQuantity = Fields.RandomParams.GetRandomPositiveDouble();
-        Fields.quantity = Fields.decimalQuantity;
-        Fields.defaultQuantity = (Convert.ToDecimal(Fields.doubleQuantity)
-            * GetExchangeRate(Fields.measureUnit, nameof(Fields.measureUnit)))
-            .Round(RoundingMode.DoublePrecision);
-        Fields.rateComponentCode = Fields.RandomParams.GetRandomRateComponentCode();
+        Fields.SetMeasureUnit(Fields.RandomParams.GetRandomSpreadMeasureUnitCode());
+        Fields.SetDoubleQuantity(Fields.RandomParams.GetRandomPositiveDouble());
     }
 
     [TestCleanup]
@@ -75,12 +69,15 @@ public sealed class SpreadTests
     [TestMethod, TestCategory("UnitTest")]
     public void GetBaseMeasureUnit_returns_expected()
     {
-        SetCompleteSpreadChild();
+        // Arrange
+        SetSpreadChild();
 
         Enum expected = Fields.measureUnit;
 
+        // Act
         var actual = _spread.GetBaseMeasureUnit();
 
+        // Assert
         Assert.AreEqual(expected, actual);
     }
     #endregion
@@ -124,6 +121,8 @@ public sealed class SpreadTests
 
     private void SetCompleteSpreadChild()
     {
+        Fields.rateComponentCode = Fields.RandomParams.GetRandomRateComponentCode();
+
         SetSpreadChild(Fields.measureUnit, Fields.quantity, new SpreadFactoryObject(), Fields.rateComponentCode);
     }
 
