@@ -15,6 +15,7 @@ public static class ParamNames
     public const string quantityTypeCode = nameof(quantityTypeCode);
     public const string rootObject = nameof(rootObject);
     public const string roundingMode = nameof(roundingMode);
+    public const string spreadMeasure = nameof(spreadMeasure);
 
     public static IEnumerable<string> GetParamNames()
     {

@@ -7,17 +7,18 @@ internal sealed class SpreadFactoryObject : ISpreadFactory
         if (!measureUnitCode.IsSpreadMeasureUnitCode()) throw InvalidMeasureUnitEnumArgumentException(measureUnitCode);
 
         Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
-        ISpreadMeasure spreadMeasure = CreateSpreadMeasure(measureUnit, defaultQuantity);
+        double quantity = (double)defaultQuantity.ToQuantity(TypeCode.Double); 
+        ISpreadMeasure spreadMeasure = CreateSpreadMeasure(measureUnit,quantity);
 
         return CreateSpread(spreadMeasure);
     }
 
     public ISpread CreateSpread(ISpreadMeasure spreadMeasure)
     {
-        throw new NotImplementedException();
+        return GetSpreadChild(spreadMeasure, this);
     }
 
-    public ISpreadMeasure CreateSpreadMeasure(Enum measureUnit, ValueType quantity)
+    public ISpreadMeasure CreateSpreadMeasure(Enum measureUnit, double quantity)
     {
         return GetSpreadMeasureBaseMeasureObject(measureUnit, quantity);
     }

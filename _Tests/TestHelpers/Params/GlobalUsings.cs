@@ -7,3 +7,4 @@ global using static CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementa
 global using static CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types.Implementations.BaseQuantifiable;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;
+global using static CsabaDu.FooVaria.Tests.TestHelpers.Params.SampleParams;

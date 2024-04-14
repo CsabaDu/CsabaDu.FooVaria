@@ -1,8 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Measurables.Types;
-using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
-using System.Diagnostics.CodeAnalysis;
-
-namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations
+﻿namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations
 {
     internal abstract class BulkSpread : Spread, IBulkSpread
     {
@@ -24,18 +20,8 @@ namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations
         #endregion
 
         #region Public methods
-        public bool AreValidShapeExtents(params IExtent[] shapeExtents)
-        {
-            return AreValidShapeExtents(GetMeasureUnitCode(), shapeExtents);
-        }
-
         #region Override methods
         #region Sealed methods
-        //public override sealed MeasureUnitCode GetSpreadMeasureUnitCode()
-        //{
-        //    return base.GetSpreadMeasureUnitCode();
-        //}
-
         public override sealed double GetQuantity()
         {
             return base.GetQuantity();
@@ -219,6 +205,11 @@ namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations
             #endregion
         }
         #endregion
+
+        public bool AreValidShapeExtents(params IExtent[] shapeExtents)
+        {
+            return AreValidShapeExtents(GetMeasureUnitCode(), shapeExtents);
+        }
         #endregion
 
         #region Private methods
@@ -368,14 +359,14 @@ namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations
 
         #region Override methods
         #region Sealed methods
-        public override sealed TSelf GetSpread(ISpreadMeasure spreadMeasure)
-        {
-            ValidateSpreadMeasure(spreadMeasure, nameof(spreadMeasure));
+        //public override sealed TSelf GetSpread(ISpreadMeasure spreadMeasure)
+        //{
+        //    ValidateSpreadMeasure(spreadMeasure, nameof(spreadMeasure));
 
-            IBulkSpreadFactory<TSelf, TSMeasure, TEnum> factory = GetBulkSpreadFactory();
+        //    IBulkSpreadFactory<TSelf, TSMeasure, TEnum> factory = GetBulkSpreadFactory();
 
-            return factory.Create((TSMeasure)spreadMeasure);
-        }
+        //    return factory.Create((TSMeasure)spreadMeasure);
+        //}
 
         public override sealed TSelf GetBulkSpread(params IExtent[] shapeExtents)
         {

@@ -559,7 +559,7 @@ public sealed class BaseMeasureTests
     #endregion
 
     #region IQuantifiable Round
-    #region override sealed IRound<IQuantifiable>.Round(RoundingMode roundingMode)
+    #region override sealed IRound<IQuantifiable>.Round(RoundingMode)
     [TestMethod, TestCategory("UnitTest")]
     public void Round_invalidArg_RoundingMode_throws_InvalidEnumArgumentException()
     {

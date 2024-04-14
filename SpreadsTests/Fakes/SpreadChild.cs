@@ -69,11 +69,6 @@ internal sealed class SpreadChild(IRootObject rootObject, string paramName) : Sp
 
     public override IFactory GetFactory() => Return.GetFactory;
 
-    public override ISpread GetSpread(ISpreadMeasure spreadMeasure)
-    {
-        return GetSpreadChild(spreadMeasure, (ISpreadFactory)GetFactory());
-    }
-
     public override ISpreadMeasure GetSpreadMeasure() => Return.GetSpreadMeasure;
 
     public override bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable? exchanged)

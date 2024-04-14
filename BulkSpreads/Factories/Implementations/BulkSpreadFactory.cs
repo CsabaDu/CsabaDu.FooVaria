@@ -1,5 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
-
+﻿
 namespace CsabaDu.FooVaria.BulkSpreads.Factories.Implementations
 {
     public abstract class BulkSpreadFactory : IBulkSpreadFactory
@@ -18,17 +17,24 @@ namespace CsabaDu.FooVaria.BulkSpreads.Factories.Implementations
         #region Public methods
         public IQuantifiable CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
         {
-            if (!measureUnitCode.IsSpreadMeasureUnitCode()) throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode);
+            Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit()!;
+            object? quantity = defaultQuantity.ToQuantity(TypeCode.Double);
 
-            IMeasure measure = MeasureFactory.Create(measureUnitCode, defaultQuantity);
+            if (quantity is double doubleQuantity && doubleQuantity > 0)
+            {
+                ISpreadMeasure spreadMeasure = CreateSpreadMeasure(measureUnit, doubleQuantity)
+                    ?? throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode);
 
-            return CreateSpread((ISpreadMeasure)measure);
+                return CreateSpread(spreadMeasure);
+            }
+
+            throw QuantityArgumentOutOfRangeException(nameof(defaultQuantity), defaultQuantity);
         }
 
         #region Abstract methods
         public abstract ISpread CreateSpread(ISpreadMeasure spreadMeasure);
         public abstract IBulkSpread Create(params IExtent[] shapeExtents);
-        public abstract ISpreadMeasure? CreateSpreadMeasure(Enum measureUnit, ValueType quantity);
+        public abstract ISpreadMeasure? CreateSpreadMeasure(Enum measureUnit, double quantity);
         #endregion
         #endregion
     }
@@ -77,13 +83,13 @@ namespace CsabaDu.FooVaria.BulkSpreads.Factories.Implementations
         #region Public methods
         #region Override methods
         #region Sealed methods
-        public override sealed TSMeasure? CreateSpreadMeasure(Enum measureUnit, ValueType quantity)
+        public override sealed TSMeasure? CreateSpreadMeasure(Enum measureUnit, double quantity)
         {
             if (measureUnit is not TEnum spreadMeasureUnit) return null;
 
-            if (quantity?.ToQuantity(TypeCode.Double) is not double spreadQuantity || spreadQuantity <= 0) return null;
-
-            return (TSMeasure)MeasureFactory.Create(spreadMeasureUnit, spreadQuantity);
+            return quantity > 0 ?
+                 (TSMeasure)MeasureFactory.Create(spreadMeasureUnit, quantity)
+                 : null;
         }
         #endregion
         #endregion

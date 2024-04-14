@@ -6,9 +6,9 @@ public sealed class RandomParams
 {
     #region Private fields
     private static readonly Random Random = Random.Shared;
-    private static readonly IEnumerable<MeasureUnitCode> CustomMeasureUnitCodes = MeasureUnitCodes.Where(x => x.IsCustomMeasureUnitCode());
-    private static readonly IEnumerable<MeasureUnitCode> ConstantMeasureUnitCodes = MeasureUnitCodes.Where(x => !x.IsCustomMeasureUnitCode());
-    private static readonly IEnumerable<MeasureUnitCode> SpreadMeasureUnitCodes = MeasureUnitCodes.Where(x => x.IsSpreadMeasureUnitCode());
+    //private static readonly IEnumerable<MeasureUnitCode> CustomMeasureUnitCodes = MeasureUnitCodes.Where(x => x.IsCustomMeasureUnitCode());
+    //private static readonly IEnumerable<MeasureUnitCode> ConstantMeasureUnitCodes = MeasureUnitCodes.Where(x => !x.IsCustomMeasureUnitCode());
+    //private static readonly IEnumerable<MeasureUnitCode> SpreadMeasureUnitCodes = MeasureUnitCodes.Where(x => x.IsSpreadMeasureUnitCode());
     #endregion
 
     #region Public methods
@@ -353,6 +353,13 @@ public sealed class RandomParams
     public MeasureUnitCode GetRandomSpreadMeasureUnitCode()
     {
         return GetRandomItem(SpreadMeasureUnitCodes);
+    }
+
+    public Enum GetRandomSpreadMeasureUnit()
+    {
+        MeasureUnitCode measureUnitCode = GetRandomSpreadMeasureUnitCode();
+
+        return GetRandomMeasureUnit(measureUnitCode);
     }
     #endregion
 

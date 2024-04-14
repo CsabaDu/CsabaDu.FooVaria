@@ -181,10 +181,10 @@ public abstract class SimpleShape : Shape, ISimpleShape
         return this;
     }
 
-    public override sealed ISpread GetSpread(ISpreadMeasure spreadMeasure)
-    {
-        return GetBulkSpreadFactory().CreateSpread(spreadMeasure);
-    }
+    //public override sealed ISpread GetSpread(ISpreadMeasure spreadMeasure)
+    //{
+    //    return GetBulkSpreadFactory().CreateSpread(spreadMeasure);
+    //}
 
     public override sealed IEnumerable<IShapeComponent> GetShapeComponents()
     {

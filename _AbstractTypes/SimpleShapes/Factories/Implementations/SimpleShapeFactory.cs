@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Factories;
+
+namespace CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Factories.Implementations;
 
 public abstract class SimpleShapeFactory : ISimpleShapeFactory
 {
@@ -15,14 +17,15 @@ public abstract class SimpleShapeFactory : ISimpleShapeFactory
 
     public IExtent CreateShapeExtent(ExtentUnit extentUnit, ValueType quantity)
     {
-        IMeasure measure = GetMeasureFactory().Create(extentUnit, quantity);
+        IMeasureFactory factory = GetMeasureFactory();
+        IMeasure measure = factory.Create(extentUnit, quantity);
 
         if (measure.GetDefaultQuantity() > 0) return (IExtent)measure;
 
         throw QuantityArgumentOutOfRangeException(quantity);
     }
 
-    public ISpreadMeasure? CreateSpreadMeasure(Enum measureUnit, ValueType quantity)
+    public ISpreadMeasure? CreateSpreadMeasure(Enum measureUnit, double quantity)
     {
         return GetBulkSpreadFactory().CreateSpreadMeasure(measureUnit, quantity);
     }

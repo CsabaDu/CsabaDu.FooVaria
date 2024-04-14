@@ -1,9 +1,11 @@
-﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types.Implementations;
-
-namespace CsabaDu.FooVaria.Tests.TestHelpers.Params;
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Params;
 
 public static class SampleParams
 {
+    internal static readonly IEnumerable<MeasureUnitCode> CustomMeasureUnitCodes = MeasureUnitCodes.Where(x => x.IsCustomMeasureUnitCode());
+    internal static readonly IEnumerable<MeasureUnitCode> ConstantMeasureUnitCodes = MeasureUnitCodes.Where(x => !x.IsCustomMeasureUnitCode());
+    internal static readonly IEnumerable<MeasureUnitCode> SpreadMeasureUnitCodes = MeasureUnitCodes.Where(x => x.IsSpreadMeasureUnitCode());
+
     private static readonly int LimitModeCount = Enum.GetNames<LimitMode>().Length;
     private static readonly int MeasureUnitCodeCount = MeasureUnitCodes.Length;
     private static readonly int RoundingModeCount = Enum.GetNames<RoundingMode>().Length;
@@ -41,5 +43,10 @@ public static class SampleParams
     public static IEnumerable<TypeCode> GetInvalidQuantityTypeCodes()
     {
         return Enum.GetValues<TypeCode>().Except(QuantityTypeCodes);
+    }
+
+    public static MeasureUnitCode GetOtherSpreadMeasureUnitCode(MeasureUnitCode measureUnitCode)
+    {
+        return SpreadMeasureUnitCodes.First(x => x != measureUnitCode);
     }
 }
