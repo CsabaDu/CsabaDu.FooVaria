@@ -67,18 +67,26 @@ public abstract class Spread(IRootObject rootObject, string paramName) : Quantif
     public ISpreadMeasure? GetSpreadMeasure(IQuantifiable? quantifiable)
     {
         return quantifiable is ISpreadMeasure spreadMeasure
-            && IsExchangeableTo(quantifiable.GetMeasureUnitCode()) ?
+            && spreadMeasure.GetSpreadMeasure() is IBaseMeasure
+            && IsExchangeableTo(spreadMeasure.GetBaseMeasureUnit())
+            && spreadMeasure.GetQuantity() > 0 ?
             spreadMeasure.GetSpreadMeasure()
             : null;
     }
 
     public void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)
     {
-        IBaseMeasure? baseMeasure = NullChecked(spreadMeasure, paramName).GetSpreadMeasure() as IBaseMeasure;
+        if (NullChecked(spreadMeasure, paramName).GetSpreadMeasure() is not IBaseMeasure baseMeasure)
+        {
+            throw ArgumentTypeOutOfRangeException(paramName, spreadMeasure!);
+        }
 
-        MeasureUnitCode measureUnitCode = baseMeasure?.GetMeasureUnitCode() ?? throw new InvalidOperationException(null);
+        MeasureUnitCode measureUnitCode = baseMeasure.GetMeasureUnitCode();
 
-        if (!HasMeasureUnitCode(measureUnitCode)) throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
+        if (!IsExchangeableTo(measureUnitCode))
+        {
+            throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
+        }
 
         double quantity = spreadMeasure!.GetQuantity();
 

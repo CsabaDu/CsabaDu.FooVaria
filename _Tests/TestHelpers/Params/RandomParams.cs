@@ -257,19 +257,38 @@ public sealed class RandomParams
 
     public double GetRandomPositiveDouble(double? excluded = null)
     {
-        double positiveDecimal = getRandomPositiveDouble();
+        double positiveDouble = getRandomPositiveDouble();
 
-        while (positiveDecimal == 0 || positiveDecimal == excluded)
+        while (positiveDouble == 0 || positiveDouble == excluded)
         {
-            positiveDecimal = getRandomPositiveDouble();
+            positiveDouble = getRandomPositiveDouble();
         }
 
-        return positiveDecimal;
+        return positiveDouble;
 
         #region Local methods
         double getRandomPositiveDouble()
         {
             return Convert.ToDouble(Random.NextInt64(uint.MaxValue)) + Random.NextDouble();
+        }
+        #endregion
+    }
+
+    public double GetRandomNegativeDouble(double? excluded = null)
+    {
+        double negativeDouble = getRandomNegativeDouble();
+
+        while (negativeDouble == excluded)
+        {
+            negativeDouble = getRandomNegativeDouble();
+        }
+
+        return negativeDouble;
+
+        #region Local methods
+        double getRandomNegativeDouble()
+        {
+            return Convert.ToDouble(Random.Next(int.MinValue, 1)) - Random.NextDouble();
         }
         #endregion
     }

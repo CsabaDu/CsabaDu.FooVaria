@@ -1,3 +1,4 @@
+using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.BehaviorObjects;
 using CsabaDu.FooVaria.Tests.TestHelpers.Params;
 using CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.Fakes;
 using System.ComponentModel;
@@ -218,8 +219,22 @@ public sealed class SpreadTests
     }
     #endregion
 
-    #region ISpreadMeasure? ISpreadGetSpreadMeasure(IQuantifiable?)
+    #region ISpread.GetSpreadMeasure(IQuantifiable?)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetGetSpreadMeasureArgs), DynamicDataSourceType.Method)]
+    public void GetSpreadMeasure_arg_ISpreadMeasure_returns_expected(Enum measureUnit, ISpreadMeasure expected, IQuantifiable quantifiable)
+    {
+        // Arrange
+        SetSpreadChild(measureUnit, Fields.quantity);
 
+        Fields.paramName = Fields.RandomParams.GetRandomParamName();
+
+        // Act
+        var actual = _spread.GetSpreadMeasure(quantifiable);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
     #endregion
     #endregion
 
@@ -296,10 +311,62 @@ public sealed class SpreadTests
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
         Assert.AreEqual(Fields.paramName, ex.ParamName);
     }
-    #endregion
-    #endregion
-    #endregion
 
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetValidateSpreadMeasureArgs), DynamicDataSourceType.Method)]
+    public void ValidateSpreadMeasure_invalidArg_ISpreadMeasure_throws_ArgumentOutOfRangeException(Enum measureUnit, ISpreadMeasure spreadMeasure)
+    {
+        // Arrange
+        SetSpreadChild(measureUnit, Fields.quantity);
+
+        Fields.paramName = Fields.RandomParams.GetRandomParamName();
+
+        // Act
+        void attempt() => _spread.ValidateSpreadMeasure(spreadMeasure, Fields.paramName);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
+        Assert.AreEqual(Fields.paramName, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateSpreadMeasure_invalidArg_ISpreadMeasure_throws_InvalidEnumArgumentException()
+    {
+        // Arrange
+        SetSpreadChild();
+
+        Fields.measureUnitCode = SampleParams.GetOtherSpreadMeasureUnitCode(Fields.measureUnitCode);
+        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        _spreadMeasure = GetSpreadMeasureBaseMeasureObject(); 
+        Fields.paramName = Fields.RandomParams.GetRandomParamName();
+
+        // Act
+        void attempt() => _spread.ValidateSpreadMeasure(_spreadMeasure, Fields.paramName);
+
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(Fields.paramName, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateSpreadMeasure_validArg_ISpreadMeasure_returns()
+    {
+        // Arrange
+        SetSpreadChild();
+
+        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        Fields.quantity = Fields.RandomParams.GetRandomPositiveDouble();
+        _spreadMeasure = GetSpreadMeasureBaseMeasureObject();
+
+        // Act
+        void attempt() => _spread.ValidateSpreadMeasure(_spreadMeasure, Fields.paramName);
+
+        // Assert
+        Assert.IsTrue(DoesNotThrowException(attempt));
+    }
+    #endregion
+    #endregion
+    #endregion
     //    //#region Static methods
 
     //    //#endregion
@@ -344,12 +411,22 @@ public sealed class SpreadTests
     {
         return SpreadMeasureBaseMeasureObject.GetSpreadMeasureBaseMeasureObject(Fields.measureUnit, Fields.quantity);
     }
+
     #region DynamicDataSource
     private static IEnumerable<object[]> GetIsExchangeableToArgs()
     {
         return DynamicDataSource.GetIsExchangeableToArgs();
     }
 
+    private static IEnumerable<object[]> GetGetSpreadMeasureArgs()
+    {
+        return DynamicDataSource.GetGetSpreadMeasureArgs();
+    }
+
+    private static IEnumerable<object[]> GetValidateSpreadMeasureArgs()
+    {
+        return DynamicDataSource.GetValidateSpreadMeasureArgs();
+    }
     #endregion
     #endregion
 }
