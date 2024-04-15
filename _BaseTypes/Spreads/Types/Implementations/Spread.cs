@@ -64,6 +64,14 @@ public abstract class Spread(IRootObject rootObject, string paramName) : Quantif
         return factory.CreateSpread(NullChecked(spreadMeasure, nameof(spreadMeasure)));
     }
 
+    public ISpreadMeasure? GetSpreadMeasure(IQuantifiable? quantifiable)
+    {
+        return quantifiable is ISpreadMeasure spreadMeasure
+            && IsExchangeableTo(quantifiable.GetMeasureUnitCode()) ?
+            spreadMeasure.GetSpreadMeasure()
+            : null;
+    }
+
     public void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)
     {
         IBaseMeasure? baseMeasure = NullChecked(spreadMeasure, paramName).GetSpreadMeasure() as IBaseMeasure;
@@ -72,7 +80,7 @@ public abstract class Spread(IRootObject rootObject, string paramName) : Quantif
 
         if (!HasMeasureUnitCode(measureUnitCode)) throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
 
-        decimal quantity = baseMeasure.GetDefaultQuantity();
+        double quantity = spreadMeasure!.GetQuantity();
 
         if (quantity > 0) return;
 

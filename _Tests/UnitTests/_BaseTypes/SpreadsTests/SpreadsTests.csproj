@@ -20,8 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\_Tests\TestHelpers\HelperMethods\HelperMethods.csproj" />
-    <ProjectReference Include="..\_Tests\UnitTests\_BaseTypes\BaseMeasuresTests\BaseMeasuresTests.csproj" />
+    <ProjectReference Include="..\..\..\TestHelpers\HelperMethods\HelperMethods.csproj" />
+    <ProjectReference Include="..\BaseMeasuresTests\BaseMeasuresTests.csproj" />
   </ItemGroup>
 
   <ItemGroup>

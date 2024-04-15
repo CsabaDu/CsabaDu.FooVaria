@@ -217,6 +217,10 @@ public sealed class SpreadTests
         Assert.AreEqual(expected, actual);
     }
     #endregion
+
+    #region ISpreadMeasure? ISpreadGetSpreadMeasure(IQuantifiable?)
+
+    #endregion
     #endregion
 
     #region bool IsExchangeableTo
@@ -276,11 +280,24 @@ public sealed class SpreadTests
 
     #region void ValidateSpreadMeasure
     #region ISpreadMeasure.ValidateSpreadMeasure(ISpreadMeasure?, string)
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateSpreadMeasure_nullArg_ISpreadMeasure_throws_ArgumentNullException()
+    {
+        // Arrange
+        SetSpreadChild();
 
+        _spreadMeasure = null;
+        Fields.paramName = Fields.RandomParams.GetRandomParamName();
+
+        // Act
+        void attempt() => _spread.ValidateSpreadMeasure(_spreadMeasure, Fields.paramName);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
+        Assert.AreEqual(Fields.paramName, ex.ParamName);
+    }
     #endregion
     #endregion
-
-
     #endregion
 
     //    //#region Static methods

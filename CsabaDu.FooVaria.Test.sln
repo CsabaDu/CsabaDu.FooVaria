@@ -48,7 +48,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelperMethods", "_Tests\Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spreads", "_BaseTypes\Spreads\Spreads.csproj", "{594924BD-CB54-43E6-9411-5DA90FBBBCDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpreadsTests", "SpreadsTests\SpreadsTests.csproj", "{15F28890-1CF1-4464-8502-EA118DA2B982}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpreadsTests", "_Tests\UnitTests\_BaseTypes\SpreadsTests\SpreadsTests.csproj", "{15F28890-1CF1-4464-8502-EA118DA2B982}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
