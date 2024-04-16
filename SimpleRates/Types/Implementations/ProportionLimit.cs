@@ -37,16 +37,6 @@ internal sealed class ProportionLimit : SimpleRate, IProportionLimit
         return HashCode.Combine(proportionLimit.GetLimitMode()!.Value, proportionLimit.GetHashCode());
     }
 
-    public decimal GetLimiterDefaultQuantity()
-    {
-        return GetDefaultQuantity();
-    }
-
-    public MeasureUnitCode GetLimiterMeasureUnitCode()
-    {
-        return GetNumeratorCode();
-    }
-
     public IProportionLimit GetProportionLimit(IBaseRate baseRate, LimitMode limitMode)
     {
         return Factory.Create(baseRate, limitMode);

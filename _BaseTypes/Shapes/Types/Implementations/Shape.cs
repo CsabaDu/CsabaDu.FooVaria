@@ -3,34 +3,6 @@
 public abstract class Shape(IRootObject rootObject, string paramName) : Spread(rootObject, paramName), IShape
 {
     #region Public methods
-    public IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
-    {
-        yield return GetMeasureUnitCode();
-        yield return MeasureUnitCode.ExtentUnit;
-    }
-
-    public int GetShapeComponentCount()
-    {
-        return GetShapeComponents().Count();
-    }
-
-    public bool IsValidMeasureUnitCode(MeasureUnitCode measureUnitCode)
-    {
-        return IsValidMeasureUnitCode(this, measureUnitCode);
-    }
-
-    public void ValidateMeasureUnitCodes(IBaseQuantifiable? baseQuantifiable, string paramName)
-    {
-        ValidateMeasureUnitCodes(this, baseQuantifiable, paramName);
-    }
-
-    public void ValidateShapeComponent(IBaseQuantifiable? shapeComponent, string paramName)
-    {
-        if (GetValidShapeComponent(NullChecked(shapeComponent, paramName)) is not null) return;
-
-        throw ArgumentTypeOutOfRangeException(paramName, shapeComponent!);
-    }
-
     #region Override methods
     #region Sealed methods
     public override sealed int CompareTo(IQuantifiable? other)
@@ -94,10 +66,44 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
     #region Abstract methods
     public abstract int CompareTo(IShape? other);
     public abstract bool? FitsIn(IShape? other, LimitMode? limitMode);
-    public abstract IShapeComponent? GetValidShapeComponent(IBaseQuantifiable? shapeComponent);
+    public abstract IShapeComponent? GetValidShapeComponent(IBaseQuantifiable? baseQuantifiable);
     public abstract IEnumerable<IShapeComponent> GetShapeComponents();
     public abstract IShape GetShape();
-    public abstract IShape? GetShape(params IShapeComponent[] shapeComponents);
     #endregion
+
+    public IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
+    {
+        yield return GetMeasureUnitCode();
+        yield return GetValidShapeComponent(this)!.GetMeasureUnitCode();
+    }
+
+    public IShape? GetShape(params IShapeComponent[] shapeComponents)
+    {
+        IShapeFactory factory = (IShapeFactory)GetFactory();
+
+        return factory.CreateShape(shapeComponents);
+    }
+
+    public int GetShapeComponentCount()
+    {
+        return GetShapeComponents().Count();
+    }
+
+    public bool IsValidMeasureUnitCode(MeasureUnitCode measureUnitCode)
+    {
+        return IsValidMeasureUnitCode(this, measureUnitCode);
+    }
+
+    public void ValidateMeasureUnitCodes(IBaseQuantifiable? baseQuantifiable, string paramName)
+    {
+        ValidateMeasureUnitCodes(this, baseQuantifiable, paramName);
+    }
+
+    public void ValidateShapeComponent(IBaseQuantifiable? shapeComponent, string paramName)
+    {
+        if (GetValidShapeComponent(NullChecked(shapeComponent, paramName)) is not null) return;
+
+        throw ArgumentTypeOutOfRangeException(paramName, shapeComponent!);
+    }
     #endregion
 }

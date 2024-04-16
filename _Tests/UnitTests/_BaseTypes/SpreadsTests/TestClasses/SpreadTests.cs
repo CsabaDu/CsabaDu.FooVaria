@@ -1,8 +1,3 @@
-using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.BehaviorObjects;
-using CsabaDu.FooVaria.Tests.TestHelpers.Params;
-using CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.Fakes;
-using System.ComponentModel;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.SpreadsTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -366,11 +361,12 @@ public sealed class SpreadTests
     }
     #endregion
     #endregion
-    #endregion
+
     //    //#region Static methods
 
     //    //#endregion
     //    #endregion
+    #endregion
 
     #region Private methods
     private void SetSpreadChild(Enum measureUnit, ValueType quantity, ISpreadFactory factory = null, RateComponentCode? rateComponentCode = null)

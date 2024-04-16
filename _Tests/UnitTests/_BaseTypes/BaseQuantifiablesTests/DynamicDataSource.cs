@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseQuantifiablesTests;
 
-internal class DynamicDataSource : CommonDynamicDataSource
+internal sealed class DynamicDataSource : CommonDynamicDataSource
 {
     #region Methods
     internal IEnumerable<object[]> GetEqualsArgs()

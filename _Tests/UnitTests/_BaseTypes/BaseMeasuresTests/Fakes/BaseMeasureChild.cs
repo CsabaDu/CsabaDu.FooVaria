@@ -47,8 +47,9 @@ internal class BaseMeasureChild(IRootObject rootObject, string paramName) : Base
     #endregion
 
     #region Test helpers
-    public BaseMeasureReturn Return { private get; set; }
     internal static DataFields Fields = new();
+    public BaseMeasureReturn Return { private get; set; }
+    private LimiterObject LimiterObject {  get; set; }
 
     internal static BaseMeasureChild GetBaseMeasureChild(Enum measureUnit, ValueType quantity, RateComponentCode? rateComponentCode = null, LimitMode? limitMode = null)
     {
@@ -63,8 +64,11 @@ internal class BaseMeasureChild(IRootObject rootObject, string paramName) : Base
                 GetFactory = rateComponentCode.HasValue ?
                     GetBaseMeasureFactoryObject(rateComponentCode.Value)
                     : null,
-                GetLimitMode = limitMode,
-            }
+            },
+            LimiterObject = new()
+            {
+                LimitMode = limitMode,
+            },
         };
     }
     #endregion
@@ -77,7 +81,7 @@ internal class BaseMeasureChild(IRootObject rootObject, string paramName) : Base
 
     public override sealed IFactory GetFactory() => Return.GetFactory;
 
-    public override sealed LimitMode? GetLimitMode() => Return.GetLimitMode;
+    public override sealed LimitMode? GetLimitMode() => LimiterObject.GetLimitMode();
 
     public override sealed bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable exchanged)
     {

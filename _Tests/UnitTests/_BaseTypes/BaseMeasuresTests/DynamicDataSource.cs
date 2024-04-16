@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests;
 
-internal class DynamicDataSource : CommonDynamicDataSource
+internal sealed class DynamicDataSource : CommonDynamicDataSource
 {
     #region Fields
     IBaseMeasure baseMeasure;

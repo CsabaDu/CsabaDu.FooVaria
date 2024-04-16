@@ -40,8 +40,9 @@ internal sealed class SpreadChild(IRootObject rootObject, string paramName) : Sp
     #endregion
 
     #region Test helpers
-    public SpreadReturn Return { private get; set; } = new();
     private static DataFields Fields = new();
+    public SpreadReturn Return { private get; set; } = new();
+    private ISpreadMeasure SpreadMeasure { get; set; }
 
     internal static SpreadChild GetSpreadChild(Enum measureUnit, ValueType quantity, ISpreadFactory factory = null, RateComponentCode? rateComponentCode = null)
     {
@@ -50,8 +51,8 @@ internal sealed class SpreadChild(IRootObject rootObject, string paramName) : Sp
             Return = new()
             {
                 GetFactory = factory,
-                GetSpreadMeasure = GetSpreadMeasureBaseMeasureObject(measureUnit, quantity, rateComponentCode),
-            }
+            },
+            SpreadMeasure = GetSpreadMeasureBaseMeasureObject(measureUnit, quantity, rateComponentCode),
         };
     }
 
@@ -62,15 +63,15 @@ internal sealed class SpreadChild(IRootObject rootObject, string paramName) : Sp
             Return = new()
             {
                 GetFactory = factory,
-                GetSpreadMeasure = spreadMeasure,
-            }
+            },
+            SpreadMeasure = spreadMeasure,
         };
     }
     #endregion
 
     public override IFactory GetFactory() => Return.GetFactory;
 
-    public override ISpreadMeasure GetSpreadMeasure() => Return.GetSpreadMeasure;
+    public override ISpreadMeasure GetSpreadMeasure() => SpreadMeasure;
 
     public override bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable? exchanged)
     {

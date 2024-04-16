@@ -201,7 +201,8 @@ public sealed class BaseMeasureTests
         Fields.rateComponentCode = Fields.RandomParams.GetRandomRateComponentCode();
         Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
         _limiter = LimiterQuantifiableObject.GetLimiterQuantifiableObject(Fields.limitMode.Value, Fields.measureUnit, Fields.decimalQuantity);
-        bool? expected = Fields.defaultQuantity.FitsIn(_limiter.GetLimiterDefaultQuantity(), Fields.limitMode);
+        Fields.decimalQuantity = (_limiter as IQuantifiable).GetDefaultQuantity();
+        bool? expected = Fields.defaultQuantity.FitsIn(Fields.decimalQuantity, Fields.limitMode);
 
         // Act
         var actual = _baseMeasure.FitsIn(_limiter);

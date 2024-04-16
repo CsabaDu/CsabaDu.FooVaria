@@ -24,11 +24,6 @@ internal sealed class Limit(ILimitFactory factory, IMeasurement measurement, ulo
         return base.GetHashCode(limit);
     }
 
-    public MeasureUnitCode GetLimiterMeasureUnitCode()
-    {
-        return GetMeasureUnitCode();
-    }
-
     public ILimit? GetLimit(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName, LimitMode limitMode)
     {
         return Factory.Create(measureUnit, exchangeRate, quantity, customName, limitMode);
@@ -62,11 +57,6 @@ internal sealed class Limit(ILimitFactory factory, IMeasurement measurement, ulo
     public ILimit? GetLimit(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity, LimitMode limitMode)
     {
         return Factory.Create(customName, measureUnitCode, exchangeRate, quantity, limitMode);
-    }
-
-    public decimal GetLimiterDefaultQuantity()
-    {
-        return GetDefaultQuantity();
     }
 
     public ILimit GetNew(ILimit other)

@@ -31,9 +31,9 @@ internal abstract class PlaneShape : SimpleShape, IPlaneShape
         return Area.GetMeasureUnit();
     }
 
-    public override sealed IShapeComponent? GetValidShapeComponent(IBaseQuantifiable? shapeComponent)
+    public override sealed IShapeComponent? GetValidShapeComponent(IBaseQuantifiable? baseQuantifiable)
     {
-        if (shapeComponent is not IExtent extent) return null;
+        if (baseQuantifiable is not IExtent extent) return null;
 
         return extent;
     }

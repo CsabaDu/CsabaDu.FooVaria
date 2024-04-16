@@ -2,7 +2,8 @@
 
 public static class FakeMethods
 {
-    public static bool TryExchange(IQuantifiable quantifiable, Func<IQuantifiable> create, Enum context, out IQuantifiable? exchanged)
+    public static bool TryExchange<T>(T quantifiable, Func<T> create, Enum context, out T? exchanged)
+        where T : class, IQuantifiable
     {
         if (quantifiable.IsExchangeableTo(context))
         {

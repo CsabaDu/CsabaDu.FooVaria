@@ -2,8 +2,6 @@
 {
     public interface ILimiter : ILimitMode
     {
-        MeasureUnitCode GetLimiterMeasureUnitCode();
-        decimal GetLimiterDefaultQuantity();
     }
 
     public interface ILimiter<TSelf, in TLimitable> : ILimiter, IEqualityComparer<TSelf>

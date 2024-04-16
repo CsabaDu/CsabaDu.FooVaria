@@ -101,16 +101,6 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         return Factory;
     }
 
-    public MeasureUnitCode GetLimiterMeasureUnitCode()
-    {
-        return Limit.GetMeasureUnitCode();
-    }
-
-    public decimal GetLimiterDefaultQuantity()
-    {
-        return Limit.GetDefaultQuantity();
-    }
-
     public override ILimitedRate GetRate(IRate rate)
     {
         return (ILimitedRate)Factory.CreateNew(rate);

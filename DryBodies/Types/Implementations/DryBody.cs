@@ -87,11 +87,11 @@ namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
             return Volume;
         }
 
-        public override sealed IShapeComponent? GetValidShapeComponent(IBaseQuantifiable? shapeComponent)
+        public override sealed IShapeComponent? GetValidShapeComponent(IBaseQuantifiable? baseQuantifiable)
         {
-            if (shapeComponent is not IExtent or IPlaneShape) return null;
+            if (baseQuantifiable is not IExtent or IPlaneShape) return null;
 
-            return (IShapeComponent)shapeComponent;
+            return (IShapeComponent)baseQuantifiable;
         }
 
         public override sealed IBulkBodyFactory GetBulkSpreadFactory()

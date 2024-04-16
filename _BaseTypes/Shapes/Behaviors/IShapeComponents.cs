@@ -3,7 +3,7 @@
     public interface IShapeComponents : IShapeComponentCount
     {
         IEnumerable<IShapeComponent> GetShapeComponents();
-        IShapeComponent? GetValidShapeComponent(IBaseQuantifiable? shapeComponent);
+        IShapeComponent? GetValidShapeComponent(IBaseQuantifiable? baseQuantifiable);
     }
 
     public interface IShapeComponents<out T> : IShapeComponents where T : class, IBaseQuantifiable, IShapeComponent

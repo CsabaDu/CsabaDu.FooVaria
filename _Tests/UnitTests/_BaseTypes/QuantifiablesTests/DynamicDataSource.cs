@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests;
 
-internal class DynamicDataSource : CommonDynamicDataSource
+internal sealed class DynamicDataSource : CommonDynamicDataSource
 {
     #region Fields
     IQuantifiable quantifiable;

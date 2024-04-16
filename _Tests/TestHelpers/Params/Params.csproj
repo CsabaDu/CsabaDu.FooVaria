@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Measurements\Measurements.csproj" />
-    <ProjectReference Include="..\..\..\_BaseTypes\Spreads\Spreads.csproj" />
+    <ProjectReference Include="..\..\..\_BaseTypes\BaseMeasurements\BaseMeasurements.csproj" />
+    <ProjectReference Include="..\..\..\_BaseTypes\Shapes\Shapes.csproj" />
   </ItemGroup>
 
 </Project>

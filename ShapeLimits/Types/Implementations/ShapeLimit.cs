@@ -39,16 +39,6 @@ public sealed class ShapeLimit : SimpleShape, IShapeLimit
         return HashCode.Combine(shapeLimit.LimitMode, shapeLimit.GetHashCode());
     }
 
-    public decimal GetLimiterDefaultQuantity()
-    {
-        return SimpleShape.GetDefaultQuantity();
-    }
-
-    public MeasureUnitCode GetLimiterMeasureUnitCode()
-    {
-        return SimpleShape.GetMeasureUnitCode();
-    }
-
     public LimitMode? GetLimitMode()
     {
         return LimitMode;
@@ -99,9 +89,9 @@ public sealed class ShapeLimit : SimpleShape, IShapeLimit
         return SimpleShape.GetBaseMeasureUnit();
     }
 
-    public override IShapeComponent? GetValidShapeComponent(IBaseQuantifiable? shapeComponent)
+    public override IShapeComponent? GetValidShapeComponent(IBaseQuantifiable? baseQuantifiable)
     {
-        return SimpleShape.GetValidShapeComponent(shapeComponent);
+        return SimpleShape.GetValidShapeComponent(baseQuantifiable);
     }
 
     public override ISpreadMeasure GetSpreadMeasure()

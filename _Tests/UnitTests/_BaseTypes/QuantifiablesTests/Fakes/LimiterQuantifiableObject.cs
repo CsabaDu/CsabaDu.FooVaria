@@ -6,21 +6,20 @@ internal sealed class LimiterQuantifiableObject(IRootObject rootObject, string p
     {
         return new(Fields.RootObject, Fields.paramName)
         {
-            LimitMode = limitMode,
             Return = new()
             {
                 GetBaseMeasureUnit = measureUnit,
                 GetDefaultQuantity = defaultQuantity,
                 GetFactory = factory,
-            }
+            },
+            LimiterObject = new()
+            {
+                LimitMode = limitMode,
+            },
         };
     }
 
-    public LimitMode LimitMode { private get; set; }
+    private LimiterObject LimiterObject { get; set; }
 
-    public decimal GetLimiterDefaultQuantity() => GetDefaultQuantity();
-
-    public MeasureUnitCode GetLimiterMeasureUnitCode() => GetMeasureUnitCode();
-
-    public LimitMode? GetLimitMode() => LimitMode;
+    public LimitMode? GetLimitMode() => LimiterObject.GetLimitMode();
 }

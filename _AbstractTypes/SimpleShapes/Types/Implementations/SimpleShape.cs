@@ -19,13 +19,6 @@ public abstract class SimpleShape : Shape, ISimpleShape
     #endregion
 
     #region Public methods
-    public override sealed IShape? GetShape(params IShapeComponent[] shapeComponents)
-    {
-        ISimpleShapeFactory factory = (ISimpleShapeFactory)GetFactory();
-
-        return factory.CreateShape(shapeComponents);
-    }
-
     public IExtent GetDiagonal()
     {
         return GetDiagonal(default);
