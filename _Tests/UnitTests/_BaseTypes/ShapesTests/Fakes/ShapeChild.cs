@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests.Fakes;
 
-internal sealed class ShapeChild(IRootObject rootObject, string paramName) : Shape(rootObject, paramName)
+internal class ShapeChild(IRootObject rootObject, string paramName) : Shape(rootObject, paramName)
 {
     #region Members
 
@@ -76,52 +76,51 @@ internal sealed class ShapeChild(IRootObject rootObject, string paramName) : Sha
                 Enum measureUnit = quantifiable.GetBaseMeasureUnit();
                 ValueType quantity = quantifiable.GetBaseQuantity();
 
-                return GetSpreadMeasureObject(measureUnit, quantity);
+                return GetSpreadMeasureBaseMeasureObject(measureUnit, quantity);
             }
 
-            MeasureUnitCode measureUnitCode = shapeComponent.GetMeasureUnitCode();
-            decimal defaultQuantity = shapeComponent.GetDefaultQuantity();
-
-            return GetSpreadMeasureObject(measureUnitCode, defaultQuantity);
+            return null;
         }
     }
     #endregion
 
-    public override int CompareTo(IShape other)
+    public override sealed  int CompareTo(IShape other)
     {
         return CompareTo(other as IQuantifiable);
     }
 
-    public override bool? FitsIn(IShape other, LimitMode? limitMode)
+    public override sealed  bool? FitsIn(IShape other, LimitMode? limitMode)
     {
         return FitsIn(other as IQuantifiable, limitMode);
     }
 
-    public override IFactory GetFactory() => Return.GetFactory;
+    public override sealed IFactory GetFactory() => Return.GetFactory;
 
-    public override IShape GetShape() => this;
+    public override sealed IShape GetShape() => this;
 
-    public override IEnumerable<IShapeComponent> GetShapeComponents() => Return.GetShapeComponents;
+    public override sealed IEnumerable<IShapeComponent> GetShapeComponents() => Return.GetShapeComponents;
 
-    public override ISpreadMeasure GetSpreadMeasure() => SpreadMeasure;
+    public override sealed ISpreadMeasure GetSpreadMeasure() => SpreadMeasure;
 
-    public override IShapeComponent GetValidShapeComponent(IBaseQuantifiable baseQuantifiable)
+    public override sealed IShapeComponent GetValidShapeComponent(IBaseQuantifiable baseQuantifiable)
     {
-        if (baseQuantifiable is IShapeComponent shapeComponent) return shapeComponent;
-        throw new NotImplementedException();
+        if (baseQuantifiable is not IShapeComponent shapeComponent) return null;
+
+        return shapeComponent;
     }
 
-    public override bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable exchanged)
+    public override sealed bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable exchanged)
     {
         return FakeMethods.TryExchange(this, getShapeChild, context, out exchanged);
 
         #region Local methods
         IQuantifiable getShapeChild()
         {
+            Enum measureUnit = GetMeasureUnitElements(context, nameof(context)).MeasureUnit;
             decimal defaultQuantity = GetDefaultQuantity();
-            ShapeComponentObject shapeComponentObject = GetShapeComponentObject(context, defaultQuantity);
+            ShapeComponentQuantifiableObject shapeComponent = GetShapeComponentQuantifiableObject(measureUnit, defaultQuantity);
 
-            return GetShapeChild(shapeComponentObject, new ShapeFactoryObject());
+            return GetShapeChild(shapeComponent);
         }
         #endregion
     }

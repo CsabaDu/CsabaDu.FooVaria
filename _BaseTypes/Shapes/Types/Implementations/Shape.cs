@@ -74,7 +74,7 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
     public IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
     {
         yield return GetMeasureUnitCode();
-        yield return GetValidShapeComponent(this)!.GetMeasureUnitCode();
+        yield return (GetValidShapeComponent(this) as IQuantifiable)!.GetMeasureUnitCode();
     }
 
     public IShape? GetShape(params IShapeComponent[] shapeComponents)

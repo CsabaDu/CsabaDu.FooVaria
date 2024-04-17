@@ -24,7 +24,7 @@ public sealed class SpreadMeasureObject : ISpreadMeasure
 
     public Enum GetBaseMeasureUnit() => MeasureUnit;
 
-    public ValueType GetBaseQuantity() => Quantity;
+    public ValueType GetBaseQuantity() => GetQuantity();
 
     public Type GetMeasureUnitType() => MeasureUnit.GetType();
 

@@ -139,10 +139,6 @@
       <FileName>Behaviors\IShapeExtent.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IShapeComponent" Collapsed="true">
-    <Position X="2.75" Y="2.75" Width="1.75" />
-    <TypeIdentifier />
-  </Interface>
   <Interface Name="CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Behaviors.IHorizontalRotation" Collapsed="true">
     <Position X="11" Y="5.25" Width="1.75" />
     <TypeIdentifier>
@@ -152,6 +148,10 @@
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IExchange&lt;TSelf, TEnum&gt;" Collapsed="true">
     <Position X="5" Y="2.75" Width="2" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors.IShapeComponent" Collapsed="true">
+    <Position X="2.75" Y="2.75" Width="1.75" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />

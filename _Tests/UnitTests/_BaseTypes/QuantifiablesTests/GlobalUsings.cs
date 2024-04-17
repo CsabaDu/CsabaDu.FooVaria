@@ -22,3 +22,4 @@ global using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations
 global using static CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods.TestSupport;
 global using static CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.Fakes.LimiterQuantifiableObject;
 global using static CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.Fakes.QuantifiableChild;
+global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;

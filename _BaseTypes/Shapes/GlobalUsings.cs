@@ -4,6 +4,7 @@ global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types;
 global using CsabaDu.FooVaria.BaseTypes.Common;
 global using CsabaDu.FooVaria.BaseTypes.Common.Enums;
 global using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
+global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
 global using CsabaDu.FooVaria.BaseTypes.Shapes.Behaviors;
 global using CsabaDu.FooVaria.BaseTypes.Shapes.Enums;

@@ -1,8 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Shapes.Factories;
-using CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.Fakes;
-using CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.SpreadsTests.Fakes;
-
-namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests.Fakes;
+﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests.Fakes;
 
 internal sealed class ShapeFactoryObject : IShapeFactory
 {
@@ -10,26 +6,24 @@ internal sealed class ShapeFactoryObject : IShapeFactory
     {
         if (!measureUnitCode.IsSpreadMeasureUnitCode()) throw InvalidMeasureUnitEnumArgumentException(measureUnitCode);
 
-        ShapeComponentObject shapeComponentObject = new()
-        {
-            MeasureUnitCode = measureUnitCode,
-            DefaultQuantity = defaultQuantity,
-        };
-        return CreateShape(shapeComponentObject);
+        Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
+        IShapeComponent shapeComponent = GetShapeComponentQuantifiableObject(measureUnit, defaultQuantity);
+
+        return CreateShape(shapeComponent);
     }
 
     public IShape CreateShape(params IShapeComponent[] shapeComponents)
     {
-        throw new NotImplementedException();
+        return GetShapeChild(shapeComponents[0], this);
     }
 
     public ISpread CreateSpread(ISpreadMeasure spreadMeasure)
     {
-        return SpreadChild.GetSpreadChild(spreadMeasure, this);
+        return GetSpreadChild(spreadMeasure, this);
     }
 
     public ISpreadMeasure CreateSpreadMeasure(Enum measureUnit, double quantity)
     {
-        return SpreadMeasureBaseMeasureObject.GetSpreadMeasureBaseMeasureObject(measureUnit, quantity);
+        return GetSpreadMeasureBaseMeasureObject(measureUnit, quantity);
     }
 }
