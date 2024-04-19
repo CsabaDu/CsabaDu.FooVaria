@@ -2,7 +2,7 @@
 
 public enum Currency
 {
-    Default, ccy_001, ccy_002, ccy_003, ccy_004, ccy_005, ccy_006, ccy_007, ccy_008, ccy_009,
+    ccy_Default, ccy_001, ccy_002, ccy_003, ccy_004, ccy_005, ccy_006, ccy_007, ccy_008, ccy_009,
     ccy_010, ccy_011, ccy_012, ccy_013, ccy_014, ccy_015, ccy_016, ccy_017, ccy_018, ccy_019,
     ccy_020, ccy_021, ccy_022, ccy_023, ccy_024, ccy_025, ccy_026, ccy_027, ccy_028, ccy_029,
     ccy_030, ccy_031, ccy_032, ccy_033, ccy_034, ccy_035, ccy_036, ccy_037, ccy_038, ccy_039,

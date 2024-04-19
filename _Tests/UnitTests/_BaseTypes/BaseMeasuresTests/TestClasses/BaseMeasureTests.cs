@@ -5,6 +5,9 @@ public sealed class BaseMeasureTests
 {
     #region Tested in parent classes' tests
 
+    // int IComparable<IQuantifiable>.CompareTo(IQuantifiable? other)
+    // bool IEquatable<IQuantifiable>.Equals(IQuantifiable? other)
+    // bool? IFit<IQuantifiable>.FitsIn(IQuantifiable? other, LimitMode? limitMode)
     // ValueType IQuantity.GetBaseQuantity()
     // decimal IDecimalQuantity.GetDecimalQuantity()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
@@ -69,78 +72,78 @@ public sealed class BaseMeasureTests
     #endregion
 
     #region Test methods
-    #region int CompareTo
-    #region override sealed IComparable<IQuantifiable>.CompareTo(IQuantifiable?)
-    [TestMethod, TestCategory("UnitTest")]
-    public void CompareTo_nullArg_IQuantifiable_returns_expected()
-    {
-        // Arrange
-        SetBaseMeasureChild();
+    //#region int CompareTo
+    //#region override sealed IComparable<IQuantifiable>.CompareTo(IQuantifiable?)
+    //[TestMethod, TestCategory("UnitTest")]
+    //public void CompareTo_nullArg_IQuantifiable_returns_expected()
+    //{
+    //    // Arrange
+    //    SetBaseMeasureChild();
 
-        IQuantifiable other = null;
-        const int expected = 1;
+    //    IQuantifiable other = null;
+    //    const int expected = 1;
 
-        // Act
-        var actual = _baseMeasure.CompareTo(other);
+    //    // Act
+    //    var actual = _baseMeasure.CompareTo(other);
 
-        // Assert
-        Assert.AreEqual(expected, actual);
-    }
+    //    // Assert
+    //    Assert.AreEqual(expected, actual);
+    //}
 
-    [TestMethod, TestCategory("UnitTest")]
-    public void CompareTo_invalidArg_IQuantifiable_throws_InvalidEnumArgumentException()
-    {
-        // Arrange
-        SetBaseMeasureChild();
+    //[TestMethod, TestCategory("UnitTest")]
+    //public void CompareTo_invalidArg_IQuantifiable_throws_InvalidEnumArgumentException()
+    //{
+    //    // Arrange
+    //    SetBaseMeasureChild();
 
-        Fields.measureUnitCode = Fields.RandomParams.GetRandomConstantMeasureUnitCode(Fields.measureUnitCode);
-        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        IQuantifiable other = GetBaseMeasureChild();
+    //    Fields.measureUnitCode = Fields.RandomParams.GetRandomConstantMeasureUnitCode(Fields.measureUnitCode);
+    //    Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+    //    IQuantifiable other = GetBaseMeasureChild();
 
-        // Act
-        void attempt() => _ = _baseMeasure.CompareTo(other);
+    //    // Act
+    //    void attempt() => _ = _baseMeasure.CompareTo(other);
 
-        // Assert
-        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
-        Assert.AreEqual(ParamNames.other, ex.ParamName);
-    }
+    //    // Assert
+    //    var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+    //    Assert.AreEqual(ParamNames.other, ex.ParamName);
+    //}
 
-    [TestMethod, TestCategory("UnitTest")]
-    public void CompareTo_validArg_IQuantifiable_returns_expected()
-    {
-        // Arrange
-        SetBaseMeasureChild();
+    //[TestMethod, TestCategory("UnitTest")]
+    //public void CompareTo_validArg_IQuantifiable_returns_expected()
+    //{
+    //    // Arrange
+    //    SetBaseMeasureChild();
 
-        Fields.measureUnit = Fields.RandomParams.GetRandomSameTypeValidMeasureUnit(Fields.measureUnit);
-        Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity(Fields.quantityTypeCode, Fields.quantity);
-        IQuantifiable other = GetBaseMeasureChild();
-        int expected = _baseMeasure.GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
+    //    Fields.measureUnit = Fields.RandomParams.GetRandomSameTypeValidMeasureUnit(Fields.measureUnit);
+    //    Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity(Fields.quantityTypeCode, Fields.quantity);
+    //    IQuantifiable other = GetBaseMeasureChild();
+    //    int expected = _baseMeasure.GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
 
-        // Act
-        var actual = _baseMeasure.CompareTo(other);
+    //    // Act
+    //    var actual = _baseMeasure.CompareTo(other);
 
-        // Assert
-        Assert.AreEqual(expected, actual);
-    }
-    #endregion
-    #endregion
+    //    // Assert
+    //    Assert.AreEqual(expected, actual);
+    //}
+    //#endregion
+    //#endregion
 
     #region bool Equals
-    #region override sealed IEquatable<IQuantifiable>.Equals(IQuantifiable?)
-    [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetEqualsArg), DynamicDataSourceType.Method)]
-    public void Equals_arg_IQuantifiable_returns_expected(bool expected, Enum measureUnit, ValueType quantity, IQuantifiable other)
-    {
-        // Arrange
-        SetBaseMeasureChild(measureUnit, quantity);
+    //#region override sealed IEquatable<IQuantifiable>.Equals(IQuantifiable?)
+    //[TestMethod, TestCategory("UnitTest")]
+    //[DynamicData(nameof(GetEqualsArg), DynamicDataSourceType.Method)]
+    //public void Equals_arg_IQuantifiable_returns_expected(bool expected, Enum measureUnit, ValueType quantity, IQuantifiable other)
+    //{
+    //    // Arrange
+    //    SetBaseMeasureChild(measureUnit, quantity);
 
-        // Act
-        var actual = _baseMeasure.Equals(other);
+    //    // Act
+    //    var actual = _baseMeasure.Equals(other);
 
-        // Assert
-        Assert.AreEqual(expected, actual);
-    }
-    #endregion
+    //    // Assert
+    //    Assert.AreEqual(expected, actual);
+    //}
+    //#endregion
 
     #region IEqualityComparer<IBaseMeasure>.Equals(IBaseMeasure?, IBaseMeasure?)
     [TestMethod, TestCategory("UnitTest")]
@@ -212,55 +215,55 @@ public sealed class BaseMeasureTests
     }
     #endregion
 
-    #region override sealed IFit<IQuantifiable>.FitsIn(IQuantifiable?, LimitMode?)
-    [TestMethod, TestCategory("UnitTest")]
-    public void FitsIn_nullArgs_IQuantifiable_LimitMode_returns_expected()
-    {
-        // Arrange
-        SetBaseMeasureChild();
+    //#region override sealed IFit<IQuantifiable>.FitsIn(IQuantifiable?, LimitMode?)
+    //[TestMethod, TestCategory("UnitTest")]
+    //public void FitsIn_nullArgs_IQuantifiable_LimitMode_returns_expected()
+    //{
+    //    // Arrange
+    //    SetBaseMeasureChild();
 
-        _limiter = null;
+    //    _limiter = null;
 
-        // Act
-        var actual = _baseMeasure.FitsIn(_limiter);
+    //    // Act
+    //    var actual = _baseMeasure.FitsIn(_limiter);
 
-        // Assert
-        Assert.IsTrue(actual);
-    }
+    //    // Assert
+    //    Assert.IsTrue(actual);
+    //}
 
-    [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetFitsInIQuantifiableLimitModeArgs), DynamicDataSourceType.Method)]
-    public void FitsIn_invalidArgs_IQuantifiable_LimitMode_returns_null(Enum measureUnit, LimitMode? limitMode, IQuantifiable other)
-    {
-        // Arrange
-        SetBaseMeasureChild(measureUnit, Fields.quantity);
+    //[TestMethod, TestCategory("UnitTest")]
+    //[DynamicData(nameof(GetFitsInIQuantifiableLimitModeArgs), DynamicDataSourceType.Method)]
+    //public void FitsIn_invalidArgs_IQuantifiable_LimitMode_returns_null(Enum measureUnit, LimitMode? limitMode, IQuantifiable other)
+    //{
+    //    // Arrange
+    //    SetBaseMeasureChild(measureUnit, Fields.quantity);
 
-        // Act
-        var actual = _baseMeasure.FitsIn(other, limitMode);
+    //    // Act
+    //    var actual = _baseMeasure.FitsIn(other, limitMode);
 
-        // Assert
-        Assert.IsNull(actual);
-    }
+    //    // Assert
+    //    Assert.IsNull(actual);
+    //}
 
-    [TestMethod, TestCategory("UnitTest")]
-    public void FitsIn_validArgs_IQuantifiable_LimitMode_returns_expected()
-    {
-        // Arrange
-        SetBaseMeasureChild();
+    //[TestMethod, TestCategory("UnitTest")]
+    //public void FitsIn_validArgs_IQuantifiable_LimitMode_returns_expected()
+    //{
+    //    // Arrange
+    //    SetBaseMeasureChild();
 
-        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity();
-        IQuantifiable quantifiable = GetBaseMeasureChild();
-        Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
-        bool? expected = Fields.defaultQuantity.FitsIn(quantifiable.GetDefaultQuantity(), Fields.limitMode);
+    //    Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+    //    Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity();
+    //    IQuantifiable quantifiable = GetBaseMeasureChild();
+    //    Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
+    //    bool? expected = Fields.defaultQuantity.FitsIn(quantifiable.GetDefaultQuantity(), Fields.limitMode);
 
-        // Act
-        var actual = _baseMeasure.FitsIn(quantifiable, Fields.limitMode);
+    //    // Act
+    //    var actual = _baseMeasure.FitsIn(quantifiable, Fields.limitMode);
 
-        // Assert
-        Assert.AreEqual(expected, actual);
-    }
-    #endregion
+    //    // Assert
+    //    Assert.AreEqual(expected, actual);
+    //}
+    //#endregion
     #endregion
 
     #region IBaseMeasure GetBaseMeasure

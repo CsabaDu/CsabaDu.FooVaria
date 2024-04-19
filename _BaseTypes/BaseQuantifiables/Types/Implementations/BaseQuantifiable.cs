@@ -32,8 +32,8 @@ public abstract class BaseQuantifiable(IRootObject rootObject, string paramName)
     #region Override methods
     public override bool Equals(object? obj)
     {
-        return base.Equals(obj)
-            && obj is IBaseQuantifiable other
+        return obj is IBaseQuantifiable other
+            && base.Equals(other)
             && GetDefaultQuantity() == other.GetDefaultQuantity();
     }
 
@@ -48,15 +48,9 @@ public abstract class BaseQuantifiable(IRootObject rootObject, string paramName)
     {
         if (limiter is null) return true;
 
-        if (limiter is not IBaseQuantifiable other) return null;
-
-        if (!other.HasMeasureUnitCode(GetMeasureUnitCode())) return null;
-
-        decimal defaultQuantity = GetDefaultQuantity();
-        decimal otherQuantity = other.GetDefaultQuantity();
-        LimitMode? limitMode = limiter?.GetLimitMode();
-
-        return defaultQuantity.FitsIn(otherQuantity, limitMode);
+        return limiter is IBaseQuantifiable other ?
+            DefaultQuantitiesFit(this, other, limiter?.GetLimitMode())
+            : null;
     }
 
     public virtual void ValidateQuantity(ValueType? quantity, string paramName)
@@ -93,11 +87,20 @@ public abstract class BaseQuantifiable(IRootObject rootObject, string paramName)
 
     #region Protected methods
     #region Static methods
+    protected static bool? DefaultQuantitiesFit(IBaseQuantifiable baseQuantifiable, IBaseQuantifiable other, LimitMode? limitMode)
+    {
+        if (!baseQuantifiable.HasMeasureUnitCode(other.GetMeasureUnitCode())) return null;
+
+        decimal quantity = baseQuantifiable.GetDefaultQuantity();
+        decimal otherQuantity = other.GetDefaultQuantity();
+
+        return quantity.FitsIn(otherQuantity, limitMode);
+    }
+
     protected static decimal GetDefaultQuantity(object quantity, decimal exchangeRate)
     {
-        decimal defaultQuantity = Convert.ToDecimal(quantity) * exchangeRate;
-
-        return defaultQuantity.Round(RoundingMode.DoublePrecision);
+        return (Convert.ToDecimal(quantity) * exchangeRate)
+            .Round(RoundingMode.DoublePrecision);
     }
 
     protected static object GetQuantity<T, TNum>(T baseQuantifiable, TypeCode quantityTypeCode)

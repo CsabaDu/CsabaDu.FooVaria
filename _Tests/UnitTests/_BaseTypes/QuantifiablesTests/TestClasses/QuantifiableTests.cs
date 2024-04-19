@@ -55,7 +55,7 @@ public sealed class QuantifiableTests
 
     #region Test methods
     #region int CompareTo
-    #region virtual IComparable<IQuantifiable>.CompareTo(IQuantifiable?)
+    #region IComparable<IQuantifiable>.CompareTo(IQuantifiable?)
     [TestMethod, TestCategory("UnitTest")]
     public void CompareTo_nullArg_IQuantifiable_returns_expected()
     {
@@ -112,7 +112,7 @@ public sealed class QuantifiableTests
     #endregion
 
     #region bool Equals
-    #region virtual IEquatable<IQuantifiable>.Equals(IQuantifiable?)
+    #region IEquatable<IQuantifiable>.Equals(IQuantifiable?)
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method)]
     public void Equals_arg_IQuantifiable_returns_expected(Enum measureUnit, decimal defaultQuantity, bool expected, IQuantifiable other)
@@ -180,7 +180,7 @@ public sealed class QuantifiableTests
     }
     #endregion
 
-    #region virtual IFit<IQuantifiable>.FitsIn(IQuantifiable?, LimitMode?)
+    #region IFit<IQuantifiable>.FitsIn(IQuantifiable?, LimitMode?)
     [TestMethod, TestCategory("UnitTest")]
     public void FitsIn_nullArgs_IQuantifiable_LimitMode_returns_expected()
     {

@@ -9,9 +9,11 @@ public static class Extensions
     }
     #endregion
 
+    #region T : struct, Enum
     public static bool IsDefined<T>(this T enumeration)
         where T : struct, Enum
     {
         return Enum.IsDefined(enumeration);
     }
+    #endregion
 }

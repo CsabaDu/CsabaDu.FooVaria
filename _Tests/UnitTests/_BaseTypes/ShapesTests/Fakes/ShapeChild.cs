@@ -13,6 +13,7 @@ internal class ShapeChild(IRootObject rootObject, string paramName) : Shape(root
     // bool? IFit<IShape>.FitsIn(IShape? other, LimitMode? limitMode)
     // Enum IMeasureUnit.GetBaseMeasureUnit()
     // ValueType IQuantity.GetBaseQuantity()
+    // IShape IShape.GetBaseShape()
     // decimal IDecimalQuantity.GetDecimalQuantity()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
@@ -26,14 +27,13 @@ internal class ShapeChild(IRootObject rootObject, string paramName) : Shape(root
     // double IQuantity<double>.GetQuantity()
     // object IQuantity.GetQuantity(TypeCode quantityTypeCode)
     // TypeCode IQuantityType.GetQuantityTypeCode()
-    // IShape IShape.GetShape()
     // IShape? IShape.GetShape(params IShapeComponent[] shapeComponents)
     // int IShapeComponentCount.GetShapeComponentCount()
     // IEnumerable<IShapeComponent> IShapeComponents.GetShapeComponents()
     // ISpread ISpread.GetSpread(ISpreadMeasure spreadMeasure)
     // ISpreadMeasure? ISpread.GetSpreadMeasure(IQuantifiable? quantifiable)
     // ISpreadMeasure ISpreadMeasure.GetSpreadMeasure()
-    // IShapeComponent? IShapeComponents.GetValidShapeComponent(IBaseQuantifiable? shapeComponent)
+    // IShapeComponent? IShapeComponents.GetValidShapeComponent(IQuantifiable? quantifiable)
     // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
     // bool IExchangeable<Enum>.IsExchangeableTo(Enum? context)
     // bool IMeasureUnitCodes.IsValidMeasureUnitCode(MeasureUnitCode measureUnitCode)
@@ -51,9 +51,9 @@ internal class ShapeChild(IRootObject rootObject, string paramName) : Shape(root
     #endregion
 
     #region Test helpers
-    private static DataFields Fields = new();
+    protected static DataFields Fields = new();
     public ShapeReturn Return { private get; set; } = new();
-    private ISpreadMeasure SpreadMeasure { get; set; }
+    protected ISpreadMeasure SpreadMeasure { get; set; }
 
     internal static ShapeChild GetShapeChild(IShapeComponent shapeComponent, IShapeFactory factory = null)
     {
@@ -69,17 +69,14 @@ internal class ShapeChild(IRootObject rootObject, string paramName) : Shape(root
 
         ISpreadMeasure getSpreadMeasure()
         {
-            if (shapeComponent is ISpreadMeasure spreadMeasure) return spreadMeasure;
+            if (shapeComponent is not IQuantifiable quantifiable) return null;
 
-            if (shapeComponent is IQuantifiable quantifiable)
-            {
-                Enum measureUnit = quantifiable.GetBaseMeasureUnit();
-                ValueType quantity = quantifiable.GetBaseQuantity();
+            if (quantifiable is ISpreadMeasure spreadMeasure) return spreadMeasure.GetSpreadMeasure();
 
-                return GetSpreadMeasureBaseMeasureObject(measureUnit, quantity);
-            }
+            Enum measureUnit = quantifiable.GetBaseMeasureUnit();
+            ValueType quantity = quantifiable.GetBaseQuantity();
 
-            return null;
+            return GetSpreadMeasureBaseMeasureObject(measureUnit, quantity);
         }
     }
     #endregion
@@ -96,15 +93,15 @@ internal class ShapeChild(IRootObject rootObject, string paramName) : Shape(root
 
     public override sealed IFactory GetFactory() => Return.GetFactory;
 
-    public override sealed IShape GetShape() => this;
+    public override sealed IShape GetBaseShape() => this;
 
     public override sealed IEnumerable<IShapeComponent> GetShapeComponents() => Return.GetShapeComponents;
 
     public override sealed ISpreadMeasure GetSpreadMeasure() => SpreadMeasure;
 
-    public override sealed IShapeComponent GetValidShapeComponent(IBaseQuantifiable baseQuantifiable)
+    public override sealed IShapeComponent GetValidShapeComponent(IQuantifiable quantifiable)
     {
-        if (baseQuantifiable is not IShapeComponent shapeComponent) return null;
+        if (quantifiable is not IShapeComponent shapeComponent) return null;
 
         return shapeComponent;
     }

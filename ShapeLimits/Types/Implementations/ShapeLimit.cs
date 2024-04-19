@@ -89,9 +89,9 @@ public sealed class ShapeLimit : SimpleShape, IShapeLimit
         return SimpleShape.GetBaseMeasureUnit();
     }
 
-    public override IShapeComponent? GetValidShapeComponent(IBaseQuantifiable? baseQuantifiable)
+    public override IShapeComponent? GetValidShapeComponent(IQuantifiable? quantifiable)
     {
-        return SimpleShape.GetValidShapeComponent(baseQuantifiable);
+        return SimpleShape.GetValidShapeComponent(quantifiable);
     }
 
     public override ISpreadMeasure GetSpreadMeasure()
@@ -109,7 +109,7 @@ public sealed class ShapeLimit : SimpleShape, IShapeLimit
         return SimpleShape.GetBulkSpreadFactory();
     }
 
-    public override ISimpleShape GetShape()
+    public override ISimpleShape GetBaseShape()
     {
         return SimpleShape;
     }

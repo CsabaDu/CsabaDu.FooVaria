@@ -1,7 +1,4 @@
-﻿
-using CsabaDu.FooVaria.Measures.Types;
-
-namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
+﻿namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
 {
     internal abstract class DryBody : SimpleShape, IDryBody
     {
@@ -87,21 +84,18 @@ namespace CsabaDu.FooVaria.DryBodies.Types.Implementations
             return Volume;
         }
 
-        public override sealed IShapeComponent? GetValidShapeComponent(IBaseQuantifiable? baseQuantifiable)
+        public override sealed IShapeComponent? GetValidShapeComponent(IQuantifiable? quantifiable)
         {
-            if (baseQuantifiable is not IExtent or IPlaneShape) return null;
+            if (quantifiable is IExtent extent) return extent;
 
-            return (IShapeComponent)baseQuantifiable;
+            if (quantifiable is IPlaneShape planeShape) return planeShape;
+
+            return null;
         }
 
         public override sealed IBulkBodyFactory GetBulkSpreadFactory()
         {
             return GetDryBodyFactory().BulkBodyFactory;
-        }
-
-        public override sealed IDryBody GetShape()
-        {
-            return this;
         }
         #endregion
         #endregion

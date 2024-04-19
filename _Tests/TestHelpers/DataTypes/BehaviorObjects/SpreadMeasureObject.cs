@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.BehaviorObjects;
 
-public sealed class SpreadMeasureObject : ISpreadMeasure
+public class SpreadMeasureObject : ISpreadMeasure
 {
     public Enum MeasureUnit { private get; set; }
     public double Quantity { private get; set; }

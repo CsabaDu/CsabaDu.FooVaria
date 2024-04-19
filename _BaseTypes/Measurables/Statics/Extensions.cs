@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Common.Statics;
-
-namespace CsabaDu.FooVaria.BaseTypes.Measurables.Statics;
+﻿namespace CsabaDu.FooVaria.BaseTypes.Measurables.Statics;
 
 public static class Extensions
 {
@@ -47,15 +45,12 @@ public static class Extensions
     {
         Type measureUnitType = measureUnitCode.GetMeasureUnitType();
 
-        foreach (Enum item in Enum.GetValues(measureUnitType))
-        {
-            yield return item;
-        }
+        return Enum.GetValues(measureUnitType).Cast<Enum>();
     }
 
     public static Enum? GetDefaultMeasureUnit(this MeasureUnitCode measureUnitCode)
     {
-        if (!Enum.IsDefined(measureUnitCode)) return null;
+        if (!measureUnitCode.IsDefined()) return null;
 
         return measureUnitCode.GetAllMeasureUnits().First(x => (int)(object)x == 0);
     }
@@ -67,7 +62,7 @@ public static class Extensions
         Type measureUnitType = measureUnitCode.GetMeasureUnitType();
         string? defaultMeasureUnitName = Enum.GetName(measureUnitType, default(int));
 
-        return defaultMeasureUnitName == Default;
+        return defaultMeasureUnitName?.EndsWith(Default) == true;
     }
 
     public static bool IsSpreadMeasureUnitCode(this MeasureUnitCode measureUnitCode)

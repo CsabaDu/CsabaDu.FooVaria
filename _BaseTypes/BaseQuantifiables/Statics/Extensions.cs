@@ -101,6 +101,20 @@ public static class Extensions
             _ => null,
         };
     }
+
+    public static int? CompareToComparison(this int comparison, int other)
+    {
+        if (other == 0) return comparison;
+
+        if (comparison == 0)
+        {
+            comparison = other;
+        }
+
+        if (comparison > 0 == other > 0) return comparison;
+
+        return null;
+    }
     #endregion
 
     #region System.ValueType

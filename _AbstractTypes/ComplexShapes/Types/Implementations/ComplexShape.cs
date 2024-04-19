@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.AbstractTypes.ComplexShapes.Types.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.Common.Enums;
+
+namespace CsabaDu.FooVaria.AbstractTypes.ComplexShapes.Types.Implementations;
 
 public abstract class ComplexShape : Shape, IComplexShape
 {
@@ -10,10 +12,12 @@ public abstract class ComplexShape : Shape, IComplexShape
     {
     }
 
-    public abstract ISimpleShape GetBaseShape();
+    public abstract ISimpleShape GetSimpleShape();
+    public abstract IShape GetTangentShape(SideCode sideCode);
 
-    public override sealed ISimpleShape GetShape()
+    public override sealed ISimpleShape GetBaseShape()
     {
-        return GetBaseShape();
+        return GetSimpleShape();
     }
+
 }

@@ -1,6 +1,5 @@
-using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.BehaviorObjects;
+using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;
 using CsabaDu.FooVaria.Tests.TestHelpers.Params;
-using CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests.Fakes;
 using System.ComponentModel;
 
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests.TestClasses;
@@ -11,12 +10,8 @@ public sealed class ShapeTests
     #region Tested in parent classes' tests
 
     // int IComparable<IQuantifiable>.CompareTo(IQuantifiable? other)
-    // int IComparable<IShape>.CompareTo(IShape? other)
     // bool IEquatable<IQuantifiable>.Equals(IQuantifiable? other)
-    // bool IEquatable<IShape>.Equals(IShape? other)
-    // bool? ILimitable.FitsIn(ILimiter? limiter)
     // bool? IFit<IQuantifiable>.FitsIn(IQuantifiable? other, LimitMode? limitMode)
-    // bool? IFit<IShape>.FitsIn(IShape? other, LimitMode? limitMode)
     // Enum IMeasureUnit.GetBaseMeasureUnit()
     // ValueType IQuantity.GetBaseQuantity()
     // decimal IDecimalQuantity.GetDecimalQuantity()
@@ -25,39 +20,30 @@ public sealed class ShapeTests
     // decimal IDefaultQuantity.GetDefaultQuantity()
     // IFactory ICommonBase.GetFactory()
     // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
-    // IEnumerable<MeasureUnitCode> IMeasureUnitCodes.GetMeasureUnitCodes()
     // Type IMeasureUnit.GetMeasureUnitType()
     // IQuantifiable IQuantifiable.GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
     // object IRound<IQuantifiable>.GetQuantity(RoundingMode roundingMode)
     // double IQuantity<double>.GetQuantity()
     // object IQuantity.GetQuantity(TypeCode quantityTypeCode)
     // TypeCode IQuantityType.GetQuantityTypeCode()
-    // IShape IShape.GetShape()
-    // IShape? IShape.GetShape(params IShapeComponent[] shapeComponents)
-    // int IShapeComponentCount.GetShapeComponentCount()
-    // IEnumerable<IShapeComponent> IShapeComponents.GetShapeComponents()
     // ISpread ISpread.GetSpread(ISpreadMeasure spreadMeasure)
     // ISpreadMeasure? ISpread.GetSpreadMeasure(IQuantifiable? quantifiable)
     // ISpreadMeasure ISpreadMeasure.GetSpreadMeasure()
-    // IShapeComponent? IShapeComponents.GetValidShapeComponent(IBaseQuantifiable? shapeComponent)
-    // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
     // bool IExchangeable<Enum>.IsExchangeableTo(Enum? context)
-    // bool IMeasureUnitCodes.IsValidMeasureUnitCode(MeasureUnitCode measureUnitCode)
     // decimal IProportional<IQuantifiable>.ProportionalTo(IQuantifiable? other)
     // IQuantifiable IRound<IQuantifiable>.Round(RoundingMode roundingMode)
     // bool ITryExchange<IQuantifiable, Enum>.TryExchangeTo(Enum context, out IQuantifiable? exchanged)
     // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum? measureUnit, string paramName)
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable? measurable, string paramName)
     // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
-    // void IMeasureUnitCodes.ValidateMeasureUnitCodes(IBaseQuantifiable? baseQuantifiable, string paramName)
     // void IBaseQuantifiable.ValidateQuantity(ValueType? quantity, string paramName)
-    // void IShape.ValidateShapeComponent(IBaseQuantifiable? shapeComponent, string paramName)
     // void ISpreadMeasure.ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)
 
     #endregion
 
     #region Private fields
     private ShapeChild _shape;
+    private IShapeComponent _shapeComponent;
 
     #region Readonly fields
     private readonly DataFields Fields = new();
@@ -78,7 +64,10 @@ public sealed class ShapeTests
     [TestInitialize]
     public void TestInitialize()
     {
-
+        Fields.measureUnit = Fields.RandomParams.GetRandomSpreadMeasureUnit();
+        Fields.measureUnitCode = GetMeasureUnitCode(Fields.measureUnit);
+        Fields.defaultQuantity = Fields.RandomParams.GetRandomPositiveDecimal();
+        _shapeComponent = GetShapeComponentQuantifiableObject(Fields.measureUnit, Fields.defaultQuantity);
     }
 
     [TestCleanup]
@@ -89,48 +78,80 @@ public sealed class ShapeTests
     #endregion
 
     #region Test methods
-
-
+    #region int CompareTo
+    #region IComparable<IShape>.CompareTo(IShape?)
 
     #endregion
+    #endregion
+
+    // bool IEquatable<IShape>.Equals(IShape?)
+    // bool IEqualityComparer<IShape>.Equals(IShape?, IShape?)
+
+    // bool? ILimitable.FitsIn(ILimiter? limiter)
+    // bool? IFit<IShape>.FitsIn(IShape?, LimitMode?)
+
+    // int Shape.GetHashCode()
+    // int IEqualityComparer<IShape>.GetHashCode(IShape)
+
+    // IEnumerable<MeasureUnitCode> IMeasureUnitCodes.GetMeasureUnitCodes()
+
+    // IShape IShape.GetShape()
+    // IShape? IShape.GetShape(params IShapeComponent[] shapeComponents)
+
+    // int IShapeComponentCount.GetShapeComponentCount()
+
+    // IEnumerable<IShapeComponent> IShapeComponents.GetShapeComponents()
+
+    // IShapeComponent? IShapeComponents.GetValidShapeComponent(IQuantifiable?)
+
+    // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode)
+
+    // bool IMeasureUnitCodes.IsValidMeasureUnitCode(MeasureUnitCode)
+
+    // void IMeasureUnitCodes.ValidateMeasureUnitCodes(IBaseQuantifiable?, string)
+
+    // void IShape.ValidateShapeComponent(IBaseQuantifiable?, string)
+
+    #endregion
+
     //    //    //#region Static methods
 
     //    //    //#endregion
-    //    //    #endregion
 
     #region Private methods
-    //    private void SetSpreadChild(Enum measureUnit, ValueType quantity, ISpreadFactory factory = null, RateComponentCode? rateComponentCode = null)
+    //    private void SetShapeChild(Enum measureUnit, ValueType quantity, IShapeFactory factory = null)
     //    {
-    //        _spread = SpreadChild.GetSpreadChild(measureUnit, quantity, factory, rateComponentCode);
+    //        _spreadMeasure = SpreadMeasureBaseMeasureObject.GetSpreadMeasureBaseMeasureObject(measureUnit, quantity);
+
+    //        SetShapeChild(_spreadMeasure, factory);
     //    }
 
-    //    private void SetSpreadChild(ISpreadMeasure spreadMeasure, ISpreadFactory factory = null)
+    //    private void SetShapeChild(ISpreadMeasure spreadMeasure, IShapeFactory factory = null)
     //    {
-    //        _spread = SpreadChild.GetSpreadChild(spreadMeasure, factory);
+    //        _shape = ShapeChild.GetShapeChild(spreadMeasure, factory);
     //    }
 
-
-    //    private void SetSpreadChild()
+    //    private void SetShapeChild()
     //    {
-    //        SetSpreadChild(Fields.measureUnit, Fields.quantity);
+    //        SetShapeChild(_spreadMeasure);
     //    }
 
-    //    private void SetCompleteSpreadChild()
+    //    private void SetCompleteShapeChild()
     //    {
     //        Fields.rateComponentCode = Fields.RandomParams.GetRandomRateComponentCode();
 
-    //        SetSpreadChild(Fields.measureUnit, Fields.quantity, new SpreadFactoryObject(), Fields.rateComponentCode);
+    //        SetShapeChild(_spreadMeasure, new ShapeFactoryObject(), Fields.rateComponentCode);
     //    }
 
-    //    private SpreadChild GetSpreadChild(ISpreadFactory factory = null)
+    //    private ShapeChild GetShapeChild(IShapeFactory factory = null)
     //    {
-    //        return SpreadChild.GetSpreadChild(Fields.measureUnit, Fields.quantity, factory);
+    //        return ShapeChild.GetShapeChild(_spreadMeasure, factory);
     //    }
 
 
-    //    private SpreadChild GetCompleteSpreadChild(RateComponentCode? rateComponentCode = null)
+    //    private ShapeChild GetCompleteShapeChild(RateComponentCode? rateComponentCode = null)
     //    {
-    //        return SpreadChild.GetSpreadChild(Fields.measureUnit, Fields.quantity, new SpreadFactoryObject(), rateComponentCode ?? RateComponentCode.Numerator);
+    //        return ShapeChild.GetShapeChild(Fields.measureUnit, Fields.quantity, new SpreadFactoryObject(), rateComponentCode ?? RateComponentCode.Numerator);
     //    }
 
     //    private ISpreadMeasure GetSpreadMeasureBaseMeasureObject()

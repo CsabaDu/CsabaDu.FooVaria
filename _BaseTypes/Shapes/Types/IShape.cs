@@ -1,9 +1,8 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.Shapes.Types;
 
-public interface IShape : ISpread, IFit<IShape>, IShapeComponents/*, ILimitable*/, IMeasureUnitCodes
+public interface IShape : ISpread, IFit<IShape>, IShapeComponents, IMeasureUnitCodes, IBaseShape, IEqualityComparer<IShape>
 {
-    IShape GetShape();
     IShape? GetShape(params IShapeComponent[] shapeComponents);
 
-    void ValidateShapeComponent(IBaseQuantifiable? shapeComponent, string paramName);
+    void ValidateShapeComponent(IQuantifiable? quantifiable, string paramName);
 }

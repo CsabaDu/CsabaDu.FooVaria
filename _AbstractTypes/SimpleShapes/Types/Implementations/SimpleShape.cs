@@ -19,6 +19,124 @@ public abstract class SimpleShape : Shape, ISimpleShape
     #endregion
 
     #region Public methods
+    #region Static methods
+    public static IExtent GetRectangularShapeDiagonal<T>(T simpleShape, ExtentUnit extentUnit = default)
+        where T : class, ISimpleShape, IRectangularShape
+    {
+        ValidateMeasureUnitByDefinition(extentUnit, nameof(extentUnit));
+
+        IEnumerable<ShapeExtentCode> shapeExtentCodes = simpleShape.GetShapeExtentCodes();
+        int i = 0;
+        decimal quantitySquares = getDefaultQuantitySquare();
+
+        for (i = 1; i < shapeExtentCodes.Count(); i++)
+        {
+            quantitySquares += getDefaultQuantitySquare();
+        }
+
+        double quantity = decimal.ToDouble(quantitySquares);
+        quantity = Math.Sqrt(quantity);
+        if (!IsDefaultMeasureUnit(extentUnit))
+        {
+            quantity /= decimal.ToDouble(GetExchangeRate(extentUnit, nameof(extentUnit)));
+        }
+        IExtent edge = getShapeExtent();
+
+        return edge.GetMeasure(extentUnit, quantity);
+
+        #region Local methods
+        IExtent getShapeExtent()
+        {
+            return simpleShape.GetShapeExtent(shapeExtentCodes.ElementAt(i));
+        }
+
+        decimal getDefaultQuantitySquare()
+        {
+            IExtent shapeExtent = getShapeExtent();
+
+            return GetDefaultQuantitySquare(shapeExtent);
+        }
+        #endregion
+    }
+
+    #region Abstract methods
+    public abstract IExtent GetDiagonal(ExtentUnit extentUnit);
+    #endregion
+    #endregion
+
+    #region Override methods
+    #region Sealed methods
+    public override sealed int CompareTo(IShape? other)
+    {
+        if (other is null) return 1;
+
+        const string paramName = nameof(other);
+        ISimpleShape simpleShape = GetShape(other, paramName);
+
+        ValidateMeasureUnitCode(simpleShape.GetMeasureUnitCode(), paramName);
+
+        return Compare(this, simpleShape) ?? throw new ArgumentOutOfRangeException(paramName);
+    }
+
+    public override sealed bool Equals(IShape? other)
+    {
+        return other is ISimpleShape simpleShape
+            && base.Equals(simpleShape);
+    }
+
+    public override sealed bool? FitsIn(IShape? other, LimitMode? limitMode)
+    {
+        if (other is null) return null;
+
+        if (other is not ISimpleShape simpleShape)
+        {
+            simpleShape = (other.GetBaseShape() as ISimpleShape)!;
+        }
+
+        if (simpleShape?.IsExchangeableTo(GetMeasureUnitCode()) != true) return null;
+
+        limitMode ??= LimitMode.BeNotGreater;
+
+        SideCode sideCode = limitMode == LimitMode.BeNotLess || limitMode == LimitMode.BeGreater ?
+            SideCode.Outer
+            : SideCode.Inner;
+
+        if (simpleShape!.GetShapeComponentCount() != GetShapeComponentCount())
+        {
+            simpleShape = (ISimpleShape)(simpleShape as ITangentShape)!.GetTangentShape(sideCode);
+        }
+
+        return Compare(this, simpleShape)?.FitsIn(limitMode);
+    }
+
+    public override ISimpleShape GetBaseShape()
+    {
+        return this;
+    }
+
+    public override sealed IEnumerable<IShapeComponent> GetShapeComponents()
+    {
+        return GetShapeExtents();
+    }
+
+    public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
+    {
+        object converted = NullChecked(quantity, paramName)
+            .ToQuantity(TypeCode.Decimal)
+            ?? throw ArgumentTypeOutOfRangeException(paramName, quantity!);
+
+        if ((decimal)converted > 0) return;
+
+        throw QuantityArgumentOutOfRangeException(paramName, quantity);
+    }
+    #endregion
+    #endregion
+
+    #region Abstract methods
+    public abstract IBulkSpreadFactory GetBulkSpreadFactory();
+    public abstract ITangentShapeFactory GetTangentShapeFactory();
+    #endregion
+
     public IExtent GetDiagonal()
     {
         return GetDiagonal(default);
@@ -33,7 +151,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
 
     public ISimpleShape GetSimpleShape(ExtentUnit extentUnit)
     {
-        return (ISimpleShape?)ExchangeTo(extentUnit) ?? throw InvalidMeasureUnitEnumArgumentException(extentUnit, nameof(extentUnit));
+        return ExchangeTo(extentUnit) ?? throw InvalidMeasureUnitEnumArgumentException(extentUnit, nameof(extentUnit));
     }
 
     public ISimpleShape GetSimpleShape(params IExtent[] shapeExtents)
@@ -45,10 +163,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
 
     public IEnumerable<IExtent> GetShapeComponents(IShape shape)
     {
-        if (NullChecked(shape, nameof(shape)) is not ISimpleShape simpleShape)
-        {
-            simpleShape = (ISimpleShape)shape.GetShape();
-        }
+        ISimpleShape simpleShape = GetShape(shape, nameof(shape));
 
         return simpleShape.GetShapeExtents();
     }
@@ -119,134 +234,6 @@ public abstract class SimpleShape : Shape, ISimpleShape
             ValidateShapeExtent(item, paramName);
         }
     }
-
-    #region Override methods
-    #region Sealed methods
-    public override sealed int CompareTo(IShape? other)
-    {
-        if (other is null) return 1;
-
-        const string paramName = nameof(other);
-
-        if (other is not ISimpleShape simpleShape)
-        {
-            simpleShape = (ISimpleShape)other.GetShape();
-        }
-
-        ValidateMeasureUnitCode(simpleShape.GetMeasureUnitCode(), paramName);
-
-        return Compare(this, simpleShape) ?? throw new ArgumentOutOfRangeException(paramName);
-    }
-
-    public override sealed bool Equals(IShape? other)
-    {
-        return other is ISimpleShape simpleShape
-            && base.Equals(simpleShape);
-    }
-
-    public override sealed bool? FitsIn(IShape? other, LimitMode? limitMode)
-    {
-        if (other is null) return null;
-
-        if (other is not ISimpleShape simpleShape)
-        {
-            simpleShape = (ISimpleShape)other.GetShape();
-        }
-
-        if (!simpleShape.IsExchangeableTo(GetMeasureUnitCode())) return null;
-
-        limitMode ??= LimitMode.BeNotGreater;
-
-        SideCode sideCode = limitMode == LimitMode.BeNotLess || limitMode == LimitMode.BeGreater ?
-            SideCode.Outer
-            : SideCode.Inner;
-
-        if (simpleShape.GetShapeComponentCount() != GetShapeComponentCount())
-        {
-            simpleShape = (ISimpleShape)(simpleShape as ITangentShape)!.GetTangentShape(sideCode);
-        }
-
-        return Compare(this, simpleShape)?.FitsIn(limitMode);
-    }
-
-    public override ISimpleShape GetShape()
-    {
-        return this;
-    }
-
-    //public override sealed ISpread GetSpread(ISpreadMeasure spreadMeasure)
-    //{
-    //    return GetBulkSpreadFactory().CreateSpread(spreadMeasure);
-    //}
-
-    public override sealed IEnumerable<IShapeComponent> GetShapeComponents()
-    {
-        return GetShapeExtents();
-    }
-
-    public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
-    {
-        object converted = NullChecked(quantity, paramName)
-            .ToQuantity(TypeCode.Decimal)
-            ?? throw ArgumentTypeOutOfRangeException(paramName, quantity!);
-
-        if ((decimal)converted > 0) return;
-
-        throw QuantityArgumentOutOfRangeException(paramName, quantity);
-    }
-    #endregion
-    #endregion
-
-    #region Virtual methods
-    public abstract IBulkSpreadFactory GetBulkSpreadFactory();
-
-    public abstract ITangentShapeFactory GetTangentShapeFactory();
-    #endregion
-
-    #region Static methods
-    public static IExtent GetRectangularShapeDiagonal<T>(T simpleShape, ExtentUnit extentUnit = default)
-        where T : class, ISimpleShape, IRectangularShape
-    {
-        ValidateMeasureUnitByDefinition(extentUnit, nameof(extentUnit));
-
-        IEnumerable<ShapeExtentCode> shapeExtentCodes = simpleShape.GetShapeExtentCodes();
-        int i = 0;
-        decimal quantitySquares = getDefaultQuantitySquare();
-
-        for (i = 1; i < shapeExtentCodes.Count(); i++)
-        {
-            quantitySquares += getDefaultQuantitySquare();
-        }
-
-        double quantity = decimal.ToDouble(quantitySquares);
-        quantity = Math.Sqrt(quantity);
-        if (!IsDefaultMeasureUnit(extentUnit))
-        {
-            quantity /= decimal.ToDouble(GetExchangeRate(extentUnit, nameof(extentUnit)));
-        }
-        IExtent edge = getShapeExtent();
-
-        return edge.GetMeasure(extentUnit, quantity);
-
-        #region Local methods
-        IExtent getShapeExtent()
-        {
-            return simpleShape.GetShapeExtent(shapeExtentCodes.ElementAt(i));
-        }
-
-        decimal getDefaultQuantitySquare()
-        {
-            IExtent shapeExtent = getShapeExtent();
-
-            return GetDefaultQuantitySquare(shapeExtent);
-        }
-        #endregion
-    }
-
-    #region Abstract methods
-    public abstract IExtent GetDiagonal(ExtentUnit extentUnit);
-    #endregion
-    #endregion
     #endregion
 
     #region Protected methods
@@ -262,24 +249,14 @@ public abstract class SimpleShape : Shape, ISimpleShape
     {
         if (other is null) return null;
 
-        int comparison = 0;
+        int? comparison = 0;
 
         foreach (ShapeExtentCode item in simpleShape.GetShapeExtentCodes())
         {
-            int recentComparison = simpleShape[item]!.CompareTo(other[item]);
-
-            if (recentComparison != 0)
-            {
-                if (comparison == 0)
-                {
-                    comparison = recentComparison;
-                }
-
-                if (comparison != recentComparison)
-                {
-                    return null;
-                }
-            }
+            if (!comparison.HasValue) return null;
+            
+            int itemComparison = simpleShape[item]!.CompareTo(other[item]);
+            comparison = comparison.Value.CompareToComparison(itemComparison);
         }
 
         return comparison;
@@ -293,6 +270,13 @@ public abstract class SimpleShape : Shape, ISimpleShape
         shapeExtents = shapeExtents.Select(x => x.ExchangeTo(extentUnit)!);
 
         return (ISimpleShape?)GetShape(shapeExtents.ToArray());
+    }
+
+    private static ISimpleShape GetShape(IShape shape, string paramName)
+    {
+        ISimpleShape? simpleShape = NullChecked(shape, paramName).GetBaseShape() as ISimpleShape;
+
+        return simpleShape ?? throw ArgumentTypeOutOfRangeException(paramName, shape);
     }
     #endregion
     #endregion

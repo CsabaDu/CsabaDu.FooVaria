@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.SpreadsTests.Fakes;
 
-internal sealed class SpreadChild(IRootObject rootObject, string paramName) : Spread(rootObject, paramName)
+internal class SpreadChild(IRootObject rootObject, string paramName) : Spread(rootObject, paramName)
 {
     #region Members
 
@@ -42,7 +42,7 @@ internal sealed class SpreadChild(IRootObject rootObject, string paramName) : Sp
     #region Test helpers
     private static DataFields Fields = new();
     public SpreadReturn Return { private get; set; } = new();
-    private ISpreadMeasure SpreadMeasure { get; set; }
+    protected ISpreadMeasure SpreadMeasure { get; set; }
 
     internal static SpreadChild GetSpreadChild(Enum measureUnit, ValueType quantity, ISpreadFactory factory = null, RateComponentCode? rateComponentCode = null)
     {

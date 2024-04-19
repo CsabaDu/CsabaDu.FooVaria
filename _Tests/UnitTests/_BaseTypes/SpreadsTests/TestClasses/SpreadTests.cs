@@ -379,7 +379,6 @@ public sealed class SpreadTests
         _spread = SpreadChild.GetSpreadChild(spreadMeasure, factory);
     }
 
-
     private void SetSpreadChild()
     {
         SetSpreadChild(Fields.measureUnit, Fields.quantity);
@@ -397,13 +396,12 @@ public sealed class SpreadTests
         return SpreadChild.GetSpreadChild(Fields.measureUnit, Fields.quantity, factory);
     }
 
-
     private SpreadChild GetCompleteSpreadChild(RateComponentCode? rateComponentCode = null)
     {
         return SpreadChild.GetSpreadChild(Fields.measureUnit, Fields.quantity, new SpreadFactoryObject(), rateComponentCode ?? RateComponentCode.Numerator);
     }
 
-    private ISpreadMeasure GetSpreadMeasureBaseMeasureObject()
+    private SpreadMeasureBaseMeasureObject GetSpreadMeasureBaseMeasureObject()
     {
         return SpreadMeasureBaseMeasureObject.GetSpreadMeasureBaseMeasureObject(Fields.measureUnit, Fields.quantity);
     }

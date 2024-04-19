@@ -8,9 +8,9 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
     {
         if (limiter is null) return true;
 
-        if (limiter is not IQuantifiable) return null;
-
-        return base.FitsIn(limiter);
+        return limiter is IQuantifiable quantifiable ?
+            FitsIn(quantifiable, limiter.GetLimitMode())
+            : null;
     }
 
     #region Sealed methods
@@ -27,36 +27,6 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
     #endregion
 
     #region Virtual methods
-    public virtual int CompareTo(IQuantifiable? other)
-    {
-        if (other is null) return 1;
-
-        ValidateMeasureUnitCode(other.GetMeasureUnitCode(), nameof(other));
-
-        return GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
-    }
-
-    public virtual bool Equals(IQuantifiable? other)
-    {
-        return base.Equals(other);
-    }
-
-    public virtual bool? FitsIn(IQuantifiable? other, LimitMode? limitMode)
-    {
-        if (other is null && !limitMode.HasValue) return true;
-
-        if (other?.HasMeasureUnitCode(GetMeasureUnitCode()) != true) return null;
-
-        limitMode ??= LimitMode.BeNotGreater;
-
-        if (!Enum.IsDefined(limitMode.Value)) return null;
-
-        decimal defaultQuantity = GetDefaultQuantity();
-        decimal otherQuantity = other.GetDefaultQuantity();
-
-        return defaultQuantity.FitsIn(otherQuantity, limitMode);
-    }
-
     public virtual bool IsExchangeableTo(Enum? context)
     {
         if (context is null) return false;
@@ -77,6 +47,29 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
     public abstract IQuantifiable Round(RoundingMode roundingMode);
     public abstract bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable? exchanged);
     #endregion
+
+    public int CompareTo(IQuantifiable? other)
+    {
+        if (other is null) return 1;
+
+        ValidateMeasureUnitCode(other.GetMeasureUnitCode(), nameof(other));
+
+        return GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
+    }
+
+    public bool Equals(IQuantifiable? other)
+    {
+        return base.Equals(other);
+    }
+
+    public bool? FitsIn(IQuantifiable? other, LimitMode? limitMode)
+    {
+        if (other is null) return limitMode.HasValue ? null : true;
+
+        return (limitMode ??= LimitMode.BeNotGreater).IsDefined() ?
+            DefaultQuantitiesFit(this, other, limitMode)
+            : null;
+    }
 
     public decimal GetDecimalQuantity()
     {

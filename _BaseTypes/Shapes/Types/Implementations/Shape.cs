@@ -1,35 +1,37 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.Shapes.Types.Implementations;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace CsabaDu.FooVaria.BaseTypes.Shapes.Types.Implementations;
 
 public abstract class Shape(IRootObject rootObject, string paramName) : Spread(rootObject, paramName), IShape
 {
     #region Public methods
     #region Override methods
     #region Sealed methods
-    public override sealed int CompareTo(IQuantifiable? other)
-    {
-        return other is IShape shape ?
-            GetShape().CompareTo(shape.GetShape())
-            : base.CompareTo(other);
-    }
+    //public override sealed int CompareTo(IQuantifiable? other)
+    //{
+    //    return other is IShape shape ?
+    //        GetBaseShape().CompareTo(shape.GetBaseShape())
+    //        : base.CompareTo(other);
+    //}
 
-    public override sealed bool Equals(IQuantifiable? other)
-    {
-        return other is IShape shape ?
-            GetShape().Equals(shape.GetShape())
-            : base.Equals(other);
-    }
+    //public override sealed bool Equals(IQuantifiable? other)
+    //{
+    //    return other is IShape shape ?
+    //        GetBaseShape().Equals(shape.GetBaseShape())
+    //        : base.Equals(other);
+    //}
 
-    public override sealed bool? FitsIn(IQuantifiable? other, LimitMode? limitMode)
-    {
-        return other is IShape shape ?
-            GetShape().FitsIn(shape.GetShape(), limitMode)
-            : base.FitsIn(other, limitMode);
-    }
+    //public override sealed bool? FitsIn(IQuantifiable? other, LimitMode? limitMode)
+    //{
+    //    return other is IShape shape ?
+    //        GetBaseShape().FitsIn(shape.GetBaseShape(), limitMode)
+    //        : base.FitsIn(other, limitMode);
+    //}
 
     public override sealed bool? FitsIn(ILimiter? limiter)
     {
         return limiter is IShape shape ?
-            GetShape().FitsIn(shape.GetShape(), limiter.GetLimitMode())
+            FitsIn(shape, limiter.GetLimitMode())
             : base.FitsIn(limiter);
     }
 
@@ -51,7 +53,6 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
     {
         return GetMeasureUnitCodes().Contains(measureUnitCode);
     }
-
     #endregion
     #endregion
 
@@ -66,15 +67,26 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
     #region Abstract methods
     public abstract int CompareTo(IShape? other);
     public abstract bool? FitsIn(IShape? other, LimitMode? limitMode);
-    public abstract IShapeComponent? GetValidShapeComponent(IBaseQuantifiable? baseQuantifiable);
+    public abstract IShapeComponent? GetValidShapeComponent(IQuantifiable? quantifiable);
     public abstract IEnumerable<IShapeComponent> GetShapeComponents();
-    public abstract IShape GetShape();
+    public abstract IShape GetBaseShape();
     #endregion
+
+    public bool Equals(IShape? x, IShape? y)
+    {
+        return x is null == y is null
+            && x?.GetBaseShape().Equals(y?.GetBaseShape()) != false;
+    }
+
+    public int GetHashCode([DisallowNull] IShape shape)
+    {
+        return shape.GetBaseShape().GetHashCode();
+    }
 
     public IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
     {
         yield return GetMeasureUnitCode();
-        yield return (GetValidShapeComponent(this) as IQuantifiable)!.GetMeasureUnitCode();
+        yield return (GetBaseShape().GetShapeComponents().First() as IQuantifiable)!.GetMeasureUnitCode();
     }
 
     public IShape? GetShape(params IShapeComponent[] shapeComponents)
@@ -99,11 +111,11 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
         ValidateMeasureUnitCodes(this, baseQuantifiable, paramName);
     }
 
-    public void ValidateShapeComponent(IBaseQuantifiable? shapeComponent, string paramName)
+    public void ValidateShapeComponent(IQuantifiable? quantifiable, string paramName)
     {
-        if (GetValidShapeComponent(NullChecked(shapeComponent, paramName)) is not null) return;
+        if (GetValidShapeComponent(NullChecked(quantifiable, paramName)) is not null) return;
 
-        throw ArgumentTypeOutOfRangeException(paramName, shapeComponent!);
+        throw ArgumentTypeOutOfRangeException(paramName, quantifiable!);
     }
     #endregion
 }

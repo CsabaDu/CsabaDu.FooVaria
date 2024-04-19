@@ -31,9 +31,9 @@ internal abstract class PlaneShape : SimpleShape, IPlaneShape
         return Area.GetMeasureUnit();
     }
 
-    public override sealed IShapeComponent? GetValidShapeComponent(IBaseQuantifiable? baseQuantifiable)
+    public override sealed IShapeComponent? GetValidShapeComponent(IQuantifiable? quantifiable)
     {
-        if (baseQuantifiable is not IExtent extent) return null;
+        if (quantifiable is not IExtent extent) return null;
 
         return extent;
     }
@@ -43,11 +43,6 @@ internal abstract class PlaneShape : SimpleShape, IPlaneShape
         IPlaneShapeFactory factory = (IPlaneShapeFactory)GetFactory();
 
         return factory.BulkSurfaceFactory;
-    }
-
-    public override sealed IPlaneShape GetShape()
-    {
-        return this;
     }
 
     public override sealed IArea GetSpreadMeasure()

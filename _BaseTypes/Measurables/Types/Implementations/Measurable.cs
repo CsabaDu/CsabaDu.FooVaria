@@ -120,12 +120,12 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
 
     public static IEnumerable<string> GetDefaultNames(MeasureUnitCode measureUnitCode)
     {
-        return measureUnitCode.GetAllMeasureUnits().Select(x => GetDefaultName(x));
+        return measureUnitCode.GetAllMeasureUnits().Select(GetDefaultName);
     }
 
     public static IEnumerable<string> GetDefaultNames()
     {
-        return GetAllMeasureUnits().Select(x => GetDefaultName(x));
+        return GetAllMeasureUnits().Select(GetDefaultName);
     }
 
     public static MeasureUnitCode GetDefinedMeasureUnitCode(Enum? measureUnit)
