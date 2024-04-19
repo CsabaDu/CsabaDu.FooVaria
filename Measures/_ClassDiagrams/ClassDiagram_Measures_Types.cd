@@ -256,7 +256,9 @@
     <Position X="4" Y="1.75" Width="2" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.IBaseMeasure" FixedFromPoint="true">
       <Path>
-        <Point X="5" Y="1.191" />
+        <Point X="4.5" Y="1.191" />
+        <Point X="4.5" Y="1.45" />
+        <Point X="5" Y="1.45" />
         <Point X="5" Y="1.75" />
       </Path>
     </InheritanceLine>
@@ -266,13 +268,13 @@
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.IBaseMeasure&lt;TSelf, TNum&gt;" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
-    <Position X="1.75" Y="3" Width="2.25" />
+    <Position X="1.5" Y="1.75" Width="2.25" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.IBaseMeasure" FixedFromPoint="true">
       <Path>
-        <Point X="4.5" Y="1.191" />
-        <Point X="4.5" Y="1.491" />
-        <Point X="2.875" Y="1.491" />
-        <Point X="2.875" Y="3" />
+        <Point X="4" Y="1.191" />
+        <Point X="4" Y="1.45" />
+        <Point X="2.625" Y="1.45" />
+        <Point X="2.625" Y="1.75" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IMeasureUnit" IsHidden="true" />
@@ -282,14 +284,14 @@
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.IBaseMeasure" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
-    <Position X="4" Y="0.5" Width="1.5" />
+    <Position X="3.5" Y="0.5" Width="1.5" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IMeasureUnit" IsHidden="true" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IProportional&lt;CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.IQuantifiable&gt;" IsHidden="true" />
     <InheritanceLine Type="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IQuantity" IsHidden="true" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Common.Types.ICommonBase&lt;TSelf&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="2" Y="0.5" Width="1.75" />
+    <Position X="1.5" Y="0.5" Width="1.75" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IQuantity" Collapsed="true">
@@ -301,23 +303,23 @@
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.ICalculate" Collapsed="true">
-    <Position X="7.25" Y="0.5" Width="1.25" />
+    <Position X="6.75" Y="0.5" Width="1.25" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.ICalculate&lt;TSelf, TOperand&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="6.75" Y="1.75" Width="2.25" />
+    <Position X="6.25" Y="1.75" Width="2.25" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.ISum&lt;TSelf&gt;" Collapsed="true">
-    <Position X="5.75" Y="0.5" Width="1.25" />
+    <Position X="5.25" Y="0.5" Width="1.25" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IDivide&lt;TSelf, TOperand&gt;" Collapsed="true">
-    <Position X="8.75" Y="0.5" Width="2" />
+    <Position X="8.25" Y="0.5" Width="2" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IMultiply&lt;TSelf, TOperand&gt;" Collapsed="true">
-    <Position X="11" Y="0.5" Width="2.25" />
+    <Position X="10.5" Y="0.5" Width="2.25" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors.IExchange&lt;TSelf, TEnum&gt;" Collapsed="true">
@@ -333,7 +335,7 @@
     <TypeIdentifier />
   </Interface>
   <Interface Name="CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors.IMeasureUnit" Collapsed="true">
-    <Position X="0.75" Y="2" Width="1.5" />
+    <Position X="0.75" Y="3.25" Width="1.5" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />
