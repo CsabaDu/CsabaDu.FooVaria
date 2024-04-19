@@ -1,15 +1,15 @@
 ﻿namespace CsabaDu.FooVaria.ShapeLimits.Types.Implementations;
 
-public sealed class ShapeLimit : SimpleShape, IShapeLimit
+public sealed class ShapeLimit : Shape, IShapeLimit
 {
-    internal ShapeLimit(IShapeLimit other) : base(other)
+    internal ShapeLimit(IShapeLimit other) : base(other, nameof(other))
     {
         SimpleShape = other.SimpleShape;
         LimitMode = other.LimitMode;
         Factory = other.Factory;
     }
 
-    internal ShapeLimit(IShapeLimitFactory factory, ISimpleShape simpleShape, LimitMode limitMode) : base(factory)
+    internal ShapeLimit(IShapeLimitFactory factory, ISimpleShape simpleShape, LimitMode limitMode) : base(factory, nameof(factory))
     {
         ValidateSimpleShape(simpleShape, nameof(simpleShape));
 
@@ -22,7 +22,7 @@ public sealed class ShapeLimit : SimpleShape, IShapeLimit
     public ISimpleShape SimpleShape { get; init; }
     public IShapeLimitFactory Factory { get; init; }
 
-    public override IExtent? this[ShapeExtentCode shapeExtentCode] => SimpleShape[shapeExtentCode];
+    public IExtent? this[ShapeExtentCode shapeExtentCode] => SimpleShape[shapeExtentCode];
 
     public bool Equals(IShapeLimit? x, IShapeLimit? y)
     {
@@ -99,24 +99,24 @@ public sealed class ShapeLimit : SimpleShape, IShapeLimit
         return SimpleShape.GetSpreadMeasure();
     }
 
-    public override IExtent GetDiagonal(ExtentUnit extentUnit)
-    {
-        return SimpleShape.GetDiagonal(extentUnit);
-    }
+    //public override IExtent GetDiagonal(ExtentUnit extentUnit)
+    //{
+    //    return SimpleShape.GetDiagonal(extentUnit);
+    //}
 
-    public override IBulkSpreadFactory GetBulkSpreadFactory()
-    {
-        return SimpleShape.GetBulkSpreadFactory();
-    }
+    //public override IBulkSpreadFactory GetBulkSpreadFactory()
+    //{
+    //    return SimpleShape.GetBulkSpreadFactory();
+    //}
 
     public override ISimpleShape GetBaseShape()
     {
         return SimpleShape;
     }
-    public override ITangentShapeFactory GetTangentShapeFactory()
-    {
-        return SimpleShape.GetTangentShapeFactory();
-    }
+    //public override ITangentShapeFactory GetTangentShapeFactory()
+    //{
+    //    return SimpleShape.GetTangentShapeFactory();
+    //}
 
     public override bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable? exchanged)
     {
@@ -128,7 +128,7 @@ public sealed class ShapeLimit : SimpleShape, IShapeLimit
         exchanged = measureUnitElements.MeasureUnit switch
         {
             AreaUnit areaUnit => exchangeTo<IArea, AreaUnit>(areaUnit),
-            ExtentUnit extentUnit => ExchangeTo(extentUnit),
+            ExtentUnit extentUnit => SimpleShape.ExchangeTo(extentUnit),
             VolumeUnit volumeUnit => exchangeTo<IVolume, VolumeUnit>(volumeUnit),
 
             _ => null,
@@ -144,5 +144,20 @@ public sealed class ShapeLimit : SimpleShape, IShapeLimit
             return GetSpreadMeasure() is TSMeasure spreadMeasure ? GetSpread(spreadMeasure.ExchangeTo(measureUnit)!) : null;
         }
         #endregion
+    }
+
+    public override int CompareTo(IShape? other)
+    {
+        return SimpleShape.CompareTo(other);
+    }
+
+    public override bool? FitsIn(IShape? other, LimitMode? limitMode)
+    {
+        return SimpleShape.FitsIn(other, limitMode);
+    }
+
+    public override IEnumerable<IShapeComponent> GetShapeComponents()
+    {
+        return SimpleShape.GetShapeComponents();
     }
 }

@@ -41,7 +41,7 @@
 [Spreads]<:-[BulkSpreads]
 [Spreads]<:-[Shapes]
 [Shapes]<:-[SimpleShapes]
-[SimpleShapes]<:-[ShapeLimits]
+[Shapes]<:-[ShapeLimits]
 [SimpleShapes]<:-[PlaneShapes]
 [SimpleShapes]<:-[DryBodies]
 [BaseMeasures]<:-[Measures]
