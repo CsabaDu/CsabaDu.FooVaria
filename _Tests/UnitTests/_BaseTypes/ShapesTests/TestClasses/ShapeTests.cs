@@ -1,7 +1,3 @@
-using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;
-using CsabaDu.FooVaria.Tests.TestHelpers.Params;
-using System.ComponentModel;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -36,7 +32,7 @@ public sealed class ShapeTests
     // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum? measureUnit, string paramName)
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable? measurable, string paramName)
     // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
-    // void IBaseQuantifiable.ValidateQuantity(ValueType? quantity, string paramName)
+    // void IBaseQuantifiable.ValidateQuantity(ValueType? defaultQuantity, string paramName)
     // void ISpreadMeasure.ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)
 
     #endregion
@@ -67,7 +63,7 @@ public sealed class ShapeTests
         Fields.measureUnit = Fields.RandomParams.GetRandomSpreadMeasureUnit();
         Fields.measureUnitCode = GetMeasureUnitCode(Fields.measureUnit);
         Fields.defaultQuantity = Fields.RandomParams.GetRandomPositiveDecimal();
-        _shapeComponent = GetShapeComponentQuantifiableObject(Fields.measureUnit, Fields.defaultQuantity);
+        _shapeComponent = GetShapeComponentQuantifiableObject();
     }
 
     [TestCleanup]
@@ -80,7 +76,57 @@ public sealed class ShapeTests
     #region Test methods
     #region int CompareTo
     #region IComparable<IShape>.CompareTo(IShape?)
+    [TestMethod, TestCategory("UnitTest")]
+    public void CompareTo_nullArg_IShape_returns_expected()
+    {
+        // Arrange
+        SetShapeChild();
 
+        IShape other = null;
+        const int expected = 1;
+
+        // Act
+        var actual = _shape.CompareTo(other);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void CompareTo_invalidArg_IShape_throws_InvalidEnumArgumentException()
+    {
+        // Arrange
+        SetShapeChild();
+
+        Fields.measureUnitCode = SampleParams.GetOtherSpreadMeasureUnitCode(Fields.measureUnitCode);
+        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        IShape other = GetShapeChild();
+
+        // Act
+        void attempt() => _ = _shape.CompareTo(other);
+
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(ParamNames.other, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void CompareTo_validArg_IQuantifiable_returns_expected()
+    {
+        // Arrange
+        SetShapeChild();
+
+        Fields.measureUnit = Fields.RandomParams.GetRandomSameTypeValidMeasureUnit(Fields.measureUnit);
+        Fields.defaultQuantity = Fields.RandomParams.GetRandomPositiveDecimal(Fields.defaultQuantity);
+        IShape other = GetShapeChild();
+        int expected = _shape.GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
+
+        // Act
+        var actual = _shape.CompareTo(other);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
     #endregion
     #endregion
 
@@ -119,45 +165,36 @@ public sealed class ShapeTests
     //    //    //#endregion
 
     #region Private methods
-    //    private void SetShapeChild(Enum measureUnit, ValueType quantity, IShapeFactory factory = null)
-    //    {
-    //        _spreadMeasure = SpreadMeasureBaseMeasureObject.GetSpreadMeasureBaseMeasureObject(measureUnit, quantity);
+    private void SetShapeChild(Enum measureUnit, decimal defaultQuantity, IShapeFactory factory = null)
+    {
+        _shapeComponent = ShapeComponentQuantifiableObject.GetShapeComponentQuantifiableObject(measureUnit, defaultQuantity);
 
-    //        SetShapeChild(_spreadMeasure, factory);
-    //    }
+        SetShapeChild(_shapeComponent, factory);
+    }
 
-    //    private void SetShapeChild(ISpreadMeasure spreadMeasure, IShapeFactory factory = null)
-    //    {
-    //        _shape = ShapeChild.GetShapeChild(spreadMeasure, factory);
-    //    }
+    private void SetShapeChild(IShapeComponent shapeComponent, IShapeFactory factory = null)
+    {
+        _shape = ShapeChild.GetShapeChild(shapeComponent, factory);
+    }
 
-    //    private void SetShapeChild()
-    //    {
-    //        SetShapeChild(_spreadMeasure);
-    //    }
+    private void SetShapeChild()
+    {
+        _shapeComponent = GetShapeComponentQuantifiableObject();
 
-    //    private void SetCompleteShapeChild()
-    //    {
-    //        Fields.rateComponentCode = Fields.RandomParams.GetRandomRateComponentCode();
+        SetShapeChild(_shapeComponent);
+    }
 
-    //        SetShapeChild(_spreadMeasure, new ShapeFactoryObject(), Fields.rateComponentCode);
-    //    }
+    private ShapeChild GetShapeChild(IShapeFactory factory = null)
+    {
+        _shapeComponent = GetShapeComponentQuantifiableObject();
 
-    //    private ShapeChild GetShapeChild(IShapeFactory factory = null)
-    //    {
-    //        return ShapeChild.GetShapeChild(_spreadMeasure, factory);
-    //    }
+        return ShapeChild.GetShapeChild(_shapeComponent, factory);
+    }
 
-
-    //    private ShapeChild GetCompleteShapeChild(RateComponentCode? rateComponentCode = null)
-    //    {
-    //        return ShapeChild.GetShapeChild(Fields.measureUnit, Fields.quantity, new SpreadFactoryObject(), rateComponentCode ?? RateComponentCode.Numerator);
-    //    }
-
-    //    private ISpreadMeasure GetSpreadMeasureBaseMeasureObject()
-    //    {
-    //        return SpreadMeasureBaseMeasureObject.GetSpreadMeasureBaseMeasureObject(Fields.measureUnit, Fields.quantity);
-    //    }
+    private ShapeComponentQuantifiableObject GetShapeComponentQuantifiableObject()
+    {
+        return ShapeComponentQuantifiableObject.GetShapeComponentQuantifiableObject(Fields.measureUnit, Fields.defaultQuantity);
+    }
 
     //    #region DynamicDataSource
     //    private static IEnumerable<object[]> GetIsExchangeableToArgs()
