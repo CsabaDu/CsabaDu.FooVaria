@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ObjectArrays;
 
-public record Enum_MeasureUnitCode_args(string Case, Enum MeasureUnit, MeasureUnitCode MeasureUnitCode) : Enum_args(Case, MeasureUnit)
+public record Args_Enum_MeasureUnitCode(string Case, Enum MeasureUnit, MeasureUnitCode MeasureUnitCode) : Args_Enum(Case, MeasureUnit)
 {
     public override object[] ToObjectArray() => [Case, MeasureUnit, MeasureUnitCode];
 }

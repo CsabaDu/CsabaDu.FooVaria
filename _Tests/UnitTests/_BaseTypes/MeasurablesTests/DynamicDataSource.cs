@@ -36,7 +36,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            bool_object_Enum_args item = new(isTrue, obj, measureUnit);
+            Args_bool_object_Enum item = new(isTrue, obj, measureUnit);
 
             return item.ToObjectArray();
         }
@@ -66,7 +66,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Enum_MeasureUnitCode_args item = new(measureUnit, measureUnitCode);
+            Args_Enum_MeasureUnitCode item = new(measureUnit, measureUnitCode);
 
             return item.ToObjectArray();
         }
@@ -85,7 +85,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Enum_MeasureUnitCode_args item = new(measureUnit, measureUnitCode);
+            Args_Enum_MeasureUnitCode item = new(measureUnit, measureUnitCode);
 
             return item.ToObjectArray();
         }

@@ -33,7 +33,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Enum_decimal_bool_IQuantifiable_args item = new(measureUnit, defaultQuantity, isTrue, quantifiable);
+            Args_Enum_decimal_bool_IQuantifiable item = new(measureUnit, defaultQuantity, isTrue, quantifiable);
 
             return item.ToObjectArray();
         }
@@ -57,7 +57,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Enum_ILimiter_args item = new(measureUnit, limiter);
+            Args_Enum_ILimiter item = new(measureUnit, limiter);
 
             return item.ToObjectArray();
         }
@@ -106,7 +106,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Enum_MeasureUnitCode_args item = new(measureUnit, measureUnitCode);
+            Args_Enum_MeasureUnitCode item = new(measureUnit, measureUnitCode);
 
             return item.ToObjectArray();
         }
@@ -142,7 +142,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Enum_decimal_object_RoundingMode_args item = new(measureUnit, defaultQuantity, obj, roundingMode);
+            Args_Enum_decimal_object_RoundingMode item = new(measureUnit, defaultQuantity, obj, roundingMode);
 
             return item.ToObjectArray();
         }
@@ -200,7 +200,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Enum_decimal_object_TypeCode_args item = new(measureUnit, defaultQuantity, obj, quantityTypeCode);
+            Args_Enum_decimal_object_TypeCode item = new(measureUnit, defaultQuantity, obj, quantityTypeCode);
 
             return item.ToObjectArray();
         }
@@ -290,7 +290,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Enum_Enum_IQuantifiable_args item = new(measureUnit, context, quantifiable);
+            Args_Enum_Enum_IQuantifiable item = new(measureUnit, context, quantifiable);
 
             return item.ToObjectArray();
         }

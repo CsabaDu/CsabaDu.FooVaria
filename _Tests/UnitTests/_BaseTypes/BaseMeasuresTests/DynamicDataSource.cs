@@ -172,7 +172,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Enum_ILimiter_args item = new(measureUnit, limiter);
+            Args_Enum_ILimiter item = new(measureUnit, limiter);
 
             return item.ToObjectArray();
         }
@@ -224,7 +224,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            string_IBaseMeasurement_args item = new(paramName, baseMeasurement);
+            Args_string_IBaseMeasurement item = new(paramName, baseMeasurement);
 
             return item.ToObjectArray();
         }
@@ -326,7 +326,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Enum_decimal_args item = new(measureUnit, decimalQuantity);
+            Args_Enum_decimal item = new(measureUnit, decimalQuantity);
 
             return item.ToObjectArray();
         }

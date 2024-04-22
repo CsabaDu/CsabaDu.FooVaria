@@ -33,7 +33,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            bool_object_Enum_decimal_args item = new(isTrue, obj, measureUnit, defaultQuantity);
+            Args_bool_object_Enum_Decimal item = new(isTrue, obj, measureUnit, defaultQuantity);
 
             return item.ToObjectArray();
         }
@@ -55,7 +55,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Enum_ILimiter_args item = new(measureUnit, limiter);
+            Args_Enum_ILimiter item = new(measureUnit, limiter);
 
             return item.ToObjectArray();
         }
