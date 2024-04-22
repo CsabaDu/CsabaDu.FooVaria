@@ -2,14 +2,22 @@
 
 public abstract class CommonDynamicDataSource : DataFields
 {
+    public static string GetDisplayName(MethodInfo methodInfo, object[] args)
+    {
+        return $"{methodInfo.Name}: {(string)args[0]}";
+    }
+
     public IEnumerable<object[]> GetHasMeasureUnitCodeArgs()
     {
         //measureUnit = RandomParams.GetRandomMeasureUnit();
         //measureUnitCode = GetMeasureUnitCode();
+
+        testCase = "Same MeasureUnitCode => true";
         SetMeasureUnit(RandomParams.GetRandomMeasureUnit());
         isTrue = true;
         yield return toObjectArray();
 
+        testCase = "Different MeasureUnitCode => false";
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
         isTrue = false;
         yield return toObjectArray();
@@ -17,19 +25,21 @@ public abstract class CommonDynamicDataSource : DataFields
         #region toObjectArray method
         object[] toObjectArray()
         {
-            TestCase_Enum_MeasureUnitCode_bool item = new(measureUnit, measureUnitCode, isTrue);
+            TestCase_Enum_MeasureUnitCode_bool args = new(testCase, measureUnit, measureUnitCode, isTrue);
 
-            return item.ToObjectArray();
+            return args.ToObjectArray();
         }
         #endregion
     }
 
     public IEnumerable<object[]> GetValidateMeasureUnitCodeInvalidArgs()
     {
+        testCase = "Not defined MeasureUnitCode";
         measureUnit = RandomParams.GetRandomMeasureUnit();
         measureUnitCode = SampleParams.NotDefinedMeasureUnitCode;
         yield return toObjectArray();
 
+        testCase = "Different MeasureUnitCode";
         measureUnitCode = GetMeasureUnitCode();
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
         yield return toObjectArray();
@@ -37,9 +47,9 @@ public abstract class CommonDynamicDataSource : DataFields
         #region toObjectArray method
         object[] toObjectArray()
         {
-            TestCase_Enum_MeasureUnitCode item = new(measureUnit, measureUnitCode);
+            TestCase_Enum_MeasureUnitCode args = new(testCase, measureUnit, measureUnitCode);
 
-            return item.ToObjectArray();
+            return args.ToObjectArray();
         }
         #endregion
     }

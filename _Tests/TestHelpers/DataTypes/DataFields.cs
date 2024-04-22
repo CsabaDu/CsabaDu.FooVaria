@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes;
+﻿using System.Reflection;
+
+namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes;
 
 public class DataFields
 {
