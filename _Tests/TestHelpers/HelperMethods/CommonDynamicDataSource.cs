@@ -59,7 +59,7 @@ public abstract class CommonDynamicDataSource : DataFields
     public IEnumerable<object[]> GetIsExchangeableToArgs(Enum measureUnit)
     {
         testCase = "null => false";
-        //this.measureUnit = measureUnit;
+        this.measureUnit = measureUnit;
         isTrue = false;
         context = null;
         yield return toObjectArray();
@@ -102,7 +102,7 @@ public abstract class CommonDynamicDataSource : DataFields
         #endregion
     }
 
-    protected static string GetEnumName<T>(this T enumeration)
+    protected static string GetEnumName<T>(T enumeration)
         where T : struct, Enum
     {
         return $"{enumeration.GetType().Name}.{Enum.GetName(enumeration)}";
