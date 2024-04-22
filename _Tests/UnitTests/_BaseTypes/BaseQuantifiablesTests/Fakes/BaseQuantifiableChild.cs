@@ -4,6 +4,7 @@ internal class BaseQuantifiableChild(IRootObject rootObject, string paramName) :
 {
     #region Members
 
+    // BaseQuantifiable(IRootObject rootObject, string paramName)
     // bool Measurable.Equals(object? obj)
     // bool? ILimitable.FitsIn(ILimiter limiter)
     // Enum IMeasureUnit.GetBaseMeasureUnit()

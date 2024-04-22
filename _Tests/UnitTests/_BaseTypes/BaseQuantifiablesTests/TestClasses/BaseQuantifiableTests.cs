@@ -5,6 +5,7 @@ public sealed class BaseQuantifiableTests
 {
     #region Tested in parent classes' tests
 
+    // BaseQuantifiable(IRootObject rootObject, string paramName)
     // Enum IMeasureUnit.GetBaseMeasureUnit()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
