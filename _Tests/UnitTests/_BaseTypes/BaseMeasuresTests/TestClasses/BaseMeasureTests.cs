@@ -673,11 +673,6 @@ public sealed class BaseMeasureTests
     }
 
     #region DynamicDataSource
-    //private static IEnumerable<object[]> GetEqualsArg()
-    //{
-    //    return DynamicDataSource.GetEqualsArg();
-    //}
-
     private static IEnumerable<object[]> GetEqualsArgs()
     {
         return DynamicDataSource.GetEqualsArgs();
@@ -687,11 +682,6 @@ public sealed class BaseMeasureTests
     {
         return DynamicDataSource.GetFitsInILimiterArgs();
     }
-
-    //private static IEnumerable<object[]> GetFitsInIQuantifiableLimitModeArgs()
-    //{
-    //    return DynamicDataSource.GetFitsInIQuantifiableLimitModeArgs();
-    //}
 
     private static IEnumerable<object[]> GetGetBaseMeasureNullCheckArgs()
     {
