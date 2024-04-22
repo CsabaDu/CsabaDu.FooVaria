@@ -2,6 +2,8 @@
 
 public abstract class CommonDynamicDataSource : DataFields
 {
+    protected string testCase = string.Empty;
+
     public static string GetDisplayName(MethodInfo methodInfo, object[] args)
     {
         return $"{methodInfo.Name}: {(string)args[0]}";

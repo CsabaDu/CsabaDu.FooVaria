@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes;
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes;
 
 public class DataFields
 {
@@ -27,8 +25,6 @@ public class DataFields
     public RoundingMode roundingMode;
     public ISpreadMeasure spreadMeasure;
     public TypeCode typeCode;
-
-    protected string testCase;
 
     public void SetDefaultQuantity()
     {
