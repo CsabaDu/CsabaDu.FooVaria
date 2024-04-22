@@ -56,37 +56,36 @@ public abstract class CommonDynamicDataSource : DataFields
 
     public IEnumerable<object[]> GetIsExchangeableToArgs(Enum measureUnit)
     {
-        // 1
-        this.measureUnit = measureUnit;
+        testCase = "null => false";
+        //this.measureUnit = measureUnit;
         isTrue = false;
         context = null;
         yield return toObjectArray();
 
-        // 2
+        testCase = "Not meaureUnit not MeasureUnitCode Enum => false";
         context = SampleParams.DefaultLimitMode;
         yield return toObjectArray();
 
-        // 3
+        testCase = "Same MeasureUnitCode => true";
         isTrue = true;
         measureUnitCode = GetMeasureUnitCode();
         context = measureUnitCode;
         yield return toObjectArray();
 
-        // 4
+        testCase = "Same type different measureUnit => true";
         context = RandomParams.GetRandomMeasureUnit(measureUnitCode);
         yield return toObjectArray();
 
-        // 5
-        isTrue = false;
+        testCase = "Different MeasureUnitCode => false";
         measureUnitCode = RandomParams.GetRandomConstantMeasureUnitCode(measureUnitCode);
         context = measureUnitCode;
         yield return toObjectArray();
 
-        // 6
+        testCase = "Different type measureUnit => false";
         context = RandomParams.GetRandomMeasureUnit(measureUnitCode, measureUnit);
         yield return toObjectArray();
 
-        // 7
+        testCase = "Same type not defined measureUnit => false";
         int count = Enum.GetNames(measureUnit.GetType()).Length;
         context = (Enum)Enum.ToObject(measureUnit.GetType(), count);
         yield return toObjectArray();
@@ -94,9 +93,9 @@ public abstract class CommonDynamicDataSource : DataFields
         #region toObjectArray method
         object[] toObjectArray()
         {
-            TestCase_bool_Enum_Enum item = new(isTrue, measureUnit, context);
+            TestCase_bool_Enum_Enum args = new(testCase, isTrue, measureUnit, context);
 
-            return item.ToObjectArray();
+            return args.ToObjectArray();
         }
         #endregion
     }
