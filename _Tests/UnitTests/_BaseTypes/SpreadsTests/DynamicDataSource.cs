@@ -35,7 +35,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         yield return toObjectArray();
 
         spreadMeasure = null;
-        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        measureUnitCode = GetMeasureUnitCode();
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
         measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
         quantifiable = GetSpreadMeasureBaseMeasureObject(measureUnit, doubleQuantity);

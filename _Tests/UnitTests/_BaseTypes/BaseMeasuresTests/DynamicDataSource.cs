@@ -67,7 +67,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            bool_Enum_ValueType_IQuantifiable_args item = new(isTrue, measureUnit, quantity, baseMeasure);
+            Args_bool_Enum_ValueType_IQuantifiable item = new(isTrue, measureUnit, quantity, baseMeasure);
 
             return item.ToObjectArray();
         }
@@ -163,7 +163,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         yield return toObjectArray();
 
         // Different MeasureUnitCode
-        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        measureUnitCode = GetMeasureUnitCode();
         measureUnitCode = RandomParams.GetRandomCustomMeasureUnitCode(measureUnitCode);
         limitMode = RandomParams.GetRandomLimitMode();
         limiter = LimiterQuantifiableObject.GetLimiterQuantifiableObject(limitMode.Value, RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity);
@@ -184,7 +184,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         // IQuantifiable, Not defined limitMode
         limitMode = SampleParams.NotDefinedLimitMode;
         measureUnit = RandomParams.GetRandomValidMeasureUnit();
-        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        measureUnitCode = GetMeasureUnitCode();
         quantity = (ValueType)RandomParams.GetRandomQuantity();
         baseMeasure = GetBaseMeasureChild();
         yield return toObjectArray();
@@ -280,7 +280,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
 
         //// 3
         //isTrue = true;
-        //measureUnitCode = GetMeasureUnitCode(measureUnit);
+        //measureUnitCode = GetMeasureUnitCode();
         //context = measureUnitCode;
         //yield return toObjectArray();
 

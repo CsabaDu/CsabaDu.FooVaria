@@ -4,8 +4,9 @@ public abstract class CommonDynamicDataSource : DataFields
 {
     public IEnumerable<object[]> GetHasMeasureUnitCodeArgs()
     {
-        measureUnit = RandomParams.GetRandomMeasureUnit();
-        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        //measureUnit = RandomParams.GetRandomMeasureUnit();
+        //measureUnitCode = GetMeasureUnitCode();
+        SetMeasureUnit(RandomParams.GetRandomMeasureUnit());
         isTrue = true;
         yield return toObjectArray();
 
@@ -29,7 +30,7 @@ public abstract class CommonDynamicDataSource : DataFields
         measureUnitCode = SampleParams.NotDefinedMeasureUnitCode;
         yield return toObjectArray();
 
-        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        measureUnitCode = GetMeasureUnitCode();
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
         yield return toObjectArray();
 
@@ -57,7 +58,7 @@ public abstract class CommonDynamicDataSource : DataFields
 
         // 3
         isTrue = true;
-        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        measureUnitCode = GetMeasureUnitCode();
         context = measureUnitCode;
         yield return toObjectArray();
 
@@ -83,7 +84,7 @@ public abstract class CommonDynamicDataSource : DataFields
         #region toObjectArray method
         object[] toObjectArray()
         {
-            bool_Enum_Enum_args item = new(isTrue, measureUnit, context);
+            Args_bool_Enum_Enum item = new(isTrue, measureUnit, context);
 
             return item.ToObjectArray();
         }

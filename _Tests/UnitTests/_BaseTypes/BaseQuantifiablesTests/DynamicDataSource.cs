@@ -17,7 +17,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         yield return toObjectArray();
 
         // Different MeasureUnitCode
-        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode(measureUnit));
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode());
         obj = GetBaseQuantifiableChild(RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity);
         yield return toObjectArray();
 
@@ -48,7 +48,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         yield return toObjectArray();
 
         // Different MeasureUnitCode
-        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        measureUnitCode = GetMeasureUnitCode();
         limiter = GetLimiterBaseQuantifiableObject(null, RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity);
         yield return toObjectArray();
 

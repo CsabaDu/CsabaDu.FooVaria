@@ -11,7 +11,7 @@ global using CsabaDu.FooVaria.BaseTypes.Spreads.Types;
 global using CsabaDu.FooVaria.BaseTypes.Spreads.Types.Implementations;
 global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes;
 global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.BehaviorObjects;
-global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ObjectArrayItems;
+global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ObjectArrays;
 global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.Returns;
 global using CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Params;

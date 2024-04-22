@@ -8,7 +8,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         // null
         obj = null;
         measureUnit = RandomParams.GetRandomValidMeasureUnit();
-        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        measureUnitCode = GetMeasureUnitCode();
         isTrue = false;
         yield return toObjectArray();
 
@@ -37,7 +37,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         obj = null;
         isTrue = false;
         measureUnit = RandomParams.GetRandomValidMeasureUnit();
-        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        measureUnitCode = GetMeasureUnitCode();
         yield return toObjectArray();
 
         // Different MeasureUnitCode
@@ -53,7 +53,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         // Different MeasureUnit, same MeasureUnitCode and same ExhchangeRate
         measureUnit = RandomParams.GetRandomNotUsedCustomMeasureUnit();
         _ = TrySetCustomMeasureUnit(measureUnit, decimal.One, RandomParams.GetRandomParamName());
-        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        measureUnitCode = GetMeasureUnitCode();
         obj = GetBaseMeasurementChild(measureUnitCode.GetDefaultMeasureUnit());
         yield return toObjectArray();
 
@@ -61,7 +61,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         object[] toObjectArray()
         {
             IBaseMeasurement baseMeasurement = (IBaseMeasurement)obj;
-            bool_Enum_IBaseMeasurement_args item = new(isTrue, measureUnit, baseMeasurement);
+            Args_bool_Enum_IBaseMeasurement item = new(isTrue, measureUnit, baseMeasurement);
 
             return item.ToObjectArray();
         }
@@ -71,12 +71,12 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
     internal IEnumerable<object[]> GetExchangeRateCollectionArg()
     {
         measureUnit = RandomParams.GetRandomMeasureUnit();
-        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        measureUnitCode = GetMeasureUnitCode();
         yield return toObjectArray();
 
         measureUnit = RandomParams.GetRandomNotUsedCustomMeasureUnit();
         _ = TrySetCustomMeasureUnit(measureUnit, RandomParams.GetRandomNotNegativeDecimal(), RandomParams.GetRandomParamName());
-        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        measureUnitCode = GetMeasureUnitCode();
         measureUnit = measureUnitCode.GetDefaultMeasureUnit();
         yield return toObjectArray();
 
@@ -103,7 +103,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         yield return toObjectArray();
 
         // other MeasureUnitCode - false
-        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        measureUnitCode = GetMeasureUnitCode();
         context = RandomParams.GetRandomConstantMeasureUnitCode(measureUnitCode);
         yield return toObjectArray();
 
@@ -137,7 +137,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            bool_Enum_Enum_args item = new(isTrue, measureUnit, context);
+            Args_bool_Enum_Enum item = new(isTrue, measureUnit, context);
 
             return item.ToObjectArray();
         }
@@ -168,7 +168,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
     {
         // MeasureUnitCode
         measureUnit = RandomParams.GetRandomConstantMeasureUnit();
-        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        measureUnitCode = GetMeasureUnitCode();
         context = measureUnitCode;
         yield return toObjectArray();
 

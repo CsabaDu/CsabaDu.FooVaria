@@ -43,7 +43,7 @@ public sealed class BaseQuantifiableTests
     {
         Fields.defaultQuantity = Fields.RandomParams.GetRandomDecimal();
 
-        Fields.SetMeasureUnitCode(Fields.RandomParams.GetRandomMeasureUnit());
+        Fields.SetMeasureUnit(Fields.RandomParams.GetRandomMeasureUnit());
     }
 
     [TestCleanup]

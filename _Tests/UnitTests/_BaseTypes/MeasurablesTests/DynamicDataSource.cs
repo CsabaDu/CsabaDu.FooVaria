@@ -22,7 +22,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         yield return toObjectArray();
 
         // IMeasure different MeasureUnit with same MeasureUnitCode
-        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        measureUnitCode = GetMeasureUnitCode();
         measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode, measureUnit);
         obj = GetMeasurableChild(measureUnit);
         yield return toObjectArray();
@@ -76,7 +76,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
     internal IEnumerable<object[]> GetValidateMeasureUnitValidArgs()
     {
         measureUnit = RandomParams.GetRandomMeasureUnit();
-        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        measureUnitCode = GetMeasureUnitCode();
         yield return toObjectArray();
 
         measureUnit = measureUnitCode;

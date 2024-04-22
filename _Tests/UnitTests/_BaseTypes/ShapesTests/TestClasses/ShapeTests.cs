@@ -61,7 +61,7 @@ public sealed class ShapeTests
     public void TestInitialize()
     {
         Fields.measureUnit = Fields.RandomParams.GetRandomSpreadMeasureUnit();
-        Fields.measureUnitCode = GetMeasureUnitCode(Fields.measureUnit);
+        Fields.measureUnitCode = Fields.GetMeasureUnitCode();
         Fields.defaultQuantity = Fields.RandomParams.GetRandomPositiveDecimal();
         _shapeComponent = GetShapeComponentQuantifiableObject();
     }

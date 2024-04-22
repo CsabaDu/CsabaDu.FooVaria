@@ -44,22 +44,22 @@ public class DataFields
         SetDefaultQuantity();
     }
 
-    public void SetMeasureUnitCode(Enum measureUnit)
+    public void SetMeasureUnit(Enum measureUnit)
     {
         this.measureUnit = measureUnit;
-        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        measureUnitCode = GetMeasureUnitCode();
         measureUnitType = measureUnit.GetType();
 
     }
 
-    public void SetMeasureUnit(MeasureUnitCode measureUnitCode)
+    public void SetRandomMeasureUnit(MeasureUnitCode measureUnitCode)
     {
         this.measureUnitCode = measureUnitCode;
         measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
         measureUnitType = measureUnit.GetType();
     }
 
-    public void SetQuantity(TypeCode quantityTypeCode)
+    public void SetRandomQuantity(TypeCode quantityTypeCode)
     {
         this.quantityTypeCode = quantityTypeCode;
         quantity = RandomParams.GetRandomValueType(quantityTypeCode);
@@ -69,7 +69,12 @@ public class DataFields
 
     public void SetBaseMeasureFields(MeasureUnitCode measureUnitCode, double quantity)
     {
-        SetMeasureUnit(measureUnitCode);
+        SetRandomMeasureUnit(measureUnitCode);
         SetDoubleQuantity(quantity);
+    }
+
+    public MeasureUnitCode GetMeasureUnitCode()
+    {
+        return Measurable.GetMeasureUnitCode(measureUnit);
     }
 }

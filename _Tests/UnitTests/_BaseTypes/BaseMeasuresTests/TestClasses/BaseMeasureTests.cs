@@ -53,8 +53,8 @@ public sealed class BaseMeasureTests
     [TestInitialize]
     public void TestInitialize()
     {
-        Fields.SetMeasureUnit(Fields.RandomParams.GetRandomConstantMeasureUnitCode());
-        Fields.SetQuantity(Fields.RandomParams.GetRandomQuantityTypeCode());
+        Fields.SetRandomMeasureUnit(Fields.RandomParams.GetRandomConstantMeasureUnitCode());
+        Fields.SetRandomQuantity(Fields.RandomParams.GetRandomQuantityTypeCode());
 
         Fields.rateComponentCode = Fields.RandomParams.GetRandomRateComponentCode();
         Fields.limitMode = Fields.RandomParams.GetRandomNullableLimitMode();
