@@ -7,7 +7,6 @@ public class DataFields
     public readonly RootObject RootObject = new();
     #endregion
 
-    //public IBaseMeasure baseMeasure;
     public Enum context;
     public decimal defaultQuantity;
     public decimal decimalQuantity;
@@ -26,6 +25,8 @@ public class DataFields
     public RoundingMode roundingMode;
     public ISpreadMeasure spreadMeasure;
     public TypeCode typeCode;
+
+    protected string testCase;
 
     public void SetDefaultQuantity()
     {

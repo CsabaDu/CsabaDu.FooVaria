@@ -33,7 +33,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Args_Enum_decimal_bool_IQuantifiable item = new(measureUnit, defaultQuantity, isTrue, quantifiable);
+            TestCase_Enum_decimal_bool_IQuantifiable item = new(measureUnit, defaultQuantity, isTrue, quantifiable);
 
             return item.ToObjectArray();
         }
@@ -57,7 +57,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Args_Enum_ILimiter item = new(measureUnit, limiter);
+            TestCase_Enum_ILimiter item = new(measureUnit, limiter);
 
             return item.ToObjectArray();
         }
@@ -106,7 +106,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Args_Enum_MeasureUnitCode item = new(measureUnit, measureUnitCode);
+            TestCase_Enum_MeasureUnitCode item = new(measureUnit, measureUnitCode);
 
             return item.ToObjectArray();
         }
@@ -142,7 +142,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Args_Enum_decimal_object_RoundingMode item = new(measureUnit, defaultQuantity, obj, roundingMode);
+            TestCase_Enum_decimal_object_RoundingMode item = new(measureUnit, defaultQuantity, obj, roundingMode);
 
             return item.ToObjectArray();
         }
@@ -200,7 +200,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Args_Enum_decimal_object_TypeCode item = new(measureUnit, defaultQuantity, obj, quantityTypeCode);
+            TestCase_Enum_decimal_object_TypeCode item = new(measureUnit, defaultQuantity, obj, quantityTypeCode);
 
             return item.ToObjectArray();
         }
@@ -252,7 +252,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Args_bool_Enum_Enum item = new(isTrue, measureUnit, context);
+            TestCase_bool_Enum_Enum item = new(isTrue, measureUnit, context);
 
             return item.ToObjectArray();
         }
@@ -290,7 +290,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Args_Enum_Enum_IQuantifiable item = new(measureUnit, context, quantifiable);
+            TestCase_Enum_Enum_IQuantifiable item = new(measureUnit, context, quantifiable);
 
             return item.ToObjectArray();
         }

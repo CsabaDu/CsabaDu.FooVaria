@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ObjectArrays;
 
-public abstract record ObjectArray(string Case)
+public abstract record ObjectArray(string TestCase)
 {
-    public virtual object[] ToObjectArray() => [Case, Case];
+    public virtual object[] ToObjectArray() => [TestCase];
 }

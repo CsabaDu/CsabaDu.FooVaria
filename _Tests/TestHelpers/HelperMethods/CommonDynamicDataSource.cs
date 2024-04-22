@@ -17,7 +17,7 @@ public abstract class CommonDynamicDataSource : DataFields
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Args_Enum_MeasureUnitCode_bool item = new(measureUnit, measureUnitCode, isTrue);
+            TestCase_Enum_MeasureUnitCode_bool item = new(measureUnit, measureUnitCode, isTrue);
 
             return item.ToObjectArray();
         }
@@ -37,7 +37,7 @@ public abstract class CommonDynamicDataSource : DataFields
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Args_Enum_MeasureUnitCode item = new(measureUnit, measureUnitCode);
+            TestCase_Enum_MeasureUnitCode item = new(measureUnit, measureUnitCode);
 
             return item.ToObjectArray();
         }
@@ -84,7 +84,7 @@ public abstract class CommonDynamicDataSource : DataFields
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Args_bool_Enum_Enum item = new(isTrue, measureUnit, context);
+            TestCase_bool_Enum_Enum item = new(isTrue, measureUnit, context);
 
             return item.ToObjectArray();
         }

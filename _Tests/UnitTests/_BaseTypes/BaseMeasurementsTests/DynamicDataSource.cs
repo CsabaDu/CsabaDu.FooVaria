@@ -24,7 +24,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Args_bool_object_Enum item = new(isTrue, obj, measureUnit);
+            TestCase_bool_object_Enum item = new(isTrue, obj, measureUnit);
 
             return item.ToObjectArray();
         }
@@ -61,7 +61,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         object[] toObjectArray()
         {
             IBaseMeasurement baseMeasurement = (IBaseMeasurement)obj;
-            Args_bool_Enum_IBaseMeasurement item = new(isTrue, measureUnit, baseMeasurement);
+            TestCase_bool_Enum_IBaseMeasurement item = new(isTrue, measureUnit, baseMeasurement);
 
             return item.ToObjectArray();
         }
@@ -83,7 +83,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Args_Enum_MeasureUnitCode item = new(measureUnit, measureUnitCode);
+            TestCase_Enum_MeasureUnitCode item = new(measureUnit, measureUnitCode);
 
             return item.ToObjectArray();
         }
@@ -137,7 +137,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Args_bool_Enum_Enum item = new(isTrue, measureUnit, context);
+            TestCase_bool_Enum_Enum item = new(isTrue, measureUnit, context);
 
             return item.ToObjectArray();
         }
@@ -157,7 +157,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Args_Enum_decimal item = new(measureUnit, decimalQuantity);
+            TestCase_Enum_decimal item = new(measureUnit, decimalQuantity);
 
             return item.ToObjectArray();
         }
@@ -179,7 +179,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Args_Enum_Enum item = new(measureUnit, context);
+            TestCase_Enum_Enum item = new(measureUnit, context);
 
             return item.ToObjectArray();
         }

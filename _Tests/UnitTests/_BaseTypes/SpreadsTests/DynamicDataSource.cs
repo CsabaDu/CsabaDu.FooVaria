@@ -44,7 +44,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Args_Enum_ISpreadMeasure_IQuantifiable item = new(measureUnit, spreadMeasure, quantifiable);
+            TestCase_Enum_ISpreadMeasure_IQuantifiable item = new(measureUnit, spreadMeasure, quantifiable);
 
             return item.ToObjectArray();
         }
@@ -68,7 +68,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Args_Enum_ISpreadMeasure item = new(measureUnit, spreadMeasure);
+            TestCase_Enum_ISpreadMeasure item = new(measureUnit, spreadMeasure);
 
             return item.ToObjectArray();
         }

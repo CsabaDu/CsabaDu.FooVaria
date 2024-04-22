@@ -304,7 +304,7 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
 
     public static bool NameEquals(string name, string otherName)
     {
-        return string.Equals(name, otherName, StringComparison.OrdinalIgnoreCase);
+        return string.Equals(name, otherName, StringComparison.OrdinalIgnoreTestCase);
     }
 
     public static void ValidateCustomName(string? customName)
