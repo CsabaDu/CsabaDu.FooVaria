@@ -101,4 +101,10 @@ public abstract class CommonDynamicDataSource : DataFields
         }
         #endregion
     }
+
+    protected static string GetEnumName<T>(this T enumeration)
+        where T : struct, Enum
+    {
+        return $"{enumeration.GetType().Name}.{Enum.GetName(enumeration)}";
+    }
 }

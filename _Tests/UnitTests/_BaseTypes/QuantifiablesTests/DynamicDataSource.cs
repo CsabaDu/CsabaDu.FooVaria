@@ -144,7 +144,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            testCase = "RoundingMode." + Enum.GetName(roundingMode);
+            testCase = $"{obj.GetType().Name}, {GetEnumName(roundingMode)}";
             TestCase_Enum_decimal_object_RoundingMode args = new(testCase, measureUnit, defaultQuantity, obj, roundingMode);
 
             return args.ToObjectArray();
@@ -162,7 +162,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray(TypeCode typeCode)
         {
-            testCase = GetTypeCodeName(typeCode);
+            testCase = GetEnumName(typeCode);
             TestCase_TypeCode item = new(testCase, typeCode);
 
             return item.ToObjectArray();
@@ -183,7 +183,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
             if (item is not (TypeCode.Int64 or TypeCode.UInt64))
             {
                 quantityTypeCode = item;
-                testCase = GetTypeCodeName(item);
+                testCase = GetEnumName(item);
                 obj = convertDefaultQuantity();
                 yield return toObjectArray();
             }
@@ -191,18 +191,18 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
 
         measureUnit = MeasureUnitCode.Currency.GetDefaultMeasureUnit();
         quantityTypeCode = TypeCode.Double;
-        testCase = GetTypeCodeName(quantityTypeCode);
+        testCase = GetEnumName(quantityTypeCode);
         obj = convertDefaultQuantity();
         yield return toObjectArray();
 
         quantityTypeCode = TypeCode.Int64;
-        testCase = GetTypeCodeName(quantityTypeCode);
+        testCase = GetEnumName(quantityTypeCode);
         obj = convertDefaultQuantity();
         yield return toObjectArray();
 
         defaultQuantity = RandomParams.GetRandomNotNegativeDecimal();
         quantityTypeCode = TypeCode.UInt64;
-        testCase = GetTypeCodeName(quantityTypeCode);
+        testCase = GetEnumName(quantityTypeCode);
         obj = convertDefaultQuantity();
         yield return toObjectArray();
 
@@ -307,9 +307,4 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #endregion
     }
     #endregion
-
-    private static string GetTypeCodeName(TypeCode typeCode)
-    {
-        return "TypeCode." + Enum.GetName(typeCode);
-    }
 }

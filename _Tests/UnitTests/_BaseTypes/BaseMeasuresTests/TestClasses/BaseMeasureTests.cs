@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -36,6 +38,7 @@ public sealed class BaseMeasureTests
 
     #region Static fields
     private static DynamicDataSource DynamicDataSource;
+    private const string DisplayName = nameof(GetDisplayName);
     #endregion
 
     private BaseMeasureChild _baseMeasure;
@@ -68,6 +71,11 @@ public sealed class BaseMeasureTests
         _limiter = null;
 
         RestoreConstantExchangeRates();
+    }
+
+    public static string GetDisplayName(MethodInfo methodInfo, object[] args)
+    {
+        return CommonDynamicDataSource.GetDisplayName(methodInfo, args);
     }
     #endregion
 
@@ -131,7 +139,7 @@ public sealed class BaseMeasureTests
     #region bool Equals
     //#region override sealed IEquatable<IQuantifiable>.Equals(IQuantifiable?)
     //[TestMethod, TestCategory("UnitTest")]
-    //[DynamicData(nameof(GetEqualsArg), DynamicDataSourceType.Method)]
+    //[DynamicData(nameof(GetEqualsArg), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
     //public void Equals_arg_IQuantifiable_returns_expected(bool expected, Enum measureUnit, ValueType quantity, IQuantifiable other)
     //{
     //    // Arrange
@@ -147,8 +155,8 @@ public sealed class BaseMeasureTests
 
     #region IEqualityComparer<IBaseMeasure>.Equals(IBaseMeasure?, IBaseMeasure?)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method)]
-    public void Equals_args_IBaseMeasure_IBaseMeasure_returns_expected(IBaseMeasure left, bool expected, IBaseMeasure right)
+    [DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void Equals_args_IBaseMeasure_IBaseMeasure_returns_expected(string testCase, IBaseMeasure left, bool expected, IBaseMeasure right)
     {
         // Arrange
         SetBaseMeasureChild();
@@ -180,8 +188,8 @@ public sealed class BaseMeasureTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetFitsInILimiterArgs), DynamicDataSourceType.Method)]
-    public void FitsIn_invalidArg_ILimiter_returns_null(Enum measureUnit, ILimiter limiter)
+    [DynamicData(nameof(GetFitsInILimiterArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void FitsIn_invalidArg_ILimiter_returns_null(string testCase, Enum measureUnit, ILimiter limiter)
     {
         // Arrange
         SetBaseMeasureChild(measureUnit, Fields.quantity);
@@ -232,7 +240,7 @@ public sealed class BaseMeasureTests
     //}
 
     //[TestMethod, TestCategory("UnitTest")]
-    //[DynamicData(nameof(GetFitsInIQuantifiableLimitModeArgs), DynamicDataSourceType.Method)]
+    //[DynamicData(nameof(GetFitsInIQuantifiableLimitModeArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
     //public void FitsIn_invalidArgs_IQuantifiable_LimitMode_returns_null(Enum measureUnit, LimitMode? limitMode, IQuantifiable other)
     //{
     //    // Arrange
@@ -320,8 +328,8 @@ public sealed class BaseMeasureTests
 
     #region IBaseMeasure.GetBaseMeasure(IBaseMeasurement, ValueType)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetGetBaseMeasureNullCheckArgs), DynamicDataSourceType.Method)]
-    public void GetBaseMeasure_nullArgs_IBaseMeasurement_ValueType_thorws_ArgumentNullException(string paramName, IBaseMeasurement baseMeasurement)
+    [DynamicData(nameof(GetGetBaseMeasureNullCheckArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void GetBaseMeasure_nullArgs_IBaseMeasurement_ValueType_thorws_ArgumentNullException(string testCase, string paramName, IBaseMeasurement baseMeasurement)
     {
         // Arrange
         SetBaseMeasureChild();
@@ -510,8 +518,8 @@ public sealed class BaseMeasureTests
     #region TypeCode GetQuantityTypeCode
     #region IQuantityTypeCode.GetQuantityTypeCode(object?)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetGetQuantityTypeCodeArgs), DynamicDataSourceType.Method)]
-    public void GetQuantityTypeCode_arg_object_returns_expected(TypeCode expected, object quantity)
+    [DynamicData(nameof(GetGetQuantityTypeCodeArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void GetQuantityTypeCode_arg_object_returns_expected(string testCase, TypeCode expected, object quantity)
     {
         // Arrange
         SetBaseMeasureChild();
@@ -547,8 +555,8 @@ public sealed class BaseMeasureTests
     #region bool IsExchangeableTo
     #region override sealed IExchangeable<Enum>.IsExchangeableTo(Enum?)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetIsExchangeableToArgs), DynamicDataSourceType.Method)]
-    public void IsExchangeableTo_arg_Enum_returns_expected(bool expected, Enum measureUnit, Enum context)
+    [DynamicData(nameof(GetIsExchangeableToArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void IsExchangeableTo_arg_Enum_returns_expected(string testCase, bool expected, Enum measureUnit, Enum context)
     {
         // Arrange
         SetBaseMeasureChild(measureUnit, Fields.quantity);
@@ -659,17 +667,16 @@ public sealed class BaseMeasureTests
         return BaseMeasureChild.GetBaseMeasureChild(Fields.measureUnit, Fields.quantity);
     }
 
-
     private BaseMeasureChild GetCompleteBaseMeasureChild()
     {
         return BaseMeasureChild.GetBaseMeasureChild(Fields.measureUnit, Fields.quantity, Fields.rateComponentCode, Fields.limitMode);
     }
 
     #region DynamicDataSource
-    private static IEnumerable<object[]> GetEqualsArg()
-    {
-        return DynamicDataSource.GetEqualsArg();
-    }
+    //private static IEnumerable<object[]> GetEqualsArg()
+    //{
+    //    return DynamicDataSource.GetEqualsArg();
+    //}
 
     private static IEnumerable<object[]> GetEqualsArgs()
     {
@@ -681,10 +688,10 @@ public sealed class BaseMeasureTests
         return DynamicDataSource.GetFitsInILimiterArgs();
     }
 
-    private static IEnumerable<object[]> GetFitsInIQuantifiableLimitModeArgs()
-    {
-        return DynamicDataSource.GetFitsInIQuantifiableLimitModeArgs();
-    }
+    //private static IEnumerable<object[]> GetFitsInIQuantifiableLimitModeArgs()
+    //{
+    //    return DynamicDataSource.GetFitsInIQuantifiableLimitModeArgs();
+    //}
 
     private static IEnumerable<object[]> GetGetBaseMeasureNullCheckArgs()
     {
@@ -699,11 +706,6 @@ public sealed class BaseMeasureTests
     private static IEnumerable<object[]> GetIsExchangeableToArgs()
     {
         return DynamicDataSource.GetIsExchangeableToArgs();
-    }
-
-    private static IEnumerable<object[]> GetValidateExchangeRateArgs()
-    {
-        return DynamicDataSource.GetValidateExchangeRateArgs();
     }
     #endregion
     #endregion

@@ -23,37 +23,37 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
 
     internal IEnumerable<object[]> GetEqualsArg()
     {
-        // null
+        testCase = "null => false";
         isTrue = false;
         measureUnit = RandomParams.GetRandomConstantMeasureUnit();
         quantity = (ValueType)RandomParams.GetRandomQuantity();
         baseMeasure = null;
         yield return toObjectArray();
 
-        // Same
+        testCase = "Same baseMeasure => true";
         isTrue = true;
         baseMeasure = GetBaseMeasureChild();
         yield return toObjectArray();
 
-        // Different MeasureUnitCode
+        testCase = "Different MeasureUnitCode => false";
         isTrue = false;
         measureUnitCode = RandomParams.GetRandomConstantMeasureUnitCode(measureUnitCode);
         context = measureUnitCode.GetDefaultMeasureUnit();
         measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode, context);
         yield return toObjectArray();
 
-        // Same MeasureUnitCode, different measureUnit
+        testCase = "Same MeasureUnitCode, different measureUnit => false";
         baseMeasure = GetBaseMeasureChild();
         measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode, measureUnit);
         yield return toObjectArray();
 
-        // Different quantity
+        testCase = "Different quantity => false";
         baseMeasure = GetBaseMeasureChild();
         quantityTypeCode = Type.GetTypeCode(quantity.GetType());
         quantity = (ValueType)RandomParams.GetRandomQuantity(quantityTypeCode, quantity);
         yield return toObjectArray();
 
-        // Equals when exchanged
+        testCase = "Equals when exchanged => true";
         isTrue = true;
         decimalQuantity = RandomParams.GetRandomDecimal();
         quantity = decimalQuantity;
@@ -67,22 +67,22 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            TestCase_bool_Enum_ValueType_IQuantifiable item = new(isTrue, measureUnit, quantity, baseMeasure);
+            TestCase_bool_Enum_ValueType_IQuantifiable args = new(testCase, isTrue, measureUnit, quantity, baseMeasure);
 
-            return item.ToObjectArray();
+            return args.ToObjectArray();
         }
         #endregion
     }
 
     internal IEnumerable<object[]> GetEqualsArgs()
     {
-        // 1. null - null
+        testCase = "null, null => true";
         isTrue = true;
         baseMeasure = null;
         other = null;
         yield return toObjectArray();
 
-        // 2. not null - null
+        testCase = "not null, null => false";
         isTrue = false;
         measureUnit = RandomParams.GetRandomValidMeasureUnit();
         quantity = (ValueType)RandomParams.GetRandomQuantity();
@@ -91,42 +91,42 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         baseMeasure = getBaseMeasureChild();
         yield return toObjectArray();
 
-        // 3. null - not null
+        testCase = "null, not null => false";
         baseMeasure = null;
         other = getBaseMeasureChild();
         yield return toObjectArray();
 
-        // 4. Same
+        testCase = "same baseMeasures, same LimitModes => true";
         isTrue = true;
         baseMeasure = getBaseMeasureChild();
         yield return toObjectArray();
 
-        // 5. Different LimitMode
+        testCase = "Different LimitMode => false";
         isTrue = false;
         limitMode = RandomParams.GetRandomNullableLimitMode(limitMode);
         other = getBaseMeasureChild();
         yield return toObjectArray();
 
-        // 6. Different RateComponentCode
+        testCase = "Different RateComponentCode => false";
         baseMeasure = getBaseMeasureChild();
         rateComponentCode = RandomParams.GetRandomRateComponentCode(rateComponentCode);
         other = getBaseMeasureChild();
         yield return toObjectArray();
 
-        // 7. Different quantity
+        testCase = "Different quantity => false";
         baseMeasure = getBaseMeasureChild();
         quantityTypeCode = Type.GetTypeCode(quantity.GetType());
         quantity = (ValueType)RandomParams.GetRandomQuantity(quantityTypeCode, quantity);
         other = getBaseMeasureChild();
         yield return toObjectArray();
 
-        // 8. Different measureUnit
+        testCase = "Different measureUnit => false";
         baseMeasure = getBaseMeasureChild();
         measureUnit = RandomParams.GetRandomValidMeasureUnit(measureUnit);
         other = getBaseMeasureChild();
         yield return toObjectArray();
 
-        // 9. Equals when exchanged
+        testCase = "Equals when exchanged";
         isTrue = true;
         decimalQuantity = RandomParams.GetRandomDecimal();
         quantity = decimalQuantity;
@@ -142,9 +142,9 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            IBaseMeasure_bool_IBaseMeasure_arg item = new(baseMeasure, isTrue, other);
+            TestCase_IBaseMeasure_bool_IBaseMeasure args = new(testCase, baseMeasure, isTrue, other);
 
-            return item.ToObjectArray();
+            return args.ToObjectArray();
         }
         #endregion
 
@@ -157,12 +157,12 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
 
     internal IEnumerable<object[]> GetFitsInILimiterArgs()
     {
-        // Not IBaseQuantifiable
+        testCase = "Not IBaseQuantifiable";
         measureUnit = RandomParams.GetRandomMeasureUnit();
         limiter = new LimiterObject();
         yield return toObjectArray();
 
-        // Different MeasureUnitCode
+        testCase = "Different MeasureUnitCode";
         measureUnitCode = GetMeasureUnitCode();
         measureUnitCode = RandomParams.GetRandomCustomMeasureUnitCode(measureUnitCode);
         limitMode = RandomParams.GetRandomLimitMode();
@@ -172,16 +172,16 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            TestCase_Enum_ILimiter item = new(measureUnit, limiter);
+            TestCase_Enum_ILimiter args = new(testCase, measureUnit, limiter);
 
-            return item.ToObjectArray();
+            return args.ToObjectArray();
         }
         #endregion
     }
 
     internal IEnumerable<object[]> GetFitsInIQuantifiableLimitModeArgs()
     {
-        // IQuantifiable, Not defined limitMode
+        testCase = "IQuantifiable, Not defined limitMode";
         limitMode = SampleParams.NotDefinedLimitMode;
         measureUnit = RandomParams.GetRandomValidMeasureUnit();
         measureUnitCode = GetMeasureUnitCode();
@@ -189,33 +189,35 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         baseMeasure = GetBaseMeasureChild();
         yield return toObjectArray();
 
-        // Different IQuantifiable, valid LimitMode
+        testCase = "Different IQuantifiable, valid LimitMode";
         measureUnitCode = RandomParams.GetRandomConstantMeasureUnitCode(measureUnitCode);
         measureUnit = measureUnitCode.GetDefaultMeasureUnit();
         measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode, measureUnit);
         limitMode = RandomParams.GetRandomLimitMode();
         yield return toObjectArray();
 
-        // null, valid LimitMode
+        testCase = "null, valid LimitMode";
         baseMeasure = null;
         yield return toObjectArray();
 
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Enum_LimitMode_IQuantifiable_arg item = new(measureUnit, limitMode, baseMeasure);
+            TestCase_Enum_LimitMode_IQuantifiable args = new(testCase, measureUnit, limitMode, baseMeasure);
 
-            return item.ToObjectArray();
+            return args.ToObjectArray();
         }
         #endregion
     }
 
     internal IEnumerable<object[]> GetGetBaseMeasureNullCheckArgs()
     {
+        testCase = "null, null";
         paramName = ParamNames.baseMeasurement;
         baseMeasurement = null;
         yield return toObjectArray();
 
+        testCase = "baseMeasurement, null";
         paramName = ParamNames.quantity;
         measureUnit = RandomParams.GetRandomMeasureUnit();
         baseMeasurement = BaseMeasurementChild.GetBaseMeasurementChild(measureUnit);
@@ -224,42 +226,47 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            TestCase_string_IBaseMeasurement item = new(paramName, baseMeasurement);
+            TestCase_string_IBaseMeasurement args = new(testCase, paramName, baseMeasurement);
 
-            return item.ToObjectArray();
+            return args.ToObjectArray();
         }
         #endregion
     }
 
     internal IEnumerable<object[]> GetGetQuantityTypeCodeArgs()
     {
+        testCase = "TypeCode.Empty => null";
         typeCode = TypeCode.Empty;
         obj = null;
         yield return toObjectArray();
 
+        testCase = "TypeCode.Object => null";
         typeCode = TypeCode.Object;
         obj = new();
         yield return toObjectArray();
 
         foreach (TypeCode item in SampleParams.InvalidValueTypeCodes)
         {
+            testCase = GetEnumName(item);
             obj = RandomParams.GetRandomValueType(item);
             yield return toObjectArray();
         }
 
         foreach (var item in BaseQuantifiable.QuantityTypeCodes)
         {
+            testCase = GetEnumName(item);
             typeCode = item;
             obj = RandomParams.GetRandomValueType(item);
             yield return toObjectArray();
         }
 
+
         #region toObjectArray method
         object[] toObjectArray()
         {
-            TypeCode_object_arg item = new(typeCode, obj);
+            TestCase_TypeCode_object args = new(testCase, typeCode, obj);
 
-            return item.ToObjectArray();
+            return args.ToObjectArray();
         }
         #endregion
     }
@@ -267,70 +274,6 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
     internal IEnumerable<object[]> GetIsExchangeableToArgs()
     {
         return GetIsExchangeableToArgs(RandomParams.GetRandomConstantMeasureUnit());
-
-        //// 1
-        //measureUnit = RandomParams.GetRandomConstantMeasureUnit();
-        //isTrue = false;
-        //context = null;
-        //yield return toObjectArray();
-
-        //// 2
-        //context = SampleParams.DefaultLimitMode;
-        //yield return toObjectArray();
-
-        //// 3
-        //isTrue = true;
-        //measureUnitCode = GetMeasureUnitCode();
-        //context = measureUnitCode;
-        //yield return toObjectArray();
-
-        //// 4
-        //context = RandomParams.GetRandomMeasureUnit(measureUnitCode);
-        //yield return toObjectArray();
-
-        //// 5
-        //isTrue = false;
-        //measureUnitCode = RandomParams.GetRandomConstantMeasureUnitCode(measureUnitCode);
-        //context = measureUnitCode;
-        //yield return toObjectArray();
-
-        //// 6
-        //context = RandomParams.GetRandomMeasureUnit(measureUnitCode, measureUnit);
-        //yield return toObjectArray();
-
-        //// 7
-        //int count = Enum.GetNames(measureUnit.GetType()).Length;
-        //context = (Enum)Enum.ToObject(measureUnit.GetType(), count);
-        //yield return toObjectArray();
-
-        //#region toObjectArray method
-        //object[] toObjectArray()
-        //{
-        //    bool_Enum_Enum_args item = new(isTrue, measureUnit, context);
-
-        //    return item.ToObjectArray();
-        //}
-        //#endregion
-    }
-
-    internal IEnumerable<object[]> GetValidateExchangeRateArgs()
-    {
-        decimalQuantity = 0;
-        measureUnit = RandomParams.GetRandomValidMeasureUnit();
-        yield return toObjectArray();
-
-        decimalQuantity = RandomParams.GetRandomDecimal();
-        paramName = RandomParams.GetRandomParamName();
-        yield return toObjectArray();
-
-        #region toObjectArray method
-        object[] toObjectArray()
-        {
-            TestCase_Enum_decimal item = new(measureUnit, decimalQuantity);
-
-            return item.ToObjectArray();
-        }
-        #endregion
     }
     #endregion
 }

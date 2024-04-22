@@ -86,7 +86,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region Local methods
         static object[] toObjectArray(TypeCode typeCode)
         {
-            string testCase = "TypeCode." + Enum.GetName(typeCode);
+            string testCase = GetEnumName(typeCode);
             TestCase_TypeCode item = new(testCase, typeCode);
 
             return item.ToObjectArray();
