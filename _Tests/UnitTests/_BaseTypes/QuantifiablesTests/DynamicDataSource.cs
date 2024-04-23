@@ -183,26 +183,26 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
             if (item is not (TypeCode.Int64 or TypeCode.UInt64))
             {
                 quantityTypeCode = item;
-                testCase = GetEnumName(item);
+                testCase = getItemTestCase(item);
                 obj = convertDefaultQuantity();
                 yield return toObjectArray();
             }
         }
 
-        measureUnit = MeasureUnitCode.Currency.GetDefaultMeasureUnit();
+        SetMeasureUnit(MeasureUnitCode.Currency.GetDefaultMeasureUnit());
         quantityTypeCode = TypeCode.Double;
-        testCase = GetEnumName(quantityTypeCode);
+        testCase = getTestCase();
         obj = convertDefaultQuantity();
         yield return toObjectArray();
 
         quantityTypeCode = TypeCode.Int64;
-        testCase = GetEnumName(quantityTypeCode);
+        testCase = getTestCase();
         obj = convertDefaultQuantity();
         yield return toObjectArray();
 
         defaultQuantity = RandomParams.GetRandomNotNegativeDecimal();
         quantityTypeCode = TypeCode.UInt64;
-        testCase = GetEnumName(quantityTypeCode);
+        testCase = getTestCase();
         obj = convertDefaultQuantity();
         yield return toObjectArray();
 
@@ -220,6 +220,17 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         {
             return defaultQuantity.ToQuantity(quantityTypeCode);
         }
+
+        string getItemTestCase(TypeCode typeCode)
+        {
+            return $"{GetEnumName(measureUnitCode)}, {GetEnumName(typeCode)}";
+        }
+
+        string getTestCase()
+        {
+            return getItemTestCase(quantityTypeCode);
+        }
+
         #endregion
     }
 
