@@ -11,9 +11,6 @@ public abstract class CommonDynamicDataSource : DataFields
 
     public IEnumerable<object[]> GetHasMeasureUnitCodeArgs()
     {
-        //measureUnit = RandomParams.GetRandomMeasureUnit();
-        //measureUnitCode = GetMeasureUnitCode();
-
         testCase = "Same MeasureUnitCode => true";
         SetMeasureUnit(RandomParams.GetRandomMeasureUnit());
         isTrue = true;
@@ -79,6 +76,7 @@ public abstract class CommonDynamicDataSource : DataFields
         yield return toObjectArray();
 
         testCase = "Different MeasureUnitCode => false";
+        isTrue = false;
         measureUnitCode = RandomParams.GetRandomConstantMeasureUnitCode(measureUnitCode);
         context = measureUnitCode;
         yield return toObjectArray();
