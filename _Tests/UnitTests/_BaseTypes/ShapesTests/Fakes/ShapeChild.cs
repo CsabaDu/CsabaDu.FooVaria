@@ -4,6 +4,7 @@ internal class ShapeChild(IRootObject rootObject, string paramName) : Shape(root
 {
     #region Members
 
+    // Shape(IRootObject rootObject, string paramName)
     // int IComparable<IQuantifiable>.CompareTo(IQuantifiable? other)
     // int IComparable<IShape>.CompareTo(IShape? other)
     // bool IEquatable<IQuantifiable>.Equals(IQuantifiable? other)

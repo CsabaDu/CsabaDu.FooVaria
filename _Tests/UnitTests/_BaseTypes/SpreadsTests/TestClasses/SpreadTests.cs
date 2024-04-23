@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.SpreadsTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -5,6 +7,7 @@ public sealed class SpreadTests
 {
     #region Tested in parent classes' tests
 
+    // Spread(IRootObject rootObject, string paramName)
     // int IComparable<IQuantifiable>.CompareTo(IQuantifiable? other)
     // bool IEquatable<IQuantifiable>.Equals(IQuantifiable? other)
     // bool? ILimitable.FitsIn(ILimiter? limiter)
@@ -39,6 +42,7 @@ public sealed class SpreadTests
 
     #region Static fields
     private static DynamicDataSource DynamicDataSource;
+    private const string DisplayName = nameof(GetDisplayName);
     #endregion
     #endregion
 
@@ -62,6 +66,11 @@ public sealed class SpreadTests
     {
         Fields.paramName = null;
         _spreadMeasure = null;
+    }
+
+    public static string GetDisplayName(MethodInfo methodInfo, object[] args)
+    {
+        return CommonDynamicDataSource.GetDisplayName(methodInfo, args);
     }
     #endregion
 
@@ -216,8 +225,8 @@ public sealed class SpreadTests
 
     #region ISpread.GetSpreadMeasure(IQuantifiable?)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetGetSpreadMeasureArgs), DynamicDataSourceType.Method)]
-    public void GetSpreadMeasure_arg_ISpreadMeasure_returns_expected(Enum measureUnit, ISpreadMeasure expected, IQuantifiable quantifiable)
+    [DynamicData(nameof(GetGetSpreadMeasureArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void GetSpreadMeasure_arg_ISpreadMeasure_returns_expected(string testCase, Enum measureUnit, ISpreadMeasure expected, IQuantifiable quantifiable)
     {
         // Arrange
         SetSpreadChild(measureUnit, Fields.quantity);
@@ -236,8 +245,8 @@ public sealed class SpreadTests
     #region bool IsExchangeableTo
     #region override sealed IExchangeable<Enum>.IsExchangeableTo(Enum?)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetIsExchangeableToArgs), DynamicDataSourceType.Method)]
-    public void IsExchangeableTo_arg_Enum_returns_expected(bool expected, Enum measureUnit, Enum context)
+    [DynamicData(nameof(GetIsExchangeableToArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void IsExchangeableTo_arg_Enum_returns_expected(string testCase, bool expected, Enum measureUnit, Enum context)
     {
         // Arrange
         SetSpreadChild(measureUnit, Fields.quantity);
@@ -308,8 +317,8 @@ public sealed class SpreadTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetValidateSpreadMeasureArgs), DynamicDataSourceType.Method)]
-    public void ValidateSpreadMeasure_invalidArg_ISpreadMeasure_throws_ArgumentOutOfRangeException(Enum measureUnit, ISpreadMeasure spreadMeasure)
+    [DynamicData(nameof(GetValidateSpreadMeasureArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void ValidateSpreadMeasure_invalidArg_ISpreadMeasure_throws_ArgumentOutOfRangeException(string testCase, Enum measureUnit, ISpreadMeasure spreadMeasure)
     {
         // Arrange
         SetSpreadChild(measureUnit, Fields.quantity);

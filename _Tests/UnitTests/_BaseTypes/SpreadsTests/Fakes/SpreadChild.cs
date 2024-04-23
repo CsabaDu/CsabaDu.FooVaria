@@ -4,6 +4,7 @@ internal class SpreadChild(IRootObject rootObject, string paramName) : Spread(ro
 {
     #region Members
 
+    // Spread(IRootObject rootObject, string paramName)
     // ISpread ISpread.GetSpread(ISpreadMeasure spreadMeasure)
     // IQuantifiable IQuantifiable.GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
     // void IBaseQuantifiable.ValidateQuantity(ValueType? quantity, string paramName)

@@ -6,6 +6,7 @@ internal class BaseMeasureChild(IRootObject rootObject, string paramName) : Base
 {
     #region Members
 
+    // BaseMeasure(IRootObject rootObject, string paramName)
     // int IComparable<IQuantifiable>.CompareTo(IQuantifiable? other)
     // bool IEquatable<IQuantifiable>.Equals(IQuantifiable? other)
     // bool IEqualityComparer<IBaseMeasure>.Equals(IBaseMeasure? x, IBaseMeasure? y)

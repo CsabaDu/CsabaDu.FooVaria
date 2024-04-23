@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -5,6 +7,7 @@ public sealed class QuantifiableTests
 {
     #region Tested in parent classes' tests
 
+    // Quantifiable(IRootObject rootObject, string paramName)
     // Enum IMeasureUnit.GetBaseMeasureUnit()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
@@ -18,6 +21,20 @@ public sealed class QuantifiableTests
 
     #endregion
 
+    #region Private fields
+    #region Readonly fields
+    private readonly DataFields Fields = new();
+    #endregion
+
+    #region Static fields
+    private static DynamicDataSource DynamicDataSource;
+    private const string DisplayName = nameof(GetDisplayName);
+    #endregion
+
+    private QuantifiableChild _quantifiable;
+    private ILimiter limiter;
+    #endregion
+
     #region Initialize
     [ClassInitialize]
     public static void ClassInitialize(TestContext context)
@@ -28,7 +45,7 @@ public sealed class QuantifiableTests
     [TestInitialize]
     public void TestInitialize()
     {
-        Fields.SetMeasureUnitCode(Fields.RandomParams.GetRandomMeasureUnit());
+        Fields.SetMeasureUnit(Fields.RandomParams.GetRandomMeasureUnit());
 
         Fields.defaultQuantity = Fields.RandomParams.GetRandomDecimal();
     }
@@ -38,19 +55,11 @@ public sealed class QuantifiableTests
     {
         Fields.paramName = null;
     }
-    #endregion
 
-    #region Private fields
-    #region Readonly fields
-    private readonly DataFields Fields = new();
-    #endregion
-
-    #region Static fields
-    private static DynamicDataSource DynamicDataSource;
-    #endregion
-
-    private QuantifiableChild _quantifiable;
-    private ILimiter limiter;
+    public static string GetDisplayName(MethodInfo methodInfo, object[] args)
+    {
+        return CommonDynamicDataSource.GetDisplayName(methodInfo, args);
+    }
     #endregion
 
     #region Test methods
@@ -114,8 +123,8 @@ public sealed class QuantifiableTests
     #region bool Equals
     #region IEquatable<IQuantifiable>.Equals(IQuantifiable?)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method)]
-    public void Equals_arg_IQuantifiable_returns_expected(Enum measureUnit, decimal defaultQuantity, bool expected, IQuantifiable other)
+    [DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void Equals_arg_IQuantifiable_returns_expected(string testCase, Enum measureUnit, decimal defaultQuantity, bool expected, IQuantifiable other)
     {
         // Arrange
         SetQuantifiableChild(defaultQuantity, measureUnit);
@@ -147,8 +156,8 @@ public sealed class QuantifiableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetFitsInILimiterArgs), DynamicDataSourceType.Method)]
-    public void FitsIn_invalidArg_ILimiter_returns_null(Enum measureUnit, ILimiter limiter)
+    [DynamicData(nameof(GetFitsInILimiterArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void FitsIn_invalidArg_ILimiter_returns_null(string testCase, Enum measureUnit, ILimiter limiter)
     {
         // Arrange
         SetQuantifiableChild(Fields.defaultQuantity, measureUnit);
@@ -197,8 +206,8 @@ public sealed class QuantifiableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetFitsInIQuantifiableLimitModeArgs), DynamicDataSourceType.Method)]
-    public void FitsIn_invalidArgs_IQuantifiable_LimitMode_returns_null(Enum measureUnit, LimitMode? limitMode, IQuantifiable other)
+    [DynamicData(nameof(GetFitsInIQuantifiableLimitModeArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void FitsIn_invalidArgs_IQuantifiable_LimitMode_returns_null(string testCase, Enum measureUnit, LimitMode? limitMode, IQuantifiable other)
     {
         // Arrange
         SetQuantifiableChild(Fields.defaultQuantity, measureUnit);
@@ -324,8 +333,8 @@ public sealed class QuantifiableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetGetQuantityRoundingModeArgs), DynamicDataSourceType.Method)]
-    public void GetQuantity_validArg_RoundingMode_returns_expected(Enum measureUnit, decimal defaultQuantity, object expected, RoundingMode roundingMode)
+    [DynamicData(nameof(GetGetQuantityRoundingModeArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void GetQuantity_validArg_RoundingMode_returns_expected(string testCase, Enum measureUnit, decimal defaultQuantity, object expected, RoundingMode roundingMode)
     {
         // Arrange
         SetQuantifiableChild(defaultQuantity, measureUnit);
@@ -340,8 +349,8 @@ public sealed class QuantifiableTests
 
     #region IQuantity.GetQuantity(TypeCode)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetGetQuantityInvalidTypeCodeArgs), DynamicDataSourceType.Method)]
-    public void GetQuantity_invalidArg_TypeCode_throws_InvalidEnumArgumentException(TypeCode typeCode)
+    [DynamicData(nameof(GetGetQuantityInvalidTypeCodeArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void GetQuantity_invalidArg_TypeCode_throws_InvalidEnumArgumentException(string testCase, TypeCode typeCode)
     {
         // Arrange
         decimal quantity = typeCode == TypeCode.UInt64 ? Fields.RandomParams.GetRandomNegativeDecimal() : Fields.defaultQuantity;
@@ -356,8 +365,8 @@ public sealed class QuantifiableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetGetQuantityValidTypeCodeArgs), DynamicDataSourceType.Method)]
-    public void GetQuantity_validArg_TypeCode_returns_expected(Enum measureUnit, decimal defaultQuantity, object expected, TypeCode quantityTypeCode)
+    [DynamicData(nameof(GetGetQuantityValidTypeCodeArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void GetQuantity_validArg_TypeCode_returns_expected(string testCase, Enum measureUnit, decimal defaultQuantity, object expected, TypeCode quantityTypeCode)
     {
         // Arrange
         SetQuantifiableChild(defaultQuantity, measureUnit);
@@ -374,8 +383,8 @@ public sealed class QuantifiableTests
     #region bool IsExchangeableTo
     #region IExchangeable<Enum>.IsExchangeableTo(Enum?)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetIsExchangeableToArg), DynamicDataSourceType.Method)]
-    public void IsExchangeableTo_arg_Enum_returns_expected(bool expected, Enum measureUnit, Enum context)
+    [DynamicData(nameof(GetIsExchangeableToArg), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void IsExchangeableTo_arg_Enum_returns_expected(string testCase, bool expected, Enum measureUnit, Enum context)
     {
         // Arrange
         SetQuantifiableChild(Fields.defaultQuantity, measureUnit);
@@ -501,8 +510,8 @@ public sealed class QuantifiableTests
     #region bool TryExchangeTo
     #region abstract ITryExchange<IQuantifiable, Enum>.TryExchangeTo(Enum?, out IQuantifiable?)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetTryExchangeToArgs), DynamicDataSourceType.Method)]
-    public void TryExchangeTo_arg_returns_success_out_expected(Enum measureUnit, Enum otherMeasureUnit, IQuantifiable expected)
+    [DynamicData(nameof(GetTryExchangeToArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void TryExchangeTo_arg_returns_success_out_expected(string testCase, Enum measureUnit, Enum otherMeasureUnit, IQuantifiable expected)
     {
         // Arrange
         SetQuantifiableChild(Fields.defaultQuantity, measureUnit);
@@ -520,8 +529,8 @@ public sealed class QuantifiableTests
     #region void IMeasureUnitCode.ValidateMeasureUnitCode
     #region override sealed IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode, string)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetValidateMeasureUnitCodeInvalidArgs), DynamicDataSourceType.Method)]
-    public void ValidateMeasureUnitCode_invalidArg_MeasureUnitCode_arg_string_throws_InvalidEnumArgumentException(Enum measureUnit, MeasureUnitCode measureUnitCode)
+    [DynamicData(nameof(GetValidateMeasureUnitCodeInvalidArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void ValidateMeasureUnitCode_invalidArg_MeasureUnitCode_arg_string_throws_InvalidEnumArgumentException(string testCase, Enum measureUnit, MeasureUnitCode measureUnitCode)
     {
         // Arrange
         Fields.paramName = Fields.RandomParams.GetRandomParamName();

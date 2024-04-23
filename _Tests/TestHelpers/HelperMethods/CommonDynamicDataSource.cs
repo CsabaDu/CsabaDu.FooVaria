@@ -2,13 +2,21 @@
 
 public abstract class CommonDynamicDataSource : DataFields
 {
+    protected string testCase = string.Empty;
+
+    public static string GetDisplayName(MethodInfo methodInfo, object[] args)
+    {
+        return $"{methodInfo.Name}: {(string)args[0]}";
+    }
+
     public IEnumerable<object[]> GetHasMeasureUnitCodeArgs()
     {
-        measureUnit = RandomParams.GetRandomMeasureUnit();
-        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        testCase = "Same MeasureUnitCode => true";
+        SetMeasureUnit(RandomParams.GetRandomMeasureUnit());
         isTrue = true;
         yield return toObjectArray();
 
+        testCase = "Different MeasureUnitCode => false";
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
         isTrue = false;
         yield return toObjectArray();
@@ -16,66 +24,68 @@ public abstract class CommonDynamicDataSource : DataFields
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Enum_MeasureUnitCode_bool_args item = new(measureUnit, measureUnitCode, isTrue);
+            TestCase_Enum_MeasureUnitCode_bool args = new(testCase, measureUnit, measureUnitCode, isTrue);
 
-            return item.ToObjectArray();
+            return args.ToObjectArray();
         }
         #endregion
     }
 
     public IEnumerable<object[]> GetValidateMeasureUnitCodeInvalidArgs()
     {
+        testCase = "Not defined MeasureUnitCode";
         measureUnit = RandomParams.GetRandomMeasureUnit();
         measureUnitCode = SampleParams.NotDefinedMeasureUnitCode;
         yield return toObjectArray();
 
-        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        testCase = "Different MeasureUnitCode";
+        measureUnitCode = GetMeasureUnitCode();
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
         yield return toObjectArray();
 
         #region toObjectArray method
         object[] toObjectArray()
         {
-            Enum_MeasureUnitCode_args item = new(measureUnit, measureUnitCode);
+            TestCase_Enum_MeasureUnitCode args = new(testCase, measureUnit, measureUnitCode);
 
-            return item.ToObjectArray();
+            return args.ToObjectArray();
         }
         #endregion
     }
 
-    public IEnumerable<object[]> GetIsExchangeableToArgs(Enum measureUnit)
+    protected IEnumerable<object[]> GetIsExchangeableToArgs(Enum measureUnit)
     {
-        // 1
+        testCase = "null => false";
         this.measureUnit = measureUnit;
         isTrue = false;
         context = null;
         yield return toObjectArray();
 
-        // 2
+        testCase = "Not meaureUnit not MeasureUnitCode Enum => false";
         context = SampleParams.DefaultLimitMode;
         yield return toObjectArray();
 
-        // 3
+        testCase = "Same MeasureUnitCode => true";
         isTrue = true;
-        measureUnitCode = GetMeasureUnitCode(measureUnit);
+        measureUnitCode = GetMeasureUnitCode();
         context = measureUnitCode;
         yield return toObjectArray();
 
-        // 4
+        testCase = "Same type different measureUnit => true";
         context = RandomParams.GetRandomMeasureUnit(measureUnitCode);
         yield return toObjectArray();
 
-        // 5
+        testCase = "Different MeasureUnitCode => false";
         isTrue = false;
         measureUnitCode = RandomParams.GetRandomConstantMeasureUnitCode(measureUnitCode);
         context = measureUnitCode;
         yield return toObjectArray();
 
-        // 6
+        testCase = "Different type measureUnit => false";
         context = RandomParams.GetRandomMeasureUnit(measureUnitCode, measureUnit);
         yield return toObjectArray();
 
-        // 7
+        testCase = "Same type not defined measureUnit => false";
         int count = Enum.GetNames(measureUnit.GetType()).Length;
         context = (Enum)Enum.ToObject(measureUnit.GetType(), count);
         yield return toObjectArray();
@@ -83,10 +93,16 @@ public abstract class CommonDynamicDataSource : DataFields
         #region toObjectArray method
         object[] toObjectArray()
         {
-            bool_Enum_Enum_args item = new(isTrue, measureUnit, context);
+            TestCase_bool_Enum_Enum args = new(testCase, isTrue, measureUnit, context);
 
-            return item.ToObjectArray();
+            return args.ToObjectArray();
         }
         #endregion
+    }
+
+    protected static string GetEnumName<T>(T enumeration)
+        where T : struct, Enum
+    {
+        return $"{enumeration.GetType().Name}.{Enum.GetName(enumeration)}";
     }
 }

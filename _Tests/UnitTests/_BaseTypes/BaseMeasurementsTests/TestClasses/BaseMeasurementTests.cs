@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasurementsTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -26,6 +28,7 @@ public sealed class BaseMeasurementTests
 
     #region Static fields
     private static DynamicDataSource DynamicDataSource;
+    private const string DisplayName = nameof(GetDisplayName);
     #endregion
     #endregion
 
@@ -39,7 +42,7 @@ public sealed class BaseMeasurementTests
     [TestInitialize]
     public void TestInitialize()
     {
-        Fields.SetMeasureUnitCode(Fields.RandomParams.GetRandomConstantMeasureUnit());
+        Fields.SetMeasureUnit(Fields.RandomParams.GetRandomConstantMeasureUnit());
     }
 
     [TestCleanup]
@@ -48,6 +51,11 @@ public sealed class BaseMeasurementTests
         Fields.paramName = null;
 
         RestoreConstantExchangeRates();
+    }
+
+    public static string GetDisplayName(MethodInfo methodInfo, object[] args)
+    {
+        return CommonDynamicDataSource.GetDisplayName(methodInfo, args);
     }
     #endregion
 
@@ -107,8 +115,8 @@ public sealed class BaseMeasurementTests
     #region bool Equals
     #region IEquatable<IBaseMeasurement>.Equals(object?)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetEqualsObjectArg), DynamicDataSourceType.Method)]
-    public void Equals_arg_object_returns_expected(bool expected, object obj, Enum measureUnit)
+    [DynamicData(nameof(GetEqualsObjectArg), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void Equals_arg_object_returns_expected(string testCase, bool expected, object obj, Enum measureUnit)
     {
         // Arrange
         SetBaseMeasurementChild(measureUnit);
@@ -123,8 +131,8 @@ public sealed class BaseMeasurementTests
 
     #region override sealed BaseMeasurement.Equals(IBaseMeasurement?)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetEqualsBaseMeasurementArg), DynamicDataSourceType.Method)]
-    public void Equals_arg_IBaseMeasurement_returns_expected(bool expected, Enum measureUnit, IBaseMeasurement other)
+    [DynamicData(nameof(GetEqualsBaseMeasurementArg), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void Equals_arg_IBaseMeasurement_returns_expected(string testCase, bool expected, Enum measureUnit, IBaseMeasurement other)
     {
         // Arrange
         SetBaseMeasurementChild(measureUnit);
@@ -199,8 +207,8 @@ public sealed class BaseMeasurementTests
     #region IDictionary<object, decimal> GetExchangeRateCollection
     #region IExchangeRateCollection.GetExchangeRateCollection()
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetExchangeRateCollectionArg), DynamicDataSourceType.Method)]
-    public void GetExchangeRateCollection_returns_expected(Enum measureUnit, MeasureUnitCode measureUnitCode)
+    [DynamicData(nameof(GetExchangeRateCollectionArg), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void GetExchangeRateCollection_returns_expected(string testCase, Enum measureUnit, MeasureUnitCode measureUnitCode)
     {
         // Arrange
         SetBaseMeasurementChild(measureUnit);
@@ -274,8 +282,8 @@ public sealed class BaseMeasurementTests
     #region bool HasMeasureUnitCode
     #region override sealed IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetHasMeasureUnitCodeArgs), DynamicDataSourceType.Method)]
-    public void HasMeasureUnitCode_arg_MeasureUnitCode_returns_expected(Enum measureUnit, MeasureUnitCode measureUnitCode, bool expected)
+    [DynamicData(nameof(GetHasMeasureUnitCodeArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void HasMeasureUnitCode_arg_MeasureUnitCode_returns_expected(string testCase, Enum measureUnit, MeasureUnitCode measureUnitCode, bool expected)
     {
         // Arrange
         SetBaseMeasurementChild(measureUnit);
@@ -292,8 +300,8 @@ public sealed class BaseMeasurementTests
     #region bool IsExchangeableTo
     #region IExchangeable<Enum>.IsExchangeableTo(Enum)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetIsExchangeableToArg), DynamicDataSourceType.Method)]
-    public void IsExchangeableTo_arg_Enum_returns_expected(bool expected, Enum measureUnit, Enum context)
+    [DynamicData(nameof(GetIsExchangeableToArg), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void IsExchangeableTo_arg_Enum_returns_expected(string testCase, bool expected, Enum measureUnit, Enum context)
     {
         // Arrange
         SetBaseMeasurementChild(measureUnit);
@@ -362,8 +370,8 @@ public sealed class BaseMeasurementTests
     #region void ValidateExchangeRate
     #region IExchangeRate.ValidateExchangeRate(decimal, string)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetValidateExchangeRateArg), DynamicDataSourceType.Method)]
-    public void ValidateExchangeRate_invalidArg_decimal_arg_string_throws_ArgumentOutOfRangeException(Enum measureUnit, decimal exchangeRate)
+    [DynamicData(nameof(GetValidateExchangeRateArg), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void ValidateExchangeRate_invalidArg_decimal_arg_string_throws_ArgumentOutOfRangeException(string testCase, Enum measureUnit, decimal exchangeRate)
     {
         // Arrange
         Fields.paramName = Fields.RandomParams.GetRandomParamName();
@@ -427,8 +435,8 @@ public sealed class BaseMeasurementTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetValidateMeasureUnitValidArgs), DynamicDataSourceType.Method)]
-    public void ValidateMeasureUnit_validArg_Enum_arg_string_returns(Enum measureUnit, Enum context)
+    [DynamicData(nameof(GetValidateMeasureUnitValidArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void ValidateMeasureUnit_validArg_Enum_arg_string_returns(string testCase, Enum measureUnit, Enum context)
     {
         // Arrange
         SetBaseMeasurementChild(measureUnit);

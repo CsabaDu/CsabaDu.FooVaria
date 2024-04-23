@@ -1,5 +1,3 @@
-using CsabaDu.FooVaria.BaseTypes.Measurables.Types;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.MeasurablesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -21,6 +19,7 @@ public sealed class MeasurableTests
 
     #region Static fields
     private static DynamicDataSource DynamicDataSource;
+    private const string DisplayName = nameof(GetDisplayName);
     #endregion
     #endregion
 
@@ -34,7 +33,7 @@ public sealed class MeasurableTests
     [TestInitialize]
     public void TestInitialize()
     {
-        Fields.SetMeasureUnitCode(Fields.RandomParams.GetRandomMeasureUnit());
+        Fields.SetMeasureUnit(Fields.RandomParams.GetRandomMeasureUnit());
         SetMeasurableChild();
     }
 
@@ -43,14 +42,19 @@ public sealed class MeasurableTests
     {
         Fields.paramName = null;
     }
+
+    public static string GetDisplayName(MethodInfo methodInfo, object[] args)
+    {
+        return CommonDynamicDataSource.GetDisplayName(methodInfo, args);
+    }
     #endregion
 
     #region Test methods
     #region bool Equals
     #region override Measurable.Equals(object?)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method)]
-    public void Equals_arg_object_returns_expected(bool expected, object obj, Enum measureUnit)
+    [DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void Equals_arg_object_returns_expected(string testCase, bool expected, object obj, Enum measureUnit)
     {
         // Arrange
         SetMeasurableChild(measureUnit);
@@ -190,8 +194,8 @@ public sealed class MeasurableTests
     #region bool HasMeasureUnitCode
     #region virtual IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetHasMeasureUnitCodeArgs), DynamicDataSourceType.Method)]
-    public void HasMeasureUnitCode_arg_MeasureUnitCode_returns_expected(Enum measureUnit, MeasureUnitCode measureUnitCode, bool expected)
+    [DynamicData(nameof(GetHasMeasureUnitCodeArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void HasMeasureUnitCode_arg_MeasureUnitCode_returns_expected(string testCase, Enum measureUnit, MeasureUnitCode measureUnitCode, bool expected)
     {
         // Arrange
         SetMeasurableChild(measureUnit);
@@ -222,8 +226,8 @@ public sealed class MeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetValidateMeasureUnitInvalidArgs), DynamicDataSourceType.Method)]
-    public void ValidateMeasureUnit_invalidArg_Enum_arg_string_throws_InvalidEnumArgumentException(Enum measureUnit, MeasureUnitCode measureUnitCode)
+    [DynamicData(nameof(GetValidateMeasureUnitInvalidArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void ValidateMeasureUnit_invalidArg_Enum_arg_string_throws_InvalidEnumArgumentException(string testCase, Enum measureUnit, MeasureUnitCode measureUnitCode)
     {
         // Arrange
         Fields.measureUnit = measureUnitCode.GetDefaultMeasureUnit();
@@ -240,8 +244,8 @@ public sealed class MeasurableTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetValidateMeasureUnitValidArgs), DynamicDataSourceType.Method)]
-    public void ValidateMeasureUnit_validArg_Enum_arg_string_returns(Enum measureUnit, MeasureUnitCode measureUnitCode)
+    [DynamicData(nameof(GetValidateMeasureUnitValidArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void ValidateMeasureUnit_validArg_Enum_arg_string_returns(string testCase, Enum measureUnit, MeasureUnitCode measureUnitCode)
     {
         // Arrange
         Fields.measureUnit = measureUnitCode.GetDefaultMeasureUnit();
@@ -309,8 +313,8 @@ public sealed class MeasurableTests
 
     #region virtual IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode, string)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetValidateMeasureUnitCodeInvalidArgs), DynamicDataSourceType.Method)]
-    public void ValidateMeasureUnitCode_invalidArg_MeasureUnitCode_arg_string_throws_InvalidEnumArgumentException(Enum measureUnit, MeasureUnitCode measureUnitCode)
+    [DynamicData(nameof(GetValidateMeasureUnitCodeInvalidArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void ValidateMeasureUnitCode_invalidArg_MeasureUnitCode_arg_string_throws_InvalidEnumArgumentException(string testCase, Enum measureUnit, MeasureUnitCode measureUnitCode)
     {
         // Arrange
         Fields.paramName = Fields.RandomParams.GetRandomParamName();
