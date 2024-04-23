@@ -53,6 +53,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sections", "Sections\Sectio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComplexDryBodies", "ComplexDryBodies\ComplexDryBodies.csproj", "{D6CEB79C-2EA1-44DD-A0C1-5DB044BF3A6B}"
 EndProject
+Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "DependencyValidation", "_DependencyValidations\DependencyValidation\DependencyValidation.modelproj", "{28850AE7-7C59-4167-AAB3-955163041567}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DependencyValidations", "DependencyValidations", "{FE773D90-7F40-4D54-90C8-615114B4F8DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -151,6 +155,10 @@ Global
 		{D6CEB79C-2EA1-44DD-A0C1-5DB044BF3A6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6CEB79C-2EA1-44DD-A0C1-5DB044BF3A6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6CEB79C-2EA1-44DD-A0C1-5DB044BF3A6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28850AE7-7C59-4167-AAB3-955163041567}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28850AE7-7C59-4167-AAB3-955163041567}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28850AE7-7C59-4167-AAB3-955163041567}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28850AE7-7C59-4167-AAB3-955163041567}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -167,6 +175,7 @@ Global
 		{6221C4B8-E19B-4938-A571-9CB60C3CCCA3} = {0AF2CC76-F30A-4EC3-B794-F71398848CB5}
 		{D523461C-D1BD-47C6-8B6F-7D29B46EC0F5} = {5F40102A-C774-45D0-8D85-1CDB6923B617}
 		{9189E951-BAAE-4BCB-A86B-4FEBDBD242E4} = {5F40102A-C774-45D0-8D85-1CDB6923B617}
+		{28850AE7-7C59-4167-AAB3-955163041567} = {FE773D90-7F40-4D54-90C8-615114B4F8DC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E59D61FF-8716-46EC-B6E6-C30BCA17F953}
