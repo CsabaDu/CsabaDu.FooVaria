@@ -52,7 +52,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpreadsTests", "_Tests\Unit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shapes", "_BaseTypes\Shapes\Shapes.csproj", "{5E326962-CAD8-4475-AF9F-302BB1D9BCBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapesTests", "_Tests\UnitTests\_BaseTypes\ShapesTests\ShapesTests.csproj", "{C686B72B-6D92-4D4F-81AC-1AD520821CB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShapesTests", "_Tests\UnitTests\_BaseTypes\ShapesTests\ShapesTests.csproj", "{C686B72B-6D92-4D4F-81AC-1AD520821CB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
