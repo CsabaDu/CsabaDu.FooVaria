@@ -5,6 +5,7 @@ public sealed class ShapeTests
 {
     #region Tested in parent classes' tests
 
+    // Shape(IRootObject rootObject, string paramName)
     // int IComparable<IQuantifiable>.CompareTo(IQuantifiable? other)
     // bool IEquatable<IQuantifiable>.Equals(IQuantifiable? other)
     // bool? IFit<IQuantifiable>.FitsIn(IQuantifiable? other, LimitMode? limitMode)

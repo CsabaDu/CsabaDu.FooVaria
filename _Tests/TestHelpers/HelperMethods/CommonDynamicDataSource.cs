@@ -53,7 +53,7 @@ public abstract class CommonDynamicDataSource : DataFields
         #endregion
     }
 
-    public IEnumerable<object[]> GetIsExchangeableToArgs(Enum measureUnit)
+    protected IEnumerable<object[]> GetIsExchangeableToArgs(Enum measureUnit)
     {
         testCase = "null => false";
         this.measureUnit = measureUnit;

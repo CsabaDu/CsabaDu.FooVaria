@@ -7,6 +7,7 @@ public sealed class BaseMeasureTests
 {
     #region Tested in parent classes' tests
 
+    // BaseMeasure(IRootObject rootObject, string paramName)
     // int IComparable<IQuantifiable>.CompareTo(IQuantifiable? other)
     // bool IEquatable<IQuantifiable>.Equals(IQuantifiable? other)
     // bool? IFit<IQuantifiable>.FitsIn(IQuantifiable? other, LimitMode? limitMode)

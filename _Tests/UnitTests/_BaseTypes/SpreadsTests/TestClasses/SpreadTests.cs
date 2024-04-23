@@ -7,6 +7,7 @@ public sealed class SpreadTests
 {
     #region Tested in parent classes' tests
 
+    // Spread(IRootObject rootObject, string paramName)
     // int IComparable<IQuantifiable>.CompareTo(IQuantifiable? other)
     // bool IEquatable<IQuantifiable>.Equals(IQuantifiable? other)
     // bool? ILimitable.FitsIn(ILimiter? limiter)
