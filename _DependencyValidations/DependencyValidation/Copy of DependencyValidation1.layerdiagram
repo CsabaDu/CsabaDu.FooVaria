@@ -62,6 +62,9 @@
                 <dependencyFromLayerToLayer Id="5b58fd8d-70be-493d-a83a-19545f2dc694" direction="Forward">
                   <layerMoniker Id="8678772a-604a-490e-b3ba-c78acddc4341" />
                 </dependencyFromLayerToLayer>
+                <dependencyFromLayerToLayer Id="f367b983-7abc-4965-8ff4-047fe485f139" direction="Forward">
+                  <layerMoniker Id="9f08207d-9425-4498-8268-80e74fb4d2c7" />
+                </dependencyFromLayerToLayer>
               </dependencyToLayers>
               <references>
                 <reference Id="93426e46-fa54-4665-b8f6-0dc669fe834d" name="Fakes">

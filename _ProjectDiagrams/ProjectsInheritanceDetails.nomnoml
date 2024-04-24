@@ -1,50 +1,51 @@
 #title: ProjectsInheritanceDetails
-#.base: fill=orange dashed bold italic
-#.abstract: fill=yellow bold italic
-#.concrete: fill=lime bold
+#.base: fill=#FFC080 bold italic
+#.abstract: fill=#FFFF80 bold italic
+#.concrete: fill=#80FF80 bold
+#.project: fill=#A1C7E7
 
-[Common|
+[<project>Common|
 	[<base>CommonBase]
 ]
-[Measurables|
+[<project>Measurables|
 	[<base>Measurable]
 ]
-[BaseMeasurements|
+[<project>BaseMeasurements|
 	[<base>BaseMeasurement]
 ]
-[BaseQuantifiables|
+[<project>BaseQuantifiables|
 	[<base>BaseQuantifiable]
 ]
-[Quantifiables|
+[<project>Quantifiables|
 	[<base>Quantifiable]
 ]
-[BaseMeasures|
+[<project>BaseMeasures|
 	[<base>BaseMeasure]
 ]
-[Spreads|
+[<project>Spreads|
 	[<base>Spread]
 ]
-[Shapes|
+[<project>Shapes|
 	[<base>Shape]
 ]
-[BaseRates|
+[<project>BaseRates|
 	[<base>BaseRate]
 ]
-[SimpleRates|
+[<project>SimpleRates|
 	[<abstract>SimpleRate]<:-[<concrete>Proportion]
 	[SimpleRate]<:-[<concrete>ProportionLimit]
 ]
-[SimpleShapes|
+[<project>SimpleShapes|
 	[<abstract>SimpleShape]
 ]
-[ComplexShapes|
+[<project>ComplexShapes|
 	[<abstract>ComplexShape]
 ]
-[Measurements|
+[<project>Measurements|
 	[<abstract>Measurement]<:-[<concrete>ConstantMeasurement]
     [Measurement]<:-[<concrete>CustomMeasurement]
 ]
-[Measures|
+[<project>Measures|
 	[<abstract>Measure]<:-[<abstract>Measure<TSelf, TNum>]
     [Measure<TSelf, TNum>]<:-[<abstract>Measure<TSelf, TNum, TEnum>]
     [Measure<TSelf, TNum, TEnum>]<:-[<concrete>Area]
@@ -56,46 +57,46 @@
     [Measure<TSelf, TNum, TEnum>]<:-[<concrete>Volume]
     [Measure<TSelf, TNum, TEnum>]<:-[<concrete>Weight]
 ]
-[RateComponents|
+[<project>RateComponents|
 	[<abstract>RateComponent]<:-[<abstract>RateComponent<TSelf>]
     [RateComponent<TSelf>]<:-[<concrete>Denominator]
     [RateComponent<TSelf>]<:-[<concrete>Limit]
 ]
-[Rates|
+[<project>Rates|
 	[<abstract>Rate]<:-[<concrete>FlatRate]
 	[Rate]<:-[<concrete>LimitedRate]
 ]
-[SimpleRates|
+[<project>SimpleRates|
 	[<abstract>SimpleRate]<:-[<concrete>Proportion]
 	[<abstract>SimpleRate]<:-[<concrete>ProportionLimit]
 ]
-[BulkSpreads|
+[<project>BulkSpreads|
 	[<abstract>BulkSpread]<:-[<abstract>BulkSpread<TSelf, TSMeasure>]
 	[BulkSpread<TSelf, TSMeasure>]<:-[<abstract>BulkSpread<TSelf, TSMeasure, TEnum>]
 	[BulkSpread<TSelf, TSMeasure, TEnum>]<:-[<concrete>BulkSurface]
 	[BulkSpread<TSelf, TSMeasure, TEnum>]<:-[<concrete>BulkBody]
 ]
-[PlaneShapes|
+[<project>PlaneShapes|
 	[<abstract>PlaneShape]<:-[<concrete>Circle]
     [PlaneShape]<:-[<concrete>Rectangle]
 ]
-[DryBodies|
+[<project>DryBodies|
 	[<abstract>DryBody]<:-[<abstract>DryBody<TSelf, TBFace>]
     [<abstract>DryBody<TSelf, TBFace>]<:-[<concrete>Cylinder]
     [DryBody<TSelf, TBFace>]<:-[<concrete>Cuboid]
 ]
-[Masses|
+[<project>Masses|
 	[<abstract>Mass]<:-[<concrete>BulkMass]
 	[Mass]<:-[<concrete>DryMass]
 ]
-[Sections|
+[<project>Sections|
 	[<abstract>Section]<:-[<concrete>PlaneSection]
 	[<abstract>Section]<:-[<concrete>CrossSection]
 ]
-[ComplexDryBodies|
+[<project>ComplexDryBodies|
 	[<concrete>ComplexDryBody]
 ]
-[ShapeLimits|
+[<project>ShapeLimits|
 	[<concrete>ShapeLimit]
 ]
 

@@ -1,7 +1,7 @@
 #title: ProjectsDependencies
-#.base: fill=orange dashed bold italic
-#.abstract: fill=yellow bold italic
-#.concrete: fill=lime bold
+#.base: fill=#FFC080 bold italic
+#.abstract: fill=#FFFF80 bold italic
+#.concrete: fill=#80FF80 bold
 
 [<base>Common]
 [<base>Measurables]
