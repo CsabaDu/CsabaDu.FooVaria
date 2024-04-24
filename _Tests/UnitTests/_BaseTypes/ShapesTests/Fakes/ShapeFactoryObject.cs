@@ -7,7 +7,7 @@ internal sealed class ShapeFactoryObject : IShapeFactory
         if (!measureUnitCode.IsSpreadMeasureUnitCode()) throw InvalidMeasureUnitEnumArgumentException(measureUnitCode);
 
         Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
-        IShapeComponent shapeComponent = GetShapeComponentQuantifiableObject(measureUnit, defaultQuantity);
+        IShapeComponent shapeComponent = CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Quantifiables.ShapeComponentQuantifiableObject.GetShapeComponentQuantifiableObject(measureUnit, defaultQuantity);
 
         return CreateShape(shapeComponent);
     }
@@ -24,6 +24,6 @@ internal sealed class ShapeFactoryObject : IShapeFactory
 
     public ISpreadMeasure CreateSpreadMeasure(Enum measureUnit, double quantity)
     {
-        return GetSpreadMeasureBaseMeasureObject(measureUnit, quantity);
+        return TestHelpers.Fakes.BaseTypes.BaseMeasures.SpreadMeasureBaseMeasureObject.GetSpreadMeasureBaseMeasureObject(measureUnit, quantity);
     }
 }

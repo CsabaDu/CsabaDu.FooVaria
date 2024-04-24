@@ -1,3 +1,5 @@
+using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Quantifiables;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]

@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests.Fakes;
+﻿using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Quantifiables;
+
+namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests.Fakes;
 
 internal class ShapeChild(IRootObject rootObject, string paramName) : Shape(rootObject, paramName)
 {
@@ -77,7 +79,7 @@ internal class ShapeChild(IRootObject rootObject, string paramName) : Shape(root
             Enum measureUnit = quantifiable.GetBaseMeasureUnit();
             ValueType quantity = quantifiable.GetBaseQuantity();
 
-            return GetSpreadMeasureBaseMeasureObject(measureUnit, quantity);
+            return TestHelpers.Fakes.BaseTypes.BaseMeasures.SpreadMeasureBaseMeasureObject.GetSpreadMeasureBaseMeasureObject(measureUnit, quantity);
         }
     }
     #endregion
@@ -116,7 +118,7 @@ internal class ShapeChild(IRootObject rootObject, string paramName) : Shape(root
         {
             Enum measureUnit = GetMeasureUnitElements(context, nameof(context)).MeasureUnit;
             decimal defaultQuantity = GetDefaultQuantity();
-            ShapeComponentQuantifiableObject shapeComponent = GetShapeComponentQuantifiableObject(measureUnit, defaultQuantity);
+            ShapeComponentQuantifiableObject shapeComponent = ShapeComponentQuantifiableObject.GetShapeComponentQuantifiableObject(measureUnit, defaultQuantity);
 
             return GetShapeChild(shapeComponent);
         }

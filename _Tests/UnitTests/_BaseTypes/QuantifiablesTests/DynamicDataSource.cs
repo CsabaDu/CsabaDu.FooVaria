@@ -18,15 +18,15 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
 
         testCase = "Different MeasureUnitCode => false";
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode());
-        quantifiable = GetQuantifiableChild(defaultQuantity, RandomParams.GetRandomMeasureUnit(measureUnitCode));
+        quantifiable = TestHelpers.Fakes.BaseTypes.Quantifiables.QuantifiableChild.GetQuantifiableChild(defaultQuantity, RandomParams.GetRandomMeasureUnit(measureUnitCode));
         yield return toObjectArray();
 
         testCase = "Same measureUnit, different defaultQuantity => false";
-        quantifiable = GetQuantifiableChild(RandomParams.GetRandomDecimal(defaultQuantity), measureUnit);
+        quantifiable = TestHelpers.Fakes.BaseTypes.Quantifiables.QuantifiableChild.GetQuantifiableChild(RandomParams.GetRandomDecimal(defaultQuantity), measureUnit);
         yield return toObjectArray();
 
         testCase = "Same measureUnit, same defaultQuantity => true";
-        quantifiable = GetQuantifiableChild(defaultQuantity, measureUnit);
+        quantifiable = TestHelpers.Fakes.BaseTypes.Quantifiables.QuantifiableChild.GetQuantifiableChild(defaultQuantity, measureUnit);
         isTrue = true;
         yield return toObjectArray();
 
@@ -51,7 +51,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         measureUnitCode = GetMeasureUnitCode();
         measureUnitCode = RandomParams.GetRandomCustomMeasureUnitCode(measureUnitCode);
         limitMode = RandomParams.GetRandomLimitMode();
-        limiter = GetLimiterQuantifiableObject(limitMode.Value, RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity);
+        limiter = TestHelpers.Fakes.BaseTypes.Quantifiables.LimiterQuantifiableObject.GetLimiterQuantifiableObject(limitMode.Value, RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity);
         yield return toObjectArray();
 
         #region toObjectArray method
@@ -70,7 +70,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         limitMode = SampleParams.NotDefinedLimitMode;
         measureUnit = RandomParams.GetRandomMeasureUnit();
         measureUnitCode = GetMeasureUnitCode();
-        quantifiable = GetQuantifiableChild(RandomParams.GetRandomDecimal(), measureUnit);
+        quantifiable = TestHelpers.Fakes.BaseTypes.Quantifiables.QuantifiableChild.GetQuantifiableChild(RandomParams.GetRandomDecimal(), measureUnit);
         yield return toObjectArray();
 
         testCase = "Different IQuantifiable, valid LimitMode";
@@ -299,7 +299,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
 
         testCase = "Same type defined measureUnit => true, out exchanged";
         context = RandomParams.GetRandomMeasureUnit(measureUnitCode);
-        quantifiable = GetQuantifiableChild(RandomParams.GetRandomDecimal(), context);
+        quantifiable = TestHelpers.Fakes.BaseTypes.Quantifiables.QuantifiableChild.GetQuantifiableChild(RandomParams.GetRandomDecimal(), context);
         yield return toObjectArray();
 
         testCase = "Different type measureUnit => false, out null";

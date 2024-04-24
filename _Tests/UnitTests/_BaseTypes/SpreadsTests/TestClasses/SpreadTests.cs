@@ -1,3 +1,4 @@
+using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.BaseMeasures;
 using System.Reflection;
 
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.SpreadsTests.TestClasses;

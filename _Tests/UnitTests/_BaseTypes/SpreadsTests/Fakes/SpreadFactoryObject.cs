@@ -20,6 +20,6 @@ internal sealed class SpreadFactoryObject : ISpreadFactory
 
     public ISpreadMeasure CreateSpreadMeasure(Enum measureUnit, double quantity)
     {
-        return GetSpreadMeasureBaseMeasureObject(measureUnit, quantity);
+        return SpreadMeasureBaseMeasureObject.GetSpreadMeasureBaseMeasureObject(measureUnit, quantity);
     }
 }

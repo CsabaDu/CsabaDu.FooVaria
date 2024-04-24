@@ -39,6 +39,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AdditionalFiles Include="..\..\..\..\_DependencyValidations\DependencyValidation\Copy of DependencyValidation1.layerdiagram" Link="Copy of DependencyValidation1.layerdiagram">
+      <Visible>False</Visible>
+    </AdditionalFiles>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BaseMeasurementsTests\BaseMeasurementsTests.csproj" />
     <ProjectReference Include="..\QuantifiablesTests\QuantifiablesTests.csproj" />
   </ItemGroup>

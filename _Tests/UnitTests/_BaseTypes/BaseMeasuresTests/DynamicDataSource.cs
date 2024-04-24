@@ -166,7 +166,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         measureUnitCode = GetMeasureUnitCode();
         measureUnitCode = RandomParams.GetRandomCustomMeasureUnitCode(measureUnitCode);
         limitMode = RandomParams.GetRandomLimitMode();
-        limiter = LimiterQuantifiableObject.GetLimiterQuantifiableObject(limitMode.Value, RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity);
+        limiter = TestHelpers.Fakes.BaseTypes.Quantifiables.LimiterQuantifiableObject.GetLimiterQuantifiableObject(limitMode.Value, RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity);
         yield return toObjectArray();
 
         #region toObjectArray method
@@ -220,7 +220,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         testCase = "baseMeasurement, null";
         paramName = ParamNames.quantity;
         measureUnit = RandomParams.GetRandomMeasureUnit();
-        baseMeasurement = BaseMeasurementChild.GetBaseMeasurementChild(measureUnit);
+        baseMeasurement = TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild.GetBaseMeasurementChild(measureUnit);
         yield return toObjectArray();
 
         #region toObjectArray method

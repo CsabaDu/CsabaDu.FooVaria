@@ -53,7 +53,7 @@ internal class SpreadChild(IRootObject rootObject, string paramName) : Spread(ro
             {
                 GetFactory = factory,
             },
-            SpreadMeasure = GetSpreadMeasureBaseMeasureObject(measureUnit, quantity, rateComponentCode),
+            SpreadMeasure = SpreadMeasureBaseMeasureObject.GetSpreadMeasureBaseMeasureObject(measureUnit, quantity, rateComponentCode),
         };
     }
 
