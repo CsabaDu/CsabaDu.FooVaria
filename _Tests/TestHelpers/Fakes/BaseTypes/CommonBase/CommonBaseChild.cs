@@ -1,6 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.CommonTests.Fakes
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.CommonBase
 {
-    public sealed class CommonBaseChild(IRootObject rootObject, string paramName) : CommonBase(rootObject, paramName)
+    public sealed class CommonBaseChild(IRootObject rootObject, string paramName) : FooVaria.BaseTypes.Common.Types.Implementations.CommonBase(rootObject, paramName)
     {
         #region Members
 
