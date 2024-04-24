@@ -27,13 +27,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="..\..\..\..\DependencyValidation1\DependencyValidation1.layerdiagram" Link="DependencyValidation1.layerdiagram">
+    <AdditionalFiles Include="..\..\..\..\_DependencyValidations\DependencyValidation\DependencyValidation1.layerdiagram" Link="DependencyValidation1.layerdiagram">
       <Visible>False</Visible>
     </AdditionalFiles>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\TestHelpers\HelperMethods\HelperMethods.csproj" />
+    <AdditionalFiles Include="..\..\..\..\_DependencyValidations\DependencyValidation\Copy of DependencyValidation1.layerdiagram" Link="Copy of DependencyValidation1.layerdiagram">
+      <Visible>False</Visible>
+    </AdditionalFiles>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\TestHelpers\Fakes\Fakes.csproj" />
   </ItemGroup>
 
 </Project>

@@ -10,7 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="..\..\..\..\DependencyValidation1\DependencyValidation1.layerdiagram" Link="DependencyValidation1.layerdiagram">
+    <AdditionalFiles Include="..\..\..\..\_DependencyValidations\DependencyValidation\DependencyValidation1.layerdiagram" Link="DependencyValidation1.layerdiagram">
+      <Visible>False</Visible>
+    </AdditionalFiles>
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\..\..\_DependencyValidations\DependencyValidation\Copy of DependencyValidation1.layerdiagram" Link="Copy of DependencyValidation1.layerdiagram">
       <Visible>False</Visible>
     </AdditionalFiles>
   </ItemGroup>
@@ -27,8 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\_BaseTypes\Shapes\Shapes.csproj" />
-    <ProjectReference Include="..\SpreadsTests\SpreadsTests.csproj" />
+    <ProjectReference Include="..\..\..\TestHelpers\Fakes\Fakes.csproj" />
   </ItemGroup>
 
   <ItemGroup>

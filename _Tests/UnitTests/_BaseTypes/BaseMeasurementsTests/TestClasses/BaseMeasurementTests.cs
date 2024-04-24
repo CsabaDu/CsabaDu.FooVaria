@@ -20,7 +20,7 @@ public sealed class BaseMeasurementTests
     #endregion
 
     #region Private fields
-    private BaseMeasurementChild _baseMeasurement;
+    private TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild _baseMeasurement;
 
     #region Readonly fields
     private readonly DataFields Fields = new();
@@ -84,7 +84,7 @@ public sealed class BaseMeasurementTests
         SetBaseMeasurementChild();
         Fields.measureUnitCode = Fields.RandomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
         Fields.measureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode);
-        IBaseMeasurement other = GetBaseMeasurementChild(Fields.measureUnit);
+        IBaseMeasurement other = TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild.GetBaseMeasurementChild(Fields.measureUnit);
 
         // Act
         void attempt() => _ = _baseMeasurement.CompareTo(other);
@@ -100,7 +100,7 @@ public sealed class BaseMeasurementTests
         // Arrange
         SetBaseMeasurementChild();
         Fields.measureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode);
-        IBaseMeasurement other = GetBaseMeasurementChild(Fields.measureUnit);
+        IBaseMeasurement other = TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild.GetBaseMeasurementChild(Fields.measureUnit);
         int expected = _baseMeasurement.GetExchangeRate().CompareTo(other.GetExchangeRate());
 
         // Act
@@ -152,7 +152,7 @@ public sealed class BaseMeasurementTests
     public void GetBaseMeasurement_arg_creates()
     {
         // Arrange
-        SetBaseMeasurementChild(Fields.measureUnit, new BaseMeasurementFactoryObject());
+        SetBaseMeasurementChild(Fields.measureUnit, new TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementFactoryObject());
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnitOrMeasureUnitCode();
 
         // Act
@@ -322,7 +322,7 @@ public sealed class BaseMeasurementTests
     {
         // Arrange
         SetBaseMeasurementChild();
-        BaseMeasurementChild other = null;
+        TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild other = null;
 
         // Act
         void attempt() => _ = _baseMeasurement.ProportionalTo(other);
@@ -339,7 +339,7 @@ public sealed class BaseMeasurementTests
         SetBaseMeasurementChild();
         Fields.measureUnitCode = Fields.RandomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
         Fields.measureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode);
-        IBaseMeasurement other = GetBaseMeasurementChild(Fields.measureUnit);
+        IBaseMeasurement other = TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild.GetBaseMeasurementChild(Fields.measureUnit);
 
         // Act
         void attempt() => _ = _baseMeasurement.ProportionalTo(other);
@@ -355,7 +355,7 @@ public sealed class BaseMeasurementTests
         // Arrange
         SetBaseMeasurementChild();
         Fields.measureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode);
-        IBaseMeasurement other = GetBaseMeasurementChild(Fields.measureUnit);
+        IBaseMeasurement other = TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild.GetBaseMeasurementChild(Fields.measureUnit);
         decimal expected = _baseMeasurement.GetExchangeRate() / other.GetExchangeRate();
 
         // Act
@@ -458,7 +458,7 @@ public sealed class BaseMeasurementTests
     #region Private methods
     private void SetBaseMeasurementChild(Enum measureUnit, IBaseMeasurementFactory factory = null, string measureUnitName = null)
     {
-        _baseMeasurement = GetBaseMeasurementChild(measureUnit, factory, measureUnitName);
+        _baseMeasurement = TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild.GetBaseMeasurementChild(measureUnit, factory, measureUnitName);
     }
 
     private void SetBaseMeasurementChild()

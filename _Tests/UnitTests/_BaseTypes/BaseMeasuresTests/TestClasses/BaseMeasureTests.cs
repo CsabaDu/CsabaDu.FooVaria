@@ -212,7 +212,7 @@ public sealed class BaseMeasureTests
         Fields.decimalQuantity = Fields.RandomParams.GetRandomDecimal();
         Fields.rateComponentCode = Fields.RandomParams.GetRandomRateComponentCode();
         Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
-        _limiter = LimiterQuantifiableObject.GetLimiterQuantifiableObject(Fields.limitMode.Value, Fields.measureUnit, Fields.decimalQuantity);
+        _limiter = TestHelpers.Fakes.BaseTypes.Quantifiables.LimiterQuantifiableObject.GetLimiterQuantifiableObject(Fields.limitMode.Value, Fields.measureUnit, Fields.decimalQuantity);
         Fields.decimalQuantity = (_limiter as IQuantifiable).GetDefaultQuantity();
         bool? expected = Fields.defaultQuantity.FitsIn(Fields.decimalQuantity, Fields.limitMode);
 
@@ -352,7 +352,7 @@ public sealed class BaseMeasureTests
         SetBaseMeasureChild();
 
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit();
-        _baseMeasurement = BaseMeasurementChild.GetBaseMeasurementChild(Fields.measureUnit);
+        _baseMeasurement = TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild.GetBaseMeasurementChild(Fields.measureUnit);
         Fields.quantityTypeCode = Fields.RandomParams.GetRandomInvalidQuantityTypeCode();
         Fields.quantity = Fields.RandomParams.GetRandomValueType(Fields.quantityTypeCode);
 
@@ -372,7 +372,7 @@ public sealed class BaseMeasureTests
 
         Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity();
         IBaseMeasure expected = GetCompleteBaseMeasureChild();
-        _baseMeasurement = BaseMeasurementChild.GetBaseMeasurementChild(Fields.measureUnit);
+        _baseMeasurement = TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild.GetBaseMeasurementChild(Fields.measureUnit);
 
         // Act
         var actual = _baseMeasure.GetBaseMeasure(_baseMeasurement, Fields.quantity);
@@ -391,7 +391,7 @@ public sealed class BaseMeasureTests
         // Arrange
         SetCompleteBaseMeasureChild();
 
-        IBaseMeasurement expected = BaseMeasurementChild.GetBaseMeasurementChild(Fields.measureUnit);
+        IBaseMeasurement expected = TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild.GetBaseMeasurementChild(Fields.measureUnit);
 
         // Act
         var actual = _baseMeasure.GetBaseMeasurement();

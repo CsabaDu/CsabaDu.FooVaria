@@ -1,0 +1,491 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<layerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="b67fd073-574c-41e8-804d-e1eb9b5761f6" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/LayerDesigner">
+  <layers>
+    <layer Id="33d6da73-923b-4c50-b895-cedd126dd3fb" name="CsabaDu.FooVaria.Tests">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="4e8bd32e-512d-40e7-8433-74fca7ba550f" direction="Forward">
+          <layerMoniker Id="b1f19931-3a46-4b5f-8a3b-5770a8b7b823" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+      <childLayers>
+        <layer Id="9ac330d6-db45-4ffe-ad98-64a827df4a8a" name="TestHelpers">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="ee69a6f8-f3d2-48df-9683-f56429a3680e" direction="Forward">
+              <layerMoniker Id="d860c1dc-dac7-4447-977d-69169911ffa8" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+          <childLayers>
+            <layer Id="8678772a-604a-490e-b3ba-c78acddc4341" name="HelperMethods">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="e9425fc4-3d72-4333-aff8-e7165323568f" direction="Forward">
+                  <layerMoniker Id="9f08207d-9425-4498-8268-80e74fb4d2c7" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="f6f6e731-aa4a-4123-b2b5-f275d8cd021e" name="HelperMethods">
+                  <ArtifactNode Label="HelperMethods" Category="CodeSchema_Project" Id="(Assembly=../../_Tests/TestHelpers/HelperMethods/HelperMethods.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="9f08207d-9425-4498-8268-80e74fb4d2c7" name="DataTypes">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="e20a6289-d3f9-471c-bf3d-7b5ce5ebaf7c" direction="Forward">
+                  <layerMoniker Id="3871eb68-3dc3-46b1-8903-e34f1c2a029c" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="41473502-8daf-41db-ba05-113b98e948b1" name="DataTypes">
+                  <ArtifactNode Label="DataTypes" Category="CodeSchema_Project" Id="(Assembly=../../_Tests/TestHelpers/DataTypes/DataTypes.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="3871eb68-3dc3-46b1-8903-e34f1c2a029c" name="Params">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="b199dcec-fe19-4d49-9b27-e44a12a57f28" direction="Forward">
+                  <layerMoniker Id="d860c1dc-dac7-4447-977d-69169911ffa8" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="16a84298-0b82-4256-b805-0c24dc85d44e" name="Params">
+                  <ArtifactNode Label="Params" Category="CodeSchema_Project" Id="(Assembly=../../_Tests/TestHelpers/Params/Params.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="0a826354-0083-4555-b31c-aa78516540ba" name="Fakes">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="5b58fd8d-70be-493d-a83a-19545f2dc694" direction="Forward">
+                  <layerMoniker Id="8678772a-604a-490e-b3ba-c78acddc4341" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="93426e46-fa54-4665-b8f6-0dc669fe834d" name="Fakes">
+                  <ArtifactNode Label="Fakes" Category="CodeSchema_Project" Id="(Assembly=../../_Tests/TestHelpers/Fakes/Fakes.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+          </childLayers>
+          <references>
+            <reference Id="c71300b0-4b18-49d1-88e4-0ce753bee02c" name="TestHelpers">
+              <ArtifactNode Label="TestHelpers" Category="CodeSchema_Project" Id="(Assembly=../../_Tests/TestHelpers)">
+                <Category Ref="CodeMap_SolutionFolder" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+      </childLayers>
+      <references>
+        <reference Id="e7377108-1e9c-436f-be50-52a5ab78e7e0" name="_Tests">
+          <ArtifactNode Label="_Tests" Category="CodeSchema_Project" Id="(Assembly=../../_Tests)">
+            <Category Ref="CodeMap_SolutionFolder" />
+          </ArtifactNode>
+        </reference>
+      </references>
+    </layer>
+    <layer Id="b1f19931-3a46-4b5f-8a3b-5770a8b7b823" name="CsabaDu.FooVaria">
+      <childLayers>
+        <layer Id="3ca24993-6f7b-434d-94f3-8817cad45393" name="BaseTypes">
+          <childLayers>
+            <layer Id="007c4610-20ba-435d-9c14-6a3ec48c8d84" name="BaseMeasurements">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="12e34f9b-9d75-4d1c-bb19-1dcfbb1de8c2" direction="Forward">
+                  <layerMoniker Id="10fb6ab7-dc8e-4df7-9026-606385a555af" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="7be34e8c-771c-444a-b51a-418bc80fe69c" name="BaseMeasurements">
+                  <ArtifactNode Label="BaseMeasurements" Category="CodeSchema_Project" Id="(Assembly=../../_BaseTypes/BaseMeasurements/BaseMeasurements.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="9ea1a06a-068a-40bf-a131-32e3be71bf17" name="BaseMeasures">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="07e5b5b7-b6d4-4b12-8163-ab7852910735" direction="Forward">
+                  <layerMoniker Id="007c4610-20ba-435d-9c14-6a3ec48c8d84" />
+                </dependencyFromLayerToLayer>
+                <dependencyFromLayerToLayer Id="3053d1c5-42d1-4cdf-aa4e-02f1d366dbec" direction="Forward">
+                  <layerMoniker Id="060a3fde-f3ee-4622-bf55-119047ea3f04" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="9012b4cf-92c2-4037-a5f2-4072dd7cc3fb" name="BaseMeasures">
+                  <ArtifactNode Label="BaseMeasures" Category="CodeSchema_Project" Id="(Assembly=../../_BaseTypes/BaseMeasures/BaseMeasures.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="8fc7c693-0f39-4814-9e65-29f797523c2e" name="BaseQuantifiables">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="86791bff-b435-4618-adf5-ecfbf1392547" direction="Forward">
+                  <layerMoniker Id="10fb6ab7-dc8e-4df7-9026-606385a555af" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="5996de5e-d1a0-434c-9b74-7d4bc145696f" name="BaseQuantifiables">
+                  <ArtifactNode Label="BaseQuantifiables" Category="CodeSchema_Project" Id="(Assembly=../../_BaseTypes/BaseQuantifiables/BaseQuantifiables.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="2f3be616-9095-431a-a808-4e71f648260e" name="BaseRates">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="0a119acc-988e-4f28-a654-c86a4867d2cf" direction="Forward">
+                  <layerMoniker Id="8fc7c693-0f39-4814-9e65-29f797523c2e" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="b43ee568-70d7-4bd7-ab45-8043062a8c2c" name="BaseRates">
+                  <ArtifactNode Label="BaseRates" Category="CodeSchema_Project" Id="(Assembly=../../_BaseTypes/BaseRates/BaseRates.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="10fb6ab7-dc8e-4df7-9026-606385a555af" name="Measurables">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="4b215391-ecfa-4a8e-9695-d4e2599c10b9" direction="Forward">
+                  <layerMoniker Id="ea29e335-d0ca-4138-8a04-1521be03e341" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="c24029c3-ccb7-4880-acef-9f5a6e15ab97" name="Measurables">
+                  <ArtifactNode Label="Measurables" Category="CodeSchema_Project" Id="(Assembly=../../_BaseTypes/Measurables/Measurables.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="060a3fde-f3ee-4622-bf55-119047ea3f04" name="Quantifiables">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="53410fa1-0c57-479d-9d41-ca2e37513db2" direction="Forward">
+                  <layerMoniker Id="8fc7c693-0f39-4814-9e65-29f797523c2e" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="3d5fd5f7-8c34-4bef-9b18-74b4dd6be142" name="Quantifiables">
+                  <ArtifactNode Label="Quantifiables" Category="CodeSchema_Project" Id="(Assembly=../../_BaseTypes/Quantifiables/Quantifiables.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="1b90930c-2f1c-460d-af7b-3a4317f0ae1b" name="Shapes">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="e8dc24aa-66bb-4705-9e22-974bb4bd5b10" direction="Forward">
+                  <layerMoniker Id="51106400-dae2-446d-8525-ecce9604dc62" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="41ae2117-2e6e-41e1-a994-685786745e01" name="Shapes">
+                  <ArtifactNode Label="Shapes" Category="CodeSchema_Project" Id="(Assembly=../../_BaseTypes/Shapes/Shapes.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="51106400-dae2-446d-8525-ecce9604dc62" name="Spreads">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="70c1ec7b-a108-40bc-ae2f-abda5069ac41" direction="Forward">
+                  <layerMoniker Id="9ea1a06a-068a-40bf-a131-32e3be71bf17" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="6d1011d4-710c-461d-be9e-d045adbb0e9d" name="Spreads">
+                  <ArtifactNode Label="Spreads" Category="CodeSchema_Project" Id="(Assembly=../../_BaseTypes/Spreads/Spreads.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="ea29e335-d0ca-4138-8a04-1521be03e341" name="Common">
+              <references>
+                <reference Id="8e56a2ba-9226-4602-a4f4-73c53f71b627" name="Common">
+                  <ArtifactNode Label="Common" Category="CodeSchema_Project" Id="(Assembly=../../_BaseTypes/Common/Common.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+          </childLayers>
+          <references>
+            <reference Id="1c743e4e-8472-4471-b29f-73e0705f5300" name="BaseTypes">
+              <ArtifactNode Label="BaseTypes" Category="CodeSchema_Project" Id="(Assembly=../../BaseTypes)">
+                <Category Ref="CodeMap_SolutionFolder" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="d860c1dc-dac7-4447-977d-69169911ffa8" name="ConcreteTypes">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="80a2062a-8437-44a7-b8bf-6e6357b4a260" direction="Forward">
+              <layerMoniker Id="3ca24993-6f7b-434d-94f3-8817cad45393" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="da37eadb-e42e-4afa-96d4-9bdb4b290f05" direction="Bidirectional">
+              <layerMoniker Id="efb1f2a5-e41b-43f3-8ff2-2b69425cba8f" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+          <childLayers>
+            <layer Id="b96bb08b-e62c-49c1-9aed-ba426396ce20" name="BulkSpreads">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="12796587-1843-4254-95a5-4d15dd33ae3e" direction="Forward">
+                  <layerMoniker Id="b623be17-1a3a-444f-87f9-54a4284050cd" />
+                </dependencyFromLayerToLayer>
+                <dependencyFromLayerToLayer Id="c88b4e8f-01b4-4c67-9737-e613f716fb4f" direction="Forward">
+                  <layerMoniker Id="51106400-dae2-446d-8525-ecce9604dc62" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="086600af-e010-4a35-8119-192b0f3ba291" name="BulkSpreads">
+                  <ArtifactNode Label="BulkSpreads" Category="CodeSchema_Project" Id="(Assembly=../../BulkSpreads/BulkSpreads.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="6ba6b3eb-ad5a-47ac-9cb1-cbc8569b5c40" name="DryBodies">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="4c32c3c6-2f04-44f1-89c7-a3fbcbc2c4bc" direction="Forward">
+                  <layerMoniker Id="a836991a-436e-459f-90d6-624592b0806d" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="bbcab743-2987-40ad-b457-b49baa386bca" name="DryBodies">
+                  <ArtifactNode Label="DryBodies" Category="CodeSchema_Project" Id="(Assembly=../../DryBodies/DryBodies.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="c7c5ef3d-38cc-47ce-98f7-fe7f7eb78283" name="Masses">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="0d9da8be-3598-4a2e-9247-887fd3384565" direction="Forward">
+                  <layerMoniker Id="21f01f73-669d-436f-a9b6-3d4834825129" />
+                </dependencyFromLayerToLayer>
+                <dependencyFromLayerToLayer Id="9884d0ff-601d-46d3-a8be-79fbf010ee32" direction="Forward">
+                  <layerMoniker Id="6ba6b3eb-ad5a-47ac-9cb1-cbc8569b5c40" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="c92212c9-5f08-4a08-a462-54ffcbd6f929" name="Masses">
+                  <ArtifactNode Label="Masses" Category="CodeSchema_Project" Id="(Assembly=../../Masses/Masses.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="86a495df-5eee-4389-8d40-edaaf6e827e7" name="Measurements">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="af89ed42-c7fb-4b08-a12b-2f3377c32a0e" direction="Forward">
+                  <layerMoniker Id="007c4610-20ba-435d-9c14-6a3ec48c8d84" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="272c2e9e-423c-40de-92d3-7f9b155999a9" name="Measurements">
+                  <ArtifactNode Label="Measurements" Category="CodeSchema_Project" Id="(Assembly=../../Measurements/Measurements.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="b623be17-1a3a-444f-87f9-54a4284050cd" name="Measures">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="f51d117c-a171-4599-ad75-a6bd149b852f" direction="Forward">
+                  <layerMoniker Id="86a495df-5eee-4389-8d40-edaaf6e827e7" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="88363808-6a38-4166-a7fa-561f2861cc07" name="Measures">
+                  <ArtifactNode Label="Measures" Category="CodeSchema_Project" Id="(Assembly=../../Measures/Measures.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="a836991a-436e-459f-90d6-624592b0806d" name="PlaneShapes">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="c982273a-4085-4dcf-9da4-959aa7bff904" direction="Forward">
+                  <layerMoniker Id="401a7275-ae07-467d-85f4-ea010322901e" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="cb98a294-32c8-4da3-a90b-2463b0691480" name="PlaneShapes">
+                  <ArtifactNode Label="PlaneShapes" Category="CodeSchema_Project" Id="(Assembly=../../PlaneShapes/PlaneShapes.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="37117ee3-4f35-46d9-8a0f-206e957365b7" name="RateComponents">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="f731916b-dae0-451d-8c6c-cc4e036f31ec" direction="Forward">
+                  <layerMoniker Id="b623be17-1a3a-444f-87f9-54a4284050cd" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="68949f2c-ae6e-45a6-a6e5-2ede39daecc3" name="RateComponents">
+                  <ArtifactNode Label="RateComponents" Category="CodeSchema_Project" Id="(Assembly=../../RateComponents/RateComponents.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="10bf00b8-067d-430f-af87-4935d0208a8b" name="Rates">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="15865796-bcc7-45fe-9673-f1a311113d56" direction="Forward">
+                  <layerMoniker Id="2f3be616-9095-431a-a808-4e71f648260e" />
+                </dependencyFromLayerToLayer>
+                <dependencyFromLayerToLayer Id="3f81c03f-2edc-4c80-86c7-fafdb71512b7" direction="Forward">
+                  <layerMoniker Id="37117ee3-4f35-46d9-8a0f-206e957365b7" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="3268087b-09ff-431e-b2db-306077f63b22" name="Rates">
+                  <ArtifactNode Label="Rates" Category="CodeSchema_Project" Id="(Assembly=../../Rates/Rates.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="37958550-cf24-47c5-a883-c6e1cb6ef81d" name="Sections">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="ecc963e6-aac1-409b-9f04-e4e87af3bafe" direction="Forward">
+                  <layerMoniker Id="387b986d-9894-4cbb-9827-31aabd178ca9" />
+                </dependencyFromLayerToLayer>
+                <dependencyFromLayerToLayer Id="881025e9-3ae2-493a-a809-3b15e1b8497b" direction="Forward">
+                  <layerMoniker Id="6ba6b3eb-ad5a-47ac-9cb1-cbc8569b5c40" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="0c7cc08d-7047-449b-bc0d-35029f76ed52" name="Sections">
+                  <ArtifactNode Label="Sections" Category="CodeSchema_Project" Id="(Assembly=../../Sections/Sections.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="4028f7a4-7c69-4060-8686-74b5058e46ef" name="ShapeLimits">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="79835f5d-73d5-43ef-8c7a-5b76245f111d" direction="Forward">
+                  <layerMoniker Id="401a7275-ae07-467d-85f4-ea010322901e" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="d517bfd3-2858-4621-be24-c3568ba643eb" name="ShapeLimits">
+                  <ArtifactNode Label="ShapeLimits" Category="CodeSchema_Project" Id="(Assembly=../../ShapeLimits/ShapeLimits.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="21f01f73-669d-436f-a9b6-3d4834825129" name="SimpleRates">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="624961d6-7777-4803-852e-e7a4bc1da863" direction="Forward">
+                  <layerMoniker Id="2f3be616-9095-431a-a808-4e71f648260e" />
+                </dependencyFromLayerToLayer>
+                <dependencyFromLayerToLayer Id="842bbd84-9dfb-4235-a056-8b601c43c867" direction="Forward">
+                  <layerMoniker Id="b623be17-1a3a-444f-87f9-54a4284050cd" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="2e74afd7-d5ba-4545-a67d-cecab5615c6a" name="SimpleRates">
+                  <ArtifactNode Label="SimpleRates" Category="CodeSchema_Project" Id="(Assembly=../../SimpleRates/SimpleRates.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="d7eb6f7b-b378-409f-9c9f-25a8daf5f56d" name="ComplexDryBodies">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="b0a6c811-4153-4e06-976c-1fe09936b2f4" direction="Forward">
+                  <layerMoniker Id="37958550-cf24-47c5-a883-c6e1cb6ef81d" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="936dd18a-5e85-4861-85fd-55a466abddc1" name="ComplexDryBodies">
+                  <ArtifactNode Label="ComplexDryBodies" Category="CodeSchema_Project" Id="(Assembly=../../ComplexDryBodies/ComplexDryBodies.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+          </childLayers>
+        </layer>
+        <layer Id="efb1f2a5-e41b-43f3-8ff2-2b69425cba8f" name="AbstractTypes">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="0cb338b7-e8e4-495b-a770-6967c57e5ed2" direction="Forward">
+              <layerMoniker Id="3ca24993-6f7b-434d-94f3-8817cad45393" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+          <childLayers>
+            <layer Id="387b986d-9894-4cbb-9827-31aabd178ca9" name="ComplexShapes">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="8a52040c-f96c-479d-ae26-8a12a4216ebd" direction="Forward">
+                  <layerMoniker Id="401a7275-ae07-467d-85f4-ea010322901e" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="09e4af79-5511-49d8-948c-3bf845cf9051" name="ComplexShapes">
+                  <ArtifactNode Label="ComplexShapes" Category="CodeSchema_Project" Id="(Assembly=../../_AbstractTypes/ComplexShapes/ComplexShapes.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="401a7275-ae07-467d-85f4-ea010322901e" name="SimpleShapes">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="1f3cd50c-e60d-44a1-a658-b0f687720201" direction="Forward">
+                  <layerMoniker Id="1b90930c-2f1c-460d-af7b-3a4317f0ae1b" />
+                </dependencyFromLayerToLayer>
+                <dependencyFromLayerToLayer Id="d4be79e3-5889-4673-bf30-478286688f41" direction="Forward">
+                  <layerMoniker Id="b96bb08b-e62c-49c1-9aed-ba426396ce20" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+              <references>
+                <reference Id="9f2025d1-64ff-4fbc-ae19-108663f42629" name="SimpleShapes">
+                  <ArtifactNode Label="SimpleShapes" Category="CodeSchema_Project" Id="(Assembly=../../_AbstractTypes/SimpleShapes/SimpleShapes.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+          </childLayers>
+          <references>
+            <reference Id="51ba4c82-8720-4782-8d39-7e4a0a19591a" name="AbstractTypes">
+              <ArtifactNode Label="AbstractTypes" Category="CodeSchema_Project" Id="(Assembly=../../AbstractTypes)">
+                <Category Ref="CodeMap_SolutionFolder" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+      </childLayers>
+    </layer>
+    <layer Id="524e8079-b2bb-4d7a-b796-bab31014b10b" name="UnitTests">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="073e0590-6975-441c-8cbd-65fe1659f63f" direction="Forward">
+          <layerMoniker Id="9ac330d6-db45-4ffe-ad98-64a827df4a8a" />
+        </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="0d8b3925-8788-4850-9a85-e60e869e0338" direction="Forward">
+          <layerMoniker Id="0a826354-0083-4555-b31c-aa78516540ba" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+      <references>
+        <reference Id="4b0ab33d-f324-4f47-9440-a8e1a5a94aab" name="UnitTests">
+          <ArtifactNode Label="UnitTests" Category="CodeSchema_Project" Id="(Assembly=../../_Tests/UnitTests)">
+            <Category Ref="CodeMap_SolutionFolder" />
+          </ArtifactNode>
+        </reference>
+      </references>
+    </layer>
+  </layers>
+</layerModel>
