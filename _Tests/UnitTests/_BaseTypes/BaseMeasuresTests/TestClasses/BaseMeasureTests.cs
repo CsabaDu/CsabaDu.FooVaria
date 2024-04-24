@@ -38,7 +38,7 @@ public sealed class BaseMeasureTests
     #endregion
 
     #region Static fields
-    private static DynamicDataSource DynamicDataSource;
+    private static DynamicDataSource DynamicDataSource = new();
     private const string DisplayName = nameof(GetDisplayName);
     #endregion
 
@@ -48,11 +48,11 @@ public sealed class BaseMeasureTests
     #endregion
 
     #region Initialize
-    [ClassInitialize]
-    public static void ClassInitialize(TestContext context)
-    {
-        DynamicDataSource = new();
-    }
+    //[ClassInitialize]
+    //public static void ClassInitialize(TestContext context)
+    //{
+    //    DynamicDataSource = new();
+    //}
 
     [TestInitialize]
     public void TestInitialize()

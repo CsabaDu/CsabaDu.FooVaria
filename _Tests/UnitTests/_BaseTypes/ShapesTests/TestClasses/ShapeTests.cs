@@ -47,16 +47,16 @@ public sealed class ShapeTests
     #endregion
 
     #region Static fields
-    private static DynamicDataSource DynamicDataSource;
+    private static DynamicDataSource DynamicDataSource = new();
     #endregion
     #endregion
 
     #region Initialize
-    [ClassInitialize]
-    public static void ClassInitialize(TestContext context)
-    {
-        DynamicDataSource = new();
-    }
+    //[ClassInitialize]
+    //public static void ClassInitialize(TestContext context)
+    //{
+    //    DynamicDataSource = new();
+    //}
 
     [TestInitialize]
     public void TestInitialize()
