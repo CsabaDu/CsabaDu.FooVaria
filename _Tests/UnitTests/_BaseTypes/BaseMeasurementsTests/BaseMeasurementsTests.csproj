@@ -27,10 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Fakes\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <AdditionalFiles Include="..\..\..\..\_DependencyValidations\DependencyValidation\DependencyValidation1.layerdiagram" Link="DependencyValidation1.layerdiagram">
       <Visible>False</Visible>
     </AdditionalFiles>

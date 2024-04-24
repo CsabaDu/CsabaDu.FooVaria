@@ -33,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\TestHelpers\DataTypes\DataTypes.csproj" />
+    <ProjectReference Include="..\..\TestHelpers\Fakes\Fakes.csproj" />
   </ItemGroup>
 
   <ItemGroup>

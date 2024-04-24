@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.BehaviorObjects;
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Spreads;
 
 public sealed class ShapeComponentSpreadMeasureObject : SpreadMeasureObject, IShapeComponent
 {

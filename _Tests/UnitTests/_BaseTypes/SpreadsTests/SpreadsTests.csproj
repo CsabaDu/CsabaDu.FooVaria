@@ -40,7 +40,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\TestHelpers\Fakes\Fakes.csproj" />
-    <ProjectReference Include="..\BaseMeasuresTests\BaseMeasuresTests.csproj" />
   </ItemGroup>
 
   <ItemGroup>

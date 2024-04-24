@@ -2,7 +2,6 @@
 global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Factories;
 global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes;
-global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.BehaviorObjects;
 global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ObjectArrays;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.BaseQuantifiables;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Params;

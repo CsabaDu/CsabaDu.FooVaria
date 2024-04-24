@@ -45,8 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BaseMeasurementsTests\BaseMeasurementsTests.csproj" />
-    <ProjectReference Include="..\QuantifiablesTests\QuantifiablesTests.csproj" />
+    <ProjectReference Include="..\..\..\TestHelpers\Fakes\Fakes.csproj" />
   </ItemGroup>
 
   <ItemGroup>

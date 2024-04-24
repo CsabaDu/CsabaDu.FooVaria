@@ -33,9 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\_BaseTypes\Shapes\Shapes.csproj" />
     <ProjectReference Include="..\..\..\TestHelpers\Fakes\Fakes.csproj" />
-    <ProjectReference Include="..\SpreadsTests\SpreadsTests.csproj" />
   </ItemGroup>
 
   <ItemGroup>
