@@ -10,11 +10,16 @@ public sealed class SpreadMeasureBaseMeasureObject(IRootObject rootObject, strin
         {
             Return = new()
             {
-                GetBaseMeasurement = BaseMeasureFactoryObject.BaseMeasurementFactory.CreateBaseMeasurement(measureUnit),
+                GetBaseMeasurement = BaseMeasurementFactory.CreateBaseMeasurement(measureUnit),
                 GetBaseQuantity = quantity is double ? quantity : (ValueType)quantity.ToQuantity(TypeCode.Double),
-                GetFactory = BaseMeasureFactoryObject.GetBaseMeasureFactoryObject(rateComponentCode ?? RateComponentCode.Numerator),
+                GetFactory = GetBaseMeasureFactoryObject(rateComponentCode ?? RateComponentCode.Numerator),
             }
         };
+    }
+
+    public static SpreadMeasureBaseMeasureObject GetSpreadMeasureBaseMeasureObject(DataFields fields, RateComponentCode? rateComponentCode = null)
+    {
+        return GetSpreadMeasureBaseMeasureObject(fields.measureUnit, fields.quantity, rateComponentCode);
     }
 
     public double GetQuantity() => (double)GetBaseQuantity();

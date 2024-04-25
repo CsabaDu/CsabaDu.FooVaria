@@ -41,6 +41,11 @@ public class BaseQuantifiableChild(IRootObject rootObject, string paramName) : B
             }
         };
     }
+
+    public static BaseQuantifiableChild GetBaseQuantifiableChild(DataFields fields, IBaseQuantifiableFactory factory = null)
+    {
+        return GetBaseQuantifiableChild(fields.measureUnit, fields.defaultQuantity, factory);
+    }
     #endregion
 
     public override sealed Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnit;

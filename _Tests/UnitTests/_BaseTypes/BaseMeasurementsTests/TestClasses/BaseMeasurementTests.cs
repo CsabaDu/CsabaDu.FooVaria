@@ -1,5 +1,3 @@
-using System.Reflection;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasurementsTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -458,12 +456,12 @@ public sealed class BaseMeasurementTests
     #region Private methods
     private void SetBaseMeasurementChild(Enum measureUnit, IBaseMeasurementFactory factory = null, string measureUnitName = null)
     {
-        _baseMeasurement = TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild.GetBaseMeasurementChild(measureUnit, factory, measureUnitName);
+        _baseMeasurement = GetBaseMeasurementChild(measureUnit, factory, measureUnitName);
     }
 
     private void SetBaseMeasurementChild()
     {
-        SetBaseMeasurementChild(Fields.measureUnit);
+        _baseMeasurement = GetBaseMeasurementChild(Fields);
     }
 
     #region DynamicDataSource

@@ -77,8 +77,22 @@ public class ShapeChild(IRootObject rootObject, string paramName) : Shape(rootOb
             Enum measureUnit = quantifiable.GetBaseMeasureUnit();
             ValueType quantity = quantifiable.GetBaseQuantity();
 
-            return TestHelpers.Fakes.BaseTypes.BaseMeasures.SpreadMeasureBaseMeasureObject.GetSpreadMeasureBaseMeasureObject(measureUnit, quantity);
+            return GetSpreadMeasureBaseMeasureObject(measureUnit, quantity);
         }
+    }
+
+    public static ShapeChild GetShapeChild(Enum measureUnit, decimal defaultQuantity, IShapeFactory factory = null)
+    {
+        IShapeComponent shapeComponent = GetShapeComponentQuantifiableObject(measureUnit, defaultQuantity);
+
+        return GetShapeChild(shapeComponent, factory);
+    }
+
+    public static ShapeChild GetShapeChild(DataFields fields, IShapeFactory factory = null)
+    {
+        IShapeComponent shapeComponent = GetShapeComponentQuantifiableObject(fields);
+
+        return GetShapeChild(shapeComponent, factory);
     }
     #endregion
 

@@ -47,6 +47,11 @@ public sealed class BaseMeasurementChild(IRootObject rootObject, string paramNam
             }
         };
     }
+
+    public static BaseMeasurementChild GetBaseMeasurementChild(DataFields fields)
+    {
+        return GetBaseMeasurementChild(fields.measureUnit);
+    }
     #endregion
 
     public override Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnit;

@@ -1,5 +1,3 @@
-using System.Reflection;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -612,12 +610,12 @@ public sealed class QuantifiableTests
 
     private void SetQuantifiableChild(decimal defaultQuantity, Enum measureUnit = null, IQuantifiableFactory factory = null)
     {
-        _quantifiable = TestHelpers.Fakes.BaseTypes.Quantifiables.QuantifiableChild.GetQuantifiableChild(defaultQuantity, measureUnit, factory);
+        _quantifiable = GetQuantifiableChild(defaultQuantity, measureUnit, factory);
     }
 
     private void SetQuantifiableChild()
     {
-        SetQuantifiableChild(Fields.defaultQuantity, Fields.measureUnit);
+        _quantifiable = GetQuantifiableChild(Fields);
     }
     #endregion
 }

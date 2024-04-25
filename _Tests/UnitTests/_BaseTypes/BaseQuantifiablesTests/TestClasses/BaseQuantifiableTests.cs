@@ -1,5 +1,3 @@
-using System.Reflection;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseQuantifiablesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -239,7 +237,7 @@ public sealed class BaseQuantifiableTests
 
     private void SetBaseQuantifiableChild()
     {
-        SetBaseQuantifiableChild(Fields.measureUnit, Fields.defaultQuantity);
+        _baseQuantifiable = GetBaseQuantifiableChild(Fields);
     }
 
     #region DynamicDataSource

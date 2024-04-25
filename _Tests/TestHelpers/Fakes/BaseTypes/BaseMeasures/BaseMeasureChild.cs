@@ -70,6 +70,16 @@ public class BaseMeasureChild(IRootObject rootObject, string paramName) : BaseMe
             },
         };
     }
+
+    public static BaseMeasureChild GetBaseMeasureChild(DataFields fields)
+    {
+        return GetBaseMeasureChild(fields.measureUnit, fields.quantity);
+    }
+
+    public static BaseMeasureChild GetCompleteBaseMeasureChild(DataFields fields)
+    {
+        return GetBaseMeasureChild(fields.measureUnit, fields.quantity, fields.rateComponentCode, fields.limitMode);
+    }
     #endregion
 
     public override sealed IBaseMeasurement GetBaseMeasurement() => Return.GetBaseMeasurement;

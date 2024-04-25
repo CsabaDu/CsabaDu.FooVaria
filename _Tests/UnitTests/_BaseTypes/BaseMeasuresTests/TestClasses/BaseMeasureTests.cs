@@ -1,5 +1,3 @@
-using System.Reflection;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasuresTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -317,7 +315,7 @@ public sealed class BaseMeasureTests
         SetCompleteBaseMeasureChild();
 
         Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity();
-        IBaseMeasure expected = GetCompleteBaseMeasureChild();
+        IBaseMeasure expected = GetCompleteBaseMeasureChild(Fields);
 
         // Act
         var actual = _baseMeasure.GetBaseMeasure(Fields.quantity);
@@ -371,7 +369,7 @@ public sealed class BaseMeasureTests
         SetCompleteBaseMeasureChild();
 
         Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity();
-        IBaseMeasure expected = GetCompleteBaseMeasureChild();
+        IBaseMeasure expected = GetCompleteBaseMeasureChild(Fields);
         _baseMeasurement = TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild.GetBaseMeasurementChild(Fields.measureUnit);
 
         // Act
@@ -486,7 +484,7 @@ public sealed class BaseMeasureTests
 
         Fields.measureUnit = Fields.RandomParams.GetRandomConstantMeasureUnit();
         Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity();
-        IBaseMeasure baseMeasure = GetCompleteBaseMeasureChild();
+        IBaseMeasure baseMeasure = GetCompleteBaseMeasureChild(Fields);
         int expected = HashCode.Combine(Fields.rateComponentCode, Fields.limitMode, baseMeasure.GetHashCode());
 
         // Act
@@ -597,7 +595,7 @@ public sealed class BaseMeasureTests
 
         Fields.roundingMode = Fields.RandomParams.GetRandomRoundingMode();
         Fields.quantity = (ValueType)Fields.quantity.Round(Fields.roundingMode);
-        IQuantifiable expected = GetCompleteBaseMeasureChild();
+        IQuantifiable expected = GetCompleteBaseMeasureChild(Fields);
 
         // Act
         var actual = _baseMeasure.Round(Fields.roundingMode);
@@ -650,27 +648,16 @@ public sealed class BaseMeasureTests
     #region Private methods
     private void SetBaseMeasureChild(Enum measureUnit, ValueType quantity, RateComponentCode? rateComponentCode = null, LimitMode? limitMode = null)
     {
-        _baseMeasure = BaseMeasureChild.GetBaseMeasureChild(measureUnit, quantity, rateComponentCode, limitMode);
+        _baseMeasure = GetBaseMeasureChild(measureUnit, quantity, rateComponentCode, limitMode);
     }
-
     private void SetBaseMeasureChild()
     {
-        SetBaseMeasureChild(Fields.measureUnit, Fields.quantity);
+        _baseMeasure = GetBaseMeasureChild(Fields);
     }
 
     private void SetCompleteBaseMeasureChild()
     {
-        SetBaseMeasureChild(Fields.measureUnit, Fields.quantity, Fields.rateComponentCode, Fields.limitMode);
-    }
-
-    private BaseMeasureChild GetBaseMeasureChild()
-    {
-        return BaseMeasureChild.GetBaseMeasureChild(Fields.measureUnit, Fields.quantity);
-    }
-
-    private BaseMeasureChild GetCompleteBaseMeasureChild()
-    {
-        return BaseMeasureChild.GetBaseMeasureChild(Fields.measureUnit, Fields.quantity, Fields.rateComponentCode, Fields.limitMode);
+        _baseMeasure = GetCompleteBaseMeasureChild(Fields);
     }
 
     #region DynamicDataSource
@@ -701,4 +688,3 @@ public sealed class BaseMeasureTests
     #endregion
     #endregion
 }
-

@@ -54,6 +54,11 @@ public class QuantifiableChild(IRootObject rootObject, string paramName) : Quant
             Return = GetReturn(measureUnit, defaultQuantity, factory),
         };
     }
+
+    public static QuantifiableChild GetQuantifiableChild(DataFields fields)
+    {
+        return GetQuantifiableChild(fields.defaultQuantity, fields.measureUnit);
+    }
     #endregion
 
     public override sealed Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnit;

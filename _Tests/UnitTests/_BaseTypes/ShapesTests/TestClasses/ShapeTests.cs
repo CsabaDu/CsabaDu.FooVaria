@@ -1,3 +1,7 @@
+using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
+using CsabaDu.FooVaria.BaseTypes.Common.Factories;
+using CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -64,7 +68,7 @@ public sealed class ShapeTests
         Fields.measureUnit = Fields.RandomParams.GetRandomSpreadMeasureUnit();
         Fields.measureUnitCode = Fields.GetMeasureUnitCode();
         Fields.defaultQuantity = Fields.RandomParams.GetRandomPositiveDecimal();
-        _shapeComponent = GetShapeComponentQuantifiableObject();
+        _shapeComponent = GetShapeComponentQuantifiableObject(Fields);
     }
 
     [TestCleanup]
@@ -101,7 +105,7 @@ public sealed class ShapeTests
 
         Fields.measureUnitCode = SampleParams.GetOtherSpreadMeasureUnitCode(Fields.measureUnitCode);
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        IShape other = GetShapeChild();
+        IShape other = GetShapeChild(Fields);
 
         // Act
         void attempt() => _ = _shape.CompareTo(other);
@@ -119,7 +123,7 @@ public sealed class ShapeTests
 
         Fields.measureUnit = Fields.RandomParams.GetRandomSameTypeValidMeasureUnit(Fields.measureUnit);
         Fields.defaultQuantity = Fields.RandomParams.GetRandomPositiveDecimal(Fields.defaultQuantity);
-        IShape other = GetShapeChild();
+        IShape other = GetShapeChild(Fields);
         int expected = _shape.GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
 
         // Act
@@ -168,33 +172,17 @@ public sealed class ShapeTests
     #region Private methods
     private void SetShapeChild(Enum measureUnit, decimal defaultQuantity, IShapeFactory factory = null)
     {
-        _shapeComponent = ShapeComponentQuantifiableObject.GetShapeComponentQuantifiableObject(measureUnit, defaultQuantity);
-
-        SetShapeChild(_shapeComponent, factory);
+        _shape = GetShapeChild(measureUnit, defaultQuantity, factory);
     }
 
     private void SetShapeChild(IShapeComponent shapeComponent, IShapeFactory factory = null)
     {
-        _shape = ShapeChild.GetShapeChild(shapeComponent, factory);
+        _shape = GetShapeChild(shapeComponent, factory);
     }
 
     private void SetShapeChild()
     {
-        _shapeComponent = GetShapeComponentQuantifiableObject();
-
-        SetShapeChild(_shapeComponent);
-    }
-
-    private ShapeChild GetShapeChild(IShapeFactory factory = null)
-    {
-        _shapeComponent = GetShapeComponentQuantifiableObject();
-
-        return ShapeChild.GetShapeChild(_shapeComponent, factory);
-    }
-
-    private ShapeComponentQuantifiableObject GetShapeComponentQuantifiableObject()
-    {
-        return ShapeComponentQuantifiableObject.GetShapeComponentQuantifiableObject(Fields.measureUnit, Fields.defaultQuantity);
+        _shape = GetShapeChild(Fields);
     }
 
     //    #region DynamicDataSource

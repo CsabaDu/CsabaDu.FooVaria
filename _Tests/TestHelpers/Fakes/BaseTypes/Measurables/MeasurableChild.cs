@@ -37,6 +37,11 @@ public sealed class MeasurableChild(IRootObject rootObject, string paramName) : 
             }
         };
     }
+
+    public static MeasurableChild GetMeasurableChild(DataFields fields, IMeasurableFactory factory = null)
+    {
+        return GetMeasurableChild(fields.measureUnit, factory);
+    }
     #endregion
 
     public override Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnit;

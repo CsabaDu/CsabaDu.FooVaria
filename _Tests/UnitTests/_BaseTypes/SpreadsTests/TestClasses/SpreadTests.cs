@@ -1,6 +1,5 @@
-using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.BaseMeasures;
-using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Spreads;
-using System.Reflection;
+using CsabaDu.FooVaria.BaseTypes.Common.Factories;
+using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
 
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.SpreadsTests.TestClasses;
 
@@ -195,8 +194,8 @@ public sealed class SpreadTests
 
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
         Fields.quantity = Fields.RandomParams.GetRandomPositiveDouble();
-        _spreadMeasure = GetSpreadMeasureBaseMeasureObject();
-        ISpread expected = GetSpreadChild(new SpreadFactoryObject());
+        _spreadMeasure = GetSpreadMeasureBaseMeasureObject(Fields);
+        ISpread expected = GetSpreadChild(Fields, new SpreadFactoryObject());
 
         // Act
         var actual = _spread.GetSpread(_spreadMeasure);
@@ -215,7 +214,7 @@ public sealed class SpreadTests
         // Arrange
         SetSpreadChild();
 
-        ISpreadMeasure expected = GetSpreadMeasureBaseMeasureObject();
+        ISpreadMeasure expected = GetSpreadMeasureBaseMeasureObject(Fields);
 
         // Act
         var actual = _spread.GetSpreadMeasure();
@@ -288,7 +287,7 @@ public sealed class SpreadTests
 
         Fields.roundingMode = Fields.RandomParams.GetRandomRoundingMode();
         Fields.quantity = (ValueType)Fields.quantity.Round(Fields.roundingMode);
-        IQuantifiable expected = GetCompleteSpreadChild();
+        IQuantifiable expected = GetCompleteSpreadChild(Fields);
 
         // Act
         var actual = _spread.Round(Fields.roundingMode);
@@ -343,7 +342,7 @@ public sealed class SpreadTests
 
         Fields.measureUnitCode = SampleParams.GetOtherSpreadMeasureUnitCode(Fields.measureUnitCode);
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        _spreadMeasure = GetSpreadMeasureBaseMeasureObject(); 
+        _spreadMeasure = GetSpreadMeasureBaseMeasureObject(Fields); 
         Fields.paramName = Fields.RandomParams.GetRandomParamName();
 
         // Act
@@ -362,7 +361,7 @@ public sealed class SpreadTests
 
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
         Fields.quantity = Fields.RandomParams.GetRandomPositiveDouble();
-        _spreadMeasure = GetSpreadMeasureBaseMeasureObject();
+        _spreadMeasure = GetSpreadMeasureBaseMeasureObject(Fields);
 
         // Act
         void attempt() => _spread.ValidateSpreadMeasure(_spreadMeasure, Fields.paramName);
@@ -382,39 +381,22 @@ public sealed class SpreadTests
     #region Private methods
     private void SetSpreadChild(Enum measureUnit, ValueType quantity, ISpreadFactory factory = null, RateComponentCode? rateComponentCode = null)
     {
-        _spread = SpreadChild.GetSpreadChild(measureUnit, quantity, factory, rateComponentCode);
+        _spread = GetSpreadChild(measureUnit, quantity, factory, rateComponentCode);
     }
 
     private void SetSpreadChild(ISpreadMeasure spreadMeasure, ISpreadFactory factory = null)
     {
-        _spread = SpreadChild.GetSpreadChild(spreadMeasure, factory);
+        _spread = GetSpreadChild(spreadMeasure, factory);
     }
 
     private void SetSpreadChild()
     {
-        SetSpreadChild(Fields.measureUnit, Fields.quantity);
+        _spread = GetSpreadChild(Fields);
     }
 
     private void SetCompleteSpreadChild()
     {
-        Fields.rateComponentCode = Fields.RandomParams.GetRandomRateComponentCode();
-
-        SetSpreadChild(Fields.measureUnit, Fields.quantity, new SpreadFactoryObject(), Fields.rateComponentCode);
-    }
-
-    private SpreadChild GetSpreadChild(ISpreadFactory factory = null)
-    {
-        return SpreadChild.GetSpreadChild(Fields.measureUnit, Fields.quantity, factory);
-    }
-
-    private SpreadChild GetCompleteSpreadChild(RateComponentCode? rateComponentCode = null)
-    {
-        return SpreadChild.GetSpreadChild(Fields.measureUnit, Fields.quantity, new SpreadFactoryObject(), rateComponentCode ?? RateComponentCode.Numerator);
-    }
-
-    private SpreadMeasureBaseMeasureObject GetSpreadMeasureBaseMeasureObject()
-    {
-        return SpreadMeasureBaseMeasureObject.GetSpreadMeasureBaseMeasureObject(Fields.measureUnit, Fields.quantity);
+        _spread = GetCompleteSpreadChild(Fields);
     }
 
     #region DynamicDataSource

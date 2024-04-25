@@ -384,7 +384,7 @@ public sealed class MeasurableTests
 
     private void SetMeasurableChild()
     {
-        SetMeasurableChild(Fields.measureUnit);
+        _measurable = GetMeasurableChild(Fields);
     }
     #endregion
 }

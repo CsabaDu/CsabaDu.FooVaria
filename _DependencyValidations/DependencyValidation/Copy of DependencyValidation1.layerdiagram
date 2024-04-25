@@ -97,7 +97,7 @@
             <dependencyFromLayerToLayer Id="073e0590-6975-441c-8cbd-65fe1659f63f" direction="Forward">
               <layerMoniker Id="9ac330d6-db45-4ffe-ad98-64a827df4a8a" />
             </dependencyFromLayerToLayer>
-            <dependencyFromLayerToLayer Id="1da12d54-682f-4e33-9547-56eb6caa5107" direction="Forward">
+            <dependencyFromLayerToLayer Id="150b7e00-e747-400f-b109-58416a8d51f0" direction="Forward">
               <layerMoniker Id="0a826354-0083-4555-b31c-aa78516540ba" />
             </dependencyFromLayerToLayer>
           </dependencyToLayers>
@@ -165,6 +165,15 @@
                 </reference>
               </references>
             </layer>
+            <layer Id="8c3b4474-c8b2-43c8-adf2-1de6807b4154" name="MeasurablesTests">
+              <references>
+                <reference Id="f1cc99ea-221e-492c-9da5-98b1870b04f7" name="MeasurablesTests">
+                  <ArtifactNode Label="MeasurablesTests" Category="CodeSchema_Project" Id="(Assembly=../../_Tests/UnitTests/_BaseTypes/MeasurablesTests/MeasurablesTests.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
             <layer Id="21431ba1-fb53-4a19-a539-d53d69cfce66" name="MeasurementTests">
               <references>
                 <reference Id="4e59fa7e-860e-4739-8cc3-9b91073f2dbb" name="MeasurementTests">
@@ -174,10 +183,10 @@
                 </reference>
               </references>
             </layer>
-            <layer Id="8c3b4474-c8b2-43c8-adf2-1de6807b4154" name="MeasurablesTests">
+            <layer Id="ae7d2e6e-e69e-430c-8412-0202e0c52161" name="BaseRatesTests">
               <references>
-                <reference Id="f1cc99ea-221e-492c-9da5-98b1870b04f7" name="MeasurablesTests">
-                  <ArtifactNode Label="MeasurablesTests" Category="CodeSchema_Project" Id="(Assembly=../../_Tests/UnitTests/_BaseTypes/MeasurablesTests/MeasurablesTests.csproj)">
+                <reference Id="a84d5588-faf8-4728-b13a-5a2ef48d3f3f" name="BaseRatesTests">
+                  <ArtifactNode Label="BaseRatesTests" Category="CodeSchema_Project" Id="(Assembly=../../_Tests/UnitTests/_BaseTypes/BaseRatesTests/BaseRatesTests.csproj)">
                     <Category Ref="File" />
                   </ArtifactNode>
                 </reference>

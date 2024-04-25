@@ -9,4 +9,9 @@ public sealed class ShapeComponentQuantifiableObject(IRootObject rootObject, str
             Return = GetReturn(measureUnit, defaultQuantity, factory),
         };
     }
+
+    public static ShapeComponentQuantifiableObject GetShapeComponentQuantifiableObject(DataFields fields, IQuantifiableFactory factory = null)
+    {
+        return GetShapeComponentQuantifiableObject(fields.measureUnit, fields.defaultQuantity, factory);
+    }
 }

@@ -4,7 +4,7 @@ public sealed class ShapeComponentShapeObject(IRootObject rootObject, string par
 {
     public static ShapeComponentShapeObject GetShapeComponentShapeObject(ISpreadMeasure spreadMeasure, IShapeFactory factory = null)
     {
-        ShapeComponentSpreadMeasureObject shapeComponent = ShapeComponentSpreadMeasureObject.GetShapeComponentSpreadMeasureObject(spreadMeasure);
+        ShapeComponentSpreadMeasureObject shapeComponent = GetShapeComponentSpreadMeasureObject(spreadMeasure);
 
         return new(Fields.RootObject, Fields.paramName)
         {
