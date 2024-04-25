@@ -48,9 +48,9 @@ public sealed class BaseMeasurementChild(IRootObject rootObject, string paramNam
         };
     }
 
-    public static BaseMeasurementChild GetBaseMeasurementChild(DataFields fields)
+    public static BaseMeasurementChild GetBaseMeasurementChild(DataFields fields, IBaseMeasurementFactory factory = null, string measureUnitName = null)
     {
-        return GetBaseMeasurementChild(fields.measureUnit);
+        return GetBaseMeasurementChild(fields.measureUnit, factory, measureUnitName);
     }
     #endregion
 

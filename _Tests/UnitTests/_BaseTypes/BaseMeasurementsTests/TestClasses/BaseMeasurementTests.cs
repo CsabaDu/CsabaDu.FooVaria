@@ -82,7 +82,7 @@ public sealed class BaseMeasurementTests
         SetBaseMeasurementChild();
         Fields.measureUnitCode = Fields.RandomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
         Fields.measureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode);
-        IBaseMeasurement other = TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild.GetBaseMeasurementChild(Fields.measureUnit);
+        IBaseMeasurement other = GetBaseMeasurementChild(Fields.measureUnit);
 
         // Act
         void attempt() => _ = _baseMeasurement.CompareTo(other);
@@ -98,7 +98,7 @@ public sealed class BaseMeasurementTests
         // Arrange
         SetBaseMeasurementChild();
         Fields.measureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode);
-        IBaseMeasurement other = TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild.GetBaseMeasurementChild(Fields.measureUnit);
+        IBaseMeasurement other = GetBaseMeasurementChild(Fields.measureUnit);
         int expected = _baseMeasurement.GetExchangeRate().CompareTo(other.GetExchangeRate());
 
         // Act
@@ -337,7 +337,7 @@ public sealed class BaseMeasurementTests
         SetBaseMeasurementChild();
         Fields.measureUnitCode = Fields.RandomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
         Fields.measureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode);
-        IBaseMeasurement other = TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild.GetBaseMeasurementChild(Fields.measureUnit);
+        IBaseMeasurement other = GetBaseMeasurementChild(Fields.measureUnit);
 
         // Act
         void attempt() => _ = _baseMeasurement.ProportionalTo(other);
@@ -353,7 +353,7 @@ public sealed class BaseMeasurementTests
         // Arrange
         SetBaseMeasurementChild();
         Fields.measureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode);
-        IBaseMeasurement other = TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild.GetBaseMeasurementChild(Fields.measureUnit);
+        IBaseMeasurement other = GetBaseMeasurementChild(Fields.measureUnit);
         decimal expected = _baseMeasurement.GetExchangeRate() / other.GetExchangeRate();
 
         // Act

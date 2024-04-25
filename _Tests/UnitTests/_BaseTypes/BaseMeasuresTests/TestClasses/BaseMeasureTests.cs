@@ -350,7 +350,7 @@ public sealed class BaseMeasureTests
         SetBaseMeasureChild();
 
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit();
-        _baseMeasurement = TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild.GetBaseMeasurementChild(Fields.measureUnit);
+        _baseMeasurement = GetBaseMeasurementChild(Fields.measureUnit);
         Fields.quantityTypeCode = Fields.RandomParams.GetRandomInvalidQuantityTypeCode();
         Fields.quantity = Fields.RandomParams.GetRandomValueType(Fields.quantityTypeCode);
 
@@ -370,7 +370,7 @@ public sealed class BaseMeasureTests
 
         Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity();
         IBaseMeasure expected = GetCompleteBaseMeasureChild(Fields);
-        _baseMeasurement = TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild.GetBaseMeasurementChild(Fields.measureUnit);
+        _baseMeasurement = GetBaseMeasurementChild(Fields.measureUnit);
 
         // Act
         var actual = _baseMeasure.GetBaseMeasure(_baseMeasurement, Fields.quantity);
@@ -389,7 +389,7 @@ public sealed class BaseMeasureTests
         // Arrange
         SetCompleteBaseMeasureChild();
 
-        IBaseMeasurement expected = TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild.GetBaseMeasurementChild(Fields.measureUnit);
+        IBaseMeasurement expected = GetBaseMeasurementChild(Fields.measureUnit);
 
         // Act
         var actual = _baseMeasure.GetBaseMeasurement();

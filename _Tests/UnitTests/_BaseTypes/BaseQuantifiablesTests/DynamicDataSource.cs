@@ -26,7 +26,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         yield return toObjectArray();
 
         testCase = "Same measureUnit, same defaultQuantity => true";
-        obj = GetBaseQuantifiableChild(measureUnit, defaultQuantity);
+        obj = GetBaseQuantifiableChild(this);
         isTrue = true;
         yield return toObjectArray();
 

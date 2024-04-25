@@ -88,69 +88,62 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         quantity = (ValueType)RandomParams.GetRandomQuantity();
         rateComponentCode = RandomParams.GetRandomRateComponentCode();
         limitMode = RandomParams.GetRandomNullableLimitMode();
-        baseMeasure = getBaseMeasureChild();
+        baseMeasure = GetCompleteBaseMeasureChild(this);
         yield return toObjectArray();
 
         testCase = "null, not null => false";
         baseMeasure = null;
-        other = getBaseMeasureChild();
+        other = GetCompleteBaseMeasureChild(this);
         yield return toObjectArray();
 
         testCase = "same baseMeasures, same LimitModes => true";
         isTrue = true;
-        baseMeasure = getBaseMeasureChild();
+        baseMeasure = GetCompleteBaseMeasureChild(this);
         yield return toObjectArray();
 
         testCase = "Different LimitMode => false";
         isTrue = false;
         limitMode = RandomParams.GetRandomNullableLimitMode(limitMode);
-        other = getBaseMeasureChild();
+        other = GetCompleteBaseMeasureChild(this);
         yield return toObjectArray();
 
         testCase = "Different RateComponentCode => false";
-        baseMeasure = getBaseMeasureChild();
+        baseMeasure = GetCompleteBaseMeasureChild(this);
         rateComponentCode = RandomParams.GetRandomRateComponentCode(rateComponentCode);
-        other = getBaseMeasureChild();
+        other = GetCompleteBaseMeasureChild(this);
         yield return toObjectArray();
 
         testCase = "Different quantity => false";
-        baseMeasure = getBaseMeasureChild();
+        baseMeasure = GetCompleteBaseMeasureChild(this);
         quantityTypeCode = Type.GetTypeCode(quantity.GetType());
         quantity = (ValueType)RandomParams.GetRandomQuantity(quantityTypeCode, quantity);
-        other = getBaseMeasureChild();
+        other = GetCompleteBaseMeasureChild(this);
         yield return toObjectArray();
 
         testCase = "Different measureUnit => false";
-        baseMeasure = getBaseMeasureChild();
+        baseMeasure = GetCompleteBaseMeasureChild(this);
         measureUnit = RandomParams.GetRandomValidMeasureUnit(measureUnit);
-        other = getBaseMeasureChild();
+        other = GetCompleteBaseMeasureChild(this);
         yield return toObjectArray();
 
         testCase = "Equals when exchanged";
         isTrue = true;
         decimalQuantity = RandomParams.GetRandomDecimal();
         quantity = decimalQuantity;
-        baseMeasure = getBaseMeasureChild();
+        baseMeasure = GetCompleteBaseMeasureChild(this);
         decimalQuantity *= GetExchangeRate();
         measureUnit = RandomParams.GetRandomSameTypeValidMeasureUnit(measureUnit);
         decimalQuantity /= GetExchangeRate();
         quantity = decimalQuantity;
-        other = getBaseMeasureChild();
+        other = GetCompleteBaseMeasureChild(this);
         yield return toObjectArray();
 
-        #region Local methods
         #region toObjectArray method
         object[] toObjectArray()
         {
             TestCase_IBaseMeasure_bool_IBaseMeasure args = new(testCase, baseMeasure, isTrue, other);
 
             return args.ToObjectArray();
-        }
-        #endregion
-
-        BaseMeasureChild getBaseMeasureChild()
-        {
-            return BaseMeasureChild.GetBaseMeasureChild(measureUnit, quantity, rateComponentCode, limitMode);
         }
         #endregion
     }
@@ -166,7 +159,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         measureUnitCode = GetMeasureUnitCode();
         measureUnitCode = RandomParams.GetRandomCustomMeasureUnitCode(measureUnitCode);
         limitMode = RandomParams.GetRandomLimitMode();
-        limiter = TestHelpers.Fakes.BaseTypes.Quantifiables.LimiterQuantifiableObject.GetLimiterQuantifiableObject(limitMode.Value, RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity);
+        limiter = GetLimiterQuantifiableObject(limitMode.Value, RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity);
         yield return toObjectArray();
 
         #region toObjectArray method

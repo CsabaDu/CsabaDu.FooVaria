@@ -15,5 +15,7 @@ global using CsabaDu.FooVaria.Tests.TestHelpers.Params;
 global using System.ComponentModel;
 global using System.Reflection;
 global using static CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations.BaseMeasurement;
+global using static CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild;
 global using static CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.BaseMeasures.BaseMeasureChild;
+global using static CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Quantifiables.LimiterQuantifiableObject;
 global using static CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods.TestSupport;
