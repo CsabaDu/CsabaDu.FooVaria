@@ -13,9 +13,6 @@
             <dependencyFromLayerToLayer Id="ee69a6f8-f3d2-48df-9683-f56429a3680e" direction="Forward">
               <layerMoniker Id="d860c1dc-dac7-4447-977d-69169911ffa8" />
             </dependencyFromLayerToLayer>
-            <dependencyFromLayerToLayer Id="de62f164-45ad-4622-bb9e-b41b820cb26c" direction="Forward">
-              <layerMoniker Id="efb1f2a5-e41b-43f3-8ff2-2b69425cba8f" />
-            </dependencyFromLayerToLayer>
           </dependencyToLayers>
           <childLayers>
             <layer Id="8678772a-604a-490e-b3ba-c78acddc4341" name="HelperMethods">
