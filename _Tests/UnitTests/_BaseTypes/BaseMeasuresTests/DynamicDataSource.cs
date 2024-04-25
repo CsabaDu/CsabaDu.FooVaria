@@ -10,10 +10,10 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
 
     #region Methods
     #region Private methods
-    private decimal GetExchangeRate()
-    {
-        return ExchangeRateCollection[measureUnit];
-    }
+    //private decimal GetExchangeRate()
+    //{
+    //    return ExchangeRateCollection[measureUnit];
+    //}
 
     private BaseMeasureChild GetBaseMeasureChild()
     {

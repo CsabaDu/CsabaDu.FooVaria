@@ -1,6 +1,3 @@
-using CsabaDu.FooVaria.BaseTypes.Common.Factories;
-using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.SpreadsTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]

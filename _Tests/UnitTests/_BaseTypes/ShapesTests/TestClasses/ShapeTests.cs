@@ -1,6 +1,4 @@
-using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
-using CsabaDu.FooVaria.BaseTypes.Common.Factories;
-using CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors;
+using System.Reflection;
 
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests.TestClasses;
 
@@ -10,9 +8,9 @@ public sealed class ShapeTests
     #region Tested in parent classes' tests
 
     // Shape(IRootObject rootObject, string paramName)
-    // int IComparable<IQuantifiable>.CompareTo(IQuantifiable? other)
-    // bool IEquatable<IQuantifiable>.Equals(IQuantifiable? other)
-    // bool? IFit<IQuantifiable>.FitsIn(IQuantifiable? other, LimitMode? limitMode)
+    // int IComparable<IQuantifiable>.CompareTo(IQuantifiable? _other)
+    // bool IEquatable<IQuantifiable>.Equals(IQuantifiable? _other)
+    // bool? IFit<IQuantifiable>.FitsIn(IQuantifiable? _other, LimitMode? limitMode)
     // Enum IMeasureUnit.GetBaseMeasureUnit()
     // ValueType IQuantity.GetBaseQuantity()
     // decimal IDecimalQuantity.GetDecimalQuantity()
@@ -31,7 +29,7 @@ public sealed class ShapeTests
     // ISpreadMeasure? ISpread.GetSpreadMeasure(IQuantifiable? quantifiable)
     // ISpreadMeasure ISpreadMeasure.GetSpreadMeasure()
     // bool IExchangeable<Enum>.IsExchangeableTo(Enum? context)
-    // decimal IProportional<IQuantifiable>.ProportionalTo(IQuantifiable? other)
+    // decimal IProportional<IQuantifiable>.ProportionalTo(IQuantifiable? _other)
     // IQuantifiable IRound<IQuantifiable>.Round(RoundingMode roundingMode)
     // bool ITryExchange<IQuantifiable, Enum>.TryExchangeTo(Enum context, out IQuantifiable? exchanged)
     // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum? measureUnit, string paramName)
@@ -44,6 +42,7 @@ public sealed class ShapeTests
 
     #region Private fields
     private ShapeChild _shape;
+    private ShapeChild _other;
     private IShapeComponent _shapeComponent;
 
     #region Readonly fields
@@ -52,16 +51,11 @@ public sealed class ShapeTests
 
     #region Static fields
     private static DynamicDataSource DynamicDataSource = new();
+    private const string DisplayName = nameof(GetDisplayName);
     #endregion
     #endregion
 
     #region Initialize
-    //[ClassInitialize]
-    //public static void ClassInitialize(TestContext context)
-    //{
-    //    DynamicDataSource = new();
-    //}
-
     [TestInitialize]
     public void TestInitialize()
     {
@@ -75,6 +69,12 @@ public sealed class ShapeTests
     public void TestCleanup()
     {
         Fields.paramName = null;
+        _other = null;
+    }
+
+    public static string GetDisplayName(MethodInfo methodInfo, object[] args)
+    {
+        return CommonDynamicDataSource.GetDisplayName(methodInfo, args);
     }
     #endregion
 
@@ -101,14 +101,14 @@ public sealed class ShapeTests
     public void CompareTo_invalidArg_IShape_throws_InvalidEnumArgumentException()
     {
         // Arrange
-        SetShapeChild();
+        SetCompleteShapeChild();
 
         Fields.measureUnitCode = SampleParams.GetOtherSpreadMeasureUnitCode(Fields.measureUnitCode);
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        IShape other = GetShapeChild(Fields);
+        _other = GetCompleteShapeChild(Fields);
 
         // Act
-        void attempt() => _ = _shape.CompareTo(other);
+        void attempt() => _ = _shape.CompareTo(_other);
 
         // Assert
         var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
@@ -119,15 +119,15 @@ public sealed class ShapeTests
     public void CompareTo_validArg_IQuantifiable_returns_expected()
     {
         // Arrange
-        SetShapeChild();
+        SetCompleteShapeChild();
 
         Fields.measureUnit = Fields.RandomParams.GetRandomSameTypeValidMeasureUnit(Fields.measureUnit);
         Fields.defaultQuantity = Fields.RandomParams.GetRandomPositiveDecimal(Fields.defaultQuantity);
-        IShape other = GetShapeChild(Fields);
-        int expected = _shape.GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
+        _other = GetCompleteShapeChild(Fields);
+        int expected = _shape.GetDefaultQuantity().CompareTo(_other.GetDefaultQuantity());
 
         // Act
-        var actual = _shape.CompareTo(other);
+        var actual = _shape.CompareTo(_other);
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -135,8 +135,27 @@ public sealed class ShapeTests
     #endregion
     #endregion
 
-    // bool IEquatable<IShape>.Equals(IShape?)
-    // bool IEqualityComparer<IShape>.Equals(IShape?, IShape?)
+    #region bool Equals
+    #region IEquatable<IShape>.Equals(IShape?)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetEqualsArg), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void Equals_arg_IQuantifiable_returns_expected(string testCase, Enum measureUnit, decimal defaultQuantity, bool expected, IShape other)
+    {
+        // Arrange
+        SetShapeChild(measureUnit, defaultQuantity);
+
+        // Act
+        var actual = _shape.Equals(other);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+
+    #region IEqualityComparer<IShape>.Equals(IShape?, IShape?)
+
+    #endregion
+    #endregion
 
     // bool? ILimitable.FitsIn(ILimiter? limiter)
     // bool? IFit<IShape>.FitsIn(IShape?, LimitMode?)
@@ -146,8 +165,8 @@ public sealed class ShapeTests
 
     // IEnumerable<MeasureUnitCode> IMeasureUnitCodes.GetMeasureUnitCodes()
 
-    // IShape IShape.GetShape()
-    // IShape? IShape.GetShape(params IShapeComponent[] shapeComponents)
+    // IShape IShape.GetBaseShape()
+    // IShape? IShape.GetBaseShape(params IShapeComponent[] shapeComponents)
 
     // int IShapeComponentCount.GetShapeComponentCount()
 
@@ -170,22 +189,32 @@ public sealed class ShapeTests
     //    //    //#endregion
 
     #region Private methods
-    private void SetShapeChild(Enum measureUnit, decimal defaultQuantity, IShapeFactory factory = null)
+    private void SetShapeChild(Enum measureUnit, decimal defaultQuantity, IShapeFactory factory = null, IShape baseShape = null)
     {
-        _shape = GetShapeChild(measureUnit, defaultQuantity, factory);
+        _shape = GetShapeChild(measureUnit, defaultQuantity, factory, baseShape);
     }
 
-    private void SetShapeChild(IShapeComponent shapeComponent, IShapeFactory factory = null)
+    private void SetShapeChild(IShapeComponent shapeComponent, IShapeFactory factory = null, IShape baseShape = null)
     {
-        _shape = GetShapeChild(shapeComponent, factory);
+        _shape = GetShapeChild(shapeComponent, factory, baseShape);
     }
 
-    private void SetShapeChild()
+    private void SetShapeChild(IShape baseShape = null, IShapeFactory factory = null)
     {
-        _shape = GetShapeChild(Fields);
+        _shape = GetShapeChild(Fields, factory, baseShape);
     }
 
-    //    #region DynamicDataSource
+    private void SetCompleteShapeChild(IShapeFactory factory = null)
+    {
+        _shape = GetCompleteShapeChild(Fields, factory);
+    }
+
+    #region DynamicDataSource
+    private static IEnumerable<object[]> GetEqualsArg()
+    {
+        return DynamicDataSource.GetEqualsArg();
+    }
+
     //    private static IEnumerable<object[]> GetIsExchangeableToArgs()
     //    {
     //        return DynamicDataSource.GetIsExchangeableToArgs();
@@ -200,6 +229,6 @@ public sealed class ShapeTests
     //    {
     //        return DynamicDataSource.GetValidateSpreadMeasureArgs();
     //    }
-    //    #endregion
+    #endregion
     #endregion
 }

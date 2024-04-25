@@ -17,7 +17,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         yield return toObjectArray();
 
         testCase = "IBaseMeasurement => measureUnits equal";
-        obj = TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild.GetBaseMeasurementChild(RandomParams.GetRandomValidMeasureUnit());
+        obj = GetBaseMeasurementChild(RandomParams.GetRandomValidMeasureUnit());
         isTrue = measureUnit.Equals((obj as IBaseMeasurement).GetBaseMeasureUnit());
         yield return toObjectArray();
 
@@ -42,19 +42,19 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
 
         testCase = "Different MeasureUnitCode => false";
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
-        baseMeasurement = TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild.GetBaseMeasurementChild(RandomParams.GetRandomMeasureUnit(measureUnitCode));
+        baseMeasurement = GetBaseMeasurementChild(RandomParams.GetRandomMeasureUnit(measureUnitCode));
         yield return toObjectArray();
 
         testCase = "Same MeasureUnit => true";
         isTrue = true;
-        baseMeasurement = TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild.GetBaseMeasurementChild(measureUnit);
+        baseMeasurement = GetBaseMeasurementChild(measureUnit);
         yield return toObjectArray();
 
         testCase = "Same MeasureUnitCode, same ExhchangeRate, Different measureUnit => true";
         measureUnit = RandomParams.GetRandomNotUsedCustomMeasureUnit();
         _ = TrySetCustomMeasureUnit(measureUnit, decimal.One, RandomParams.GetRandomParamName());
         measureUnitCode = GetMeasureUnitCode();
-        baseMeasurement = TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild.GetBaseMeasurementChild(measureUnitCode.GetDefaultMeasureUnit());
+        baseMeasurement = GetBaseMeasurementChild(measureUnitCode.GetDefaultMeasureUnit());
         yield return toObjectArray();
 
         #region toObjectArray method
@@ -157,7 +157,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         yield return toObjectArray();
 
         testCase = "Different ExchangeRate";
-        decimalQuantity = RandomParams.GetRandomNotNegativeDecimal(GetExchangeRate(measureUnit, null));
+        decimalQuantity = RandomParams.GetRandomNotNegativeDecimal(GetExchangeRate());
         #region toObjectArray method
         object[] toObjectArray()
         {

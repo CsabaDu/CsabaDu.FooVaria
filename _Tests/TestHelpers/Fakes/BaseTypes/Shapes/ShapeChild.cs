@@ -28,7 +28,7 @@ public class ShapeChild(IRootObject rootObject, string paramName) : Shape(rootOb
     // double IQuantity<double>.GetQuantity()
     // object IQuantity.GetQuantity(TypeCode quantityTypeCode)
     // TypeCode IQuantityType.GetQuantityTypeCode()
-    // IShape? IShape.GetShape(params IShapeComponent[] shapeComponents)
+    // IShape? IShape.GetBaseShape(params IShapeComponent[] shapeComponents)
     // int IShapeComponentCount.GetShapeComponentCount()
     // IEnumerable<IShapeComponent> IShapeComponents.GetShapeComponents()
     // ISpread ISpread.GetSpread(ISpreadMeasure spreadMeasure)
@@ -56,14 +56,15 @@ public class ShapeChild(IRootObject rootObject, string paramName) : Shape(rootOb
     public ShapeReturn Return { private get; set; } = new();
     protected ISpreadMeasure SpreadMeasure { get; set; }
 
-    public static ShapeChild GetShapeChild(IShapeComponent shapeComponent, IShapeFactory factory = null)
+    public static ShapeChild GetShapeChild(IShapeComponent shapeComponent, IShapeFactory factory = null, IShape baseShape = null)
     {
         return new(Fields.RootObject, Fields.paramName)
         {
             Return = new()
             {
-                GetFactory = factory,
                 GetShapeComponents = [shapeComponent],
+                GetFactory = factory,
+                GetBaseShape = baseShape,
             },
             SpreadMeasure = getSpreadMeasure(),
         };
@@ -81,18 +82,25 @@ public class ShapeChild(IRootObject rootObject, string paramName) : Shape(rootOb
         }
     }
 
-    public static ShapeChild GetShapeChild(Enum measureUnit, decimal defaultQuantity, IShapeFactory factory = null)
+    public static ShapeChild GetShapeChild(Enum measureUnit, decimal defaultQuantity, IShapeFactory factory = null, IShape baseShape = null)
     {
         IShapeComponent shapeComponent = GetShapeComponentQuantifiableObject(measureUnit, defaultQuantity);
 
-        return GetShapeChild(shapeComponent, factory);
+        return GetShapeChild(shapeComponent, factory, baseShape);
     }
 
-    public static ShapeChild GetShapeChild(DataFields fields, IShapeFactory factory = null)
+    public static ShapeChild GetCompleteShapeChild(DataFields fields, IShapeFactory factory = null)
+    {
+        IShape baseShape = GetShapeChild(fields);
+
+        return GetShapeChild(fields, factory, baseShape);
+    }
+
+    public static ShapeChild GetShapeChild(DataFields fields, IShapeFactory factory = null, IShape baseShape = null)
     {
         IShapeComponent shapeComponent = GetShapeComponentQuantifiableObject(fields);
 
-        return GetShapeChild(shapeComponent, factory);
+        return GetShapeChild(shapeComponent, factory, baseShape);
     }
     #endregion
 
@@ -106,9 +114,9 @@ public class ShapeChild(IRootObject rootObject, string paramName) : Shape(rootOb
         return FitsIn(other as IQuantifiable, limitMode);
     }
 
-    public override sealed IFactory GetFactory() => Return.GetFactory;
+    public override sealed IShape GetBaseShape() => Return.GetBaseShape;
 
-    public override sealed IShape GetBaseShape() => this;
+    public override sealed IFactory GetFactory() => Return.GetFactory;
 
     public override sealed IEnumerable<IShapeComponent> GetShapeComponents() => Return.GetShapeComponents;
 

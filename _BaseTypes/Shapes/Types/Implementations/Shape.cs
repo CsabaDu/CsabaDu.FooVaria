@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace CsabaDu.FooVaria.BaseTypes.Shapes.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.BaseTypes.Shapes.Types.Implementations;
 
 public abstract class Shape(IRootObject rootObject, string paramName) : Spread(rootObject, paramName), IShape
 {
@@ -86,7 +84,12 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
     public IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
     {
         yield return GetMeasureUnitCode();
-        yield return (GetBaseShape().GetShapeComponents().First() as IQuantifiable)!.GetMeasureUnitCode();
+
+        IShape baseShape = GetBaseShape();
+        IEnumerable<IShapeComponent> shapeComponents = baseShape.GetShapeComponents();
+        IShapeComponent first = shapeComponents.First();
+
+        yield return (first as IQuantifiable)!.GetMeasureUnitCode();
     }
 
     public IShape? GetShape(params IShapeComponent[] shapeComponents)

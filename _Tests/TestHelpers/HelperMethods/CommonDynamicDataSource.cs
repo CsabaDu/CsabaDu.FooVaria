@@ -105,4 +105,11 @@ public abstract class CommonDynamicDataSource : DataFields
     {
         return $"{enumeration.GetType().Name}.{Enum.GetName(enumeration)}";
     }
+
+    protected decimal GetExchangeRate()
+    {
+        return ExchangeRateCollection[measureUnit];
+    }
+
+
 }
