@@ -101,6 +101,89 @@
               <layerMoniker Id="0a826354-0083-4555-b31c-aa78516540ba" />
             </dependencyFromLayerToLayer>
           </dependencyToLayers>
+          <childLayers>
+            <layer Id="b50cd198-cd48-47da-94ed-8aa322bf1955" name="BaseMeasurementsTests">
+              <references>
+                <reference Id="b027c63f-c94e-4638-991d-2f6046881aa6" name="BaseMeasurementsTests">
+                  <ArtifactNode Label="BaseMeasurementsTests" Category="CodeSchema_Project" Id="(Assembly=../../_Tests/UnitTests/_BaseTypes/BaseMeasurementsTests/BaseMeasurementsTests.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="a344012b-3d2a-45ac-bb2d-e4087cadd713" name="BaseMeasuresTests">
+              <references>
+                <reference Id="3e018ba1-c235-42dd-82e2-899c16e43471" name="BaseMeasuresTests">
+                  <ArtifactNode Label="BaseMeasuresTests" Category="CodeSchema_Project" Id="(Assembly=../../_Tests/UnitTests/_BaseTypes/BaseMeasuresTests/BaseMeasuresTests.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="c5967c81-db17-476c-9e0e-89821495ddaa" name="BaseQuantifiablesTests">
+              <references>
+                <reference Id="e00db062-d58a-4bd3-9bff-c6c7028aa089" name="BaseQuantifiablesTests">
+                  <ArtifactNode Label="BaseQuantifiablesTests" Category="CodeSchema_Project" Id="(Assembly=../../_Tests/UnitTests/_BaseTypes/BaseQuantifiablesTests/BaseQuantifiablesTests.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="575f79dd-a051-4fbe-8488-6bde3743b006" name="CommonTests">
+              <references>
+                <reference Id="931814d0-a65c-4d0e-bb3a-b770b3c2ffbe" name="CommonTests">
+                  <ArtifactNode Label="CommonTests" Category="CodeSchema_Project" Id="(Assembly=../../_Tests/UnitTests/_BaseTypes/CommonTests/CommonTests.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="d644ed79-58cc-4313-ab48-2d1a1e49fcdf" name="QuantifiablesTests">
+              <references>
+                <reference Id="075747f9-54e0-4cff-bbbf-33529f4b3563" name="QuantifiablesTests">
+                  <ArtifactNode Label="QuantifiablesTests" Category="CodeSchema_Project" Id="(Assembly=../../_Tests/UnitTests/_BaseTypes/QuantifiablesTests/QuantifiablesTests.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="cc11d35a-8572-4a80-a078-2ec7c364e345" name="ShapesTests">
+              <references>
+                <reference Id="9a1b0591-393c-4694-a837-1a56aace593b" name="ShapesTests">
+                  <ArtifactNode Label="ShapesTests" Category="CodeSchema_Project" Id="(Assembly=../../_Tests/UnitTests/_BaseTypes/ShapesTests/ShapesTests.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="1a659e49-4b01-47f3-acd3-111f5f1d0219" name="SpreadsTests">
+              <references>
+                <reference Id="ed651201-629c-4f67-b873-2be18ac2d2be" name="SpreadsTests">
+                  <ArtifactNode Label="SpreadsTests" Category="CodeSchema_Project" Id="(Assembly=../../_Tests/UnitTests/_BaseTypes/SpreadsTests/SpreadsTests.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="21431ba1-fb53-4a19-a539-d53d69cfce66" name="MeasurementTests">
+              <references>
+                <reference Id="4e59fa7e-860e-4739-8cc3-9b91073f2dbb" name="MeasurementTests">
+                  <ArtifactNode Label="MeasurementTests" Category="CodeSchema_Project" Id="(Assembly=../../_Tests/UnitTests/MeasurementTests/MeasurementTests.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+            <layer Id="8c3b4474-c8b2-43c8-adf2-1de6807b4154" name="MeasurablesTests">
+              <references>
+                <reference Id="f1cc99ea-221e-492c-9da5-98b1870b04f7" name="MeasurablesTests">
+                  <ArtifactNode Label="MeasurablesTests" Category="CodeSchema_Project" Id="(Assembly=../../_Tests/UnitTests/_BaseTypes/MeasurablesTests/MeasurablesTests.csproj)">
+                    <Category Ref="File" />
+                  </ArtifactNode>
+                </reference>
+              </references>
+            </layer>
+          </childLayers>
           <references>
             <reference Id="4b0ab33d-f324-4f47-9440-a8e1a5a94aab" name="UnitTests">
               <ArtifactNode Label="UnitTests" Category="CodeSchema_Project" Id="(Assembly=../../_Tests/UnitTests)">
