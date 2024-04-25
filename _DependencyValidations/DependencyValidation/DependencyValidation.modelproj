@@ -44,5 +44,43 @@
       <DependentUpon>DependencyValidation1.layerdiagram</DependentUpon>
     </Validate>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\_Tests\TestHelpers\Fakes\Fakes.csproj">
+      <Name>Fakes</Name>
+      <Project>{449ba328-447e-4b67-923e-6c79406a63d4}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\_Tests\UnitTests\_BaseTypes\BaseMeasurementsTests\BaseMeasurementsTests.csproj">
+      <Name>BaseMeasurementsTests</Name>
+      <Project>{7ffbf725-cf24-4fc4-b86a-d26057434a21}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\_Tests\UnitTests\_BaseTypes\BaseMeasuresTests\BaseMeasuresTests.csproj">
+      <Name>BaseMeasuresTests</Name>
+      <Project>{8700be1c-a1e2-4b32-aaaf-6c67bf498d90}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\_Tests\UnitTests\_BaseTypes\BaseQuantifiablesTests\BaseQuantifiablesTests.csproj">
+      <Name>BaseQuantifiablesTests</Name>
+      <Project>{ade3c2ca-0b43-448e-9dc3-7645d752c60a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\_Tests\UnitTests\_BaseTypes\CommonTests\CommonTests.csproj">
+      <Name>CommonTests</Name>
+      <Project>{b83c0197-a39f-4586-b805-0910dd3add6b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\_Tests\UnitTests\_BaseTypes\MeasurablesTests\MeasurablesTests.csproj">
+      <Name>MeasurablesTests</Name>
+      <Project>{8f4e9d39-3077-4cbe-81d5-4d00bcb23e00}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\_Tests\UnitTests\_BaseTypes\QuantifiablesTests\QuantifiablesTests.csproj">
+      <Name>QuantifiablesTests</Name>
+      <Project>{35d253c0-59ae-447e-9243-7f1ba6554871}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\_Tests\UnitTests\_BaseTypes\ShapesTests\ShapesTests.csproj">
+      <Name>ShapesTests</Name>
+      <Project>{c686b72b-6d92-4d4f-81ac-1ad520821cb8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\_Tests\UnitTests\_BaseTypes\SpreadsTests\SpreadsTests.csproj">
+      <Name>SpreadsTests</Name>
+      <Project>{15f28890-1cf1-4464-8502-ea118da2b982}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>

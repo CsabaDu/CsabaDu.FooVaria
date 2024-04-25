@@ -13,6 +13,9 @@
             <dependencyFromLayerToLayer Id="ee69a6f8-f3d2-48df-9683-f56429a3680e" direction="Forward">
               <layerMoniker Id="d860c1dc-dac7-4447-977d-69169911ffa8" />
             </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="de62f164-45ad-4622-bb9e-b41b820cb26c" direction="Forward">
+              <layerMoniker Id="efb1f2a5-e41b-43f3-8ff2-2b69425cba8f" />
+            </dependencyFromLayerToLayer>
           </dependencyToLayers>
           <childLayers>
             <layer Id="8678772a-604a-490e-b3ba-c78acddc4341" name="HelperMethods">
@@ -45,8 +48,17 @@
             </layer>
             <layer Id="3871eb68-3dc3-46b1-8903-e34f1c2a029c" name="Params">
               <dependencyToLayers>
-                <dependencyFromLayerToLayer Id="b199dcec-fe19-4d49-9b27-e44a12a57f28" direction="Forward">
-                  <layerMoniker Id="d860c1dc-dac7-4447-977d-69169911ffa8" />
+                <dependencyFromLayerToLayer Id="8c0f6c33-49b3-4c7d-bb13-dd12853f62ff" direction="Forward">
+                  <layerMoniker Id="c7c5ef3d-38cc-47ce-98f7-fe7f7eb78283" />
+                </dependencyFromLayerToLayer>
+                <dependencyFromLayerToLayer Id="8bc7b60a-e122-48b3-b3ef-6202dd9f159b" direction="Forward">
+                  <layerMoniker Id="d7eb6f7b-b378-409f-9c9f-25a8daf5f56d" />
+                </dependencyFromLayerToLayer>
+                <dependencyFromLayerToLayer Id="a59869b5-555e-4f40-a937-ea2c4f3e7f04" direction="Forward">
+                  <layerMoniker Id="4028f7a4-7c69-4060-8686-74b5058e46ef" />
+                </dependencyFromLayerToLayer>
+                <dependencyFromLayerToLayer Id="489ad005-49e2-4e72-bdca-a2898958dee4" direction="Forward">
+                  <layerMoniker Id="10bf00b8-067d-430f-af87-4935d0208a8b" />
                 </dependencyFromLayerToLayer>
               </dependencyToLayers>
               <references>
@@ -75,6 +87,23 @@
           <references>
             <reference Id="c71300b0-4b18-49d1-88e4-0ce753bee02c" name="TestHelpers">
               <ArtifactNode Label="TestHelpers" Category="CodeSchema_Project" Id="(Assembly=../../_Tests/TestHelpers)">
+                <Category Ref="CodeMap_SolutionFolder" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="524e8079-b2bb-4d7a-b796-bab31014b10b" name="UnitTests">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="073e0590-6975-441c-8cbd-65fe1659f63f" direction="Forward">
+              <layerMoniker Id="9ac330d6-db45-4ffe-ad98-64a827df4a8a" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="1da12d54-682f-4e33-9547-56eb6caa5107" direction="Forward">
+              <layerMoniker Id="0a826354-0083-4555-b31c-aa78516540ba" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+          <references>
+            <reference Id="4b0ab33d-f324-4f47-9440-a8e1a5a94aab" name="UnitTests">
+              <ArtifactNode Label="UnitTests" Category="CodeSchema_Project" Id="(Assembly=../../_Tests/UnitTests)">
                 <Category Ref="CodeMap_SolutionFolder" />
               </ArtifactNode>
             </reference>
@@ -469,23 +498,6 @@
           </references>
         </layer>
       </childLayers>
-    </layer>
-    <layer Id="524e8079-b2bb-4d7a-b796-bab31014b10b" name="UnitTests">
-      <dependencyToLayers>
-        <dependencyFromLayerToLayer Id="073e0590-6975-441c-8cbd-65fe1659f63f" direction="Forward">
-          <layerMoniker Id="9ac330d6-db45-4ffe-ad98-64a827df4a8a" />
-        </dependencyFromLayerToLayer>
-        <dependencyFromLayerToLayer Id="0d8b3925-8788-4850-9a85-e60e869e0338" direction="Forward">
-          <layerMoniker Id="0a826354-0083-4555-b31c-aa78516540ba" />
-        </dependencyFromLayerToLayer>
-      </dependencyToLayers>
-      <references>
-        <reference Id="4b0ab33d-f324-4f47-9440-a8e1a5a94aab" name="UnitTests">
-          <ArtifactNode Label="UnitTests" Category="CodeSchema_Project" Id="(Assembly=../../_Tests/UnitTests)">
-            <Category Ref="CodeMap_SolutionFolder" />
-          </ArtifactNode>
-        </reference>
-      </references>
     </layer>
   </layers>
 </layerModel>
