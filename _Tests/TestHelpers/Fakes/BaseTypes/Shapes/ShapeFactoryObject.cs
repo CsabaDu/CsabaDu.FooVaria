@@ -14,7 +14,10 @@ public sealed class ShapeFactoryObject : IShapeFactory
 
     public IShape CreateShape(params IShapeComponent[] shapeComponents)
     {
-        return GetShapeChild(shapeComponents[0], this);
+        IShapeComponent shapeComponent = shapeComponents[0];
+        IShape baseShape = GetShapeChild(shapeComponent);
+
+        return GetShapeChild(shapeComponent, baseShape, this);
     }
 
     public ISpread CreateSpread(ISpreadMeasure spreadMeasure)

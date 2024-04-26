@@ -45,12 +45,6 @@ public sealed class SpreadTests
     #endregion
 
     #region Initialize
-    //[ClassInitialize]
-    //public static void ClassInitialize(TestContext context)
-    //{
-    //    DynamicDataSource = new();
-    //}
-
     [TestInitialize]
     public void TestInitialize()
     {

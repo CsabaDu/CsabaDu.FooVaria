@@ -7,5 +7,6 @@ global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ObjectArrays;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Shapes;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Params;
 global using System.ComponentModel;
+global using System.Reflection;
 global using static CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Quantifiables.ShapeComponentQuantifiableObject;
 global using static CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Shapes.ShapeChild;

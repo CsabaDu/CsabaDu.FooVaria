@@ -1,4 +1,4 @@
-using System.Reflection;
+using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types;
 
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests.TestClasses;
 
@@ -136,7 +136,7 @@ public sealed class ShapeTests
     #endregion
 
     #region bool Equals
-    #region IEquatable<IShape>.Equals(IShape?)
+    #region virtual IEquatable<IShape>.Equals(IShape?)
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetEqualsArg), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
     public void Equals_arg_IQuantifiable_returns_expected(string testCase, Enum measureUnit, decimal defaultQuantity, bool expected, IShape other)
@@ -153,7 +153,19 @@ public sealed class ShapeTests
     #endregion
 
     #region IEqualityComparer<IShape>.Equals(IShape?, IShape?)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void Equals_args_IBaseMeasure_IBaseMeasure_returns_expected(string testCase, IShape left, bool expected, IShape right)
+    {
+        // Arrange
+        SetCompleteShapeChild();
 
+        // Act
+        var actual = _shape.Equals(left, right);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
     #endregion
     #endregion
 
@@ -189,19 +201,19 @@ public sealed class ShapeTests
     //    //    //#endregion
 
     #region Private methods
-    private void SetShapeChild(Enum measureUnit, decimal defaultQuantity, IShapeFactory factory = null, IShape baseShape = null)
+    private void SetShapeChild(Enum measureUnit, decimal defaultQuantity, IShape baseShape = null, IShapeFactory factory = null)
     {
-        _shape = GetShapeChild(measureUnit, defaultQuantity, factory, baseShape);
+        _shape = GetShapeChild(measureUnit, defaultQuantity, baseShape, factory);
     }
 
-    private void SetShapeChild(IShapeComponent shapeComponent, IShapeFactory factory = null, IShape baseShape = null)
+    private void SetShapeChild(IShapeComponent shapeComponent, IShape baseShape = null, IShapeFactory factory = null)
     {
-        _shape = GetShapeChild(shapeComponent, factory, baseShape);
+        _shape = GetShapeChild(shapeComponent, baseShape, factory);
     }
 
     private void SetShapeChild(IShape baseShape = null, IShapeFactory factory = null)
     {
-        _shape = GetShapeChild(Fields, factory, baseShape);
+        _shape = GetShapeChild(Fields, baseShape, factory);
     }
 
     private void SetCompleteShapeChild(IShapeFactory factory = null)
@@ -215,6 +227,11 @@ public sealed class ShapeTests
         return DynamicDataSource.GetEqualsArg();
     }
 
+    private static IEnumerable<object[]> GetEqualsArgs()
+    {
+        return DynamicDataSource.GetEqualsArgs();
+    }
+    
     //    private static IEnumerable<object[]> GetIsExchangeableToArgs()
     //    {
     //        return DynamicDataSource.GetIsExchangeableToArgs();
