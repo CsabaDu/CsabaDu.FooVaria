@@ -1,5 +1,3 @@
-using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests;
 
 internal sealed class DynamicDataSource : CommonDynamicDataSource

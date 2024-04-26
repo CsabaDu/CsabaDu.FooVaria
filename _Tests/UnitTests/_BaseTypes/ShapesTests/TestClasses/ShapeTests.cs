@@ -1,5 +1,3 @@
-using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -155,10 +153,10 @@ public sealed class ShapeTests
     #region IEqualityComparer<IShape>.Equals(IShape?, IShape?)
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
-    public void Equals_args_IBaseMeasure_IBaseMeasure_returns_expected(string testCase, IShape left, bool expected, IShape right)
+    public void Equals_args_IShape_IShape_returns_expected(string testCase, IShape left, bool expected, IShape right)
     {
         // Arrange
-        SetCompleteShapeChild();
+        SetShapeChild();
 
         // Act
         var actual = _shape.Equals(left, right);
@@ -169,8 +167,15 @@ public sealed class ShapeTests
     #endregion
     #endregion
 
-    // bool? ILimitable.FitsIn(ILimiter? limiter)
-    // bool? IFit<IShape>.FitsIn(IShape?, LimitMode?)
+    #region bool? FitsIn
+    #region override sealed ILimitable.FitsIn(ILimiter?)
+
+    #endregion
+
+    #region abstract IFit<IShape>.FitsIn(IShape?, LimitMode?)
+
+    #endregion
+    #endregion
 
     // int Shape.GetHashCode()
     // int IEqualityComparer<IShape>.GetHashCode(IShape)

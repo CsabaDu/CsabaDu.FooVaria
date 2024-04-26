@@ -5,27 +5,6 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
     #region Public methods
     #region Override methods
     #region Sealed methods
-    //public override sealed int CompareTo(IQuantifiable? other)
-    //{
-    //    return other is IShape shape ?
-    //        GetBaseShape().CompareTo(shape.GetBaseShape())
-    //        : base.CompareTo(other);
-    //}
-
-    //public override sealed bool Equals(IQuantifiable? other)
-    //{
-    //    return other is IShape shape ?
-    //        GetBaseShape().Equals(shape.GetBaseShape())
-    //        : base.Equals(other);
-    //}
-
-    //public override sealed bool? FitsIn(IQuantifiable? other, LimitMode? limitMode)
-    //{
-    //    return other is IShape shape ?
-    //        GetBaseShape().FitsIn(shape.GetBaseShape(), limitMode)
-    //        : base.FitsIn(other, limitMode);
-    //}
-
     public override sealed bool? FitsIn(ILimiter? limiter)
     {
         return limiter is IShape shape ?

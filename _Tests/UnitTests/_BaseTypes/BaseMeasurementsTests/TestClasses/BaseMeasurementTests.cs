@@ -31,12 +31,6 @@ public sealed class BaseMeasurementTests
     #endregion
 
     #region Initialize
-    //[ClassInitialize]
-    //public static void ClassInitialize(TestContext context)
-    //{
-    //    DynamicDataSource = new();
-    //}
-
     [TestInitialize]
     public void TestInitialize()
     {
@@ -454,16 +448,6 @@ public sealed class BaseMeasurementTests
     #endregion
 
     #region Private methods
-    private void SetBaseMeasurementChild(Enum measureUnit, IBaseMeasurementFactory factory = null, string measureUnitName = null)
-    {
-        _baseMeasurement = GetBaseMeasurementChild(measureUnit, factory, measureUnitName);
-    }
-
-    private void SetBaseMeasurementChild()
-    {
-        _baseMeasurement = GetBaseMeasurementChild(Fields);
-    }
-
     #region DynamicDataSource
     private static IEnumerable<object[]> GetEqualsObjectArg()
     {
@@ -500,5 +484,15 @@ public sealed class BaseMeasurementTests
         return DynamicDataSource.GetValidateMeasureUnitValidArgs();
     }
     #endregion
+
+    private void SetBaseMeasurementChild(Enum measureUnit, IBaseMeasurementFactory factory = null, string measureUnitName = null)
+    {
+        _baseMeasurement = GetBaseMeasurementChild(measureUnit, factory, measureUnitName);
+    }
+
+    private void SetBaseMeasurementChild()
+    {
+        _baseMeasurement = GetBaseMeasurementChild(Fields);
+    }
     #endregion
 }

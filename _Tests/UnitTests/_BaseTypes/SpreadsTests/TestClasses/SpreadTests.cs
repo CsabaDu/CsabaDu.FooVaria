@@ -370,6 +370,23 @@ public sealed class SpreadTests
     #endregion
 
     #region Private methods
+    #region DynamicDataSource
+    private static IEnumerable<object[]> GetIsExchangeableToArgs()
+    {
+        return DynamicDataSource.GetIsExchangeableToArgs();
+    }
+
+    private static IEnumerable<object[]> GetGetSpreadMeasureArgs()
+    {
+        return DynamicDataSource.GetGetSpreadMeasureArgs();
+    }
+
+    private static IEnumerable<object[]> GetValidateSpreadMeasureArgs()
+    {
+        return DynamicDataSource.GetValidateSpreadMeasureArgs();
+    }
+    #endregion
+
     private void SetSpreadChild(Enum measureUnit, ValueType quantity, ISpreadFactory factory = null, RateComponentCode? rateComponentCode = null)
     {
         _spread = GetSpreadChild(measureUnit, quantity, factory, rateComponentCode);
@@ -389,22 +406,5 @@ public sealed class SpreadTests
     {
         _spread = GetCompleteSpreadChild(Fields);
     }
-
-    #region DynamicDataSource
-    private static IEnumerable<object[]> GetIsExchangeableToArgs()
-    {
-        return DynamicDataSource.GetIsExchangeableToArgs();
-    }
-
-    private static IEnumerable<object[]> GetGetSpreadMeasureArgs()
-    {
-        return DynamicDataSource.GetGetSpreadMeasureArgs();
-    }
-
-    private static IEnumerable<object[]> GetValidateSpreadMeasureArgs()
-    {
-        return DynamicDataSource.GetValidateSpreadMeasureArgs();
-    }
-    #endregion
     #endregion
 }
