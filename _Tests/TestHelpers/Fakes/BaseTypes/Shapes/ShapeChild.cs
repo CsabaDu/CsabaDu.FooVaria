@@ -60,26 +60,9 @@ public class ShapeChild(IRootObject rootObject, string paramName) : Shape(rootOb
     {
         return new(Fields.RootObject, Fields.paramName)
         {
-            Return = new()
-            {
-                GetShapeComponents = [shapeComponent],
-                GetFactory = factory,
-                GetBaseShape = baseShape,
-            },
-            SpreadMeasure = getSpreadMeasure(),
+            Return = GetReturn(shapeComponent, baseShape, factory),
+            SpreadMeasure = GetSpreadMeasure(shapeComponent),
         };
-
-        ISpreadMeasure getSpreadMeasure()
-        {
-            if (shapeComponent is not IQuantifiable quantifiable) return null;
-
-            if (quantifiable is ISpreadMeasure spreadMeasure) return spreadMeasure.GetSpreadMeasure();
-
-            Enum measureUnit = quantifiable.GetBaseMeasureUnit();
-            ValueType quantity = quantifiable.GetBaseQuantity();
-
-            return GetSpreadMeasureBaseMeasureObject(measureUnit, quantity);
-        }
     }
 
     public static ShapeChild GetShapeChild(Enum measureUnit, decimal defaultQuantity, IShape baseShape = null, IShapeFactory factory = null)
@@ -87,6 +70,13 @@ public class ShapeChild(IRootObject rootObject, string paramName) : Shape(rootOb
         IShapeComponent shapeComponent = GetShapeComponentQuantifiableObject(measureUnit, defaultQuantity);
 
         return GetShapeChild(shapeComponent, baseShape, factory);
+    }
+
+    public static ShapeChild GetCompleteShapeChild(Enum measureUnit, decimal defaultQuantity, IShapeFactory factory = null)
+    {
+        IShape baseShape = GetShapeChild(measureUnit, defaultQuantity);
+
+        return GetShapeChild(measureUnit, defaultQuantity, baseShape, factory);
     }
 
     public static ShapeChild GetCompleteShapeChild(DataFields fields, IShapeFactory factory = null)
@@ -102,6 +92,29 @@ public class ShapeChild(IRootObject rootObject, string paramName) : Shape(rootOb
 
         return GetShapeChild(shapeComponent, baseShape, factory);
     }
+
+    protected static ShapeReturn GetReturn(IShapeComponent shapeComponent, IShape baseShape = null, IShapeFactory factory = null)
+    {
+        return new()
+        {
+            GetShapeComponents = [shapeComponent],
+            GetFactory = factory,
+            GetBaseShape = baseShape,
+        };
+    }
+
+    protected static ISpreadMeasure GetSpreadMeasure(IShapeComponent shapeComponent)
+    {
+        if (shapeComponent is not IQuantifiable quantifiable) return null;
+
+        if (quantifiable is ISpreadMeasure spreadMeasure) return spreadMeasure.GetSpreadMeasure();
+
+        Enum measureUnit = quantifiable.GetBaseMeasureUnit();
+        ValueType quantity = quantifiable.GetBaseQuantity();
+
+        return GetSpreadMeasureBaseMeasureObject(measureUnit, quantity);
+    }
+
     #endregion
 
     public override sealed  int CompareTo(IShape other)

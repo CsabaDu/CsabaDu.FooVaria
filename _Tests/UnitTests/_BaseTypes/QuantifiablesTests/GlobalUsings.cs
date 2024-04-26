@@ -8,6 +8,7 @@ global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
 global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes;
 global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ObjectArrays;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.BaseQuantifiables;
+global using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Quantifiables;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Params;
 global using System.ComponentModel;
 global using System.Reflection;

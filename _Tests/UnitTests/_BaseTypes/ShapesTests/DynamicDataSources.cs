@@ -1,3 +1,7 @@
+using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
+using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.Implementations;
+using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.BaseQuantifiables;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests;
 
 internal sealed class DynamicDataSource : CommonDynamicDataSource
@@ -101,6 +105,60 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         object[] toObjectArray()
         {
             TestCase_IShape_bool_IShape args = new(testCase, shape, isTrue, other);
+
+            return args.ToObjectArray();
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> GetFitsInILimiterArgs()
+    {
+        testCase = "Not IShape";
+        measureUnit = RandomParams.GetRandomSpreadMeasureUnit();
+        limiter = new LimiterObject();
+        yield return toObjectArray();
+
+        testCase = "Different MeasureUnitCode";
+        measureUnitCode = SampleParams.GetOtherSpreadMeasureUnitCode(GetMeasureUnitCode());
+        limitMode = RandomParams.GetRandomLimitMode();
+        limiter = GetLimiterQuantifiableObject(limitMode.Value, RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity);
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            TestCase_Enum_ILimiter args = new(testCase, measureUnit, limiter);
+
+            return args.ToObjectArray();
+        }
+        #endregion
+    }
+
+
+    internal IEnumerable<object[]> GetFitsInIShapeLimitModeArgs()
+    {
+        testCase = "IShape, Not defined LimitMode";
+        limitMode = SampleParams.NotDefinedLimitMode;
+        measureUnit = RandomParams.GetRandomSpreadMeasureUnit();
+        defaultQuantity = RandomParams.GetRandomPositiveDecimal();
+        shape = GetShapeChild(this);
+        yield return toObjectArray();
+
+        testCase = "Different IShape, valid LimitMode";
+        measureUnitCode = GetMeasureUnitCode();
+        measureUnitCode = SampleParams.GetOtherSpreadMeasureUnitCode(measureUnitCode);
+        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
+        limitMode = RandomParams.GetRandomLimitMode();
+        yield return toObjectArray();
+
+        testCase = "null, valid LimitMode";
+        shape = null;
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            TestCase_Enum_LimitMode_IShape args = new(testCase, measureUnit, limitMode, shape);
 
             return args.ToObjectArray();
         }

@@ -1,5 +1,5 @@
-using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
-using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
+using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Enums;
+using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
 
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests.TestClasses;
 
@@ -45,6 +45,7 @@ public sealed class ShapeTests
     private ShapeChild _shape;
     private ShapeChild _other;
     private IShapeComponent _shapeComponent;
+    private ILimiter _limiter;
 
     #region Readonly fields
     private readonly DataFields Fields = new();
@@ -71,6 +72,7 @@ public sealed class ShapeTests
     {
         Fields.paramName = null;
         _other = null;
+        _limiter = null;
     }
 
     public static string GetDisplayName(MethodInfo methodInfo, object[] args)
@@ -171,58 +173,106 @@ public sealed class ShapeTests
     #endregion
 
     #region bool? FitsIn
-    //#region override sealed ILimitable.FitsIn(ILimiter?)
-    //[TestMethod, TestCategory("UnitTest")]
-    //public void FitsIn_nullArg_ILimiter_returns_expected()
-    //{
-    //    // Arrange
-    //    SetQuantifiableChild();
+    #region override sealed ILimitable.FitsIn(ILimiter?)
+    [TestMethod, TestCategory("UnitTest")]
+    public void FitsIn_nullArg_ILimiter_returns_expected()
+    {
+        // Arrange
+        SetShapeChild();
 
-    //    limiter = null;
+        _limiter = null;
 
-    //    // Act
-    //    var actual = _quantifiable.FitsIn(limiter);
+        // Act
+        var actual = _shape.FitsIn(_limiter);
 
-    //    // Assert
-    //    Assert.IsTrue(actual);
-    //}
+        // Assert
+        Assert.IsTrue(actual);
+    }
 
-    //[TestMethod, TestCategory("UnitTest")]
-    //[DynamicData(nameof(GetFitsInILimiterArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
-    //public void FitsIn_invalidArg_ILimiter_returns_null(string testCase, Enum measureUnit, ILimiter limiter)
-    //{
-    //    // Arrange
-    //    SetQuantifiableChild(Fields.defaultQuantity, measureUnit);
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetFitsInILimiterArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void FitsIn_invalidArg_ILimiter_returns_null(string testCase, Enum measureUnit, ILimiter limiter)
+    {
+        // Arrange
+        SetCompleteShapeChild(measureUnit, Fields.defaultQuantity);
 
-    //    // Act
-    //    var actual = _quantifiable.FitsIn(limiter);
+        // Act
+        var actual = _shape.FitsIn(limiter);
 
-    //    // Assert
-    //    Assert.IsNull(actual);
-    //}
+        // Assert
+        Assert.IsNull(actual);
+    }
 
-    //[TestMethod, TestCategory("UnitTest")]
-    //public void FitsIn_validArg_ILimiter_returns_expected()
-    //{
-    //    // Arrange
-    //    SetQuantifiableChild();
+    [TestMethod, TestCategory("UnitTest")]
+    public void FitsIn_validArg_ILimiter_returns_expected()
+    {
+        // Arrange
+        SetCompleteShapeChild();
 
-    //    Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
-    //    decimal otherQuantity = Fields.RandomParams.GetRandomDecimal();
-    //    Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-    //    limiter = TestHelpers.Fakes.BaseTypes.Quantifiables.LimiterQuantifiableObject.GetLimiterQuantifiableObject(Fields.limitMode.Value, Fields.measureUnit, otherQuantity);
-    //    bool? expected = Fields.defaultQuantity.FitsIn(otherQuantity, Fields.limitMode);
+        Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
+        decimal otherQuantity = Fields.defaultQuantity;
+        Fields.defaultQuantity = Fields.RandomParams.GetRandomDecimal();
+        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        _shapeComponent = GetShapeComponentQuantifiableObject(Fields);
+        _limiter = GetLimiterShapeObject(Fields.limitMode.Value, _shapeComponent);
+        bool? expected = otherQuantity.FitsIn(Fields.defaultQuantity, Fields.limitMode);
 
-    //    // Act
-    //    var actual = _quantifiable.FitsIn(limiter);
+        // Act
+        var actual = _shape.FitsIn(_limiter);
 
-    //    // Assert
-    //    Assert.AreEqual(expected, actual);
-    //}
-    //#endregion
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
 
     #region abstract IFit<IShape>.FitsIn(IShape?, LimitMode?)
+    [TestMethod, TestCategory("UnitTest")]
+    public void FitsIn_nullArgs_IShape_LimitMode_returns_expected()
+    {
+        // Arrange
+        SetShapeChild();
 
+        Fields.limitMode = null;
+
+        // Act
+        var actual = _shape.FitsIn(null, Fields.limitMode);
+
+        // Assert
+        Assert.IsTrue(actual);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetFitsInIShapeLimitModeArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void FitsIn_invalidArgs_IShape_LimitMode_returns_null(string testCase, Enum measureUnit, LimitMode? limitMode, IShape other)
+    {
+        // Arrange
+        SetCompleteShapeChild(measureUnit, Fields.defaultQuantity);
+
+        // Act
+        var actual = _shape.FitsIn(other, limitMode);
+
+        // Assert
+        Assert.IsNull(actual);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void FitsIn_validArgs_IShape_LimitMode_returns_expected()
+    {
+        // Arrange
+        SetShapeChild();
+
+        decimal otherQuantity = Fields.RandomParams.GetRandomPositiveDecimal();
+        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        _other = GetShapeChild(Fields.measureUnit, otherQuantity);
+        Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
+        bool? expected = Fields.defaultQuantity.FitsIn(otherQuantity, Fields.limitMode);
+
+        // Act
+        var actual = _shape.FitsIn(_other, Fields.limitMode);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
     #endregion
     #endregion
 
@@ -255,6 +305,28 @@ public sealed class ShapeTests
     //    //    //#endregion
 
     #region Private methods
+    #region DynamicDataSource
+    private static IEnumerable<object[]> GetEqualsArg()
+    {
+        return DynamicDataSource.GetEqualsArg();
+    }
+
+    private static IEnumerable<object[]> GetEqualsArgs()
+    {
+        return DynamicDataSource.GetEqualsArgs();
+    }
+
+    private static IEnumerable<object[]> GetFitsInILimiterArgs()
+    {
+        return DynamicDataSource.GetFitsInILimiterArgs();
+    }
+
+    private static IEnumerable<object[]> GetFitsInIShapeLimitModeArgs()
+    {
+        return DynamicDataSource.GetFitsInIShapeLimitModeArgs();
+    }
+    #endregion
+
     private void SetShapeChild(Enum measureUnit, decimal defaultQuantity, IShape baseShape = null, IShapeFactory factory = null)
     {
         _shape = GetShapeChild(measureUnit, defaultQuantity, baseShape, factory);
@@ -275,31 +347,10 @@ public sealed class ShapeTests
         _shape = GetCompleteShapeChild(Fields, factory);
     }
 
-    #region DynamicDataSource
-    private static IEnumerable<object[]> GetEqualsArg()
+    private void SetCompleteShapeChild(Enum measureUnit, decimal defaultQuantity, IShapeFactory factory = null)
     {
-        return DynamicDataSource.GetEqualsArg();
+        _shape = GetCompleteShapeChild(measureUnit, defaultQuantity, factory);
     }
 
-    private static IEnumerable<object[]> GetEqualsArgs()
-    {
-        return DynamicDataSource.GetEqualsArgs();
-    }
-    
-    //    private static IEnumerable<object[]> GetIsExchangeableToArgs()
-    //    {
-    //        return DynamicDataSource.GetIsExchangeableToArgs();
-    //    }
-
-    //    private static IEnumerable<object[]> GetGetSpreadMeasureArgs()
-    //    {
-    //        return DynamicDataSource.GetGetSpreadMeasureArgs();
-    //    }
-
-    //    private static IEnumerable<object[]> GetValidateSpreadMeasureArgs()
-    //    {
-    //        return DynamicDataSource.GetValidateSpreadMeasureArgs();
-    //    }
-    #endregion
     #endregion
 }

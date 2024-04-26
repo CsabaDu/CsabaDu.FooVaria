@@ -4,7 +4,7 @@ public class QuantifiableChild(IRootObject rootObject, string paramName) : Quant
 {
     #region Members
 
-    // Quantifiable(IRootObject rootObject, string paramName)
+    // Shape(IRootObject rootObject, string paramName)
     // int IComparable<IQuantifiable>.CompareTo(IQuantifiable other)
     // bool IEquatable<IQuantifiable>.Equals(IQuantifiable other)
     // IQuantifiable IExchange<IQuantifiable, Enum>.ExchangeTo(Enum context)
