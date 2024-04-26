@@ -19,22 +19,27 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         yield return toObjectArray();
 
         testCase = "Zero quantity => null";
-        doubleQuantity = 0;
-        quantifiable = SpreadMeasureBaseMeasureObject.GetSpreadMeasureBaseMeasureObject(measureUnit, doubleQuantity);
+        quantity = 0.0;
+        quantifiable = GetSpreadMeasureBaseMeasureObject(this);
         yield return toObjectArray();
 
         testCase = "Negative quantity => null";
-        doubleQuantity = RandomParams.GetRandomNegativeDouble();
-        quantifiable = SpreadMeasureBaseMeasureObject.GetSpreadMeasureBaseMeasureObject(measureUnit, doubleQuantity);
+        quantity = RandomParams.GetRandomNegativeDouble();
+        quantifiable = GetSpreadMeasureBaseMeasureObject(this);
+        yield return toObjectArray();
+
+        testCase = "Not ISpreadMeasure IBaseMeasure => null";
+        quantity = RandomParams.GetRandomPositiveDouble();
+        quantifiable = GetBaseMeasureChild(this);
         yield return toObjectArray();
 
         testCase = "Not ISpreadMeasure IQuantifiable => null";
-        doubleQuantity = RandomParams.GetRandomPositiveDouble();
-        quantifiable = BaseMeasureChild.GetBaseMeasureChild(measureUnit, doubleQuantity);
+        defaultQuantity = (decimal)quantity.ToQuantity(TypeCode.Decimal);
+        quantifiable = GetQuantifiableChild(this);
         yield return toObjectArray();
 
         testCase = "ISpreadMeasure IQuantifiable => SpreadMeasure";
-        spreadMeasure = SpreadMeasureBaseMeasureObject.GetSpreadMeasureBaseMeasureObject(measureUnit, doubleQuantity);
+        spreadMeasure = GetSpreadMeasureBaseMeasureObject(this);
         quantifiable = spreadMeasure as IQuantifiable;
         yield return toObjectArray();
 
@@ -43,7 +48,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         measureUnitCode = GetMeasureUnitCode();
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
         measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
-        quantifiable = SpreadMeasureBaseMeasureObject.GetSpreadMeasureBaseMeasureObject(measureUnit, doubleQuantity);
+        quantifiable = GetSpreadMeasureBaseMeasureObject(this);
         yield return toObjectArray();
 
         #region toObjectArray method
@@ -64,13 +69,13 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         yield return toObjectArray();
 
         testCase = "Zero quantity";
-        doubleQuantity = 0;
-        spreadMeasure = SpreadMeasureBaseMeasureObject.GetSpreadMeasureBaseMeasureObject(measureUnit, doubleQuantity);
+        quantity = 0.0;
+        spreadMeasure = GetSpreadMeasureBaseMeasureObject(this);
         yield return toObjectArray();
 
         testCase = "Negative quantity";
-        doubleQuantity = RandomParams.GetRandomNegativeDouble();
-        spreadMeasure = SpreadMeasureBaseMeasureObject.GetSpreadMeasureBaseMeasureObject(measureUnit, doubleQuantity);
+        quantity = RandomParams.GetRandomNegativeDouble();
+        spreadMeasure = GetSpreadMeasureBaseMeasureObject(this);
         yield return toObjectArray();
 
         #region toObjectArray method

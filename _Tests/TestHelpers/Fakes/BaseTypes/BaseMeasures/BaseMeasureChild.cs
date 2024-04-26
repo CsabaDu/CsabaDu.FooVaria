@@ -52,7 +52,7 @@ public class BaseMeasureChild(IRootObject rootObject, string paramName) : BaseMe
 
     public static BaseMeasureChild GetBaseMeasureChild(Enum measureUnit, ValueType quantity, RateComponentCode? rateComponentCode = null, LimitMode? limitMode = null)
     {
-        IBaseMeasurement baseMeasurement = BaseMeasureFactoryObject.BaseMeasurementFactory.CreateBaseMeasurement(measureUnit);
+        IBaseMeasurement baseMeasurement = BaseMeasurementFactory.CreateBaseMeasurement(measureUnit);
 
         return new(Fields.RootObject, Fields.paramName)
         {
@@ -61,7 +61,7 @@ public class BaseMeasureChild(IRootObject rootObject, string paramName) : BaseMe
                 GetBaseMeasurement = baseMeasurement,
                 GetBaseQuantity = quantity,
                 GetFactory = rateComponentCode.HasValue ?
-                    BaseMeasureFactoryObject.GetBaseMeasureFactoryObject(rateComponentCode.Value)
+                    GetBaseMeasureFactoryObject(rateComponentCode.Value)
                     : null,
             },
             LimiterObject = new()
@@ -84,7 +84,7 @@ public class BaseMeasureChild(IRootObject rootObject, string paramName) : BaseMe
 
     public override sealed IBaseMeasurement GetBaseMeasurement() => Return.GetBaseMeasurement;
 
-    public override sealed IBaseMeasurementFactory GetBaseMeasurementFactory() => BaseMeasureFactoryObject.BaseMeasurementFactory;
+    public override sealed IBaseMeasurementFactory GetBaseMeasurementFactory() => BaseMeasurementFactory;
 
     public override sealed ValueType GetBaseQuantity() => Return.GetBaseQuantity;
 

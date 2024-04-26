@@ -213,7 +213,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         testCase = "baseMeasurement, null";
         paramName = ParamNames.quantity;
         measureUnit = RandomParams.GetRandomMeasureUnit();
-        baseMeasurement = TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild.GetBaseMeasurementChild(measureUnit);
+        baseMeasurement = GetBaseMeasurementChild(measureUnit);
         yield return toObjectArray();
 
         #region toObjectArray method
