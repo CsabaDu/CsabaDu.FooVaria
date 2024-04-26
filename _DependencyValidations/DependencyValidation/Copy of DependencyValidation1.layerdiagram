@@ -2,11 +2,6 @@
 <layerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="b67fd073-574c-41e8-804d-e1eb9b5761f6" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/LayerDesigner">
   <layers>
     <layer Id="33d6da73-923b-4c50-b895-cedd126dd3fb" name="CsabaDu.FooVaria.Tests">
-      <dependencyToLayers>
-        <dependencyFromLayerToLayer Id="4e8bd32e-512d-40e7-8433-74fca7ba550f" direction="Forward">
-          <layerMoniker Id="b1f19931-3a46-4b5f-8a3b-5770a8b7b823" />
-        </dependencyFromLayerToLayer>
-      </dependencyToLayers>
       <childLayers>
         <layer Id="9ac330d6-db45-4ffe-ad98-64a827df4a8a" name="TestHelpers">
           <dependencyToLayers>
@@ -44,20 +39,6 @@
               </references>
             </layer>
             <layer Id="3871eb68-3dc3-46b1-8903-e34f1c2a029c" name="Params">
-              <dependencyToLayers>
-                <dependencyFromLayerToLayer Id="8c0f6c33-49b3-4c7d-bb13-dd12853f62ff" direction="Forward">
-                  <layerMoniker Id="c7c5ef3d-38cc-47ce-98f7-fe7f7eb78283" />
-                </dependencyFromLayerToLayer>
-                <dependencyFromLayerToLayer Id="8bc7b60a-e122-48b3-b3ef-6202dd9f159b" direction="Forward">
-                  <layerMoniker Id="d7eb6f7b-b378-409f-9c9f-25a8daf5f56d" />
-                </dependencyFromLayerToLayer>
-                <dependencyFromLayerToLayer Id="a59869b5-555e-4f40-a937-ea2c4f3e7f04" direction="Forward">
-                  <layerMoniker Id="4028f7a4-7c69-4060-8686-74b5058e46ef" />
-                </dependencyFromLayerToLayer>
-                <dependencyFromLayerToLayer Id="489ad005-49e2-4e72-bdca-a2898958dee4" direction="Forward">
-                  <layerMoniker Id="10bf00b8-067d-430f-af87-4935d0208a8b" />
-                </dependencyFromLayerToLayer>
-              </dependencyToLayers>
               <references>
                 <reference Id="16a84298-0b82-4256-b805-0c24dc85d44e" name="Params">
                   <ArtifactNode Label="Params" Category="CodeSchema_Project" Id="(Assembly=../../_Tests/TestHelpers/Params/Params.csproj)">
@@ -93,9 +74,6 @@
           <dependencyToLayers>
             <dependencyFromLayerToLayer Id="073e0590-6975-441c-8cbd-65fe1659f63f" direction="Forward">
               <layerMoniker Id="9ac330d6-db45-4ffe-ad98-64a827df4a8a" />
-            </dependencyFromLayerToLayer>
-            <dependencyFromLayerToLayer Id="150b7e00-e747-400f-b109-58416a8d51f0" direction="Forward">
-              <layerMoniker Id="0a826354-0083-4555-b31c-aa78516540ba" />
             </dependencyFromLayerToLayer>
           </dependencyToLayers>
           <childLayers>

@@ -34,12 +34,6 @@ public sealed class BaseQuantifiableTests
     #endregion
 
     #region Initialize
-    //[ClassInitialize]
-    //public static void ClassInitialize(TestContext context)
-    //{
-    //    DynamicDataSource = new();
-    //}
-
     [TestInitialize]
     public void TestInitialize()
     {
@@ -230,16 +224,6 @@ public sealed class BaseQuantifiableTests
     #endregion
 
     #region Private methods
-    private void SetBaseQuantifiableChild(Enum measureUnit, decimal defaultQuantity, IBaseQuantifiableFactory factory = null)
-    {
-        _baseQuantifiable = GetBaseQuantifiableChild(measureUnit, defaultQuantity, factory);
-    }
-
-    private void SetBaseQuantifiableChild()
-    {
-        _baseQuantifiable = GetBaseQuantifiableChild(Fields);
-    }
-
     #region DynamicDataSource
     private static IEnumerable<object[]> GetEqualsArgs()
     {
@@ -261,5 +245,15 @@ public sealed class BaseQuantifiableTests
         return DynamicDataSource.GetValidQuantityTypeCodeArg();
     }
     #endregion
+
+    private void SetBaseQuantifiableChild(Enum measureUnit, decimal defaultQuantity, IBaseQuantifiableFactory factory = null)
+    {
+        _baseQuantifiable = GetBaseQuantifiableChild(measureUnit, defaultQuantity, factory);
+    }
+
+    private void SetBaseQuantifiableChild()
+    {
+        _baseQuantifiable = GetBaseQuantifiableChild(Fields);
+    }
     #endregion
 }
