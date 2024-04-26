@@ -88,7 +88,7 @@ public sealed class QuantifiableTests
         Fields.measureUnitCode = Fields.RandomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
         Fields.defaultQuantity = Fields.RandomParams.GetRandomDecimal();
-        IQuantifiable other = TestHelpers.Fakes.BaseTypes.Quantifiables.QuantifiableChild.GetQuantifiableChild(Fields.defaultQuantity, Fields.measureUnit);
+        IQuantifiable other = GetQuantifiableChild(Fields);
 
         // Act
         void attempt() => _ = _quantifiable.CompareTo(other);
@@ -106,7 +106,7 @@ public sealed class QuantifiableTests
 
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
         Fields.defaultQuantity = Fields.RandomParams.GetRandomDecimal();
-        IQuantifiable other = TestHelpers.Fakes.BaseTypes.Quantifiables.QuantifiableChild.GetQuantifiableChild(Fields.defaultQuantity, Fields.measureUnit);
+        IQuantifiable other = GetQuantifiableChild(Fields);
         int expected = _quantifiable.GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
 
         // Act
@@ -176,7 +176,7 @@ public sealed class QuantifiableTests
         Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
         decimal otherQuantity = Fields.RandomParams.GetRandomDecimal();
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        limiter = TestHelpers.Fakes.BaseTypes.Quantifiables.LimiterQuantifiableObject.GetLimiterQuantifiableObject(Fields.limitMode.Value, Fields.measureUnit, otherQuantity);
+        limiter = GetLimiterQuantifiableObject(Fields.limitMode.Value, Fields.measureUnit, otherQuantity);
         bool? expected = Fields.defaultQuantity.FitsIn(otherQuantity, Fields.limitMode);
 
         // Act
@@ -225,7 +225,7 @@ public sealed class QuantifiableTests
 
         decimal otherQuantity = Fields.RandomParams.GetRandomDecimal();
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        IQuantifiable quantifiable = TestHelpers.Fakes.BaseTypes.Quantifiables.QuantifiableChild.GetQuantifiableChild(otherQuantity, Fields.measureUnit);
+        IQuantifiable quantifiable = GetQuantifiableChild(otherQuantity, Fields.measureUnit);
         Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
         bool? expected = Fields.defaultQuantity.FitsIn(otherQuantity, Fields.limitMode);
 
@@ -422,7 +422,7 @@ public sealed class QuantifiableTests
         Fields.measureUnitCode = Fields.RandomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
         Fields.defaultQuantity = Fields.RandomParams.GetRandomDecimal();
-        IQuantifiable other = TestHelpers.Fakes.BaseTypes.Quantifiables.QuantifiableChild.GetQuantifiableChild(Fields.defaultQuantity, Fields.measureUnit);
+        IQuantifiable other = GetQuantifiableChild(Fields);
 
         // Act
         void attempt() => _ = _quantifiable.ProportionalTo(other);
@@ -440,7 +440,7 @@ public sealed class QuantifiableTests
 
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
         Fields.defaultQuantity = 0;
-        IQuantifiable other = TestHelpers.Fakes.BaseTypes.Quantifiables.QuantifiableChild.GetQuantifiableChild(Fields.defaultQuantity, Fields.measureUnit);
+        IQuantifiable other = GetQuantifiableChild(Fields);
 
         // Act
         void attempt() => _ = _quantifiable.ProportionalTo(other);
@@ -458,7 +458,7 @@ public sealed class QuantifiableTests
 
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
         Fields.defaultQuantity = Fields.RandomParams.GetRandomDecimal();
-        IQuantifiable other = TestHelpers.Fakes.BaseTypes.Quantifiables.QuantifiableChild.GetQuantifiableChild(Fields.defaultQuantity, Fields.measureUnit);
+        IQuantifiable other = GetQuantifiableChild(Fields);
         decimal expected = Math.Abs(_quantifiable.GetDefaultQuantity() / other.GetDefaultQuantity());
 
         // Act
@@ -494,7 +494,7 @@ public sealed class QuantifiableTests
         Fields.roundingMode = Fields.RandomParams.GetRandomRoundingMode();
 
         Fields.defaultQuantity = Fields.defaultQuantity.Round(Fields.roundingMode);
-        IQuantifiable expected = TestHelpers.Fakes.BaseTypes.Quantifiables.QuantifiableChild.GetQuantifiableChild(Fields.defaultQuantity, Fields.measureUnit);
+        IQuantifiable expected = GetQuantifiableChild(Fields);
 
         // Act
         var actual = _quantifiable.Round(Fields.roundingMode);

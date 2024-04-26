@@ -1,3 +1,6 @@
+using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
+using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -168,9 +171,55 @@ public sealed class ShapeTests
     #endregion
 
     #region bool? FitsIn
-    #region override sealed ILimitable.FitsIn(ILimiter?)
+    //#region override sealed ILimitable.FitsIn(ILimiter?)
+    //[TestMethod, TestCategory("UnitTest")]
+    //public void FitsIn_nullArg_ILimiter_returns_expected()
+    //{
+    //    // Arrange
+    //    SetQuantifiableChild();
 
-    #endregion
+    //    limiter = null;
+
+    //    // Act
+    //    var actual = _quantifiable.FitsIn(limiter);
+
+    //    // Assert
+    //    Assert.IsTrue(actual);
+    //}
+
+    //[TestMethod, TestCategory("UnitTest")]
+    //[DynamicData(nameof(GetFitsInILimiterArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    //public void FitsIn_invalidArg_ILimiter_returns_null(string testCase, Enum measureUnit, ILimiter limiter)
+    //{
+    //    // Arrange
+    //    SetQuantifiableChild(Fields.defaultQuantity, measureUnit);
+
+    //    // Act
+    //    var actual = _quantifiable.FitsIn(limiter);
+
+    //    // Assert
+    //    Assert.IsNull(actual);
+    //}
+
+    //[TestMethod, TestCategory("UnitTest")]
+    //public void FitsIn_validArg_ILimiter_returns_expected()
+    //{
+    //    // Arrange
+    //    SetQuantifiableChild();
+
+    //    Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
+    //    decimal otherQuantity = Fields.RandomParams.GetRandomDecimal();
+    //    Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+    //    limiter = TestHelpers.Fakes.BaseTypes.Quantifiables.LimiterQuantifiableObject.GetLimiterQuantifiableObject(Fields.limitMode.Value, Fields.measureUnit, otherQuantity);
+    //    bool? expected = Fields.defaultQuantity.FitsIn(otherQuantity, Fields.limitMode);
+
+    //    // Act
+    //    var actual = _quantifiable.FitsIn(limiter);
+
+    //    // Assert
+    //    Assert.AreEqual(expected, actual);
+    //}
+    //#endregion
 
     #region abstract IFit<IShape>.FitsIn(IShape?, LimitMode?)
 
