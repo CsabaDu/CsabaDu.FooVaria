@@ -1,4 +1,5 @@
-﻿namespace CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types.Implementations;
+﻿
+namespace CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types.Implementations;
 
 public abstract class SimpleShape : Shape, ISimpleShape
 {
@@ -136,6 +137,33 @@ public abstract class SimpleShape : Shape, ISimpleShape
     public abstract IBulkSpreadFactory GetBulkSpreadFactory();
     public abstract ITangentShapeFactory GetTangentShapeFactory();
     #endregion
+
+    public bool Equals(IShapeComponent? x, IShapeComponent? y)
+    {
+        if (x?.GetMeasureUnitCode() != y?.GetMeasureUnitCode()) return false;
+
+        return y is null 
+            || x?.GetBaseShapeComponents().SequenceEqual(y.GetBaseShapeComponents()) == true;
+    }
+
+    public int GetHashCode([DisallowNull] IShapeComponent obj)
+    {
+        throw new NotImplementedException();
+    }
+
+    public IEnumerable<IShapeComponent> GetBaseShapeComponents()
+    {
+        IEnumerable<IExtent> shapeExtents = GetShapeExtents();
+
+        return shapeExtents.Select(getShapeExtentFirstBaseShapeComponent).OrderBy(x => x);
+
+        #region Local methods
+        IShapeComponent getShapeExtentFirstBaseShapeComponent(IExtent shapeExtent)
+        {
+            return shapeExtent.GetBaseShapeComponents().First();
+        }
+        #endregion
+    }
 
     public IExtent GetDiagonal()
     {

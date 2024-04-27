@@ -37,7 +37,7 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
     public virtual bool Equals(IShape? other)
     {
         return base.Equals(other)
-            && GetShapeComponents().SequenceEqual(other.GetShapeComponents());
+            && GetBaseShape().GetShapeComponents().SequenceEqual(other.GetBaseShape().GetShapeComponents());
     }
     #endregion
 
@@ -51,8 +51,12 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
 
     public bool Equals(IShape? x, IShape? y)
     {
-        return x is null == y is null
-            && x?.GetBaseShape().Equals(y?.GetBaseShape()) != false;
+        //if (x is null != y is null) return false;
+
+        return x is not null
+            && y is not null
+            || y is null
+            || x?.GetBaseShape().Equals(y.GetBaseShape()) == true;
     }
 
     public int GetHashCode([DisallowNull] IShape shape)
