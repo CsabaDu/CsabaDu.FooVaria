@@ -1,5 +1,4 @@
 using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Enums;
-using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
 
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests.TestClasses;
 
@@ -276,8 +275,33 @@ public sealed class ShapeTests
     #endregion
     #endregion
 
-    // int Shape.GetHashCode()
-    // int IEqualityComparer<IShape>.GetHashCode(IShape)
+    #region int GetHashCode
+    #region override Shape.GetHashCode()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetHashCode_returns_expected()
+    {
+        // Arrange
+        SetCompleteShapeChild();
+        HashCode hashCode = new();
+        int baseHashCode = HashCode.Combine(Fields.measureUnitCode, Fields.defaultQuantity);
+        hashCode.Add(baseHashCode);
+        hashCode.Add(_shapeComponent);
+
+        var expected = hashCode.ToHashCode();
+
+        // Act
+        var actual = _shape.GetHashCode();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+
+    #region IEqualityComparer<IShape>.GetHashCode(IShape)
+
+    #endregion
+    #endregion
+
 
     // IEnumerable<MeasureUnitCode> IMeasureUnitCodes.GetMeasureUnitCodes()
 

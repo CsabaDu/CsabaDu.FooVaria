@@ -145,7 +145,7 @@ public sealed class BaseQuantifiableTests
     #endregion
 
     #region int GetHashCode
-    #region override Measurable.GetHashCode()
+    #region override BaseQuantifiable.GetHashCode()
     [TestMethod, TestCategory("UnitTest")]
     public void GetHashCode_returns_expected()
     {

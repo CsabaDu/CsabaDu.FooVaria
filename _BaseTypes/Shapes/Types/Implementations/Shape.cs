@@ -4,15 +4,7 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
 {
     #region Public methods
     #region Override methods
-    #region Sealed methods
-    public override sealed bool? FitsIn(ILimiter? limiter)
-    {
-        return limiter is IShape shape ?
-            FitsIn(shape, limiter.GetLimitMode())
-            : base.FitsIn(limiter);
-    }
-
-    public override sealed int GetHashCode()
+    public override int GetHashCode()
     {
         HashCode hashCode = new();
 
@@ -24,6 +16,14 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
         }
 
         return hashCode.ToHashCode();
+    }
+
+    #region Sealed methods
+    public override sealed bool? FitsIn(ILimiter? limiter)
+    {
+        return limiter is IShape shape ?
+            FitsIn(shape, limiter.GetLimitMode())
+            : base.FitsIn(limiter);
     }
 
     public override sealed bool HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
