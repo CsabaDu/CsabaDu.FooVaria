@@ -1,5 +1,4 @@
-﻿
-namespace CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types.Implementations;
 
 public abstract class SimpleShape : Shape, ISimpleShape
 {
@@ -72,7 +71,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
         if (other is null) return 1;
 
         const string paramName = nameof(other);
-        ISimpleShape simpleShape = GetShape(other, paramName);
+        ISimpleShape simpleShape = GetSimpleShape(other, paramName);
 
         ValidateMeasureUnitCode(simpleShape.GetMeasureUnitCode(), paramName);
 
@@ -138,33 +137,6 @@ public abstract class SimpleShape : Shape, ISimpleShape
     public abstract ITangentShapeFactory GetTangentShapeFactory();
     #endregion
 
-    public bool Equals(IShapeComponent? x, IShapeComponent? y)
-    {
-        if (x?.GetMeasureUnitCode() != y?.GetMeasureUnitCode()) return false;
-
-        return y is null 
-            || x?.GetBaseShapeComponents().SequenceEqual(y.GetBaseShapeComponents()) == true;
-    }
-
-    public int GetHashCode([DisallowNull] IShapeComponent obj)
-    {
-        throw new NotImplementedException();
-    }
-
-    public IEnumerable<IShapeComponent> GetBaseShapeComponents()
-    {
-        IEnumerable<IExtent> shapeExtents = GetShapeExtents();
-
-        return shapeExtents.Select(getShapeExtentFirstBaseShapeComponent).OrderBy(x => x);
-
-        #region Local methods
-        IShapeComponent getShapeExtentFirstBaseShapeComponent(IExtent shapeExtent)
-        {
-            return shapeExtent.GetBaseShapeComponents().First();
-        }
-        #endregion
-    }
-
     public IExtent GetDiagonal()
     {
         return GetDiagonal(default);
@@ -191,7 +163,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
 
     public IEnumerable<IExtent> GetShapeComponents(IShape shape)
     {
-        ISimpleShape simpleShape = GetShape(shape, nameof(shape));
+        ISimpleShape simpleShape = GetSimpleShape(shape, nameof(shape));
 
         return simpleShape.GetShapeExtents();
     }
@@ -300,11 +272,11 @@ public abstract class SimpleShape : Shape, ISimpleShape
         return (ISimpleShape?)GetShape(shapeExtents.ToArray());
     }
 
-    private static ISimpleShape GetShape(IShape shape, string paramName)
+    private static ISimpleShape GetSimpleShape(IShape shape, string paramName)
     {
-        ISimpleShape? simpleShape = NullChecked(shape, paramName).GetBaseShape() as ISimpleShape;
+        if (NullChecked(shape, paramName).GetBaseShape() is ISimpleShape simpleShape) return simpleShape;
 
-        return simpleShape ?? throw ArgumentTypeOutOfRangeException(paramName, shape);
+        throw ArgumentTypeOutOfRangeException(paramName, shape);
     }
     #endregion
     #endregion

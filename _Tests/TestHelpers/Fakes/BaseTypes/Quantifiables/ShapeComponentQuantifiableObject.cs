@@ -1,4 +1,5 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Quantifiables;
+﻿
+namespace CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Quantifiables;
 
 public sealed class ShapeComponentQuantifiableObject(IRootObject rootObject, string paramName) : QuantifiableChild(rootObject, paramName), IShapeComponent
 {
@@ -13,5 +14,20 @@ public sealed class ShapeComponentQuantifiableObject(IRootObject rootObject, str
     public static ShapeComponentQuantifiableObject GetShapeComponentQuantifiableObject(DataFields fields, IQuantifiableFactory factory = null)
     {
         return GetShapeComponentQuantifiableObject(fields.measureUnit, fields.defaultQuantity, factory);
+    }
+
+    public bool Equals(IShapeComponent x, IShapeComponent y)
+    {
+        throw new NotImplementedException();
+    }
+
+    public IEnumerable<IShapeComponent> GetBaseShapeComponents()
+    {
+        yield return this;
+    }
+
+    public int GetHashCode([DisallowNull] IShapeComponent obj)
+    {
+        throw new NotImplementedException();
     }
 }

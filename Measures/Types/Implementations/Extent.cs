@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types.Implementations;
-
-namespace CsabaDu.FooVaria.Measures.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Measures.Types.Implementations;
 
 internal sealed class Extent(IMeasureFactory factory, ExtentUnit extentUnit, double quantity)
     : Measure<IExtent, double, ExtentUnit>(factory, extentUnit, quantity), IExtent
@@ -28,12 +26,7 @@ internal sealed class Extent(IMeasureFactory factory, ExtentUnit extentUnit, dou
 
     public bool Equals(IShapeComponent? x, IShapeComponent? y)
     {
-        //if (x is not IExtent || y is not IExtent) return false;
-
-        return x is not IExtent
-            && y is not IExtent
-            || y is null
-            || (x as BaseQuantifiable)?.Equals(y) == true;
+        return Equals<IExtent>(x, y);
     }
 
     public IDistance? ExchangeTo(DistanceUnit distanceUnit)
@@ -48,7 +41,7 @@ internal sealed class Extent(IMeasureFactory factory, ExtentUnit extentUnit, dou
 
     public int GetHashCode([DisallowNull] IShapeComponent shapeComponent)
     {
-        return (shapeComponent as BaseQuantifiable)!.GetHashCode();
+        return GetHashCode<IExtent>(shapeComponent);
     }
 
     public decimal ProportionalTo(IDistance? other)

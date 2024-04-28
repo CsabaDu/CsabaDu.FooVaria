@@ -37,7 +37,7 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
     public virtual bool Equals(IShape? other)
     {
         return base.Equals(other)
-            && GetBaseShape().GetShapeComponents().SequenceEqual(other.GetBaseShape().GetShapeComponents());
+            && GetShapeComponents().SequenceEqual(other.GetShapeComponents());
     }
     #endregion
 
@@ -49,19 +49,19 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
     public abstract IShape GetBaseShape();
     #endregion
 
-    public bool Equals(IShape? x, IShape? y)
+    public bool Equals(IShapeComponent? x, IShapeComponent? y)
     {
-        //if (x is null != y is null) return false;
-
-        return x is not null
-            && y is not null
-            || y is null
-            || x?.GetBaseShape().Equals(y.GetBaseShape()) == true;
+        return Equals<IShape>(x, y);
     }
 
-    public int GetHashCode([DisallowNull] IShape shape)
+    public IEnumerable<IShapeComponent> GetBaseShapeComponents()
     {
-        return shape.GetBaseShape().GetHashCode();
+        return GetBaseShape().GetShapeComponents();
+    }
+
+    public int GetHashCode([DisallowNull] IShapeComponent shapeComponent)
+    {
+        return GetHashCode<IShape>(shapeComponent);
     }
 
     public IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()

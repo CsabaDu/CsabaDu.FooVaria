@@ -112,4 +112,34 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
         throw QuantityArgumentOutOfRangeException(paramName, defaultQuantity);
     }
     #endregion
+
+    #region Protected methods
+    #region Static methods
+    protected static bool Equals<T>(IShapeComponent? x, IShapeComponent? y)
+        where T : class, IQuantifiable, IBaseShapeComponents
+    {
+        if (x is null && y is null) return true;
+
+        if (x is null || y is null) return false;
+
+        return x.HasMeasureUnitCode(y.GetMeasureUnitCode())
+            && x.GetBaseShapeComponents().SequenceEqual(y.GetBaseShapeComponents());
+    }
+
+    protected static int GetHashCode<T>(IShapeComponent shapeComponent)
+            where T : class, IQuantifiable, IBaseShapeComponents
+    {
+        HashCode hashCode = new();
+
+        hashCode.Add(shapeComponent.GetMeasureUnitCode().GetHashCode());
+
+        foreach (IShapeComponent item in shapeComponent.GetBaseShapeComponents())
+        {
+            hashCode.Add(item);
+        }
+
+        return hashCode.ToHashCode();
+    }
+    #endregion
+    #endregion
 }
