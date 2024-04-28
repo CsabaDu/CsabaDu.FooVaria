@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.Shapes.Behaviors
 {
-    public interface IShapeComponents : IShapeComponentCount, IBaseShapeComponents
+    public interface IShapeComponents : IShapeComponentCount
     {
         IEnumerable<IShapeComponent> GetShapeComponents();
         IShapeComponent? GetValidShapeComponent(IQuantifiable? quantifiable);
