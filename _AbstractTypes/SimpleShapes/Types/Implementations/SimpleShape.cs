@@ -1,4 +1,5 @@
-﻿namespace CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types.Implementations;
+﻿
+namespace CsabaDu.FooVaria.AbstractTypes.SimpleShapes.Types.Implementations;
 
 public abstract class SimpleShape : Shape, ISimpleShape
 {
@@ -277,6 +278,16 @@ public abstract class SimpleShape : Shape, ISimpleShape
         if (NullChecked(shape, paramName).GetBaseShape() is ISimpleShape simpleShape) return simpleShape;
 
         throw ArgumentTypeOutOfRangeException(paramName, shape);
+    }
+
+    public bool Equals(IShapeComponent? x, IShapeComponent? y)
+    {
+        return Equals<IShapeComponent>(x, y);
+    }
+
+    public int GetHashCode([DisallowNull] IShapeComponent shapeComponent)
+    {
+        return GetHashCode<IShapeComponent>(shapeComponent);
     }
     #endregion
     #endregion

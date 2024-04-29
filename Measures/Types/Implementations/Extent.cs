@@ -26,7 +26,7 @@ internal sealed class Extent(IMeasureFactory factory, ExtentUnit extentUnit, dou
 
     public bool Equals(IShapeComponent? x, IShapeComponent? y)
     {
-        return Equals<IExtent>(x, y);
+        return Equals<IShapeComponent>(x, y);
     }
 
     public IDistance? ExchangeTo(DistanceUnit distanceUnit)
@@ -41,7 +41,7 @@ internal sealed class Extent(IMeasureFactory factory, ExtentUnit extentUnit, dou
 
     public int GetHashCode([DisallowNull] IShapeComponent shapeComponent)
     {
-        return GetHashCode<IExtent>(shapeComponent);
+        return GetHashCode<IShapeComponent>(shapeComponent);
     }
 
     public decimal ProportionalTo(IDistance? other)

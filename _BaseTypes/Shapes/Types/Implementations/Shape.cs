@@ -49,7 +49,7 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
     public abstract IShape GetBaseShape();
     #endregion
 
-    public bool Equals(IShapeComponent? x, IShapeComponent? y)
+    public bool Equals(IShape? x, IShape? y)
     {
         return Equals<IShape>(x, y);
     }
@@ -59,9 +59,9 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
         return GetBaseShape().GetShapeComponents();
     }
 
-    public int GetHashCode([DisallowNull] IShapeComponent shapeComponent)
+    public int GetHashCode([DisallowNull] IShape shape)
     {
-        return GetHashCode<IShape>(shapeComponent);
+        return GetHashCode<IShape>(shape);
     }
 
     public IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()

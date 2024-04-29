@@ -115,8 +115,8 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
 
     #region Protected methods
     #region Static methods
-    protected static bool Equals<T>(IShapeComponent? x, IShapeComponent? y)
-        where T : class, IQuantifiable, IBaseShapeComponents
+    protected static bool Equals<T>(T? x, T? y)
+        where T : class, IBaseShapeComponents
     {
         if (x is null && y is null) return true;
 
@@ -126,14 +126,14 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
             && x.GetBaseShapeComponents().SequenceEqual(y.GetBaseShapeComponents());
     }
 
-    protected static int GetHashCode<T>(IShapeComponent shapeComponent)
-            where T : class, IQuantifiable, IBaseShapeComponents
+    protected static int GetHashCode<T>(T baseShapeComponent)
+            where T : class, IBaseShapeComponents
     {
         HashCode hashCode = new();
 
-        hashCode.Add(shapeComponent.GetMeasureUnitCode().GetHashCode());
+        hashCode.Add(baseShapeComponent.GetMeasureUnitCode().GetHashCode());
 
-        foreach (IShapeComponent item in shapeComponent.GetBaseShapeComponents())
+        foreach (IShapeComponent item in baseShapeComponent.GetBaseShapeComponents())
         {
             hashCode.Add(item);
         }
