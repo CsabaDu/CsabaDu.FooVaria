@@ -1,4 +1,4 @@
-using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Enums;
+using CsabaDu.FooVaria.BaseTypes.Shapes.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests.TestClasses;
 
@@ -70,7 +70,9 @@ public sealed class ShapeTests
     public void TestCleanup()
     {
         Fields.paramName = null;
+        Fields.limitMode = null;
         _other = null;
+        _shapeComponent = null;
         _limiter = null;
     }
 
@@ -209,12 +211,11 @@ public sealed class ShapeTests
         SetCompleteShapeChild();
 
         Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
-        decimal otherQuantity = Fields.defaultQuantity;
         Fields.defaultQuantity = Fields.RandomParams.GetRandomDecimal();
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
         _shapeComponent = GetShapeComponentQuantifiableObject(Fields);
         _limiter = GetLimiterShapeObject(Fields.limitMode.Value, _shapeComponent);
-        bool? expected = otherQuantity.FitsIn(Fields.defaultQuantity, Fields.limitMode);
+        bool? expected = ShapeFitsIn((_limiter as LimiterShapeObject).GetDefaultQuantity(), _limiter.GetLimitMode().Value);
 
         // Act
         var actual = _shape.FitsIn(_limiter);
@@ -226,7 +227,7 @@ public sealed class ShapeTests
 
     #region abstract IFit<IShape>.FitsIn(IShape?, LimitMode?)
     [TestMethod, TestCategory("UnitTest")]
-    public void FitsIn_nullArgs_IShape_LimitMode_returns_expected()
+    public void FitsIn_nullArgs_IShape_LimitMode_returns_true()
     {
         // Arrange
         SetShapeChild();
@@ -260,11 +261,11 @@ public sealed class ShapeTests
         // Arrange
         SetShapeChild();
 
-        decimal otherQuantity = Fields.RandomParams.GetRandomPositiveDecimal();
+        Fields.defaultQuantity = Fields.RandomParams.GetRandomPositiveDecimal();
         Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        _other = GetShapeChild(Fields.measureUnit, otherQuantity);
+        _other = GetShapeChild(Fields);
         Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
-        bool? expected = Fields.defaultQuantity.FitsIn(otherQuantity, Fields.limitMode);
+        bool? expected = ShapeFitsIn(_other.GetDefaultQuantity(), Fields.limitMode.Value);
 
         // Act
         var actual = _shape.FitsIn(_other, Fields.limitMode);
@@ -283,8 +284,8 @@ public sealed class ShapeTests
         // Arrange
         SetCompleteShapeChild();
         HashCode hashCode = new();
-        int baseHashCode = HashCode.Combine(Fields.measureUnitCode, Fields.defaultQuantity);
-        hashCode.Add(baseHashCode);
+        hashCode.Add(_shape.GetMeasureUnitCode());
+        hashCode.Add(_shape.GetDefaultQuantity());
         hashCode.Add(_shapeComponent);
 
         var expected = hashCode.ToHashCode();
@@ -376,5 +377,9 @@ public sealed class ShapeTests
         _shape = GetCompleteShapeChild(measureUnit, defaultQuantity, factory);
     }
 
+    private bool? ShapeFitsIn(decimal defaultQuantity, LimitMode limitMode)
+    {
+        return _shape.GetDefaultQuantity().FitsIn(defaultQuantity, limitMode);
+    }
     #endregion
 }

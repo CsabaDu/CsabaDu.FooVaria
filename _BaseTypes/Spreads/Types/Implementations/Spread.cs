@@ -66,12 +66,19 @@ public abstract class Spread(IRootObject rootObject, string paramName) : Quantif
 
     public ISpreadMeasure? GetSpreadMeasure(IQuantifiable? quantifiable)
     {
-        return quantifiable is ISpreadMeasure spreadMeasure
-            && getSpreadMeasure() is IBaseMeasure
-            && IsExchangeableTo(spreadMeasure.GetBaseMeasureUnit())
-            && spreadMeasure.GetQuantity() > 0 ?
-            getSpreadMeasure()
-            : null;
+        if (quantifiable is not ISpreadMeasure spreadMeasure) return null;
+        if(getSpreadMeasure() is not IBaseMeasure) return null;
+        if (!IsExchangeableTo(spreadMeasure.GetBaseMeasureUnit())) return null;
+        if (spreadMeasure.GetQuantity() <= 0) return null;
+
+        return getSpreadMeasure();
+
+        //return quantifiable is ISpreadMeasure spreadMeasure
+        //    && getSpreadMeasure() is IBaseMeasure
+        //    && IsExchangeableTo(spreadMeasure.GetBaseMeasureUnit())
+        //    && spreadMeasure.GetQuantity() > 0 ?
+        //    getSpreadMeasure()
+        //    : null;
 
         #region Local methods
         ISpreadMeasure getSpreadMeasure()

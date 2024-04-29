@@ -1,13 +1,10 @@
-using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
-using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types.Implementations;
-using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.BaseQuantifiables;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests;
 
 internal sealed class DynamicDataSource : CommonDynamicDataSource
 {
     private IShape shape;
     private IShape other;
+    private IShapeComponent shapeComponent;
 
     internal IEnumerable<object[]> GetEqualsArg()
     {
@@ -82,23 +79,21 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
 
         testCase = "Same shapes, same baseShapes => true";
         isTrue = true;
-        measureUnitCode = SampleParams.GetOtherSpreadMeasureUnitCode(measureUnitCode);
         measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
-        shape = other
-            = GetShapeChild(this, other);
+        shape = other = GetShapeChild(this, other);
         yield return toObjectArray();
 
         testCase = "Different shapes, same baseShapes => true";
-        measureUnitCode = SampleParams.GetOtherSpreadMeasureUnitCode(GetMeasureUnitCode());
         measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
         defaultQuantity = RandomParams.GetRandomPositiveDecimal(defaultQuantity);
-        other = GetShapeChild(this, shape.GetBaseShape());
+        other = GetShapeChild(this, shape);
         yield return toObjectArray();
 
         testCase = "Different baseShapes => false";
         isTrue = false;
-        shape = GetShapeChild(this, other.GetBaseShape());
-        other = GetShapeChild(this, other);
+        shapeComponent = shape.GetShapeComponents().First();
+        defaultQuantity = RandomParams.GetRandomPositiveDecimal(defaultQuantity);
+        other = GetShapeChild(shapeComponent, GetShapeChild(this));
         yield return toObjectArray();
 
         #region toObjectArray method

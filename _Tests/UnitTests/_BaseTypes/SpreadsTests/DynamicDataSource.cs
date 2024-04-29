@@ -45,10 +45,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
 
         testCase = "Different MeasureUnitCode => null";
         spreadMeasure = null;
-        measureUnitCode = GetMeasureUnitCode();
-        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
-        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
-        quantifiable = GetSpreadMeasureBaseMeasureObject(this);
+        measureUnit = RandomParams.GetRandomSpreadMeasureUnit(GetMeasureUnitCode());
         yield return toObjectArray();
 
         #region toObjectArray method

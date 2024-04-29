@@ -151,7 +151,7 @@ public class ShapeChild(IRootObject rootObject, string paramName) : Shape(rootOb
         {
             Enum measureUnit = GetMeasureUnitElements(context, nameof(context)).MeasureUnit;
             decimal defaultQuantity = GetDefaultQuantity();
-            ShapeComponentQuantifiableObject shapeComponent = ShapeComponentQuantifiableObject.GetShapeComponentQuantifiableObject(measureUnit, defaultQuantity);
+            ShapeComponentQuantifiableObject shapeComponent = GetShapeComponentQuantifiableObject(measureUnit, defaultQuantity);
 
             return GetShapeChild(shapeComponent);
         }

@@ -8,7 +8,8 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
     {
         HashCode hashCode = new();
 
-        hashCode.Add(base.GetHashCode());
+        hashCode.Add(GetMeasureUnitCode());
+        hashCode.Add(GetDefaultQuantity());
 
         foreach (IShapeComponent item in GetShapeComponents())
         {

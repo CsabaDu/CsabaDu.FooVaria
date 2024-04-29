@@ -374,9 +374,11 @@ public sealed class RandomParams
         return GetRandomItem(SpreadMeasureUnitCodes);
     }
 
-    public Enum GetRandomSpreadMeasureUnit()
+    public Enum GetRandomSpreadMeasureUnit(MeasureUnitCode? excluded = null)
     {
-        MeasureUnitCode measureUnitCode = GetRandomSpreadMeasureUnitCode();
+        MeasureUnitCode measureUnitCode = excluded.HasValue ?
+            GetOtherSpreadMeasureUnitCode(excluded.Value)
+            : GetRandomSpreadMeasureUnitCode();
 
         return GetRandomMeasureUnit(measureUnitCode);
     }
