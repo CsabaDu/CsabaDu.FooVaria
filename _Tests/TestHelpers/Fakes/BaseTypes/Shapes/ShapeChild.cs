@@ -28,7 +28,7 @@ public class ShapeChild(IRootObject rootObject, string paramName) : Shape(rootOb
     // double IQuantity<double>.GetQuantity()
     // object IQuantity.GetQuantity(TypeCode quantityTypeCode)
     // TypeCode IQuantityType.GetQuantityTypeCode()
-    // IShape? IShape.GetBaseShape(params IShapeComponent[] shapeComponents)
+    // IShape? IShape.GetShape(params IShapeComponent[] shapeComponents)
     // int IShapeComponentCount.GetShapeComponentCount()
     // IEnumerable<IShapeComponent> IShapeComponents.GetShapeComponents()
     // ISpread ISpread.GetSpread(ISpreadMeasure spreadMeasure)

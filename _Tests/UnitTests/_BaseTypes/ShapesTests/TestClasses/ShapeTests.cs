@@ -1,5 +1,6 @@
 using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
 using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
+using CsabaDu.FooVaria.BaseTypes.Shapes.Behaviors;
 using CsabaDu.FooVaria.BaseTypes.Shapes.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests.TestClasses;
@@ -351,7 +352,7 @@ public sealed class ShapeTests
     #endregion
 
     #region IShape GetBaseShape
-    #region IShape.GetBaseShape()
+    #region abstract IShape.GetBaseShape()
     [TestMethod, TestCategory("UnitTest")]
     public void GetBaseShape_returns_expected()
     {
@@ -369,15 +370,68 @@ public sealed class ShapeTests
         Assert.AreEqual(expected, actual);
     }
     #endregion
+    #endregion
 
-    #region IShape.GetBaseShape(params IShapeComponent[] shapeComponents)
+    #region IShape GetShape
+    #region IShape.GetShape(params IShapeComponent[] shapeComponents)
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetShape_arg_params_IShapeComponent_returns_expected()
+    {
+        // Arrange
+        _other = GetShapeChild(_shapeComponent);
 
+        SetShapeChild(_shapeComponent, _other);
+
+        IShape expected = new ShapeFactoryObject().CreateShape(_shapeComponent);
+
+        // Act
+        var actual = _shape.GetBaseShape();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
     #endregion
     #endregion
 
-    // int IShapeComponentCount.GetShapeComponentCount()
+    #region int GetShapeComponentCount
+    #region IShapeComponentCount.GetShapeComponentCount()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetShapeComponentCount_returns_expected()
+    {
+        // Arrange
+        SetShapeChild();
 
-    // IEnumerable<IShapeComponent> IShapeComponents.GetShapeComponents()
+        int expected = 1;
+
+        // Act
+        var actual = _shape.GetShapeComponentCount();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region IEnumerable<IShapeComponent> GetShapeComponents
+    #region abstract IShapeComponents.GetShapeComponents()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetShapeComponents_returns_expected()
+    {
+        // Arrange
+        SetShapeChild();
+
+        IEnumerable<IShapeComponent> expected = [_shapeComponent];
+
+        // Act
+        var actual = _shape.GetShapeComponents();
+
+        // Assert
+        Assert.IsTrue(expected.SequenceEqual(actual));
+    }
+    #endregion
+    #endregion
+
+
 
     // IShapeComponent? IShapeComponents.GetValidShapeComponent(IQuantifiable?)
 
