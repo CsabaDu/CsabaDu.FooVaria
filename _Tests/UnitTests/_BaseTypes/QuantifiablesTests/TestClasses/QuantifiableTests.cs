@@ -32,15 +32,18 @@ public sealed class QuantifiableTests
     private QuantifiableChild _quantifiable;
     private QuantifiableChild _other;
     private ILimiter _limiter;
+    private RandomParams _randomParams;
     #endregion
 
     #region Initialize
     [TestInitialize]
     public void TestInitialize()
     {
-        Fields.SetMeasureUnit(Fields.RandomParams.GetRandomMeasureUnit());
+        _randomParams = Fields.RandomParams;
+        
+        Fields.SetMeasureUnit(_randomParams.GetRandomMeasureUnit());
 
-        Fields.defaultQuantity = Fields.RandomParams.GetRandomDecimal();
+        Fields.defaultQuantity = _randomParams.GetRandomDecimal();
     }
 
     [TestCleanup]
@@ -82,9 +85,9 @@ public sealed class QuantifiableTests
         // Arrange
         SetQuantifiableChild();
 
-        Fields.measureUnitCode = Fields.RandomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
-        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        Fields.defaultQuantity = Fields.RandomParams.GetRandomDecimal();
+        Fields.measureUnitCode = _randomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
+        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        Fields.defaultQuantity = _randomParams.GetRandomDecimal();
         IQuantifiable other = GetQuantifiableChild(Fields);
 
         // Act
@@ -101,8 +104,8 @@ public sealed class QuantifiableTests
         // Arrange
         SetQuantifiableChild();
 
-        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        Fields.defaultQuantity = Fields.RandomParams.GetRandomDecimal();
+        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        Fields.defaultQuantity = _randomParams.GetRandomDecimal();
         IQuantifiable other = GetQuantifiableChild(Fields);
         int expected = _quantifiable.GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
 
@@ -170,9 +173,9 @@ public sealed class QuantifiableTests
         // Arrange
         SetQuantifiableChild();
 
-        Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
-        decimal otherQuantity = Fields.RandomParams.GetRandomDecimal();
-        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        Fields.limitMode = _randomParams.GetRandomLimitMode();
+        decimal otherQuantity = _randomParams.GetRandomDecimal();
+        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
         _limiter = GetLimiterQuantifiableObject(Fields.limitMode.Value, Fields.measureUnit, otherQuantity);
         bool? expected = Fields.defaultQuantity.FitsIn(otherQuantity, Fields.limitMode);
 
@@ -220,10 +223,10 @@ public sealed class QuantifiableTests
         // Arrange
         SetQuantifiableChild();
 
-        decimal otherQuantity = Fields.RandomParams.GetRandomDecimal();
-        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        decimal otherQuantity = _randomParams.GetRandomDecimal();
+        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
         _other = GetQuantifiableChild(otherQuantity, Fields.measureUnit);
-        Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
+        Fields.limitMode = _randomParams.GetRandomLimitMode();
         bool? expected = Fields.defaultQuantity.FitsIn(otherQuantity, Fields.limitMode);
 
         // Act
@@ -348,7 +351,7 @@ public sealed class QuantifiableTests
     public void GetQuantity_invalidArg_TypeCode_throws_InvalidEnumArgumentException(string testCase, TypeCode typeCode)
     {
         // Arrange
-        decimal quantity = typeCode == TypeCode.UInt64 ? Fields.RandomParams.GetRandomNegativeDecimal() : Fields.defaultQuantity;
+        decimal quantity = typeCode == TypeCode.UInt64 ? _randomParams.GetRandomNegativeDecimal() : Fields.defaultQuantity;
         SetQuantifiableChild(quantity, Fields.measureUnit);
 
         // Act
@@ -416,9 +419,9 @@ public sealed class QuantifiableTests
         // Arrange
         SetQuantifiableChild();
 
-        Fields.measureUnitCode = Fields.RandomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
-        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        Fields.defaultQuantity = Fields.RandomParams.GetRandomDecimal();
+        Fields.measureUnitCode = _randomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
+        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        Fields.defaultQuantity = _randomParams.GetRandomDecimal();
         _other = GetQuantifiableChild(Fields);
 
         // Act
@@ -435,7 +438,7 @@ public sealed class QuantifiableTests
         // Arrange
         SetQuantifiableChild();
 
-        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
         Fields.defaultQuantity = 0;
         _other = GetQuantifiableChild(Fields);
 
@@ -453,8 +456,8 @@ public sealed class QuantifiableTests
         // Arrange
         SetQuantifiableChild();
 
-        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        Fields.defaultQuantity = Fields.RandomParams.GetRandomDecimal();
+        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        Fields.defaultQuantity = _randomParams.GetRandomDecimal();
         _other = GetQuantifiableChild(Fields);
         decimal expected = Math.Abs(_quantifiable.GetDefaultQuantity() / _other.GetDefaultQuantity());
 
@@ -488,7 +491,7 @@ public sealed class QuantifiableTests
     {
         //// Arrange
         SetQuantifiableChild();
-        Fields.roundingMode = Fields.RandomParams.GetRandomRoundingMode();
+        Fields.roundingMode = _randomParams.GetRandomRoundingMode();
 
         Fields.defaultQuantity = Fields.defaultQuantity.Round(Fields.roundingMode);
         IQuantifiable expected = GetQuantifiableChild(Fields);
@@ -528,7 +531,7 @@ public sealed class QuantifiableTests
     public void ValidateMeasureUnitCode_invalidArg_MeasureUnitCode_arg_string_throws_InvalidEnumArgumentException(string testCase, Enum measureUnit, MeasureUnitCode measureUnitCode)
     {
         // Arrange
-        Fields.paramName = Fields.RandomParams.GetRandomParamName();
+        Fields.paramName = _randomParams.GetRandomParamName();
 
         SetQuantifiableChild(Fields.defaultQuantity, measureUnit);
 
@@ -545,7 +548,7 @@ public sealed class QuantifiableTests
     {
         // Arrange
         SetQuantifiableChild();
-        Fields.paramName = Fields.RandomParams.GetRandomParamName();
+        Fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
         void attempt() => _quantifiable.ValidateMeasureUnitCode(Fields.measureUnitCode, Fields.paramName);

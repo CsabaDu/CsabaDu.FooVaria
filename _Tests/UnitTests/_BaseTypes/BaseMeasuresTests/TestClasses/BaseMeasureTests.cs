@@ -43,6 +43,7 @@ public sealed class BaseMeasureTests
     private BaseMeasureChild _baseMeasure;
     private IBaseMeasurement _baseMeasurement;
     private ILimiter _limiter;
+    private RandomParams _randomParams;
     #endregion
 
     #region Initialize
@@ -55,11 +56,13 @@ public sealed class BaseMeasureTests
     [TestInitialize]
     public void TestInitialize()
     {
-        Fields.SetRandomMeasureUnit(Fields.RandomParams.GetRandomConstantMeasureUnitCode());
-        Fields.SetRandomQuantity(Fields.RandomParams.GetRandomQuantityTypeCode());
+        _randomParams = Fields.RandomParams;
 
-        Fields.rateComponentCode = Fields.RandomParams.GetRandomRateComponentCode();
-        Fields.limitMode = Fields.RandomParams.GetRandomNullableLimitMode();
+        Fields.SetRandomMeasureUnit(_randomParams.GetRandomConstantMeasureUnitCode());
+        Fields.SetRandomQuantity(_randomParams.GetRandomQuantityTypeCode());
+
+        Fields.rateComponentCode = _randomParams.GetRandomRateComponentCode();
+        Fields.limitMode = _randomParams.GetRandomNullableLimitMode();
     }
 
     [TestCleanup]
@@ -134,10 +137,10 @@ public sealed class BaseMeasureTests
         // Arrange
         SetBaseMeasureChild();
 
-        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        Fields.decimalQuantity = Fields.RandomParams.GetRandomDecimal();
-        Fields.rateComponentCode = Fields.RandomParams.GetRandomRateComponentCode();
-        Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
+        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        Fields.decimalQuantity = _randomParams.GetRandomDecimal();
+        Fields.rateComponentCode = _randomParams.GetRandomRateComponentCode();
+        Fields.limitMode = _randomParams.GetRandomLimitMode();
         _limiter = TestHelpers.Fakes.BaseTypes.Quantifiables.LimiterQuantifiableObject.GetLimiterQuantifiableObject(Fields.limitMode.Value, Fields.measureUnit, Fields.decimalQuantity);
         Fields.decimalQuantity = (_limiter as IQuantifiable).GetDefaultQuantity();
         bool? expected = Fields.defaultQuantity.FitsIn(Fields.decimalQuantity, Fields.limitMode);
@@ -186,10 +189,10 @@ public sealed class BaseMeasureTests
     //    // Arrange
     //    SetBaseMeasureChild();
 
-    //    Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-    //    Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity();
+    //    Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+    //    Fields.quantity = (ValueType)_randomParams.GetRandomQuantity();
     //    IQuantifiable quantifiable = GetBaseMeasureChild();
-    //    Fields.limitMode = Fields.RandomParams.GetRandomLimitMode();
+    //    Fields.limitMode = _randomParams.GetRandomLimitMode();
     //    bool? expected = Fields.defaultQuantity.FitsIn(quantifiable.GetDefaultQuantity(), Fields.limitMode);
 
     //    // Act
@@ -225,8 +228,8 @@ public sealed class BaseMeasureTests
         // Arrange
         SetBaseMeasureChild();
 
-        Fields.quantityTypeCode = Fields.RandomParams.GetRandomInvalidQuantityTypeCode();
-        Fields.quantity = Fields.RandomParams.GetRandomValueType(Fields.quantityTypeCode);
+        Fields.quantityTypeCode = _randomParams.GetRandomInvalidQuantityTypeCode();
+        Fields.quantity = _randomParams.GetRandomValueType(Fields.quantityTypeCode);
 
         // Act
         void attempt() => _ = _baseMeasure.GetBaseMeasure(Fields.quantity);
@@ -242,7 +245,7 @@ public sealed class BaseMeasureTests
         // Arrange
         SetCompleteBaseMeasureChild();
 
-        Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity();
+        Fields.quantity = (ValueType)_randomParams.GetRandomQuantity();
         IBaseMeasure expected = GetCompleteBaseMeasureChild(Fields);
 
         // Act
@@ -277,10 +280,10 @@ public sealed class BaseMeasureTests
         // Arrange
         SetBaseMeasureChild();
 
-        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit();
+        Fields.measureUnit = _randomParams.GetRandomMeasureUnit();
         _baseMeasurement = GetBaseMeasurementChild(Fields.measureUnit);
-        Fields.quantityTypeCode = Fields.RandomParams.GetRandomInvalidQuantityTypeCode();
-        Fields.quantity = Fields.RandomParams.GetRandomValueType(Fields.quantityTypeCode);
+        Fields.quantityTypeCode = _randomParams.GetRandomInvalidQuantityTypeCode();
+        Fields.quantity = _randomParams.GetRandomValueType(Fields.quantityTypeCode);
 
         // Act
         void attempt() => _ = _baseMeasure.GetBaseMeasure(Fields.quantity);
@@ -296,7 +299,7 @@ public sealed class BaseMeasureTests
         // Arrange
         SetCompleteBaseMeasureChild();
 
-        Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity();
+        Fields.quantity = (ValueType)_randomParams.GetRandomQuantity();
         IBaseMeasure expected = GetCompleteBaseMeasureChild(Fields);
         _baseMeasurement = GetBaseMeasurementChild(Fields.measureUnit);
 
@@ -410,8 +413,8 @@ public sealed class BaseMeasureTests
         // Arrange
         SetBaseMeasureChild();
 
-        Fields.measureUnit = Fields.RandomParams.GetRandomConstantMeasureUnit();
-        Fields.quantity = (ValueType)Fields.RandomParams.GetRandomQuantity();
+        Fields.measureUnit = _randomParams.GetRandomConstantMeasureUnit();
+        Fields.quantity = (ValueType)_randomParams.GetRandomQuantity();
         IBaseMeasure baseMeasure = GetCompleteBaseMeasureChild(Fields);
         int expected = HashCode.Combine(Fields.rateComponentCode, Fields.limitMode, baseMeasure.GetHashCode());
 
@@ -521,7 +524,7 @@ public sealed class BaseMeasureTests
         // Arrange
         SetCompleteBaseMeasureChild();
 
-        Fields.roundingMode = Fields.RandomParams.GetRandomRoundingMode();
+        Fields.roundingMode = _randomParams.GetRandomRoundingMode();
         Fields.quantity = (ValueType)Fields.quantity.Round(Fields.roundingMode);
         IQuantifiable expected = GetCompleteBaseMeasureChild(Fields);
 
@@ -543,8 +546,8 @@ public sealed class BaseMeasureTests
         SetBaseMeasureChild();
 
         Fields.decimalQuantity = GetExchangeRate(Fields.measureUnit, Fields.paramName);
-        Fields.decimalQuantity = Fields.RandomParams.GetRandomDecimal(Fields.decimalQuantity);
-        Fields.paramName = Fields.RandomParams.GetRandomParamName();
+        Fields.decimalQuantity = _randomParams.GetRandomDecimal(Fields.decimalQuantity);
+        Fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
         void attempt() => _baseMeasure.ValidateExchangeRate(Fields.decimalQuantity, Fields.paramName);

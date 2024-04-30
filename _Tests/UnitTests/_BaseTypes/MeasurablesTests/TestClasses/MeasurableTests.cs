@@ -12,6 +12,7 @@ public sealed class MeasurableTests
 
     #region Private fields
     private MeasurableChild _measurable;
+    private RandomParams _randomParams;
 
     #region Readonly fields
     private readonly DataFields Fields = new();
@@ -33,7 +34,8 @@ public sealed class MeasurableTests
     [TestInitialize]
     public void TestInitialize()
     {
-        Fields.SetMeasureUnit(Fields.RandomParams.GetRandomMeasureUnit());
+        _randomParams = Fields.RandomParams;
+        Fields.SetMeasureUnit(_randomParams.GetRandomMeasureUnit());
         SetMeasurableChild();
     }
 
@@ -74,7 +76,7 @@ public sealed class MeasurableTests
     public void GetBaseMeasureUnit_returns_expected()
     {
         // Arrange
-        Enum expected = Fields.RandomParams.GetRandomMeasureUnit();
+        Enum expected = _randomParams.GetRandomMeasureUnit();
 
         SetMeasurableChild(expected);
 
@@ -215,7 +217,7 @@ public sealed class MeasurableTests
     public void ValidateMeasureUnit_nullArg_Enum_arg_string_throws_ArgumentNullException()
     {
         // Arrange
-        Fields.paramName = Fields.RandomParams.GetRandomParamName();
+        Fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
         void attempt() => _measurable.ValidateMeasureUnit(null, Fields.paramName);
@@ -231,7 +233,7 @@ public sealed class MeasurableTests
     {
         // Arrange
         Fields.measureUnit = measureUnitCode.GetDefaultMeasureUnit();
-        Fields.paramName = Fields.RandomParams.GetRandomParamName();
+        Fields.paramName = _randomParams.GetRandomParamName();
 
         SetMeasurableChild();
 
@@ -249,7 +251,7 @@ public sealed class MeasurableTests
     {
         // Arrange
         Fields.measureUnit = measureUnitCode.GetDefaultMeasureUnit();
-        Fields.paramName = Fields.RandomParams.GetRandomParamName();
+        Fields.paramName = _randomParams.GetRandomParamName();
 
         SetMeasurableChild();
 
@@ -268,7 +270,7 @@ public sealed class MeasurableTests
     public void ValidateMeasureUnitCode_nullArg_IMeasurable_arg_string_throws_ArgumentNullException()
     {
         // Arrange
-        Fields.paramName = Fields.RandomParams.GetRandomParamName();
+        Fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
         void attempt() => _measurable.ValidateMeasureUnitCode(null, Fields.paramName);
@@ -282,9 +284,9 @@ public sealed class MeasurableTests
     public void ValidateMeasureUnitCode_invalidArg_IMeasurable_arg_string_throws_InvalidEnumArgumentException()
     {
         // Arrange
-        Fields.measureUnitCode = Fields.RandomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
-        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        Fields.paramName = Fields.RandomParams.GetRandomParamName();
+        Fields.measureUnitCode = _randomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
+        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        Fields.paramName = _randomParams.GetRandomParamName();
         IMeasurable measurable = GetMeasurableChild(Fields.measureUnit);
 
         // Act
@@ -299,9 +301,9 @@ public sealed class MeasurableTests
     public void ValidateMeasureUnitCode_validArg_IMeasurable_arg_string_returns()
     {
         // Arrange
-        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
         MeasurableChild measurable = GetMeasurableChild(Fields.measureUnit);
-        Fields.paramName = Fields.RandomParams.GetRandomParamName();
+        Fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
         void attempt() => _measurable.ValidateMeasureUnitCode(measurable, Fields.paramName);
@@ -317,7 +319,7 @@ public sealed class MeasurableTests
     public void ValidateMeasureUnitCode_invalidArg_MeasureUnitCode_arg_string_throws_InvalidEnumArgumentException(string testCase, Enum measureUnit, MeasureUnitCode measureUnitCode)
     {
         // Arrange
-        Fields.paramName = Fields.RandomParams.GetRandomParamName();
+        Fields.paramName = _randomParams.GetRandomParamName();
 
         SetMeasurableChild(measureUnit);
 
@@ -333,7 +335,7 @@ public sealed class MeasurableTests
     public void ValidateMeasureUnitCode_validArg_MeasureUnitCode_arg_string_returns()
     {
         // Arrange
-        Fields.paramName = Fields.RandomParams.GetRandomParamName();
+        Fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
         void attempt() => _measurable.ValidateMeasureUnitCode(Fields.measureUnitCode, Fields.paramName);

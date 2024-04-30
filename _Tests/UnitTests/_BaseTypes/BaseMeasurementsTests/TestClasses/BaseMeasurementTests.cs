@@ -1,3 +1,5 @@
+using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.BaseMeasurements;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasurementsTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -18,8 +20,8 @@ public sealed class BaseMeasurementTests
     #endregion
 
     #region Private fields
-    private TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild _baseMeasurement;
-
+    private BaseMeasurementChild _baseMeasurement;
+    private RandomParams _randomParams;
     #region Readonly fields
     private readonly DataFields Fields = new();
     #endregion
@@ -34,7 +36,8 @@ public sealed class BaseMeasurementTests
     [TestInitialize]
     public void TestInitialize()
     {
-        Fields.SetMeasureUnit(Fields.RandomParams.GetRandomConstantMeasureUnit());
+        _randomParams = Fields.RandomParams;
+        Fields.SetMeasureUnit(_randomParams.GetRandomConstantMeasureUnit());
     }
 
     [TestCleanup]
@@ -74,8 +77,8 @@ public sealed class BaseMeasurementTests
     {
         // Arrange
         SetBaseMeasurementChild();
-        Fields.measureUnitCode = Fields.RandomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
-        Fields.measureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode);
+        Fields.measureUnitCode = _randomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
+        Fields.measureUnit = _randomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode);
         IBaseMeasurement other = GetBaseMeasurementChild(Fields.measureUnit);
 
         // Act
@@ -91,7 +94,7 @@ public sealed class BaseMeasurementTests
     {
         // Arrange
         SetBaseMeasurementChild();
-        Fields.measureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode);
+        Fields.measureUnit = _randomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode);
         IBaseMeasurement other = GetBaseMeasurementChild(Fields.measureUnit);
         int expected = _baseMeasurement.GetExchangeRate().CompareTo(other.GetExchangeRate());
 
@@ -145,7 +148,7 @@ public sealed class BaseMeasurementTests
     {
         // Arrange
         SetBaseMeasurementChild(Fields.measureUnit, new TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementFactoryObject());
-        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnitOrMeasureUnitCode();
+        Fields.measureUnit = _randomParams.GetRandomMeasureUnitOrMeasureUnitCode();
 
         // Act
         var actual = _baseMeasurement.GetBaseMeasurement(Fields.measureUnit);
@@ -241,7 +244,7 @@ public sealed class BaseMeasurementTests
     public void GetName_returns_expected()
     {
         // Arrange
-        string expected = Fields.RandomParams.GetRandomParamName();
+        string expected = _randomParams.GetRandomParamName();
         SetBaseMeasurementChild(null, null, expected);
 
         // Act
@@ -329,8 +332,8 @@ public sealed class BaseMeasurementTests
     {
         // Arrange
         SetBaseMeasurementChild();
-        Fields.measureUnitCode = Fields.RandomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
-        Fields.measureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode);
+        Fields.measureUnitCode = _randomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
+        Fields.measureUnit = _randomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode);
         IBaseMeasurement other = GetBaseMeasurementChild(Fields.measureUnit);
 
         // Act
@@ -346,7 +349,7 @@ public sealed class BaseMeasurementTests
     {
         // Arrange
         SetBaseMeasurementChild();
-        Fields.measureUnit = Fields.RandomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode);
+        Fields.measureUnit = _randomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode);
         IBaseMeasurement other = GetBaseMeasurementChild(Fields.measureUnit);
         decimal expected = _baseMeasurement.GetExchangeRate() / other.GetExchangeRate();
 
@@ -366,7 +369,7 @@ public sealed class BaseMeasurementTests
     public void ValidateExchangeRate_invalidArg_decimal_arg_string_throws_ArgumentOutOfRangeException(string testCase, Enum measureUnit, decimal exchangeRate)
     {
         // Arrange
-        Fields.paramName = Fields.RandomParams.GetRandomParamName();
+        Fields.paramName = _randomParams.GetRandomParamName();
         SetBaseMeasurementChild(measureUnit);
 
         // Act
@@ -400,7 +403,7 @@ public sealed class BaseMeasurementTests
     {
         // Arrange
         SetBaseMeasurementChild();
-        Fields.paramName = Fields.RandomParams.GetRandomParamName();
+        Fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
         void attempt() => _baseMeasurement.ValidateMeasureUnit(null, Fields.paramName);
@@ -415,8 +418,8 @@ public sealed class BaseMeasurementTests
     {
         // Arrange
         SetBaseMeasurementChild();
-        Fields.measureUnitCode = Fields.RandomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
-        Enum context = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        Fields.measureUnitCode = _randomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
+        Enum context = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
 
         // Act
         void attempt() => _baseMeasurement.ValidateMeasureUnit(context, Fields.paramName);

@@ -33,6 +33,7 @@ public sealed class SpreadTests
     #region Private fields
     private SpreadChild _spread;
     private ISpreadMeasure _spreadMeasure;
+    private RandomParams _randomParams;
 
     #region Readonly fields
     private readonly DataFields Fields = new();
@@ -48,9 +49,11 @@ public sealed class SpreadTests
     [TestInitialize]
     public void TestInitialize()
     {
+        _randomParams = Fields.RandomParams;
+
         Fields.SetBaseMeasureFields(
-            Fields.RandomParams.GetRandomSpreadMeasureUnitCode(),
-            Fields.RandomParams.GetRandomPositiveDouble());
+            _randomParams.GetRandomSpreadMeasureUnitCode(),
+            _randomParams.GetRandomPositiveDouble());
     }
 
     [TestCleanup]
@@ -183,8 +186,8 @@ public sealed class SpreadTests
         // Arrange
         SetCompleteSpreadChild();
 
-        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        Fields.quantity = Fields.RandomParams.GetRandomPositiveDouble();
+        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        Fields.quantity = _randomParams.GetRandomPositiveDouble();
         _spreadMeasure = GetSpreadMeasureBaseMeasureObject(Fields);
         ISpread expected = GetSpreadChild(Fields, new SpreadFactoryObject());
 
@@ -223,7 +226,7 @@ public sealed class SpreadTests
         // Arrange
         SetSpreadChild(measureUnit, Fields.quantity);
 
-        Fields.paramName = Fields.RandomParams.GetRandomParamName();
+        Fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
         var actual = _spread.GetSpreadMeasure(quantifiable);
@@ -276,7 +279,7 @@ public sealed class SpreadTests
         // Arrange
         SetCompleteSpreadChild();
 
-        Fields.roundingMode = Fields.RandomParams.GetRandomRoundingMode();
+        Fields.roundingMode = _randomParams.GetRandomRoundingMode();
         Fields.quantity = (ValueType)Fields.quantity.Round(Fields.roundingMode);
         IQuantifiable expected = GetCompleteSpreadChild(Fields);
 
@@ -298,7 +301,7 @@ public sealed class SpreadTests
         SetSpreadChild();
 
         _spreadMeasure = null;
-        Fields.paramName = Fields.RandomParams.GetRandomParamName();
+        Fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
         void attempt() => _spread.ValidateSpreadMeasure(_spreadMeasure, Fields.paramName);
@@ -315,7 +318,7 @@ public sealed class SpreadTests
         // Arrange
         SetSpreadChild(measureUnit, Fields.quantity);
 
-        Fields.paramName = Fields.RandomParams.GetRandomParamName();
+        Fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
         void attempt() => _spread.ValidateSpreadMeasure(spreadMeasure, Fields.paramName);
@@ -332,9 +335,9 @@ public sealed class SpreadTests
         SetSpreadChild();
 
         Fields.measureUnitCode = SampleParams.GetOtherSpreadMeasureUnitCode(Fields.measureUnitCode);
-        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
         _spreadMeasure = GetSpreadMeasureBaseMeasureObject(Fields); 
-        Fields.paramName = Fields.RandomParams.GetRandomParamName();
+        Fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
         void attempt() => _spread.ValidateSpreadMeasure(_spreadMeasure, Fields.paramName);
@@ -350,8 +353,8 @@ public sealed class SpreadTests
         // Arrange
         SetSpreadChild();
 
-        Fields.measureUnit = Fields.RandomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        Fields.quantity = Fields.RandomParams.GetRandomPositiveDouble();
+        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        Fields.quantity = _randomParams.GetRandomPositiveDouble();
         _spreadMeasure = GetSpreadMeasureBaseMeasureObject(Fields);
 
         // Act
