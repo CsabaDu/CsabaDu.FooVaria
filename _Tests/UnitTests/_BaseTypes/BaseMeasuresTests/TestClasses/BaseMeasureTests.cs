@@ -166,7 +166,7 @@ public sealed class BaseMeasureTests
     //    var actual = _baseMeasure.FitsIn(_limiter);
 
     //    // Assert
-    //    Assert.IsTrue(actual);
+    //    Assert.Quantifiable(actual);
     //}
 
     //[TestMethod, TestCategory("UnitTest")]

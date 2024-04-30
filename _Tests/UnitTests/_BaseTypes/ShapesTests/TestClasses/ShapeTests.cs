@@ -1,5 +1,7 @@
+using CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors;
 using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
 using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
+using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
 using CsabaDu.FooVaria.BaseTypes.Shapes.Behaviors;
 using CsabaDu.FooVaria.BaseTypes.Shapes.Types.Implementations;
 
@@ -431,13 +433,44 @@ public sealed class ShapeTests
     #endregion
     #endregion
 
+    #region IShapeComponent? GetValidShapeComponent
+    #region abstract IShapeComponents.GetValidShapeComponent(IQuantifiable?)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetGetValidShapeComponentArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void GetValidShapeComponent_arg_IQuantifiable_returns_expected(string testCase, IQuantifiable quantifiable, IShapeComponent expected)
+    {
+        // Arrange
+        SetShapeChild();
 
+        // Act
+        var actual = _shape.GetValidShapeComponent(quantifiable);
 
-    // IShapeComponent? IShapeComponents.GetValidShapeComponent(IQuantifiable?)
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
 
-    // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode)
+    #region bool HasMeasureUnitCode
+    #region IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetHasMeasureUnitCodeArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void HasMeasureUnitCode_arg_MeasureUnitCode_returns_expected(string testCase, Enum measureUnit, MeasureUnitCode measureUnitCode, bool expected)
+    {
+        // Arrange
+        SetCompleteShapeChild(measureUnit, Fields.defaultQuantity);
+
+        // Act
+        var actual = _shape.HasMeasureUnitCode(measureUnitCode);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
 
     // bool IMeasureUnitCodes.IsValidMeasureUnitCode(MeasureUnitCode)
+
 
     // void IMeasureUnitCodes.ValidateMeasureUnitCodes(IBaseQuantifiable?, string)
 
@@ -469,6 +502,16 @@ public sealed class ShapeTests
     private static IEnumerable<object[]> GetFitsInIShapeLimitModeArgs()
     {
         return DynamicDataSource.GetFitsInIShapeLimitModeArgs();
+    }
+
+    private static IEnumerable<object[]> GetGetValidShapeComponentArgs()
+    {
+        return DynamicDataSource.GetGetValidShapeComponentArgs();
+    }
+
+    private static IEnumerable<object[]> GetHasMeasureUnitCodeArgs()
+    {
+        return DynamicDataSource.GetHasMeasureUnitCodeArgs();
     }
     #endregion
 
