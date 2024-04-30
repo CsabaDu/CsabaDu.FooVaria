@@ -1,4 +1,7 @@
+using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types;
+using CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors;
 using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
+using CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods;
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -45,6 +48,7 @@ public sealed class ShapeTests
     private IShapeComponent _shapeComponent;
     private ILimiter _limiter;
     private RandomParams _randomParams;
+    private IBaseQuantifiable _baseQuantifiable;
 
     #region Readonly fields
     private readonly DataFields Fields = new();
@@ -75,6 +79,7 @@ public sealed class ShapeTests
         _other = null;
         _shapeComponent = null;
         _limiter = null;
+        _baseQuantifiable = null;
     }
 
     public static string GetDisplayName(MethodInfo methodInfo, object[] args)
@@ -464,18 +469,71 @@ public sealed class ShapeTests
     #endregion
     #endregion
 
+    #region void ValidateMeasureUnitCodes
+    #region IMeasureUnitCodes.ValidateMeasureUnitCodes(IBaseQuantifiable?, string)
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateMeasureUnitCodes_nullArg_IBaseQuantifiable_arg_string_throws_ArgumentNullException()
+    {
+        // Arrange
+        SetShapeChild();
+
+        _baseQuantifiable = null;
+        Fields.paramName = _randomParams.GetRandomParamName();
+
+        // Act
+        void attempt() => _shape.ValidateMeasureUnitCodes(_baseQuantifiable, Fields.paramName);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
+        Assert.AreEqual(Fields.paramName, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateMeasureUnitCodes_invalidArg_IBaseQuantifiable_arg_string_throws_InvalidEnumArgumentException()
+    {
+        // Arrange
+        SetCompleteShapeChild();
+
+        Fields.measureUnitCode = _randomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
+        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        _baseQuantifiable = GetBaseQuantifiableChild(Fields);
+        Fields.paramName = _randomParams.GetRandomParamName();
+
+        // Act
+        void attempt() => _shape.ValidateMeasureUnitCodes(_baseQuantifiable, Fields.paramName);
+
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(Fields.paramName, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateMeasureUnitCodes_validArg_IBaseQuantifiable_arg_string_returns()
+    {
+        // Arrange
+        _other = GetCompleteShapeChild(Fields);
+        Fields.measureUnit = _randomParams.GetRandomSpreadMeasureUnit(Fields.measureUnitCode);
+        SetShapeChild(Fields.measureUnit, Fields.defaultQuantity, _other);
+        _baseQuantifiable = _shape;
+
+        // Act
+        void attempt() => _shape.ValidateMeasureUnitCodes(_baseQuantifiable, Fields.paramName);
+
+        // Assert
+        Assert.IsTrue(DoesNotThrowException(attempt));
+    }
+    #endregion
+    #endregion
 
 
 
-    // void IMeasureUnitCodes.ValidateMeasureUnitCodes(IBaseQuantifiable?, string)
-
-    // void IShape.ValidateShapeComponent(IBaseQuantifiable?, string)
+    // void IShape.ValidateShapeComponent(IQuantifiable?, string)
 
     #endregion
 
-    //    //    //#region Static methods
+    //#region Static methods
 
-    //    //    //#endregion
+    //#endregion
 
     #region Private methods
     #region DynamicDataSource

@@ -21,13 +21,7 @@ public sealed class ShapeComponentSpreadMeasureObject : SpreadMeasureObject, ISh
 
     public bool Equals(IShapeComponent x, IShapeComponent y)
     {
-        if (x is null && y is null) return true;
-
-        if (x is null || y is null) return false;
-
-        if (x.GetMeasureUnitCode() != y.GetMeasureUnitCode()) return false;
-
-        return x.GetBaseShapeComponents().SequenceEqual(y.GetBaseShapeComponents());
+        return FakeMethods.Equals(x, y);
     }
 
     public IEnumerable<IShapeComponent> GetBaseShapeComponents()
@@ -44,15 +38,7 @@ public sealed class ShapeComponentSpreadMeasureObject : SpreadMeasureObject, ISh
 
     public int GetHashCode([DisallowNull] IShapeComponent shapeComponent)
     {
-        HashCode hashCode = new();
-        hashCode.Add(shapeComponent.GetMeasureUnitCode());
-
-        foreach (IBaseShapeComponent item in shapeComponent.GetBaseShapeComponents())
-        {
-            hashCode.Add(item);
-        }
-
-        return hashCode.ToHashCode();
+        return FakeMethods.GetHashCode(shapeComponent);
     }
 
     public MeasureUnitCode GetMeasureUnitCode()
@@ -71,12 +57,4 @@ public sealed class ShapeComponentSpreadMeasureObject : SpreadMeasureObject, ISh
 
         throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
     }
-
-    //public static ShapeComponentSpreadMeasureObject GetShapeComponentSpreadMeasureObject(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
-    //{
-    //    Enum measureUnit = measureUnitCode.GetDefaultMeasureUnit();
-    //    double quantity = (double)defaultQuantity.ToQuantity(TypeCode.Double);
-
-    //    return GetShapeComponentSpreadMeasureObject(measureUnit, quantity);
-    //}
 }

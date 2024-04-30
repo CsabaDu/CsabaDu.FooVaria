@@ -15,15 +15,10 @@ public sealed class ShapeComponentQuantifiableObject(IRootObject rootObject, str
         return GetShapeComponentQuantifiableObject(fields.measureUnit, fields.defaultQuantity, factory);
     }
 
+
     public bool Equals(IShapeComponent x, IShapeComponent y)
     {
-        if (x is null && y is null) return true;
-
-        if (x is null || y is null) return false;
-
-        if (x.GetMeasureUnitCode() != y.GetMeasureUnitCode()) return false;
-
-        return x.GetBaseShapeComponents().SequenceEqual(y.GetBaseShapeComponents());
+        return FakeMethods.Equals(x, y);
     }
 
     public IEnumerable<IShapeComponent> GetBaseShapeComponents()
@@ -31,16 +26,8 @@ public sealed class ShapeComponentQuantifiableObject(IRootObject rootObject, str
         yield return this;
     }
 
-    public int GetHashCode([DisallowNull] IShapeComponent baseShapeComponent)
+    public int GetHashCode([DisallowNull] IShapeComponent shapeComponent)
     {
-        HashCode hashCode = new();
-        hashCode.Add(baseShapeComponent.GetMeasureUnitCode());
-
-        foreach (IShapeComponent item in baseShapeComponent.GetBaseShapeComponents())
-        {
-            hashCode.Add(item);
-        }
-
-        return hashCode.ToHashCode();
+        return FakeMethods.GetHashCode(shapeComponent);
     }
 }
