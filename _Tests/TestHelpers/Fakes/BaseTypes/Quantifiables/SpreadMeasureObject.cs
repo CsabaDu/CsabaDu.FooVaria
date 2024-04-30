@@ -2,15 +2,15 @@
 
 public class SpreadMeasureObject : ISpreadMeasure
 {
-    public Enum MeasureUnit { private get; set; }
-    public double Quantity { private get; set; }
+    public Enum MeasureUnit { protected get; set; }
+    public double Quantity { protected get; set; }
 
     public static SpreadMeasureObject GetSpreadMeasureObject(Enum measureUnit, ValueType quantity)
     {
         return new()
         {
             MeasureUnit = measureUnit,
-            Quantity = (double)quantity.ToQuantity(TypeCode.Double),
+            Quantity = Convert.ToDouble(quantity) /*(double)quantity.ToQuantity(TypeCode.Double)*/,
         };
     }
 
@@ -28,7 +28,7 @@ public class SpreadMeasureObject : ISpreadMeasure
 
     public Type GetMeasureUnitType() => MeasureUnit.GetType();
 
-    public double GetQuantity() => Quantity;
+    public double GetQuantity() => (double)GetQuantity(TypeCode.Double);
 
     public object GetQuantity(TypeCode quantityTypeCode) => Quantity.ToQuantity(quantityTypeCode);
 

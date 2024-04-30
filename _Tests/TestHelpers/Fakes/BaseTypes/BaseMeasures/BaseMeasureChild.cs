@@ -47,7 +47,7 @@ public class BaseMeasureChild(IRootObject rootObject, string paramName) : BaseMe
 
     #region Test helpers
     internal static DataFields Fields = new();
-    public BaseMeasureReturn Return { private get; set; }
+    public BaseMeasureReturn Return { protected get; set; }
     private LimiterObject LimiterObject {  get; set; }
 
     public static BaseMeasureChild GetBaseMeasureChild(Enum measureUnit, ValueType quantity, RateComponentCode? rateComponentCode = null, LimitMode? limitMode = null)

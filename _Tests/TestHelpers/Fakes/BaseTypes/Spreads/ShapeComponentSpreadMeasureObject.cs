@@ -1,5 +1,4 @@
-﻿
-namespace CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Spreads;
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Spreads;
 
 public sealed class ShapeComponentSpreadMeasureObject : SpreadMeasureObject, IShapeComponent
 {
@@ -8,7 +7,7 @@ public sealed class ShapeComponentSpreadMeasureObject : SpreadMeasureObject, ISh
         return new()
         {
             MeasureUnit = measureUnit,
-            Quantity = (double)quantity.ToQuantity(TypeCode.Double),
+            Quantity = Convert.ToDouble(quantity) /*(double)quantity.ToQuantity(TypeCode.Double)*/,
         };
     }
 
@@ -22,37 +21,55 @@ public sealed class ShapeComponentSpreadMeasureObject : SpreadMeasureObject, ISh
 
     public bool Equals(IShapeComponent x, IShapeComponent y)
     {
-        throw new NotImplementedException();
+        if (x is null && y is null) return true;
+
+        if (x is null || y is null) return false;
+
+        if (x.GetMeasureUnitCode() != y.GetMeasureUnitCode()) return false;
+
+        return x.GetBaseShapeComponents().SequenceEqual(y.GetBaseShapeComponents());
     }
 
     public IEnumerable<IShapeComponent> GetBaseShapeComponents()
     {
-        throw new NotImplementedException();
+        yield return this;
     }
 
     public decimal GetDefaultQuantity()
     {
-        throw new NotImplementedException();
+       return Convert.ToDecimal(Quantity)
+            * GetExchangeRate(MeasureUnit, nameof(MeasureUnit))
+            .Round(RoundingMode.DoublePrecision);
     }
 
-    public int GetHashCode([DisallowNull] IShapeComponent obj)
+    public int GetHashCode([DisallowNull] IShapeComponent shapeComponent)
     {
-        throw new NotImplementedException();
+        HashCode hashCode = new();
+        hashCode.Add(shapeComponent.GetMeasureUnitCode());
+
+        foreach (IBaseShapeComponent item in shapeComponent.GetBaseShapeComponents())
+        {
+            hashCode.Add(item);
+        }
+
+        return hashCode.ToHashCode();
     }
 
     public MeasureUnitCode GetMeasureUnitCode()
     {
-        throw new NotImplementedException();
+        return Measurable.GetMeasureUnitCode(MeasureUnit);
     }
 
     public bool HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
     {
-        throw new NotImplementedException();
+        return measureUnitCode == GetMeasureUnitCode();
     }
 
     public void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, [DisallowNull] string paramName)
     {
-        throw new NotImplementedException();
+        if (HasMeasureUnitCode(measureUnitCode)) return;
+
+        throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
     }
 
     //public static ShapeComponentSpreadMeasureObject GetShapeComponentSpreadMeasureObject(MeasureUnitCode measureUnitCode, decimal defaultQuantity)

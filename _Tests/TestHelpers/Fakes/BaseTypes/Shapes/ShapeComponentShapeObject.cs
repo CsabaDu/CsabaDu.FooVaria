@@ -39,10 +39,13 @@ public sealed class ShapeComponentShapeObject(IRootObject rootObject, string par
 
     public bool Equals(IShapeComponent x, IShapeComponent y)
     {
-        return x is null == y is null
-            && (y is null
-            || x!.HasMeasureUnitCode(y.GetMeasureUnitCode())
-            && x!.GetBaseShapeComponents().SequenceEqual(y.GetBaseShapeComponents()));
+        if (x is null && y is null) return true;
+
+        if (x is null || y is null) return false;
+
+        if (x.GetMeasureUnitCode() != y.GetMeasureUnitCode()) return false;
+
+        return x.GetBaseShapeComponents().SequenceEqual(y.GetBaseShapeComponents());
     }
 
     public int GetHashCode([DisallowNull] IShapeComponent shapeComponent)

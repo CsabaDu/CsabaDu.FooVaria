@@ -49,10 +49,7 @@ public class SpreadChild(IRootObject rootObject, string paramName) : Spread(root
     {
         return new(Fields.RootObject, Fields.paramName)
         {
-            Return = new()
-            {
-                GetFactory = factory,
-            },
+            Return = GetReturn(factory),
             SpreadMeasure = GetSpreadMeasureBaseMeasureObject(measureUnit, quantity, rateComponentCode),
         };
     }
@@ -61,10 +58,7 @@ public class SpreadChild(IRootObject rootObject, string paramName) : Spread(root
     {
         return new(Fields.RootObject, Fields.paramName)
         {
-            Return = new()
-            {
-                GetFactory = factory,
-            },
+            Return = GetReturn(factory),
             SpreadMeasure = spreadMeasure,
         };
     }
@@ -96,5 +90,13 @@ public class SpreadChild(IRootObject rootObject, string paramName) : Spread(root
             return GetSpreadChild(measureUnit, GetBaseQuantity());
         }
         #endregion
+    }
+
+    private static SpreadReturn GetReturn(ISpreadFactory factory = null)
+    {
+        return new()
+        {
+            GetFactory = factory,
+        };
     }
 }
