@@ -148,10 +148,10 @@ internal abstract class Mass : BaseQuantifiable, IMass
         return GetGreaterWeight(volumeWeight);
     }
 
-    public bool IsValidMeasureUnitCode(MeasureUnitCode measureUnitCode)
-    {
-        return IsValidMeasureUnitCode(this, measureUnitCode);
-    }
+    //public bool IsValidMeasureUnitCode(MeasureUnitCode measureUnitCode)
+    //{
+    //    return IsValidMeasureUnitCode(this, measureUnitCode);
+    //}
 
     public bool IsExchangeableTo(Enum? context)
     {

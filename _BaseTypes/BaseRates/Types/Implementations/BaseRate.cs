@@ -84,10 +84,10 @@
                 && baseRate.GetNumeratorCode() == GetNumeratorCode();
         }
 
-        public bool IsValidMeasureUnitCode(MeasureUnitCode measureUnitCode)
-        {
-            return IsValidMeasureUnitCode(this, measureUnitCode);
-        }
+        //public bool IsValidMeasureUnitCode(MeasureUnitCode measureUnitCode)
+        //{
+        //    return IsValidMeasureUnitCode(this, measureUnitCode);
+        //}
 
         public bool IsValidRateComponent(object? rateComponent, RateComponentCode rateComponentCode)
         {

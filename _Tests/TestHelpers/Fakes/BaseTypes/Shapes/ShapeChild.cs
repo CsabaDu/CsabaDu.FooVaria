@@ -37,7 +37,6 @@ public class ShapeChild(IRootObject rootObject, string paramName) : Shape(rootOb
     // IShapeComponent? IShapeComponents.GetValidShapeComponent(IQuantifiable? quantifiable)
     // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
     // bool IExchangeable<Enum>.IsExchangeableTo(Enum? context)
-    // bool IMeasureUnitCodes.IsValidMeasureUnitCode(MeasureUnitCode measureUnitCode)
     // decimal IProportional<IQuantifiable>.ProportionalTo(IQuantifiable? other)
     // IQuantifiable IRound<IQuantifiable>.Round(RoundingMode roundingMode)
     // bool ITryExchange<IQuantifiable, Enum>.TryExchangeTo(Enum context, out IQuantifiable? exchanged)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
+using System;
 
 namespace CsabaDu.FooVaria.Tests.TestHelpers.Params;
 
@@ -68,9 +69,9 @@ public sealed class RandomParams
         return GetRandomItem(MeasureUnitCodes, excluded);
     }
 
-    public Enum GetRandomMeasureUnit(MeasureUnitCode? measureUnutCode = null, Enum excluded = null)
+    public Enum GetRandomMeasureUnit(MeasureUnitCode? measureUnitCode = null, Enum excluded = null)
     {
-        measureUnutCode ??= GetRandomMeasureUnitCode();
+        measureUnitCode ??= GetRandomMeasureUnitCode();
         Enum randomMeasureUnit = getRandomMeasureUnit();
 
         while (randomMeasureUnit.Equals(excluded))
@@ -83,7 +84,27 @@ public sealed class RandomParams
         #region Local methods
         Enum getRandomMeasureUnit()
         {
-            return GetRandomItem(measureUnutCode.Value.GetAllMeasureUnits());
+            return GetRandomItem(measureUnitCode.Value.GetAllMeasureUnits());
+        }
+        #endregion
+    }
+
+
+    public MeasureUnitCode GetRandomMeasureUnitCode(IEnumerable<MeasureUnitCode> excludeds)
+    {
+        MeasureUnitCode randomMeasureUnitCode = getRandomMeasureUnitCode();
+
+        while (excludeds.Contains(randomMeasureUnitCode))
+        {
+            randomMeasureUnitCode = getRandomMeasureUnitCode();
+        }
+
+        return randomMeasureUnitCode;
+
+        #region Local methods
+        MeasureUnitCode getRandomMeasureUnitCode()
+        {
+            return GetRandomMeasureUnitCode(excludeds.First());
         }
         #endregion
     }

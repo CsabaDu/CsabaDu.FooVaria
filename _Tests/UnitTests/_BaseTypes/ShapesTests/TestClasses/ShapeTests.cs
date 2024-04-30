@@ -1,10 +1,4 @@
-using CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors;
 using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
-using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
-using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
-using CsabaDu.FooVaria.BaseTypes.Shapes.Behaviors;
-using CsabaDu.FooVaria.BaseTypes.Shapes.Types.Implementations;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -455,10 +449,11 @@ public sealed class ShapeTests
     #region IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode)
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetHasMeasureUnitCodeArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
-    public void HasMeasureUnitCode_arg_MeasureUnitCode_returns_expected(string testCase, Enum measureUnit, MeasureUnitCode measureUnitCode, bool expected)
+    public void HasMeasureUnitCode_arg_MeasureUnitCode_returns_expected(string testCase, Enum measureUnit, MeasureUnitCode measureUnitCode, bool expected, Enum otherMeasureUnit)
     {
         // Arrange
-        SetCompleteShapeChild(measureUnit, Fields.defaultQuantity);
+        _other = GetCompleteShapeChild(measureUnit, Fields.defaultQuantity);
+        SetShapeChild(otherMeasureUnit, Fields.defaultQuantity, _other);
 
         // Act
         var actual = _shape.HasMeasureUnitCode(measureUnitCode);
@@ -469,7 +464,7 @@ public sealed class ShapeTests
     #endregion
     #endregion
 
-    // bool IMeasureUnitCodes.IsValidMeasureUnitCode(MeasureUnitCode)
+
 
 
     // void IMeasureUnitCodes.ValidateMeasureUnitCodes(IBaseQuantifiable?, string)

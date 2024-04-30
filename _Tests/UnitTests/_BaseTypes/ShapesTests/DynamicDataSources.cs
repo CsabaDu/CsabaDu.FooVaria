@@ -1,5 +1,3 @@
-using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests;
 
 internal sealed class DynamicDataSource : CommonDynamicDataSource
@@ -194,23 +192,50 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
 
     public new IEnumerable<object[]> GetHasMeasureUnitCodeArgs()
     {
-        testCase = "Same MeasureUnitCode => true";
-        SetMeasureUnit(RandomParams.GetRandomSpreadMeasureUnit());
+        testCase = "Shape MeasureUnitCode => true";
         isTrue = true;
+        measureUnit = RandomParams.GetRandomSpreadMeasureUnit();
+        measureUnitCode = GetMeasureUnitCode();
+        context = RandomParams.GetRandomSpreadMeasureUnit(measureUnitCode);
+        yield return toObjectArray();
+
+        testCase = "BaseShape MeasureUnitCode => true";
+        measureUnitCode = Measurable.GetMeasureUnitCode(context);
         yield return toObjectArray();
 
         testCase = "Different MeasureUnitCode => false";
-        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
-        isTrue = false;
+        isTrue= false;
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode([measureUnitCode, GetMeasureUnitCode()]);
         yield return toObjectArray();
 
         #region toObjectArray method
         object[] toObjectArray()
         {
-            TestCase_Enum_MeasureUnitCode_bool args = new(testCase, measureUnit, measureUnitCode, isTrue);
+            TestCase_Enum_MeasureUnitCode_bool_Enum args = new(testCase, measureUnit, measureUnitCode, isTrue, context);
 
             return args.ToObjectArray();
         }
         #endregion
+
+
+
+    //testCase = "Same MeasureUnitCode => true";
+    //SetMeasureUnit(RandomParams.GetRandomSpreadMeasureUnit());
+    //isTrue = true;
+    //yield return toObjectArray();
+
+        //testCase = "Different MeasureUnitCode => false";
+        //measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
+        //isTrue = false;
+        //yield return toObjectArray();
+
+        //#region toObjectArray method
+        //object[] toObjectArray()
+        //{
+        //    TestCase_Enum_MeasureUnitCode_bool args = new(testCase, measureUnit, measureUnitCode, isTrue);
+
+        //    return args.ToObjectArray();
+        //}
+        //#endregion
     }
 }

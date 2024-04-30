@@ -5,13 +5,9 @@
         public override object[] ToObjectArray() => [TestCase, IsTrue];
     }
 
-    public record TestCase_IQuantifiable(string Case, IQuantifiable Quantifiable) : ObjectArray(Case)
-    {
-        public override object[] ToObjectArray() => [TestCase, Quantifiable];
-    }
 
-    public record TestCase_IQuantifiable_IShapeComponent(string Case, IQuantifiable Quantifiable, IShapeComponent ShapeComponent) : TestCase_IQuantifiable(Case, Quantifiable)
+    public record TestCase_Enum_MeasureUnitCode_bool_Enum(string TestCase, Enum MeasureUnit, MeasureUnitCode MeasureUnitCode, bool IsTrue, Enum Context) : TestCase_Enum_MeasureUnitCode_bool(TestCase, MeasureUnit, MeasureUnitCode, IsTrue)
     {
-        public override object[] ToObjectArray() => [TestCase, Quantifiable, ShapeComponent];
+        public override object[] ToObjectArray() => [TestCase, MeasureUnit, MeasureUnitCode, IsTrue, Context];
     }
 }

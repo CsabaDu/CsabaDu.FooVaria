@@ -83,10 +83,10 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
         return GetShapeComponents().Count();
     }
 
-    public bool IsValidMeasureUnitCode(MeasureUnitCode measureUnitCode)
-    {
-        return IsValidMeasureUnitCode(this, measureUnitCode);
-    }
+    //public bool IsValidMeasureUnitCode(MeasureUnitCode measureUnitCode)
+    //{
+    //    return IsValidMeasureUnitCode(this, measureUnitCode);
+    //}
 
     public void ValidateMeasureUnitCodes(IBaseQuantifiable? baseQuantifiable, string paramName)
     {
