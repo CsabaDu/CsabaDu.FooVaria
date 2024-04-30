@@ -332,7 +332,9 @@ public sealed class ShapeTests
     {
         // Arrange
         _other = GetShapeChild(_randomParams.GetRandomSpreadMeasureUnit(Fields.measureUnitCode), Fields.defaultQuantity);
+
         SetShapeChild(_shapeComponent, _other);
+
         IEnumerable<MeasureUnitCode> expected =
         [
             _shape.GetMeasureUnitCode(),
@@ -348,9 +350,30 @@ public sealed class ShapeTests
     #endregion
     #endregion
 
+    #region IShape GetBaseShape
+    #region IShape.GetBaseShape()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetBaseShape_returns_expected()
+    {
+        // Arrange
+        _other = GetShapeChild(_randomParams.GetRandomSpreadMeasureUnit(Fields.measureUnitCode), Fields.defaultQuantity);
 
-    // IShape IShape.GetBaseShape()
-    // IShape? IShape.GetBaseShape(params IShapeComponent[] shapeComponents)
+        SetShapeChild(_shapeComponent, _other);
+
+        IShape expected = _other;
+
+        // Act
+        var actual = _shape.GetBaseShape();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+
+    #region IShape.GetBaseShape(params IShapeComponent[] shapeComponents)
+
+    #endregion
+    #endregion
 
     // int IShapeComponentCount.GetShapeComponentCount()
 
