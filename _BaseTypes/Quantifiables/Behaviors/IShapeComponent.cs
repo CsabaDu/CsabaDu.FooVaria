@@ -1,3 +1,3 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
 
-public interface IShapeComponent : IBaseShapeComponents, IEqualityComparer<IShapeComponent>;
+public interface IShapeComponent : IBaseShapeComponent, IEqualityComparer<IShapeComponent>;

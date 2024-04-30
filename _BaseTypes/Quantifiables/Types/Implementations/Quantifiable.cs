@@ -116,7 +116,7 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
     #region Protected methods
     #region Static methods
     protected static bool Equals<T>(T? x, T? y)
-        where T : class, IBaseShapeComponents
+        where T : class, IBaseShapeComponent
     {
         return x is null == y is null
             && (y is null
@@ -125,13 +125,13 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
     }
 
     protected static int GetHashCode<T>(T baseShapeComponent)
-            where T : class, IBaseShapeComponents, IEqualityComparer<T>
+            where T : class, IBaseShapeComponent, IEqualityComparer<T>
     {
         HashCode hashCode = new();
 
         hashCode.Add(baseShapeComponent.GetMeasureUnitCode());
 
-        foreach (IBaseShapeComponents item in baseShapeComponent.GetBaseShapeComponents())
+        foreach (IBaseShapeComponent item in baseShapeComponent.GetBaseShapeComponents())
         {
             hashCode.Add(item);
         }

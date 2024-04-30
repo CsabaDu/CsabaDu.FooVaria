@@ -1,4 +1,6 @@
 ﻿
+using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
+
 namespace CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Shapes;
 
 public sealed class ShapeComponentShapeObject(IRootObject rootObject, string paramName) : ShapeChild(rootObject, paramName), IShapeComponent
@@ -37,19 +39,22 @@ public sealed class ShapeComponentShapeObject(IRootObject rootObject, string par
 
     public bool Equals(IShapeComponent x, IShapeComponent y)
     {
-        return x is null
-            && y is null
-            || y is IShape xShape
-            && y is IShape yShape
-            && xShape.Equals(xShape, yShape);
-   }
+        return x is null == y is null
+            && (y is null
+            || x!.HasMeasureUnitCode(y.GetMeasureUnitCode())
+            && x!.GetBaseShapeComponents().SequenceEqual(y.GetBaseShapeComponents()));
+    }
 
     public int GetHashCode([DisallowNull] IShapeComponent shapeComponent)
     {
-        if (shapeComponent is IShape shape) return shape.GetHashCode(shape);
+        HashCode hashCode = new();
+        hashCode.Add(shapeComponent.GetMeasureUnitCode());
 
-        if (shapeComponent is BaseQuantifiable baseQuantifiable) return baseQuantifiable.GetHashCode();
+        foreach (IBaseShapeComponent item in shapeComponent.GetBaseShapeComponents())
+        {
+            hashCode.Add(item);
+        }
 
-        return GetMeasureUnitCode().GetHashCode();
+        return hashCode.ToHashCode();
     }
 }
