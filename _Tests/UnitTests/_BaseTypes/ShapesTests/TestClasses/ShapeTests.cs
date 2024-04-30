@@ -1,3 +1,4 @@
+using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
 using CsabaDu.FooVaria.BaseTypes.Shapes.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests.TestClasses;
@@ -283,12 +284,12 @@ public sealed class ShapeTests
     {
         // Arrange
         SetCompleteShapeChild();
+
         HashCode hashCode = new();
         hashCode.Add(_shape.GetMeasureUnitCode());
         hashCode.Add(_shape.GetDefaultQuantity());
         hashCode.Add(_shapeComponent);
-
-        var expected = hashCode.ToHashCode();
+        int expected = hashCode.ToHashCode();
 
         // Act
         var actual = _shape.GetHashCode();
@@ -299,7 +300,25 @@ public sealed class ShapeTests
     #endregion
 
     #region IEqualityComparer<IShape>.GetHashCode(IShape)
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetHashCode_arg_IShape_returns_expected()
+    {
+        // Arrange
+        SetCompleteShapeChild();
 
+        Fields.measureUnitCode = SampleParams.GetOtherSpreadMeasureUnitCode(Fields.measureUnitCode);
+        _other = GetCompleteShapeChild(Fields);
+        HashCode hashCode = new();
+        hashCode.Add(_other.GetMeasureUnitCode());
+        hashCode.Add(_other.GetBaseShapeComponents().First());
+        int expected = hashCode.ToHashCode();
+
+        // Act
+        var actual = _shape.GetHashCode(_other);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
     #endregion
     #endregion
 

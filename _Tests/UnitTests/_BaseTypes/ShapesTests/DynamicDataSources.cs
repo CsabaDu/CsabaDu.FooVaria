@@ -129,7 +129,6 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #endregion
     }
 
-
     internal IEnumerable<object[]> GetFitsInIShapeLimitModeArgs()
     {
         testCase = "IShape, Not defined LimitMode";

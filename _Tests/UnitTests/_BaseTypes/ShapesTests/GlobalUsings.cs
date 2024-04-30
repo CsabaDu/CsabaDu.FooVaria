@@ -16,3 +16,4 @@ global using static CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Quantifia
 global using static CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Quantifiables.ShapeComponentQuantifiableObject;
 global using static CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Shapes.LimiterShapeObject;
 global using static CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Shapes.ShapeChild;
+global using static CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Shapes.ShapeComponentShapeObject;
