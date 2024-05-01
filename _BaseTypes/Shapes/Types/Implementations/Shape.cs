@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.Shapes.Types.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
+
+namespace CsabaDu.FooVaria.BaseTypes.Shapes.Types.Implementations;
 
 public abstract class Shape(IRootObject rootObject, string paramName) : Spread(rootObject, paramName), IShape
 {
@@ -90,9 +92,14 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
 
     public void ValidateShapeComponent(IQuantifiable? quantifiable, string paramName)
     {
-        if (GetValidShapeComponent(NullChecked(quantifiable, paramName)) is not null) return;
+        MeasureUnitCode measureUnitCode = NullChecked(quantifiable, paramName).GetMeasureUnitCode();
 
-        throw ArgumentTypeOutOfRangeException(paramName, quantifiable!);
+        if (quantifiable is not IShapeComponent)
+        {
+            throw ArgumentTypeOutOfRangeException(paramName, quantifiable!);
+        }
+
+        ValidateMeasureUnitCode(measureUnitCode, paramName);
     }
     #endregion
 }

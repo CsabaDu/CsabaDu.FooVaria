@@ -16,3 +16,4 @@ global using CsabaDu.FooVaria.BaseTypes.Spreads.Types.Implementations;
 global using System.ComponentModel;
 global using System.Diagnostics.CodeAnalysis;
 global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.ExceptionMethods;
+global using static CsabaDu.FooVaria.BaseTypes.Measurables.Statics.ExceptionMethods;

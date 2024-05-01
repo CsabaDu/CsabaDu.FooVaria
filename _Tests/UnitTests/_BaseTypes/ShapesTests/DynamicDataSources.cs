@@ -216,26 +216,31 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
             return args.ToObjectArray();
         }
         #endregion
+    }
 
+    internal IEnumerable<object[]> ValidateShapeComponent()
+    {
+        testCase = "null => null";
+        quantifiable = null;
+        yield return toObjectArray();
 
+        testCase = "Not IShapeComponent IQuantifiable";
+        measureUnit = RandomParams.GetRandomSpreadMeasureUnit();
+        defaultQuantity = RandomParams.GetRandomPositiveDecimal();
+        quantifiable = GetQuantifiableChild(this);
+        yield return toObjectArray();
 
-    //testCase = "Same MeasureUnitCode => true";
-    //SetMeasureUnit(RandomParams.GetRandomSpreadMeasureUnit());
-    //isTrue = true;
-    //yield return toObjectArray();
+        testCase = "IShapeComponent => same IShapeComponent";
+        quantifiable = GetShapeComponentQuantifiableObject(this);
+        yield return toObjectArray();
 
-        //testCase = "Different MeasureUnitCode => false";
-        //measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
-        //isTrue = false;
-        //yield return toObjectArray();
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            TestCase_IQuantifiable args = new(testCase, quantifiable);
 
-        //#region toObjectArray method
-        //object[] toObjectArray()
-        //{
-        //    TestCase_Enum_MeasureUnitCode_bool args = new(testCase, measureUnit, measureUnitCode, isTrue);
-
-        //    return args.ToObjectArray();
-        //}
-        //#endregion
+            return args.ToObjectArray();
+        }
+        #endregion
     }
 }

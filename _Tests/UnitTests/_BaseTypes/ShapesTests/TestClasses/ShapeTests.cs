@@ -49,6 +49,7 @@ public sealed class ShapeTests
     private ILimiter _limiter;
     private RandomParams _randomParams;
     private IBaseQuantifiable _baseQuantifiable;
+    private IQuantifiable _quantifiable;
 
     #region Readonly fields
     private readonly DataFields Fields = new();
@@ -80,6 +81,7 @@ public sealed class ShapeTests
         _shapeComponent = null;
         _limiter = null;
         _baseQuantifiable = null;
+        _quantifiable = null;
     }
 
     public static string GetDisplayName(MethodInfo methodInfo, object[] args)
@@ -525,10 +527,77 @@ public sealed class ShapeTests
     #endregion
     #endregion
 
+    #region void ValidateShapeComponent
+    #region IShape.ValidateShapeComponent(IQuantifiable?, string)
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateShapeComponent_nullArg_IQuantifiable_arg_string_throws_ArgumentNullException()
+    {
+        // Arrange
+        SetShapeChild();
 
+        _quantifiable = null;
+        Fields.paramName = _randomParams.GetRandomParamName();
 
-    // void IShape.ValidateShapeComponent(IQuantifiable?, string)
+        // Act
+        void attempt() => _shape.ValidateShapeComponent(_quantifiable, Fields.paramName);
 
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
+        Assert.AreEqual(Fields.paramName, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateShapeComponent_invalidArg_IQuantifiable_arg_string_throws_ArgumentOutOfRangeException()
+    {
+        // Arrange
+        SetShapeChild();
+
+        _quantifiable = GetQuantifiableChild(Fields);
+        Fields.paramName = _randomParams.GetRandomParamName();
+
+        // Act
+        void attempt() => _shape.ValidateShapeComponent(_quantifiable, Fields.paramName);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
+        Assert.AreEqual(Fields.paramName, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateShapeComponent_invalidArg_IQuantifiable_arg_string_throws_InvalidEnumArgumentException()
+    {
+        // Arrange
+        SetCompleteShapeChild();
+
+        Fields.measureUnit = _randomParams.GetRandomSpreadMeasureUnit(Fields.measureUnitCode);
+        _quantifiable = GetShapeComponentQuantifiableObject(Fields);
+        Fields.paramName = _randomParams.GetRandomParamName();
+
+        // Act
+        void attempt() => _shape.ValidateShapeComponent(_quantifiable, Fields.paramName);
+
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(Fields.paramName, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateShapeComponent_validArg_IQuantifiable_arg_string_returns()
+    {
+        SetCompleteShapeChild();
+
+        _quantifiable = GetShapeComponentQuantifiableObject(Fields);
+        Fields.paramName = _randomParams.GetRandomParamName();
+
+        // Act
+        void attempt() => _shape.ValidateShapeComponent(_quantifiable, Fields.paramName);
+
+        // Assert
+        Assert.IsTrue(DoesNotThrowException(attempt));
+    }
+
+    #endregion
+    #endregion
     #endregion
 
     //#region Static methods
