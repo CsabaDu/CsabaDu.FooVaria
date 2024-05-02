@@ -3,6 +3,75 @@
     public abstract class BaseRate(IRootObject rootObject, string paramName) : BaseQuantifiable(rootObject, paramName), IBaseRate
     {
         #region Public methods
+        #region Override methods
+        #region Sealed methods
+        public override sealed bool Equals(object? obj)
+        {
+            return obj is IBaseRate baseRate && Equals(baseRate);
+        }
+
+        public override sealed int GetHashCode()
+        {
+            return HashCode.Combine(GetDenominatorCode(), GetNumeratorCode(), GetDefaultQuantity());
+        }
+
+        //public override sealed MeasureUnitCode GetMeasureUnitCode()
+        //{
+        //    return GetDenominatorCode();
+        //}
+
+        public override sealed TypeCode GetQuantityTypeCode()
+        {
+            Type quantityType = GetQuantity().GetType();
+
+            return Type.GetTypeCode(quantityType);
+        }
+
+        public override sealed bool HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
+        {
+            return GetMeasureUnitCodes().Contains(measureUnitCode);
+        }
+
+        public override sealed void ValidateMeasureUnit(Enum? measureUnit, string paramName)
+        {
+            base.ValidateMeasureUnit(measureUnit, paramName);
+        }
+
+        public override sealed void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
+        {
+            ValidateMeasureUnitCode(this, measureUnitCode, paramName);
+        }
+
+        public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
+        {
+            ValidatePositiveQuantity(quantity, paramName);
+        }
+        #endregion
+        #endregion
+
+        #region Virtual methods
+        public virtual LimitMode? GetLimitMode()
+        {
+            return null;
+        }
+
+        #endregion
+
+        #region Abstract methods
+        public abstract MeasureUnitCode GetDenominatorCode();
+        public abstract IEnumerable<MeasureUnitCode> GetMeasureUnitCodes();
+        public abstract MeasureUnitCode GetNumeratorCode();
+        public abstract object? GetRateComponent(RateComponentCode rateComponentCode);
+
+        #endregion
+
+        #region Static methods
+        public static IEnumerable<RateComponentCode> GetRateComponentCodes()
+        {
+            return Enum.GetValues<RateComponentCode>();
+        }
+        #endregion
+
         public int CompareTo(IBaseRate? other)
         {
             if (other is null) return 1;
@@ -84,11 +153,6 @@
                 && baseRate.GetNumeratorCode() == GetNumeratorCode();
         }
 
-        //public bool IsValidMeasureUnitCode(MeasureUnitCode measureUnitCode)
-        //{
-        //    return IsValidMeasureUnitCode(this, measureUnitCode);
-        //}
-
         public bool IsValidRateComponent(object? rateComponent, RateComponentCode rateComponentCode)
         {
             return GetRateComponent(rateComponentCode)?.Equals(rateComponent) == true;
@@ -118,86 +182,13 @@
 
             throw InvalidRateComponentCodeArgumentException(rateComponentCode);
         }
-
-        #region Override methods
-        #region Sealed methods
-        public override sealed bool Equals(object? obj)
-        {
-            return obj is IBaseRate baseRate && Equals(baseRate);
-        }
-
-        public override sealed int GetHashCode()
-        {
-            return HashCode.Combine(GetDenominatorCode(), GetNumeratorCode(), GetDefaultQuantity());
-        }
-
-        public override sealed MeasureUnitCode GetMeasureUnitCode()
-        {
-            return GetDenominatorCode();
-        }
-
-        public override sealed TypeCode GetQuantityTypeCode()
-        {
-            Type quantityType = GetQuantity().GetType();
-
-            return Type.GetTypeCode(quantityType);
-        }
-
-        public override sealed bool HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
-        {
-            return GetMeasureUnitCodes().Contains(measureUnitCode);
-        }
-
-        public override sealed void ValidateMeasureUnit(Enum? measureUnit, string paramName)
-        {
-            base.ValidateMeasureUnit(measureUnit, paramName);
-        }
-
-        public override sealed void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
-        {
-            ValidateMeasureUnitCode(this, measureUnitCode, paramName);
-        }
-
-        //public override sealed void ValidateQuantity(IBaseQuantifiable? baseQuantifiable, string paramName)
-        //{
-        //    base.ValidateQuantity(baseQuantifiable, paramName);
-        //}
-
-        public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
-        {
-            ValidatePositiveQuantity(quantity, paramName);
-        }
-        #endregion
         #endregion
 
-        #region Virtual methods
-        public virtual LimitMode? GetLimitMode()
-        {
-            return null;
-        }
-
-        #endregion
-
-        #region Abstract methods
-        //public abstract IBaseRate GetBaseRate(MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode);
-        public abstract MeasureUnitCode GetDenominatorCode();
-        public abstract IEnumerable<MeasureUnitCode> GetMeasureUnitCodes();
-        public abstract MeasureUnitCode GetNumeratorCode();
-        public abstract object? GetRateComponent(RateComponentCode rateComponentCode);
-
-        #endregion
-
-        #region Static methods
-        public static IEnumerable<RateComponentCode> GetRateComponentCodes()
-        {
-            return Enum.GetValues<RateComponentCode>();
-        }
-        #endregion
-        #endregion
-
+        #region Private methods
         private IBaseRateFactory GetBaseRateFactory()
         {
             return (IBaseRateFactory)GetFactory();
         }
+        #endregion
     }
 }

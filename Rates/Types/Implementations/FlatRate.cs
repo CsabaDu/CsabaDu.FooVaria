@@ -113,25 +113,18 @@ internal sealed class FlatRate : Rate, IFlatRate
 
         if (!other.TryExchangeTo(Denominator, out IRate? exchanged))
         {
-            throw InvalidMeasureUnitCodeEnumArgumentException(other!.GetMeasureUnitCode(), nameof(other));
+            throw InvalidMeasureUnitCodeEnumArgumentException(other!.GetDenominatorCode(), nameof(other));
         }
 
-        IMeasure numerator = getNumeratorSum(summingMode);
+        IMeasure numerator = summingMode switch
+        {
+            SummingMode.Add => Numerator.Add(exchanged!.Numerator),
+            SummingMode.Subtract => Numerator.Subtract(exchanged!.Numerator),
+
+            _ => throw new InvalidOperationException(null),
+        };
 
         return GetFlatRate(numerator);
-
-        #region Local methods
-        IMeasure getNumeratorSum(SummingMode summingMode)
-        {
-            return summingMode switch
-            {
-                SummingMode.Add => Numerator.Add(exchanged!.Numerator),
-                SummingMode.Subtract => Numerator.Subtract(exchanged!.Numerator),
-
-                _ => throw new InvalidOperationException(null),
-            };
-        }
-        #endregion
     }
     #endregion
 }

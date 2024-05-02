@@ -4,4 +4,9 @@
     {
         public decimal GetDefaultQuantity { get; set; }
     }
+
+    public class BaseRateReturn : BaseQuantifiableReturn
+    {
+        public MeasureUnitCode GetNumeratorCode { get; set; }
+    }
 }
