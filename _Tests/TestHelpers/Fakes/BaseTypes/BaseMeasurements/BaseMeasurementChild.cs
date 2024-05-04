@@ -8,18 +8,18 @@ public sealed class BaseMeasurementChild(IRootObject rootObject, string paramNam
     // int IComparable<IBaseMeasurement>.CompareTo(IBaseMeasurement other)
     // bool IEquatable<IBaseMeasurement>.Equals(IBaseMeasurement other)
     // bool BaseMeasurement.Equals(object? obj)
-    // IBaseMeasurement IBaseMeasurement.GetBaseMeasurement(Enum context)
-    // Enum IMeasureUnit.GetBaseMeasureUnit()
+    // IBaseMeasurement IBaseMeasurement.GetBaseMeasurementValue(Enum context)
+    // Enum IMeasureUnit.GetBaseMeasureUnitValue()
     // IDictionary<object, decimal> IConstantExchangeRateCollection.GetConstantExchangeRateCollection()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
     // decimal IExchangeRate.GetExchangeRate()
     // IDictionary<object, decimal> IExchangeRateCollection.GetExchangeRateCollection()
-    // IFactory ICommonBase.GetFactory()
+    // IFactory ICommonBase.GetFactoryValue()
     // int BaseMeasurement.GetHashCode()
     // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()
-    // string INamed.GetName()
+    // string INamed.GetNameValue()
     // TypeCode IQuantityType.GetQuantityTypeCode()
     // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
     // bool IExchangeable<Enum>.IsExchangeableTo(Enum context)
@@ -33,17 +33,19 @@ public sealed class BaseMeasurementChild(IRootObject rootObject, string paramNam
 
     #region Test helpers
     public BaseMeasurementReturn Return { private get; set; } = new();
-    internal static DataFields Fields = new();
+    //internal static DataFields Fields => DataFields.Fields;
 
     public static BaseMeasurementChild GetBaseMeasurementChild(Enum measureUnit, IBaseMeasurementFactory factory = null, string measureUnitName = null)
     {
-        return new(Fields.RootObject, Fields.paramName)
+        DataFields fields = DataFields.Fields;
+
+        return new(fields.RootObject, fields.paramName)
         {
             Return = new()
             {
-                GetBaseMeasureUnit = measureUnit,
-                GetFactory = factory,
-                GetName = measureUnitName,
+                GetBaseMeasureUnitValue = measureUnit,
+                GetFactoryValue = factory,
+                GetNameValue = measureUnitName,
             }
         };
     }
@@ -54,9 +56,9 @@ public sealed class BaseMeasurementChild(IRootObject rootObject, string paramNam
     }
     #endregion
 
-    public override Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnit;
+    public override Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnitValue;
 
-    public override IFactory GetFactory() => Return.GetFactory;
+    public override IFactory GetFactory() => Return.GetFactoryValue;
 
-    public override string GetName() => Return.GetName;
+    public override string GetName() => Return.GetNameValue;
 }

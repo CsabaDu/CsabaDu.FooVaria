@@ -5,11 +5,11 @@ public sealed class CommonBaseChild(IRootObject rootObject, string paramName) : 
     #region Members
 
     // CommonBaseChild CommonBaseChild(IRootObject rootObject, string paramName)
-    // IFactory ICommonBase.GetFactory()
+    // IFactory ICommonBase.GetFactoryValue()
 
     #endregion
 
     public CommonBaseReturn Return { private get; set; }
 
-    public override IFactory GetFactory() => Return.GetFactory;
+    public override IFactory GetFactory() => Return.GetFactoryValue;
 }

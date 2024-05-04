@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Common.Statics;
-
-namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations;
 
 public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Quantifiable(rootObject, paramName), IBaseMeasure
 {
@@ -27,21 +25,6 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
 
     #region Override methods
     #region Sealed methods
-    //public override sealed int CompareTo(IQuantifiable? other)
-    //{
-    //    return base.CompareTo(other);
-    //}
-
-    //public override sealed bool Equals(IQuantifiable? other)
-    //{
-    //    return base.Equals(other);
-    //}
-
-    //public override sealed bool? FitsIn(IQuantifiable? other, LimitMode? limitMode)
-    //{
-    //    return base.FitsIn(other, limitMode);
-    //}
-
     public override sealed bool? FitsIn(ILimiter? limiter)
     {
         return base.FitsIn(limiter);
@@ -84,6 +67,11 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
         IBaseMeasurement baseMeasurement = GetBaseMeasurement();
 
         return GetBaseMeasure(baseMeasurement, quantity);
+    }
+
+    public override sealed void ValidateMeasureUnit(Enum? measureUnit, string paramName)
+    {
+        GetBaseMeasurement().ValidateMeasureUnit(measureUnit, paramName);
     }
     #endregion
     #endregion

@@ -4,7 +4,9 @@ public sealed class ShapeComponentQuantifiableObject(IRootObject rootObject, str
 {
     public static ShapeComponentQuantifiableObject GetShapeComponentQuantifiableObject(Enum measureUnit, decimal defaultQuantity, IQuantifiableFactory factory = null)
     {
-        return new(Fields.RootObject, Fields.paramName)
+        DataFields fields = DataFields.Fields;
+
+        return new(fields.RootObject, fields.paramName)
         {
             Return = GetReturn(measureUnit, defaultQuantity, factory),
         };

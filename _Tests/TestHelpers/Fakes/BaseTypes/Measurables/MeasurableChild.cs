@@ -6,10 +6,10 @@ public sealed class MeasurableChild(IRootObject rootObject, string paramName) : 
 
     // Measurable(IRootObject rootObject, string paramName)
     // bool Measurable.Equals(object? obj)
-    // Enum IMeasureUnit.GetBaseMeasureUnit()
+    // Enum IMeasureUnit.GetBaseMeasureUnitValue()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
-    // IFactory ICommonBase.GetFactory()
+    // IFactory ICommonBase.GetFactoryValue()
     // int Measurable.GetHashCode()
     // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()
@@ -26,14 +26,14 @@ public sealed class MeasurableChild(IRootObject rootObject, string paramName) : 
 
     public static MeasurableChild GetMeasurableChild(Enum measureUnit, IMeasurableFactory factory = null)
     {
-        DataFields fields = new();
+        DataFields fields = DataFields.Fields;
 
         return new(fields.RootObject, fields.paramName)
         {
             Return = new()
             {
-                GetBaseMeasureUnit = measureUnit,
-                GetFactory = factory,
+                GetBaseMeasureUnitValue = measureUnit,
+                GetFactoryValue = factory,
             }
         };
     }
@@ -44,7 +44,7 @@ public sealed class MeasurableChild(IRootObject rootObject, string paramName) : 
     }
     #endregion
 
-    public override Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnit;
+    public override Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnitValue;
 
-    public override IFactory GetFactory() => Return.GetFactory;
+    public override IFactory GetFactory() => Return.GetFactoryValue;
 }

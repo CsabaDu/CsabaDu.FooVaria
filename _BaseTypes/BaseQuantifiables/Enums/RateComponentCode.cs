@@ -2,7 +2,7 @@
 
 public enum RateComponentCode
 {
-    Denominator,
     Numerator,
+    Denominator,
     Limit
 }

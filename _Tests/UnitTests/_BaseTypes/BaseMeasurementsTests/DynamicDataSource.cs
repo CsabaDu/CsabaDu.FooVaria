@@ -167,27 +167,5 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         }
         #endregion
     }
-
-    internal IEnumerable<object[]> GetValidateMeasureUnitValidArgs()
-    {
-        testCase = "MeasureUnitCode";
-        measureUnit = RandomParams.GetRandomConstantMeasureUnit();
-        measureUnitCode = GetMeasureUnitCode();
-        context = measureUnitCode;
-        yield return toObjectArray();
-
-        testCase = "measureUnit";
-        context = RandomParams.GetRandomMeasureUnit(measureUnitCode);
-        yield return toObjectArray();
-
-        #region toObjectArray method
-        object[] toObjectArray()
-        {
-            TestCase_Enum_Enum args = new(testCase, measureUnit, context);
-
-            return args.ToObjectArray();
-        }
-        #endregion
-    }
     #endregion
 }

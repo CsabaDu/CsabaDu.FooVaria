@@ -33,7 +33,7 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
 
     //public override sealed MeasureUnitCode GetMeasureUnitCode()
     //{
-    //    Enum measuureUnit = GetBaseMeasureUnit();
+    //    Enum measuureUnit = GetBaseMeasureUnitValue();
 
     //    return GetMeasureUnitCode(measuureUnit);
     //}

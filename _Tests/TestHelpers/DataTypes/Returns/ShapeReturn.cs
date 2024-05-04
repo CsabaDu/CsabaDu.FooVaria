@@ -1,9 +1,7 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Shapes.Types;
-
-namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.Returns;
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.Returns;
 
 public class ShapeReturn : SpreadReturn
 {
-    public  IEnumerable<IShapeComponent> GetShapeComponents {  get; set; }
-    public IShape GetBaseShape {  get; set; }
+    public  IEnumerable<IShapeComponent> GetShapeComponentsValue {  get; set; }
+    public IShape GetBaseShapeValue {  get; set; }
 }

@@ -9,11 +9,11 @@ public sealed class BaseMeasureTests
     // int IComparable<IQuantifiable>.CompareTo(IQuantifiable? other)
     // bool IEquatable<IQuantifiable>.Equals(IQuantifiable? other)
     // bool? IFit<IQuantifiable>.FitsIn(IQuantifiable? other, LimitMode? limitMode)
-    // ValueType IQuantity.GetBaseQuantity()
+    // ValueType IQuantity.GetBaseQuantityValue()
     // decimal IDecimalQuantity.GetDecimalQuantity()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
-    // IFactory ICommonBase.GetFactory()
+    // IFactory ICommonBase.GetFactoryValue()
     // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()
     // IQuantifiable IQuantifiable.GetQuantifiable(MeasureUnitCode measureUnitCode, decimal quantity)
@@ -193,7 +193,7 @@ public sealed class BaseMeasureTests
     //    Fields.quantity = (ValueType)_randomParams.GetRandomQuantity();
     //    IQuantifiable quantifiable = GetBaseMeasureChild();
     //    Fields.limitMode = _randomParams.GetRandomLimitMode();
-    //    bool? expected = Fields.defaultQuantity.FitsIn(quantifiable.GetDefaultQuantity(), Fields.limitMode);
+    //    bool? expected = Fields.defaultQuantity.FitsIn(quantifiable.GetDefaultQuantityValue(), Fields.limitMode);
 
     //    // Act
     //    var actual = _baseMeasure.FitsIn(quantifiable, Fields.limitMode);
@@ -537,6 +537,53 @@ public sealed class BaseMeasureTests
     #endregion
     #endregion
 
+    #region override sealed IDefaultMeasureUnit.ValidateMeasureUnit(Enum?, string)
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateMeasureUnit_nullArg_Enum_arg_string_throws_ArgumentNullException()
+    {
+        // Arrange
+        SetBaseMeasureChild();
+        Fields.paramName = _randomParams.GetRandomParamName();
+
+        // Act
+        void attempt() => _baseMeasure.ValidateMeasureUnit(null, Fields.paramName);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
+        Assert.AreEqual(Fields.paramName, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateMeasureUnit_invalidArg_Enum_arg_string_throws_InvalidEnumArgumentException()
+    {
+        // Arrange
+        SetBaseMeasureChild();
+        Fields.measureUnitCode = _randomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
+        Enum context = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+
+        // Act
+        void attempt() => _baseMeasure.ValidateMeasureUnit(context, Fields.paramName);
+
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(Fields.paramName, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetValidateMeasureUnitValidArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void ValidateMeasureUnit_validArg_Enum_arg_string_returns(string testCase, Enum measureUnit, Enum context)
+    {
+        // Arrange
+        SetBaseMeasureChild(measureUnit, Fields.quantity);
+
+        // Act
+        void attempt() => _baseMeasure.ValidateMeasureUnit(context, Fields.paramName);
+
+        // Assert
+        Assert.IsTrue(DoesNotThrowException(attempt));
+    }
+    #endregion
+
     #region void ValidateExchangeRate
     #region IExchangeRate.ValidateExchangeRate(decimal, string)
     [TestMethod, TestCategory("UnitTest")]
@@ -589,6 +636,11 @@ public sealed class BaseMeasureTests
     private void SetCompleteBaseMeasureChild()
     {
         _baseMeasure = GetCompleteBaseMeasureChild(Fields);
+    }
+
+    private static IEnumerable<object[]> GetValidateMeasureUnitValidArgs()
+    {
+        return DynamicDataSource.GetValidateMeasureUnitValidArgs();
     }
 
     #region DynamicDataSource

@@ -1,3 +1,5 @@
+using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.Returns;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -6,11 +8,12 @@ public sealed class QuantifiableTests
     #region Tested in parent classes' tests
 
     // Shape(IRootObject rootObject, string paramName)
-    // Enum IMeasureUnit.GetBaseMeasureUnit()
+    // Enum IMeasureUnit.GetBaseMeasureUnitValue()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
-    // decimal IDefaultQuantity.GetDefaultQuantity()
-    // IFactory ICommonBase.GetFactory()
+    // decimal IDefaultQuantity.GetDefaultQuantityValue()
+    // IFactory ICommonBase.GetFactoryValue()
+    // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()
     // TypeCode IQuantityType.GetQuantityTypeCode()
     // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
@@ -49,7 +52,7 @@ public sealed class QuantifiableTests
     [TestCleanup]
     public void TestCleanup()
     {
-        Fields.paramName = null;
+        //Fields.paramName = null;
         _other = null;
         _limiter = null;
     }
@@ -278,23 +281,23 @@ public sealed class QuantifiableTests
     #endregion
     #endregion
 
-    #region MeasureUnitCode GetMeasureUnitCode
-    #region override sealed IMeasureUnitCode.GetMeasureUnitCode()
-    [TestMethod, TestCategory("UnitTest")]
-    public void GetMeasureUnitCode_returns_expected()
-    {
-        // Arrange
-        SetQuantifiableChild();
-        MeasureUnitCode expected = Fields.measureUnitCode;
+    //#region MeasureUnitCode GetMeasureUnitCode
+    //#region override sealed IMeasureUnitCode.GetMeasureUnitCode()
+    //[TestMethod, TestCategory("UnitTest")]
+    //public void GetMeasureUnitCode_returns_expected()
+    //{
+    //    // Arrange
+    //    SetQuantifiableChild();
+    //    MeasureUnitCode expected = Fields.measureUnitCode;
 
-        // Act
-        var actual = _quantifiable.GetMeasureUnitCode();
+    //    // Act
+    //    var actual = _quantifiable.GetMeasureUnitCode();
 
-        // Assert
-        Assert.AreEqual(expected, actual);
-    }
-    #endregion
-    #endregion
+    //    // Assert
+    //    Assert.AreEqual(expected, actual);
+    //}
+    //#endregion
+    //#endregion
 
     #region IQuantifiable GetQuantifiable
     #region IQuantifiable.GetQuantifiable(MeasureUnitCode, decimal)

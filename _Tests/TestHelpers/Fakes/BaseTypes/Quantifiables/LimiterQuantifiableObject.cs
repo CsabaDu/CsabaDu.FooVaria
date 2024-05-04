@@ -4,7 +4,9 @@ public sealed class LimiterQuantifiableObject(IRootObject rootObject, string par
 {
     public static LimiterQuantifiableObject GetLimiterQuantifiableObject(LimitMode limitMode, Enum measureUnit, decimal defaultQuantity, IQuantifiableFactory factory = null)
     {
-        return new(Fields.RootObject, Fields.paramName)
+        DataFields fields = DataFields.Fields;
+
+        return new(fields.RootObject, fields.paramName)
         {
             Return = GetReturn(measureUnit, defaultQuantity, factory),
             LimiterObject = new()

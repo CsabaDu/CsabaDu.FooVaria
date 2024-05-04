@@ -9,6 +9,28 @@ public abstract class CommonDynamicDataSource : DataFields
         return $"{methodInfo.Name}: {(string)args[0]}";
     }
 
+    public IEnumerable<object[]> GetValidateMeasureUnitValidArgs()
+    {
+        testCase = "MeasureUnitCode";
+        measureUnit = RandomParams.GetRandomConstantMeasureUnit();
+        measureUnitCode = GetMeasureUnitCode();
+        context = measureUnitCode;
+        yield return toObjectArray();
+
+        testCase = "measureUnit";
+        context = RandomParams.GetRandomMeasureUnit(measureUnitCode);
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            TestCase_Enum_Enum args = new(testCase, measureUnit, context);
+
+            return args.ToObjectArray();
+        }
+        #endregion
+    }
+
     public IEnumerable<object[]> GetHasMeasureUnitCodeArgs()
     {
         testCase = "Same MeasureUnitCode => true";

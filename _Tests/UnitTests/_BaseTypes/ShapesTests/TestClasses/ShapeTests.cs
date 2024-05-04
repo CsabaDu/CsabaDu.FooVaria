@@ -13,13 +13,13 @@ public sealed class ShapeTests
     // int IComparable<IQuantifiable>.CompareTo(IQuantifiable? _other)
     // bool IEquatable<IQuantifiable>.Equals(IQuantifiable? _other)
     // bool? IFit<IQuantifiable>.FitsIn(IQuantifiable? _other, LimitMode? limitMode)
-    // Enum IMeasureUnit.GetBaseMeasureUnit()
-    // ValueType IQuantity.GetBaseQuantity()
+    // Enum IMeasureUnit.GetBaseMeasureUnitValue()
+    // ValueType IQuantity.GetBaseQuantityValue()
     // decimal IDecimalQuantity.GetDecimalQuantity()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
-    // decimal IDefaultQuantity.GetDefaultQuantity()
-    // IFactory ICommonBase.GetFactory()
+    // decimal IDefaultQuantity.GetDefaultQuantityValue()
+    // IFactory ICommonBase.GetFactoryValue()
     // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()
     // IQuantifiable IQuantifiable.GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
@@ -267,7 +267,7 @@ public sealed class ShapeTests
     public void FitsIn_validArgs_IShape_LimitMode_returns_expected()
     {
         // Arrange
-        SetShapeChild();
+        SetCompleteShapeChild();
 
         Fields.defaultQuantity = _randomParams.GetRandomPositiveDecimal();
         Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
@@ -470,6 +470,8 @@ public sealed class ShapeTests
     }
     #endregion
     #endregion
+
+    // ValidateMeasureUnit
 
     #region void ValidateMeasureUnitCodes
     #region IMeasureUnitCodes.ValidateMeasureUnitCodes(IBaseQuantifiable?, string)

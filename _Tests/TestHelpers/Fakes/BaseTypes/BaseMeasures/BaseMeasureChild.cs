@@ -12,16 +12,16 @@ public class BaseMeasureChild(IRootObject rootObject, string paramName) : BaseMe
     // bool? IFit<IQuantifiable>.FitsIn(IQuantifiable? other, LimitMode? limitMode)
     // IBaseMeasure IBaseMeasure.GetBaseMeasure(ValueType quantity)
     // IBaseMeasure IBaseMeasure.GetBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity)
-    // IBaseMeasurement IBaseMeasure.GetBaseMeasurement()
+    // IBaseMeasurement IBaseMeasure.GetBaseMeasurementValue()
     // IBaseMeasurementFactory IBaseMeasure.GetBaseMeasurementFactory()
-    // Enum IMeasureUnit.GetBaseMeasureUnit()
-    // ValueType IQuantity.GetBaseQuantity()
+    // Enum IMeasureUnit.GetBaseMeasureUnitValue()
+    // ValueType IQuantity.GetBaseQuantityValue()
     // decimal IDecimalQuantity.GetDecimalQuantity()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
-    // decimal IDefaultQuantity.GetDefaultQuantity()
+    // decimal IDefaultQuantity.GetDefaultQuantityValue()
     // decimal IExchangeRate.GetExchangeRate()
-    // IFactory ICommonBase.GetFactory()
+    // IFactory ICommonBase.GetFactoryValue()
     // int IEqualityComparer<IBaseMeasure>.GetHashCode(IBaseMeasure obj)
     // LimitMode? ILimitMode.GetLimitMode()
     // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
@@ -46,21 +46,21 @@ public class BaseMeasureChild(IRootObject rootObject, string paramName) : BaseMe
     #endregion
 
     #region Test helpers
-    internal static DataFields Fields = new();
     public BaseMeasureReturn Return { protected get; set; }
     private LimiterObject LimiterObject {  get; set; }
 
     public static BaseMeasureChild GetBaseMeasureChild(Enum measureUnit, ValueType quantity, RateComponentCode? rateComponentCode = null, LimitMode? limitMode = null)
     {
         IBaseMeasurement baseMeasurement = BaseMeasurementFactory.CreateBaseMeasurement(measureUnit);
+        DataFields fields = DataFields.Fields;
 
-        return new(Fields.RootObject, Fields.paramName)
+        return new(fields.RootObject, fields.paramName)
         {
             Return = new()
             {
-                GetBaseMeasurement = baseMeasurement,
-                GetBaseQuantity = quantity,
-                GetFactory = rateComponentCode.HasValue ?
+                GetBaseMeasurementValue = baseMeasurement,
+                GetBaseQuantityValue = quantity,
+                GetFactoryValue = rateComponentCode.HasValue ?
                     GetBaseMeasureFactoryObject(rateComponentCode.Value)
                     : null,
             },
@@ -82,13 +82,13 @@ public class BaseMeasureChild(IRootObject rootObject, string paramName) : BaseMe
     }
     #endregion
 
-    public override sealed IBaseMeasurement GetBaseMeasurement() => Return.GetBaseMeasurement;
+    public override sealed IBaseMeasurement GetBaseMeasurement() => Return.GetBaseMeasurementValue;
 
     public override sealed IBaseMeasurementFactory GetBaseMeasurementFactory() => BaseMeasurementFactory;
 
-    public override sealed ValueType GetBaseQuantity() => Return.GetBaseQuantity;
+    public override sealed ValueType GetBaseQuantity() => Return.GetBaseQuantityValue;
 
-    public override sealed IFactory GetFactory() => Return.GetFactory;
+    public override sealed IFactory GetFactory() => Return.GetFactoryValue;
 
     public override sealed LimitMode? GetLimitMode() => LimiterObject.GetLimitMode();
 

@@ -1,12 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.Returns
-{
-    public class BaseQuantifiableReturn : MeasurableReturn
-    {
-        public decimal GetDefaultQuantity { get; set; }
-    }
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.Returns;
 
-    public class BaseRateReturn : BaseQuantifiableReturn
-    {
-        public MeasureUnitCode GetNumeratorCode { get; set; }
-    }
+public class BaseQuantifiableReturn : MeasurableReturn
+{
+    public decimal GetDefaultQuantityValue { get; set; }
 }

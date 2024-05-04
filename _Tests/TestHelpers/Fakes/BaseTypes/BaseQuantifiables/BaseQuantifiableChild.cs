@@ -8,11 +8,11 @@ public class BaseQuantifiableChild(IRootObject rootObject, string paramName) : B
     // BaseQuantifiable(IRootObject rootObject, string paramName)
     // bool Measurable.Equals(object? obj)
     // bool? ILimitable.FitsIn(ILimiter limiter)
-    // Enum IMeasureUnit.GetBaseMeasureUnit()
+    // Enum IMeasureUnit.GetBaseMeasureUnitValue()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
-    // decimal IDefaultQuantity.GetDefaultQuantity()
-    // IFactory ICommonBase.GetFactory()
+    // decimal IDefaultQuantity.GetDefaultQuantityValue()
+    // IFactory ICommonBase.GetFactoryValue()
     // int Measurable.GetHashCode()
     // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()
@@ -27,17 +27,18 @@ public class BaseQuantifiableChild(IRootObject rootObject, string paramName) : B
 
     #region Test helpers
     public BaseQuantifiableReturn Return { private get; set; }
-    internal static DataFields Fields = new();
 
     public static BaseQuantifiableChild GetBaseQuantifiableChild(Enum measureUnit, decimal defaultQuantity, IBaseQuantifiableFactory factory = null)
     {
-        return new(Fields.RootObject, Fields.paramName)
+        DataFields fields = DataFields.Fields;
+
+        return new(fields.RootObject, fields.paramName)
         {
             Return = new()
             {
-                GetBaseMeasureUnit = measureUnit,
-                GetDefaultQuantity = defaultQuantity,
-                GetFactory = factory,
+                GetBaseMeasureUnitValue = measureUnit,
+                GetDefaultQuantityValue = defaultQuantity,
+                GetFactoryValue = factory,
             }
         };
     }
@@ -48,9 +49,9 @@ public class BaseQuantifiableChild(IRootObject rootObject, string paramName) : B
     }
     #endregion
 
-    public override sealed Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnit;
+    public override sealed Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnitValue;
 
-    public override sealed IFactory GetFactory() => Return.GetFactory;
+    public override sealed IFactory GetFactory() => Return.GetFactoryValue;
 
-    public override sealed decimal GetDefaultQuantity() => Return.GetDefaultQuantity;
+    public override sealed decimal GetDefaultQuantity() => Return.GetDefaultQuantityValue;
 }

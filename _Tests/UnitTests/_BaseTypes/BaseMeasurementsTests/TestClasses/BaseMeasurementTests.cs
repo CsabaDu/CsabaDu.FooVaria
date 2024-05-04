@@ -8,10 +8,10 @@ public sealed class BaseMeasurementTests
     #region Tested in parent classes' tests
 
     // BaseMeasurement(IRootObject rootObject, string paramName)
-    // Enum IMeasureUnit.GetBaseMeasureUnit()
+    // Enum IMeasureUnit.GetBaseMeasureUnitValue()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
-    // IFactory ICommonBase.GetFactory()
+    // IFactory ICommonBase.GetFactoryValue()
     // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable measurable, string paramName)
@@ -22,6 +22,7 @@ public sealed class BaseMeasurementTests
     #region Private fields
     private BaseMeasurementChild _baseMeasurement;
     private RandomParams _randomParams;
+
     #region Readonly fields
     private readonly DataFields Fields = new();
     #endregion

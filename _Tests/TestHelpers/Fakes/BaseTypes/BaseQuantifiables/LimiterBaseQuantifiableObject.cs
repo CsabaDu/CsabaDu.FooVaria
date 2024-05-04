@@ -4,14 +4,16 @@ public sealed class LimiterBaseQuantifiableObject(IRootObject rootObject, string
 {
     public static LimiterBaseQuantifiableObject GetLimiterBaseQuantifiableObject(LimitMode? limitMode, Enum measureUnit, decimal defaultQuantity, IBaseQuantifiableFactory factory = null)
     {
-        return new(Fields.RootObject, Fields.paramName)
+        DataFields fields = DataFields.Fields;
+
+        return new(fields.RootObject, fields.paramName)
         {
             LimitMode = limitMode,
             Return = new()
             {
-                GetBaseMeasureUnit = measureUnit,
-                GetDefaultQuantity = defaultQuantity,
-                GetFactory = factory,
+                GetBaseMeasureUnitValue = measureUnit,
+                GetDefaultQuantityValue = defaultQuantity,
+                GetFactoryValue = factory,
             }
         };
     }

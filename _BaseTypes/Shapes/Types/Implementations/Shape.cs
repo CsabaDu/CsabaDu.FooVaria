@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
-
-namespace CsabaDu.FooVaria.BaseTypes.Shapes.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.BaseTypes.Shapes.Types.Implementations;
 
 public abstract class Shape(IRootObject rootObject, string paramName) : Spread(rootObject, paramName), IShape
 {
@@ -32,6 +30,11 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
     public override sealed bool HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
     {
         return GetMeasureUnitCodes().Contains(measureUnitCode);
+    }
+
+    public override sealed void ValidateMeasureUnit(Enum? measureUnit, string paramName)
+    {
+        base.ValidateMeasureUnit(measureUnit, paramName);
     }
     #endregion
     #endregion
@@ -69,8 +72,7 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
 
     public IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
     {
-        yield return GetMeasureUnitCode();
-        yield return GetBaseShapeComponents().First().GetMeasureUnitCode();
+        return [GetMeasureUnitCode(), GetBaseShapeComponents().First().GetMeasureUnitCode()];
     }
 
     public IShape? GetShape(params IShapeComponent[] shapeComponents)
