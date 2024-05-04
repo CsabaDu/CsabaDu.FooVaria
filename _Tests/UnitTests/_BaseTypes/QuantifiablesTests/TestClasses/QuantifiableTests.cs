@@ -1,5 +1,3 @@
-using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.Returns;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -24,7 +22,7 @@ public sealed class QuantifiableTests
 
     #region Private fields
     #region Readonly fields
-    private readonly DataFields Fields = new();
+    //private readonly DataFields Fields = new();
     #endregion
 
     #region Static fields
@@ -36,24 +34,23 @@ public sealed class QuantifiableTests
     private QuantifiableChild _other;
     private ILimiter _limiter;
     private RandomParams _randomParams;
+    private DataFields _fields;
     #endregion
 
     #region Initialize
     [TestInitialize]
     public void TestInitialize()
     {
-        _randomParams = Fields.RandomParams;
-        
-        Fields.SetMeasureUnit(_randomParams.GetRandomMeasureUnit());
-
-        Fields.defaultQuantity = _randomParams.GetRandomDecimal();
+        _fields = new();
+        _randomParams = _fields.RandomParams;
+        _fields.SetMeasureUnit(_randomParams.GetRandomMeasureUnit());
+        _fields.defaultQuantity = _randomParams.GetRandomDecimal();
     }
 
     [TestCleanup]
     public void TestCleanup()
     {
-        //Fields.paramName = null;
-        _other = null;
+        _quantifiable = _other = null;
         _limiter = null;
     }
 
@@ -70,7 +67,7 @@ public sealed class QuantifiableTests
     public void CompareTo_nullArg_IQuantifiable_returns_expected()
     {
         // Arrange
-        SetQuantifiableChild(Fields.defaultQuantity);
+        SetQuantifiableChild(_fields.defaultQuantity);
 
         IQuantifiable other = null;
         const int expected = 1;
@@ -88,10 +85,10 @@ public sealed class QuantifiableTests
         // Arrange
         SetQuantifiableChild();
 
-        Fields.measureUnitCode = _randomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
-        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        Fields.defaultQuantity = _randomParams.GetRandomDecimal();
-        IQuantifiable other = GetQuantifiableChild(Fields);
+        _fields.measureUnitCode = _randomParams.GetRandomMeasureUnitCode(_fields.measureUnitCode);
+        _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
+        _fields.defaultQuantity = _randomParams.GetRandomDecimal();
+        IQuantifiable other = GetQuantifiableChild(_fields);
 
         // Act
         void attempt() => _ = _quantifiable.CompareTo(other);
@@ -107,9 +104,9 @@ public sealed class QuantifiableTests
         // Arrange
         SetQuantifiableChild();
 
-        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        Fields.defaultQuantity = _randomParams.GetRandomDecimal();
-        IQuantifiable other = GetQuantifiableChild(Fields);
+        _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
+        _fields.defaultQuantity = _randomParams.GetRandomDecimal();
+        IQuantifiable other = GetQuantifiableChild(_fields);
         int expected = _quantifiable.GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
 
         // Act
@@ -161,7 +158,7 @@ public sealed class QuantifiableTests
     public void FitsIn_invalidArg_ILimiter_returns_null(string testCase, Enum measureUnit, ILimiter limiter)
     {
         // Arrange
-        SetQuantifiableChild(Fields.defaultQuantity, measureUnit);
+        SetQuantifiableChild(_fields.defaultQuantity, measureUnit);
 
         // Act
         var actual = _quantifiable.FitsIn(limiter);
@@ -176,11 +173,11 @@ public sealed class QuantifiableTests
         // Arrange
         SetQuantifiableChild();
 
-        Fields.limitMode = _randomParams.GetRandomLimitMode();
+        _fields.limitMode = _randomParams.GetRandomLimitMode();
         decimal otherQuantity = _randomParams.GetRandomDecimal();
-        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        _limiter = GetLimiterQuantifiableObject(Fields.limitMode.Value, Fields.measureUnit, otherQuantity);
-        bool? expected = Fields.defaultQuantity.FitsIn(otherQuantity, Fields.limitMode);
+        _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
+        _limiter = GetLimiterQuantifiableObject(_fields.limitMode.Value, _fields.measureUnit, otherQuantity);
+        bool? expected = _fields.defaultQuantity.FitsIn(otherQuantity, _fields.limitMode);
 
         // Act
         var actual = _quantifiable.FitsIn(_limiter);
@@ -197,10 +194,10 @@ public sealed class QuantifiableTests
         // Arrange
         SetQuantifiableChild();
 
-        Fields.limitMode = null;
+        _fields.limitMode = null;
 
         // Act
-        var actual = _quantifiable.FitsIn(null, Fields.limitMode);
+        var actual = _quantifiable.FitsIn(null, _fields.limitMode);
 
         // Assert
         Assert.IsTrue(actual);
@@ -211,7 +208,7 @@ public sealed class QuantifiableTests
     public void FitsIn_invalidArgs_IQuantifiable_LimitMode_returns_null(string testCase, Enum measureUnit, LimitMode? limitMode, IQuantifiable other)
     {
         // Arrange
-        SetQuantifiableChild(Fields.defaultQuantity, measureUnit);
+        SetQuantifiableChild(_fields.defaultQuantity, measureUnit);
 
         // Act
         var actual = _quantifiable.FitsIn(other, limitMode);
@@ -227,13 +224,13 @@ public sealed class QuantifiableTests
         SetQuantifiableChild();
 
         decimal otherQuantity = _randomParams.GetRandomDecimal();
-        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        _other = GetQuantifiableChild(otherQuantity, Fields.measureUnit);
-        Fields.limitMode = _randomParams.GetRandomLimitMode();
-        bool? expected = Fields.defaultQuantity.FitsIn(otherQuantity, Fields.limitMode);
+        _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
+        _other = GetQuantifiableChild(otherQuantity, _fields.measureUnit);
+        _fields.limitMode = _randomParams.GetRandomLimitMode();
+        bool? expected = _fields.defaultQuantity.FitsIn(otherQuantity, _fields.limitMode);
 
         // Act
-        var actual = _quantifiable.FitsIn(_other, Fields.limitMode);
+        var actual = _quantifiable.FitsIn(_other, _fields.limitMode);
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -249,8 +246,8 @@ public sealed class QuantifiableTests
         // Arrange
         SetQuantifiableChild();
 
-        TypeCode typeCode = Fields.measureUnitCode.GetQuantityTypeCode();
-        ValueType expected = (ValueType)Fields.defaultQuantity.ToQuantity(typeCode);
+        TypeCode typeCode = _fields.measureUnitCode.GetQuantityTypeCode();
+        ValueType expected = (ValueType)_fields.defaultQuantity.ToQuantity(typeCode);
 
         // Act
         var actual = _quantifiable.GetBaseQuantity();
@@ -269,8 +266,8 @@ public sealed class QuantifiableTests
         // Arrange
         SetQuantifiableChild();
 
-        Fields.quantity = _quantifiable.GetBaseQuantity();
-        decimal expected = (decimal)Fields.quantity.ToQuantity(TypeCode.Decimal);
+        _fields.quantity = _quantifiable.GetBaseQuantity();
+        decimal expected = (decimal)_fields.quantity.ToQuantity(TypeCode.Decimal);
 
         // Act
         var actual = _quantifiable.GetDecimalQuantity();
@@ -288,7 +285,7 @@ public sealed class QuantifiableTests
     //{
     //    // Arrange
     //    SetQuantifiableChild();
-    //    MeasureUnitCode expected = Fields.measureUnitCode;
+    //    MeasureUnitCode expected = _fields.measureUnitCode;
 
     //    // Act
     //    var actual = _quantifiable.GetMeasureUnitCode();
@@ -306,10 +303,10 @@ public sealed class QuantifiableTests
     {
         // Arrange
         QuantifiableFactoryObject factory = new();
-        SetQuantifiableChild(Fields.defaultQuantity, Fields.measureUnit, factory);
+        SetQuantifiableChild(_fields.defaultQuantity, _fields.measureUnit, factory);
 
         // Act
-        var actual = _quantifiable.GetQuantifiable(Fields.measureUnitCode, Fields.defaultQuantity);
+        var actual = _quantifiable.GetQuantifiable(_fields.measureUnitCode, _fields.defaultQuantity);
 
         // Assert
         Assert.IsInstanceOfType<IQuantifiable>(actual);
@@ -354,8 +351,8 @@ public sealed class QuantifiableTests
     public void GetQuantity_invalidArg_TypeCode_throws_InvalidEnumArgumentException(string testCase, TypeCode typeCode)
     {
         // Arrange
-        decimal quantity = typeCode == TypeCode.UInt64 ? _randomParams.GetRandomNegativeDecimal() : Fields.defaultQuantity;
-        SetQuantifiableChild(quantity, Fields.measureUnit);
+        decimal quantity = typeCode == TypeCode.UInt64 ? _randomParams.GetRandomNegativeDecimal() : _fields.defaultQuantity;
+        SetQuantifiableChild(quantity, _fields.measureUnit);
 
         // Act
         void attempt() => _ = _quantifiable.GetQuantity(typeCode);
@@ -388,7 +385,7 @@ public sealed class QuantifiableTests
     public void IsExchangeableTo_arg_Enum_returns_expected(string testCase, bool expected, Enum measureUnit, Enum context)
     {
         // Arrange
-        SetQuantifiableChild(Fields.defaultQuantity, measureUnit);
+        SetQuantifiableChild(_fields.defaultQuantity, measureUnit);
 
         // Act
         var actual = _quantifiable.IsExchangeableTo(context);
@@ -422,10 +419,10 @@ public sealed class QuantifiableTests
         // Arrange
         SetQuantifiableChild();
 
-        Fields.measureUnitCode = _randomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
-        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        Fields.defaultQuantity = _randomParams.GetRandomDecimal();
-        _other = GetQuantifiableChild(Fields);
+        _fields.measureUnitCode = _randomParams.GetRandomMeasureUnitCode(_fields.measureUnitCode);
+        _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
+        _fields.defaultQuantity = _randomParams.GetRandomDecimal();
+        _other = GetQuantifiableChild(_fields);
 
         // Act
         void attempt() => _ = _quantifiable.ProportionalTo(_other);
@@ -441,9 +438,9 @@ public sealed class QuantifiableTests
         // Arrange
         SetQuantifiableChild();
 
-        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        Fields.defaultQuantity = 0;
-        _other = GetQuantifiableChild(Fields);
+        _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
+        _fields.defaultQuantity = 0;
+        _other = GetQuantifiableChild(_fields);
 
         // Act
         void attempt() => _ = _quantifiable.ProportionalTo(_other);
@@ -459,9 +456,9 @@ public sealed class QuantifiableTests
         // Arrange
         SetQuantifiableChild();
 
-        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        Fields.defaultQuantity = _randomParams.GetRandomDecimal();
-        _other = GetQuantifiableChild(Fields);
+        _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
+        _fields.defaultQuantity = _randomParams.GetRandomDecimal();
+        _other = GetQuantifiableChild(_fields);
         decimal expected = Math.Abs(_quantifiable.GetDefaultQuantity() / _other.GetDefaultQuantity());
 
         // Act
@@ -494,13 +491,13 @@ public sealed class QuantifiableTests
     {
         //// Arrange
         SetQuantifiableChild();
-        Fields.roundingMode = _randomParams.GetRandomRoundingMode();
+        _fields.roundingMode = _randomParams.GetRandomRoundingMode();
 
-        Fields.defaultQuantity = Fields.defaultQuantity.Round(Fields.roundingMode);
-        IQuantifiable expected = GetQuantifiableChild(Fields);
+        _fields.defaultQuantity = _fields.defaultQuantity.Round(_fields.roundingMode);
+        IQuantifiable expected = GetQuantifiableChild(_fields);
 
         // Act
-        var actual = _quantifiable.Round(Fields.roundingMode);
+        var actual = _quantifiable.Round(_fields.roundingMode);
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -515,7 +512,7 @@ public sealed class QuantifiableTests
     public void TryExchangeTo_arg_returns_success_out_expected(string testCase, Enum measureUnit, Enum otherMeasureUnit, IQuantifiable expected)
     {
         // Arrange
-        SetQuantifiableChild(Fields.defaultQuantity, measureUnit);
+        SetQuantifiableChild(_fields.defaultQuantity, measureUnit);
 
         // Act
         var success = _quantifiable.TryExchangeTo(otherMeasureUnit, out IQuantifiable actual);
@@ -534,16 +531,16 @@ public sealed class QuantifiableTests
     public void ValidateMeasureUnitCode_invalidArg_MeasureUnitCode_arg_string_throws_InvalidEnumArgumentException(string testCase, Enum measureUnit, MeasureUnitCode measureUnitCode)
     {
         // Arrange
-        Fields.paramName = _randomParams.GetRandomParamName();
+        _fields.paramName = _randomParams.GetRandomParamName();
 
-        SetQuantifiableChild(Fields.defaultQuantity, measureUnit);
+        SetQuantifiableChild(_fields.defaultQuantity, measureUnit);
 
         // Act
-        void attempt() => _quantifiable.ValidateMeasureUnitCode(measureUnitCode, Fields.paramName);
+        void attempt() => _quantifiable.ValidateMeasureUnitCode(measureUnitCode, _fields.paramName);
 
         // Assert
         var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
-        Assert.AreEqual(Fields.paramName, ex.ParamName);
+        Assert.AreEqual(_fields.paramName, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
@@ -551,10 +548,10 @@ public sealed class QuantifiableTests
     {
         // Arrange
         SetQuantifiableChild();
-        Fields.paramName = _randomParams.GetRandomParamName();
+        _fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
-        void attempt() => _quantifiable.ValidateMeasureUnitCode(Fields.measureUnitCode, Fields.paramName);
+        void attempt() => _quantifiable.ValidateMeasureUnitCode(_fields.measureUnitCode, _fields.paramName);
 
         // Assert
         Assert.IsTrue(DoesNotThrowException(attempt));
@@ -618,7 +615,7 @@ public sealed class QuantifiableTests
 
     private void SetQuantifiableChild()
     {
-        _quantifiable = GetQuantifiableChild(Fields);
+        _quantifiable = GetQuantifiableChild(_fields);
     }
     #endregion
 }

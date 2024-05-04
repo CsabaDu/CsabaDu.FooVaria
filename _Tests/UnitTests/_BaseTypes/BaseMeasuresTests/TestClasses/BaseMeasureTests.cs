@@ -32,7 +32,7 @@ public sealed class BaseMeasureTests
 
     #region Private fields
     #region Readonly fields
-    private readonly DataFields Fields = new();
+    //private readonly DataFields Fields = new();
     #endregion
 
     #region Static fields
@@ -44,31 +44,25 @@ public sealed class BaseMeasureTests
     private IBaseMeasurement _baseMeasurement;
     private ILimiter _limiter;
     private RandomParams _randomParams;
+    private DataFields _fields;
     #endregion
 
     #region Initialize
-    //[ClassInitialize]
-    //public static void ClassInitialize(TestContext context)
-    //{
-    //    DynamicDataSource = new();
-    //}
-
     [TestInitialize]
     public void TestInitialize()
     {
-        _randomParams = Fields.RandomParams;
-
-        Fields.SetRandomMeasureUnit(_randomParams.GetRandomConstantMeasureUnitCode());
-        Fields.SetRandomQuantity(_randomParams.GetRandomQuantityTypeCode());
-
-        Fields.rateComponentCode = _randomParams.GetRandomRateComponentCode();
-        Fields.limitMode = _randomParams.GetRandomNullableLimitMode();
+        _fields = new();
+        _randomParams = _fields.RandomParams;
+        _fields.SetRandomMeasureUnit(_randomParams.GetRandomConstantMeasureUnitCode());
+        _fields.SetRandomQuantity(_randomParams.GetRandomQuantityTypeCode());
+        _fields.rateComponentCode = _randomParams.GetRandomRateComponentCode();
+        _fields.limitMode = _randomParams.GetRandomNullableLimitMode();
     }
 
     [TestCleanup]
     public void TestCleanup()
     {
-        Fields.paramName = null;
+        _baseMeasure = null;
         _baseMeasurement = null;
         _limiter = null;
 
@@ -122,7 +116,7 @@ public sealed class BaseMeasureTests
     public void FitsIn_invalidArg_ILimiter_returns_null(string testCase, Enum measureUnit, ILimiter limiter)
     {
         // Arrange
-        SetBaseMeasureChild(measureUnit, Fields.quantity);
+        SetBaseMeasureChild(measureUnit, _fields.quantity);
 
         // Act
         var actual = _baseMeasure.FitsIn(limiter);
@@ -137,13 +131,13 @@ public sealed class BaseMeasureTests
         // Arrange
         SetBaseMeasureChild();
 
-        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        Fields.decimalQuantity = _randomParams.GetRandomDecimal();
-        Fields.rateComponentCode = _randomParams.GetRandomRateComponentCode();
-        Fields.limitMode = _randomParams.GetRandomLimitMode();
-        _limiter = TestHelpers.Fakes.BaseTypes.Quantifiables.LimiterQuantifiableObject.GetLimiterQuantifiableObject(Fields.limitMode.Value, Fields.measureUnit, Fields.decimalQuantity);
-        Fields.decimalQuantity = (_limiter as IQuantifiable).GetDefaultQuantity();
-        bool? expected = Fields.defaultQuantity.FitsIn(Fields.decimalQuantity, Fields.limitMode);
+        _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
+        _fields.decimalQuantity = _randomParams.GetRandomDecimal();
+        _fields.rateComponentCode = _randomParams.GetRandomRateComponentCode();
+        _fields.limitMode = _randomParams.GetRandomLimitMode();
+        _limiter = TestHelpers.Fakes.BaseTypes.Quantifiables.LimiterQuantifiableObject.GetLimiterQuantifiableObject(_fields.limitMode.Value, _fields.measureUnit, _fields.decimalQuantity);
+        _fields.decimalQuantity = (_limiter as IQuantifiable).GetDefaultQuantity();
+        bool? expected = _fields.defaultQuantity.FitsIn(_fields.decimalQuantity, _fields.limitMode);
 
         // Act
         var actual = _baseMeasure.FitsIn(_limiter);
@@ -174,7 +168,7 @@ public sealed class BaseMeasureTests
     //public void FitsIn_invalidArgs_IQuantifiable_LimitMode_returns_null(Enum measureUnit, LimitMode? limitMode, IQuantifiable other)
     //{
     //    // Arrange
-    //    SetBaseMeasureChild(measureUnit, Fields.quantity);
+    //    SetBaseMeasureChild(measureUnit, _fields.quantity);
 
     //    // Act
     //    var actual = _baseMeasure.FitsIn(other, limitMode);
@@ -189,14 +183,14 @@ public sealed class BaseMeasureTests
     //    // Arrange
     //    SetBaseMeasureChild();
 
-    //    Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-    //    Fields.quantity = (ValueType)_randomParams.GetRandomQuantity();
+    //    _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
+    //    _fields.quantity = (ValueType)_randomParams.GetRandomQuantity();
     //    IQuantifiable quantifiable = GetBaseMeasureChild();
-    //    Fields.limitMode = _randomParams.GetRandomLimitMode();
-    //    bool? expected = Fields.defaultQuantity.FitsIn(quantifiable.GetDefaultQuantityValue(), Fields.limitMode);
+    //    _fields.limitMode = _randomParams.GetRandomLimitMode();
+    //    bool? expected = _fields.defaultQuantity.FitsIn(quantifiable.GetDefaultQuantityValue(), _fields.limitMode);
 
     //    // Act
-    //    var actual = _baseMeasure.FitsIn(quantifiable, Fields.limitMode);
+    //    var actual = _baseMeasure.FitsIn(quantifiable, _fields.limitMode);
 
     //    // Assert
     //    Assert.AreEqual(expected, actual);
@@ -212,10 +206,10 @@ public sealed class BaseMeasureTests
         // Arrange
         SetBaseMeasureChild();
 
-        Fields.quantity = null;
+        _fields.quantity = null;
 
         // Act
-        void attempt() => _ = _baseMeasure.GetBaseMeasure(Fields.quantity);
+        void attempt() => _ = _baseMeasure.GetBaseMeasure(_fields.quantity);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
@@ -228,11 +222,11 @@ public sealed class BaseMeasureTests
         // Arrange
         SetBaseMeasureChild();
 
-        Fields.quantityTypeCode = _randomParams.GetRandomInvalidQuantityTypeCode();
-        Fields.quantity = _randomParams.GetRandomValueType(Fields.quantityTypeCode);
+        _fields.quantityTypeCode = _randomParams.GetRandomInvalidQuantityTypeCode();
+        _fields.quantity = _randomParams.GetRandomValueType(_fields.quantityTypeCode);
 
         // Act
-        void attempt() => _ = _baseMeasure.GetBaseMeasure(Fields.quantity);
+        void attempt() => _ = _baseMeasure.GetBaseMeasure(_fields.quantity);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
@@ -245,11 +239,11 @@ public sealed class BaseMeasureTests
         // Arrange
         SetCompleteBaseMeasureChild();
 
-        Fields.quantity = (ValueType)_randomParams.GetRandomQuantity();
-        IBaseMeasure expected = GetCompleteBaseMeasureChild(Fields);
+        _fields.quantity = (ValueType)_randomParams.GetRandomQuantity();
+        IBaseMeasure expected = GetCompleteBaseMeasureChild(_fields);
 
         // Act
-        var actual = _baseMeasure.GetBaseMeasure(Fields.quantity);
+        var actual = _baseMeasure.GetBaseMeasure(_fields.quantity);
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -264,10 +258,10 @@ public sealed class BaseMeasureTests
         // Arrange
         SetBaseMeasureChild();
 
-        Fields.quantity = null;
+        _fields.quantity = null;
 
         // Act
-        void attempt() => _ = _baseMeasure.GetBaseMeasure(baseMeasurement, Fields.quantity);
+        void attempt() => _ = _baseMeasure.GetBaseMeasure(baseMeasurement, _fields.quantity);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
@@ -280,13 +274,13 @@ public sealed class BaseMeasureTests
         // Arrange
         SetBaseMeasureChild();
 
-        Fields.measureUnit = _randomParams.GetRandomMeasureUnit();
-        _baseMeasurement = GetBaseMeasurementChild(Fields.measureUnit);
-        Fields.quantityTypeCode = _randomParams.GetRandomInvalidQuantityTypeCode();
-        Fields.quantity = _randomParams.GetRandomValueType(Fields.quantityTypeCode);
+        _fields.measureUnit = _randomParams.GetRandomMeasureUnit();
+        _baseMeasurement = GetBaseMeasurementChild(_fields.measureUnit);
+        _fields.quantityTypeCode = _randomParams.GetRandomInvalidQuantityTypeCode();
+        _fields.quantity = _randomParams.GetRandomValueType(_fields.quantityTypeCode);
 
         // Act
-        void attempt() => _ = _baseMeasure.GetBaseMeasure(Fields.quantity);
+        void attempt() => _ = _baseMeasure.GetBaseMeasure(_fields.quantity);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
@@ -299,12 +293,12 @@ public sealed class BaseMeasureTests
         // Arrange
         SetCompleteBaseMeasureChild();
 
-        Fields.quantity = (ValueType)_randomParams.GetRandomQuantity();
-        IBaseMeasure expected = GetCompleteBaseMeasureChild(Fields);
-        _baseMeasurement = GetBaseMeasurementChild(Fields.measureUnit);
+        _fields.quantity = (ValueType)_randomParams.GetRandomQuantity();
+        IBaseMeasure expected = GetCompleteBaseMeasureChild(_fields);
+        _baseMeasurement = GetBaseMeasurementChild(_fields.measureUnit);
 
         // Act
-        var actual = _baseMeasure.GetBaseMeasure(_baseMeasurement, Fields.quantity);
+        var actual = _baseMeasure.GetBaseMeasure(_baseMeasurement, _fields.quantity);
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -320,7 +314,7 @@ public sealed class BaseMeasureTests
         // Arrange
         SetCompleteBaseMeasureChild();
 
-        IBaseMeasurement expected = GetBaseMeasurementChild(Fields.measureUnit);
+        IBaseMeasurement expected = GetBaseMeasurementChild(_fields.measureUnit);
 
         // Act
         var actual = _baseMeasure.GetBaseMeasurement();
@@ -356,7 +350,7 @@ public sealed class BaseMeasureTests
         // Arrange
         SetCompleteBaseMeasureChild();
 
-        Enum expected = Fields.measureUnit;
+        Enum expected = _fields.measureUnit;
 
         // Act
         var actual = _baseMeasure.GetBaseMeasureUnit();
@@ -375,7 +369,7 @@ public sealed class BaseMeasureTests
         // Arrange
         SetBaseMeasureChild();
 
-        decimal expected = Fields.defaultQuantity;
+        decimal expected = _fields.defaultQuantity;
 
         // Act
         var actual = _baseMeasure.GetDefaultQuantity();
@@ -394,7 +388,7 @@ public sealed class BaseMeasureTests
         // Arrange
         SetCompleteBaseMeasureChild();
 
-        decimal expected = ExchangeRateCollection[Fields.measureUnit];
+        decimal expected = ExchangeRateCollection[_fields.measureUnit];
 
         // Act
         var actual = _baseMeasure.GetExchangeRate();
@@ -413,10 +407,10 @@ public sealed class BaseMeasureTests
         // Arrange
         SetBaseMeasureChild();
 
-        Fields.measureUnit = _randomParams.GetRandomConstantMeasureUnit();
-        Fields.quantity = (ValueType)_randomParams.GetRandomQuantity();
-        IBaseMeasure baseMeasure = GetCompleteBaseMeasureChild(Fields);
-        int expected = HashCode.Combine(Fields.rateComponentCode, Fields.limitMode, baseMeasure.GetHashCode());
+        _fields.measureUnit = _randomParams.GetRandomConstantMeasureUnit();
+        _fields.quantity = (ValueType)_randomParams.GetRandomQuantity();
+        IBaseMeasure baseMeasure = GetCompleteBaseMeasureChild(_fields);
+        int expected = HashCode.Combine(_fields.rateComponentCode, _fields.limitMode, baseMeasure.GetHashCode());
 
         // Act
         var actual = _baseMeasure.GetHashCode(baseMeasure);
@@ -434,7 +428,7 @@ public sealed class BaseMeasureTests
     {
         // Arrange
         SetCompleteBaseMeasureChild();
-        LimitMode? expected = Fields.limitMode;
+        LimitMode? expected = _fields.limitMode;
 
         // Act
         var actual = _baseMeasure.GetLimitMode();
@@ -471,7 +465,7 @@ public sealed class BaseMeasureTests
         // Arrange
         SetCompleteBaseMeasureChild();
 
-        RateComponentCode expected = Fields.rateComponentCode;
+        RateComponentCode expected = _fields.rateComponentCode;
 
         // Act
         var actual = _baseMeasure.GetRateComponentCode();
@@ -489,7 +483,7 @@ public sealed class BaseMeasureTests
     public void IsExchangeableTo_arg_Enum_returns_expected(string testCase, bool expected, Enum measureUnit, Enum context)
     {
         // Arrange
-        SetBaseMeasureChild(measureUnit, Fields.quantity);
+        SetBaseMeasureChild(measureUnit, _fields.quantity);
 
         // Act
         var actual = _baseMeasure.IsExchangeableTo(context);
@@ -508,10 +502,10 @@ public sealed class BaseMeasureTests
         // Arrange
         SetBaseMeasureChild();
 
-        Fields.roundingMode = SampleParams.NotDefinedRoundingMode;
+        _fields.roundingMode = SampleParams.NotDefinedRoundingMode;
 
         // Act
-        void attempt() => _ = _baseMeasure.Round(Fields.roundingMode);
+        void attempt() => _ = _baseMeasure.Round(_fields.roundingMode);
 
         // Assert
         var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
@@ -524,12 +518,12 @@ public sealed class BaseMeasureTests
         // Arrange
         SetCompleteBaseMeasureChild();
 
-        Fields.roundingMode = _randomParams.GetRandomRoundingMode();
-        Fields.quantity = (ValueType)Fields.quantity.Round(Fields.roundingMode);
-        IQuantifiable expected = GetCompleteBaseMeasureChild(Fields);
+        _fields.roundingMode = _randomParams.GetRandomRoundingMode();
+        _fields.quantity = (ValueType)_fields.quantity.Round(_fields.roundingMode);
+        IQuantifiable expected = GetCompleteBaseMeasureChild(_fields);
 
         // Act
-        var actual = _baseMeasure.Round(Fields.roundingMode);
+        var actual = _baseMeasure.Round(_fields.roundingMode);
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -543,14 +537,14 @@ public sealed class BaseMeasureTests
     {
         // Arrange
         SetBaseMeasureChild();
-        Fields.paramName = _randomParams.GetRandomParamName();
+        _fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
-        void attempt() => _baseMeasure.ValidateMeasureUnit(null, Fields.paramName);
+        void attempt() => _baseMeasure.ValidateMeasureUnit(null, _fields.paramName);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-        Assert.AreEqual(Fields.paramName, ex.ParamName);
+        Assert.AreEqual(_fields.paramName, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
@@ -558,15 +552,15 @@ public sealed class BaseMeasureTests
     {
         // Arrange
         SetBaseMeasureChild();
-        Fields.measureUnitCode = _randomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
-        Enum context = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        _fields.measureUnitCode = _randomParams.GetRandomMeasureUnitCode(_fields.measureUnitCode);
+        Enum context = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
 
         // Act
-        void attempt() => _baseMeasure.ValidateMeasureUnit(context, Fields.paramName);
+        void attempt() => _baseMeasure.ValidateMeasureUnit(context, _fields.paramName);
 
         // Assert
         var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
-        Assert.AreEqual(Fields.paramName, ex.ParamName);
+        Assert.AreEqual(_fields.paramName, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
@@ -574,10 +568,10 @@ public sealed class BaseMeasureTests
     public void ValidateMeasureUnit_validArg_Enum_arg_string_returns(string testCase, Enum measureUnit, Enum context)
     {
         // Arrange
-        SetBaseMeasureChild(measureUnit, Fields.quantity);
+        SetBaseMeasureChild(measureUnit, _fields.quantity);
 
         // Act
-        void attempt() => _baseMeasure.ValidateMeasureUnit(context, Fields.paramName);
+        void attempt() => _baseMeasure.ValidateMeasureUnit(context, _fields.paramName);
 
         // Assert
         Assert.IsTrue(DoesNotThrowException(attempt));
@@ -592,16 +586,16 @@ public sealed class BaseMeasureTests
         // Arrange
         SetBaseMeasureChild();
 
-        Fields.decimalQuantity = GetExchangeRate(Fields.measureUnit, Fields.paramName);
-        Fields.decimalQuantity = _randomParams.GetRandomDecimal(Fields.decimalQuantity);
-        Fields.paramName = _randomParams.GetRandomParamName();
+        _fields.decimalQuantity = GetExchangeRate(_fields.measureUnit, _fields.paramName);
+        _fields.decimalQuantity = _randomParams.GetRandomDecimal(_fields.decimalQuantity);
+        _fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
-        void attempt() => _baseMeasure.ValidateExchangeRate(Fields.decimalQuantity, Fields.paramName);
+        void attempt() => _baseMeasure.ValidateExchangeRate(_fields.decimalQuantity, _fields.paramName);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
-        Assert.AreEqual(Fields.paramName, ex.ParamName);
+        Assert.AreEqual(_fields.paramName, ex.ParamName);
     }
 
 
@@ -611,10 +605,10 @@ public sealed class BaseMeasureTests
         // Arrange
         SetBaseMeasureChild();
 
-        Fields.decimalQuantity = GetExchangeRate(Fields.measureUnit, Fields.paramName);
+        _fields.decimalQuantity = GetExchangeRate(_fields.measureUnit, _fields.paramName);
 
         // Act
-        void attempt() => _baseMeasure.ValidateExchangeRate(Fields.decimalQuantity, Fields.paramName);
+        void attempt() => _baseMeasure.ValidateExchangeRate(_fields.decimalQuantity, _fields.paramName);
 
         // Assert
         Assert.IsTrue(DoesNotThrowException(attempt));
@@ -630,12 +624,12 @@ public sealed class BaseMeasureTests
     }
     private void SetBaseMeasureChild()
     {
-        _baseMeasure = GetBaseMeasureChild(Fields);
+        _baseMeasure = GetBaseMeasureChild(_fields);
     }
 
     private void SetCompleteBaseMeasureChild()
     {
-        _baseMeasure = GetCompleteBaseMeasureChild(Fields);
+        _baseMeasure = GetCompleteBaseMeasureChild(_fields);
     }
 
     private static IEnumerable<object[]> GetValidateMeasureUnitValidArgs()

@@ -22,9 +22,10 @@ public sealed class BaseMeasurementTests
     #region Private fields
     private BaseMeasurementChild _baseMeasurement;
     private RandomParams _randomParams;
+    private DataFields _fields;
 
     #region Readonly fields
-    private readonly DataFields Fields = new();
+    //private readonly DataFields Fields = new();
     #endregion
 
     #region Static fields
@@ -37,14 +38,15 @@ public sealed class BaseMeasurementTests
     [TestInitialize]
     public void TestInitialize()
     {
-        _randomParams = Fields.RandomParams;
-        Fields.SetMeasureUnit(_randomParams.GetRandomConstantMeasureUnit());
+        _fields = new();
+        _randomParams = _fields.RandomParams;
+        _fields.SetMeasureUnit(_randomParams.GetRandomConstantMeasureUnit());
     }
 
     [TestCleanup]
     public void TestCleanup()
     {
-        Fields.paramName = null;
+        _baseMeasurement = null;
 
         RestoreConstantExchangeRates();
     }
@@ -78,9 +80,9 @@ public sealed class BaseMeasurementTests
     {
         // Arrange
         SetBaseMeasurementChild();
-        Fields.measureUnitCode = _randomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
-        Fields.measureUnit = _randomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode);
-        IBaseMeasurement other = GetBaseMeasurementChild(Fields.measureUnit);
+        _fields.measureUnitCode = _randomParams.GetRandomMeasureUnitCode(_fields.measureUnitCode);
+        _fields.measureUnit = _randomParams.GetRandomValidMeasureUnit(_fields.measureUnitCode);
+        IBaseMeasurement other = GetBaseMeasurementChild(_fields.measureUnit);
 
         // Act
         void attempt() => _ = _baseMeasurement.CompareTo(other);
@@ -95,8 +97,8 @@ public sealed class BaseMeasurementTests
     {
         // Arrange
         SetBaseMeasurementChild();
-        Fields.measureUnit = _randomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode);
-        IBaseMeasurement other = GetBaseMeasurementChild(Fields.measureUnit);
+        _fields.measureUnit = _randomParams.GetRandomValidMeasureUnit(_fields.measureUnitCode);
+        IBaseMeasurement other = GetBaseMeasurementChild(_fields.measureUnit);
         int expected = _baseMeasurement.GetExchangeRate().CompareTo(other.GetExchangeRate());
 
         // Act
@@ -148,11 +150,11 @@ public sealed class BaseMeasurementTests
     public void GetBaseMeasurement_arg_creates()
     {
         // Arrange
-        SetBaseMeasurementChild(Fields.measureUnit, new TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementFactoryObject());
-        Fields.measureUnit = _randomParams.GetRandomMeasureUnitOrMeasureUnitCode();
+        SetBaseMeasurementChild(_fields.measureUnit, new TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementFactoryObject());
+        _fields.measureUnit = _randomParams.GetRandomMeasureUnitOrMeasureUnitCode();
 
         // Act
-        var actual = _baseMeasurement.GetBaseMeasurement(Fields.measureUnit);
+        var actual = _baseMeasurement.GetBaseMeasurement(_fields.measureUnit);
 
         // Assert
         Assert.IsInstanceOfType(actual, typeof(IBaseMeasurement));
@@ -168,7 +170,7 @@ public sealed class BaseMeasurementTests
         // Arrange
         SetBaseMeasurementChild();
         IDictionary<object, decimal> expected = ConstantExchangeRateCollection
-            .Where(x => x.Key.GetType().Name == Enum.GetName(Fields.measureUnitCode))
+            .Where(x => x.Key.GetType().Name == Enum.GetName(_fields.measureUnitCode))
             .ToDictionary(x => x.Key, x => x.Value);
 
         // Act
@@ -188,7 +190,7 @@ public sealed class BaseMeasurementTests
         // Arrange
         SetBaseMeasurementChild();
         decimal expected = ExchangeRateCollection
-            .FirstOrDefault(x => x.Key.Equals(Fields.measureUnit))
+            .FirstOrDefault(x => x.Key.Equals(_fields.measureUnit))
             .Value;
 
         // Act
@@ -264,7 +266,7 @@ public sealed class BaseMeasurementTests
     {
         // Arrange
         SetBaseMeasurementChild();
-        TypeCode expected = Fields.measureUnitCode.GetQuantityTypeCode();
+        TypeCode expected = _fields.measureUnitCode.GetQuantityTypeCode();
 
         // Act
         var actual = _baseMeasurement.GetQuantityTypeCode();
@@ -333,9 +335,9 @@ public sealed class BaseMeasurementTests
     {
         // Arrange
         SetBaseMeasurementChild();
-        Fields.measureUnitCode = _randomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
-        Fields.measureUnit = _randomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode);
-        IBaseMeasurement other = GetBaseMeasurementChild(Fields.measureUnit);
+        _fields.measureUnitCode = _randomParams.GetRandomMeasureUnitCode(_fields.measureUnitCode);
+        _fields.measureUnit = _randomParams.GetRandomValidMeasureUnit(_fields.measureUnitCode);
+        IBaseMeasurement other = GetBaseMeasurementChild(_fields.measureUnit);
 
         // Act
         void attempt() => _ = _baseMeasurement.ProportionalTo(other);
@@ -350,8 +352,8 @@ public sealed class BaseMeasurementTests
     {
         // Arrange
         SetBaseMeasurementChild();
-        Fields.measureUnit = _randomParams.GetRandomValidMeasureUnit(Fields.measureUnitCode);
-        IBaseMeasurement other = GetBaseMeasurementChild(Fields.measureUnit);
+        _fields.measureUnit = _randomParams.GetRandomValidMeasureUnit(_fields.measureUnitCode);
+        IBaseMeasurement other = GetBaseMeasurementChild(_fields.measureUnit);
         decimal expected = _baseMeasurement.GetExchangeRate() / other.GetExchangeRate();
 
         // Act
@@ -370,15 +372,15 @@ public sealed class BaseMeasurementTests
     public void ValidateExchangeRate_invalidArg_decimal_arg_string_throws_ArgumentOutOfRangeException(string testCase, Enum measureUnit, decimal exchangeRate)
     {
         // Arrange
-        Fields.paramName = _randomParams.GetRandomParamName();
+        _fields.paramName = _randomParams.GetRandomParamName();
         SetBaseMeasurementChild(measureUnit);
 
         // Act
-        void attempt() => _baseMeasurement.ValidateExchangeRate(exchangeRate, Fields.paramName);
+        void attempt() => _baseMeasurement.ValidateExchangeRate(exchangeRate, _fields.paramName);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
-        Assert.AreEqual(Fields.paramName, ex.ParamName);
+        Assert.AreEqual(_fields.paramName, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
@@ -386,7 +388,7 @@ public sealed class BaseMeasurementTests
     {
         // Arrange
         SetBaseMeasurementChild();
-        decimal exchangeRate = GetExchangeRate(Fields.measureUnit, null);
+        decimal exchangeRate = GetExchangeRate(_fields.measureUnit, null);
 
         // Act
         void attempt() => _baseMeasurement.ValidateExchangeRate(exchangeRate, null);
@@ -404,14 +406,14 @@ public sealed class BaseMeasurementTests
     {
         // Arrange
         SetBaseMeasurementChild();
-        Fields.paramName = _randomParams.GetRandomParamName();
+        _fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
-        void attempt() => _baseMeasurement.ValidateMeasureUnit(null, Fields.paramName);
+        void attempt() => _baseMeasurement.ValidateMeasureUnit(null, _fields.paramName);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-        Assert.AreEqual(Fields.paramName, ex.ParamName);
+        Assert.AreEqual(_fields.paramName, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
@@ -419,15 +421,15 @@ public sealed class BaseMeasurementTests
     {
         // Arrange
         SetBaseMeasurementChild();
-        Fields.measureUnitCode = _randomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
-        Enum context = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
+        _fields.measureUnitCode = _randomParams.GetRandomMeasureUnitCode(_fields.measureUnitCode);
+        Enum context = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
 
         // Act
-        void attempt() => _baseMeasurement.ValidateMeasureUnit(context, Fields.paramName);
+        void attempt() => _baseMeasurement.ValidateMeasureUnit(context, _fields.paramName);
 
         // Assert
         var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
-        Assert.AreEqual(Fields.paramName, ex.ParamName);
+        Assert.AreEqual(_fields.paramName, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
@@ -438,7 +440,7 @@ public sealed class BaseMeasurementTests
         SetBaseMeasurementChild(measureUnit);
 
         // Act
-        void attempt() => _baseMeasurement.ValidateMeasureUnit(context, Fields.paramName);
+        void attempt() => _baseMeasurement.ValidateMeasureUnit(context, _fields.paramName);
 
         // Assert
         Assert.IsTrue(DoesNotThrowException(attempt));
@@ -496,7 +498,7 @@ public sealed class BaseMeasurementTests
 
     private void SetBaseMeasurementChild()
     {
-        _baseMeasurement = GetBaseMeasurementChild(Fields);
+        _baseMeasurement = GetBaseMeasurementChild(_fields);
     }
     #endregion
 }
