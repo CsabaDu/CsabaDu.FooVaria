@@ -20,7 +20,7 @@ public sealed class MeasurableTests
     #endregion
 
     #region Static fields
-    private static DynamicDataSource DynamicDataSource = new();
+    private static readonly DynamicDataSource DynamicDataSource = new();
     private const string DisplayName = nameof(GetDisplayName);
     #endregion
     #endregion

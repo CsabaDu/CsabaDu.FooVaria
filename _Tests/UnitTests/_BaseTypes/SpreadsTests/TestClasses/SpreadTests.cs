@@ -41,7 +41,7 @@ public sealed class SpreadTests
     #endregion
 
     #region Static fields
-    private static DynamicDataSource DynamicDataSource = new();
+    private static readonly DynamicDataSource DynamicDataSource = new();
     private const string DisplayName = nameof(GetDisplayName);
     private const string LogFileName = "testLog_SpreadTestsLogs";
     #endregion
