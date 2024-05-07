@@ -37,12 +37,13 @@ public sealed class SpreadTests
 
     #region Readonly fields
     private DataFields _fields;
-    private readonly DataFields Fields = new();
+    //private readonly DataFields Fields = new();
     #endregion
 
     #region Static fields
     private static DynamicDataSource DynamicDataSource = new();
     private const string DisplayName = nameof(GetDisplayName);
+    private const string LogFileName = "testLog_SpreadTestsLogs";
     #endregion
     #endregion
 
@@ -99,13 +100,19 @@ public sealed class SpreadTests
         // Arrange
         SetSpreadChild();
 
-        ValueType expected = _fields.quantity;
+        ValueType expected = (ValueType)_fields.quantity.ToQuantity(TypeCode.Double);
 
         // Act
         var actual = _spread.GetBaseQuantity();
 
+        if (!expected.Equals(actual))
+        {
+            WriteLog(actual, nameof(GetBaseQuantity_returns_expected));
+        }
+
         // Assert
         Assert.AreEqual(expected, actual);
+        //Assert.AreEqual(expected.Round(RoundingMode.SinglePrecision), actual.Round(RoundingMode.SinglePrecision));
     }
     #endregion
     #endregion
@@ -118,13 +125,18 @@ public sealed class SpreadTests
         // Arrange
         SetSpreadChild();
 
-        double expected = _fields.doubleQuantity;
+        double expected = (double)_fields.doubleQuantity.ToQuantity(TypeCode.Double);
 
-        // Act
         var actual = _spread.GetQuantity();
+
+        if (!expected.Equals(actual))
+        {
+            WriteLog(actual, nameof(GetQuantity_returns_expected));
+        }
 
         // Assert
         Assert.AreEqual(expected, actual);
+        //Assert.AreEqual(expected.Round(RoundingMode.SinglePrecision), actual.Round(RoundingMode.SinglePrecision));
     }
     #endregion
     #endregion
@@ -389,6 +401,31 @@ public sealed class SpreadTests
     private static IEnumerable<object[]> GetValidateSpreadMeasureArgs()
     {
         return DynamicDataSource.GetValidateSpreadMeasureArgs();
+    }
+    #endregion
+
+    #region Logger
+    private void WriteLog(object actual, string testMethodName)
+    {
+        StartLog(LogFileName, testMethodName);
+
+        double doubleQuantity = _fields.doubleQuantity;
+
+        LogVariable(LogFileName, "doubleQuantity", doubleQuantity);
+        LogVariable(LogFileName, "quantity", _fields.quantity);
+
+        Enum measureUnit = _fields.measureUnit;
+
+        LogVariable(LogFileName, "measureUnit", measureUnit);
+        LogVariable(LogFileName, "defaultQuantity", _fields.defaultQuantity);
+        LogVariable(LogFileName, "exchangeRate", BaseMeasurement.GetExchangeRate(measureUnit, string.Empty));
+        LogVariable(LogFileName, "actual", actual);
+
+        double difference = doubleQuantity - (double)actual;
+
+        LogVariable(LogFileName, "difference", difference.ToString("F30"));
+
+        EndLog(LogFileName);
     }
     #endregion
 

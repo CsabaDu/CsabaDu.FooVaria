@@ -1,3 +1,4 @@
+global using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;
 global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Enums;
 global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;

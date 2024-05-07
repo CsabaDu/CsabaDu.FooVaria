@@ -59,7 +59,6 @@ public static class Extensions
     {
         return roundingMode switch
         {
-            //RoundingMode.General => Math.Round(quantity),
             RoundingMode.Ceiling => Math.Ceiling(quantity),
             RoundingMode.Floor => Math.Floor(quantity),
             RoundingMode.Half => getHalfQuantity(),
@@ -144,9 +143,7 @@ public static class Extensions
         {
             return conversionTypeCode switch
             {
-                //TypeCode.Int32 or /*=> Convert.ToInt32(quantity),*/
                 TypeCode.Int64 => Convert.ToInt64(quantity),
-                //TypeCode.UInt32 or
                 TypeCode.UInt64 => getRoundedUIntQuantityOrNull(),
                 TypeCode.Double or
                 TypeCode.Decimal => getRoundedQuantity(),

@@ -13,7 +13,7 @@ public sealed class SpreadMeasureBaseMeasureObject(IRootObject rootObject, strin
             Return = new()
             {
                 GetBaseMeasurementValue = BaseMeasurementFactory.CreateBaseMeasurement(measureUnit),
-                GetBaseQuantityValue = quantity is double ? quantity : Convert.ToDouble(quantity),
+                GetBaseQuantityValue = (double)quantity.ToQuantity(TypeCode.Double),
                 GetFactoryValue = GetBaseMeasureFactoryObject(rateComponentCode ?? RateComponentCode.Numerator),
             }
         };
