@@ -89,12 +89,11 @@ internal abstract class Rate : BaseRate, IRate
     public bool IsExchangeableTo(Enum? context)
     {
         return Denominator.IsExchangeableTo(context);
+    }
 
-        //if (context is null) return false;
-
-        //return Denominator.IsExchangeableTo(context)
-        //    || Numerator.IsExchangeableTo(context)
-        //    || GetLimit()?.IsExchangeableTo(context) == true;
+    public bool IsExchangeableTo(IBaseMeasure? baseMeasure)
+    {
+        return baseMeasure?.IsExchangeableTo(GetDenominatorCode()) == true;
     }
 
     public decimal ProportionalTo(IRate? other)
@@ -204,11 +203,6 @@ internal abstract class Rate : BaseRate, IRate
     #region Abstract methods
     public abstract ILimit? GetLimit();
     public abstract IRate GetRate(IRate rate);
-
-    public bool IsExchangeableTo(IBaseMeasure? baseMeasure)
-    {
-        return baseMeasure?.IsExchangeableTo(GetDenominatorCode()) != true;
-    }
     #endregion
     #endregion
 }
