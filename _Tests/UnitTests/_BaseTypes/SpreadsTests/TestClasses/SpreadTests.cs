@@ -13,8 +13,8 @@ public sealed class SpreadTests
     // decimal IDecimalQuantity.GetDecimalQuantity()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
-    // decimal IDefaultQuantity.GetDefaultQuantity()
-    // IFactory ICommonBase.GetFactory()
+    // decimal IDefaultQuantity.GetDefaultQuantityValue()
+    // IFactory ICommonBase.GetFactoryValue()
     // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()
     // IQuantifiable IQuantifiable.GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
@@ -36,12 +36,14 @@ public sealed class SpreadTests
     private RandomParams _randomParams;
 
     #region Readonly fields
-    private readonly DataFields Fields = new();
+    private DataFields _fields;
+    //private readonly DataFields Fields = new();
     #endregion
 
     #region Static fields
     private static DynamicDataSource DynamicDataSource = new();
     private const string DisplayName = nameof(GetDisplayName);
+    private const string LogFileName = "testLog_SpreadTestsLogs";
     #endregion
     #endregion
 
@@ -49,9 +51,10 @@ public sealed class SpreadTests
     [TestInitialize]
     public void TestInitialize()
     {
-        _randomParams = Fields.RandomParams;
+        _fields = new();
+        _randomParams = _fields.RandomParams;
 
-        Fields.SetBaseMeasureFields(
+        _fields.SetBaseMeasureFields(
             _randomParams.GetRandomSpreadMeasureUnitCode(),
             _randomParams.GetRandomPositiveDouble());
     }
@@ -59,7 +62,7 @@ public sealed class SpreadTests
     [TestCleanup]
     public void TestCleanup()
     {
-        Fields.paramName = null;
+        _spread = null;
         _spreadMeasure = null;
     }
 
@@ -78,7 +81,7 @@ public sealed class SpreadTests
         // Arrange
         SetSpreadChild();
 
-        Enum expected = Fields.measureUnit;
+        Enum expected = _fields.measureUnit;
 
         // Act
         var actual = _spread.GetBaseMeasureUnit();
@@ -97,13 +100,19 @@ public sealed class SpreadTests
         // Arrange
         SetSpreadChild();
 
-        ValueType expected = Fields.quantity;
+        ValueType expected = (ValueType)_fields.quantity.ToQuantity(TypeCode.Double);
 
         // Act
         var actual = _spread.GetBaseQuantity();
 
+        if (!expected.Equals(actual))
+        {
+            WriteLog(actual, nameof(GetBaseQuantity_returns_expected));
+        }
+
         // Assert
         Assert.AreEqual(expected, actual);
+        //Assert.AreEqual(expected.Round(RoundingMode.SinglePrecision), actual.Round(RoundingMode.SinglePrecision));
     }
     #endregion
     #endregion
@@ -116,13 +125,18 @@ public sealed class SpreadTests
         // Arrange
         SetSpreadChild();
 
-        double expected = Fields.doubleQuantity;
+        double expected = (double)_fields.doubleQuantity.ToQuantity(TypeCode.Double);
 
-        // Act
         var actual = _spread.GetQuantity();
+
+        if (!expected.Equals(actual))
+        {
+            WriteLog(actual, nameof(GetQuantity_returns_expected));
+        }
 
         // Assert
         Assert.AreEqual(expected, actual);
+        //Assert.AreEqual(expected.Round(RoundingMode.SinglePrecision), actual.Round(RoundingMode.SinglePrecision));
     }
     #endregion
     #endregion
@@ -135,7 +149,7 @@ public sealed class SpreadTests
         // Arrange
         SetSpreadChild();
 
-        TypeCode expected = Fields.quantityTypeCode;
+        TypeCode expected = _fields.quantityTypeCode;
 
         // Act
         var actual = _spread.GetQuantityTypeCode();
@@ -186,10 +200,10 @@ public sealed class SpreadTests
         // Arrange
         SetCompleteSpreadChild();
 
-        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        Fields.quantity = _randomParams.GetRandomPositiveDouble();
-        _spreadMeasure = GetSpreadMeasureBaseMeasureObject(Fields);
-        ISpread expected = GetSpreadChild(Fields, new SpreadFactoryObject());
+        _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
+        _fields.quantity = _randomParams.GetRandomPositiveDouble();
+        _spreadMeasure = GetSpreadMeasureBaseMeasureObject(_fields);
+        ISpread expected = GetSpreadChild(_fields, new SpreadFactoryObject());
 
         // Act
         var actual = _spread.GetSpread(_spreadMeasure);
@@ -208,7 +222,7 @@ public sealed class SpreadTests
         // Arrange
         SetSpreadChild();
 
-        ISpreadMeasure expected = GetSpreadMeasureBaseMeasureObject(Fields);
+        ISpreadMeasure expected = GetSpreadMeasureBaseMeasureObject(_fields);
 
         // Act
         var actual = _spread.GetSpreadMeasure();
@@ -224,9 +238,9 @@ public sealed class SpreadTests
     public void GetSpreadMeasure_arg_ISpreadMeasure_returns_expected(string testCase, Enum measureUnit, ISpreadMeasure expected, IQuantifiable quantifiable)
     {
         // Arrange
-        SetSpreadChild(measureUnit, Fields.quantity);
+        SetSpreadChild(measureUnit, _fields.quantity);
 
-        Fields.paramName = _randomParams.GetRandomParamName();
+        _fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
         var actual = _spread.GetSpreadMeasure(quantifiable);
@@ -244,7 +258,7 @@ public sealed class SpreadTests
     public void IsExchangeableTo_arg_Enum_returns_expected(string testCase, bool expected, Enum measureUnit, Enum context)
     {
         // Arrange
-        SetSpreadChild(measureUnit, Fields.quantity);
+        SetSpreadChild(measureUnit, _fields.quantity);
 
         // Act
         var actual = _spread.IsExchangeableTo(context);
@@ -263,10 +277,10 @@ public sealed class SpreadTests
         // Arrange
         SetSpreadChild();
 
-        Fields.roundingMode = SampleParams.NotDefinedRoundingMode;
+        _fields.roundingMode = SampleParams.NotDefinedRoundingMode;
 
         // Act
-        void attempt() => _ = _spread.Round(Fields.roundingMode);
+        void attempt() => _ = _spread.Round(_fields.roundingMode);
 
         // Assert
         var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
@@ -279,12 +293,12 @@ public sealed class SpreadTests
         // Arrange
         SetCompleteSpreadChild();
 
-        Fields.roundingMode = _randomParams.GetRandomRoundingMode();
-        Fields.quantity = (ValueType)Fields.quantity.Round(Fields.roundingMode);
-        IQuantifiable expected = GetCompleteSpreadChild(Fields);
+        _fields.roundingMode = _randomParams.GetRandomRoundingMode();
+        _fields.quantity = (ValueType)_fields.quantity.Round(_fields.roundingMode);
+        IQuantifiable expected = GetCompleteSpreadChild(_fields);
 
         // Act
-        var actual = _spread.Round(Fields.roundingMode);
+        var actual = _spread.Round(_fields.roundingMode);
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -301,14 +315,14 @@ public sealed class SpreadTests
         SetSpreadChild();
 
         _spreadMeasure = null;
-        Fields.paramName = _randomParams.GetRandomParamName();
+        _fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
-        void attempt() => _spread.ValidateSpreadMeasure(_spreadMeasure, Fields.paramName);
+        void attempt() => _spread.ValidateSpreadMeasure(_spreadMeasure, _fields.paramName);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-        Assert.AreEqual(Fields.paramName, ex.ParamName);
+        Assert.AreEqual(_fields.paramName, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
@@ -316,16 +330,16 @@ public sealed class SpreadTests
     public void ValidateSpreadMeasure_invalidArg_ISpreadMeasure_throws_ArgumentOutOfRangeException(string testCase, Enum measureUnit, ISpreadMeasure spreadMeasure)
     {
         // Arrange
-        SetSpreadChild(measureUnit, Fields.quantity);
+        SetSpreadChild(measureUnit, _fields.quantity);
 
-        Fields.paramName = _randomParams.GetRandomParamName();
+        _fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
-        void attempt() => _spread.ValidateSpreadMeasure(spreadMeasure, Fields.paramName);
+        void attempt() => _spread.ValidateSpreadMeasure(spreadMeasure, _fields.paramName);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
-        Assert.AreEqual(Fields.paramName, ex.ParamName);
+        Assert.AreEqual(_fields.paramName, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
@@ -334,17 +348,17 @@ public sealed class SpreadTests
         // Arrange
         SetSpreadChild();
 
-        Fields.measureUnitCode = SampleParams.GetOtherSpreadMeasureUnitCode(Fields.measureUnitCode);
-        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        _spreadMeasure = GetSpreadMeasureBaseMeasureObject(Fields); 
-        Fields.paramName = _randomParams.GetRandomParamName();
+        _fields.measureUnitCode = SampleParams.GetOtherSpreadMeasureUnitCode(_fields.measureUnitCode);
+        _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
+        _spreadMeasure = GetSpreadMeasureBaseMeasureObject(_fields); 
+        _fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
-        void attempt() => _spread.ValidateSpreadMeasure(_spreadMeasure, Fields.paramName);
+        void attempt() => _spread.ValidateSpreadMeasure(_spreadMeasure, _fields.paramName);
 
         // Assert
         var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
-        Assert.AreEqual(Fields.paramName, ex.ParamName);
+        Assert.AreEqual(_fields.paramName, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
@@ -353,12 +367,12 @@ public sealed class SpreadTests
         // Arrange
         SetSpreadChild();
 
-        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        Fields.quantity = _randomParams.GetRandomPositiveDouble();
-        _spreadMeasure = GetSpreadMeasureBaseMeasureObject(Fields);
+        _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
+        _fields.quantity = _randomParams.GetRandomPositiveDouble();
+        _spreadMeasure = GetSpreadMeasureBaseMeasureObject(_fields);
 
         // Act
-        void attempt() => _spread.ValidateSpreadMeasure(_spreadMeasure, Fields.paramName);
+        void attempt() => _spread.ValidateSpreadMeasure(_spreadMeasure, _fields.paramName);
 
         // Assert
         Assert.IsTrue(DoesNotThrowException(attempt));
@@ -390,6 +404,31 @@ public sealed class SpreadTests
     }
     #endregion
 
+    #region Logger
+    private void WriteLog(object actual, string testMethodName)
+    {
+        StartLog(LogFileName, testMethodName);
+
+        double doubleQuantity = _fields.doubleQuantity;
+
+        LogVariable(LogFileName, "doubleQuantity", doubleQuantity);
+        LogVariable(LogFileName, "quantity", _fields.quantity);
+
+        Enum measureUnit = _fields.measureUnit;
+
+        LogVariable(LogFileName, "measureUnit", measureUnit);
+        LogVariable(LogFileName, "defaultQuantity", _fields.defaultQuantity);
+        LogVariable(LogFileName, "exchangeRate", BaseMeasurement.GetExchangeRate(measureUnit, string.Empty));
+        LogVariable(LogFileName, "actual", actual);
+
+        double difference = doubleQuantity - (double)actual;
+
+        LogVariable(LogFileName, "difference", difference.ToString("F30"));
+
+        EndLog(LogFileName);
+    }
+    #endregion
+
     private void SetSpreadChild(Enum measureUnit, ValueType quantity, ISpreadFactory factory = null, RateComponentCode? rateComponentCode = null)
     {
         _spread = GetSpreadChild(measureUnit, quantity, factory, rateComponentCode);
@@ -402,12 +441,12 @@ public sealed class SpreadTests
 
     private void SetSpreadChild()
     {
-        _spread = GetSpreadChild(Fields);
+        _spread = GetSpreadChild(_fields);
     }
 
     private void SetCompleteSpreadChild()
     {
-        _spread = GetCompleteSpreadChild(Fields);
+        _spread = GetCompleteSpreadChild(_fields);
     }
     #endregion
 }

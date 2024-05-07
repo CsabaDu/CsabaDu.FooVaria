@@ -2,5 +2,5 @@
 
 public class BaseMeasurementReturn : MeasurableReturn
 {
-    public string GetName { get; set; }
+    public string GetNameValue { get; set; }
 }

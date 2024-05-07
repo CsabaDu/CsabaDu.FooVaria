@@ -292,7 +292,7 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
     #endregion
 
     #region Virtual methods
-    public virtual MeasureUnitCode GetMeasureUnitCode()
+    public /*virtual*/ MeasureUnitCode GetMeasureUnitCode()
     {
         return GetMeasureUnitCode(GetBaseMeasureUnit());
     }

@@ -5,8 +5,9 @@ public sealed class LimiterShapeObject(IRootObject rootObject, string paramName)
     public static LimiterShapeObject GetLimiterShapeObject(LimitMode limitMode, IShapeComponent shapeComponent, IShapeFactory factory = null)
     {
         IShape baseShape = GetShapeChild(shapeComponent);
+        DataFields fields = DataFields.Fields;
 
-        return new(Fields.RootObject, Fields.paramName)
+        return new(fields.RootObject, fields.paramName)
         {
             Return = GetReturn(shapeComponent, baseShape, factory),
             SpreadMeasure = GetSpreadMeasure(shapeComponent),

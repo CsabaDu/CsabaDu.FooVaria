@@ -7,7 +7,9 @@ internal sealed class BaseMeasureFactoryObject(RateComponentCode rateComponentCo
 
     public static BaseMeasureFactoryObject GetBaseMeasureFactoryObject()
     {
-        RateComponentCode rateComponentCode = Fields.RandomParams.GetRandomRateComponentCode();
+        DataFields fields = DataFields.Fields;
+
+        RateComponentCode rateComponentCode = fields.RandomParams.GetRandomRateComponentCode();
 
         return GetBaseMeasureFactoryObject(rateComponentCode);
     }
@@ -22,23 +24,27 @@ internal sealed class BaseMeasureFactoryObject(RateComponentCode rateComponentCo
 
     public IBaseMeasure CreateBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity)
     {
-        return new BaseMeasureChild(Fields.RootObject, Fields.paramName)
+        DataFields fields = DataFields.Fields;
+
+        return new BaseMeasureChild(fields.RootObject, fields.paramName)
         {
             Return = new()
             {
-                GetBaseMeasurement = baseMeasurement,
-                GetBaseQuantity = quantity,
-                GetFactory = this,
+                GetBaseMeasurementValue = baseMeasurement,
+                GetBaseQuantityValue = quantity,
+                GetFactoryValue = this,
             }
         };
     }
 
     public IQuantifiable CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
     {
-        IBaseMeasurement baseMeasurement = BaseMeasurementFactory.CreateBaseMeasurement(measureUnitCode);
-        Fields.typeCode = measureUnitCode.GetQuantityTypeCode();
-        Fields.quantity = (ValueType)defaultQuantity.ToQuantity(Fields.typeCode);
+        DataFields fields = DataFields.Fields;
 
-        return CreateBaseMeasure(baseMeasurement, Fields.quantity);
+        IBaseMeasurement baseMeasurement = BaseMeasurementFactory.CreateBaseMeasurement(measureUnitCode);
+        fields.typeCode = measureUnitCode.GetQuantityTypeCode();
+        fields.quantity = (ValueType)defaultQuantity.ToQuantity(fields.typeCode);
+
+        return CreateBaseMeasure(baseMeasurement, fields.quantity);
     }
 }

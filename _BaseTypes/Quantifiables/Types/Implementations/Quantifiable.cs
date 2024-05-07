@@ -14,10 +14,10 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
     }
 
     #region Sealed methods
-    public override sealed MeasureUnitCode GetMeasureUnitCode()
-    {
-        return base.GetMeasureUnitCode();
-    }
+    //public override sealed MeasureUnitCode GetMeasureUnitCode()
+    //{
+    //    return base.GetMeasureUnitCode();
+    //}
 
     public override sealed void ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
     {

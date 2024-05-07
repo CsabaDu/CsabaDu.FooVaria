@@ -10,13 +10,13 @@ public class QuantifiableChild(IRootObject rootObject, string paramName) : Quant
     // IQuantifiable IExchange<IQuantifiable, Enum>.ExchangeTo(Enum context)
     // bool? ILimitable.FitsIn(ILimiter limiter)
     // bool? IFit<IQuantifiable>.FitsIn(IQuantifiable other, LimitMode? limitMode)
-    // Enum IMeasureUnit.GetBaseMeasureUnit()
-    // ValueType IQuantity.GetBaseQuantity()
+    // Enum IMeasureUnit.GetBaseMeasureUnitValue()
+    // ValueType IQuantity.GetBaseQuantityValue()
     // decimal IDecimalQuantity.GetDecimalQuantity()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
-    // decimal IDefaultQuantity.GetDefaultQuantity()
-    // IFactory ICommonBase.GetFactory()
+    // decimal IDefaultQuantity.GetDefaultQuantityValue()
+    // IFactory ICommonBase.GetFactoryValue()
     // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()
     // IQuantifiable IQuantifiable.GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
@@ -36,20 +36,22 @@ public class QuantifiableChild(IRootObject rootObject, string paramName) : Quant
 
     #region Test helpers
     public QuantifiableReturn Return { private get; set; }
-    internal static DataFields Fields = new();
+
     protected static QuantifiableReturn GetReturn(Enum measureUnit, decimal defaultQuantity, IQuantifiableFactory factory)
     {
         return new()
         {
-            GetDefaultQuantity = defaultQuantity,
-            GetBaseMeasureUnit = measureUnit,
-            GetFactory = factory,
+            GetDefaultQuantityValue = defaultQuantity,
+            GetBaseMeasureUnitValue = measureUnit,
+            GetFactoryValue = factory,
         };
     }
 
     public static QuantifiableChild GetQuantifiableChild(decimal defaultQuantity, Enum measureUnit = null, IQuantifiableFactory factory = null)
     {
-        return new(Fields.RootObject, Fields.paramName)
+        DataFields fields = DataFields.Fields;
+
+        return new(fields.RootObject, fields.paramName)
         {
             Return = GetReturn(measureUnit, defaultQuantity, factory),
         };
@@ -61,19 +63,19 @@ public class QuantifiableChild(IRootObject rootObject, string paramName) : Quant
     }
     #endregion
 
-    public override sealed Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnit;
+    public override sealed Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnitValue;
 
     public override sealed ValueType GetBaseQuantity()
     {
-        ValueType quantity = Return.GetDefaultQuantity;
+        ValueType quantity = Return.GetDefaultQuantityValue;
         TypeCode typeCode = GetQuantityTypeCode();
 
         return (ValueType)quantity.ToQuantity(typeCode);
     }
 
-    public override sealed decimal GetDefaultQuantity() => Return.GetDefaultQuantity;
+    public override sealed decimal GetDefaultQuantity() => Return.GetDefaultQuantityValue;
 
-    public override sealed IFactory GetFactory() => Return.GetFactory;
+    public override sealed IFactory GetFactory() => Return.GetFactoryValue;
 
     public override sealed IQuantifiable Round(RoundingMode roundingMode)
     {
@@ -92,7 +94,7 @@ public class QuantifiableChild(IRootObject rootObject, string paramName) : Quant
         {
             Enum measureUnit = GetMeasureUnitElements(context, nameof(context)).MeasureUnit;
 
-            return GetQuantifiableChild(Return.GetDefaultQuantity, measureUnit);
+            return GetQuantifiableChild(Return.GetDefaultQuantityValue, measureUnit);
         }
         #endregion
     }

@@ -2,6 +2,8 @@
 {
     public class CommonBaseReturn
     {
-        public IFactory GetFactory { get; set; }
+        //internal static readonly DataFields Fields = new();
+
+        public IFactory GetFactoryValue { get; set; }
     }
 }

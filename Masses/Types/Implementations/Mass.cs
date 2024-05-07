@@ -79,10 +79,10 @@ internal abstract class Mass : BaseQuantifiable, IMass
         return factory.CreateDensity(this);
     }
 
-    public override MeasureUnitCode GetMeasureUnitCode()
-    {
-        return Weight.GetMeasureUnitCode();
-    }
+    //public override MeasureUnitCode GetMeasureUnitCode()
+    //{
+    //    return Weight.GetMeasureUnitCode();
+    //}
 
     public MeasureUnitCode GetMeasureUnitCode(decimal ratio)
     {
@@ -265,7 +265,7 @@ internal abstract class Mass : BaseQuantifiable, IMass
     #region Virtual methods
     public virtual IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
     {
-        yield return GetMeasureUnitCode();
+        yield return Weight.GetMeasureUnitCode();
         yield return GetBody().GetMeasureUnitCode();
     }
 

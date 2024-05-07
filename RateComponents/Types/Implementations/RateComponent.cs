@@ -82,11 +82,6 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
         {
             return Measurement;
         }
-
-        public override sealed void ValidateMeasureUnit(Enum? measureUnit, string paramName)
-        {
-            Measurement.ValidateMeasureUnit(measureUnit, paramName);
-        }
         #endregion
         #endregion
         #endregion

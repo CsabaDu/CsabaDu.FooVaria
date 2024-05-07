@@ -88,11 +88,13 @@ internal abstract class Rate : BaseRate, IRate
 
     public bool IsExchangeableTo(Enum? context)
     {
-        if (context is null) return false;
+        return Denominator.IsExchangeableTo(context);
 
-        return Denominator.IsExchangeableTo(context)
-            || Numerator.IsExchangeableTo(context)
-            || GetLimit()?.IsExchangeableTo(context) == true;
+        //if (context is null) return false;
+
+        //return Denominator.IsExchangeableTo(context)
+        //    || Numerator.IsExchangeableTo(context)
+        //    || GetLimit()?.IsExchangeableTo(context) == true;
     }
 
     public decimal ProportionalTo(IRate? other)
@@ -148,16 +150,16 @@ internal abstract class Rate : BaseRate, IRate
 
     public void ValidateDenominator(IMeasurable denominator, string paramName)
     {
-        MeasureUnitCode measureUnitCode = NullChecked(denominator, paramName).GetMeasureUnitCode();
+        MeasureUnitCode denominatorCode = NullChecked(denominator, paramName).GetMeasureUnitCode();
 
-        if (!HasMeasureUnitCode(measureUnitCode))
+        if (denominator is IQuantifiable or IBaseMeasurement)
         {
-            throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
+            if (IsExchangeableTo(denominatorCode)) return;
+
+            throw InvalidMeasureUnitCodeEnumArgumentException(denominatorCode, paramName);
         }
 
-        if (denominator is IQuantifiable or IBaseMeasurement) return;
-
-        ArgumentTypeOutOfRangeException(paramName, denominator);
+        throw ArgumentTypeOutOfRangeException(paramName, denominator);
     }
 
     #region Override methods
@@ -203,14 +205,9 @@ internal abstract class Rate : BaseRate, IRate
     public abstract ILimit? GetLimit();
     public abstract IRate GetRate(IRate rate);
 
-    public bool IsExchangeableTo(IMeasurement? measurement)
-    {
-        return measurement?.IsExchangeableTo(GetMeasureUnitCode()) != true;
-    }
-
     public bool IsExchangeableTo(IBaseMeasure? baseMeasure)
     {
-        return baseMeasure?.IsExchangeableTo(GetMeasureUnitCode()) != true;
+        return baseMeasure?.IsExchangeableTo(GetDenominatorCode()) != true;
     }
     #endregion
     #endregion

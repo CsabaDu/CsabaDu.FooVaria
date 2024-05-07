@@ -31,12 +31,12 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
         return Factory;
     }
 
-    public override sealed MeasureUnitCode GetMeasureUnitCode()
-    {
-        Enum measuureUnit = GetBaseMeasureUnit();
+    //public override sealed MeasureUnitCode GetMeasureUnitCode()
+    //{
+    //    Enum measuureUnit = GetBaseMeasureUnitValue();
 
-        return GetMeasureUnitCode(measuureUnit);
-    }
+    //    return GetMeasureUnitCode(measuureUnit);
+    //}
 
     public override sealed string GetName()
     {

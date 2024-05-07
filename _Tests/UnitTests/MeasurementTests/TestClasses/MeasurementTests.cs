@@ -32,7 +32,7 @@
 //    private MeasurementChild _measurement;
 
 //    #region Readonly fields
-//    private readonly DataFields Fields = new();
+//    private readonly Fields Fields = new();
 //    #endregion
 
 //    #region Static fields
@@ -46,7 +46,7 @@
 
 //    // int IComparable<IBaseMeasurement>.CompareTo(IBaseMeasurement? other)
 //    // bool IEquatable<IBaseMeasurement>.Equals(IBaseMeasurement other)
-//    // IBaseMeasurement IBaseMeasurement.GetBaseMeasurement(Enum context)
+//    // IBaseMeasurement IBaseMeasurement.GetBaseMeasurementValue(Enum context)
 //    // IDictionary<object, decimal> IConstantExchangeRateCollection.GetConstantExchangeRateCollection()
 //    // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
 //    // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
@@ -65,20 +65,20 @@
 //    #endregion
 
 //    // Measurement(IMeasurementFactory factory, Enum measureUnit)
-//    // Enum IMeasureUnit.GetBaseMeasureUnit()
+//    // Enum IMeasureUnit.GetBaseMeasureUnitValue()
 //    // string? ICustomNameCollection.GetCustomName()
 //    // IDictionary<object, string> ICustomNameCollection.GetCustomNameCollection()
 //    // IMeasurement IDefaultMeasurable<IMeasurement>.GetDefault()
 //    // IMeasurable? IDefaultMeasurable.GetDefault(MeasureUnitCode measureUnitCode)
 //    // string IMeasureUnitCollection.GetDefaultName()
-//    // IFactory ICommonBase.GetFactory()
+//    // IFactory ICommonBase.GetFactoryValue()
 //    // IMeasurement IMeasurement.GetMeasurement(Enum measureUnit)
 //    // IMeasurement IMeasurement.GetMeasurement(IMeasurement other)
 //    // IMeasurement? IMeasurement.GetMeasurement(string customName, MeasureUnitCode measureUnitCode, decimal decimalQuantity)
 //    // IMeasurement? IMeasurement.GetMeasurement(Enum measureUnit, decimal decimalQuantity, string customName)
 //    // IMeasurement IMeasurement.GetMeasurement(string name)
 //    // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
-//    // string INamed.GetName()
+//    // string INamed.GetNameValue()
 //    // void ICustomNameCollection.SetCustomName(string customName)
 //    // void ICustomNameCollection.SetOrReplaceCustomName(string customName)
 //    // bool IMeasurement.TryGetMeasurement(decimal decimalQuantity, out IMeasurement? measurement)
@@ -93,9 +93,9 @@
 //    //    {
 //    //        Return = new()
 //    //        {
-//    //            GetBaseMeasureUnit = measureUnit,
-//    //            GetFactory = factory,
-//    //            GetName = measureUnitName,
+//    //            GetBaseMeasureUnitValue = measureUnit,
+//    //            GetFactoryValue = factory,
+//    //            GetNameValue = measureUnitName,
 //    //        }
 //    //    };
 //    //}

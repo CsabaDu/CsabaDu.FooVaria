@@ -9,16 +9,16 @@ public class SpreadChild(IRootObject rootObject, string paramName) : Spread(root
     // IQuantifiable IQuantifiable.GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
     // void IBaseQuantifiable.ValidateQuantity(ValueType? quantity, string paramName)
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable? measurable, string paramName)
-    // IFactory ICommonBase.GetFactory()
+    // IFactory ICommonBase.GetFactoryValue()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
     // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum? measureUnit, string paramName)
     // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
     // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
     // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
-    // Enum IMeasureUnit.GetBaseMeasureUnit()
+    // Enum IMeasureUnit.GetBaseMeasureUnitValue()
     // TypeCode IQuantityType.GetQuantityTypeCode()
-    // decimal IDefaultQuantity.GetDefaultQuantity()
+    // decimal IDefaultQuantity.GetDefaultQuantityValue()
     // Type IMeasureUnit.GetMeasureUnitType()
     // bool? ILimitable.FitsIn(ILimiter? limiter)
     // bool ITryExchange<IQuantifiable, Enum>.TryExchangeTo(Enum context, out IQuantifiable? exchanged)
@@ -35,19 +35,20 @@ public class SpreadChild(IRootObject rootObject, string paramName) : Spread(root
     // MeasureUnitCode ISpreadMeasure.GetSpreadMeasureUnitCode()
     // void ISpreadMeasure.ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)
     // double IQuantity<double>.GetQuantity()
-    // ValueType IQuantity.GetBaseQuantity()
+    // ValueType IQuantity.GetBaseQuantityValue()
     // object IQuantity.GetQuantity(TypeCode quantityTypeCode)
 
     #endregion
 
     #region Test helpers
-    private static DataFields Fields = new();
     public SpreadReturn Return { private get; set; } = new();
     protected ISpreadMeasure SpreadMeasure { get; set; }
 
     public static SpreadChild GetSpreadChild(Enum measureUnit, ValueType quantity, ISpreadFactory factory = null, RateComponentCode? rateComponentCode = null)
     {
-        return new(Fields.RootObject, Fields.paramName)
+        DataFields fields = DataFields.Fields;
+
+        return new(fields.RootObject, fields.paramName)
         {
             Return = GetReturn(factory),
             SpreadMeasure = GetSpreadMeasureBaseMeasureObject(measureUnit, quantity, rateComponentCode),
@@ -56,7 +57,9 @@ public class SpreadChild(IRootObject rootObject, string paramName) : Spread(root
 
     public static SpreadChild GetSpreadChild(ISpreadMeasure spreadMeasure, ISpreadFactory factory = null)
     {
-        return new(Fields.RootObject, Fields.paramName)
+        DataFields fields = DataFields.Fields;
+
+        return new(fields.RootObject, fields.paramName)
         {
             Return = GetReturn(factory),
             SpreadMeasure = spreadMeasure,
@@ -74,7 +77,7 @@ public class SpreadChild(IRootObject rootObject, string paramName) : Spread(root
     }
     #endregion
 
-    public override IFactory GetFactory() => Return.GetFactory;
+    public override IFactory GetFactory() => Return.GetFactoryValue;
 
     public override ISpreadMeasure GetSpreadMeasure() => SpreadMeasure;
 
@@ -96,7 +99,7 @@ public class SpreadChild(IRootObject rootObject, string paramName) : Spread(root
     {
         return new()
         {
-            GetFactory = factory,
+            GetFactoryValue = factory,
         };
     }
 }

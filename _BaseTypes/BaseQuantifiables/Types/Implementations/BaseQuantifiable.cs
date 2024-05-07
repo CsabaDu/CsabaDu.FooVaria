@@ -130,13 +130,23 @@ public abstract class BaseQuantifiable(IRootObject rootObject, string paramName)
         {
             foreach (MeasureUnitCode item in other.GetMeasureUnitCodes())
             {
-                ValidateMeasureUnitCode(measureUnitCodes, item, paramName);
+                validateMeasureUnitCode(item);
             }
         }
+        else
+        {
+            MeasureUnitCode measureUnitCode = NullChecked(baseQuantifiable, paramName).GetMeasureUnitCode();
 
-        MeasureUnitCode measureUnitCode = NullChecked(baseQuantifiable, paramName).GetMeasureUnitCode();
+            validateMeasureUnitCode(measureUnitCode);
+        }
 
-        ValidateMeasureUnitCode(measureUnitCodes, measureUnitCode, paramName);
+
+        #region Local methods
+        void validateMeasureUnitCode(MeasureUnitCode measureUnitCode)
+        {
+            ValidateMeasureUnitCode(measureUnitCodes, measureUnitCode, paramName);
+        }
+        #endregion
     }
 
     protected static void ValidatePositiveQuantity(ValueType? quantity, string paramName)

@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\_BaseTypes\BaseMeasurements\BaseMeasurements.csproj" />
+    <ProjectReference Include="..\..\..\_BaseTypes\BaseRates\BaseRates.csproj" />
     <ProjectReference Include="..\..\..\_BaseTypes\Shapes\Shapes.csproj" />
   </ItemGroup>
 

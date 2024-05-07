@@ -2,6 +2,8 @@
 
 public class DataFields
 {
+    internal static readonly DataFields Fields = new();
+
     #region Readonly fields
     public readonly RandomParams RandomParams = new();
     public readonly RootObject RootObject = new();
@@ -16,6 +18,7 @@ public class DataFields
     public LimitMode? limitMode;
     public Enum measureUnit;
     public MeasureUnitCode measureUnitCode;
+    public MeasureUnitCode denominatorCode;
     public Type measureUnitType;
     public object obj;
     public string paramName;

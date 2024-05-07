@@ -2,7 +2,6 @@
 
 public enum RoundingMode
 {
-    //General,
     DoublePrecision,
     SinglePrecision,
     Floor,

@@ -1,7 +1,3 @@
-using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types;
-using CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors;
-using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
-using CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods;
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -13,13 +9,13 @@ public sealed class ShapeTests
     // int IComparable<IQuantifiable>.CompareTo(IQuantifiable? _other)
     // bool IEquatable<IQuantifiable>.Equals(IQuantifiable? _other)
     // bool? IFit<IQuantifiable>.FitsIn(IQuantifiable? _other, LimitMode? limitMode)
-    // Enum IMeasureUnit.GetBaseMeasureUnit()
-    // ValueType IQuantity.GetBaseQuantity()
+    // Enum IMeasureUnit.GetBaseMeasureUnitValue()
+    // ValueType IQuantity.GetBaseQuantityValue()
     // decimal IDecimalQuantity.GetDecimalQuantity()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
-    // decimal IDefaultQuantity.GetDefaultQuantity()
-    // IFactory ICommonBase.GetFactory()
+    // decimal IDefaultQuantity.GetDefaultQuantityValue()
+    // IFactory ICommonBase.GetFactoryValue()
     // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()
     // IQuantifiable IQuantifiable.GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
@@ -47,12 +43,13 @@ public sealed class ShapeTests
     private ShapeChild _other;
     private IShapeComponent _shapeComponent;
     private ILimiter _limiter;
-    private RandomParams _randomParams;
     private IBaseQuantifiable _baseQuantifiable;
     private IQuantifiable _quantifiable;
+    private RandomParams _randomParams;
+    private DataFields _fields;
 
     #region Readonly fields
-    private readonly DataFields Fields = new();
+    //private readonly DataFields Fields = new();
     #endregion
 
     #region Static fields
@@ -65,19 +62,18 @@ public sealed class ShapeTests
     [TestInitialize]
     public void TestInitialize()
     {
-        _randomParams = Fields.RandomParams;
-        Fields.measureUnit = _randomParams.GetRandomSpreadMeasureUnit();
-        Fields.measureUnitCode = Fields.GetMeasureUnitCode();
-        Fields.defaultQuantity = _randomParams.GetRandomPositiveDecimal();
-        _shapeComponent = GetShapeComponentQuantifiableObject(Fields);
+        _fields = new();
+        _randomParams = _fields.RandomParams;
+        _fields.measureUnit = _randomParams.GetRandomSpreadMeasureUnit();
+        _fields.measureUnitCode = _fields.GetMeasureUnitCode();
+        _fields.defaultQuantity = _randomParams.GetRandomPositiveDecimal();
+        _shapeComponent = GetShapeComponentQuantifiableObject(_fields);
     }
 
     [TestCleanup]
     public void TestCleanup()
     {
-        Fields.paramName = null;
-        Fields.limitMode = null;
-        _other = null;
+        _shape = _other = null;
         _shapeComponent = null;
         _limiter = null;
         _baseQuantifiable = null;
@@ -115,9 +111,9 @@ public sealed class ShapeTests
         // Arrange
         SetCompleteShapeChild();
 
-        Fields.measureUnitCode = SampleParams.GetOtherSpreadMeasureUnitCode(Fields.measureUnitCode);
-        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        _other = GetCompleteShapeChild(Fields);
+        _fields.measureUnitCode = SampleParams.GetOtherSpreadMeasureUnitCode(_fields.measureUnitCode);
+        _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
+        _other = GetCompleteShapeChild(_fields);
 
         // Act
         void attempt() => _ = _shape.CompareTo(_other);
@@ -133,9 +129,9 @@ public sealed class ShapeTests
         // Arrange
         SetCompleteShapeChild();
 
-        Fields.measureUnit = _randomParams.GetRandomSameTypeValidMeasureUnit(Fields.measureUnit);
-        Fields.defaultQuantity = _randomParams.GetRandomPositiveDecimal(Fields.defaultQuantity);
-        _other = GetCompleteShapeChild(Fields);
+        _fields.measureUnit = _randomParams.GetRandomSameTypeValidMeasureUnit(_fields.measureUnit);
+        _fields.defaultQuantity = _randomParams.GetRandomPositiveDecimal(_fields.defaultQuantity);
+        _other = GetCompleteShapeChild(_fields);
         int expected = _shape.GetDefaultQuantity().CompareTo(_other.GetDefaultQuantity());
 
         // Act
@@ -203,7 +199,7 @@ public sealed class ShapeTests
     public void FitsIn_invalidArg_ILimiter_returns_null(string testCase, Enum measureUnit, ILimiter limiter)
     {
         // Arrange
-        SetCompleteShapeChild(measureUnit, Fields.defaultQuantity);
+        SetCompleteShapeChild(measureUnit, _fields.defaultQuantity);
 
         // Act
         var actual = _shape.FitsIn(limiter);
@@ -218,11 +214,11 @@ public sealed class ShapeTests
         // Arrange
         SetCompleteShapeChild();
 
-        Fields.limitMode = _randomParams.GetRandomLimitMode();
-        Fields.defaultQuantity = _randomParams.GetRandomDecimal();
-        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        _shapeComponent = GetShapeComponentQuantifiableObject(Fields);
-        _limiter = GetLimiterShapeObject(Fields.limitMode.Value, _shapeComponent);
+        _fields.limitMode = _randomParams.GetRandomLimitMode();
+        _fields.defaultQuantity = _randomParams.GetRandomDecimal();
+        _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
+        _shapeComponent = GetShapeComponentQuantifiableObject(_fields);
+        _limiter = GetLimiterShapeObject(_fields.limitMode.Value, _shapeComponent);
         bool? expected = ShapeFitsIn((_limiter as LimiterShapeObject).GetDefaultQuantity(), _limiter.GetLimitMode().Value);
 
         // Act
@@ -240,10 +236,10 @@ public sealed class ShapeTests
         // Arrange
         SetShapeChild();
 
-        Fields.limitMode = null;
+        _fields.limitMode = null;
 
         // Act
-        var actual = _shape.FitsIn(null, Fields.limitMode);
+        var actual = _shape.FitsIn(null, _fields.limitMode);
 
         // Assert
         Assert.IsTrue(actual);
@@ -254,7 +250,7 @@ public sealed class ShapeTests
     public void FitsIn_invalidArgs_IShape_LimitMode_returns_null(string testCase, Enum measureUnit, LimitMode? limitMode, IShape other)
     {
         // Arrange
-        SetCompleteShapeChild(measureUnit, Fields.defaultQuantity);
+        SetCompleteShapeChild(measureUnit, _fields.defaultQuantity);
 
         // Act
         var actual = _shape.FitsIn(other, limitMode);
@@ -267,16 +263,16 @@ public sealed class ShapeTests
     public void FitsIn_validArgs_IShape_LimitMode_returns_expected()
     {
         // Arrange
-        SetShapeChild();
+        SetCompleteShapeChild();
 
-        Fields.defaultQuantity = _randomParams.GetRandomPositiveDecimal();
-        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        _other = GetShapeChild(Fields);
-        Fields.limitMode = _randomParams.GetRandomLimitMode();
-        bool? expected = ShapeFitsIn(_other.GetDefaultQuantity(), Fields.limitMode.Value);
+        _fields.defaultQuantity = _randomParams.GetRandomPositiveDecimal();
+        _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
+        _other = GetShapeChild(_fields);
+        _fields.limitMode = _randomParams.GetRandomLimitMode();
+        bool? expected = ShapeFitsIn(_other.GetDefaultQuantity(), _fields.limitMode.Value);
 
         // Act
-        var actual = _shape.FitsIn(_other, Fields.limitMode);
+        var actual = _shape.FitsIn(_other, _fields.limitMode);
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -313,8 +309,8 @@ public sealed class ShapeTests
         // Arrange
         SetCompleteShapeChild();
 
-        Fields.measureUnitCode = SampleParams.GetOtherSpreadMeasureUnitCode(Fields.measureUnitCode);
-        _other = GetCompleteShapeChild(Fields);
+        _fields.measureUnitCode = SampleParams.GetOtherSpreadMeasureUnitCode(_fields.measureUnitCode);
+        _other = GetCompleteShapeChild(_fields);
         HashCode hashCode = new();
         hashCode.Add(_other.GetMeasureUnitCode());
         hashCode.Add(_other.GetBaseShapeComponents().First());
@@ -335,7 +331,7 @@ public sealed class ShapeTests
     public void GetMeasureUnitCodes_returns_expected()
     {
         // Arrange
-        _other = GetShapeChild(_randomParams.GetRandomSpreadMeasureUnit(Fields.measureUnitCode), Fields.defaultQuantity);
+        _other = GetShapeChild(_randomParams.GetRandomSpreadMeasureUnit(_fields.measureUnitCode), _fields.defaultQuantity);
 
         SetShapeChild(_shapeComponent, _other);
 
@@ -360,7 +356,7 @@ public sealed class ShapeTests
     public void GetBaseShape_returns_expected()
     {
         // Arrange
-        _other = GetShapeChild(_randomParams.GetRandomSpreadMeasureUnit(Fields.measureUnitCode), Fields.defaultQuantity);
+        _other = GetShapeChild(_randomParams.GetRandomSpreadMeasureUnit(_fields.measureUnitCode), _fields.defaultQuantity);
 
         SetShapeChild(_shapeComponent, _other);
 
@@ -459,8 +455,8 @@ public sealed class ShapeTests
     public void HasMeasureUnitCode_arg_MeasureUnitCode_returns_expected(string testCase, Enum measureUnit, MeasureUnitCode measureUnitCode, bool expected, Enum otherMeasureUnit)
     {
         // Arrange
-        _other = GetCompleteShapeChild(measureUnit, Fields.defaultQuantity);
-        SetShapeChild(otherMeasureUnit, Fields.defaultQuantity, _other);
+        _other = GetCompleteShapeChild(measureUnit, _fields.defaultQuantity);
+        SetShapeChild(otherMeasureUnit, _fields.defaultQuantity, _other);
 
         // Act
         var actual = _shape.HasMeasureUnitCode(measureUnitCode);
@@ -471,6 +467,8 @@ public sealed class ShapeTests
     #endregion
     #endregion
 
+    // ValidateMeasureUnit
+
     #region void ValidateMeasureUnitCodes
     #region IMeasureUnitCodes.ValidateMeasureUnitCodes(IBaseQuantifiable?, string)
     [TestMethod, TestCategory("UnitTest")]
@@ -480,14 +478,14 @@ public sealed class ShapeTests
         SetShapeChild();
 
         _baseQuantifiable = null;
-        Fields.paramName = _randomParams.GetRandomParamName();
+        _fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
-        void attempt() => _shape.ValidateMeasureUnitCodes(_baseQuantifiable, Fields.paramName);
+        void attempt() => _shape.ValidateMeasureUnitCodes(_baseQuantifiable, _fields.paramName);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-        Assert.AreEqual(Fields.paramName, ex.ParamName);
+        Assert.AreEqual(_fields.paramName, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
@@ -496,30 +494,30 @@ public sealed class ShapeTests
         // Arrange
         SetCompleteShapeChild();
 
-        Fields.measureUnitCode = _randomParams.GetRandomMeasureUnitCode(Fields.measureUnitCode);
-        Fields.measureUnit = _randomParams.GetRandomMeasureUnit(Fields.measureUnitCode);
-        _baseQuantifiable = GetBaseQuantifiableChild(Fields);
-        Fields.paramName = _randomParams.GetRandomParamName();
+        _fields.measureUnitCode = _randomParams.GetRandomMeasureUnitCode(_fields.measureUnitCode);
+        _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
+        _baseQuantifiable = GetBaseQuantifiableChild(_fields);
+        _fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
-        void attempt() => _shape.ValidateMeasureUnitCodes(_baseQuantifiable, Fields.paramName);
+        void attempt() => _shape.ValidateMeasureUnitCodes(_baseQuantifiable, _fields.paramName);
 
         // Assert
         var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
-        Assert.AreEqual(Fields.paramName, ex.ParamName);
+        Assert.AreEqual(_fields.paramName, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
     public void ValidateMeasureUnitCodes_validArg_IBaseQuantifiable_arg_string_returns()
     {
         // Arrange
-        _other = GetCompleteShapeChild(Fields);
-        Fields.measureUnit = _randomParams.GetRandomSpreadMeasureUnit(Fields.measureUnitCode);
-        SetShapeChild(Fields.measureUnit, Fields.defaultQuantity, _other);
+        _other = GetCompleteShapeChild(_fields);
+        _fields.measureUnit = _randomParams.GetRandomSpreadMeasureUnit(_fields.measureUnitCode);
+        SetShapeChild(_fields.measureUnit, _fields.defaultQuantity, _other);
         _baseQuantifiable = _shape;
 
         // Act
-        void attempt() => _shape.ValidateMeasureUnitCodes(_baseQuantifiable, Fields.paramName);
+        void attempt() => _shape.ValidateMeasureUnitCodes(_baseQuantifiable, _fields.paramName);
 
         // Assert
         Assert.IsTrue(DoesNotThrowException(attempt));
@@ -536,14 +534,14 @@ public sealed class ShapeTests
         SetShapeChild();
 
         _quantifiable = null;
-        Fields.paramName = _randomParams.GetRandomParamName();
+        _fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
-        void attempt() => _shape.ValidateShapeComponent(_quantifiable, Fields.paramName);
+        void attempt() => _shape.ValidateShapeComponent(_quantifiable, _fields.paramName);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-        Assert.AreEqual(Fields.paramName, ex.ParamName);
+        Assert.AreEqual(_fields.paramName, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
@@ -552,15 +550,15 @@ public sealed class ShapeTests
         // Arrange
         SetShapeChild();
 
-        _quantifiable = GetQuantifiableChild(Fields);
-        Fields.paramName = _randomParams.GetRandomParamName();
+        _quantifiable = GetQuantifiableChild(_fields);
+        _fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
-        void attempt() => _shape.ValidateShapeComponent(_quantifiable, Fields.paramName);
+        void attempt() => _shape.ValidateShapeComponent(_quantifiable, _fields.paramName);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
-        Assert.AreEqual(Fields.paramName, ex.ParamName);
+        Assert.AreEqual(_fields.paramName, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
@@ -569,16 +567,16 @@ public sealed class ShapeTests
         // Arrange
         SetCompleteShapeChild();
 
-        Fields.measureUnit = _randomParams.GetRandomSpreadMeasureUnit(Fields.measureUnitCode);
-        _quantifiable = GetShapeComponentQuantifiableObject(Fields);
-        Fields.paramName = _randomParams.GetRandomParamName();
+        _fields.measureUnit = _randomParams.GetRandomSpreadMeasureUnit(_fields.measureUnitCode);
+        _quantifiable = GetShapeComponentQuantifiableObject(_fields);
+        _fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
-        void attempt() => _shape.ValidateShapeComponent(_quantifiable, Fields.paramName);
+        void attempt() => _shape.ValidateShapeComponent(_quantifiable, _fields.paramName);
 
         // Assert
         var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
-        Assert.AreEqual(Fields.paramName, ex.ParamName);
+        Assert.AreEqual(_fields.paramName, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
@@ -586,11 +584,11 @@ public sealed class ShapeTests
     {
         SetCompleteShapeChild();
 
-        _quantifiable = GetShapeComponentQuantifiableObject(Fields);
-        Fields.paramName = _randomParams.GetRandomParamName();
+        _quantifiable = GetShapeComponentQuantifiableObject(_fields);
+        _fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
-        void attempt() => _shape.ValidateShapeComponent(_quantifiable, Fields.paramName);
+        void attempt() => _shape.ValidateShapeComponent(_quantifiable, _fields.paramName);
 
         // Assert
         Assert.IsTrue(DoesNotThrowException(attempt));
@@ -649,12 +647,12 @@ public sealed class ShapeTests
 
     private void SetShapeChild(IShape baseShape = null, IShapeFactory factory = null)
     {
-        _shape = GetShapeChild(Fields, baseShape, factory);
+        _shape = GetShapeChild(_fields, baseShape, factory);
     }
 
     private void SetCompleteShapeChild(IShapeFactory factory = null)
     {
-        _shape = GetCompleteShapeChild(Fields, factory);
+        _shape = GetCompleteShapeChild(_fields, factory);
     }
 
     private void SetCompleteShapeChild(Enum measureUnit, decimal defaultQuantity, IShapeFactory factory = null)
