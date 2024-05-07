@@ -148,7 +148,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
     internal IEnumerable<object[]> GetValidateExchangeRateArg()
     {
         testCase = "Zero ExchangeRate";
-        measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        measureUnit = RandomParams.GetRandomConstantMeasureUnit();
         decimalQuantity = 0;
         yield return toObjectArray();
 
