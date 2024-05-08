@@ -2,7 +2,7 @@
 
 public sealed class TestSupport
 {
-    private const string LogFilePath = @"C:\Users\DudásCsaba\Source\Repos\Logs\";
+    public const string BaseTypesLogDirectory = @"..\..\..\..\..\..\..\TestResults\Logs\";
     private const string Ext_txt = ".txt";
 
     internal static void RestoreConstantExchangeRates()
@@ -32,31 +32,30 @@ public sealed class TestSupport
     }
 
     #region Logger
-    private static string GetLogFilePath(string logFileName)
+    private static string GetLogFilePath(string logDirectory, string logFileName)
     {
-        return LogFilePath + logFileName + Ext_txt;
+        return logDirectory + logFileName + Ext_txt;
     }
 
-    public static void StartLog(string logFileName, string testMethodName)
+    public static void StartLog(string logDirectory, string logFileName, string testMethodName)
     {
-        using StreamWriter writer = new(GetLogFilePath(logFileName), true);
+        using StreamWriter writer = new(GetLogFilePath(logDirectory, logFileName), true);
 
         writer.WriteLine($"Time: {DateTime.Now}, Test method: {testMethodName}");
     }
 
-    public static void LogVariable(string logFileName, string variableName, object variableValue)
+    public static void LogVariable(string logDirectory, string logFileName, string variableName, object variableValue)
     {
-        using StreamWriter writer = new(GetLogFilePath(logFileName), true);
+        using StreamWriter writer = new(GetLogFilePath(logDirectory, logFileName), true);
 
         writer.WriteLine($"Variable {variableName} value: {variableValue}");
     }
 
-    public static void EndLog(string logFileName)
+    public static void EndLog(string logDirectory, string logFileName)
     {
-        using StreamWriter writer = new(GetLogFilePath(logFileName), true);
+        using StreamWriter writer = new(GetLogFilePath(logDirectory, logFileName), true);
 
-        writer.WriteLine($"---");
+        writer.WriteLine("---");
     }
     #endregion
-
 }

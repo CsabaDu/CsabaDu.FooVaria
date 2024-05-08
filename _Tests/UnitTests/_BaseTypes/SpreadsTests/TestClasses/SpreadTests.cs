@@ -105,14 +105,8 @@ public sealed class SpreadTests
         // Act
         var actual = _spread.GetBaseQuantity();
 
-        if (!expected.Equals(actual))
-        {
-            WriteLog(actual, nameof(GetBaseQuantity_returns_expected));
-        }
-
         // Assert
         Assert.AreEqual(expected, actual);
-        //Assert.AreEqual(expected.Round(RoundingMode.SinglePrecision), actual.Round(RoundingMode.SinglePrecision));
     }
     #endregion
     #endregion
@@ -127,16 +121,11 @@ public sealed class SpreadTests
 
         double expected = (double)_fields.doubleQuantity.ToQuantity(TypeCode.Double);
 
+        // Act
         var actual = _spread.GetQuantity();
-
-        if (!expected.Equals(actual))
-        {
-            WriteLog(actual, nameof(GetQuantity_returns_expected));
-        }
 
         // Assert
         Assert.AreEqual(expected, actual);
-        //Assert.AreEqual(expected.Round(RoundingMode.SinglePrecision), actual.Round(RoundingMode.SinglePrecision));
     }
     #endregion
     #endregion
@@ -407,25 +396,25 @@ public sealed class SpreadTests
     #region Logger
     private void WriteLog(object actual, string testMethodName)
     {
-        StartLog(LogFileName, testMethodName);
+        StartLog(BaseTypesLogDirectory, LogFileName, testMethodName);
 
         double doubleQuantity = _fields.doubleQuantity;
 
-        LogVariable(LogFileName, "doubleQuantity", doubleQuantity);
-        LogVariable(LogFileName, "quantity", _fields.quantity);
+        LogVariable(BaseTypesLogDirectory, LogFileName, "doubleQuantity", doubleQuantity);
+        LogVariable(BaseTypesLogDirectory, LogFileName, "quantity", _fields.quantity);
 
         Enum measureUnit = _fields.measureUnit;
 
-        LogVariable(LogFileName, "measureUnit", measureUnit);
-        LogVariable(LogFileName, "defaultQuantity", _fields.defaultQuantity);
-        LogVariable(LogFileName, "exchangeRate", BaseMeasurement.GetExchangeRate(measureUnit, string.Empty));
-        LogVariable(LogFileName, "actual", actual);
+        LogVariable(BaseTypesLogDirectory, LogFileName, "measureUnit name", measureUnit);
+        LogVariable(BaseTypesLogDirectory, LogFileName, "defaultQuantity", _fields.defaultQuantity);
+        LogVariable(BaseTypesLogDirectory, LogFileName, "exchangeRate", BaseMeasurement.GetExchangeRate(measureUnit, string.Empty));
+        LogVariable(BaseTypesLogDirectory, LogFileName, "actual", actual);
 
         double difference = doubleQuantity - (double)actual;
 
-        LogVariable(LogFileName, "difference", difference.ToString("F30"));
+        LogVariable(BaseTypesLogDirectory, LogFileName, "difference", difference.ToString("F30"));
 
-        EndLog(LogFileName);
+        EndLog(BaseTypesLogDirectory, LogFileName);
     }
     #endregion
 

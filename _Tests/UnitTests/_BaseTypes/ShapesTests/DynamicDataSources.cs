@@ -2,11 +2,14 @@ namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.ShapesTests;
 
 internal sealed class DynamicDataSource : CommonDynamicDataSource
 {
+    #region Fields
     private IShape shape;
     private IShape other;
     private IShapeComponent shapeComponent;
     private IQuantifiable quantifiable;
+    #endregion
 
+    #region Methods
     internal IEnumerable<object[]> GetEqualsArg()
     {
         testCase = "null => false";
@@ -243,4 +246,5 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         }
         #endregion
     }
+    #endregion
 }

@@ -79,6 +79,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         return GetQuantityTypeCodeArg(typeCodes);
     }
 
+    #region Private methods
     private static IEnumerable<object[]> GetQuantityTypeCodeArg(IEnumerable<TypeCode> typeCodes)
     {
         return typeCodes.Select(toObjectArray);
@@ -93,5 +94,6 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         }
         #endregion
     }
+    #endregion
     #endregion
 }

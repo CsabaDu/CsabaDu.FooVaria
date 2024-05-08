@@ -21,10 +21,6 @@ public sealed class QuantifiableTests
     #endregion
 
     #region Private fields
-    #region Readonly fields
-    //private readonly DataFields Fields = new();
-    #endregion
-
     #region Static fields
     private static readonly DynamicDataSource DynamicDataSource = new();
     private const string DisplayName = nameof(GetDisplayName);

@@ -39,6 +39,11 @@ public sealed class ShapeTests
     #endregion
 
     #region Private fields
+    #region Static fields
+    private static readonly DynamicDataSource DynamicDataSource = new();
+    private const string DisplayName = nameof(GetDisplayName);
+    #endregion
+
     private ShapeChild _shape;
     private ShapeChild _other;
     private IShapeComponent _shapeComponent;
@@ -47,15 +52,6 @@ public sealed class ShapeTests
     private IQuantifiable _quantifiable;
     private RandomParams _randomParams;
     private DataFields _fields;
-
-    #region Readonly fields
-    //private readonly DataFields Fields = new();
-    #endregion
-
-    #region Static fields
-    private static readonly DynamicDataSource DynamicDataSource = new();
-    private const string DisplayName = nameof(GetDisplayName);
-    #endregion
     #endregion
 
     #region Initialize

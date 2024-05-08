@@ -1,3 +1,3 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.CommonBase;
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Common;
 
 public sealed class RootObject : IRootObject;

@@ -1,5 +1,3 @@
-using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.BaseMeasurements;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasurementsTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -23,10 +21,6 @@ public sealed class BaseMeasurementTests
     private BaseMeasurementChild _baseMeasurement;
     private RandomParams _randomParams;
     private DataFields _fields;
-
-    #region Readonly fields
-    //private readonly DataFields Fields = new();
-    #endregion
 
     #region Static fields
     private static readonly DynamicDataSource DynamicDataSource = new();

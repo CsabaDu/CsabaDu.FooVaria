@@ -15,10 +15,6 @@ public sealed class MeasurableTests
     private RandomParams _randomParams;
     private DataFields _fields;
 
-    #region Readonly fields
-    //private readonly DataFields Fields = new();
-    #endregion
-
     #region Static fields
     private static readonly DynamicDataSource DynamicDataSource = new();
     private const string DisplayName = nameof(GetDisplayName);
@@ -31,6 +27,7 @@ public sealed class MeasurableTests
     {
         _fields = new();
         _randomParams = _fields.RandomParams;
+
         _fields.SetMeasureUnit(_randomParams.GetRandomMeasureUnit());
         SetMeasurableChild();
     }

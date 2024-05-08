@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Tests.TestHelpers.Params;
-
-namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.CommonTests.TestClasses;
+﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.CommonTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
 public sealed class CommonBaseTests
@@ -8,10 +6,6 @@ public sealed class CommonBaseTests
     #region Private fields
     private CommonBaseChild _commonBase;
     private DataFields _fields;
-
-    #region Readonly fields
-    //private readonly DataFields Fields = new();
-    #endregion
     #endregion
 
     #region Initialize

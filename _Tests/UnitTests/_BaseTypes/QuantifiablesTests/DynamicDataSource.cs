@@ -1,5 +1,4 @@
-﻿
-namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests;
+﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.QuantifiablesTests;
 
 internal sealed class DynamicDataSource : CommonDynamicDataSource
 {
