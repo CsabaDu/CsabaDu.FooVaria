@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types.Implementations;
+﻿using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
+
+namespace CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types.Implementations;
 
 public abstract class BaseQuantifiable(IRootObject rootObject, string paramName) : Measurable(rootObject, paramName), IBaseQuantifiable
 {
@@ -124,29 +126,37 @@ public abstract class BaseQuantifiable(IRootObject rootObject, string paramName)
         throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
     }
 
-    protected static void ValidateMeasureUnitCodes(IMeasureUnitCodes measureUnitCodes, IBaseQuantifiable? baseQuantifiable, string paramName)
+    //protected static void ValidateMeasureUnitCodes(IMeasureUnitCodes measureUnitCodes, IBaseQuantifiable? baseQuantifiable, string paramName)
+    //{
+    //    if (baseQuantifiable is IMeasureUnitCodes other)
+    //    {
+    //        foreach (MeasureUnitCode item in other.GetMeasureUnitCodes())
+    //        {
+    //            validateMeasureUnitCode(item);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        MeasureUnitCode measureUnitCode = NullChecked(baseQuantifiable, paramName).GetMeasureUnitCode();
+
+    //        validateMeasureUnitCode(measureUnitCode);
+    //    }
+
+
+    //    #region Local methods
+    //    void validateMeasureUnitCode(MeasureUnitCode measureUnitCode)
+    //    {
+    //        ValidateMeasureUnitCode(measureUnitCodes, measureUnitCode, paramName);
+    //    }
+    //    #endregion
+    //}
+
+    protected static void ValidateMeasureUnitCodes(IMeasureUnitCodes measureUnitCodes, IMeasureUnitCodes other, string paramName)
     {
-        if (baseQuantifiable is IMeasureUnitCodes other)
+        foreach (MeasureUnitCode item in other.GetMeasureUnitCodes())
         {
-            foreach (MeasureUnitCode item in other.GetMeasureUnitCodes())
-            {
-                validateMeasureUnitCode(item);
-            }
+            ValidateMeasureUnitCode(measureUnitCodes, item, paramName);
         }
-        else
-        {
-            MeasureUnitCode measureUnitCode = NullChecked(baseQuantifiable, paramName).GetMeasureUnitCode();
-
-            validateMeasureUnitCode(measureUnitCode);
-        }
-
-
-        #region Local methods
-        void validateMeasureUnitCode(MeasureUnitCode measureUnitCode)
-        {
-            ValidateMeasureUnitCode(measureUnitCodes, measureUnitCode, paramName);
-        }
-        #endregion
     }
 
     protected static void ValidatePositiveQuantity(ValueType? quantity, string paramName)

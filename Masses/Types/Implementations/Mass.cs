@@ -1,8 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Spreads.Types;
-using CsabaDu.FooVaria.DryBodies.Types;
-using CsabaDu.FooVaria.Masses.Behaviors;
-
-namespace CsabaDu.FooVaria.Masses.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.Masses.Types.Implementations;
 
 internal abstract class Mass : BaseQuantifiable, IMass
 {
@@ -192,9 +188,14 @@ internal abstract class Mass : BaseQuantifiable, IMass
         ValidateQuantity(defaultQuantity, paramName);
     }
 
-    public void ValidateMeasureUnitCodes(IBaseQuantifiable? baseQuantifiable, string paramName)
+    public void ValidateMeasureUnitCodes(IMeasureUnitCodes? measureUnitCodes, string paramName)
     {
-        ValidateMeasureUnitCodes(this, baseQuantifiable, paramName);
+        if (NullChecked(measureUnitCodes, paramName) is IMass mass)
+        {
+            ValidateMeasureUnitCodes(this, mass, paramName);
+        }
+
+        throw ArgumentTypeOutOfRangeException(paramName, measureUnitCodes!);
     }
 
     public void ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)

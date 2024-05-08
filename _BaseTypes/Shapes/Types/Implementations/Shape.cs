@@ -4,21 +4,6 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
 {
     #region Public methods
     #region Override methods
-    public override int GetHashCode()
-    {
-        HashCode hashCode = new();
-
-        hashCode.Add(GetMeasureUnitCode());
-        hashCode.Add(GetDefaultQuantity());
-
-        foreach (IShapeComponent item in GetShapeComponents())
-        {
-            hashCode.Add(item);
-        }
-
-        return hashCode.ToHashCode();
-    }
-
     #region Sealed methods
     public override sealed bool? FitsIn(ILimiter? limiter)
     {
@@ -37,6 +22,21 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
         base.ValidateMeasureUnit(measureUnit, paramName);
     }
     #endregion
+
+    public override int GetHashCode()
+    {
+        HashCode hashCode = new();
+
+        hashCode.Add(GetMeasureUnitCode());
+        hashCode.Add(GetDefaultQuantity());
+
+        foreach (IShapeComponent item in GetShapeComponents())
+        {
+            hashCode.Add(item);
+        }
+
+        return hashCode.ToHashCode();
+    }
     #endregion
 
     #region Virtual methods
@@ -87,9 +87,14 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
         return GetShapeComponents().Count();
     }
 
-    public void ValidateMeasureUnitCodes(IBaseQuantifiable? baseQuantifiable, string paramName)
+    public void ValidateMeasureUnitCodes(IMeasureUnitCodes? measureUnitCodes, string paramName)
     {
-        ValidateMeasureUnitCodes(this, baseQuantifiable, paramName);
+        if (NullChecked(measureUnitCodes, paramName) is IShape shape)
+        {
+            ValidateMeasureUnitCodes(this, shape, paramName);
+        }
+
+        throw ArgumentTypeOutOfRangeException(paramName, measureUnitCodes!);
     }
 
     public void ValidateShapeComponent(IQuantifiable? quantifiable, string paramName)

@@ -54,10 +54,8 @@ public abstract class BaseRate(IRootObject rootObject, string paramName) : BaseQ
 
     #region Abstract methods
     public abstract MeasureUnitCode GetDenominatorCode();
-    public abstract IEnumerable<MeasureUnitCode> GetMeasureUnitCodes();
     public abstract MeasureUnitCode GetNumeratorCode();
     public abstract object? GetRateComponent(RateComponentCode rateComponentCode);
-
     #endregion
 
     #region Static methods
@@ -126,7 +124,22 @@ public abstract class BaseRate(IRootObject rootObject, string paramName) : BaseQ
         return GetBaseRateFactory().CreateBaseRate(numerator, denominator);
     }
 
-    public abstract MeasureUnitCode GetMeasureUnitCode(RateComponentCode rateComponentCode);
+    public MeasureUnitCode GetMeasureUnitCode(RateComponentCode rateComponentCode)
+    {
+        return GetMeasureUnitCode(this, rateComponentCode) ?? throw InvalidRateComponentCodeArgumentException(rateComponentCode);
+    }
+    public IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
+    {
+        foreach (RateComponentCode item in GetRateComponentCodes())
+        {
+            MeasureUnitCode? measureUnitCode = GetMeasureUnitCode(this, item);
+
+            if (measureUnitCode.HasValue)
+            {
+                yield return measureUnitCode.Value;
+            }
+        }
+    }
 
     public decimal GetQuantity()
     {
@@ -164,9 +177,27 @@ public abstract class BaseRate(IRootObject rootObject, string paramName) : BaseQ
         return Math.Abs(GetDefaultQuantity() / defaultQuantity);
     }
 
-    public void ValidateMeasureUnitCodes(IBaseQuantifiable? baseQuantifiable, string paramName)
+    public void ValidateMeasureUnitCodes(IMeasureUnitCodes? measureUnitCodes, string paramName)
     {
-        ValidateMeasureUnitCodes(this, baseQuantifiable, paramName);
+        if (NullChecked(measureUnitCodes, paramName) is not IBaseRate baseRate)
+        {
+            throw ArgumentTypeOutOfRangeException(paramName, measureUnitCodes!);
+        }
+
+        IEnumerable<MeasureUnitCode> thisMeasureUnitCodes = GetMeasureUnitCodes();
+        IEnumerable<MeasureUnitCode> otherMeasureUnitCodes = baseRate.GetMeasureUnitCodes();
+
+        for (int i = 0; i < thisMeasureUnitCodes.Count(); i++)
+        {
+            if (otherMeasureUnitCodes.Count() <= i) return;
+
+            MeasureUnitCode measureUnitCode = otherMeasureUnitCodes.ElementAt(i);
+
+            if (measureUnitCode != thisMeasureUnitCodes.ElementAt(i))
+            {
+                throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode, paramName);
+            }
+        }
     }
 
     public void ValidateRateComponentCode(RateComponentCode rateComponentCode, string paramName)
@@ -180,6 +211,25 @@ public abstract class BaseRate(IRootObject rootObject, string paramName) : BaseQ
     #endregion
 
     #region Private methods
+    #region Static methods
+    private static MeasureUnitCode? GetMeasureUnitCode(BaseRate baseRate, RateComponentCode rateComponentCode)
+    {
+        object? rateComponent = baseRate.GetRateComponent(rateComponentCode);
+
+        if (rateComponent is MeasureUnitCode measureUnitCode)
+        {
+            return measureUnitCode;
+        }
+
+        if (rateComponent is IMeasurable measurable)
+        {
+            return measurable.GetMeasureUnitCode();
+        }
+
+        return null;
+    }
+    #endregion
+
     private IBaseRateFactory GetBaseRateFactory()
     {
         return (IBaseRateFactory)GetFactory();

@@ -99,17 +99,17 @@ public abstract class SimpleRate : BaseRate, ISimpleRate
         return DenominatorCode;
     }
 
-    public override sealed MeasureUnitCode GetMeasureUnitCode(RateComponentCode rateComponentCode)
-    {
-        if (GetRateComponent(rateComponentCode) is MeasureUnitCode measureUnitCode) return measureUnitCode;
+    //public override sealed MeasureUnitCode GetMeasureUnitCode(RateComponentCode rateComponentCode)
+    //{
+    //    if (GetRateComponent(rateComponentCode) is MeasureUnitCode measureUnitCode) return measureUnitCode;
 
-        throw InvalidRateComponentCodeArgumentException(rateComponentCode);
-    }
+    //    throw InvalidRateComponentCodeArgumentException(rateComponentCode);
+    //}
 
-    public override sealed IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
-    {
-        return GetRateComponentCodes().Where(x => this[x] is MeasureUnitCode).Select(GetMeasureUnitCode);
-    }
+    //public override sealed IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
+    //{
+    //    return GetRateComponentCodes().Where(x => this[x] is MeasureUnitCode).Select(GetMeasureUnitCode);
+    //}
 
     public override sealed MeasureUnitCode GetNumeratorCode()
     {

@@ -178,15 +178,15 @@ internal abstract class Rate : BaseRate, IRate
         return Denominator.GetMeasureUnitCode();
     }
 
-    public override sealed MeasureUnitCode GetMeasureUnitCode(RateComponentCode rateComponentCode)
-    {
-        return this[rateComponentCode]?.GetMeasureUnitCode() ?? throw InvalidRateComponentCodeArgumentException(rateComponentCode);
-    }
+    //public override sealed MeasureUnitCode GetMeasureUnitCode(RateComponentCode rateComponentCode)
+    //{
+    //    return this[rateComponentCode]?.GetMeasureUnitCode() ?? throw InvalidRateComponentCodeArgumentException(rateComponentCode);
+    //}
 
-    public override sealed IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
-    {
-        return GetRateComponentCodes().Where(x => this[x] is not null).Select(GetMeasureUnitCode);
-    }
+    //public override sealed IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
+    //{
+    //    return GetRateComponentCodes().Where(x => this[x] is not null).Select(GetMeasureUnitCode);
+    //}
 
     public override sealed MeasureUnitCode GetNumeratorCode()
     {

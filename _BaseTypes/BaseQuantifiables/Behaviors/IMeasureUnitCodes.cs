@@ -3,5 +3,6 @@
 public interface IMeasureUnitCodes
 {
     IEnumerable<MeasureUnitCode> GetMeasureUnitCodes();
-    void ValidateMeasureUnitCodes(IBaseQuantifiable? baseQuantifiable, string paramName);
+
+    void ValidateMeasureUnitCodes(IMeasureUnitCodes? measureUnitCodes, string paramName);
 }
