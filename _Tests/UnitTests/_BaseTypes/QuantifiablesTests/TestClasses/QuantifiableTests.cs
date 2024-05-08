@@ -63,7 +63,7 @@ public sealed class QuantifiableTests
     public void CompareTo_nullArg_IQuantifiable_returns_expected()
     {
         // Arrange
-        SetQuantifiableChild(_fields.defaultQuantity);
+        SetQuantifiableChild();
 
         IQuantifiable other = null;
         const int expected = 1;

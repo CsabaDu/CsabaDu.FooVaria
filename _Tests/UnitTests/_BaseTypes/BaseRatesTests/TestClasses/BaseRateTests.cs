@@ -1,3 +1,5 @@
+using CsabaDu.FooVaria.BaseTypes.BaseRates.Types;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseRatesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -15,6 +17,46 @@ public sealed class BaseRateTests
     // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()
     // decimal IQuantity<decimal>.GetQuantity()
+
+    #endregion
+
+    #region Private fields
+    private BaseRateChild _baseRate;
+    private MeasureUnitCode _denominatorCode;
+    private RandomParams _randomParams;
+    private DataFields _fields;
+
+    #region Static fields
+    private static readonly DynamicDataSource DynamicDataSource = new();
+    private const string DisplayName = nameof(GetDisplayName);
+    #endregion
+    #endregion
+
+    #region Initialize
+    [TestInitialize]
+    public void TestInitialize()
+    {
+        _fields = new();
+        _randomParams = _fields.RandomParams;
+        _fields.defaultQuantity = _randomParams.GetRandomDecimal();
+        _denominatorCode = _randomParams.GetRandomMeasureUnitCode();
+
+        _fields.SetMeasureUnit(_randomParams.GetRandomMeasureUnit());
+    }
+
+    [TestCleanup]
+    public void TestCleanup()
+    {
+        _baseRate = null;
+    }
+
+    public static string GetDisplayName(MethodInfo methodInfo, object[] args)
+    {
+        return CommonDynamicDataSource.GetDisplayName(methodInfo, args);
+    }
+    #endregion
+
+    #region Test methods
 
     // int IComparable<IBaseRate>.CompareTo(IBaseRate? other)
     // bool IEquatable<IBaseRate>.Equals(IBaseRate? other)
@@ -42,46 +84,27 @@ public sealed class BaseRateTests
     // void IBaseQuantifiable.ValidateQuantity(Type? quantity, string paramName)
     // void IBaseRate.ValidateRateComponentCode(RateComponentCode rateComponentCode, string paramName)
 
+    #region int CompareTo
+    #region IComparable<IBaseRate>.CompareTo(IBaseRate?)
+    [TestMethod, TestCategory("UnitTest")]
+    public void CompareTo_nullArg_IBaseRate_returns_expected()
+    {
+        // Arrange
+        SetBaseRateChild();
+
+        IBaseRate other = null;
+        const int expected = 1;
+
+        // Act
+        var actual = _baseRate.CompareTo(other);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    #endregion
     #endregion
 
-    //#region Private fields
-    //private BaseQuantifiableChild _baseQuantifiable;
-    //private RandomParams _randomParams;
-
-    //#region Readonly fields
-    //private readonly DataFields Fields = new();
-    //#endregion
-
-    //#region Static fields
-    //private static readonly DynamicDataSource DynamicDataSource = new();
-    //private const string DisplayName = nameof(GetDisplayName);
-    //#endregion
-    //#endregion
-
-    //#region Initialize
-    //[TestInitialize]
-    //public void TestInitialize()
-    //{
-    //    _randomParams = Fields.RandomParams;
-
-    //    Fields.defaultQuantity = _randomParams.GetRandomDecimal();
-
-    //    Fields.SetMeasureUnit(_randomParams.GetRandomMeasureUnit());
-    //}
-
-    //[TestCleanup]
-    //public void TestCleanup()
-    //{
-    //    Fields.paramName = null;
-    //}
-
-    //public static string GetDisplayName(MethodInfo methodInfo, object[] args)
-    //{
-    //    return CommonDynamicDataSource.GetDisplayName(methodInfo, args);
-    //}
-    //#endregion
-
-    //#region Test methods
     //#region bool Equals
     //#region override BaseQuantifiable.Equals(object?)
     //[TestMethod, TestCategory("UnitTest")]
@@ -248,10 +271,10 @@ public sealed class BaseRateTests
     //}
     //#endregion
     //#endregion
-    //#endregion
+    #endregion
 
-    //#region Private methods
-    //#region DynamicDataSource
+    #region Private methods
+    #region DynamicDataSource
     //private static IEnumerable<object[]> GetEqualsArgs()
     //{
     //    return DynamicDataSource.GetEqualsArgs();
@@ -271,16 +294,21 @@ public sealed class BaseRateTests
     //{
     //    return DynamicDataSource.GetValidQuantityTypeCodeArg();
     //}
-    //#endregion
+    #endregion
 
-    //private void SetBaseQuantifiableChild(Enum measureUnit, decimal defaultQuantity, IBaseQuantifiableFactory factory = null)
-    //{
-    //    _baseQuantifiable = GetBaseQuantifiableChild(measureUnit, defaultQuantity, factory);
-    //}
+    private void SetBaseRateChild(Enum measureUnit, decimal defaultQuantity, MeasureUnitCode denominatorCode, IBaseRateFactory factory = null)
+    {
+        _baseRate = GetBaseRateChild(measureUnit, defaultQuantity, denominatorCode, factory);
+    }
 
-    //private void SetBaseQuantifiableChild()
-    //{
-    //    _baseQuantifiable = GetBaseQuantifiableChild(Fields);
-    //}
-    //#endregion
+    private void SetBaseRateChild(IBaseRateFactory factory = null)
+    {
+        _baseRate = GetBaseRateChild(_fields, factory);
+    }
+
+    private void SetBaseRateChild(IQuantifiable quantifiable, MeasureUnitCode denominatorCode, IBaseRateFactory factory = null)
+    {
+        _baseRate = GetBaseRateChild(quantifiable, denominatorCode, factory);
+    }
+    #endregion
 }

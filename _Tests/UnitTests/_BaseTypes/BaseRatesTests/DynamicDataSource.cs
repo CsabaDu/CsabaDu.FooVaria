@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes;
-
-namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseRatesTests;
+﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseRatesTests;
 
 internal sealed class DynamicDataSource : CommonDynamicDataSource
 {
