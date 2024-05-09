@@ -2,43 +2,43 @@
 
 internal sealed class DynamicDataSource : CommonDynamicDataSource
 {
-    //#region Methods
-    //internal IEnumerable<object[]> GetEqualsArgs()
-    //{
-    //    testCase = "null => false";
-    //    obj = null;
-    //    measureUnit = RandomParams.GetRandomValidMeasureUnit();
-    //    defaultQuantity = RandomParams.GetRandomDecimal();
-    //    isTrue = false;
-    //    yield return toObjectArray();
+    #region Methods
+    internal IEnumerable<object[]> GetEqualsArgs()
+    {
+        testCase = "null => false";
+        obj = null;
+        measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        defaultQuantity = RandomParams.GetRandomDecimal();
+        isTrue = false;
+        yield return toObjectArray();
 
-    //    testCase = "object => false";
-    //    obj = new();
-    //    yield return toObjectArray();
+        //testCase = "object => false";
+        //obj = new();
+        //yield return toObjectArray();
 
-    //    testCase = "Different MeasureUnitCode => false";
-    //    measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode());
-    //    obj = GetBaseQuantifiableChild(RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity);
-    //    yield return toObjectArray();
+        //testCase = "Different MeasureUnitCode => false";
+        //measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode());
+        //obj = GetBaseQuantifiableChild(RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity);
+        //yield return toObjectArray();
 
-    //    testCase = "Same measureUnit, different defaultQuantity => false";
-    //    obj = GetBaseQuantifiableChild(measureUnit, RandomParams.GetRandomDecimal(defaultQuantity));
-    //    yield return toObjectArray();
+        //testCase = "Same measureUnit, different defaultQuantity => false";
+        //obj = GetBaseQuantifiableChild(measureUnit, RandomParams.GetRandomDecimal(defaultQuantity));
+        //yield return toObjectArray();
 
-    //    testCase = "Same measureUnit, same defaultQuantity => true";
-    //    obj = GetBaseQuantifiableChild(this);
-    //    isTrue = true;
-    //    yield return toObjectArray();
+        //testCase = "Same measureUnit, same defaultQuantity => true";
+        //obj = GetBaseQuantifiableChild(this);
+        //isTrue = true;
+        //yield return toObjectArray();
 
-    //    #region toObjectArray method
-    //    object[] toObjectArray()
-    //    {
-    //        TestCase_bool_object_Enum_decimal args = new(testCase, isTrue, obj, measureUnit, defaultQuantity);
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            TestCase_bool_object_Enum_decimal args = new(testCase, isTrue, obj, measureUnit, defaultQuantity);
 
-    //        return args.ToObjectArray();
-    //    }
-    //    #endregion
-    //}
+            return args.ToObjectArray();
+        }
+        #endregion
+    }
 
     //internal IEnumerable<object[]> GetFitsInArgs()
     //{
@@ -93,5 +93,5 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
     //    }
     //    #endregion
     //}
-    //#endregion
+    #endregion
 }
