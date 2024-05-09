@@ -2,38 +2,50 @@
 
 internal sealed class DynamicDataSource : CommonDynamicDataSource
 {
+    #region Fields
+    IBaseRate baseRate;
+    #endregion
+
     #region Methods
     internal IEnumerable<object[]> GetEqualsArgs()
     {
         testCase = "null => false";
-        obj = null;
+        isTrue = false;
+        baseRate = null;
         measureUnit = RandomParams.GetRandomValidMeasureUnit();
         defaultQuantity = RandomParams.GetRandomDecimal();
-        isTrue = false;
+        denominatorCode = RandomParams.GetRandomMeasureUnitCode();
         yield return toObjectArray();
 
-        //testCase = "object => false";
-        //obj = new();
-        //yield return toObjectArray();
+        testCase = "different DefaultQuantity => false";
+        baseRate = GetBaseRateChild(this);
+        defaultQuantity = RandomParams.GetRandomDecimal(defaultQuantity);
+        yield return toObjectArray();
 
-        //testCase = "Different MeasureUnitCode => false";
-        //measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode());
-        //obj = GetBaseQuantifiableChild(RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity);
-        //yield return toObjectArray();
+        testCase = "Different DenominatorCode => false";
+        baseRate = GetBaseRateChild(this);
+        denominatorCode = RandomParams.GetRandomMeasureUnitCode(denominatorCode);
+        yield return toObjectArray();
 
-        //testCase = "Same measureUnit, different defaultQuantity => false";
-        //obj = GetBaseQuantifiableChild(measureUnit, RandomParams.GetRandomDecimal(defaultQuantity));
-        //yield return toObjectArray();
+        testCase = "Different type measureUnit => false";
+        baseRate = GetBaseRateChild(this);
+        measureUnitCode = RandomParams.GetRandomConstantMeasureUnitCode(GetMeasureUnitCode());
+        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
+        yield return toObjectArray();
 
-        //testCase = "Same measureUnit, same defaultQuantity => true";
-        //obj = GetBaseQuantifiableChild(this);
-        //isTrue = true;
-        //yield return toObjectArray();
+        testCase = "Same baseRate => true";
+        isTrue = true;
+        baseRate = GetBaseRateChild(this);
+        yield return toObjectArray();
+
+        testCase = "Same measureUnit type, different measureUnit => true";
+        measureUnit = RandomParams.GetRandomMeasureUnit(GetMeasureUnitCode(), measureUnit);
+        yield return toObjectArray();
 
         #region toObjectArray method
         object[] toObjectArray()
         {
-            TestCase_bool_object_Enum_decimal args = new(testCase, isTrue, obj, measureUnit, defaultQuantity);
+            TestCase_Enum_decimal_bool_MeasureUnitCode_IBaseRate args = new(testCase, measureUnit, defaultQuantity, isTrue, denominatorCode, baseRate);
 
             return args.ToObjectArray();
         }

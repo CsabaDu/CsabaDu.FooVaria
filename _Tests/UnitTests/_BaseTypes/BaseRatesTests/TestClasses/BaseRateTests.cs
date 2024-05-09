@@ -113,9 +113,9 @@ public sealed class BaseRateTests
 
     #region bool Equals
     #region IEquatable<IBaseRate>.Equals(IBaseRate?)
-    [TestMethod, TestCategory("UnitTest"), Ignore]
+    [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
-    public void Equals_arg_IQuantifiable_returns_expected(string testCase, Enum measureUnit, decimal defaultQuantity, bool expected, IBaseRate other, MeasureUnitCode denominatorCode)
+    public void Equals_arg_IBaseRate_returns_expected(string testCase, Enum measureUnit, decimal defaultQuantity, bool expected, MeasureUnitCode denominatorCode, IBaseRate other)
     {
         // Arrange
         SetBaseRateChild(measureUnit, defaultQuantity, denominatorCode);
@@ -158,25 +158,10 @@ public sealed class BaseRateTests
 
     #region Private methods
     #region DynamicDataSource
-    //private static IEnumerable<object[]> GetEqualsArgs()
-    //{
-    //    return DynamicDataSource.GetEqualsArgs();
-    //}
-
-    //private static IEnumerable<object[]> GetFitsInArgs()
-    //{
-    //    return DynamicDataSource.GetFitsInArgs();
-    //}
-
-    //private static IEnumerable<object[]> GetInvalidQuantityTypeCodeArg()
-    //{
-    //    return DynamicDataSource.GetInvalidQuantityTypeCodeArg();
-    //}
-
-    //private static IEnumerable<object[]> GetValidQuantityTypeCodeArg()
-    //{
-    //    return DynamicDataSource.GetValidQuantityTypeCodeArg();
-    //}
+    private static IEnumerable<object[]> GetEqualsArgs()
+    {
+        return DynamicDataSource.GetEqualsArgs();
+    }
     #endregion
 
     private void SetBaseRateChild(Enum measureUnit, decimal defaultQuantity, MeasureUnitCode denominatorCode, IBaseRateFactory factory = null)
@@ -193,12 +178,5 @@ public sealed class BaseRateTests
     {
         _baseRate = GetBaseRateChild(quantifiable, denominatorCode, factory);
     }
-
-    #region DynamicDataSource
-    private static IEnumerable<object[]> GetEqualsArgs()
-    {
-        return DynamicDataSource.GetEqualsArgs();
-    }
-    #endregion
     #endregion
 }
