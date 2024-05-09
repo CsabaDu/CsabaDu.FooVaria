@@ -43,7 +43,7 @@ public class ShapeChild(IRootObject rootObject, string paramName) : Shape(rootOb
     // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum? measureUnit, string paramName)
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable? measurable, string paramName)
     // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
-    // void IMeasureUnitCodes.ValidateMeasureUnitCodes(IBaseQuantifiable? baseQuantifiable, string paramName)
+    // void IMeasureUnitCodes.ValidateMeasureUnitCodes(IMeasureUnitCodes? measureUnitCodes, string paramName)
     // void IBaseQuantifiable.ValidateQuantity(ValueType? quantity, string paramName)
     // void IShape.ValidateShapeComponent(IQuantifiable? quantifiable, string paramName)
     // void ISpreadMeasure.ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)

@@ -1,4 +1,5 @@
 using CsabaDu.FooVaria.BaseTypes.BaseRates.Types;
+using System.ComponentModel;
 
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseRatesTests.TestClasses;
 
@@ -58,7 +59,6 @@ public sealed class BaseRateTests
 
     #region Test methods
 
-    // int IComparable<IBaseRate>.CompareTo(IBaseRate? other)
     // bool IEquatable<IBaseRate>.Equals(IBaseRate? other)
     // bool? IFit<IBaseRate>.FitsIn(IBaseRate? other, LimitMode? limitMode)
     // bool? ILimitable.FitsIn(ILimiter? limiter)
@@ -80,7 +80,7 @@ public sealed class BaseRateTests
     // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum? measureUnit, string paramName)
     // void IMeasurable.ValidateMeasureUnitCode(IBaseQuantifiable? baseQuantifiable, string paramName)
     // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
-    // void IMeasureUnitCodes.ValidateMeasureUnitCodes(IBaseQuantifiable? baseQuantifiable, string paramName)
+    // void IMeasureUnitCodes.ValidateMeasureUnitCodes(IMeasureUnitCodes? measureUnitCodes, string paramName)
     // void IBaseQuantifiable.ValidateQuantity(Type? quantity, string paramName)
     // void IBaseRate.ValidateRateComponentCode(RateComponentCode rateComponentCode, string paramName)
 
@@ -102,6 +102,41 @@ public sealed class BaseRateTests
         Assert.AreEqual(expected, actual);
     }
 
+    [TestMethod, TestCategory("UnitTest")]
+    public void CompareTo_invalidArg_IBaseRate_throws_InvalidEnumArgumentException()
+    {
+        // Arrange
+        SetBaseRateChild();
+
+        _fields.measureUnit = _randomParams.GetRandomSpreadMeasureUnit(_fields.measureUnitCode);
+        _fields.defaultQuantity = _randomParams.GetRandomDecimal();
+        IBaseRate other = GetBaseRateChild(_fields);
+
+        // Act
+        void attempt() => _ = _baseRate.CompareTo(other);
+
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(ParamNames.other, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void CompareTo_validArg_IQuantifiable_returns_expected()
+    {
+        // Arrange
+        SetBaseRateChild();
+
+        _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
+        _fields.defaultQuantity = _randomParams.GetRandomDecimal();
+        IBaseRate other = GetBaseRateChild(_fields);
+        int expected = _baseRate.GetDefaultQuantity().CompareTo(other.GetDefaultQuantity());
+
+        // Act
+        var actual = _baseRate.CompareTo(other);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
     #endregion
     #endregion
 

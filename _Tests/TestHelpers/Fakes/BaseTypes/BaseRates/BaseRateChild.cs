@@ -72,18 +72,7 @@ public sealed class BaseRateChild(IRootObject rootObject, string paramName) : Ba
     }
     #endregion
 
-    public override MeasureUnitCode GetMeasureUnitCode(RateComponentCode rateComponentCode)
-    {
-        return (MeasureUnitCode?)GetRateComponent(rateComponentCode)
-            ?? throw InvalidRateComponentCodeArgumentException(rateComponentCode);
-    }
-
     public override MeasureUnitCode GetDenominatorCode() => Return.GetDenominatorCodeValue;
-
-    public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
-    {
-        return [GetNumeratorCode(), GetDenominatorCode()];
-    }
 
     public override MeasureUnitCode GetNumeratorCode() => GetMeasureUnitCode();
 

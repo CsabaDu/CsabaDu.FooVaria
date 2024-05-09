@@ -3,6 +3,7 @@
 public sealed class TestSupport
 {
     public const string BaseTypesLogDirectory = @"..\..\..\..\..\..\..\TestResults\Logs\";
+    //public const string TestSupportLogDirectory = @"..\..\..\..\..\..\..\TestResults\Logs\";
     private const string Ext_txt = ".txt";
 
     internal static void RestoreConstantExchangeRates()
@@ -20,8 +21,14 @@ public sealed class TestSupport
             attempt();
             return true;
         }
-        catch
+        catch (Exception ex)
         {
+            const string logFileName = nameof(DoesNotThrowException) + "_failed";
+
+            StartLog(BaseTypesLogDirectory, logFileName, attempt.Method.Name);
+            LogVariable(BaseTypesLogDirectory, logFileName, ex.GetType().Name, ex.Message);
+            EndLog(BaseTypesLogDirectory, logFileName);
+
             return false;
         }
     }

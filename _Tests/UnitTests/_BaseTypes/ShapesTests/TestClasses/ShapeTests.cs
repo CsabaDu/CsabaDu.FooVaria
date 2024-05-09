@@ -48,7 +48,7 @@ public sealed class ShapeTests
     private ShapeChild _other;
     private IShapeComponent _shapeComponent;
     private ILimiter _limiter;
-    private IBaseQuantifiable _baseQuantifiable;
+    IMeasureUnitCodes _measureUnitCodes;
     private IQuantifiable _quantifiable;
     private RandomParams _randomParams;
     private DataFields _fields;
@@ -72,7 +72,7 @@ public sealed class ShapeTests
         _shape = _other = null;
         _shapeComponent = null;
         _limiter = null;
-        _baseQuantifiable = null;
+        _measureUnitCodes = null;
         _quantifiable = null;
     }
 
@@ -466,18 +466,18 @@ public sealed class ShapeTests
     // ValidateMeasureUnit
 
     #region void ValidateMeasureUnitCodes
-    #region IMeasureUnitCodes.ValidateMeasureUnitCodes(IBaseQuantifiable?, string)
+    #region IMeasureUnitCodes.ValidateMeasureUnitCodes(IMeasureUnitCodes?, string)
     [TestMethod, TestCategory("UnitTest")]
-    public void ValidateMeasureUnitCodes_nullArg_IBaseQuantifiable_arg_string_throws_ArgumentNullException()
+    public void ValidateMeasureUnitCodes_nullArg_IMeasureUnitCodes_arg_string_throws_ArgumentNullException()
     {
         // Arrange
         SetShapeChild();
 
-        _baseQuantifiable = null;
+        _measureUnitCodes = null;
         _fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
-        void attempt() => _shape.ValidateMeasureUnitCodes(_baseQuantifiable, _fields.paramName);
+        void attempt() => _shape.ValidateMeasureUnitCodes(_measureUnitCodes, _fields.paramName);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
@@ -485,18 +485,32 @@ public sealed class ShapeTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void ValidateMeasureUnitCodes_invalidArg_IBaseQuantifiable_arg_string_throws_InvalidEnumArgumentException()
+    public void ValidateMeasureUnitCodes_invalidArg_IMeasureUnitCodes_arg_string_throws_ArgumentOutOfRangeException()
     {
         // Arrange
-        SetCompleteShapeChild();
+        SetShapeChild();
 
-        _fields.measureUnitCode = _randomParams.GetRandomMeasureUnitCode(_fields.measureUnitCode);
-        _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
-        _baseQuantifiable = GetBaseQuantifiableChild(_fields);
+        _measureUnitCodes = new MeasureUnitCodesObject();
         _fields.paramName = _randomParams.GetRandomParamName();
 
         // Act
-        void attempt() => _shape.ValidateMeasureUnitCodes(_baseQuantifiable, _fields.paramName);
+        void attempt() => _shape.ValidateMeasureUnitCodes(_measureUnitCodes, _fields.paramName);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
+        Assert.AreEqual(_fields.paramName, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateMeasureUnitCodes_invalidArg_IMeasureUnitCodes_arg_string_throws_InvalidEnumArgumentException()
+    {
+        // Arrange
+        SetCompleteShapeChild();
+        _fields.measureUnit = _randomParams.GetRandomSpreadMeasureUnit(_fields.measureUnitCode);
+        _measureUnitCodes = GetCompleteShapeChild(_fields);
+
+        // Act
+        void attempt() => _shape.ValidateMeasureUnitCodes(_measureUnitCodes, _fields.paramName);
 
         // Assert
         var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
@@ -504,16 +518,16 @@ public sealed class ShapeTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void ValidateMeasureUnitCodes_validArg_IBaseQuantifiable_arg_string_returns()
+    public void ValidateMeasureUnitCodes_validArg_IMeasureUnitCodes_arg_string_returns()
     {
         // Arrange
         _other = GetCompleteShapeChild(_fields);
         _fields.measureUnit = _randomParams.GetRandomSpreadMeasureUnit(_fields.measureUnitCode);
         SetShapeChild(_fields.measureUnit, _fields.defaultQuantity, _other);
-        _baseQuantifiable = _shape;
+        _other = _shape;
 
         // Act
-        void attempt() => _shape.ValidateMeasureUnitCodes(_baseQuantifiable, _fields.paramName);
+        void attempt() => _shape.ValidateMeasureUnitCodes(_other, _fields.paramName);
 
         // Assert
         Assert.IsTrue(DoesNotThrowException(attempt));

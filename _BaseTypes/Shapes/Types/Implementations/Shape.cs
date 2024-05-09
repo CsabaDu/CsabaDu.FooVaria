@@ -93,8 +93,10 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
         {
             ValidateMeasureUnitCodes(this, shape, paramName);
         }
-
-        throw ArgumentTypeOutOfRangeException(paramName, measureUnitCodes!);
+        else
+        {
+            throw ArgumentTypeOutOfRangeException(paramName, measureUnitCodes!);
+        }
     }
 
     public void ValidateShapeComponent(IQuantifiable? quantifiable, string paramName)

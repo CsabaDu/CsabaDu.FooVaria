@@ -3,6 +3,13 @@
 public abstract class BaseRate(IRootObject rootObject, string paramName) : BaseQuantifiable(rootObject, paramName), IBaseRate
 {
     #region Public methods
+    #region Static methods
+    public static IEnumerable<RateComponentCode> GetRateComponentCodes()
+    {
+        return Enum.GetValues<RateComponentCode>();
+    }
+    #endregion
+
     #region Override methods
     #region Sealed methods
     public override sealed bool Equals(object? obj)
@@ -56,13 +63,6 @@ public abstract class BaseRate(IRootObject rootObject, string paramName) : BaseQ
     public abstract MeasureUnitCode GetDenominatorCode();
     public abstract MeasureUnitCode GetNumeratorCode();
     public abstract object? GetRateComponent(RateComponentCode rateComponentCode);
-    #endregion
-
-    #region Static methods
-    public static IEnumerable<RateComponentCode> GetRateComponentCodes()
-    {
-        return Enum.GetValues<RateComponentCode>();
-    }
     #endregion
 
     public int CompareTo(IBaseRate? other)
