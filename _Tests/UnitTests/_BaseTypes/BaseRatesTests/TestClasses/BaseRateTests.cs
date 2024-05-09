@@ -129,9 +129,16 @@ public sealed class BaseRateTests
     #endregion
     #endregion
 
+    #region bool? FitsIn
+    #region IFit<IBaseRate>.FitsIn(IBaseRate?, LimitMode?)
 
-    // bool? IFit<IBaseRate>.FitsIn(IBaseRate? other, LimitMode? limitMode)
-    // bool? ILimitable.FitsIn(ILimiter? limiter)
+    #endregion
+
+    #region ILimitable.FitsIn(ILimiter?)
+
+    #endregion
+    #endregion
+
     // IBaseRate IBaseRate.GetBaseRate(IQuantifiable numerator, Enum denominator)
     // IBaseRate IBaseRate.GetBaseRate(IQuantifiable numerator, IMeasurable denominator)
     // IBaseRate IBaseRate.GetBaseRate(IQuantifiable numerator, IQuantifiable denominator)

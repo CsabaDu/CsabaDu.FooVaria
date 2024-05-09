@@ -44,6 +44,7 @@ public sealed class BaseRateChild(IRootObject rootObject, string paramName) : Ba
 
     #region Test helpers
     public BaseRateReturn Return { private get; set; }
+    private MeasureUnitCode DenominatorCode { get; set; }
 
     public static BaseRateChild GetBaseRateChild(Enum measureUnit, decimal defaultQuantity, MeasureUnitCode denominatorCode, IBaseRateFactory factory = null)
     {
@@ -55,9 +56,9 @@ public sealed class BaseRateChild(IRootObject rootObject, string paramName) : Ba
             {
                 GetBaseMeasureUnitValue = measureUnit,
                 GetDefaultQuantityValue = defaultQuantity,
-                GetDenominatorCodeValue = denominatorCode,
                 GetFactoryValue = factory,
-            }
+            },
+            DenominatorCode = denominatorCode,
         };
     }
 
@@ -72,16 +73,16 @@ public sealed class BaseRateChild(IRootObject rootObject, string paramName) : Ba
     }
     #endregion
 
-    public override MeasureUnitCode GetDenominatorCode() => Return.GetDenominatorCodeValue;
+    //public override MeasureUnitCode GetDenominatorCode() => Return.GetDenominatorCodeValue;
 
-    public override MeasureUnitCode GetNumeratorCode() => GetMeasureUnitCode();
+    //public override MeasureUnitCode GetNumeratorCode() => GetMeasureUnitCode();
 
     public override object GetRateComponent(RateComponentCode rateComponentCode)
     {
         return rateComponentCode switch
         {
-            RateComponentCode.Numerator => GetNumeratorCode(),
-            RateComponentCode.Denominator => GetDenominatorCode(),
+            RateComponentCode.Numerator => GetMeasureUnitCode(),
+            RateComponentCode.Denominator => DenominatorCode,
 
             _ => null,
         };

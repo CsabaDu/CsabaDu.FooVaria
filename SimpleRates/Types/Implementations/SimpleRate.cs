@@ -94,10 +94,10 @@ public abstract class SimpleRate : BaseRate, ISimpleRate
         return NumeratorCode.GetDefaultMeasureUnit()!;
     }
 
-    public override sealed MeasureUnitCode GetDenominatorCode()
-    {
-        return DenominatorCode;
-    }
+    //public override sealed MeasureUnitCode GetDenominatorCode()
+    //{
+    //    return DenominatorCode;
+    //}
 
     //public override sealed MeasureUnitCode GetMeasureUnitCode(RateComponentCode rateComponentCode)
     //{
@@ -111,10 +111,10 @@ public abstract class SimpleRate : BaseRate, ISimpleRate
     //    return GetRateComponentCodes().Where(x => this[x] is MeasureUnitCode).Select(GetMeasureUnitCode);
     //}
 
-    public override sealed MeasureUnitCode GetNumeratorCode()
-    {
-        return NumeratorCode;
-    }
+    //public override sealed MeasureUnitCode GetNumeratorCode()
+    //{
+    //    return NumeratorCode;
+    //}
 
     public override sealed Enum? GetRateComponent(RateComponentCode rateComponentCode)
     {

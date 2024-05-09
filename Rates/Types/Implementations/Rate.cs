@@ -173,10 +173,10 @@ internal abstract class Rate : BaseRate, IRate
         return Numerator.GetBaseMeasureUnit();
     }
 
-    public override sealed MeasureUnitCode GetDenominatorCode()
-    {
-        return Denominator.GetMeasureUnitCode();
-    }
+    //public override sealed MeasureUnitCode GetDenominatorCode()
+    //{
+    //    return Denominator.GetMeasureUnitCode();
+    //}
 
     //public override sealed MeasureUnitCode GetMeasureUnitCode(RateComponentCode rateComponentCode)
     //{
@@ -188,10 +188,10 @@ internal abstract class Rate : BaseRate, IRate
     //    return GetRateComponentCodes().Where(x => this[x] is not null).Select(GetMeasureUnitCode);
     //}
 
-    public override sealed MeasureUnitCode GetNumeratorCode()
-    {
-        return Numerator.GetMeasureUnitCode();
-    }
+    //public override sealed MeasureUnitCode GetNumeratorCode()
+    //{
+    //    return Numerator.GetMeasureUnitCode();
+    //}
 
     public override sealed IBaseMeasure? GetRateComponent(RateComponentCode rateComponentCode)
     {

@@ -60,8 +60,6 @@ public abstract class BaseRate(IRootObject rootObject, string paramName) : BaseQ
     #endregion
 
     #region Abstract methods
-    public abstract MeasureUnitCode GetDenominatorCode();
-    public abstract MeasureUnitCode GetNumeratorCode();
     public abstract object? GetRateComponent(RateComponentCode rateComponentCode);
     #endregion
 
@@ -124,10 +122,16 @@ public abstract class BaseRate(IRootObject rootObject, string paramName) : BaseQ
         return GetBaseRateFactory().CreateBaseRate(numerator, denominator);
     }
 
+    public MeasureUnitCode GetDenominatorCode()
+    {
+        return GetMeasureUnitCode(RateComponentCode.Denominator);
+    }
+
     public MeasureUnitCode GetMeasureUnitCode(RateComponentCode rateComponentCode)
     {
         return GetMeasureUnitCode(this, rateComponentCode) ?? throw InvalidRateComponentCodeArgumentException(rateComponentCode);
     }
+
     public IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
     {
         foreach (RateComponentCode item in GetRateComponentCodes())
@@ -139,6 +143,11 @@ public abstract class BaseRate(IRootObject rootObject, string paramName) : BaseQ
                 yield return measureUnitCode.Value;
             }
         }
+    }
+
+    public MeasureUnitCode GetNumeratorCode()
+    {
+        return GetMeasureUnitCode(RateComponentCode.Numerator);
     }
 
     public decimal GetQuantity()
