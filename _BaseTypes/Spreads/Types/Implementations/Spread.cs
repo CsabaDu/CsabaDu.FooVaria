@@ -4,13 +4,6 @@ public abstract class Spread(IRootObject rootObject, string paramName) : Quantif
 {
     #region Public methods
     #region Override methods
-    public override Enum GetBaseMeasureUnit()
-    {
-        ISpreadMeasure spreadMeasure = GetSpreadMeasure();
-
-        return spreadMeasure.GetBaseMeasureUnit();
-    }
-
     #region Sealed methods
     public override sealed ValueType GetBaseQuantity()
     {
@@ -42,6 +35,13 @@ public abstract class Spread(IRootObject rootObject, string paramName) : Quantif
         return GetSpread(spreadMeasure);
     }
     #endregion
+
+    public override Enum GetBaseMeasureUnit()
+    {
+        ISpreadMeasure spreadMeasure = GetSpreadMeasure();
+
+        return spreadMeasure.GetBaseMeasureUnit();
+    }
     #endregion
 
     #region Virtual methods
@@ -66,19 +66,12 @@ public abstract class Spread(IRootObject rootObject, string paramName) : Quantif
 
     public ISpreadMeasure? GetSpreadMeasure(IQuantifiable? quantifiable)
     {
-        if (quantifiable is not ISpreadMeasure spreadMeasure) return null;
-        if(getSpreadMeasure() is not IBaseMeasure) return null;
-        if (!IsExchangeableTo(spreadMeasure.GetBaseMeasureUnit())) return null;
-        if (spreadMeasure.GetQuantity() <= 0) return null;
-
-        return getSpreadMeasure();
-
-        //return quantifiable is ISpreadMeasure spreadMeasure
-        //    && getSpreadMeasure() is IBaseMeasure
-        //    && IsExchangeableTo(spreadMeasure.GetBaseMeasureUnit())
-        //    && spreadMeasure.GetQuantity() > 0 ?
-        //    getSpreadMeasure()
-        //    : null;
+        return quantifiable is ISpreadMeasure spreadMeasure
+            && getSpreadMeasure() is IBaseMeasure
+            && IsExchangeableTo(spreadMeasure.GetBaseMeasureUnit())
+            && spreadMeasure.GetQuantity() > 0 ?
+            getSpreadMeasure()
+            : null;
 
         #region Local methods
         ISpreadMeasure getSpreadMeasure()

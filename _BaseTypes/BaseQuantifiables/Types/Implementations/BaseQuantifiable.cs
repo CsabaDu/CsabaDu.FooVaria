@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
-
-namespace CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types.Implementations;
 
 public abstract class BaseQuantifiable(IRootObject rootObject, string paramName) : Measurable(rootObject, paramName), IBaseQuantifiable
 {
