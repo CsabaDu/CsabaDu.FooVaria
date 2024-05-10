@@ -52,6 +52,41 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #endregion
     }
 
+    internal IEnumerable<object[]> GetFitsInIBaseRateLimitModeArgs()
+    {
+        testCase = "IBaseRate, Not defined LimitMode";
+        measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        defaultQuantity = RandomParams.GetRandomDecimal();
+        denominatorCode = RandomParams.GetRandomMeasureUnitCode();
+        baseRate = GetBaseRateChild(this);
+        limitMode = SampleParams.NotDefinedLimitMode;
+        yield return toObjectArray();
+
+        testCase = "Different NumeratotCode, valid LimitMode";
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode());
+        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
+        limitMode = RandomParams.GetRandomLimitMode();
+        yield return toObjectArray();
+
+        testCase = "Different DenominatorCode, valid LimitMode";
+        baseRate = GetBaseRateChild(this);
+        denominatorCode = RandomParams.GetRandomMeasureUnitCode(denominatorCode);
+        yield return toObjectArray();
+
+        testCase = "null, valid LimitMode";
+        baseRate = null;
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            TestCase_Enum_LimitMode_IBaseRate_MeasureUnitCode args = new(testCase, measureUnit, limitMode, baseRate, denominatorCode);
+
+            return args.ToObjectArray();
+        }
+        #endregion
+    }
+
     //internal IEnumerable<object[]> GetFitsInArgs()
     //{
     //    testCase = "Not IBaseQuantifiable";

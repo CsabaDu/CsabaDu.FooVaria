@@ -185,7 +185,7 @@ public sealed class QuantifiableTests
 
     #region IFit<IQuantifiable>.FitsIn(IQuantifiable?, LimitMode?)
     [TestMethod, TestCategory("UnitTest")]
-    public void FitsIn_nullArgs_IQuantifiable_LimitMode_returns_expected()
+    public void FitsIn_nullArgs_IQuantifiable_LimitMode_returns_true()
     {
         // Arrange
         SetQuantifiableChild();

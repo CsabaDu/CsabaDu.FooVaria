@@ -20,6 +20,8 @@ public sealed class BaseRateTests
 
     #region Private fields
     private BaseRateChild _baseRate;
+    private IBaseRate _other;
+    private ILimiter _limiter;
     private MeasureUnitCode _denominatorCode;
     private RandomParams _randomParams;
     private DataFields _fields;
@@ -46,6 +48,8 @@ public sealed class BaseRateTests
     public void TestCleanup()
     {
         _baseRate = null;
+        _other = null;
+        _limiter = null; 
     }
 
     public static string GetDisplayName(MethodInfo methodInfo, object[] args)
@@ -131,11 +135,59 @@ public sealed class BaseRateTests
 
     #region bool? FitsIn
     #region IFit<IBaseRate>.FitsIn(IBaseRate?, LimitMode?)
+    #region override sealed IFit<IBaseRate>.FitsIn(IBaseRate?, LimitMode?)
+    [TestMethod, TestCategory("UnitTest")]
+    public void FitsIn_nullArgs_IBaseRate_LimitMode_returns_true()
+    {
+        // Arrange
+        SetBaseRateChild();
 
+        _other = null;
+        _fields.limitMode = null;
+
+        // Act
+        var actual = _baseRate.FitsIn(_other, _fields.limitMode);
+
+        // Assert
+        Assert.IsTrue(actual);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetFitsInIBaseRateLimitModeArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void FitsIn_invalidArgs_IBaseRate_LimitMode_returns_null(string testCase, Enum measureUnit, LimitMode? limitMode, IBaseRate other, MeasureUnitCode denominatorCode)
+    {
+        // Arrange
+        SetBaseRateChild(measureUnit, _fields.defaultQuantity, denominatorCode);
+
+        // Act
+        var actual = _baseRate.FitsIn(other, limitMode);
+
+        // Assert
+        Assert.IsNull(actual);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void FitsIn_validArgs_IBaseRate_LimitMode_returns_expected()
+    {
+        // Arrange
+        SetBaseRateChild();
+
+        _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
+        _fields.defaultQuantity = _randomParams.GetRandomDecimal();
+        IBaseRate baseRate = GetBaseRateChild(_fields);
+        _fields.limitMode = _randomParams.GetRandomLimitMode();
+        bool? expected = _baseRate.GetDefaultQuantity().FitsIn(baseRate.GetDefaultQuantity(), _fields.limitMode);
+
+        // Act
+        var actual = _baseRate.FitsIn(baseRate, _fields.limitMode);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
     #endregion
 
     #region ILimitable.FitsIn(ILimiter?)
-
+    #endregion
     #endregion
     #endregion
 
@@ -168,6 +220,11 @@ public sealed class BaseRateTests
     private static IEnumerable<object[]> GetEqualsArgs()
     {
         return DynamicDataSource.GetEqualsArgs();
+    }
+
+    private static IEnumerable<object[]> GetFitsInIBaseRateLimitModeArgs()
+    {
+        return DynamicDataSource.GetFitsInIBaseRateLimitModeArgs();
     }
     #endregion
 
