@@ -30,9 +30,7 @@ public class BaseQuantifiableChild(IRootObject rootObject, string paramName) : B
 
     public static BaseQuantifiableChild GetBaseQuantifiableChild(Enum measureUnit, decimal defaultQuantity, IBaseQuantifiableFactory factory = null)
     {
-        DataFields fields = DataFields.Fields;
-
-        return new(fields.RootObject, fields.paramName)
+        return new(Fields.RootObject, Fields.paramName)
         {
             Return = new()
             {

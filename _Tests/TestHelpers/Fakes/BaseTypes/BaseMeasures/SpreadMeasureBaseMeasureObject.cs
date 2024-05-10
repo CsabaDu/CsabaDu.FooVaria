@@ -6,9 +6,9 @@ public sealed class SpreadMeasureBaseMeasureObject(IRootObject rootObject, strin
     {
         if (measureUnit is null || !GetMeasureUnitCode(measureUnit).IsSpreadMeasureUnitCode()) return null;
 
-        DataFields fields = DataFields.Fields;
+        
 
-        return new(fields.RootObject, fields.paramName)
+        return new(Fields.RootObject, Fields.paramName)
         {
             Return = new()
             {

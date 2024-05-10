@@ -26,9 +26,9 @@ public sealed class MeasurableChild(IRootObject rootObject, string paramName) : 
 
     public static MeasurableChild GetMeasurableChild(Enum measureUnit, IMeasurableFactory factory = null)
     {
-        DataFields fields = DataFields.Fields;
+        
 
-        return new(fields.RootObject, fields.paramName)
+        return new(Fields.RootObject, Fields.paramName)
         {
             Return = new()
             {

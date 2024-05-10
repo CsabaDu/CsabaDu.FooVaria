@@ -49,9 +49,9 @@ public class QuantifiableChild(IRootObject rootObject, string paramName) : Quant
 
     public static QuantifiableChild GetQuantifiableChild(decimal defaultQuantity, Enum measureUnit = null, IQuantifiableFactory factory = null)
     {
-        DataFields fields = DataFields.Fields;
+        
 
-        return new(fields.RootObject, fields.paramName)
+        return new(Fields.RootObject, Fields.paramName)
         {
             Return = GetReturn(measureUnit, defaultQuantity, factory),
         };

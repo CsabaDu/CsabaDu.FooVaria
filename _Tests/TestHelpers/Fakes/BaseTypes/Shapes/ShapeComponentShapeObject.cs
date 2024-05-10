@@ -11,9 +11,7 @@ public sealed class ShapeComponentShapeObject(IRootObject rootObject, string par
 
     private static ShapeComponentShapeObject GetShapeComponentShapeObject(ShapeComponentSpreadMeasureObject shapeComponentSpreadMeasure, IShapeFactory factory = null)
     {
-        DataFields fields = DataFields.Fields;
-
-        return new(fields.RootObject, fields.paramName)
+        return new(Fields.RootObject, Fields.paramName)
         {
             Return = new()
             {

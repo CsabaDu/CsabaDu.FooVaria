@@ -7,9 +7,9 @@ internal sealed class BaseMeasureFactoryObject(RateComponentCode rateComponentCo
 
     public static BaseMeasureFactoryObject GetBaseMeasureFactoryObject()
     {
-        DataFields fields = DataFields.Fields;
+        
 
-        RateComponentCode rateComponentCode = fields.RandomParams.GetRandomRateComponentCode();
+        RateComponentCode rateComponentCode = Fields.RandomParams.GetRandomRateComponentCode();
 
         return GetBaseMeasureFactoryObject(rateComponentCode);
     }
@@ -24,9 +24,7 @@ internal sealed class BaseMeasureFactoryObject(RateComponentCode rateComponentCo
 
     public IBaseMeasure CreateBaseMeasure(IBaseMeasurement baseMeasurement, ValueType quantity)
     {
-        DataFields fields = DataFields.Fields;
-
-        return new BaseMeasureChild(fields.RootObject, fields.paramName)
+        return new BaseMeasureChild(Fields.RootObject, Fields.paramName)
         {
             Return = new()
             {
@@ -39,12 +37,10 @@ internal sealed class BaseMeasureFactoryObject(RateComponentCode rateComponentCo
 
     public IQuantifiable CreateQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
     {
-        DataFields fields = DataFields.Fields;
-
         IBaseMeasurement baseMeasurement = BaseMeasurementFactory.CreateBaseMeasurement(measureUnitCode);
-        fields.typeCode = measureUnitCode.GetQuantityTypeCode();
-        fields.quantity = (ValueType)defaultQuantity.ToQuantity(fields.typeCode);
+        Fields.typeCode = measureUnitCode.GetQuantityTypeCode();
+        Fields.quantity = (ValueType)defaultQuantity.ToQuantity(Fields.typeCode);
 
-        return CreateBaseMeasure(baseMeasurement, fields.quantity);
+        return CreateBaseMeasure(baseMeasurement, Fields.quantity);
     }
 }

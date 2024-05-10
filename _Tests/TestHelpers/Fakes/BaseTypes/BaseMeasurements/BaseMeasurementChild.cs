@@ -37,9 +37,9 @@ public sealed class BaseMeasurementChild(IRootObject rootObject, string paramNam
 
     public static BaseMeasurementChild GetBaseMeasurementChild(Enum measureUnit, IBaseMeasurementFactory factory = null, string measureUnitName = null)
     {
-        DataFields fields = DataFields.Fields;
+        
 
-        return new(fields.RootObject, fields.paramName)
+        return new(Fields.RootObject, Fields.paramName)
         {
             Return = new()
             {

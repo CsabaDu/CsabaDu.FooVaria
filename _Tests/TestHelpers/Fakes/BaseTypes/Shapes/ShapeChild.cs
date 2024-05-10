@@ -52,13 +52,11 @@ public class ShapeChild(IRootObject rootObject, string paramName) : Shape(rootOb
 
     #region Test helpers
     public ShapeReturn Return { private get; set; } = new();
-    protected ISpreadMeasure SpreadMeasure { get; set; }
+    protected ISpreadMeasure SpreadMeasure { private get; set; }
 
     public static ShapeChild GetShapeChild(IShapeComponent shapeComponent, IShape baseShape = null, IShapeFactory factory = null)
     {
-        DataFields fields = DataFields.Fields;
-
-        return new(fields.RootObject, fields.paramName)
+        return new(Fields.RootObject, Fields.paramName)
         {
             Return = GetReturn(shapeComponent, baseShape, factory),
             SpreadMeasure = GetSpreadMeasure(shapeComponent),

@@ -46,9 +46,7 @@ public class SpreadChild(IRootObject rootObject, string paramName) : Spread(root
 
     public static SpreadChild GetSpreadChild(Enum measureUnit, ValueType quantity, ISpreadFactory factory = null, RateComponentCode? rateComponentCode = null)
     {
-        DataFields fields = DataFields.Fields;
-
-        return new(fields.RootObject, fields.paramName)
+        return new(Fields.RootObject, Fields.paramName)
         {
             Return = GetReturn(factory),
             SpreadMeasure = GetSpreadMeasureBaseMeasureObject(measureUnit, quantity, rateComponentCode),
@@ -57,9 +55,7 @@ public class SpreadChild(IRootObject rootObject, string paramName) : Spread(root
 
     public static SpreadChild GetSpreadChild(ISpreadMeasure spreadMeasure, ISpreadFactory factory = null)
     {
-        DataFields fields = DataFields.Fields;
-
-        return new(fields.RootObject, fields.paramName)
+        return new(Fields.RootObject, Fields.paramName)
         {
             Return = GetReturn(factory),
             SpreadMeasure = spreadMeasure,

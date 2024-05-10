@@ -18,13 +18,13 @@ public sealed class SpreadFactoryObject : ISpreadFactory
         return GetSpreadChild(spreadMeasure, this);
     }
 
-    private ISpread GetSpreadChild(ISpreadMeasure spreadMeasure, SpreadFactoryObject spreadFactoryObject)
+    private SpreadChild GetSpreadChild(ISpreadMeasure spreadMeasure, SpreadFactoryObject spreadFactoryObject)
     {
         return SpreadChild.GetSpreadChild(spreadMeasure, this);
     }
 
     public ISpreadMeasure CreateSpreadMeasure(Enum measureUnit, double quantity)
     {
-        return SpreadMeasureBaseMeasureObject.GetSpreadMeasureBaseMeasureObject(measureUnit, quantity);
+        return GetSpreadMeasureBaseMeasureObject(measureUnit, quantity);
     }
 }
