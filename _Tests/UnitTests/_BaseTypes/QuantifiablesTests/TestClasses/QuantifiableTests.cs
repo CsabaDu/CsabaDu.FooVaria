@@ -135,7 +135,7 @@ public sealed class QuantifiableTests
     #region bool? FitsIn
     #region override ILimitable.FitsIn(ILimiter?)
     [TestMethod, TestCategory("UnitTest")]
-    public void FitsIn_nullArg_ILimiter_returns_expected()
+    public void FitsIn_nullArg_ILimiter_returns_true()
     {
         // Arrange
         SetQuantifiableChild();

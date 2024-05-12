@@ -17,6 +17,15 @@ public abstract class BaseRate(IRootObject rootObject, string paramName) : BaseQ
         return obj is IBaseRate baseRate && Equals(baseRate);
     }
 
+    public override sealed bool? FitsIn(ILimiter? limiter)
+    {
+        if (limiter is null) return true;
+
+        if (limiter is not IBaseRate baseRate) return null;
+
+        return FitsIn(baseRate, limiter?.GetLimitMode());
+    }
+
     public override sealed int GetHashCode()
     {
         return HashCode.Combine(GetNumeratorCode(), GetDefaultQuantity(), GetDenominatorCode());
@@ -76,15 +85,6 @@ public abstract class BaseRate(IRootObject rootObject, string paramName) : BaseQ
     {
         return base.Equals(other)
             && other.GetDenominatorCode() == GetDenominatorCode();
-    }
-
-    public override sealed bool? FitsIn(ILimiter? limiter)
-    {
-        if (limiter is null) return true;
-
-        if (limiter is not IBaseRate baseRate) return null;
-
-        return FitsIn(baseRate, limiter?.GetLimitMode());
     }
 
     public bool? FitsIn(IBaseRate? other, LimitMode? limitMode)

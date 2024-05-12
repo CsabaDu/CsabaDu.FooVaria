@@ -2,7 +2,7 @@
 
 public sealed class LimiterBaseRateObject(IRootObject rootObject, string paramName) : BaseRateChild(rootObject, paramName), ILimiter
 {
-    public static LimiterBaseRateObject GetLimiterBaseQuantifiableObject(LimitMode? limitMode, Enum measureUnit, decimal defaultQuantity, MeasureUnitCode denominatorCode, IBaseRateFactory factory = null)
+    public static LimiterBaseRateObject GetLimiterBaseRateObject(LimitMode? limitMode, Enum measureUnit, decimal defaultQuantity, MeasureUnitCode denominatorCode, IBaseRateFactory factory = null)
     {
         return new(Fields.RootObject, Fields.paramName)
         {

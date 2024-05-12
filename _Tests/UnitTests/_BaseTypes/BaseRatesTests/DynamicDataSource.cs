@@ -118,6 +118,34 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #endregion
     }
 
+    internal IEnumerable<object[]> GetFitsInILimiterArgs()
+    {
+        testCase = "Not IBaseRatee";
+        measureUnit = RandomParams.GetRandomMeasureUnit();
+        limiter = new LimiterObject();
+        yield return toObjectArray();
+
+        testCase = "Different type MeasureUnit";
+        denominatorCode = RandomParams.GetRandomMeasureUnitCode();
+        limitMode = RandomParams.GetRandomLimitMode();
+        limiter = GetLimiterBaseRateObject(limitMode.Value, RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity, denominatorCode);
+        measureUnit = measureUnit = RandomParams.GetRandomMeasureUnit(GetMeasureUnitCode());
+        yield return toObjectArray();
+
+        testCase = "Different DenominatorCode";
+        limiter = GetLimiterBaseRateObject(limitMode.Value, RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity, denominatorCode);
+        denominatorCode = RandomParams.GetRandomMeasureUnitCode(denominatorCode);
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            TestCase_Enum_ILimiter_MeasureUnitCode args = new(testCase, measureUnit, limiter, denominatorCode);
+
+            return args.ToObjectArray();
+        }
+        #endregion
+    }
     //internal IEnumerable<object[]> GetFitsInArgs()
     //{
     //    testCase = "Not IBaseQuantifiable";

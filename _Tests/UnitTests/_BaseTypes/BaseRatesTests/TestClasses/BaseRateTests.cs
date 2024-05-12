@@ -203,54 +203,54 @@ public sealed class BaseRateTests
     #endregion
 
     #region ILimitable.FitsIn(ILimiter?)
-    #region virtual ILimitable.FitsIn(ILimiter?)
-    //[TestMethod, TestCategory("UnitTest")]
-    //public void FitsIn_nullArg_ILimiter_returns_expected()
-    //{
-    //    // Arrange
-    //    SetBaseQuantifiableChild();
+    #region override sealed ILimitable.FitsIn(ILimiter?)
+    [TestMethod, TestCategory("UnitTest")]
+    public void FitsIn_nullArg_ILimiter_returns_true()
+    {
+        // Arrange
+        SetBaseRateChild();
 
-    //    ILimiter limiter = null;
+        _limiter = null;
 
-    //    // Act
-    //    var actual = _baseQuantifiable.FitsIn(limiter);
+        // Act
+        var actual = _baseRate.FitsIn(_limiter);
 
-    //    // Assert
-    //    Assert.IsTrue(actual);
-    //}
+        // Assert
+        Assert.IsTrue(actual);
+    }
 
-    //[TestMethod, TestCategory("UnitTest")]
-    //[DynamicData(nameof(GetFitsInArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
-    //public void FitsIn_invalidArg_ILimiter_returns_null(string testCase, Enum measureUnit, ILimiter limiter)
-    //{
-    //    // Arrange
-    //    SetBaseQuantifiableChild(measureUnit, _fields.defaultQuantity);
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetFitsInILimiterArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void FitsIn_invalidArg_ILimiter_returns_null(string testCase, Enum measureUnit, ILimiter limiter, MeasureUnitCode denominatorCode)
+    {
+        // Arrange
+        SetBaseRateChild(measureUnit, _fields.defaultQuantity, denominatorCode);
 
-    //    // Act
-    //    var actual = _baseQuantifiable.FitsIn(limiter);
+        // Act
+        var actual = _baseRate.FitsIn(limiter);
 
-    //    // Assert
-    //    Assert.IsNull(actual);
-    //}
+        // Assert
+        Assert.IsNull(actual);
+    }
 
-    //[TestMethod, TestCategory("UnitTest")]
-    //public void FitsIn_validArg_ILimiter_returns_expected()
-    //{
-    //    // Arrange
-    //    SetBaseQuantifiableChild();
+    [TestMethod, TestCategory("UnitTest")]
+    public void FitsIn_validArg_ILimiter_returns_expected()
+    {
+        // Arrange
+        SetBaseRateChild();
 
-    //    _fields.limitMode = _randomParams.GetRandomLimitMode();
-    //    decimal otherQuantity = _randomParams.GetRandomDecimal();
-    //    _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
-    //    ILimiter limiter = GetLimiterBaseQuantifiableObject(_fields.limitMode, _fields.measureUnit, otherQuantity);
-    //    bool? expected = _fields.defaultQuantity.FitsIn(otherQuantity, _fields.limitMode);
+        _fields.limitMode = _randomParams.GetRandomLimitMode();
+        decimal otherQuantity = _randomParams.GetRandomDecimal();
+        _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
+        _limiter = GetLimiterBaseRateObject(_fields.limitMode.Value, _fields.measureUnit, otherQuantity, _fields.denominatorCode);
+        bool? expected = _fields.defaultQuantity.FitsIn(otherQuantity, _fields.limitMode);
 
-    //    // Act
-    //    var actual = _baseQuantifiable.FitsIn(limiter);
+        // Act
+        var actual = _baseRate.FitsIn(_limiter);
 
-    //    // Assert
-    //    Assert.AreEqual(expected, actual);
-    //}
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
     #endregion
     #endregion
     #endregion
@@ -296,6 +296,11 @@ public sealed class BaseRateTests
     private static IEnumerable<object[]> GetFitsInIBaseRateLimitModeArgs()
     {
         return DynamicDataSource.GetFitsInIBaseRateLimitModeArgs();
+    }
+
+    private static IEnumerable<object[]> GetFitsInILimiterArgs()
+    {
+        return DynamicDataSource.GetFitsInILimiterArgs();
     }
     #endregion
 
