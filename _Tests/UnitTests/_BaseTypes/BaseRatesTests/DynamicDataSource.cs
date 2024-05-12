@@ -7,7 +7,38 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
     #endregion
 
     #region Methods
-    internal IEnumerable<object[]> GetEqualsArgs()
+    internal IEnumerable<object[]> GetEqualsObjectArgs()
+    {
+        testCase = "null => false";
+        isTrue = false;
+        obj = null;
+        measureUnit = RandomParams.GetRandomValidMeasureUnit();
+        defaultQuantity = RandomParams.GetRandomDecimal();
+        denominatorCode = RandomParams.GetRandomMeasureUnitCode();
+        yield return toObjectArray();
+
+        testCase = "Different IBaseRate => false";
+        obj = GetBaseRateChild(this);
+        defaultQuantity = RandomParams.GetRandomDecimal(defaultQuantity);
+        yield return toObjectArray();
+
+        testCase = "Equal IBaseRate => true";
+        isTrue = true;
+        obj = GetBaseRateChild(this);
+        measureUnit = RandomParams.GetRandomMeasureUnit(GetMeasureUnitCode(), measureUnit);
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            TestCase_bool_object_Enum_decimal_MeasureUnitCode args = new(testCase, isTrue, obj, measureUnit, defaultQuantity, denominatorCode);
+
+            return args.ToObjectArray();
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> GetEqualsIBaseRateArgs()
     {
         testCase = "null => false";
         isTrue = false;
@@ -17,7 +48,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         denominatorCode = RandomParams.GetRandomMeasureUnitCode();
         yield return toObjectArray();
 
-        testCase = "different DefaultQuantity => false";
+        testCase = "Different DefaultQuantity => false";
         baseRate = GetBaseRateChild(this);
         defaultQuantity = RandomParams.GetRandomDecimal(defaultQuantity);
         yield return toObjectArray();

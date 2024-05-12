@@ -33,6 +33,8 @@
         // bool? IFit<IBaseRate>.FitsIn(IBaseRate? other, LimitMode? limitMode)
         // int IComparable<IBaseRate>.CompareTo(IBaseRate? other)
         // bool IEquatable<IBaseRate>.Equals(IBaseRate? other)
+        // bool BaseRate.Equals(object? obj)
+        // int BaseRate.GetHashCode()
         // MeasureUnitCode IDenominate.GetDenominatorCodeValue()
         // object? IValidRateComponent.GetRateComponent(RateComponentCode rateComponentCode)
         // bool IValidRateComponent.IsValidRateComponent(object? rateComponent, RateComponentCode rateComponentCode)

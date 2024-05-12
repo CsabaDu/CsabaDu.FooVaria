@@ -274,24 +274,6 @@ public sealed class QuantifiableTests
     #endregion
     #endregion
 
-    //#region MeasureUnitCode GetMeasureUnitCode
-    //#region override sealed IMeasureUnitCode.GetMeasureUnitCode()
-    //[TestMethod, TestCategory("UnitTest")]
-    //public void GetMeasureUnitCode_returns_expected()
-    //{
-    //    // Arrange
-    //    SetQuantifiableChild();
-    //    MeasureUnitCode expected = _fields.measureUnitCode;
-
-    //    // Act
-    //    var actual = _quantifiable.GetMeasureUnitCode();
-
-    //    // Assert
-    //    Assert.AreEqual(expected, actual);
-    //}
-    //#endregion
-    //#endregion
-
     #region IQuantifiable GetQuantifiable
     #region IQuantifiable.GetQuantifiable(MeasureUnitCode, decimal)
     [TestMethod, TestCategory("UnitTest")]

@@ -116,9 +116,25 @@ public sealed class BaseRateTests
     #endregion
 
     #region bool Equals
+    #region override sealed BaseRate.Equals(object? obj)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetEqualsObjectArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void Equals_arg_object_returns_expected(string testCase, bool expected, object obj, Enum measureUnit, decimal defaultQuantity, MeasureUnitCode denominatorCode)
+    {
+        // Arrange
+        SetBaseRateChild(measureUnit, defaultQuantity, denominatorCode);
+
+        // Act
+        var actual = _baseRate.Equals(obj);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+
     #region IEquatable<IBaseRate>.Equals(IBaseRate?)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetEqualsArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    [DynamicData(nameof(GetEqualsIBaseRateArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
     public void Equals_arg_IBaseRate_returns_expected(string testCase, Enum measureUnit, decimal defaultQuantity, bool expected, MeasureUnitCode denominatorCode, IBaseRate other)
     {
         // Arrange
@@ -187,10 +203,60 @@ public sealed class BaseRateTests
     #endregion
 
     #region ILimitable.FitsIn(ILimiter?)
+    #region virtual ILimitable.FitsIn(ILimiter?)
+    //[TestMethod, TestCategory("UnitTest")]
+    //public void FitsIn_nullArg_ILimiter_returns_expected()
+    //{
+    //    // Arrange
+    //    SetBaseQuantifiableChild();
+
+    //    ILimiter limiter = null;
+
+    //    // Act
+    //    var actual = _baseQuantifiable.FitsIn(limiter);
+
+    //    // Assert
+    //    Assert.IsTrue(actual);
+    //}
+
+    //[TestMethod, TestCategory("UnitTest")]
+    //[DynamicData(nameof(GetFitsInArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    //public void FitsIn_invalidArg_ILimiter_returns_null(string testCase, Enum measureUnit, ILimiter limiter)
+    //{
+    //    // Arrange
+    //    SetBaseQuantifiableChild(measureUnit, _fields.defaultQuantity);
+
+    //    // Act
+    //    var actual = _baseQuantifiable.FitsIn(limiter);
+
+    //    // Assert
+    //    Assert.IsNull(actual);
+    //}
+
+    //[TestMethod, TestCategory("UnitTest")]
+    //public void FitsIn_validArg_ILimiter_returns_expected()
+    //{
+    //    // Arrange
+    //    SetBaseQuantifiableChild();
+
+    //    _fields.limitMode = _randomParams.GetRandomLimitMode();
+    //    decimal otherQuantity = _randomParams.GetRandomDecimal();
+    //    _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
+    //    ILimiter limiter = GetLimiterBaseQuantifiableObject(_fields.limitMode, _fields.measureUnit, otherQuantity);
+    //    bool? expected = _fields.defaultQuantity.FitsIn(otherQuantity, _fields.limitMode);
+
+    //    // Act
+    //    var actual = _baseQuantifiable.FitsIn(limiter);
+
+    //    // Assert
+    //    Assert.AreEqual(expected, actual);
+    //}
+    #endregion
     #endregion
     #endregion
     #endregion
 
+    // int BaseRate.GetHashCode()
     // IBaseRate IBaseRate.GetBaseRate(IQuantifiable numerator, Enum denominator)
     // IBaseRate IBaseRate.GetBaseRate(IQuantifiable numerator, IMeasurable denominator)
     // IBaseRate IBaseRate.GetBaseRate(IQuantifiable numerator, IQuantifiable denominator)
@@ -217,9 +283,14 @@ public sealed class BaseRateTests
 
     #region Private methods
     #region DynamicDataSource
-    private static IEnumerable<object[]> GetEqualsArgs()
+    private static IEnumerable<object[]> GetEqualsObjectArgs()
     {
-        return DynamicDataSource.GetEqualsArgs();
+        return DynamicDataSource.GetEqualsObjectArgs();
+    }
+
+    private static IEnumerable<object[]> GetEqualsIBaseRateArgs()
+    {
+        return DynamicDataSource.GetEqualsIBaseRateArgs();
     }
 
     private static IEnumerable<object[]> GetFitsInIBaseRateLimitModeArgs()
