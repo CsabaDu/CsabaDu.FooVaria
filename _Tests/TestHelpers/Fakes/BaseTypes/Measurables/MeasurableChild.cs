@@ -22,7 +22,7 @@ public sealed class MeasurableChild(IRootObject rootObject, string paramName) : 
     #endregion
 
     #region Test helpers
-    public MeasurableReturn Return { private get; set; }
+    public MeasurableReturnValues Return { private get; set; }
 
     public static MeasurableChild GetMeasurableChild(Enum measureUnit, IMeasurableFactory factory = null)
     {

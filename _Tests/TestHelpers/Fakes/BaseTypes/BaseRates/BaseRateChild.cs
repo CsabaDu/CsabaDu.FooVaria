@@ -45,9 +45,9 @@
         #endregion
 
         #region Test helpers
-        public BaseRateReturn Return { private get; set; }
+        public BaseRateReturnValues Return { private get; set; }
         protected MeasureUnitCode DenominatorCode { private get; set; }
-        protected static BaseRateReturn GetReturn(Enum measureUnit, decimal defaultQuantity, IBaseRateFactory factory = null)
+        protected static BaseRateReturnValues GetReturn(Enum measureUnit, decimal defaultQuantity, IBaseRateFactory factory = null)
         {
             return new()
             {

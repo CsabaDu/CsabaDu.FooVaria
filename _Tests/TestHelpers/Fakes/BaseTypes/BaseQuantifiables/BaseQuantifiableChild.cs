@@ -26,7 +26,7 @@ public class BaseQuantifiableChild(IRootObject rootObject, string paramName) : B
     #endregion
 
     #region Test helpers
-    public BaseQuantifiableReturn Return { private get; set; }
+    public BaseQuantifiableReturnValues Return { private get; set; }
 
     public static BaseQuantifiableChild GetBaseQuantifiableChild(Enum measureUnit, decimal defaultQuantity, IBaseQuantifiableFactory factory = null)
     {

@@ -41,7 +41,7 @@ public class SpreadChild(IRootObject rootObject, string paramName) : Spread(root
     #endregion
 
     #region Test helpers
-    public SpreadReturn Return { private get; set; } = new();
+    public SpreadReturnValues Return { private get; set; } = new();
     protected ISpreadMeasure SpreadMeasure { get; set; }
 
     public static SpreadChild GetSpreadChild(Enum measureUnit, ValueType quantity, ISpreadFactory factory = null, RateComponentCode? rateComponentCode = null)
@@ -91,7 +91,7 @@ public class SpreadChild(IRootObject rootObject, string paramName) : Spread(root
         #endregion
     }
 
-    private static SpreadReturn GetReturn(ISpreadFactory factory = null)
+    private static SpreadReturnValues GetReturn(ISpreadFactory factory = null)
     {
         return new()
         {

@@ -51,7 +51,7 @@ public class ShapeChild(IRootObject rootObject, string paramName) : Shape(rootOb
     #endregion
 
     #region Test helpers
-    public ShapeReturn Return { private get; set; } = new();
+    public ShapeReturnValues Return { private get; set; } = new();
     protected ISpreadMeasure SpreadMeasure { private get; set; }
 
     public static ShapeChild GetShapeChild(IShapeComponent shapeComponent, IShape baseShape = null, IShapeFactory factory = null)
@@ -91,7 +91,7 @@ public class ShapeChild(IRootObject rootObject, string paramName) : Shape(rootOb
         return GetShapeChild(shapeComponent, baseShape, factory);
     }
 
-    protected static ShapeReturn GetReturn(IShapeComponent shapeComponent, IShape baseShape = null, IShapeFactory factory = null)
+    protected static ShapeReturnValues GetReturn(IShapeComponent shapeComponent, IShape baseShape = null, IShapeFactory factory = null)
     {
         return new()
         {

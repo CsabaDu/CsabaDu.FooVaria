@@ -35,9 +35,9 @@ public class QuantifiableChild(IRootObject rootObject, string paramName) : Quant
     #endregion
 
     #region Test helpers
-    public QuantifiableReturn Return { private get; set; }
+    public QuantifiableReturnValues Return { private get; set; }
 
-    protected static QuantifiableReturn GetReturn(Enum measureUnit, decimal defaultQuantity, IQuantifiableFactory factory)
+    protected static QuantifiableReturnValues GetReturn(Enum measureUnit, decimal defaultQuantity, IQuantifiableFactory factory)
     {
         return new()
         {

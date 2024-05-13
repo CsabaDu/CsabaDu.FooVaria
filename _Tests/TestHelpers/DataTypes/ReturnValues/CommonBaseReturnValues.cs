@@ -1,6 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.Returns
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ReturnValues
 {
-    public class CommonBaseReturn
+    public class CommonBaseReturnValues
     {
         //internal static readonly DataFields Fields = new();
 

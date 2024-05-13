@@ -9,7 +9,7 @@ public sealed class CommonBaseChild(IRootObject rootObject, string paramName) : 
 
     #endregion
 
-    public CommonBaseReturn Return { private get; set; }
+    public CommonBaseReturnValues Return { private get; set; }
 
     public override IFactory GetFactory() => Return.GetFactoryValue;
 }

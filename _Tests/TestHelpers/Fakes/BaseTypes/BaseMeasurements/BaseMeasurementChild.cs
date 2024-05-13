@@ -32,7 +32,7 @@ public sealed class BaseMeasurementChild(IRootObject rootObject, string paramNam
     #endregion
 
     #region Test helpers
-    public BaseMeasurementReturn Return { private get; set; } = new();
+    public BaseMeasurementReturnValues Return { private get; set; } = new();
     //internal static DataFields Fields => DataFields.Fields;
 
     public static BaseMeasurementChild GetBaseMeasurementChild(Enum measureUnit, IBaseMeasurementFactory factory = null, string measureUnitName = null)
