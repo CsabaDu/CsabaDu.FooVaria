@@ -65,7 +65,6 @@ public abstract class BaseRate(IRootObject rootObject, string paramName) : BaseQ
     {
         return null;
     }
-
     #endregion
 
     #region Abstract methods
@@ -129,7 +128,7 @@ public abstract class BaseRate(IRootObject rootObject, string paramName) : BaseQ
 
     public MeasureUnitCode GetMeasureUnitCode(RateComponentCode rateComponentCode)
     {
-        return GetMeasureUnitCode(this, rateComponentCode) ?? throw InvalidRateComponentCodeArgumentException(rateComponentCode);
+        return GetMeasureUnitCode(this, rateComponentCode) ?? throw InvalidRateComponentCodeEnumArgumentException(rateComponentCode);
     }
 
     public IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
@@ -215,7 +214,7 @@ public abstract class BaseRate(IRootObject rootObject, string paramName) : BaseQ
 
         if (rateComponent is not null) return;
 
-        throw InvalidRateComponentCodeArgumentException(rateComponentCode);
+        throw InvalidRateComponentCodeEnumArgumentException(rateComponentCode);
     }
     #endregion
 

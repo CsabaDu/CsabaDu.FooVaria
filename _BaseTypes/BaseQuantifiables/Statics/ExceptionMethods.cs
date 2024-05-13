@@ -13,12 +13,12 @@ public static class ExceptionMethods
         return new InvalidEnumArgumentException(paramName, (int)limitMode, limitMode.GetType());
     }
 
-    public static InvalidEnumArgumentException InvalidRateComponentCodeArgumentException(RateComponentCode rateComponentCode)
+    public static InvalidEnumArgumentException InvalidRateComponentCodeEnumArgumentException(RateComponentCode rateComponentCode)
     {
-        return InvalidRateComponentCodeArgumentException(rateComponentCode, nameof(rateComponentCode));
+        return InvalidRateComponentCodeEnumArgumentException(rateComponentCode, nameof(rateComponentCode));
     }
 
-    public static InvalidEnumArgumentException InvalidRateComponentCodeArgumentException(RateComponentCode rateComponentCode, string paramName)
+    public static InvalidEnumArgumentException InvalidRateComponentCodeEnumArgumentException(RateComponentCode rateComponentCode, string paramName)
     {
         return new InvalidEnumArgumentException(paramName, (int)rateComponentCode, rateComponentCode.GetType());
     }
