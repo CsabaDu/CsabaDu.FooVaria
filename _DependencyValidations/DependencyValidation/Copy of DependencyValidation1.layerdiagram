@@ -5,7 +5,10 @@
       <childLayers>
         <layer Id="9ac330d6-db45-4ffe-ad98-64a827df4a8a" name="TestHelpers">
           <dependencyToLayers>
-            <dependencyFromLayerToLayer Id="ee69a6f8-f3d2-48df-9683-f56429a3680e" direction="Forward">
+            <dependencyFromLayerToLayer Id="79f2ddd7-07fb-4032-b768-dabf71a4f490" direction="Forward">
+              <layerMoniker Id="efb1f2a5-e41b-43f3-8ff2-2b69425cba8f" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="7c278e07-1956-4104-aa02-3ed409bffb5b" direction="Forward">
               <layerMoniker Id="d860c1dc-dac7-4447-977d-69169911ffa8" />
             </dependencyFromLayerToLayer>
           </dependencyToLayers>
