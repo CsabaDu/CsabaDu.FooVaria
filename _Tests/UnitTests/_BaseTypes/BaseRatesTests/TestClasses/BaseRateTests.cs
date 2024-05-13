@@ -261,7 +261,7 @@ public sealed class BaseRateTests
     public void GetBaseRate_nullArgs_IQuantifiable_Enum_throws_ArgumentNullException(string testCase, IQuantifiable numerator, Enum denominator, string paramName)
     {
         // Arrange
-        SetBaseRateChild(new BaseRateFactoryObject());
+        SetCompleteBaseRateChild();
 
         // Act
         void attempt() => _ = _baseRate.GetBaseRate(numerator, denominator);
@@ -276,7 +276,7 @@ public sealed class BaseRateTests
     public void GetBaseRate_arg_IQuantifiable_invalidArg_Enum_throws_InvalidEnumArgumentException(string testCase, IQuantifiable numerator, Enum denominator)
     {
         // Arrange
-        SetBaseRateChild(new BaseRateFactoryObject());
+        SetCompleteBaseRateChild();
 
         // Act
         void attempt() => _ = _baseRate.GetBaseRate(numerator, denominator);
@@ -293,7 +293,7 @@ public sealed class BaseRateTests
     public void GetBaseRate_validArgs_IQuantifiable_Enum_returns_expected(string testCase, IQuantifiable numerator, Enum denominator)
     {
         // Arrange
-        SetBaseRateChild(new BaseRateFactoryObject());
+        SetCompleteBaseRateChild();
 
         MeasureUnitCode denominatorCode = Measurable.GetMeasureUnitElements(denominator, nameof(denominator)).MeasureUnitCode;
         IBaseRate expected = GetBaseRateChild(numerator, denominatorCode);
@@ -327,7 +327,6 @@ public sealed class BaseRateTests
 
     #endregion
     #endregion
-
 
     // LimitMode? ILimitMode.GetLimitMode()
     // MeasureUnitCode IBaseRate.GetMeasureUnitCode(RateComponentCode rateComponentCode)
@@ -395,6 +394,11 @@ public sealed class BaseRateTests
     private void SetBaseRateChild(IBaseRateFactory factory = null)
     {
         _baseRate = GetBaseRateChild(_fields, factory);
+    }
+
+    private void SetCompleteBaseRateChild()
+    {
+        _baseRate = GetBaseRateChild(_fields, new BaseRateFactoryObject());
     }
 
     private void SetBaseRateChild(IQuantifiable quantifiable, MeasureUnitCode denominatorCode, IBaseRateFactory factory = null)
