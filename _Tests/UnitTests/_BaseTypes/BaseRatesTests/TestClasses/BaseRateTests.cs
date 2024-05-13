@@ -378,11 +378,41 @@ public sealed class BaseRateTests
     #endregion
     #endregion
 
-    // MeasureUnitCode IDenominate.GetDenominatorCode()
+    #region MeasureUnitCode GetDenominatorCode
+    #region IDenominate.GetDenominatorCode()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetDenominatorCode_returns_expected()
+    {
+        // Arrange
+        SetBaseRateChild();
+
+        MeasureUnitCode expected = _fields.denominatorCode;
+
+        // Act
+        var actual = _baseRate.GetDenominatorCode();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
 
     #region int GetHashCode
     #region BaseRate.GetHashCode()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetHashCode_returns_expected()
+    {
+        // Arrange
+        SetBaseRateChild();
 
+        int expected = HashCode.Combine(_fields.measureUnitCode, _fields.defaultQuantity, _fields.denominatorCode); ;
+
+        // Act
+        var actual = _baseRate.GetHashCode();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
     #endregion
     #endregion
 
