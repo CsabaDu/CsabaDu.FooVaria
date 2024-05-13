@@ -1,3 +1,4 @@
+using CsabaDu.FooVaria.BaseTypes.Measurables.Types;
 using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
 
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseRatesTests.TestClasses;
@@ -286,8 +287,6 @@ public sealed class BaseRateTests
         Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
     }
 
-    // args => create MU MUC
-
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetGetBaseRateEnumValidArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
     public void GetBaseRate_validArgs_IQuantifiable_Enum_returns_expected(string testCase, IQuantifiable numerator, Enum denominator)
@@ -304,19 +303,78 @@ public sealed class BaseRateTests
         // Assert
         Assert.AreEqual(expected, actual);
     }
-
     #endregion
 
     #region IBaseRate.GetBaseRate(IQuantifiable numerator, IMeasurable denominator)
-    // null, null => throw
-    // args => create
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetGetBaseRateIMeasurableNullArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void GetBaseRate_nullArgs_IQuantifiable_IMeasurable_throws_ArgumentNullException(string testCase, IQuantifiable numerator, string paramName, IMeasurable denominator)
+    {
+        // Arrange
+        SetCompleteBaseRateChild();
 
+        // Act
+        void attempt() => _ = _baseRate.GetBaseRate(numerator, denominator);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
+        Assert.AreEqual(paramName, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetBaseRate_validArgs_IQuantifiable_IMeasurable_returns_expected()
+    {
+        // Arrange
+        SetCompleteBaseRateChild();
+
+        IQuantifiable numerator = GetQuantifiableChild(_fields);
+        _fields.measureUnit = _randomParams.GetRandomMeasureUnit();
+        IMeasurable denominator = GetMeasurableChild(_fields);
+
+        IBaseRate expected = GetBaseRateChild(numerator, _fields.GetMeasureUnitCode());
+
+        // Act
+        var actual = _baseRate.GetBaseRate(numerator, denominator);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
     #endregion
 
     #region IBaseRate.GetBaseRate(IQuantifiable numerator, IQuantifiable denominator)
-    // null, null => throw
-    // args => create
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetGetBaseRateIQuantifiableNullArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void GetBaseRate_nullArgs_IQuantifiable_IQuantifiable_throws_ArgumentNullException(string testCase, IQuantifiable numerator, string paramName, IQuantifiable denominator)
+    {
+        // Arrange
+        SetCompleteBaseRateChild();
 
+        // Act
+        void attempt() => _ = _baseRate.GetBaseRate(numerator, denominator);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
+        Assert.AreEqual(paramName, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetBaseRate_validArgs_IQuantifiable_IQuantifiable_returns_expected()
+    {
+        // Arrange
+        SetCompleteBaseRateChild();
+
+        IQuantifiable numerator = GetQuantifiableChild(_fields);
+        _fields.measureUnit = _randomParams.GetRandomMeasureUnit();
+        IQuantifiable denominator = GetQuantifiableChild(_fields);
+
+        IBaseRate expected = GetBaseRateChild(numerator, _fields.GetMeasureUnitCode());
+
+        // Act
+        var actual = _baseRate.GetBaseRate(numerator, denominator);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
     #endregion
     #endregion
 
@@ -383,6 +441,16 @@ public sealed class BaseRateTests
     private static IEnumerable<object[]> GetGetBaseRateEnumValidArgs()
     {
         return DynamicDataSource.GetGetBaseRateEnumValidArgs();
+    }
+
+    private static IEnumerable<object[]> GetGetBaseRateIMeasurableNullArgs()
+    {
+        return DynamicDataSource.GetGetBaseRateIMeasurableNullArgs();
+    }
+
+    private static IEnumerable<object[]> GetGetBaseRateIQuantifiableNullArgs()
+    {
+        return DynamicDataSource.GetGetBaseRateIQuantifiableNullArgs();
     }
     #endregion
 

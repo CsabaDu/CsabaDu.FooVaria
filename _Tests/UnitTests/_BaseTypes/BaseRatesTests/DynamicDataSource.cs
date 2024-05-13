@@ -162,7 +162,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
 
         testCase = "IQuantifiable, null => denominator";
         defaultQuantity = RandomParams.GetRandomDecimal();
-        quantifiable = QuantifiableChild.GetQuantifiableChild(this);
+        quantifiable = GetQuantifiableChild(this);
         measureUnit = null;
         paramName = ParamNames.measureUnit; 
         yield return toObjectArray();
@@ -181,7 +181,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
     {
         testCase = "Not MeasureUnit Enum";
         defaultQuantity = RandomParams.GetRandomDecimal();
-        quantifiable = QuantifiableChild.GetQuantifiableChild(this);
+        quantifiable = GetQuantifiableChild(this);
         measureUnit = SampleParams.DefaultLimitMode;
         yield return toObjectArray();
 
@@ -207,7 +207,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
     {
         testCase = "MeasureUnit Enum";
         defaultQuantity = RandomParams.GetRandomDecimal();
-        quantifiable = QuantifiableChild.GetQuantifiableChild(this);
+        quantifiable = GetQuantifiableChild(this);
         measureUnit = RandomParams.GetRandomMeasureUnit();
         yield return toObjectArray();
 
@@ -224,6 +224,70 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         }
         #endregion
     }
+
+    // TestCase_IQuantifiable_string_IMeasurable
+    internal IEnumerable<object[]> GetGetBaseRateIMeasurableNullArgs()
+    {
+        testCase = "null, null => numerator";
+        quantifiable = null;
+        IMeasurable denominator = null;
+        paramName = ParamNames.numerator;
+        yield return toObjectArray();
+
+        testCase = "null, IMeasurable => numerator";
+        measureUnit = RandomParams.GetRandomMeasureUnit();
+        denominator = GetMeasurableChild(this);
+        yield return toObjectArray();
+
+        testCase = "IQuantifiable, null => denominator";
+        defaultQuantity = RandomParams.GetRandomDecimal();
+        quantifiable = GetQuantifiableChild(this);
+        denominator = null;
+        paramName = ParamNames.denominator;
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            TestCase_IQuantifiable_string_IMeasurable args = new(testCase, quantifiable, paramName, denominator);
+
+            return args.ToObjectArray();
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> GetGetBaseRateIQuantifiableNullArgs()
+    {
+        testCase = "null, null => numerator";
+        quantifiable = null;
+        IQuantifiable denominator = null;
+        paramName = ParamNames.numerator;
+        yield return toObjectArray();
+
+        testCase = "null, IQuantifiable => numerator";
+        defaultQuantity = RandomParams.GetRandomDecimal();
+        measureUnit = RandomParams.GetRandomMeasureUnit();
+        denominator = GetQuantifiableChild(this);
+        yield return toObjectArray();
+
+        testCase = "IQuantifiable, null => denominator";
+        quantifiable = GetQuantifiableChild(this);
+        denominator = null;
+        paramName = ParamNames.denominator;
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            TestCase_IQuantifiable_string_IQuantifiable args = new(testCase, quantifiable, paramName, denominator);
+
+            return args.ToObjectArray();
+        }
+        #endregion
+    }
+
+
+
 
     //internal IEnumerable<object[]> GetFitsInArgs()
     //{
