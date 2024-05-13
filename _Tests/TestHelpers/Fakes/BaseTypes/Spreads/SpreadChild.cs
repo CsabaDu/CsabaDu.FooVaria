@@ -5,7 +5,7 @@ public class SpreadChild(IRootObject rootObject, string paramName) : Spread(root
     #region Members
 
     // Spread(IRootObject rootObject, string paramName)
-    // ISpread ISpread.GetSpread(ISpreadMeasure spreadMeasure)
+    // ISpread ISpread.GetSpread(ISpreadMeasure numerator)
     // IQuantifiable IQuantifiable.GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
     // void IBaseQuantifiable.ValidateQuantity(ValueType? quantity, string paramName)
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable? measurable, string paramName)
@@ -33,7 +33,7 @@ public class SpreadChild(IRootObject rootObject, string paramName) : Spread(root
     // ISpreadMeasure ISpreadMeasure.GetSpreadMeasure()
     // ISpreadMeasure? ISpreadGetSpreadMeasure(IQuantifiable? quantifiable)
     // MeasureUnitCode ISpreadMeasure.GetSpreadMeasureUnitCode()
-    // void ISpreadMeasure.ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)
+    // void ISpreadMeasure.ValidateSpreadMeasure(ISpreadMeasure? numerator, string paramName)
     // double IQuantity<double>.GetQuantity()
     // ValueType IQuantity.GetBaseQuantityValue()
     // object IQuantity.GetQuantity(TypeCode quantityTypeCode)

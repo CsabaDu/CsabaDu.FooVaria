@@ -4,6 +4,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
 {
     #region Fields
     IBaseRate baseRate;
+    IQuantifiable quantifiable;
     #endregion
 
     #region Methods
@@ -146,6 +147,84 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         }
         #endregion
     }
+
+    internal IEnumerable<object[]> GetGetBaseRateEnumNullArgs()
+    {
+        testCase = "null, null => numerator";
+        quantifiable = null;
+        measureUnit = null;
+        paramName = ParamNames.numerator;
+        yield return toObjectArray();
+
+        testCase = "null, Enum => numerator";
+        measureUnit = RandomParams.GetRandomMeasureUnit();
+        yield return toObjectArray();
+
+        testCase = "IQuantifiable, null => denominator";
+        defaultQuantity = RandomParams.GetRandomDecimal();
+        quantifiable = QuantifiableChild.GetQuantifiableChild(this);
+        measureUnit = null;
+        paramName = ParamNames.measureUnit; 
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            TestCase_IQuantifiable_Enum_string args = new(testCase, quantifiable, measureUnit, paramName);
+
+            return args.ToObjectArray();
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> GetGetBaseRateEnumInvalidArgs()
+    {
+        testCase = "Not MeasureUnit Enum";
+        defaultQuantity = RandomParams.GetRandomDecimal();
+        quantifiable = QuantifiableChild.GetQuantifiableChild(this);
+        measureUnit = SampleParams.DefaultLimitMode;
+        yield return toObjectArray();
+
+        testCase = "Not defined MeasureUnit Enum";
+        measureUnit = RandomParams.GetRandomNotDefinedMeasureUnit();
+        yield return toObjectArray();
+
+        testCase = "Not defined MeasureUnitCode";
+        measureUnit = SampleParams.NotDefinedMeasureUnitCode;
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            TestCase_IQuantifiable_Enum args = new(testCase, quantifiable, measureUnit);
+
+            return args.ToObjectArray();
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> GetGetBaseRateEnumValidArgs()
+    {
+        testCase = "MeasureUnit Enum";
+        defaultQuantity = RandomParams.GetRandomDecimal();
+        quantifiable = QuantifiableChild.GetQuantifiableChild(this);
+        measureUnit = RandomParams.GetRandomMeasureUnit();
+        yield return toObjectArray();
+
+        testCase = "MeasureUnitCode";
+        measureUnit = RandomParams.GetRandomMeasureUnitCode();
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            TestCase_IQuantifiable_Enum args = new(testCase, quantifiable, measureUnit);
+
+            return args.ToObjectArray();
+        }
+        #endregion
+    }
+
     //internal IEnumerable<object[]> GetFitsInArgs()
     //{
     //    testCase = "Not IBaseQuantifiable";

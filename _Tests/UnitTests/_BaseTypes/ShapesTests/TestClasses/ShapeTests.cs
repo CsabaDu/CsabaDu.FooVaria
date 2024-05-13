@@ -23,7 +23,7 @@ public sealed class ShapeTests
     // double IQuantity<double>.GetQuantity()
     // object IQuantity.GetQuantity(TypeCode quantityTypeCode)
     // TypeCode IQuantityType.GetQuantityTypeCode()
-    // ISpread ISpread.GetSpread(ISpreadMeasure spreadMeasure)
+    // ISpread ISpread.GetSpread(ISpreadMeasure numerator)
     // ISpreadMeasure? ISpread.GetSpreadMeasure(IQuantifiable? quantifiable)
     // ISpreadMeasure ISpreadMeasure.GetSpreadMeasure()
     // bool IExchangeable<Enum>.IsExchangeableTo(Enum? context)
@@ -34,7 +34,7 @@ public sealed class ShapeTests
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable? measurable, string paramName)
     // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
     // void IBaseQuantifiable.ValidateQuantity(ValueType? defaultQuantity, string paramName)
-    // void ISpreadMeasure.ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)
+    // void ISpreadMeasure.ValidateSpreadMeasure(ISpreadMeasure? numerator, string paramName)
 
     #endregion
 

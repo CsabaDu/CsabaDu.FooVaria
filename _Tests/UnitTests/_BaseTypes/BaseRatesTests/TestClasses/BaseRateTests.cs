@@ -1,3 +1,5 @@
+using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseRatesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -150,7 +152,6 @@ public sealed class BaseRateTests
     #endregion
 
     #region bool? FitsIn
-    #region IFit<IBaseRate>.FitsIn(IBaseRate?, LimitMode?)
     #region override sealed IFit<IBaseRate>.FitsIn(IBaseRate?, LimitMode?)
     [TestMethod, TestCategory("UnitTest")]
     public void FitsIn_nullArgs_IBaseRate_LimitMode_returns_true()
@@ -202,7 +203,6 @@ public sealed class BaseRateTests
     }
     #endregion
 
-    #region ILimitable.FitsIn(ILimiter?)
     #region override sealed ILimitable.FitsIn(ILimiter?)
     [TestMethod, TestCategory("UnitTest")]
     public void FitsIn_nullArg_ILimiter_returns_true()
@@ -253,17 +253,85 @@ public sealed class BaseRateTests
     }
     #endregion
     #endregion
+
+    #region IBaseRate GetBaseRate
+    #region IBaseRate.GetBaseRate(IQuantifiable numerator, Enum denominator)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetGetBaseRateEnumNullArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void GetBaseRate_nullArgs_IQuantifiable_Enum_throws_ArgumentNullException(string testCase, IQuantifiable numerator, Enum denominator, string paramName)
+    {
+        // Arrange
+        SetBaseRateChild(new BaseRateFactoryObject());
+
+        // Act
+        void attempt() => _ = _baseRate.GetBaseRate(numerator, denominator);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
+        Assert.AreEqual(paramName, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetGetBaseRateEnumInvalidArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void GetBaseRate_arg_IQuantifiable_invalidArg_Enum_throws_InvalidEnumArgumentException(string testCase, IQuantifiable numerator, Enum denominator)
+    {
+        // Arrange
+        SetBaseRateChild(new BaseRateFactoryObject());
+
+        // Act
+        void attempt() => _ = _baseRate.GetBaseRate(numerator, denominator);
+
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
+    }
+
+    // args => create MU MUC
+
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetGetBaseRateEnumValidArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void GetBaseRate_validArgs_IQuantifiable_Enum_returns_expected(string testCase, IQuantifiable numerator, Enum denominator)
+    {
+        // Arrange
+        SetBaseRateChild(new BaseRateFactoryObject());
+
+        MeasureUnitCode denominatorCode = Measurable.GetMeasureUnitElements(denominator, nameof(denominator)).MeasureUnitCode;
+        IBaseRate expected = GetBaseRateChild(numerator, denominatorCode);
+
+        // Act
+        var actual = _baseRate.GetBaseRate(numerator, denominator);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    #endregion
+
+    #region IBaseRate.GetBaseRate(IQuantifiable numerator, IMeasurable denominator)
+    // null, null => throw
+    // args => create
+
+    #endregion
+
+    #region IBaseRate.GetBaseRate(IQuantifiable numerator, IQuantifiable denominator)
+    // null, null => throw
+    // args => create
+
     #endregion
     #endregion
 
-    // int BaseRate.GetHashCode()
-    // IBaseRate IBaseRate.GetBaseRate(IQuantifiable numerator, Enum denominator)
-    // IBaseRate IBaseRate.GetBaseRate(IQuantifiable numerator, IMeasurable denominator)
-    // IBaseRate IBaseRate.GetBaseRate(IQuantifiable numerator, IQuantifiable denominator)
     // MeasureUnitCode IDenominate.GetDenominatorCode()
+
+    #region int GetHashCode
+    #region BaseRate.GetHashCode()
+
+    #endregion
+    #endregion
+
+
+    // LimitMode? ILimitMode.GetLimitMode()
     // MeasureUnitCode IBaseRate.GetMeasureUnitCode(RateComponentCode rateComponentCode)
     // IEnumerable<MeasureUnitCode> IMeasureUnitCodes.GetMeasureUnitCodes()
-    // LimitMode? ILimitMode.GetLimitMode()
     // MeasureUnitCode IBaseRate.GetNumeratorCode()
     // object IQuantity.GetQuantity(TypeCode quantityTypeCode)
     // TypeCode IQuantityType.GetQuantityTypeCode()
@@ -301,6 +369,21 @@ public sealed class BaseRateTests
     private static IEnumerable<object[]> GetFitsInILimiterArgs()
     {
         return DynamicDataSource.GetFitsInILimiterArgs();
+    }
+
+    private static IEnumerable<object[]> GetGetBaseRateEnumNullArgs()
+    {
+        return DynamicDataSource.GetGetBaseRateEnumNullArgs();
+    }
+
+    private static IEnumerable<object[]> GetGetBaseRateEnumInvalidArgs()
+    {
+        return DynamicDataSource.GetGetBaseRateEnumInvalidArgs();
+    }
+
+    private static IEnumerable<object[]> GetGetBaseRateEnumValidArgs()
+    {
+        return DynamicDataSource.GetGetBaseRateEnumValidArgs();
     }
     #endregion
 

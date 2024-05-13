@@ -31,7 +31,7 @@ public class ShapeChild(IRootObject rootObject, string paramName) : Shape(rootOb
     // IShape? IShape.GetShape(params IShapeComponent[] shapeComponents)
     // int IShapeComponentCount.GetShapeComponentCount()
     // IEnumerable<IShapeComponent> IShapeComponents.GetShapeComponentsValue()
-    // ISpread ISpread.GetSpread(ISpreadMeasure spreadMeasure)
+    // ISpread ISpread.GetSpread(ISpreadMeasure numerator)
     // ISpreadMeasure? ISpread.GetSpreadMeasure(IQuantifiable? quantifiable)
     // ISpreadMeasure ISpreadMeasure.GetSpreadMeasure()
     // IShapeComponent? IShapeComponents.GetValidShapeComponent(IQuantifiable? quantifiable)
@@ -46,7 +46,7 @@ public class ShapeChild(IRootObject rootObject, string paramName) : Shape(rootOb
     // void IMeasureUnitCodes.ValidateMeasureUnitCodes(IMeasureUnitCodes? measureUnitCodes, string paramName)
     // void IBaseQuantifiable.ValidateQuantity(ValueType? quantity, string paramName)
     // void IShape.ValidateShapeComponent(IQuantifiable? quantifiable, string paramName)
-    // void ISpreadMeasure.ValidateSpreadMeasure(ISpreadMeasure? spreadMeasure, string paramName)
+    // void ISpreadMeasure.ValidateSpreadMeasure(ISpreadMeasure? numerator, string paramName)
 
     #endregion
 
