@@ -11,7 +11,6 @@ public sealed class LimiterBaseRateObject(IRootObject rootObject, string paramNa
             DenominatorCode = denominatorCode,
         };
     }
-
     private LimitMode? LimitMode { get; set; }
 
     public override LimitMode? GetLimitMode() => LimitMode;

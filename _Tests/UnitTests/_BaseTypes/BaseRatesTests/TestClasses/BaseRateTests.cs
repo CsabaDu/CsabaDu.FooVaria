@@ -414,7 +414,23 @@ public sealed class BaseRateTests
     #endregion
     #endregion
 
-    // LimitMode? ILimitMode.GetLimitMode()
+    #region LimitMode? GetLimitMode
+    #region virtual ILimitMode.GetLimitMode()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetLimitMode_returns_null()
+    {
+        // Arrange
+        SetBaseRateChild();
+
+        // Act
+        var actual = _baseRate.GetLimitMode();
+
+        // Assert
+        Assert.IsNull(actual);
+    }
+    #endregion
+    #endregion
+
     // MeasureUnitCode IBaseRate.GetMeasureUnitCode(RateComponentCode rateComponentCode)
     // IEnumerable<MeasureUnitCode> IMeasureUnitCodes.GetMeasureUnitCodes()
     // MeasureUnitCode IBaseRate.GetNumeratorCode()
