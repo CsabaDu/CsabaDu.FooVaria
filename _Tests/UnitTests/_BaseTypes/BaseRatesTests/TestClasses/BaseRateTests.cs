@@ -1,5 +1,3 @@
-using CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseRatesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -486,9 +484,25 @@ public sealed class BaseRateTests
     #endregion
     #endregion
 
+    #region MeasureUnitCode GetNumeratorCode
+    #region IBaseRate.GetNumeratorCode()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetNumeratorCode_returns_expected()
+    {
+        // Arrange
+        SetBaseRateChild();
 
+        MeasureUnitCode expected = _fields.measureUnitCode;
 
-    // MeasureUnitCode IBaseRate.GetNumeratorCode()
+        // Act
+        var actual = _baseRate.GetNumeratorCode();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
     // object IQuantity.GetQuantity(TypeCode quantityTypeCode)
     // TypeCode IQuantityType.GetQuantityTypeCode()
     // object? IValidRateComponent.GetRateComponent(RateComponentCode rateComponentCode)

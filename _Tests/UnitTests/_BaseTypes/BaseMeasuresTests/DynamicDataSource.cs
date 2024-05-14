@@ -240,19 +240,18 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
 
         foreach (TypeCode item in SampleParams.InvalidValueTypeCodes)
         {
-            testCase = GetEnumName(item);
+            testCase = GetEnumName(item) + " => null";
             obj = RandomParams.GetRandomValueType(item);
             yield return toObjectArray();
         }
 
         foreach (var item in BaseQuantifiable.QuantityTypeCodes)
         {
-            testCase = GetEnumName(item);
+            testCase = $"{GetEnumName(item)} => {Enum.GetName(item)}";
             typeCode = item;
             obj = RandomParams.GetRandomValueType(item);
             yield return toObjectArray();
         }
-
 
         #region toObjectArray method
         object[] toObjectArray()
