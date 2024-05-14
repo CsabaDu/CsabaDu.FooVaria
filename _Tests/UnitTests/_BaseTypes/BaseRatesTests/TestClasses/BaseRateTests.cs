@@ -14,7 +14,6 @@ public sealed class BaseRateTests
     // IFactory ICommonBase.GetFactory()
     // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()
-    // decimal IQuantity<decimal>.GetQuantity()
 
     #endregion
 
@@ -503,8 +502,81 @@ public sealed class BaseRateTests
     #endregion
     #endregion
 
-    // object IQuantity.GetQuantity(TypeCode quantityTypeCode)
-    // TypeCode IQuantityType.GetQuantityTypeCode()
+    #region decimal GetQuantity
+    #region IQuantity<decimal>.GetQuantity()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetQuantity_returns_expected()
+    {
+        // Arrange
+        SetBaseRateChild();
+
+        decimal expected = _fields.defaultQuantity;
+
+        // Act
+        var actual = _baseRate.GetQuantity();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region object GetQuantity
+    #region IQuantity.GetQuantity(TypeCode)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetGetQuantityInvalidArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void GetQuantity_invalidArg_TypeCode_throws_InvalidEnumArgumentException(string testCase, TypeCode quantityTypeCode)
+    {
+        // Arrange
+        SetBaseRateChild();
+
+        // Act
+        void attempt() => _ = _baseRate.GetQuantity(quantityTypeCode);
+
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(ParamNames.quantityTypeCode, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetGetQuantityValidArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void GetQuantity_validArg_TypeCode_throws_InvalidEnumArgumentException(string testCase, TypeCode quantityTypeCode)
+    {
+        // Arrange
+        SetBaseRateChild();
+
+        object expected = _fields.defaultQuantity.ToQuantity(quantityTypeCode);
+
+        // Act
+        var actual = _baseRate.GetQuantity(quantityTypeCode);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region TypeCode GetQuantityTypeCode()
+    #region IQuantityType.GetQuantityTypeCode()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetQuantityTypeCode_returns_expected()
+    {
+        // Arrange
+        SetBaseRateChild();
+
+        TypeCode expected = TypeCode.Decimal;
+
+        // Act
+        var actual = _baseRate.GetQuantityTypeCode();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+
+
     // object? IValidRateComponent.GetRateComponent(RateComponentCode rateComponentCode)
     // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode denominatorCode)
     // bool IExchangeable<IBaseRate>.IsExchangeableTo(IBaseRate? context)
@@ -574,6 +646,16 @@ public sealed class BaseRateTests
     private static IEnumerable<object[]> GetGetMeasureUnitCodeValidArgs()
     {
         return DynamicDataSource.GetGetMeasureUnitCodeValidArgs();
+    }
+
+    private static IEnumerable<object[]> GetGetQuantityInvalidArgs()
+    {
+        return DynamicDataSource.GetGetQuantityInvalidArgs();
+    }
+
+    private static IEnumerable<object[]> GetGetQuantityValidArgs()
+    {
+        return DynamicDataSource.GetGetQuantityValidArgs();
     }
     #endregion
 

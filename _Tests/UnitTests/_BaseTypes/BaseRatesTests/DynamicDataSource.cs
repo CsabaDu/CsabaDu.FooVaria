@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseRatesTests;
+﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types.Implementations;
+
+namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseRatesTests;
 
 internal sealed class DynamicDataSource : CommonDynamicDataSource
 {
@@ -225,8 +227,6 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         }
         #endregion
     }
-
-    // TestCase_IQuantifiable_string_IMeasurable
     internal IEnumerable<object[]> GetGetBaseRateIMeasurableNullArgs()
     {
         testCase = "null, null => numerator";
@@ -333,58 +333,30 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #endregion
     }
 
-    //internal IEnumerable<object[]> GetFitsInArgs()
-    //{
-    //    testCase = "Not IBaseQuantifiable";
-    //    measureUnit = RandomParams.GetRandomMeasureUnit();
-    //    limiter = new LimiterObject();
-    //    yield return toObjectArray();
+    internal IEnumerable<object[]> GetGetQuantityInvalidArgs()
+    {
+        testCase = "Not defined TypeCode";
+        TestCase_TypeCode args = new(testCase, SampleParams.NotDefinedTypeCode);
 
-    //    testCase = "Different MeasureUnitCode";
-    //    measureUnitCode = GetMeasureUnitCode();
-    //    limiter = GetLimiterBaseQuantifiableObject(null, RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity);
-    //    yield return toObjectArray();
+        return GetGetQuantityArgs(SampleParams.InvalidValueTypeCodes)
+            .Append(args.ToObjectArray());
+    }
 
-    //    #region toObjectArray method
-    //    object[] toObjectArray()
-    //    {
-    //        TestCase_Enum_ILimiter args = new(testCase, measureUnit, limiter);
+    internal IEnumerable<object[]> GetGetQuantityValidArgs()
+    {
+        return GetGetQuantityArgs(BaseQuantifiable.QuantityTypeCodes);
+    }
 
-    //        return args.ToObjectArray();
-    //    }
-    //    #endregion
-    //}
-
-    //internal IEnumerable<object[]> GetInvalidQuantityTypeCodeArg()
-    //{
-    //    TypeCode[] typeCodes = SampleParams.InvalidValueTypeCodes;
-
-    //    return GetQuantityTypeCodeArg(typeCodes);
-    //}
-
-    //internal IEnumerable<object[]> GetValidQuantityTypeCodeArg()
-    //{
-    //    TypeCode ulongTypeCode = TypeCode.UInt64;
-    //    IEnumerable<TypeCode> typeCodes = QuantityTypeCodes
-    //        .Where(x => x != ulongTypeCode)
-    //        .Append(ulongTypeCode);
-
-    //    return GetQuantityTypeCodeArg(typeCodes);
-    //}
-
-    //private static IEnumerable<object[]> GetQuantityTypeCodeArg(IEnumerable<TypeCode> typeCodes)
-    //{
-    //    return typeCodes.Select(toObjectArray);
-
-    //    #region Local methods
-    //    static object[] toObjectArray(TypeCode typeCode)
-    //    {
-    //        string testCase = GetEnumName(typeCode);
-    //        TestCase_TypeCode item = new(testCase, typeCode);
-
-    //        return item.ToObjectArray();
-    //    }
-    //    #endregion
-    //}
+    #region Private methods
+    private IEnumerable<object[]> GetGetQuantityArgs(IEnumerable<TypeCode> typeCodes)
+    {
+        foreach (var item in typeCodes)
+        {
+            testCase = GetEnumName(item);
+            TestCase_TypeCode args = new(testCase, item);
+            yield return args.ToObjectArray();
+        }
+    }
+    #endregion
     #endregion
 }

@@ -74,25 +74,24 @@ public sealed class TestSupport
         return new(logFilePath, true);
     }
 
-    //const string logFileName = "testLogs_MethodName_paramNames";
-
-    //if (true)
-    //{
-    //    StartLog(BaseTypesLogDirectory, logFileName, nameof(FitsIn_invalidArg_ILimiter_returns_null));
-
-    //    logVariable(nameof(variable1), variable1);
-    //    logVariable(nameof(variable2), variable2);
-    //    (...)
-
-    //    EndLog(BaseTypesLogDirectory, logFileName);
-    //}
-
-    //#region Local methods
-    //static void logVariable(string variableName, object variableValue)
-    //{
-    //    LogVariable(BaseTypesLogDirectory, logFileName, variableName, variableValue);
-    //}
-    //#endregion
+    // const string methodName = nameof(TestMethod);
+    // const string logFileName = $"testLogs_{methodName}";
+    //
+    // if (true)
+    // {
+    //     StartLog(BaseTypesLogDirectory, logFileName, methodName);
+    //
+    //     logVariable(nameof(quantityTypeCode), quantityTypeCode);
+    //
+    //     EndLog(BaseTypesLogDirectory, logFileName);
+    // }
+    //
+    // #region Local methods
+    // static void logVariable(string variableName, object variableValue)
+    // {
+    //     LogVariable(BaseTypesLogDirectory, logFileName, variableName, variableValue);
+    // }
+    // #endregion
 
     #endregion
 }

@@ -156,11 +156,11 @@ public abstract class BaseRate(IRootObject rootObject, string paramName) : BaseQ
 
     public object GetQuantity(TypeCode quantityTypeCode)
     {
-        object? quantity = GetQuantity().ToQuantity(Defined(quantityTypeCode, nameof(quantityTypeCode)));
+        object? quantity = GetQuantity().ToQuantity(quantityTypeCode);
 
         if (quantity is not null) return quantity;
 
-        throw new InvalidOperationException(null);
+        throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
     }
 
     public bool IsExchangeableTo(IBaseRate? baseRate)
