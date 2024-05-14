@@ -1,4 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods;
+﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
+using CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors;
+
+namespace CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods;
 
 public sealed class TestSupport
 {
@@ -68,8 +71,28 @@ public sealed class TestSupport
     private static StreamWriter GetStreamWriter(string logDirectory, string logFileName)
     {
         string logFilePath = logDirectory + logFileName + Ext_txt;
-
         return new(logFilePath, true);
     }
+
+    //const string logFileName = "testLogs_MethodName_paramNames";
+
+    //if (true)
+    //{
+    //    StartLog(BaseTypesLogDirectory, logFileName, nameof(FitsIn_invalidArg_ILimiter_returns_null));
+
+    //    logVariable(nameof(variable1), variable1);
+    //    logVariable(nameof(variable2), variable2);
+    //    (...)
+
+    //    EndLog(BaseTypesLogDirectory, logFileName);
+    //}
+
+    //#region Local methods
+    //static void logVariable(string variableName, object variableValue)
+    //{
+    //    LogVariable(BaseTypesLogDirectory, logFileName, variableName, variableValue);
+    //}
+    //#endregion
+
     #endregion
 }

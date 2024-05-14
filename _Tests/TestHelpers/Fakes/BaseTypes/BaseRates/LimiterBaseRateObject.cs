@@ -11,6 +11,17 @@ public sealed class LimiterBaseRateObject(IRootObject rootObject, string paramNa
             DenominatorCode = denominatorCode,
         };
     }
+
+    public static LimiterBaseRateObject GetLimiterBaseRateObject(DataFields fields, IBaseRateFactory factory = null)
+    {
+        return new(Fields.RootObject, Fields.paramName)
+        {
+            LimitMode = fields.limitMode,
+            Return = GetReturn(fields.measureUnit, fields.defaultQuantity, factory),
+            DenominatorCode = fields.denominatorCode,
+        };
+    }
+
     private LimitMode? LimitMode { get; set; }
 
     public override LimitMode? GetLimitMode() => LimitMode;

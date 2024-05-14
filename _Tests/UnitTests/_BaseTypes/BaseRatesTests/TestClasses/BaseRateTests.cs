@@ -1,3 +1,4 @@
+using CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods;
 
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseRatesTests.TestClasses;
 
@@ -238,11 +239,13 @@ public sealed class BaseRateTests
         // Arrange
         SetBaseRateChild();
 
-        _fields.limitMode = _randomParams.GetRandomLimitMode();
-        decimal otherQuantity = _randomParams.GetRandomDecimal();
+        decimal defaultQuantity = _baseRate.GetDefaultQuantity();
         _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
-        _limiter = GetLimiterBaseRateObject(_fields.limitMode.Value, _fields.measureUnit, otherQuantity, _fields.denominatorCode);
-        bool? expected = _fields.defaultQuantity.FitsIn(otherQuantity, _fields.limitMode);
+        _fields.defaultQuantity = _randomParams.GetRandomDecimal();
+        _fields.limitMode = _randomParams.GetRandomLimitMode();
+        _limiter = GetLimiterBaseRateObject(_fields);
+
+        bool? expected = defaultQuantity.FitsIn(_fields.defaultQuantity, _fields.limitMode);
 
         // Act
         var actual = _baseRate.FitsIn(_limiter);
@@ -403,7 +406,7 @@ public sealed class BaseRateTests
         // Arrange
         SetBaseRateChild();
 
-        int expected = HashCode.Combine(_fields.measureUnitCode, _fields.defaultQuantity, _fields.denominatorCode); ;
+        int expected = HashCode.Combine(_fields.measureUnitCode, _fields.defaultQuantity, _fields.denominatorCode);
 
         // Act
         var actual = _baseRate.GetHashCode();
@@ -431,19 +434,71 @@ public sealed class BaseRateTests
     #endregion
     #endregion
 
-    // MeasureUnitCode IBaseRate.GetMeasureUnitCode(RateComponentCode rateComponentCode)
-    // IEnumerable<MeasureUnitCode> IMeasureUnitCodes.GetMeasureUnitCodes()
+    #region MeasureUnitCode GetMeasureUnitCode
+    #region IBaseRate.GetMeasureUnitCode(RateComponentCode)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetGetMeasureUnitCodeInvalidArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void GetMeasureUnitCode_invalidArg_RateComponentCode_throws_InvalidEnumArgumentException(string testCase, RateComponentCode rateComponentCode)
+    {
+        // Arrange
+        SetBaseRateChild();
+
+        // Act
+        void attempt() => _ = _baseRate.GetMeasureUnitCode(rateComponentCode);
+
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(ParamNames.rateComponentCode, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetGetMeasureUnitCodeValidArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void GetMeasureUnitCode_validArg_RateComponentCode_returns_expected(string testCase, Enum measureUnit, MeasureUnitCode denominatorCode, MeasureUnitCode expected, RateComponentCode rateComponentCode)
+    {
+        // Arrange
+        SetBaseRateChild(measureUnit, _fields.defaultQuantity, denominatorCode);
+
+        // Act
+        var actual = _baseRate.GetMeasureUnitCode(rateComponentCode);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    #region IEnumerable<MeasureUnitCode> GetMeasureUnitCodes
+    #region IMeasureUnitCodes.GetMeasureUnitCodes()
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetMeasureUnitCodes_returns_expected()
+    {
+        // Arrange
+        SetBaseRateChild();
+
+        IEnumerable<MeasureUnitCode> expected = [_fields.measureUnitCode, _fields.denominatorCode];
+
+        // Act
+        var actual = _baseRate.GetMeasureUnitCodes();
+
+        // Assert
+        Assert.IsTrue(expected.SequenceEqual(actual));
+    }
+    #endregion
+    #endregion
+
+
+
     // MeasureUnitCode IBaseRate.GetNumeratorCode()
     // object IQuantity.GetQuantity(TypeCode quantityTypeCode)
     // TypeCode IQuantityType.GetQuantityTypeCode()
     // object? IValidRateComponent.GetRateComponent(RateComponentCode rateComponentCode)
-    // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
+    // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode denominatorCode)
     // bool IExchangeable<IBaseRate>.IsExchangeableTo(IBaseRate? context)
     // bool IValidRateComponent.IsValidRateComponent(object? rateComponent, RateComponentCode rateComponentCode)
     // decimal IProportional<IBaseRate>.ProportionalTo(IBaseRate? other)
     // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum? measureUnit, string paramName)
     // void IMeasurable.ValidateMeasureUnitCode(IBaseQuantifiable? baseQuantifiable, string paramName)
-    // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
+    // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode denominatorCode, string paramName)
     // void IMeasureUnitCodes.ValidateMeasureUnitCodes(IMeasureUnitCodes? measureUnitCodes, string paramName)
     // void IBaseQuantifiable.ValidateQuantity(Type? quantity, string paramName)
     // void IBaseRate.ValidateRateComponentCode(RateComponentCode rateComponentCode, string paramName)
@@ -495,6 +550,16 @@ public sealed class BaseRateTests
     private static IEnumerable<object[]> GetGetBaseRateIQuantifiableNullArgs()
     {
         return DynamicDataSource.GetGetBaseRateIQuantifiableNullArgs();
+    }
+
+    private static IEnumerable<object[]> GetGetMeasureUnitCodeInvalidArgs()
+    {
+        return DynamicDataSource.GetGetMeasureUnitCodeInvalidArgs();
+    }
+
+    private static IEnumerable<object[]> GetGetMeasureUnitCodeValidArgs()
+    {
+        return DynamicDataSource.GetGetMeasureUnitCodeValidArgs();
     }
     #endregion
 

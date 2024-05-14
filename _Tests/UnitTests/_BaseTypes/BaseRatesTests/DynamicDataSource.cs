@@ -124,17 +124,18 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         testCase = "Not IBaseRatee";
         measureUnit = RandomParams.GetRandomMeasureUnit();
         limiter = new LimiterObject();
+        denominatorCode = RandomParams.GetRandomMeasureUnitCode();
         yield return toObjectArray();
 
         testCase = "Different type MeasureUnit";
-        denominatorCode = RandomParams.GetRandomMeasureUnitCode();
         limitMode = RandomParams.GetRandomLimitMode();
-        limiter = GetLimiterBaseRateObject(limitMode.Value, RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity, denominatorCode);
-        measureUnit = measureUnit = RandomParams.GetRandomMeasureUnit(GetMeasureUnitCode());
+        limiter = GetLimiterBaseRateObject(this);
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode());
+        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
         yield return toObjectArray();
 
         testCase = "Different DenominatorCode";
-        limiter = GetLimiterBaseRateObject(limitMode.Value, RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity, denominatorCode);
+        limiter = GetLimiterBaseRateObject(this);
         denominatorCode = RandomParams.GetRandomMeasureUnitCode(denominatorCode);
         yield return toObjectArray();
 
@@ -286,8 +287,51 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #endregion
     }
 
+    internal IEnumerable<object[]> GetGetMeasureUnitCodeInvalidArgs()
+    {
+        testCase = "Not defined RateComponentCode";
+        rateComponentCode = SampleParams.NotDefinedRateComponentCode;
+        yield return toObjectArray();
 
+        testCase = "RateComponentCode.Limit";
+        rateComponentCode = RateComponentCode.Limit;
+        yield return toObjectArray();
 
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            TestCase_RateComponentCode args = new(testCase, rateComponentCode);
+
+            return args.ToObjectArray();
+        }
+        #endregion
+    }
+
+    // TestCase_RateComponentCode_MeasureUnitCode
+
+    internal IEnumerable<object[]> GetGetMeasureUnitCodeValidArgs()
+    {
+        testCase = "RateComponentCode.Numerator => Numerator MeasureUnitCode";
+        rateComponentCode = RateComponentCode.Numerator;
+        measureUnit = RandomParams.GetRandomMeasureUnit();
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
+        MeasureUnitCode expected = GetMeasureUnitCode();
+        yield return toObjectArray();
+
+        testCase = "RateComponentCode.Denominator => Denominator MeasureUnitCode";
+        rateComponentCode = RateComponentCode.Denominator;
+        expected = measureUnitCode;
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            TestCase_Enum_MeasureUnitCode_MeasureUnitCode_RateComponentCode args = new(testCase, measureUnit, measureUnitCode, expected, rateComponentCode);
+
+            return args.ToObjectArray();
+        }
+        #endregion
+    }
 
     //internal IEnumerable<object[]> GetFitsInArgs()
     //{

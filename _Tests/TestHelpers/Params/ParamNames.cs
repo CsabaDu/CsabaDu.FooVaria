@@ -15,6 +15,7 @@ public static class ParamNames
     public const string paramName = nameof(paramName);
     public const string quantity = nameof(quantity);
     public const string quantityTypeCode = nameof(quantityTypeCode);
+    public const string rateComponentCode = nameof(rateComponentCode);
     public const string rootObject = nameof(rootObject);
     public const string roundingMode = nameof(roundingMode);
     public const string spreadMeasure = nameof(spreadMeasure);

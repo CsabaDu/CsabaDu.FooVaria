@@ -10,11 +10,13 @@ public static class SampleParams
     private static readonly int MeasureUnitCodeCount = MeasureUnitCodes.Length;
     private static readonly int RoundingModeCount = Enum.GetNames<RoundingMode>().Length;
     private static readonly int TypeCodeCount = Enum.GetNames<TypeCode>().Length;
+    private static readonly int RateComponentCodeCount = Enum.GetNames<RateComponentCode>().Length;
 
     public static readonly LimitMode NotDefinedLimitMode = (LimitMode)LimitModeCount;
     public static readonly MeasureUnitCode NotDefinedMeasureUnitCode = (MeasureUnitCode)MeasureUnitCodeCount;
     public static readonly RoundingMode NotDefinedRoundingMode = (RoundingMode)RoundingModeCount;
     public static readonly TypeCode NotDefinedTypeCode = (TypeCode)TypeCodeCount;
+    public static readonly RateComponentCode NotDefinedRateComponentCode = (RateComponentCode)RateComponentCodeCount;
 
     public const LimitMode DefaultLimitMode = default;
 

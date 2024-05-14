@@ -18,3 +18,4 @@ global using static CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.BaseRates
 global using static CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.BaseRates.LimiterBaseRateObject;
 global using static CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Measurables.MeasurableChild;
 global using static CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.Quantifiables.QuantifiableChild;
+global using static CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods.TestSupport;
