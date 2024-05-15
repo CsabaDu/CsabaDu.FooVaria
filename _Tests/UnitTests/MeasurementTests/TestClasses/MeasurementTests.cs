@@ -91,7 +91,7 @@
 //    //{
 //    //    _baseMeasurement = new(RootObject, paramName)
 //    //    {
-//    //        Return = new()
+//    //        ReturnValues = new()
 //    //        {
 //    //            GetBaseMeasureUnitValue = measureUnit,
 //    //            GetFactoryValue = factory,

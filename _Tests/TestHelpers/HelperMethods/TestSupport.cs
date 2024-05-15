@@ -81,7 +81,7 @@ public sealed class TestSupport
     // {
     //     StartLog(BaseTypesLogDirectory, logFileName, methodName);
     //
-    //     logVariable(nameof(quantityTypeCode), quantityTypeCode);
+    //     logVariable(nameof(variable), variable);
     //
     //     EndLog(BaseTypesLogDirectory, logFileName);
     // }

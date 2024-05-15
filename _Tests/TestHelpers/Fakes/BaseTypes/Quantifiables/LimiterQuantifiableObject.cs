@@ -6,7 +6,7 @@ public sealed class LimiterQuantifiableObject(IRootObject rootObject, string par
     {
         return new(Fields.RootObject, Fields.paramName)
         {
-            Return = GetReturn(measureUnit, defaultQuantity, factory),
+            ReturnValues = GetReturn(measureUnit, defaultQuantity, factory),
             LimitMode = limitMode,
         };
     }

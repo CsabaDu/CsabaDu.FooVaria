@@ -10,7 +10,7 @@ public sealed class BaseMeasurementFactoryObject : IBaseMeasurementFactory
 
         return new BaseMeasurementChild(Fields.RootObject, Fields.paramName)
         {
-            Return = new()
+            ReturnValues = new()
             {
                 GetBaseMeasureUnitValue = measureUnit,
                 GetFactoryValue = this,

@@ -7,7 +7,7 @@ public sealed class LimiterBaseRateObject(IRootObject rootObject, string paramNa
         return new(Fields.RootObject, Fields.paramName)
         {
             LimitMode = limitMode,
-            Return = GetReturn(measureUnit, defaultQuantity, factory),
+            ReturnValues = GetReturnValues(measureUnit, defaultQuantity, factory),
             DenominatorCode = denominatorCode,
         };
     }
@@ -17,7 +17,7 @@ public sealed class LimiterBaseRateObject(IRootObject rootObject, string paramNa
         return new(Fields.RootObject, Fields.paramName)
         {
             LimitMode = fields.limitMode,
-            Return = GetReturn(fields.measureUnit, fields.defaultQuantity, factory),
+            ReturnValues = GetReturnValues(fields.measureUnit, fields.defaultQuantity, factory),
             DenominatorCode = fields.denominatorCode,
         };
     }

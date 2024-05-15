@@ -26,7 +26,7 @@ internal sealed class BaseMeasureFactoryObject(RateComponentCode rateComponentCo
     {
         return new BaseMeasureChild(Fields.RootObject, Fields.paramName)
         {
-            Return = new()
+            ReturnValues = new()
             {
                 GetBaseMeasurementValue = baseMeasurement,
                 GetBaseQuantityValue = quantity,

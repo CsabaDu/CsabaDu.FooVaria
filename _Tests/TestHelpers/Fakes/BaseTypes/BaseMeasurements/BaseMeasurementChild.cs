@@ -32,8 +32,7 @@ public sealed class BaseMeasurementChild(IRootObject rootObject, string paramNam
     #endregion
 
     #region Test helpers
-    public BaseMeasurementReturnValues Return { private get; set; } = new();
-    //internal static DataFields Fields => DataFields.Fields;
+    public BaseMeasurementReturnValues ReturnValues { private get; set; } = new();
 
     public static BaseMeasurementChild GetBaseMeasurementChild(Enum measureUnit, IBaseMeasurementFactory factory = null, string measureUnitName = null)
     {
@@ -41,7 +40,7 @@ public sealed class BaseMeasurementChild(IRootObject rootObject, string paramNam
 
         return new(Fields.RootObject, Fields.paramName)
         {
-            Return = new()
+            ReturnValues = new()
             {
                 GetBaseMeasureUnitValue = measureUnit,
                 GetFactoryValue = factory,
@@ -56,9 +55,9 @@ public sealed class BaseMeasurementChild(IRootObject rootObject, string paramNam
     }
     #endregion
 
-    public override Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnitValue;
+    public override Enum GetBaseMeasureUnit() => ReturnValues.GetBaseMeasureUnitValue;
 
-    public override IFactory GetFactory() => Return.GetFactoryValue;
+    public override IFactory GetFactory() => ReturnValues.GetFactoryValue;
 
-    public override string GetName() => Return.GetNameValue;
+    public override string GetName() => ReturnValues.GetNameValue;
 }

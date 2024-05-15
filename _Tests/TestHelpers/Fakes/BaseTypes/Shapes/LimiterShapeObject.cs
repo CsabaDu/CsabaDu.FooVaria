@@ -8,7 +8,7 @@ public sealed class LimiterShapeObject(IRootObject rootObject, string paramName)
 
         return new(Fields.RootObject, Fields.paramName)
         {
-            Return = GetReturn(shapeComponent, baseShape, factory),
+            ReturnValues = GetReturn(shapeComponent, baseShape, factory),
             SpreadMeasure = GetSpreadMeasure(shapeComponent),
             LimitMode = limitMode,
         };

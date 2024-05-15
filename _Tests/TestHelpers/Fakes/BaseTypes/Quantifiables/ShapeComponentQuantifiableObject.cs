@@ -8,7 +8,7 @@ public sealed class ShapeComponentQuantifiableObject(IRootObject rootObject, str
 
         return new(Fields.RootObject, Fields.paramName)
         {
-            Return = GetReturn(measureUnit, defaultQuantity, factory),
+            ReturnValues = GetReturn(measureUnit, defaultQuantity, factory),
         };
     }
 

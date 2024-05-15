@@ -8,7 +8,7 @@ public sealed class LimiterBaseQuantifiableObject(IRootObject rootObject, string
 
         return new(Fields.RootObject, Fields.paramName)
         {
-            Return = new()
+            ReturnValues = new()
             {
                 GetBaseMeasureUnitValue = measureUnit,
                 GetDefaultQuantityValue = defaultQuantity,

@@ -41,14 +41,14 @@ public class SpreadChild(IRootObject rootObject, string paramName) : Spread(root
     #endregion
 
     #region Test helpers
-    public SpreadReturnValues Return { private get; set; } = new();
+    public SpreadReturnValues ReturnValues { private get; set; } = new();
     protected ISpreadMeasure SpreadMeasure { get; set; }
 
     public static SpreadChild GetSpreadChild(Enum measureUnit, ValueType quantity, ISpreadFactory factory = null, RateComponentCode? rateComponentCode = null)
     {
         return new(Fields.RootObject, Fields.paramName)
         {
-            Return = GetReturn(factory),
+            ReturnValues = GetReturn(factory),
             SpreadMeasure = GetSpreadMeasureBaseMeasureObject(measureUnit, quantity, rateComponentCode),
         };
     }
@@ -57,7 +57,7 @@ public class SpreadChild(IRootObject rootObject, string paramName) : Spread(root
     {
         return new(Fields.RootObject, Fields.paramName)
         {
-            Return = GetReturn(factory),
+            ReturnValues = GetReturn(factory),
             SpreadMeasure = spreadMeasure,
         };
     }
@@ -73,7 +73,7 @@ public class SpreadChild(IRootObject rootObject, string paramName) : Spread(root
     }
     #endregion
 
-    public override IFactory GetFactory() => Return.GetFactoryValue;
+    public override IFactory GetFactory() => ReturnValues.GetFactoryValue;
 
     public override ISpreadMeasure GetSpreadMeasure() => SpreadMeasure;
 

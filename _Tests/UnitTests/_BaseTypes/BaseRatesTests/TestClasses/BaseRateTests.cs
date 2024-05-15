@@ -450,7 +450,7 @@ public sealed class BaseRateTests
 
     [TestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetGetMeasureUnitCodeValidArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
-    public void GetMeasureUnitCode_validArg_RateComponentCode_returns_expected(string testCase, Enum measureUnit, MeasureUnitCode denominatorCode, MeasureUnitCode expected, RateComponentCode rateComponentCode)
+    public void GetMeasureUnitCode_validArg_RateComponentCode_returns_expected(string testCase, Enum measureUnit, MeasureUnitCode denominatorCode, RateComponentCode rateComponentCode, MeasureUnitCode expected)
     {
         // Arrange
         SetBaseRateChild(measureUnit, _fields.defaultQuantity, denominatorCode);
@@ -547,11 +547,36 @@ public sealed class BaseRateTests
 
         object expected = _fields.defaultQuantity.ToQuantity(quantityTypeCode);
 
-        // Act
-        var actual = _baseRate.GetQuantity(quantityTypeCode);
+        try
+        {
+            // Act
+            var actual = _baseRate.GetQuantity(quantityTypeCode);
 
-        // Assert
-        Assert.AreEqual(expected, actual);
+            // Assert
+            Assert.AreEqual(expected, actual);
+
+        }
+        catch (Exception)
+        {
+            const string methodName = nameof(GetQuantity_validArg_TypeCode_throws_InvalidEnumArgumentException);
+            const string logFileName = $"testLogs_{methodName}";
+
+            if (true)
+            {
+                StartLog(BaseTypesLogDirectory, logFileName, methodName);
+
+                logVariable(nameof(quantityTypeCode), quantityTypeCode);
+
+                EndLog(BaseTypesLogDirectory, logFileName);
+            }
+
+            #region Local methods
+            static void logVariable(string variableName, object variableValue)
+            {
+                LogVariable(BaseTypesLogDirectory, logFileName, variableName, variableValue);
+            }
+            #endregion
+        }
     }
     #endregion
     #endregion
@@ -575,10 +600,25 @@ public sealed class BaseRateTests
     #endregion
     #endregion
 
+    #region object? GetRateComponent
+    #region abstract IValidRateComponent.GetRateComponent(RateComponentCode)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetGetRateComponentArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void GetRateComponent_validArg_RateComponentCode_returns_expected(string testCase, Enum measureUnit, MeasureUnitCode denominatorCode, RateComponentCode rateComponentCode, object expected)
+    {
+        // Arrange
+        SetBaseRateChild(measureUnit, _fields.defaultQuantity, denominatorCode);
 
+        // Act
+        var actual = _baseRate.GetRateComponent(rateComponentCode);
 
-    // object? IValidRateComponent.GetRateComponent(RateComponentCode rateComponentCode)
-    // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode denominatorCode)
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+    // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
     // bool IExchangeable<IBaseRate>.IsExchangeableTo(IBaseRate? context)
     // bool IValidRateComponent.IsValidRateComponent(object? rateComponent, RateComponentCode rateComponentCode)
     // decimal IProportional<IBaseRate>.ProportionalTo(IBaseRate? other)
@@ -656,6 +696,11 @@ public sealed class BaseRateTests
     private static IEnumerable<object[]> GetGetQuantityValidArgs()
     {
         return DynamicDataSource.GetGetQuantityValidArgs();
+    }
+
+    private static IEnumerable<object[]> GetGetRateComponentArgs()
+    {
+        return DynamicDataSource.GetGetRateComponentArgs();
     }
     #endregion
 

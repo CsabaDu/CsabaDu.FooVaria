@@ -46,7 +46,7 @@ public class BaseMeasureChild(IRootObject rootObject, string paramName) : BaseMe
     #endregion
 
     #region Test helpers
-    public BaseMeasureReturnValues Return { protected get; set; }
+    public BaseMeasureReturnValues ReturnValues { protected get; set; }
     private LimitMode? LimitMode { get; set; }
     public static BaseMeasureChild GetBaseMeasureChild(Enum measureUnit, ValueType quantity, RateComponentCode? rateComponentCode = null, LimitMode? limitMode = null)
     {
@@ -55,7 +55,7 @@ public class BaseMeasureChild(IRootObject rootObject, string paramName) : BaseMe
 
         return new(Fields.RootObject, Fields.paramName)
         {
-            Return = new()
+            ReturnValues = new()
             {
                 GetBaseMeasurementValue = baseMeasurement,
                 GetBaseQuantityValue = quantity,
@@ -78,13 +78,13 @@ public class BaseMeasureChild(IRootObject rootObject, string paramName) : BaseMe
     }
     #endregion
 
-    public override sealed IBaseMeasurement GetBaseMeasurement() => Return.GetBaseMeasurementValue;
+    public override sealed IBaseMeasurement GetBaseMeasurement() => ReturnValues.GetBaseMeasurementValue;
 
     public override sealed IBaseMeasurementFactory GetBaseMeasurementFactory() => BaseMeasurementFactory;
 
-    public override sealed ValueType GetBaseQuantity() => Return.GetBaseQuantityValue;
+    public override sealed ValueType GetBaseQuantity() => ReturnValues.GetBaseQuantityValue;
 
-    public override sealed IFactory GetFactory() => Return.GetFactoryValue;
+    public override sealed IFactory GetFactory() => ReturnValues.GetFactoryValue;
 
     public override sealed LimitMode? GetLimitMode() => /*LimiterObject.GetLimitMode()*/ LimitMode;
 

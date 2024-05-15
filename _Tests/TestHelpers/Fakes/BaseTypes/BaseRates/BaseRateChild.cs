@@ -45,9 +45,9 @@
         #endregion
 
         #region Test helpers
-        public BaseRateReturnValues Return { private get; set; }
+        public BaseRateReturnValues ReturnValues { private get; set; }
         protected MeasureUnitCode DenominatorCode { private get; set; }
-        protected static BaseRateReturnValues GetReturn(Enum measureUnit, decimal defaultQuantity, IBaseRateFactory factory = null)
+        protected static BaseRateReturnValues GetReturnValues(Enum measureUnit, decimal defaultQuantity, IBaseRateFactory factory = null)
         {
             return new()
             {
@@ -61,7 +61,7 @@
         {
             return new(Fields.RootObject, Fields.paramName)
             {
-                Return = GetReturn(measureUnit, defaultQuantity, factory),
+                ReturnValues = GetReturnValues(measureUnit, defaultQuantity, factory),
                 DenominatorCode = denominatorCode,
             };
         }
@@ -88,10 +88,10 @@
             };
         }
 
-        public override sealed decimal GetDefaultQuantity() => Return.GetDefaultQuantityValue;
+        public override sealed decimal GetDefaultQuantity() => ReturnValues.GetDefaultQuantityValue;
 
-        public override sealed Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnitValue;
+        public override sealed Enum GetBaseMeasureUnit() => ReturnValues.GetBaseMeasureUnitValue;
 
-        public override sealed IFactory GetFactory() => Return.GetFactoryValue;
+        public override sealed IFactory GetFactory() => ReturnValues.GetFactoryValue;
     }
 }

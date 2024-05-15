@@ -307,8 +307,6 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #endregion
     }
 
-    // TestCase_RateComponentCode_MeasureUnitCode
-
     internal IEnumerable<object[]> GetGetMeasureUnitCodeValidArgs()
     {
         testCase = "RateComponentCode.Numerator => Numerator MeasureUnitCode";
@@ -326,7 +324,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region toObjectArray method
         object[] toObjectArray()
         {
-            TestCase_Enum_MeasureUnitCode_MeasureUnitCode_RateComponentCode args = new(testCase, measureUnit, measureUnitCode, expected, rateComponentCode);
+            TestCase_Enum_MeasureUnitCode_RateComponentCode_MeasureUnitCode args = new(testCase, measureUnit, measureUnitCode, rateComponentCode, expected);
 
             return args.ToObjectArray();
         }
@@ -345,6 +343,40 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
     internal IEnumerable<object[]> GetGetQuantityValidArgs()
     {
         return GetGetQuantityArgs(BaseQuantifiable.QuantityTypeCodes);
+    }
+
+    internal IEnumerable<object[]> GetGetRateComponentArgs()
+    {
+        testCase = "Not defined RateComponentCode => null";
+        rateComponentCode = SampleParams.NotDefinedRateComponentCode;
+        obj = null;
+        yield return toObjectArray();
+
+        testCase = "RateComponentCode.Numerator => Numerator MeasureUnitCode";
+        rateComponentCode = RateComponentCode.Numerator;
+        measureUnit = RandomParams.GetRandomMeasureUnit();
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
+        obj = GetMeasureUnitCode();
+        yield return toObjectArray();
+
+        testCase = "RateComponentCode.Denominator => Denominator MeasureUnitCode";
+        rateComponentCode = RateComponentCode.Denominator;
+        obj = measureUnitCode;
+        yield return toObjectArray();
+
+        testCase = "RateComponentCode.Limit => null";
+        rateComponentCode = RateComponentCode.Limit;
+        obj = null;
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            TestCase_Enum_MeasureUnitCode_RateComponentCode_object args = new(testCase, measureUnit, measureUnitCode, rateComponentCode, obj);
+
+            return args.ToObjectArray();
+        }
+        #endregion
     }
 
     #region Private methods

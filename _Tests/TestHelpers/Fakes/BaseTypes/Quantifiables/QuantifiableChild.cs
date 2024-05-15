@@ -35,7 +35,7 @@ public class QuantifiableChild(IRootObject rootObject, string paramName) : Quant
     #endregion
 
     #region Test helpers
-    public QuantifiableReturnValues Return { private get; set; }
+    public QuantifiableReturnValues ReturnValues { private get; set; }
 
     protected static QuantifiableReturnValues GetReturn(Enum measureUnit, decimal defaultQuantity, IQuantifiableFactory factory)
     {
@@ -51,7 +51,7 @@ public class QuantifiableChild(IRootObject rootObject, string paramName) : Quant
     {
         return new(Fields.RootObject, Fields.paramName)
         {
-            Return = GetReturn(measureUnit, defaultQuantity, factory),
+            ReturnValues = GetReturn(measureUnit, defaultQuantity, factory),
         };
     }
 
@@ -61,19 +61,19 @@ public class QuantifiableChild(IRootObject rootObject, string paramName) : Quant
     }
     #endregion
 
-    public override sealed Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnitValue;
+    public override sealed Enum GetBaseMeasureUnit() => ReturnValues.GetBaseMeasureUnitValue;
 
     public override sealed ValueType GetBaseQuantity()
     {
-        ValueType quantity = Return.GetDefaultQuantityValue;
+        ValueType quantity = ReturnValues.GetDefaultQuantityValue;
         TypeCode typeCode = GetQuantityTypeCode();
 
         return (ValueType)quantity.ToQuantity(typeCode);
     }
 
-    public override sealed decimal GetDefaultQuantity() => Return.GetDefaultQuantityValue;
+    public override sealed decimal GetDefaultQuantity() => ReturnValues.GetDefaultQuantityValue;
 
-    public override sealed IFactory GetFactory() => Return.GetFactoryValue;
+    public override sealed IFactory GetFactory() => ReturnValues.GetFactoryValue;
 
     public override sealed IQuantifiable Round(RoundingMode roundingMode)
     {
@@ -92,7 +92,7 @@ public class QuantifiableChild(IRootObject rootObject, string paramName) : Quant
         {
             Enum measureUnit = GetMeasureUnitElements(context, nameof(context)).MeasureUnit;
 
-            return GetQuantifiableChild(Return.GetDefaultQuantityValue, measureUnit);
+            return GetQuantifiableChild(ReturnValues.GetDefaultQuantityValue, measureUnit);
         }
         #endregion
     }

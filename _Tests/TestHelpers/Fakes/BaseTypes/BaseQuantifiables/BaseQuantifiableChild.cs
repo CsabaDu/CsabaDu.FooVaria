@@ -26,13 +26,13 @@ public class BaseQuantifiableChild(IRootObject rootObject, string paramName) : B
     #endregion
 
     #region Test helpers
-    public BaseQuantifiableReturnValues Return { private get; set; }
+    public BaseQuantifiableReturnValues ReturnValues { private get; set; }
 
     public static BaseQuantifiableChild GetBaseQuantifiableChild(Enum measureUnit, decimal defaultQuantity, IBaseQuantifiableFactory factory = null)
     {
         return new(Fields.RootObject, Fields.paramName)
         {
-            Return = new()
+            ReturnValues = new()
             {
                 GetBaseMeasureUnitValue = measureUnit,
                 GetDefaultQuantityValue = defaultQuantity,
@@ -47,9 +47,9 @@ public class BaseQuantifiableChild(IRootObject rootObject, string paramName) : B
     }
     #endregion
 
-    public override sealed Enum GetBaseMeasureUnit() => Return.GetBaseMeasureUnitValue;
+    public override sealed Enum GetBaseMeasureUnit() => ReturnValues.GetBaseMeasureUnitValue;
 
-    public override sealed IFactory GetFactory() => Return.GetFactoryValue;
+    public override sealed IFactory GetFactory() => ReturnValues.GetFactoryValue;
 
-    public override sealed decimal GetDefaultQuantity() => Return.GetDefaultQuantityValue;
+    public override sealed decimal GetDefaultQuantity() => ReturnValues.GetDefaultQuantityValue;
 }

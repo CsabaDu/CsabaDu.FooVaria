@@ -57,7 +57,7 @@ public sealed class CommonBaseTests
         _fields.paramName = null;
         _commonBase = new(_fields.RootObject, _fields.paramName)
         {
-            Return = new()
+            ReturnValues = new()
             {
                 GetFactoryValue = new FactoryObject(),
             }

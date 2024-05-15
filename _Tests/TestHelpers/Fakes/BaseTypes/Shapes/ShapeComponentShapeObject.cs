@@ -13,7 +13,7 @@ public sealed class ShapeComponentShapeObject(IRootObject rootObject, string par
     {
         return new(Fields.RootObject, Fields.paramName)
         {
-            Return = new()
+            ReturnValues = new()
             {
                 GetFactoryValue = factory,
                 GetShapeComponentsValue = [shapeComponentSpreadMeasure],

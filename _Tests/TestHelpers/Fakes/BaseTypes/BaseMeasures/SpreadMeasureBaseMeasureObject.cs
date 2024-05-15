@@ -10,7 +10,7 @@ public sealed class SpreadMeasureBaseMeasureObject(IRootObject rootObject, strin
 
         return new(Fields.RootObject, Fields.paramName)
         {
-            Return = new()
+            ReturnValues = new()
             {
                 GetBaseMeasurementValue = BaseMeasurementFactory.CreateBaseMeasurement(measureUnit),
                 GetBaseQuantityValue = (double)quantity.ToQuantity(TypeCode.Double),
@@ -24,7 +24,7 @@ public sealed class SpreadMeasureBaseMeasureObject(IRootObject rootObject, strin
         return GetSpreadMeasureBaseMeasureObject(fields.measureUnit, fields.quantity, rateComponentCode);
     }
 
-    public double GetQuantity() => (double)Return.GetBaseQuantityValue.ToQuantity(TypeCode.Double);
+    public double GetQuantity() => (double)ReturnValues.GetBaseQuantityValue.ToQuantity(TypeCode.Double);
 
     public ISpreadMeasure GetSpreadMeasure() => this;
 

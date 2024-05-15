@@ -51,14 +51,14 @@ public class ShapeChild(IRootObject rootObject, string paramName) : Shape(rootOb
     #endregion
 
     #region Test helpers
-    public ShapeReturnValues Return { private get; set; } = new();
+    public ShapeReturnValues ReturnValues { private get; set; } = new();
     protected ISpreadMeasure SpreadMeasure { private get; set; }
 
     public static ShapeChild GetShapeChild(IShapeComponent shapeComponent, IShape baseShape = null, IShapeFactory factory = null)
     {
         return new(Fields.RootObject, Fields.paramName)
         {
-            Return = GetReturn(shapeComponent, baseShape, factory),
+            ReturnValues = GetReturn(shapeComponent, baseShape, factory),
             SpreadMeasure = GetSpreadMeasure(shapeComponent),
         };
     }
@@ -125,11 +125,11 @@ public class ShapeChild(IRootObject rootObject, string paramName) : Shape(rootOb
         return FitsIn(other as IQuantifiable, limitMode);
     }
 
-    public override sealed IShape GetBaseShape() => Return.GetBaseShapeValue;
+    public override sealed IShape GetBaseShape() => ReturnValues.GetBaseShapeValue;
 
-    public override sealed IFactory GetFactory() => Return.GetFactoryValue;
+    public override sealed IFactory GetFactory() => ReturnValues.GetFactoryValue;
 
-    public override sealed IEnumerable<IShapeComponent> GetShapeComponents() => Return.GetShapeComponentsValue;
+    public override sealed IEnumerable<IShapeComponent> GetShapeComponents() => ReturnValues.GetShapeComponentsValue;
 
     public override sealed ISpreadMeasure GetSpreadMeasure() => SpreadMeasure;
 
