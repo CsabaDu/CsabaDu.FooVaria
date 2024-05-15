@@ -618,7 +618,26 @@ public sealed class BaseRateTests
     #endregion
     #endregion
 
-    // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
+    #region bool HasMeasureUnitCode
+    #region override sealed IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetBaseRateHasMeasureUnitCodeArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void HasMeasureUnitCode_arg_MeasureUnitCode_returns_expected(string testCase, Enum measureUnit, MeasureUnitCode denominatorCode, bool expected, MeasureUnitCode measureUnitCode)
+    {
+        // Arrange
+        SetBaseRateChild(measureUnit, _fields.defaultQuantity, denominatorCode);
+
+        // Act
+        var actual = _baseRate.HasMeasureUnitCode(measureUnitCode);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+
+
     // bool IExchangeable<IBaseRate>.IsExchangeableTo(IBaseRate? context)
     // bool IValidRateComponent.IsValidRateComponent(object? rateComponent, RateComponentCode rateComponentCode)
     // decimal IProportional<IBaseRate>.ProportionalTo(IBaseRate? other)
@@ -701,6 +720,11 @@ public sealed class BaseRateTests
     private static IEnumerable<object[]> GetGetRateComponentArgs()
     {
         return DynamicDataSource.GetGetRateComponentArgs();
+    }
+
+    private static IEnumerable<object[]> GetBaseRateHasMeasureUnitCodeArgs()
+    {
+        return DynamicDataSource.GetBaseRateHasMeasureUnitCodeArgs();
     }
     #endregion
 

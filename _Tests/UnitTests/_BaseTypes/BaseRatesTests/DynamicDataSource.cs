@@ -379,6 +379,58 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #endregion
     }
 
+    internal IEnumerable<object[]> GetBaseRateHasMeasureUnitCodeArgs()
+    {
+        measureUnit = RandomParams.GetRandomMeasureUnit();
+        denominatorCode = RandomParams.GetRandomMeasureUnitCode();
+
+        testCase = "Not defined MeasureUnitCode => false";
+        isTrue = false;
+        measureUnitCode = SampleParams.NotDefinedMeasureUnitCode;
+        yield return toObjectArray();
+
+        testCase = "Not contained MeasureUnitCode => false";
+        measureUnitCode = getDifferentRandomMeasureUnitCode();
+        yield return toObjectArray();
+
+        testCase = "Numerator MeasureUnitCode => true";
+        isTrue = true;
+        measureUnitCode = GetMeasureUnitCode();
+        yield return toObjectArray();
+
+        testCase = "Denominator MeasureUnitCode => true";
+        measureUnitCode = denominatorCode;
+        yield return toObjectArray();
+
+        #region Private methods
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            TestCase_Enum_MeasureUnitCode_bool_MeasureUnitCode args = new(testCase, measureUnit, denominatorCode, isTrue, measureUnitCode);
+
+            return args.ToObjectArray();
+        }
+        #endregion
+
+        MeasureUnitCode getDifferentRandomMeasureUnitCode()
+        {
+            MeasureUnitCode measureUnitCode = getRandomNotNumeratorMeasureUnitCode();
+
+            while (measureUnitCode == denominatorCode)
+            {
+                measureUnitCode = getRandomNotNumeratorMeasureUnitCode();
+            }
+
+            return measureUnitCode;
+        }
+
+        MeasureUnitCode getRandomNotNumeratorMeasureUnitCode()
+        {
+            return RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode());
+        }
+        #endregion
+    }
+
     #region Private methods
     private IEnumerable<object[]> GetGetQuantityArgs(IEnumerable<TypeCode> typeCodes)
     {
