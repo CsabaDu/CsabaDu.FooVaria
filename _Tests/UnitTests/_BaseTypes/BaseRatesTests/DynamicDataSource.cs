@@ -414,19 +414,15 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
 
         MeasureUnitCode getDifferentRandomMeasureUnitCode()
         {
-            MeasureUnitCode measureUnitCode = getRandomNotNumeratorMeasureUnitCode();
+            MeasureUnitCode numeratorCode = GetMeasureUnitCode();
+            MeasureUnitCode measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
 
-            while (measureUnitCode == denominatorCode)
+            while (measureUnitCode == numeratorCode || measureUnitCode == denominatorCode)
             {
-                measureUnitCode = getRandomNotNumeratorMeasureUnitCode();
+                measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
             }
 
             return measureUnitCode;
-        }
-
-        MeasureUnitCode getRandomNotNumeratorMeasureUnitCode()
-        {
-            return RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode());
         }
         #endregion
     }
