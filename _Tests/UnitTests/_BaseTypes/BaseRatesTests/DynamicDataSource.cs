@@ -402,7 +402,6 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         measureUnitCode = denominatorCode;
         yield return toObjectArray();
 
-        #region Private methods
         #region toObjectArray method
         object[] toObjectArray()
         {
@@ -412,6 +411,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         }
         #endregion
 
+        #region Local methods
         MeasureUnitCode getDifferentRandomMeasureUnitCode()
         {
             MeasureUnitCode numeratorCode = GetMeasureUnitCode();
@@ -423,6 +423,49 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
             }
 
             return measureUnitCode;
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> GetBaseRateIsExchangeableToArgs()
+    {
+        testCase = "null => false";
+        measureUnit = RandomParams.GetRandomMeasureUnit();
+        denominatorCode = RandomParams.GetRandomMeasureUnitCode();
+        baseRate = null;
+        isTrue = false;
+        yield return toObjectArray();
+
+        testCase = "Different NumeratorCode => false";
+        defaultQuantity = RandomParams.GetRandomDecimal();
+        baseRate = GetBaseRateChild(this);
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode());
+        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
+        yield return toObjectArray();
+
+        testCase = "Different DenominatorCode => false";
+        baseRate = GetBaseRateChild(this);
+        denominatorCode = RandomParams.GetRandomMeasureUnitCode(denominatorCode);
+        yield return toObjectArray();
+
+        testCase = "Same Numerator measureUnit, same DenominatorCode => true";
+        baseRate = GetBaseRateChild(this);
+        isTrue = true;
+        yield return toObjectArray();
+
+        testCase = "Same type different Numerator measureUnit, same DenominatorCode => true";
+        measureUnitCode = RandomParams.GetRandomConstantMeasureUnitCode();
+        measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode, measureUnit);
+        baseRate = GetBaseRateChild(this);
+        measureUnit = RandomParams.GetRandomMeasureUnit(GetMeasureUnitCode(), measureUnit);
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            TestCase_Enum_MeasureUnitCode_bool_IBaseRate args = new(testCase, measureUnit, denominatorCode, isTrue, baseRate);
+
+            return args.ToObjectArray();
         }
         #endregion
     }

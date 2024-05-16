@@ -581,7 +581,7 @@ public sealed class BaseRateTests
     #endregion
     #endregion
 
-    #region TypeCode GetQuantityTypeCode()
+    #region TypeCode GetQuantityTypeCode
     #region IQuantityType.GetQuantityTypeCode()
     [TestMethod, TestCategory("UnitTest")]
     public void GetQuantityTypeCode_returns_expected()
@@ -636,9 +636,24 @@ public sealed class BaseRateTests
     #endregion
     #endregion
 
+    #region bool IsExchangeableTo
+    #region IExchangeable<IBaseRate>.IsExchangeableTo(IBaseRate?)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetBaseRateIsExchangeableToArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void IsExchangeableTo_arg_IBaseRate_returns_expected(string testCase, Enum measureUnit, MeasureUnitCode denominatorCode, bool expected, IBaseRate baseRate)
+    {
+        // Arrange
+        SetBaseRateChild(measureUnit, _fields.defaultQuantity, denominatorCode);
 
+        // Act
+        var actual = _baseRate.IsExchangeableTo(baseRate);
 
-    // bool IExchangeable<IBaseRate>.IsExchangeableTo(IBaseRate? context)
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
     // bool IValidRateComponent.IsValidRateComponent(object? rateComponent, RateComponentCode rateComponentCode)
     // decimal IProportional<IBaseRate>.ProportionalTo(IBaseRate? other)
     // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum? measureUnit, string paramName)
@@ -725,6 +740,11 @@ public sealed class BaseRateTests
     private static IEnumerable<object[]> GetBaseRateHasMeasureUnitCodeArgs()
     {
         return DynamicDataSource.GetBaseRateHasMeasureUnitCodeArgs();
+    }
+
+    private static IEnumerable<object[]> GetBaseRateIsExchangeableToArgs()
+    {
+        return DynamicDataSource.GetBaseRateIsExchangeableToArgs();
     }
     #endregion
 
