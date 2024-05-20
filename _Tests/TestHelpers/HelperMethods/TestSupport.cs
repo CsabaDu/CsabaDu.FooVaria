@@ -1,5 +1,8 @@
 ﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
+using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Enums;
+using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
 using CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors;
+using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
 
 namespace CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods;
 
@@ -41,9 +44,15 @@ public sealed class TestSupport
         #endregion
     }
 
-    public static bool DoesSucceedAsExpected(bool success, object obj)
+    public static bool SucceedsAsExpected(bool success, object obj)
     {
         return obj is not null == success;
+    }
+
+    public static bool? FitsIn<T>(T limitable, decimal defaultQuantity, LimitMode limitMode)
+        where T : class, IDefaultQuantity, ILimitable
+    {
+        return limitable.GetDefaultQuantity().FitsIn(defaultQuantity, limitMode);
     }
 
     #region Logger

@@ -163,6 +163,103 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #endregion
     }
 
+    internal IEnumerable<object[]> GetValidateMeasureUnitInvalidArgs()
+    {
+        MeasureUnitCode spreadMeasureUnitCode = RandomParams.GetRandomSpreadMeasureUnitCode();
+        measureUnit = RandomParams.GetRandomSpreadMeasureUnit(spreadMeasureUnitCode);
+        Enum otherMeasureUnit = RandomParams.GetRandomSpreadMeasureUnit(GetMeasureUnitCode());
+
+        testCase = "Different MeassureUnit";
+        context = getRandomDifferentMeasureUnit();
+        yield return toObjectArray();
+
+        testCase = "Not defined MeassureUnit of ShapeComponent";
+        context = SampleParams.GetNotDefinedMeasureUnit(GetMeasureUnitCode());
+        yield return toObjectArray();
+
+        testCase = "Not defined MeassureUnit of BaseShape";
+        context = SampleParams.GetNotDefinedMeasureUnit(spreadMeasureUnitCode);
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            TestCase_Enum_Enum_Enum args = new(testCase, measureUnit, context, otherMeasureUnit);
+
+            return args.ToObjectArray();
+        }
+        #endregion
+
+        #region Local methods
+        Enum getRandomDifferentMeasureUnit()
+        {
+            Enum measureUnit = RandomParams.GetRandomMeasureUnit(getDifferentMeasureUnitCode());
+
+            while (GetMeasureUnitCode() == MeasureUnitCode.ExtentUnit)
+            {
+                measureUnit = RandomParams.GetRandomMeasureUnit(getDifferentMeasureUnitCode());
+            }
+
+            return measureUnit;
+        }
+
+        MeasureUnitCode getDifferentMeasureUnitCode()
+        {
+            return RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode());
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> GetShapeValidateMeasureUnitValidArgs()
+    {
+        measureUnit = RandomParams.GetRandomSpreadMeasureUnit();
+        
+        testCase = "Defined MeassureUnit of ShapeComponent";
+        context = RandomParams.GetRandomMeasureUnit(GetMeasureUnitCode());
+        yield return toObjectArray();
+
+        testCase = "Defined MeassureUnit of BaseShape";
+        context = RandomParams.GetRandomMeasureUnit(Measurable.GetMeasureUnitCode(context));
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            TestCase_Enum_Enum args = new(testCase, measureUnit, context);
+
+            return args.ToObjectArray();
+        }
+        #endregion
+
+    }
+    internal IEnumerable<object[]> GetShapeHasMeasureUnitCodeArgs()
+    {
+        testCase = "Shape MeasureUnitCode => true";
+        isTrue = true;
+        measureUnit = RandomParams.GetRandomSpreadMeasureUnit();
+        measureUnitCode = GetMeasureUnitCode();
+        context = RandomParams.GetRandomSpreadMeasureUnit(measureUnitCode);
+        yield return toObjectArray();
+
+        testCase = "BaseShape MeasureUnitCode => true";
+        measureUnitCode = Measurable.GetMeasureUnitCode(context);
+        yield return toObjectArray();
+
+        testCase = "Different MeasureUnitCode => false";
+        isTrue = false;
+        measureUnitCode = RandomParams.GetRandomMeasureUnitCode([measureUnitCode, GetMeasureUnitCode()]);
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            TestCase_Enum_MeasureUnitCode_bool_Enum args = new(testCase, measureUnit, measureUnitCode, isTrue, context);
+
+            return args.ToObjectArray();
+        }
+        #endregion
+    }
+
     internal IEnumerable<object[]> GetGetValidShapeComponentArgs()
     {
         testCase = "null => null";
@@ -187,34 +284,6 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         object[] toObjectArray()
         {
             TestCase_IQuantifiable_IShapeComponent args = new(testCase, quantifiable, shapeComponent);
-
-            return args.ToObjectArray();
-        }
-        #endregion
-    }
-
-    public new IEnumerable<object[]> GetHasMeasureUnitCodeArgs()
-    {
-        testCase = "Shape MeasureUnitCode => true";
-        isTrue = true;
-        measureUnit = RandomParams.GetRandomSpreadMeasureUnit();
-        measureUnitCode = GetMeasureUnitCode();
-        context = RandomParams.GetRandomSpreadMeasureUnit(measureUnitCode);
-        yield return toObjectArray();
-
-        testCase = "BaseShape MeasureUnitCode => true";
-        measureUnitCode = Measurable.GetMeasureUnitCode(context);
-        yield return toObjectArray();
-
-        testCase = "Different MeasureUnitCode => false";
-        isTrue= false;
-        measureUnitCode = RandomParams.GetRandomMeasureUnitCode([measureUnitCode, GetMeasureUnitCode()]);
-        yield return toObjectArray();
-
-        #region toObjectArray method
-        object[] toObjectArray()
-        {
-            TestCase_Enum_MeasureUnitCode_bool_Enum args = new(testCase, measureUnit, measureUnitCode, isTrue, context);
 
             return args.ToObjectArray();
         }

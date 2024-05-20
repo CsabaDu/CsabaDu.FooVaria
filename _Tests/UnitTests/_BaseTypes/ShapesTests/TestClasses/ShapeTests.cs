@@ -30,7 +30,7 @@ public sealed class ShapeTests
     // decimal IProportional<IQuantifiable>.ProportionalTo(IQuantifiable? _other)
     // IQuantifiable IRound<IQuantifiable>.Round(RoundingMode roundingMode)
     // bool ITryExchange<IQuantifiable, Enum>.TryExchangeTo(Enum context, out IQuantifiable? exchanged)
-    // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum? measureUnit, string paramName)
+    // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum? spreadMeasureUnit, string paramName)
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable? measurable, string paramName)
     // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
     // void IBaseQuantifiable.ValidateQuantity(ValueType? defaultQuantity, string paramName)
@@ -215,7 +215,7 @@ public sealed class ShapeTests
         _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
         _shapeComponent = GetShapeComponentQuantifiableObject(_fields);
         _limiter = GetLimiterShapeObject(_fields.limitMode.Value, _shapeComponent);
-        bool? expected = ShapeFitsIn((_limiter as LimiterShapeObject).GetDefaultQuantity(), _limiter.GetLimitMode().Value);
+        bool? expected = FitsIn(_shape, (_limiter as LimiterShapeObject).GetDefaultQuantity(), _limiter.GetLimitMode().Value);
 
         // Act
         var actual = _shape.FitsIn(_limiter);
@@ -265,7 +265,7 @@ public sealed class ShapeTests
         _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
         _other = GetShapeChild(_fields);
         _fields.limitMode = _randomParams.GetRandomLimitMode();
-        bool? expected = ShapeFitsIn(_other.GetDefaultQuantity(), _fields.limitMode.Value);
+        bool? expected = FitsIn(_shape, _other.GetDefaultQuantity(), _fields.limitMode.Value);
 
         // Act
         var actual = _shape.FitsIn(_other, _fields.limitMode);
@@ -327,9 +327,7 @@ public sealed class ShapeTests
     public void GetMeasureUnitCodes_returns_expected()
     {
         // Arrange
-        _other = GetShapeChild(_randomParams.GetRandomSpreadMeasureUnit(_fields.measureUnitCode), _fields.defaultQuantity);
-
-        SetShapeChild(_shapeComponent, _other);
+        SetShapeChildWithOtherBaseShape();
 
         IEnumerable<MeasureUnitCode> expected =
         [
@@ -352,9 +350,7 @@ public sealed class ShapeTests
     public void GetBaseShape_returns_expected()
     {
         // Arrange
-        _other = GetShapeChild(_randomParams.GetRandomSpreadMeasureUnit(_fields.measureUnitCode), _fields.defaultQuantity);
-
-        SetShapeChild(_shapeComponent, _other);
+        SetShapeChildWithOtherBaseShape();
 
         IShape expected = _other;
 
@@ -447,12 +443,11 @@ public sealed class ShapeTests
     #region bool HasMeasureUnitCode
     #region IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode)
     [TestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetHasMeasureUnitCodeArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    [DynamicData(nameof(GetShapeHasMeasureUnitCodeArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
     public void HasMeasureUnitCode_arg_MeasureUnitCode_returns_expected(string testCase, Enum measureUnit, MeasureUnitCode measureUnitCode, bool expected, Enum otherMeasureUnit)
     {
         // Arrange
-        _other = GetCompleteShapeChild(measureUnit, _fields.defaultQuantity);
-        SetShapeChild(otherMeasureUnit, _fields.defaultQuantity, _other);
+        SetShapeChildWithOtherBaseShape(measureUnit, otherMeasureUnit);
 
         // Act
         var actual = _shape.HasMeasureUnitCode(measureUnitCode);
@@ -463,7 +458,56 @@ public sealed class ShapeTests
     #endregion
     #endregion
 
-    // ValidateMeasureUnit
+    #region void ValidateMeasureUnit
+    #region override sealed IDefaultMeasureUnit.ValidateMeasureUnit(Enum?, string)
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateMeasureUnit_nullArg_Enum_arg_string_throws_ArgumentNullException()
+    {
+        // Arrange
+        SetShapeChild();
+
+        _fields.paramName = _randomParams.GetRandomParamName();
+
+        // Act
+        void attempt() => _shape.ValidateMeasureUnit(null, _fields.paramName);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
+        Assert.AreEqual(_fields.paramName, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetValidateMeasureUnitInvalidArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void ValidateMeasureUnit_invalidArg_Enum_arg_string_throws_InvalidEnumArgumentException(string testCase, Enum measureUnit, Enum otherMeasureUnit, Enum baseShapeMeasureUnit)
+    {
+        // Arrange
+        SetShapeChildWithOtherBaseShape(measureUnit, baseShapeMeasureUnit);
+
+        _fields.paramName = _randomParams.GetRandomParamName();
+
+        // Act
+        void attempt() => _shape.ValidateMeasureUnit(otherMeasureUnit, _fields.paramName);
+
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(_fields.paramName, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetShapeValidateMeasureUnitValidArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void ValidateMeasureUnit_validArg_Enum_arg_string_returns(string testCase, Enum measureUnit, Enum otherMeasureUnit)
+    {
+        // Arrange
+        SetShapeChildWithOtherBaseShape(measureUnit, otherMeasureUnit);
+
+        // Act
+        void attempt() => _shape.ValidateMeasureUnit(otherMeasureUnit, _fields.paramName);
+
+        // Assert
+        Assert.IsTrue(DoesNotThrowException(attempt));
+    }
+    #endregion
+    #endregion
 
     #region void ValidateMeasureUnitCodes
     #region IMeasureUnitCodes.ValidateMeasureUnitCodes(IMeasureUnitCodes?, string)
@@ -606,11 +650,11 @@ public sealed class ShapeTests
 
     #endregion
     #endregion
-    #endregion
 
     //#region Static methods
 
     //#endregion
+    #endregion
 
     #region Private methods
     #region DynamicDataSource
@@ -639,9 +683,19 @@ public sealed class ShapeTests
         return DynamicDataSource.GetGetValidShapeComponentArgs();
     }
 
-    private static IEnumerable<object[]> GetHasMeasureUnitCodeArgs()
+    private static IEnumerable<object[]> GetShapeHasMeasureUnitCodeArgs()
     {
-        return DynamicDataSource.GetHasMeasureUnitCodeArgs();
+        return DynamicDataSource.GetShapeHasMeasureUnitCodeArgs();
+    }
+
+    private static IEnumerable<object[]> GetValidateMeasureUnitInvalidArgs()
+    {
+        return DynamicDataSource.GetValidateMeasureUnitInvalidArgs();
+    }
+
+    private static IEnumerable<object[]> GetShapeValidateMeasureUnitValidArgs()
+    {
+        return DynamicDataSource.GetShapeValidateMeasureUnitValidArgs();
     }
     #endregion
 
@@ -670,9 +724,18 @@ public sealed class ShapeTests
         _shape = GetCompleteShapeChild(measureUnit, defaultQuantity, factory);
     }
 
-    private bool? ShapeFitsIn(decimal defaultQuantity, LimitMode limitMode)
+    private void SetShapeChildWithOtherBaseShape()
     {
-        return _shape.GetDefaultQuantity().FitsIn(defaultQuantity, limitMode);
+        _other = GetShapeChild(_randomParams.GetRandomSpreadMeasureUnit(_fields.measureUnitCode), _fields.defaultQuantity);
+
+        SetShapeChild(_shapeComponent, _other);
+    }
+
+    private void SetShapeChildWithOtherBaseShape(Enum measureUnit, Enum otherMeasureUnit)
+    {
+        _other = GetCompleteShapeChild(measureUnit, _fields.defaultQuantity);
+
+        SetShapeChild(otherMeasureUnit, _fields.defaultQuantity, _other);
     }
     #endregion
 }

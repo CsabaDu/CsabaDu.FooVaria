@@ -496,7 +496,7 @@ public sealed class QuantifiableTests
         var success = _quantifiable.TryExchangeTo(otherMeasureUnit, out IQuantifiable actual);
 
         // Assert
-        Assert.IsTrue(DoesSucceedAsExpected(success, actual));
+        Assert.IsTrue(SucceedsAsExpected(success, actual));
         Assert.AreEqual(expected?.GetType(), actual?.GetType());
     }
     #endregion
