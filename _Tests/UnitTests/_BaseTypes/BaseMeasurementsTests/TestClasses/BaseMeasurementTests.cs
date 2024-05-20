@@ -10,10 +10,10 @@ public sealed class BaseMeasurementTests
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
     // IFactory ICommonBase.GetFactoryValue()
-    // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
+    // RateComponentCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable measurable, string paramName)
-    // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
+    // void IMeasureUnitCode.ValidateMeasureUnitCode(RateComponentCode measureUnitCode, string paramName)
 
     #endregion
 

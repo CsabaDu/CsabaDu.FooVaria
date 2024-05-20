@@ -11,10 +11,10 @@ public sealed class QuantifiableTests
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
     // decimal IDefaultQuantity.GetDefaultQuantityValue()
     // IFactory ICommonBase.GetFactoryValue()
-    // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
+    // RateComponentCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()
     // TypeCode IQuantityType.GetQuantityTypeCode()
-    // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
+    // bool IMeasureUnitCode.HasMeasureUnitCode(RateComponentCode measureUnitCode)
     // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum measureUnit, string paramName)
     // void IBaseQuantifiable.ValidateQuantity(ValueType quantity, string paramName)
 

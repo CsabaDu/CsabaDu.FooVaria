@@ -1,3 +1,6 @@
+using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Enums;
+using CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseRatesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -12,7 +15,7 @@ public sealed class BaseRateTests
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
     // decimal IDefaultQuantity.GetDefaultQuantity()
     // IFactory ICommonBase.GetFactory()
-    // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
+    // RateComponentCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()
 
     #endregion
@@ -654,11 +657,30 @@ public sealed class BaseRateTests
     #endregion
     #endregion
 
-    // bool IValidRateComponent.IsValidRateComponent(object? rateComponent, RateComponentCode rateComponentCode)
+    #region bool IsValidRateComponent
+    #region IValidRateComponent.IsValidRateComponent(object?, RateComponentCode)
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetIsValidRateComponentArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void IsValidRateComponent_args_object_RateComponentCode_returns_expected(string testCase, Enum measureUnit, MeasureUnitCode denominatorCode, RateComponentCode rateComponentCode, object rateComponent, bool expected)
+    {
+        // Arrange
+        SetBaseRateChild(measureUnit, _fields.defaultQuantity, denominatorCode);
+
+        // Act
+        var actual = _baseRate.IsValidRateComponent(rateComponent, rateComponentCode);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+    #endregion
+
+
+
     // decimal IProportional<IBaseRate>.ProportionalTo(IBaseRate? other)
-    // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum? measureUnit, string paramName)
+    // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum? rateComponentCode, string paramName)
     // void IMeasurable.ValidateMeasureUnitCode(IBaseQuantifiable? baseQuantifiable, string paramName)
-    // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode denominatorCode, string paramName)
+    // void IMeasureUnitCode.ValidateMeasureUnitCode(RateComponentCode denominatorCode, string paramName)
     // void IMeasureUnitCodes.ValidateMeasureUnitCodes(IMeasureUnitCodes? measureUnitCodes, string paramName)
     // void IBaseQuantifiable.ValidateQuantity(Type? quantity, string paramName)
     // void IBaseRate.ValidateRateComponentCode(RateComponentCode rateComponentCode, string paramName)
@@ -745,6 +767,11 @@ public sealed class BaseRateTests
     private static IEnumerable<object[]> GetBaseRateIsExchangeableToArgs()
     {
         return DynamicDataSource.GetBaseRateIsExchangeableToArgs();
+    }
+
+    private static IEnumerable<object[]> GetIsValidRateComponentArgs()
+    {
+        return DynamicDataSource.GetIsValidRateComponentArgs();
     }
     #endregion
 

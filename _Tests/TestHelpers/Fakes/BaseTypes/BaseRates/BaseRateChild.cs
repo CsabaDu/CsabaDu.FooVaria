@@ -5,8 +5,8 @@
         #region Members
 
         // BaseRate(IRootObject rootObject, string paramName)
-        // MeasureUnitCode IBaseRate.GetNumeratorCode()
-        // MeasureUnitCode IBaseRate.GetMeasureUnitCode(RateComponentCode rateComponentCode)
+        // RateComponentCode IBaseRate.GetNumeratorCode()
+        // RateComponentCode IBaseRate.GetMeasureUnitCode(RateComponentCode rateComponentCode)
         // IBaseRate IBaseRate.GetBaseRate(IQuantifiable numerator, Enum denominator)
         // IBaseRate IBaseRate.GetBaseRate(IQuantifiable numerator, IMeasurable denominator)
         // IBaseRate IBaseRate.GetBaseRate(IQuantifiable numerator, IQuantifiable denominator)
@@ -17,9 +17,9 @@
         // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
         // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
         // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum? measureUnit, string paramName)
-        // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
-        // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
-        // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
+        // bool IMeasureUnitCode.HasMeasureUnitCode(RateComponentCode measureUnitCode)
+        // RateComponentCode IMeasureUnitCode.GetMeasureUnitCode()
+        // void IMeasureUnitCode.ValidateMeasureUnitCode(RateComponentCode measureUnitCode, string paramName)
         // TypeCode IQuantityType.GetQuantityTypeCode()
         // Enum IMeasureUnit.GetBaseMeasureUnitValue()
         // Type IMeasureUnit.GetMeasureUnitType()
@@ -35,11 +35,11 @@
         // bool IEquatable<IBaseRate>.Equals(IBaseRate? other)
         // bool BaseRate.Equals(object? obj)
         // int BaseRate.GetHashCode()
-        // MeasureUnitCode IDenominate.GetDenominatorCodeValue()
+        // RateComponentCode IDenominate.GetDenominatorCodeValue()
         // object? IValidRateComponent.GetRateComponent(RateComponentCode rateComponentCode)
         // bool IValidRateComponent.IsValidRateComponent(object? rateComponent, RateComponentCode rateComponentCode)
         // LimitMode? ILimitMode.GetLimitMode()
-        // IEnumerable<MeasureUnitCode> IMeasureUnitCodes.GetMeasureUnitCodes()
+        // IEnumerable<RateComponentCode> IMeasureUnitCodes.GetMeasureUnitCodes()
         // void IMeasureUnitCodes.ValidateMeasureUnitCodes(IBaseQuantifiable? baseQuantifiable, string paramName)
 
         #endregion

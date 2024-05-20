@@ -31,7 +31,7 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
         return Factory;
     }
 
-    //public override sealed MeasureUnitCode GetMeasureUnitCode()
+    //public override sealed RateComponentCode GetMeasureUnitCode()
     //{
     //    Enum measuureUnit = GetBaseMeasureUnitValue();
 

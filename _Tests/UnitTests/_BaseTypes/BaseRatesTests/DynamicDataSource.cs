@@ -167,7 +167,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         defaultQuantity = RandomParams.GetRandomDecimal();
         quantifiable = GetQuantifiableChild(this);
         measureUnit = null;
-        paramName = ParamNames.measureUnit; 
+        paramName = ParamNames.measureUnit;
         yield return toObjectArray();
 
         #region toObjectArray method
@@ -227,6 +227,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         }
         #endregion
     }
+
     internal IEnumerable<object[]> GetGetBaseRateIMeasurableNullArgs()
     {
         testCase = "null, null => numerator";
@@ -470,6 +471,66 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #endregion
     }
 
+    internal IEnumerable<object[]> GetIsValidRateComponentArgs()
+    {
+        measureUnit = RandomParams.GetRandomMeasureUnit();
+        denominatorCode = RandomParams.GetRandomMeasureUnitCode();
+
+        testCase = "null, RateComponentCode => false";
+        rateComponentCode = RandomParams.GetRandomRateComponentCode();
+        obj = null;
+        isTrue = false;
+        yield return toObjectArray();
+
+        testCase = "object, RateComponentCode => false";
+        obj = new();
+        yield return toObjectArray();
+
+        testCase = "NumeratorCode, RateComponentCode.Numerator => true";
+        obj = GetMeasureUnitCode();
+        rateComponentCode = RateComponentCode.Numerator;
+        isTrue = true;
+        yield return toObjectArray();
+
+        testCase = "NumeratorCode, RateComponentCode.Denominator => false";
+        rateComponentCode = RateComponentCode.Denominator;
+        isTrue = false;
+        yield return toObjectArray();
+
+        testCase = "NumeratorCode, RateComponentCode.Limit => false";
+        rateComponentCode = RateComponentCode.Limit;
+        yield return toObjectArray();
+
+        testCase = "NumeratorCode, not defined RateComponentCode => false";
+        rateComponentCode = SampleParams.NotDefinedRateComponentCode;
+        yield return toObjectArray();
+
+        testCase = "DenominatorCode, not defined RateComponentCode => false";
+        obj = denominatorCode;
+        yield return toObjectArray();
+
+        testCase = "DenominatorCode, RateComponentCode.Limit => false";
+        rateComponentCode = RateComponentCode.Limit;
+        yield return toObjectArray();
+
+        testCase = "DenominatorCode, RateComponentCode.Numerator => false";
+        rateComponentCode = RateComponentCode.Numerator;
+        yield return toObjectArray();
+
+        testCase = "DenominatorCode, RateComponentCode.Denominator => true";
+        rateComponentCode = RateComponentCode.Denominator;
+        isTrue = true;
+        yield return toObjectArray();
+
+        #region toObjectArray method
+        object[] toObjectArray()
+        {
+            TestCase_Enum_MeasureUnitCode_RateComponentCode_object_bool args = new(testCase, measureUnit, denominatorCode, rateComponentCode, obj, isTrue);
+
+            return args.ToObjectArray();
+        }
+        #endregion
+    }
     #region Private methods
     private IEnumerable<object[]> GetGetQuantityArgs(IEnumerable<TypeCode> typeCodes)
     {

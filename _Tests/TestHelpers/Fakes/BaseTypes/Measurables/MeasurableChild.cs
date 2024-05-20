@@ -11,13 +11,13 @@ public sealed class MeasurableChild(IRootObject rootObject, string paramName) : 
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
     // IFactory ICommonBase.GetFactoryValue()
     // int Measurable.GetHashCode()
-    // MeasureUnitCode IMeasureUnitCode.GetMeasureUnitCode()
+    // RateComponentCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()
     // TypeCode IQuantityType.GetQuantityTypeCode()
-    // bool IMeasureUnitCode.HasMeasureUnitCode(MeasureUnitCode measureUnitCode)
+    // bool IMeasureUnitCode.HasMeasureUnitCode(RateComponentCode measureUnitCode)
     // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum measureUnit, string paramName)
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable measurable, string paramName)
-    // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
+    // void IMeasureUnitCode.ValidateMeasureUnitCode(RateComponentCode measureUnitCode, string paramName)
 
     #endregion
 
