@@ -10,28 +10,28 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         measureUnit = RandomParams.GetRandomValidMeasureUnit();
         defaultQuantity = RandomParams.GetRandomDecimal();
         isTrue = false;
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "object => false";
         obj = new();
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Different MeasureUnitCode => false";
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode());
         obj = GetBaseQuantifiableChild(RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Same measureUnit, different defaultQuantity => false";
         obj = GetBaseQuantifiableChild(measureUnit, RandomParams.GetRandomDecimal(defaultQuantity));
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Same measureUnit, same defaultQuantity => true";
         obj = GetBaseQuantifiableChild(this);
         isTrue = true;
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
-        #region toObjectArray method
-        object[] toObjectArray()
+        #region argsToObjectArray method
+        object[] argsToObjectArray()
         {
             TestCase_bool_object_Enum_decimal args = new(testCase, isTrue, obj, measureUnit, defaultQuantity);
 
@@ -45,15 +45,15 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         testCase = "Not IBaseQuantifiable";
         measureUnit = RandomParams.GetRandomMeasureUnit();
         limiter = new LimiterObject();
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Different MeasureUnitCode";
         measureUnitCode = GetMeasureUnitCode();
         limiter = GetLimiterBaseQuantifiableObject(null, RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
-        #region toObjectArray method
-        object[] toObjectArray()
+        #region argsToObjectArray method
+        object[] argsToObjectArray()
         {
             TestCase_Enum_ILimiter args = new(testCase, measureUnit, limiter);
 
@@ -82,10 +82,10 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
     #region Private methods
     private static IEnumerable<object[]> GetQuantityTypeCodeArg(IEnumerable<TypeCode> typeCodes)
     {
-        return typeCodes.Select(toObjectArray);
+        return typeCodes.Select(argsToObjectArray);
 
         #region Local methods
-        static object[] toObjectArray(TypeCode typeCode)
+        static object[] argsToObjectArray(TypeCode typeCode)
         {
             string testCase = GetEnumName(typeCode);
             TestCase_TypeCode item = new(testCase, typeCode);

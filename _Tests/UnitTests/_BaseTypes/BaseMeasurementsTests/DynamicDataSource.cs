@@ -10,19 +10,19 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         measureUnit = RandomParams.GetRandomValidMeasureUnit();
         measureUnitCode = GetMeasureUnitCode();
         isTrue = false;
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "object => false";
         obj = new();
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "IBaseMeasurement => measureUnits equal";
         obj = GetBaseMeasurementChild(RandomParams.GetRandomValidMeasureUnit());
         isTrue = measureUnit.Equals((obj as IBaseMeasurement).GetBaseMeasureUnit());
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
-        #region toObjectArray method
-        object[] toObjectArray()
+        #region argsToObjectArray method
+        object[] argsToObjectArray()
         {
             TestCase_bool_object_Enum args = new(testCase, isTrue, obj, measureUnit);
 
@@ -38,27 +38,27 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         isTrue = false;
         measureUnit = RandomParams.GetRandomValidMeasureUnit();
         measureUnitCode = GetMeasureUnitCode();
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Different MeasureUnitCode => false";
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
         baseMeasurement = GetBaseMeasurementChild(RandomParams.GetRandomMeasureUnit(measureUnitCode));
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Same MeasureUnit => true";
         isTrue = true;
         baseMeasurement = GetBaseMeasurementChild(measureUnit);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Same MeasureUnitCode, same ExhchangeRate, Different measureUnit => true";
         measureUnit = RandomParams.GetRandomNotUsedCustomMeasureUnit();
         _ = TrySetCustomMeasureUnit(measureUnit, decimal.One, RandomParams.GetRandomParamName());
         measureUnitCode = GetMeasureUnitCode();
         baseMeasurement = GetBaseMeasurementChild(measureUnitCode.GetDefaultMeasureUnit());
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
-        #region toObjectArray method
-        object[] toObjectArray()
+        #region argsToObjectArray method
+        object[] argsToObjectArray()
         {
             TestCase_bool_Enum_IBaseMeasurement args = new(testCase, isTrue, measureUnit, baseMeasurement);
 
@@ -72,17 +72,17 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         testCase = "measureUnit";
         measureUnit = RandomParams.GetRandomMeasureUnit();
         measureUnitCode = GetMeasureUnitCode();
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Custom measureUnit";
         measureUnit = RandomParams.GetRandomNotUsedCustomMeasureUnit();
         _ = TrySetCustomMeasureUnit(measureUnit, RandomParams.GetRandomNotNegativeDecimal(), RandomParams.GetRandomParamName());
         measureUnitCode = GetMeasureUnitCode();
         measureUnit = measureUnitCode.GetDefaultMeasureUnit();
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
-        #region toObjectArray method
-        object[] toObjectArray()
+        #region argsToObjectArray method
+        object[] argsToObjectArray()
         {
             TestCase_Enum_MeasureUnitCode args = new(testCase, measureUnit, measureUnitCode);
 
@@ -97,35 +97,35 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         isTrue = false;
         measureUnit = RandomParams.GetRandomConstantMeasureUnit();
         context = null;
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Not measureUnit not MeasureUnitCode Enum => false";
         context = TypeCode.Empty;
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Different MeasureUnitCode => false";
         measureUnitCode = GetMeasureUnitCode();
         context = RandomParams.GetRandomConstantMeasureUnitCode(measureUnitCode);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Not defined measureUnit of same type => false";
         context = SampleParams.GetNotDefinedMeasureUnit(measureUnitCode);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Same MeasureUnitCode => true";
         isTrue = true;
         context = measureUnitCode;
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Same type valid measureUnit => true";
         context = RandomParams.GetRandomValidMeasureUnit(measureUnitCode);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Different type measureUnit => false";
         isTrue = false;
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
         context = RandomParams.GetRandomMeasureUnit(measureUnitCode);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Same type invalid measureUnit => false";
         measureUnitCode = RandomParams.GetRandomCustomMeasureUnitCode();
@@ -133,10 +133,10 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         SetCustomMeasureUnit(paramName, measureUnitCode, RandomParams.GetRandomPositiveDecimal());
         measureUnit = GetMeasureUnit(paramName);
         context = RandomParams.GetRandomNotUsedCustomMeasureUnit(measureUnitCode);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
-        #region toObjectArray method
-        object[] toObjectArray()
+        #region argsToObjectArray method
+        object[] argsToObjectArray()
         {
             TestCase_bool_Enum_Enum args = new(testCase, isTrue, measureUnit, context);
 
@@ -150,16 +150,16 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         testCase = "Zero ExchangeRate";
         measureUnit = RandomParams.GetRandomConstantMeasureUnit();
         decimalQuantity = 0;
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Negative ExchangeRate";
         decimalQuantity = RandomParams.GetRandomNegativeDecimal();
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Different ExchangeRate";
         decimalQuantity = RandomParams.GetRandomNotNegativeDecimal(GetExchangeRate());
-        #region toObjectArray method
-        object[] toObjectArray()
+        #region argsToObjectArray method
+        object[] argsToObjectArray()
         {
             TestCase_Enum_decimal args = new(testCase, measureUnit, decimalQuantity);
 

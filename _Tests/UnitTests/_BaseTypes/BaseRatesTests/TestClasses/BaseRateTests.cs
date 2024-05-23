@@ -1,6 +1,3 @@
-using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Enums;
-using CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors;
-
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseRatesTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -675,12 +672,81 @@ public sealed class BaseRateTests
     #endregion
     #endregion
 
+    #region decimal ProportionalTo
+    #region IProportional<IBaseRate>.ProportionalTo(IBaseRate?)
+    [TestMethod, TestCategory("UnitTest")]
+    public void ProportionalTo_nullArg_IBaseRate_throws_ArgumentNullException()
+    {
+        // Arrange
+        SetBaseRateChild();
+
+        _other = null;
+
+        // Act
+        void attempt() => _ = _baseRate.ProportionalTo(_other);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
+        Assert.AreEqual(ParamNames.other, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetProportionalToArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void ProportionalTo_invalidArg_IBaseRate_throws_InvalidEnumArgumentException(string testCase, Enum measureUnit, MeasureUnitCode denominatorCode, IBaseRate other)
+    {
+        // Arrange
+        SetBaseRateChild(measureUnit, _fields.defaultQuantity, denominatorCode);
+
+        // Act
+        void attempt() => _ = _baseRate.ProportionalTo(other);
+
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(ParamNames.other, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ProportionalTo_invalidArg_IBaseRate_throws_ArgumentOutOfRangeException()
+    {
+        // Arrange
+        SetBaseRateChild();
+
+        _fields.defaultQuantity = 0;
+        _other = GetBaseRateChild(_fields);
+
+        // Act
+        void attempt() => _ = _baseRate.ProportionalTo(_other);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
+        Assert.AreEqual(ParamNames.other, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ProportionalTo_validArg_IBaseRate_returns_expected()
+    {
+        // Arrange
+        SetBaseRateChild();
+
+        _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
+        _fields.defaultQuantity = _randomParams.GetRandomDecimal(0);
+        _other = GetBaseRateChild(_fields);
+        decimal expected = Math.Abs(_baseRate.GetDefaultQuantity() / _other.GetDefaultQuantity());
+
+        // Act
+        var actual = _baseRate.ProportionalTo(_other);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    #endregion
+    #endregion
 
 
-    // decimal IProportional<IBaseRate>.ProportionalTo(IBaseRate? other)
-    // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum? rateComponentCode, string paramName)
-    // void IMeasurable.ValidateMeasureUnitCode(IBaseQuantifiable? baseQuantifiable, string paramName)
-    // void IMeasureUnitCode.ValidateMeasureUnitCode(RateComponentCode denominatorCode, string paramName)
+
+    // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum? measureUnit, string paramName)
+    // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
     // void IMeasureUnitCodes.ValidateMeasureUnitCodes(IMeasureUnitCodes? measureUnitCodes, string paramName)
     // void IBaseQuantifiable.ValidateQuantity(Type? quantity, string paramName)
     // void IBaseRate.ValidateRateComponentCode(RateComponentCode rateComponentCode, string paramName)
@@ -773,8 +839,14 @@ public sealed class BaseRateTests
     {
         return DynamicDataSource.GetIsValidRateComponentArgs();
     }
+
+    private static IEnumerable<object[]> GetProportionalToArgs()
+    {
+        return DynamicDataSource.GetProportionalToArgs();
+    }
     #endregion
 
+    #region Setters
     private void SetBaseRateChild(Enum measureUnit, decimal defaultQuantity, MeasureUnitCode denominatorCode, IBaseRateFactory factory = null)
     {
         _baseRate = GetBaseRateChild(measureUnit, defaultQuantity, denominatorCode, factory);
@@ -794,5 +866,6 @@ public sealed class BaseRateTests
     {
         _baseRate = GetBaseRateChild(quantifiable, denominatorCode, factory);
     }
+    #endregion
     #endregion
 }

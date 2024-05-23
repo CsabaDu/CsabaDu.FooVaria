@@ -15,14 +15,14 @@ public abstract class CommonDynamicDataSource : DataFields
         measureUnit = RandomParams.GetRandomConstantMeasureUnit();
         measureUnitCode = GetMeasureUnitCode();
         context = measureUnitCode;
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "measureUnit";
         context = RandomParams.GetRandomMeasureUnit(measureUnitCode);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
-        #region toObjectArray method
-        object[] toObjectArray()
+        #region argsToObjectArray method
+        object[] argsToObjectArray()
         {
             TestCase_Enum_Enum args = new(testCase, measureUnit, context);
 
@@ -36,15 +36,15 @@ public abstract class CommonDynamicDataSource : DataFields
         testCase = "Same MeasureUnitCode => true";
         SetMeasureUnit(RandomParams.GetRandomMeasureUnit());
         isTrue = true;
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Different MeasureUnitCode => false";
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
         isTrue = false;
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
-        #region toObjectArray method
-        object[] toObjectArray()
+        #region argsToObjectArray method
+        object[] argsToObjectArray()
         {
             TestCase_Enum_MeasureUnitCode_bool args = new(testCase, measureUnit, measureUnitCode, isTrue);
 
@@ -58,15 +58,15 @@ public abstract class CommonDynamicDataSource : DataFields
         testCase = "Not defined MeasureUnitCode";
         measureUnit = RandomParams.GetRandomMeasureUnit();
         measureUnitCode = SampleParams.NotDefinedMeasureUnitCode;
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Different MeasureUnitCode";
         measureUnitCode = GetMeasureUnitCode();
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode(measureUnitCode);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
-        #region toObjectArray method
-        object[] toObjectArray()
+        #region argsToObjectArray method
+        object[] argsToObjectArray()
         {
             TestCase_Enum_MeasureUnitCode args = new(testCase, measureUnit, measureUnitCode);
 
@@ -81,39 +81,39 @@ public abstract class CommonDynamicDataSource : DataFields
         this.measureUnit = measureUnit;
         isTrue = false;
         context = null;
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Not meaureUnit not MeasureUnitCode Enum => false";
         context = SampleParams.DefaultLimitMode;
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Same MeasureUnitCode => true";
         isTrue = true;
         measureUnitCode = GetMeasureUnitCode();
         context = measureUnitCode;
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Same type different measureUnit => true";
         context = RandomParams.GetRandomMeasureUnit(measureUnitCode);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Different MeasureUnitCode => false";
         isTrue = false;
         measureUnitCode = RandomParams.GetRandomConstantMeasureUnitCode(measureUnitCode);
         context = measureUnitCode;
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Different type measureUnit => false";
         context = RandomParams.GetRandomMeasureUnit(measureUnitCode, measureUnit);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Same type not defined measureUnit => false";
         int count = Enum.GetNames(measureUnit.GetType()).Length;
         context = (Enum)Enum.ToObject(measureUnit.GetType(), count);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
-        #region toObjectArray method
-        object[] toObjectArray()
+        #region argsToObjectArray method
+        object[] argsToObjectArray()
         {
             TestCase_bool_Enum_Enum args = new(testCase, isTrue, measureUnit, context);
 

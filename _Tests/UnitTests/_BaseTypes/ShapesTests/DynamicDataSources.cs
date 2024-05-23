@@ -18,29 +18,29 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         measureUnitCode = GetMeasureUnitCode();
         defaultQuantity = RandomParams.GetRandomPositiveDecimal();
         shape = null;
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Same shape => true";
         isTrue = true;
         shape = GetShapeChild(this);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Different MeasureUnitCode => false";
         isTrue = false;
         measureUnitCode = SampleParams.GetOtherSpreadMeasureUnitCode(measureUnitCode);
         context = measureUnitCode.GetDefaultMeasureUnit();
         measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode, context);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Same MeasureUnitCode, different measureUnit => false";
         shape = GetShapeChild(this);
         measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode, measureUnit);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Different quantity => false";
         shape = GetShapeChild(this);
         defaultQuantity = RandomParams.GetRandomPositiveDecimal(defaultQuantity);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Equals when exchanged => true";
         isTrue = true;
@@ -48,10 +48,10 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         measureUnit = RandomParams.GetRandomSameTypeValidMeasureUnit(measureUnit);
         defaultQuantity /= GetExchangeRate();
         shape = GetShapeChild(this);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
-        #region toObjectArray method
-        object[] toObjectArray()
+        #region argsToObjectArray method
+        object[] argsToObjectArray()
         {
             TestCase_Enum_decimal_bool_IShape args = new(testCase, measureUnit, defaultQuantity, isTrue, shape);
 
@@ -66,7 +66,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         isTrue = true;
         shape = null;
         other = null;
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "not null, null => false";
         isTrue = false;
@@ -74,34 +74,34 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         measureUnitCode = GetMeasureUnitCode();
         defaultQuantity = RandomParams.GetRandomPositiveDecimal();
         shape = GetShapeChild(this);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "null, not null => false";
         shape = null;
         other = GetCompleteShapeChild(this);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Same shapes, same baseShapes => true";
         isTrue = true;
         measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
         shape = other = GetShapeChild(this, other);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Different shapes, same baseShapes => true";
         measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
         defaultQuantity = RandomParams.GetRandomPositiveDecimal(defaultQuantity);
         other = GetShapeChild(this, shape);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Different baseShapes => false";
         isTrue = false;
         shapeComponent = shape.GetShapeComponents().First();
         defaultQuantity = RandomParams.GetRandomPositiveDecimal(defaultQuantity);
         other = GetShapeChild(shapeComponent, GetShapeChild(this));
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
-        #region toObjectArray method
-        object[] toObjectArray()
+        #region argsToObjectArray method
+        object[] argsToObjectArray()
         {
             TestCase_IShape_bool_IShape args = new(testCase, shape, isTrue, other);
 
@@ -115,16 +115,16 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         testCase = "Not IShape";
         measureUnit = RandomParams.GetRandomSpreadMeasureUnit();
         limiter = new LimiterObject();
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Different MeasureUnitCode";
         measureUnitCode = SampleParams.GetOtherSpreadMeasureUnitCode(GetMeasureUnitCode());
         limitMode = RandomParams.GetRandomLimitMode();
         limiter = GetLimiterQuantifiableObject(limitMode.Value, RandomParams.GetRandomMeasureUnit(measureUnitCode), defaultQuantity);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
-        #region toObjectArray method
-        object[] toObjectArray()
+        #region argsToObjectArray method
+        object[] argsToObjectArray()
         {
             TestCase_Enum_ILimiter args = new(testCase, measureUnit, limiter);
 
@@ -140,21 +140,21 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         measureUnit = RandomParams.GetRandomSpreadMeasureUnit();
         defaultQuantity = RandomParams.GetRandomPositiveDecimal();
         shape = GetShapeChild(this);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Different IShape, valid LimitMode";
         measureUnitCode = GetMeasureUnitCode();
         measureUnitCode = SampleParams.GetOtherSpreadMeasureUnitCode(measureUnitCode);
         measureUnit = RandomParams.GetRandomMeasureUnit(measureUnitCode);
         limitMode = RandomParams.GetRandomLimitMode();
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "null, valid LimitMode";
         shape = null;
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
-        #region toObjectArray method
-        object[] toObjectArray()
+        #region argsToObjectArray method
+        object[] argsToObjectArray()
         {
             TestCase_Enum_LimitMode_IShape args = new(testCase, measureUnit, limitMode, shape);
 
@@ -171,18 +171,18 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
 
         testCase = "Different MeassureUnit";
         context = getRandomDifferentMeasureUnit();
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Not defined MeassureUnit of ShapeComponent";
         context = SampleParams.GetNotDefinedMeasureUnit(GetMeasureUnitCode());
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Not defined MeassureUnit of BaseShape";
         context = SampleParams.GetNotDefinedMeasureUnit(spreadMeasureUnitCode);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
-        #region toObjectArray method
-        object[] toObjectArray()
+        #region argsToObjectArray method
+        object[] argsToObjectArray()
         {
             TestCase_Enum_Enum_Enum args = new(testCase, measureUnit, context, otherMeasureUnit);
 
@@ -216,14 +216,14 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         
         testCase = "Defined MeassureUnit of ShapeComponent";
         context = RandomParams.GetRandomMeasureUnit(GetMeasureUnitCode());
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Defined MeassureUnit of BaseShape";
         context = RandomParams.GetRandomMeasureUnit(Measurable.GetMeasureUnitCode(context));
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
-        #region toObjectArray method
-        object[] toObjectArray()
+        #region argsToObjectArray method
+        object[] argsToObjectArray()
         {
             TestCase_Enum_Enum args = new(testCase, measureUnit, context);
 
@@ -239,19 +239,19 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         measureUnit = RandomParams.GetRandomSpreadMeasureUnit();
         measureUnitCode = GetMeasureUnitCode();
         context = RandomParams.GetRandomSpreadMeasureUnit(measureUnitCode);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "BaseShape MeasureUnitCode => true";
         measureUnitCode = Measurable.GetMeasureUnitCode(context);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Different MeasureUnitCode => false";
         isTrue = false;
         measureUnitCode = RandomParams.GetRandomMeasureUnitCode([measureUnitCode, GetMeasureUnitCode()]);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
-        #region toObjectArray method
-        object[] toObjectArray()
+        #region argsToObjectArray method
+        object[] argsToObjectArray()
         {
             TestCase_Enum_MeasureUnitCode_bool_Enum args = new(testCase, measureUnit, measureUnitCode, isTrue, context);
 
@@ -265,23 +265,23 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         testCase = "null => null";
         quantifiable = null;
         shapeComponent = null;
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Not IShapeComponent IQuantifiable => null";
         measureUnit = RandomParams.GetRandomSpreadMeasureUnit();
         defaultQuantity = RandomParams.GetRandomPositiveDecimal();
         quantifiable = GetQuantifiableChild(this);
         shapeComponent = null;
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "IShapeComponent => same IShapeComponent";
         var shapeComponentQuantifiableObject = GetShapeComponentQuantifiableObject(this);
         quantifiable = shapeComponentQuantifiableObject;
         shapeComponent = shapeComponentQuantifiableObject;
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
-        #region toObjectArray method
-        object[] toObjectArray()
+        #region argsToObjectArray method
+        object[] argsToObjectArray()
         {
             TestCase_IQuantifiable_IShapeComponent args = new(testCase, quantifiable, shapeComponent);
 
@@ -294,20 +294,20 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
     {
         testCase = "null => null";
         quantifiable = null;
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "Not IShapeComponent IQuantifiable";
         measureUnit = RandomParams.GetRandomSpreadMeasureUnit();
         defaultQuantity = RandomParams.GetRandomPositiveDecimal();
         quantifiable = GetQuantifiableChild(this);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
         testCase = "IShapeComponent => same IShapeComponent";
         quantifiable = GetShapeComponentQuantifiableObject(this);
-        yield return toObjectArray();
+        yield return argsToObjectArray();
 
-        #region toObjectArray method
-        object[] toObjectArray()
+        #region argsToObjectArray method
+        object[] argsToObjectArray()
         {
             TestCase_IQuantifiable args = new(testCase, quantifiable);
 

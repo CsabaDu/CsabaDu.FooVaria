@@ -55,7 +55,7 @@ public abstract class BaseRate(IRootObject rootObject, string paramName) : BaseQ
 
     public override sealed void ValidateQuantity(ValueType? quantity, string paramName)
     {
-        ValidatePositiveQuantity(quantity, paramName);
+        base.ValidateQuantity(quantity, paramName);
     }
     #endregion
     #endregion
@@ -178,9 +178,11 @@ public abstract class BaseRate(IRootObject rootObject, string paramName) : BaseQ
     {
         const string paramName = nameof(other);
 
-        decimal defaultQuantity = NullChecked(other, paramName).GetDefaultQuantity();
-
         ValidateMeasureUnitCodes(other, paramName);
+
+        decimal defaultQuantity = other!.GetDefaultQuantity();
+
+        if (defaultQuantity == 0) throw QuantityArgumentOutOfRangeException(paramName, defaultQuantity);
 
         return Math.Abs(GetDefaultQuantity() / defaultQuantity);
     }
