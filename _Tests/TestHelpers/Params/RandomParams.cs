@@ -403,6 +403,21 @@ public sealed class RandomParams
 
         return GetRandomMeasureUnit(measureUnitCode);
     }
+
+    public MeasureUnitCode GetDifferentRandomMeasureUnitCode(MeasureUnitCode[] measureUnitCodes)
+    {
+        MeasureUnitCode measureUnitCode = GetRandomMeasureUnitCode();
+
+        if (measureUnitCodes.Length >= MeasureUnitCodeCount) throw new InvalidOperationException(null);
+
+        while (measureUnitCodes.Contains(measureUnitCode))
+        {
+            measureUnitCode = GetRandomMeasureUnitCode();
+        }
+
+        return measureUnitCode;
+    }
+
     #endregion
 
     #region Private methods

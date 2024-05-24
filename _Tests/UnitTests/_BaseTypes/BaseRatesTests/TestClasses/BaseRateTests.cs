@@ -743,9 +743,59 @@ public sealed class BaseRateTests
     #endregion
     #endregion
 
+    #region void ValidateMeasureUnit
+    #region override sealed IDefaultMeasureUnit.ValidateMeasureUnit(Enum?, string)
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateMeasureUnit_nullArg_Enum_arg_string_throws_ArgumentNullException()
+    {
+        // Arrange
+        SetBaseRateChild();
 
+        _fields.paramName = _randomParams.GetRandomParamName();
 
-    // void IDefaultMeasureUnit.ValidateMeasureUnit(Enum? measureUnit, string paramName)
+        // Act
+        void attempt() => _baseRate.ValidateMeasureUnit(null, _fields.paramName);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
+        Assert.AreEqual(_fields.paramName, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ValidateMeasureUnit_invalidArg_Enum_arg_string_throws_InvalidEnumArgumentException()
+    {
+        // Arrange
+        SetBaseRateChild();
+
+        MeasureUnitCode[] measureUnitCodes = [_fields.GetMeasureUnitCode(), _fields.denominatorCode];
+        _fields.measureUnitCode = _randomParams.GetDifferentRandomMeasureUnitCode(measureUnitCodes);
+        _fields.measureUnit = _randomParams.GetRandomMeasureUnit(_fields.measureUnitCode);
+        _fields.paramName = _randomParams.GetRandomParamName();
+
+        // Act
+        void attempt() => _baseRate.ValidateMeasureUnit(_fields.measureUnit, _fields.paramName);
+
+        // Assert
+        var ex = Assert.ThrowsException<InvalidEnumArgumentException>(attempt);
+        Assert.AreEqual(_fields.paramName, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetBaseRateValidateMeasureUnitValidArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = DisplayName)]
+    public void ValidateMeasureUnit_validArg_Enum_arg_string_returns(string testCase, Enum numeratorMeasureUnit, MeasureUnitCode denominatorCode, Enum measureUnit)
+    {
+        // Arrange
+        SetBaseRateChild(numeratorMeasureUnit, _fields.defaultQuantity, denominatorCode);
+
+        // Act
+        void attempt() => _baseRate.ValidateMeasureUnit(measureUnit, _fields.paramName);
+
+        // Assert
+        Assert.IsTrue(DoesNotThrowException(attempt));
+    }
+    #endregion
+    #endregion
+
     // void IMeasureUnitCode.ValidateMeasureUnitCode(MeasureUnitCode measureUnitCode, string paramName)
     // void IMeasureUnitCodes.ValidateMeasureUnitCodes(IMeasureUnitCodes? measureUnitCodes, string paramName)
     // void IBaseQuantifiable.ValidateQuantity(Type? quantity, string paramName)
@@ -843,6 +893,11 @@ public sealed class BaseRateTests
     private static IEnumerable<object[]> GetProportionalToArgs()
     {
         return DynamicDataSource.GetProportionalToArgs();
+    }
+
+    private static IEnumerable<object[]> GetBaseRateValidateMeasureUnitValidArgs()
+    {
+        return DynamicDataSource.GetBaseRateValidateMeasureUnitValidArgs();
     }
     #endregion
 

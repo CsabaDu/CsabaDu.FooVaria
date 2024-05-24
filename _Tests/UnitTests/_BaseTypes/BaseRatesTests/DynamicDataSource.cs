@@ -415,15 +415,9 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #region Local methods
         MeasureUnitCode getDifferentRandomMeasureUnitCode()
         {
-            MeasureUnitCode numeratorCode = GetMeasureUnitCode();
-            MeasureUnitCode measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
+            MeasureUnitCode[] measureUnitCodes = [GetMeasureUnitCode(), denominatorCode];
 
-            while (measureUnitCode == numeratorCode || measureUnitCode == denominatorCode)
-            {
-                measureUnitCode = RandomParams.GetRandomMeasureUnitCode();
-            }
-
-            return measureUnitCode;
+            return RandomParams.GetDifferentRandomMeasureUnitCode(measureUnitCodes);
         }
         #endregion
     }
@@ -474,7 +468,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
     internal IEnumerable<object[]> GetIsValidRateComponentArgs()
     {
         measureUnit = RandomParams.GetRandomMeasureUnit();
-        denominatorCode = RandomParams.GetRandomMeasureUnitCode();
+        denominatorCode = RandomParams.GetRandomMeasureUnitCode(GetMeasureUnitCode());
 
         testCase = "null, RateComponentCode => false";
         rateComponentCode = RandomParams.GetRandomRateComponentCode();
@@ -553,6 +547,29 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         object[] argsToObjectArray()
         {
             TestCase_Enum_MeasureUnitCode_IBaseRate args = new(testCase, measureUnit, denominatorCode, baseRate);
+
+            return args.ToObjectArray();
+        }
+        #endregion
+    }
+
+    internal IEnumerable<object[]> GetBaseRateValidateMeasureUnitValidArgs()
+    {
+        measureUnit = RandomParams.GetRandomMeasureUnit();
+        denominatorCode = RandomParams.GetRandomMeasureUnitCode();
+
+        testCase = "Numerator-type MeasureUnit";
+        context = RandomParams.GetRandomMeasureUnit(GetMeasureUnitCode());
+        yield return argsToObjectArray();
+
+        testCase = "Denominator-type MeasureUnit";
+        context = RandomParams.GetRandomMeasureUnit(denominatorCode);
+        yield return argsToObjectArray();
+
+        #region argsToObjectArray method
+        object[] argsToObjectArray()
+        {
+            TestCase_Enum_MeasureUnitCode_Enum args = new(testCase, measureUnit, denominatorCode, context);
 
             return args.ToObjectArray();
         }

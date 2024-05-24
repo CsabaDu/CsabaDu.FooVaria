@@ -2,15 +2,15 @@
 
 public static class SampleParams
 {
-    internal static readonly IEnumerable<MeasureUnitCode> CustomMeasureUnitCodes = MeasureUnitCodes.Where(x => x.IsCustomMeasureUnitCode());
-    internal static readonly IEnumerable<MeasureUnitCode> ConstantMeasureUnitCodes = MeasureUnitCodes.Where(x => !x.IsCustomMeasureUnitCode());
-    internal static readonly IEnumerable<MeasureUnitCode> SpreadMeasureUnitCodes = MeasureUnitCodes.Where(x => x.IsSpreadMeasureUnitCode());
+    public static readonly IEnumerable<MeasureUnitCode> CustomMeasureUnitCodes = MeasureUnitCodes.Where(x => x.IsCustomMeasureUnitCode());
+    public static readonly IEnumerable<MeasureUnitCode> ConstantMeasureUnitCodes = MeasureUnitCodes.Where(x => !x.IsCustomMeasureUnitCode());
+    public static readonly IEnumerable<MeasureUnitCode> SpreadMeasureUnitCodes = MeasureUnitCodes.Where(x => x.IsSpreadMeasureUnitCode());
 
-    private static readonly int LimitModeCount = Enum.GetNames<LimitMode>().Length;
-    private static readonly int MeasureUnitCodeCount = MeasureUnitCodes.Length;
-    private static readonly int RoundingModeCount = Enum.GetNames<RoundingMode>().Length;
-    private static readonly int TypeCodeCount = Enum.GetNames<TypeCode>().Length;
-    private static readonly int RateComponentCodeCount = Enum.GetNames<RateComponentCode>().Length;
+    public static readonly int LimitModeCount = Enum.GetNames<LimitMode>().Length;
+    public static readonly int MeasureUnitCodeCount = MeasureUnitCodes.Length;
+    public static readonly int RoundingModeCount = Enum.GetNames<RoundingMode>().Length;
+    public static readonly int TypeCodeCount = Enum.GetNames<TypeCode>().Length;
+    public static readonly int RateComponentCodeCount = Enum.GetNames<RateComponentCode>().Length;
 
     public static readonly LimitMode NotDefinedLimitMode = (LimitMode)LimitModeCount;
     public static readonly MeasureUnitCode NotDefinedMeasureUnitCode = (MeasureUnitCode)MeasureUnitCodeCount;
