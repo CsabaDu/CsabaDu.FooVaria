@@ -404,7 +404,7 @@ public sealed class RandomParams
         return GetRandomMeasureUnit(measureUnitCode);
     }
 
-    public MeasureUnitCode GetDifferentRandomMeasureUnitCode(MeasureUnitCode[] measureUnitCodes)
+    public MeasureUnitCode GetRandomDifferentMeasureUnitCode(MeasureUnitCode[] measureUnitCodes)
     {
         MeasureUnitCode measureUnitCode = GetRandomMeasureUnitCode();
 

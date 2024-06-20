@@ -520,7 +520,7 @@ public sealed class BaseMeasureTests
         void attempt() => _baseMeasure.ValidateMeasureUnit(context, _fields.paramName);
 
         // Assert
-        Assert.IsTrue(DoesNotThrowException(attempt));
+        SupplementaryAssert.DoesNotThrowException(attempt);
     }
     #endregion
 
@@ -557,7 +557,7 @@ public sealed class BaseMeasureTests
         void attempt() => _baseMeasure.ValidateExchangeRate(_fields.decimalQuantity, _fields.paramName);
 
         // Assert
-        Assert.IsTrue(DoesNotThrowException(attempt));
+        SupplementaryAssert.DoesNotThrowException(attempt);
     }
     #endregion
     #endregion

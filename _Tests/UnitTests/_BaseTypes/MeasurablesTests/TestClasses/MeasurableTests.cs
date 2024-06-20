@@ -252,7 +252,7 @@ public sealed class MeasurableTests
         void attempt() => _measurable.ValidateMeasureUnit(measureUnit, _fields.paramName);
 
         // Assert
-        Assert.IsTrue(DoesNotThrowException(attempt));
+        SupplementaryAssert.DoesNotThrowException(attempt);
     }
     #endregion
     #endregion
@@ -302,7 +302,7 @@ public sealed class MeasurableTests
         void attempt() => _measurable.ValidateMeasureUnitCode(measurable, _fields.paramName);
 
         // Assert
-        Assert.IsTrue(DoesNotThrowException(attempt));
+        SupplementaryAssert.DoesNotThrowException(attempt);
     }
     #endregion
 
@@ -334,7 +334,7 @@ public sealed class MeasurableTests
         void attempt() => _measurable.ValidateMeasureUnitCode(_fields.measureUnitCode, _fields.paramName);
 
         // Assert
-        Assert.IsTrue(DoesNotThrowException(attempt));
+        SupplementaryAssert.DoesNotThrowException(attempt);
     }
     #endregion
     #endregion

@@ -364,7 +364,7 @@ public sealed class SpreadTests
         void attempt() => _spread.ValidateSpreadMeasure(_spreadMeasure, _fields.paramName);
 
         // Assert
-        Assert.IsTrue(DoesNotThrowException(attempt));
+        SupplementaryAssert.DoesNotThrowException(attempt);
     }
     #endregion
     #endregion

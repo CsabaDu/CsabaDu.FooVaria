@@ -19,31 +19,6 @@ public sealed class TestSupport
         }
     }
 
-    public static bool DoesNotThrowException(Action attempt)
-    {
-        try
-        {
-            attempt();
-            return true;
-        }
-        catch (Exception ex)
-        {
-            logThrownException(attempt, ex);
-            return false;
-        }
-
-        #region Local methods
-        static void logThrownException(Action attempt, Exception ex)
-        {
-            const string logFileName = nameof(DoesNotThrowException) + "_failed";
-
-            StartLog(BaseTypesLogDirectory, logFileName, attempt.Method.Name);
-            LogVariable(BaseTypesLogDirectory, logFileName, ex.GetType().Name, ex.Message);
-            EndLog(BaseTypesLogDirectory, logFileName);
-        }
-        #endregion
-    }
-
     public static bool SucceedsAsExpected(bool success, object obj)
     {
         return obj is not null == success;

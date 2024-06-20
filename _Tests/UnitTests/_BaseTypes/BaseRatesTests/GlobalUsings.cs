@@ -11,6 +11,7 @@ global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes;
 global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ObjectArrays;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.BaseQuantifiables;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Fakes.BaseTypes.BaseRates;
+global using CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Params;
 global using System.ComponentModel;
 global using System.Reflection;

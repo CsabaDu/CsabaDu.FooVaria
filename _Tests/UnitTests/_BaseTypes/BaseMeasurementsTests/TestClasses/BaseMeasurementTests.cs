@@ -1,3 +1,5 @@
+using CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods;
+
 namespace CsabaDu.FooVaria.Tests.UnitTests.BaseTypes.BaseMeasurementsTests.TestClasses;
 
 [TestClass, TestCategory("UnitTest")]
@@ -388,7 +390,7 @@ public sealed class BaseMeasurementTests
         void attempt() => _baseMeasurement.ValidateExchangeRate(exchangeRate, null);
 
         // Assert
-        Assert.IsTrue(DoesNotThrowException(attempt));
+        SupplementaryAssert.DoesNotThrowException(attempt);
     }
     #endregion
     #endregion
@@ -437,7 +439,7 @@ public sealed class BaseMeasurementTests
         void attempt() => _baseMeasurement.ValidateMeasureUnit(context, _fields.paramName);
 
         // Assert
-        Assert.IsTrue(DoesNotThrowException(attempt));
+        SupplementaryAssert.DoesNotThrowException(attempt);
     }
     #endregion
     #endregion

@@ -504,7 +504,7 @@ public sealed class ShapeTests
         void attempt() => _shape.ValidateMeasureUnit(otherMeasureUnit, _fields.paramName);
 
         // Assert
-        Assert.IsTrue(DoesNotThrowException(attempt));
+        SupplementaryAssert.DoesNotThrowException(attempt);
     }
     #endregion
     #endregion
@@ -574,7 +574,7 @@ public sealed class ShapeTests
         void attempt() => _shape.ValidateMeasureUnitCodes(_other, _fields.paramName);
 
         // Assert
-        Assert.IsTrue(DoesNotThrowException(attempt));
+        SupplementaryAssert.DoesNotThrowException(attempt);
     }
     #endregion
     #endregion
@@ -645,7 +645,7 @@ public sealed class ShapeTests
         void attempt() => _shape.ValidateShapeComponent(_quantifiable, _fields.paramName);
 
         // Assert
-        Assert.IsTrue(DoesNotThrowException(attempt));
+        SupplementaryAssert.DoesNotThrowException(attempt);
     }
 
     #endregion

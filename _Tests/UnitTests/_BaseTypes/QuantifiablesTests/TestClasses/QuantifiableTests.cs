@@ -532,7 +532,7 @@ public sealed class QuantifiableTests
         void attempt() => _quantifiable.ValidateMeasureUnitCode(_fields.measureUnitCode, _fields.paramName);
 
         // Assert
-        Assert.IsTrue(DoesNotThrowException(attempt));
+        SupplementaryAssert.DoesNotThrowException(attempt);
     }
     #endregion
     #endregion

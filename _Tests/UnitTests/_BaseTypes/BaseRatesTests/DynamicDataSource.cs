@@ -391,7 +391,7 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         yield return argsToObjectArray();
 
         testCase = "Not contained MeasureUnitCode => false";
-        measureUnitCode = getDifferentRandomMeasureUnitCode();
+        measureUnitCode = getRandomDifferentMeasureUnitCode();
         yield return argsToObjectArray();
 
         testCase = "Numerator MeasureUnitCode => true";
@@ -413,11 +413,11 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #endregion
 
         #region Local methods
-        MeasureUnitCode getDifferentRandomMeasureUnitCode()
+        MeasureUnitCode getRandomDifferentMeasureUnitCode()
         {
             MeasureUnitCode[] measureUnitCodes = [GetMeasureUnitCode(), denominatorCode];
 
-            return RandomParams.GetDifferentRandomMeasureUnitCode(measureUnitCodes);
+            return RandomParams.GetRandomDifferentMeasureUnitCode(measureUnitCodes);
         }
         #endregion
     }
@@ -553,6 +553,34 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #endregion
     }
 
+    internal IEnumerable<object[]> GetBaseRateValidateMeasureUnitInvalidArgs()
+    {
+        measureUnit = RandomParams.GetRandomMeasureUnit();
+        measureUnitCode = GetMeasureUnitCode();
+        denominatorCode = RandomParams.GetRandomMeasureUnitCode();
+
+        testCase = "Numerator-type invalid MeasureUnit";
+        context = SampleParams.GetNotDefinedMeasureUnit(measureUnitCode);
+        yield return argsToObjectArray();
+
+        testCase = "Denominator-type invalid MeasureUnit";
+        context = SampleParams.GetNotDefinedMeasureUnit(denominatorCode);
+        yield return argsToObjectArray();
+
+        testCase = "Different type MeasureUnit";
+        context = RandomParams.GetRandomDifferentMeasureUnitCode([measureUnitCode, denominatorCode]);
+        yield return argsToObjectArray();
+
+        #region argsToObjectArray method
+        object[] argsToObjectArray()
+        {
+            TestCase_Enum_MeasureUnitCode_Enum args = new(testCase, measureUnit, denominatorCode, context);
+
+            return args.ToObjectArray();
+        }
+        #endregion
+    }
+
     internal IEnumerable<object[]> GetBaseRateValidateMeasureUnitValidArgs()
     {
         measureUnit = RandomParams.GetRandomMeasureUnit();
@@ -576,10 +604,25 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
         #endregion
     }
 
+    internal IEnumerable<object[]> GetBaseRateValidateMeasureUnitCodeValidArgs()
+    {
+
+        yield return argsToObjectArray();
+
+        #region argsToObjectArray method
+        object[] argsToObjectArray()
+        {
+            TestCase_Enum_MeasureUnitCode_MeasureUnitCode args = new(testCase, measureUnit, denominatorCode, measureUnitCode);
+
+            return args.ToObjectArray();
+        }
+        #endregion
+    }
+
     #region Private methods
     private IEnumerable<object[]> GetGetQuantityArgs(IEnumerable<TypeCode> typeCodes)
     {
-        foreach (var item in typeCodes)
+        foreach (TypeCode item in typeCodes)
         {
             testCase = GetEnumName(item);
             TestCase_TypeCode args = new(testCase, item);
