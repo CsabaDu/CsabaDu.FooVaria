@@ -8,10 +8,10 @@ public sealed class BaseMeasurementTests
     #region Tested in parent classes' tests
 
     // BaseMeasurement(IRootObject rootObject, string paramName)
-    // Enum IMeasureUnit.GetBaseMeasureUnitValue()
+    // Enum IMeasureUnit.GetBaseMeasureUnitReturnValue()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
-    // IFactory ICommonBase.GetFactoryValue()
+    // IFactory ICommonBase.GetFactoryReturnValue()
     // RateComponentCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()
     // void IMeasurable.ValidateMeasureUnitCode(IMeasurable measurable, string paramName)
@@ -146,7 +146,7 @@ public sealed class BaseMeasurementTests
     public void GetBaseMeasurement_arg_creates()
     {
         // Arrange
-        SetBaseMeasurementChild(_fields.measureUnit, new TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementFactoryObject());
+        SetBaseMeasurementChild(_fields.measureUnit, new TestHelpers.TestDoubles.BaseTypes.BaseMeasurements.BaseMeasurementFactoryObject());
         _fields.measureUnit = _randomParams.GetRandomMeasureUnitOrMeasureUnitCode();
 
         // Act
@@ -316,7 +316,7 @@ public sealed class BaseMeasurementTests
     {
         // Arrange
         SetBaseMeasurementChild();
-        TestHelpers.Fakes.BaseTypes.BaseMeasurements.BaseMeasurementChild other = null;
+        TestHelpers.TestDoubles.BaseTypes.BaseMeasurements.BaseMeasurementChild other = null;
 
         // Act
         void attempt() => _ = _baseMeasurement.ProportionalTo(other);

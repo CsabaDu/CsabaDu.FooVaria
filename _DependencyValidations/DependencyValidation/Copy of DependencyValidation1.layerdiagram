@@ -50,15 +50,15 @@
                 </reference>
               </references>
             </layer>
-            <layer Id="0a826354-0083-4555-b31c-aa78516540ba" name="Fakes">
+            <layer Id="0a826354-0083-4555-b31c-aa78516540ba" name="TestDoubles">
               <dependencyToLayers>
                 <dependencyFromLayerToLayer Id="5b58fd8d-70be-493d-a83a-19545f2dc694" direction="Forward">
                   <layerMoniker Id="8678772a-604a-490e-b3ba-c78acddc4341" />
                 </dependencyFromLayerToLayer>
               </dependencyToLayers>
               <references>
-                <reference Id="93426e46-fa54-4665-b8f6-0dc669fe834d" name="Fakes">
-                  <ArtifactNode Label="Fakes" Category="CodeSchema_Project" Id="(Assembly=../../_Tests/TestHelpers/Fakes/Fakes.csproj)">
+                <reference Id="93426e46-fa54-4665-b8f6-0dc669fe834d" name="TestDoubles">
+                  <ArtifactNode Label="TestDoubles" Category="CodeSchema_Project" Id="(Assembly=../../_Tests/TestHelpers/TestDoubles/TestDoubles.csproj)">
                     <Category Ref="File" />
                   </ArtifactNode>
                 </reference>

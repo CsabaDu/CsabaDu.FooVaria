@@ -606,7 +606,15 @@ internal sealed class DynamicDataSource : CommonDynamicDataSource
 
     internal IEnumerable<object[]> GetBaseRateValidateMeasureUnitCodeValidArgs()
     {
+        measureUnit = RandomParams.GetRandomConstantMeasureUnit();
 
+        testCase = "NumeratorCode";
+        measureUnitCode = GetMeasureUnitCode();
+        denominatorCode = RandomParams.GetRandomConstantMeasureUnitCode(measureUnitCode);
+        yield return argsToObjectArray();
+
+        testCase = "DenominatorCode";
+        measureUnitCode = denominatorCode;
         yield return argsToObjectArray();
 
         #region argsToObjectArray method

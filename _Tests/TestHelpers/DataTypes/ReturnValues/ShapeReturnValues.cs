@@ -2,6 +2,6 @@
 
 public class ShapeReturnValues : SpreadReturnValues
 {
-    public  IEnumerable<IShapeComponent> GetShapeComponentsValue {  get; set; }
+    public  IEnumerable<IShapeComponent> GetShapeComponentsReturnValue {  get; set; }
     public IShape GetBaseShapeValue {  get; set; }
 }

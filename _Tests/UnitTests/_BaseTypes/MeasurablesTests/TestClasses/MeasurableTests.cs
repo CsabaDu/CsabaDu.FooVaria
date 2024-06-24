@@ -6,7 +6,7 @@ public sealed class MeasurableTests
     #region Tested in parent classes' tests
 
     // Measurable(IRootObject rootObject, string paramName)
-    // IFactory ICommonBase.GetFactoryValue()
+    // IFactory ICommonBase.GetFactoryReturnValue()
 
     #endregion
 

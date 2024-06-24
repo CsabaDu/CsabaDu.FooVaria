@@ -2,5 +2,5 @@
 
 public class BaseQuantifiableReturnValues : MeasurableReturnValues
 {
-    public decimal GetDefaultQuantityValue { get; set; }
+    public decimal GetDefaultQuantityReturnValue { get; set; }
 }

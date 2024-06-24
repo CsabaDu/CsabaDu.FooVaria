@@ -2,6 +2,6 @@
 
 public class BaseMeasureReturnValues : CommonBaseReturnValues
 {
-    public ValueType GetBaseQuantityValue {  get; set; }
-    public IBaseMeasurement GetBaseMeasurementValue { get; set; }
+    public ValueType GetBaseQuantityReturnValue {  get; set; }
+    public IBaseMeasurement GetBaseMeasurementReturnValue { get; set; }
 }

@@ -59,7 +59,7 @@ public sealed class CommonBaseTests
         {
             ReturnValues = new()
             {
-                GetFactoryValue = new FactoryObject(),
+                GetFactoryReturnValue = new FactoryObject(),
             }
         };
 

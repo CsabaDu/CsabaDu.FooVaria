@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods;
 
-public class SupplementaryAssert
+public sealed class SupplementaryAssert
 {
     public static void DoesNotThrowException(Action attempt)
     {
@@ -24,12 +24,12 @@ public class SupplementaryAssert
             }
         }
 
-        static void logCaughtException(Action attempt, Exception ex)
+        static void logCaughtException(Action attempt, Exception caughtException)
         {
             const string logFileName = nameof(DoesNotThrowException) + "_failed";
 
             StartLog(BaseTypesLogDirectory, logFileName, attempt.Method.Name);
-            LogVariable(BaseTypesLogDirectory, logFileName, ex.GetType().Name, ex.Message);
+            LogVariable(BaseTypesLogDirectory, logFileName, caughtException.GetType().Name, caughtException.Message);
             EndLog(BaseTypesLogDirectory, logFileName);
         }
         #endregion

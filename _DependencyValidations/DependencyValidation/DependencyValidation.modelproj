@@ -45,8 +45,8 @@
     </Validate>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\_Tests\TestHelpers\Fakes\Fakes.csproj">
-      <Name>Fakes</Name>
+    <ProjectReference Include="..\..\_Tests\TestHelpers\Fakes\TestDoubles.csproj">
+      <Name>TestDoubles</Name>
       <Project>{449ba328-447e-4b67-923e-6c79406a63d4}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\_Tests\UnitTests\_BaseTypes\BaseMeasurementsTests\BaseMeasurementsTests.csproj">

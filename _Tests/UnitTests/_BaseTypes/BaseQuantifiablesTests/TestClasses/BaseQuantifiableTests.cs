@@ -6,10 +6,10 @@ public sealed class BaseQuantifiableTests
     #region Tested in parent classes' tests
 
     // BaseQuantifiable(IRootObject rootObject, string paramName)
-    // Enum IMeasureUnit.GetBaseMeasureUnitValue()
+    // Enum IMeasureUnit.GetBaseMeasureUnitReturnValue()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
-    // IFactory ICommonBase.GetFactoryValue()
+    // IFactory ICommonBase.GetFactoryReturnValue()
     // RateComponentCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()
     // TypeCode IQuantityType.GetQuantityTypeCode()

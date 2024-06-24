@@ -46,7 +46,7 @@
 
 //    // int IComparable<IBaseMeasurement>.CompareTo(IBaseMeasurement? other)
 //    // bool IEquatable<IBaseMeasurement>.Equals(IBaseMeasurement other)
-//    // IBaseMeasurement IBaseMeasurement.GetBaseMeasurementValue(Enum context)
+//    // IBaseMeasurement IBaseMeasurement.GetBaseMeasurementReturnValue(Enum context)
 //    // IDictionary<object, decimal> IConstantExchangeRateCollection.GetConstantExchangeRateCollection()
 //    // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
 //    // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
@@ -65,20 +65,20 @@
 //    #endregion
 
 //    // Measurement(IMeasurementFactory factory, Enum measureUnit)
-//    // Enum IMeasureUnit.GetBaseMeasureUnitValue()
+//    // Enum IMeasureUnit.GetBaseMeasureUnitReturnValue()
 //    // string? ICustomNameCollection.GetCustomName()
 //    // IDictionary<object, string> ICustomNameCollection.GetCustomNameCollection()
 //    // IMeasurement IDefaultMeasurable<IMeasurement>.GetDefault()
 //    // IMeasurable? IDefaultMeasurable.GetDefault(RateComponentCode measureUnitCode)
 //    // string IMeasureUnitCollection.GetDefaultName()
-//    // IFactory ICommonBase.GetFactoryValue()
+//    // IFactory ICommonBase.GetFactoryReturnValue()
 //    // IMeasurement IMeasurement.GetMeasurement(Enum measureUnit)
 //    // IMeasurement IMeasurement.GetMeasurement(IMeasurement other)
 //    // IMeasurement? IMeasurement.GetMeasurement(string customName, RateComponentCode measureUnitCode, decimal decimalQuantity)
 //    // IMeasurement? IMeasurement.GetMeasurement(Enum measureUnit, decimal decimalQuantity, string customName)
 //    // IMeasurement IMeasurement.GetMeasurement(string name)
 //    // RateComponentCode IMeasureUnitCode.GetMeasureUnitCode()
-//    // string INamed.GetNameValue()
+//    // string INamed.GetNameReturnValue()
 //    // void ICustomNameCollection.SetCustomName(string customName)
 //    // void ICustomNameCollection.SetOrReplaceCustomName(string customName)
 //    // bool IMeasurement.TryGetMeasurement(decimal decimalQuantity, out IMeasurement? measurement)
@@ -93,9 +93,9 @@
 //    //    {
 //    //        ReturnValues = new()
 //    //        {
-//    //            GetBaseMeasureUnitValue = measureUnit,
-//    //            GetFactoryValue = factory,
-//    //            GetNameValue = measureUnitName,
+//    //            GetBaseMeasureUnitReturnValue = measureUnit,
+//    //            GetFactoryReturnValue = factory,
+//    //            GetNameReturnValue = measureUnitName,
 //    //        }
 //    //    };
 //    //}

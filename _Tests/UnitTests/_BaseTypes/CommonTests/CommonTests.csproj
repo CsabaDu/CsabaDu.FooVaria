@@ -33,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\TestHelpers\Fakes\Fakes.csproj" />
+    <ProjectReference Include="..\..\..\TestHelpers\TestDoubles\TestDoubles.csproj" />
   </ItemGroup>
 
 </Project>

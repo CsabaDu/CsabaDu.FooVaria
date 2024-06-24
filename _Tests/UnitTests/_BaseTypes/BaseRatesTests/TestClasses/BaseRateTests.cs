@@ -829,9 +829,12 @@ public sealed class BaseRateTests
     #endregion
     #endregion
 
+    #region void ValidateMeasureUnitCodes
+    #region IMeasureUnitCodes.ValidateMeasureUnitCodes(IMeasureUnitCodes?, string)
 
+    #endregion
+    #endregion
 
-    // void IMeasureUnitCodes.ValidateMeasureUnitCodes(IMeasureUnitCodes? measureUnitCodes, string paramName)
     // void IBaseQuantifiable.ValidateQuantity(Type? quantity, string paramName)
     // void IBaseRate.ValidateRateComponentCode(RateComponentCode rateComponentCode, string paramName)
 

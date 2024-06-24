@@ -4,6 +4,6 @@
     {
         //internal static readonly DataFields Fields = new();
 
-        public IFactory GetFactoryValue { get; set; }
+        public IFactory GetFactoryReturnValue { get; set; }
     }
 }

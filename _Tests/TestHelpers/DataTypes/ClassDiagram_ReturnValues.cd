@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ReturnValues.BaseMeasurementReturnValues" Collapsed="true">
+    <Position X="1" Y="3.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ReturnValues\BaseMeasurementReturnValues.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ReturnValues.BaseMeasureReturnValues" Collapsed="true">
+    <Position X="6.25" Y="1.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAQ=</HashCode>
+      <FileName>ReturnValues\BaseMeasureReturnValues.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ReturnValues.BaseQuantifiableReturnValues" Collapsed="true">
+    <Position X="4.5" Y="3.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ReturnValues\BaseQuantifiableReturnValues.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ReturnValues.BaseRateReturnValues" Collapsed="true">
+    <Position X="3" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ReturnValues\BaseRateReturnValues.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ReturnValues.CommonBaseReturnValues" Collapsed="true">
+    <Position X="6.25" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ReturnValues\CommonBaseReturnValues.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ReturnValues.MeasurableReturnValues" Collapsed="true">
+    <Position X="3.25" Y="1.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>ReturnValues\MeasurableReturnValues.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ReturnValues.QuantifiableReturnValues" Collapsed="true">
+    <Position X="6" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ReturnValues\QuantifiableReturnValues.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ReturnValues.ShapeReturnValues" Collapsed="true">
+    <Position X="9.5" Y="3.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>ReturnValues\ShapeReturnValues.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ReturnValues.SpreadReturnValues" Collapsed="true">
+    <Position X="9.5" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ReturnValues\SpreadReturnValues.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

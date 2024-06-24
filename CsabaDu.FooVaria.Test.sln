@@ -54,7 +54,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shapes", "_BaseTypes\Shapes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShapesTests", "_Tests\UnitTests\_BaseTypes\ShapesTests\ShapesTests.csproj", "{C686B72B-6D92-4D4F-81AC-1AD520821CB8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fakes", "_Tests\TestHelpers\Fakes\Fakes.csproj", "{449BA328-447E-4B67-923E-6C79406A63D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestDoubles", "_Tests\TestHelpers\TestDoubles\TestDoubles.csproj", "{449BA328-447E-4B67-923E-6C79406A63D4}"
 EndProject
 Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "DependencyValidation", "_DependencyValidations\DependencyValidation\DependencyValidation.modelproj", "{28850AE7-7C59-4167-AAB3-955163041567}"
 EndProject

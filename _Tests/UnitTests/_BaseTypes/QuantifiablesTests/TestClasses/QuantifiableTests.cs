@@ -6,11 +6,11 @@ public sealed class QuantifiableTests
     #region Tested in parent classes' tests
 
     // Shape(IRootObject rootObject, string paramName)
-    // Enum IMeasureUnit.GetBaseMeasureUnitValue()
+    // Enum IMeasureUnit.GetBaseMeasureUnitReturnValue()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
-    // decimal IDefaultQuantity.GetDefaultQuantityValue()
-    // IFactory ICommonBase.GetFactoryValue()
+    // decimal IDefaultQuantity.GetDefaultQuantityReturnValue()
+    // IFactory ICommonBase.GetFactoryReturnValue()
     // RateComponentCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()
     // TypeCode IQuantityType.GetQuantityTypeCode()

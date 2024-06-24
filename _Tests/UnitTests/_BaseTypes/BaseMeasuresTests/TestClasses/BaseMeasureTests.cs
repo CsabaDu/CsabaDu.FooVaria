@@ -9,11 +9,11 @@ public sealed class BaseMeasureTests
     // int IComparable<IQuantifiable>.CompareTo(IQuantifiable? other)
     // bool IEquatable<IQuantifiable>.Equals(IQuantifiable? other)
     // bool? IFit<IQuantifiable>.FitsIn(IQuantifiable? other, LimitMode? limitMode)
-    // ValueType IQuantity.GetBaseQuantityValue()
+    // ValueType IQuantity.GetBaseQuantityReturnValue()
     // decimal IDecimalQuantity.GetDecimalQuantity()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
-    // IFactory ICommonBase.GetFactoryValue()
+    // IFactory ICommonBase.GetFactoryReturnValue()
     // RateComponentCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()
     // IQuantifiable IQuantifiable.GetQuantifiable(RateComponentCode measureUnitCode, decimal quantity)
@@ -131,7 +131,7 @@ public sealed class BaseMeasureTests
         _fields.decimalQuantity = _randomParams.GetRandomDecimal();
         _fields.rateComponentCode = _randomParams.GetRandomRateComponentCode();
         _fields.limitMode = _randomParams.GetRandomLimitMode();
-        _limiter = TestHelpers.Fakes.BaseTypes.Quantifiables.LimiterQuantifiableObject.GetLimiterQuantifiableObject(_fields.limitMode.Value, _fields.measureUnit, _fields.decimalQuantity);
+        _limiter = TestHelpers.TestDoubles.BaseTypes.Quantifiables.LimiterQuantifiableObject.GetLimiterQuantifiableObject(_fields.limitMode.Value, _fields.measureUnit, _fields.decimalQuantity);
         _fields.decimalQuantity = (_limiter as IQuantifiable).GetDefaultQuantity();
         bool? expected = _fields.defaultQuantity.FitsIn(_fields.decimalQuantity, _fields.limitMode);
 

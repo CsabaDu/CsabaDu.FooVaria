@@ -2,5 +2,5 @@
 
 public class MeasurableReturnValues : CommonBaseReturnValues
 {
-    public Enum GetBaseMeasureUnitValue { get; set; }
+    public Enum GetBaseMeasureUnitReturnValue { get; set; }
 }
