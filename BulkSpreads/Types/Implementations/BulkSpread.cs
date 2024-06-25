@@ -314,7 +314,7 @@
         #region Private methods
         private IBulkSpreadFactory<TSelf, TSMeasure> GetBulkSpreadFactory()
         {
-            return (IBulkSpreadFactory<TSelf, TSMeasure>)GetFactory();
+            return (IBulkSpreadFactory<TSelf, TSMeasure>)Factory;
         }
         #endregion
     }
@@ -426,7 +426,7 @@
         #region Private methods
         private IBulkSpreadFactory<TSelf, TSMeasure, TEnum> GetBulkSpreadFactory()
         {
-            return (IBulkSpreadFactory<TSelf, TSMeasure, TEnum>)GetFactory();
+            return (IBulkSpreadFactory<TSelf, TSMeasure, TEnum>)Factory;
         }
         #endregion
     }

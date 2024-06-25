@@ -1,8 +1,10 @@
-﻿namespace CsabaDu.FooVaria.Measurements.Types;
+﻿using CsabaDu.FooVaria.BaseTypes.Common.Behaviors;
 
-public interface IMeasurement : IBaseMeasurement, IMeasureUnitCollection, ICustomNameCollection, IDefaultMeasurable<IMeasurement>
+namespace CsabaDu.FooVaria.Measurements.Types;
+
+public interface IMeasurement : IBaseMeasurement, IMeasureUnitCollection, ICustomNameCollection, IDefaultMeasurable<IMeasurement>, IGetFactory<IMeasurementFactory>
 {
-    IMeasurementFactory Factory { get; init; }
+    //IMeasurementFactory Factory { get; init; }
     object MeasureUnit { get; init; }
 
     IMeasurement GetMeasurement(Enum measureUnit);

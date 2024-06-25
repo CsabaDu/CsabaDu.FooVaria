@@ -37,7 +37,7 @@
                     : ShapeExtentCode.Length;
 
                 IExtent horizontal = dryBody.GetShapeExtent(perpendicular);
-                ICuboidFactory factory = (ICuboidFactory)dryBody.GetFactory();
+                ICuboidFactory factory = (ICuboidFactory)dryBody.Factory;
 
                 return createRectangle(factory, horizontal);
             }

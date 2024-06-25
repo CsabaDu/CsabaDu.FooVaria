@@ -1,9 +1,6 @@
-﻿using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;
-using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
-
-namespace CsabaDu.FooVaria.Measures.Types.Implementations
+﻿namespace CsabaDu.FooVaria.Measures.Types.Implementations
 {
-    internal abstract class Measure : BaseMeasure, IMeasure
+    internal abstract class Measure(IMeasureFactory factory) : BaseMeasure(factory, nameof(factory)), IMeasure
     {
         #region Enums
         protected enum MeasureOperationMode
@@ -14,14 +11,14 @@ namespace CsabaDu.FooVaria.Measures.Types.Implementations
         #endregion
 
         #region Constructors
-        private protected Measure(IMeasureFactory factory) : base(factory, nameof(factory))
-        {
-            Factory = factory;
-        }
+        //private protected Measure(IMeasureFactory factory) : base(factory, nameof(factory))
+        //{
+        //    //Factory = factory;
+        //}
         #endregion
 
         #region Properties
-        public IMeasureFactory Factory { get; init; }
+        //public IMeasureFactory Factory { get; init; }
         #endregion
 
         #region Public methods
@@ -39,27 +36,27 @@ namespace CsabaDu.FooVaria.Measures.Types.Implementations
 
         public IMeasure GetBaseMeasure(Enum measureUnit, ValueType quantity)
         {
-            return Factory.Create(measureUnit, quantity);
+            return GetFactory().Create(measureUnit, quantity);
         }
 
         public IMeasure GetBaseMeasure(string name, ValueType quantity)
         {
-            return Factory.Create(name, quantity);
+            return GetFactory().Create(name, quantity);
         }
 
         public IMeasure? GetBaseMeasure(Enum measureUnit, decimal exchangeRate, ValueType quantity, string customName)
         {
-            return Factory.Create(measureUnit, exchangeRate, quantity, customName);
+            return GetFactory().Create(measureUnit, exchangeRate, quantity, customName);
         }
 
         public IMeasure? GetBaseMeasure(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate, ValueType quantity)
         {
-            return Factory.Create(customName, measureUnitCode, exchangeRate, quantity);
+            return GetFactory().Create(customName, measureUnitCode, exchangeRate, quantity);
         }
 
         public IMeasure GetBaseMeasure(IBaseMeasure baseMeasure)
         {
-            return Factory.Create(baseMeasure);
+            return GetFactory().Create(baseMeasure);
         }
 
         public IMeasure Multiply(decimal multiplier)
@@ -76,12 +73,12 @@ namespace CsabaDu.FooVaria.Measures.Types.Implementations
         #region Sealed methods
         public override sealed IMeasurementFactory GetBaseMeasurementFactory()
         {
-            return Factory.MeasurementFactory;
+            return GetFactory().MeasurementFactory;
         }
 
-        public override sealed IMeasureFactory GetFactory()
+        public IMeasureFactory GetFactory()
         {
-            return Factory;
+            return (IMeasureFactory)Factory;
         }
 
         public override sealed LimitMode? GetLimitMode()
@@ -166,19 +163,19 @@ namespace CsabaDu.FooVaria.Measures.Types.Implementations
         #endregion
     }
 
-    internal abstract class Measure<TSelf, TNum> : Measure, IMeasure<TSelf, TNum>
+    internal abstract class Measure<TSelf, TNum>(IMeasureFactory factory, TNum quantity) : Measure(factory), IMeasure<TSelf, TNum>
         where TSelf : class, IMeasure
         where TNum : struct
     {
         #region Constructors
-        private protected Measure(IMeasureFactory factory, TNum quantity) : base(factory)
-        {
-            Quantity = quantity;
-        }
+        //private protected Measure(IMeasureFactory factory, TNum quantity) : base(factory)
+        //{
+        //    Quantity = quantity;
+        //}
         #endregion
 
         #region Properties
-        public TNum Quantity { get; init; }
+        public TNum Quantity { get; init; } = quantity;
         #endregion
 
         #region Public methods
@@ -191,17 +188,17 @@ namespace CsabaDu.FooVaria.Measures.Types.Implementations
 
         public TSelf GetMeasure(string name, TNum quantity)
         {
-            return (TSelf)Factory.Create(name, quantity);
+            return (TSelf)GetFactory().Create(name, quantity);
         }
 
         public TSelf GetMeasure(IMeasurement measurement, TNum quantity)
         {
-            return (TSelf)Factory.CreateBaseMeasure(measurement, quantity);
+            return (TSelf)GetFactory().CreateBaseMeasure(measurement, quantity);
         }
 
         public TSelf GetNew(TSelf other)
         {
-            return (TSelf)Factory.CreateNew(other);
+            return (TSelf)GetFactory().CreateNew(other);
         }
 
         public TNum GetQuantity()
@@ -218,7 +215,7 @@ namespace CsabaDu.FooVaria.Measures.Types.Implementations
         #endregion
     }
 
-    internal abstract class Measure<TSelf, TNum, TEnum> : Measure<TSelf, TNum>, IMeasure<TSelf, TNum, TEnum>
+    internal abstract class Measure<TSelf, TNum, TEnum>(IMeasureFactory factory, TEnum measureUnit, TNum quantity) : Measure<TSelf, TNum>(factory, quantity), IMeasure<TSelf, TNum, TEnum>
         where TSelf : class, IMeasure
         where TNum : struct
         where TEnum : struct, Enum
@@ -228,14 +225,14 @@ namespace CsabaDu.FooVaria.Measures.Types.Implementations
         #endregion
 
         #region Constructors
-        private protected Measure(IMeasureFactory factory, TEnum measureUnit, TNum quantity) : base(factory, quantity)
-        {
-            Measurement = GetBaseMeasurementFactory().Create(measureUnit);
-        }
+        //private protected Measure(IMeasureFactory factory, TEnum measureUnit, TNum quantity) : base(factory, quantity)
+        //{
+        //    Measurement = GetBaseMeasurementFactory().Create(measureUnit);
+        //}
         #endregion
 
         #region Properties
-        public IMeasurement Measurement { get; init; }
+        public IMeasurement Measurement { get; init; } = factory.MeasurementFactory.Create(measureUnit);
         #endregion
 
         #region Public methods

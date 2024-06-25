@@ -127,7 +127,7 @@ public abstract class SimpleRate : BaseRate, ISimpleRate
     #region Private methods
     private ISimpleRateFactory GetSimpleRateFactory()
     {
-        return (ISimpleRateFactory)GetFactory();
+        return (ISimpleRateFactory)Factory;
     }
 
     private MeasurementElements GetValidMeasurementElements(Enum context, RateComponentCode rateComponentCode, string paramName)

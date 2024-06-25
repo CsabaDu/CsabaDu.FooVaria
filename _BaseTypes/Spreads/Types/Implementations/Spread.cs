@@ -106,7 +106,7 @@ public abstract class Spread(IRootObject rootObject, string paramName) : Quantif
     #region Private methods
     private ISpreadFactory GetSpreadFactory()
     {
-        return (ISpreadFactory)GetFactory();
+        return (ISpreadFactory)Factory;
     }
     #endregion
 }

@@ -13,8 +13,6 @@
   </ItemGroup>
 
 <ItemGroup>
-    <Folder Include="Behaviors\" />
-    <Folder Include="Factories\" />
     <Folder Include="Types\Implementations\" />
     <Folder Include="_ClassDiagrams\" />
   </ItemGroup>

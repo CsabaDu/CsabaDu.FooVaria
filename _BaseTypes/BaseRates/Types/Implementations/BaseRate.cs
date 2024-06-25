@@ -242,7 +242,7 @@ public abstract class BaseRate(IRootObject rootObject, string paramName) : BaseQ
 
     private IBaseRateFactory GetBaseRateFactory()
     {
-        return (IBaseRateFactory)GetFactory();
+        return (IBaseRateFactory)Factory;
     }
     #endregion
 }

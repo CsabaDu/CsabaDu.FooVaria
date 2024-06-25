@@ -6,19 +6,19 @@ internal sealed class DryMass : Mass, IDryMass
     internal DryMass(IDryMass other) : base(other)
     {
         DryBody = other.DryBody;
-        Factory = other.Factory;
+        //Factory = other.Factory;
     }
 
     internal DryMass(IDryMassFactory factory, IWeight weight, IDryBody dryBody) : base(factory, weight)
     {
         DryBody = NullChecked(dryBody, nameof(dryBody));
-        Factory = factory;
+        //Factory = factory;
     }
 
     internal DryMass(IDryMassFactory factory, IWeight weight, params IExtent[] shapeExtents) : base(factory, weight)
     {
         DryBody = getDryBody();
-        Factory = factory;
+        //Factory = factory;
 
         #region Local methods
         IDryBody getDryBody()
@@ -41,7 +41,7 @@ internal sealed class DryMass : Mass, IDryMass
 
     #region Properties
     public IDryBody DryBody { get; init; }
-    public IDryMassFactory Factory { get; init; }
+    //public IDryMassFactory Factory { get; init; }
     #endregion
 
     #region Public methods
@@ -90,7 +90,7 @@ internal sealed class DryMass : Mass, IDryMass
 
     public override IDryBodyFactory GetBodyFactory()
     {
-        return (IDryBodyFactory)Factory.GetBodyFactory();
+        return (IDryBodyFactory)GetFactory().GetBodyFactory();
     }
 
     public IDryMass GetDryMass(IDryBody dryBody, IProportion density)
@@ -98,9 +98,9 @@ internal sealed class DryMass : Mass, IDryMass
         return (IDryMass)GetMass(dryBody, density);
     }
 
-    public override IDryMassFactory GetFactory()
+    public IDryMassFactory GetFactory()
     {
-        return Factory;
+        return (IDryMassFactory)Factory;
     }
 
     public override IEnumerable<MeasureUnitCode> GetMeasureUnitCodes()
@@ -132,22 +132,22 @@ internal sealed class DryMass : Mass, IDryMass
 
     public IDryMass GetDryMass(IWeight weight, IDryBody dryBody)
     {
-        return Factory.Create(weight, dryBody);
+        return GetFactory().Create(weight, dryBody);
     }
 
     public IDryMass GetDryMass(IWeight weight, IPlaneShape baseFace, IExtent height)
     {
-        return Factory.Create(weight, baseFace, height);
+        return GetFactory().Create(weight, baseFace, height);
     }
 
     public IDryMass GetDryMass(IWeight weight, params IExtent[] shapeExtents)
     {
-        return Factory.Create(weight, shapeExtents);
+        return GetFactory().Create(weight, shapeExtents);
     }
 
     public IDryMass GetNew(IDryMass other)
     {
-        return Factory.CreateNew(other);
+        return GetFactory().CreateNew(other);
     }
     #endregion
 }

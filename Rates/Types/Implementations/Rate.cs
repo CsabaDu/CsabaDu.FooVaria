@@ -76,14 +76,14 @@ internal abstract class Rate : BaseRate, IRate
 
     public IRate GetRate(params IBaseMeasure[] rateComponents)
     {
-        IRateFactory factory = (IRateFactory)GetFactory();
+        IRateFactory factory = (IRateFactory)Factory;
 
         return factory.Create(rateComponents);
     }
 
     public IBaseMeasure GetBaseMeasure(RateComponentCode rateComponentCode)
     {
-        return GetRateComponent(rateComponentCode) ?? throw InvalidRateComponentCodeArgumentException(rateComponentCode);
+        return GetRateComponent(rateComponentCode) ?? throw InvalidRateComponentCodeEnumArgumentException(rateComponentCode);
     }
 
     public bool IsExchangeableTo(Enum? context)

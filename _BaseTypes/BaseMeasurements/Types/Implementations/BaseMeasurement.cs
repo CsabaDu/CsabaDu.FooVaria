@@ -263,6 +263,14 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
 
         return new(measureUnit!, measureUnitCode, exchangeRate);
     }
+    public static Enum GetValidMeasureUnit(Enum measureUnit)
+    {
+        bool isValid = IsValidMeasureUnit(NullChecked(measureUnit, nameof(measureUnit)));
+
+        if (isValid) return measureUnit;
+
+        throw InvalidMeasureUnitEnumArgumentException(measureUnit);
+    }
 
     public static IEnumerable<object> GetValidMeasureUnits()
     {
@@ -375,7 +383,7 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
 
     public IBaseMeasurement? GetBaseMeasurement(Enum context)
     {
-        IBaseMeasurementFactory factory = (IBaseMeasurementFactory)GetFactory();
+        IBaseMeasurementFactory factory = (IBaseMeasurementFactory)Factory;
 
         return factory.CreateBaseMeasurement(context);
     }

@@ -1,8 +1,10 @@
-﻿namespace CsabaDu.FooVaria.BulkSpreads.Types;
+﻿using CsabaDu.FooVaria.BaseTypes.Common.Behaviors;
 
-public interface IBulkSurface : IBulkSpread<IBulkSurface, IArea, AreaUnit>, ISurface
+namespace CsabaDu.FooVaria.BulkSpreads.Types;
+
+public interface IBulkSurface : IBulkSpread<IBulkSurface, IArea, AreaUnit>, ISurface, IGetFactory<IBulkSurfaceFactory>
 {
-    IBulkSurfaceFactory Factory { get; init; }
+    //IBulkSurfaceFactory Factory { get; init; }
 
     IBulkSurface GetBulkSurface(IExtent radius);
     IBulkSurface GetBulkSurface(IExtent length, IExtent width);

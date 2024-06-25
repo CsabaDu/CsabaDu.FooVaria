@@ -1,24 +1,21 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
-using System.Diagnostics.CodeAnalysis;
-
-namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations;
 
 internal sealed class BulkSurface : BulkSpread<IBulkSurface, IArea, AreaUnit>, IBulkSurface
 {
     #region Constructors
     internal BulkSurface(IBulkSurface other) : base(other)
     {
-        Factory = other.Factory;
+        //Factory = other.Factory;
     }
 
     internal BulkSurface(IBulkSurfaceFactory factory, IArea area) : base(factory, area)
     {
-        Factory = factory;
+        //Factory = factory;
     }
     #endregion
 
     #region Properties
-    public IBulkSurfaceFactory Factory { get; init; }
+    //public IBulkSurfaceFactory Factory { get; init; }
     #endregion
 
     #region Public methods
@@ -38,9 +35,9 @@ internal sealed class BulkSurface : BulkSpread<IBulkSurface, IArea, AreaUnit>, I
     }
 
     #region Override methods
-    public override IBulkSurfaceFactory GetFactory()
+    public IBulkSurfaceFactory GetFactory()
     {
-        return Factory;
+        return (IBulkSurfaceFactory)Factory;
     }
 
     public override IBulkSurface GetBulkSpread(ISpread baseSppread)

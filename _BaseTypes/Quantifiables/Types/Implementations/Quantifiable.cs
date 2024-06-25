@@ -78,7 +78,7 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
 
     public IQuantifiable GetQuantifiable(MeasureUnitCode measureUnitCode, decimal defaultQuantity)
     {
-        IQuantifiableFactory factory = (IQuantifiableFactory)GetFactory();
+        IQuantifiableFactory factory = (IQuantifiableFactory)Factory;
 
         return factory.CreateQuantifiable(measureUnitCode, defaultQuantity);
     }

@@ -1,9 +1,11 @@
-﻿namespace CsabaDu.FooVaria.Masses.Types;
+﻿using CsabaDu.FooVaria.BaseTypes.Common.Behaviors;
 
-public interface IDryMass : IMass, ICommonBase<IDryMass>, IExchange<IDryMass, ExtentUnit>
+namespace CsabaDu.FooVaria.Masses.Types;
+
+public interface IDryMass : IMass, IGetNew<IDryMass>, IExchange<IDryMass, ExtentUnit>, IGetFactory<IDryMassFactory>
 {
     IDryBody DryBody { get; init; }
-    IDryMassFactory Factory { get; init; }
+    //IDryMassFactory Factory { get; init; }
 
     IDryMass GetDryMass(IWeight weight, IDryBody dryBody);
     IDryMass GetDryMass(IWeight weight, IPlaneShape baseFace, IExtent height);

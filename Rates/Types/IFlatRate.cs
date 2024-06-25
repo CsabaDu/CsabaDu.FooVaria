@@ -1,8 +1,10 @@
-﻿namespace CsabaDu.FooVaria.Rates.Types;
+﻿using CsabaDu.FooVaria.BaseTypes.Common.Behaviors;
 
-public interface IFlatRate : IRate, ICalculate<IFlatRate, decimal>, ICommonBase<IFlatRate>
+namespace CsabaDu.FooVaria.Rates.Types;
+
+public interface IFlatRate : IRate, ICalculate<IFlatRate, decimal>, IGetNew<IFlatRate>, IGetFactory<IFlatRateFactory>
 {
-    IFlatRateFactory Factory { get; init; }
+    //IFlatRateFactory Factory { get; init; }
 
     IFlatRate GetFlatRate(IMeasure numerator, string name, ValueType quantity);
     IFlatRate GetFlatRate(IMeasure numerator, string name);

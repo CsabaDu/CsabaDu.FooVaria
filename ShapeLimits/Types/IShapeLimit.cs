@@ -1,10 +1,12 @@
-﻿namespace CsabaDu.FooVaria.ShapeLimits.Types;
+﻿using CsabaDu.FooVaria.BaseTypes.Common.Behaviors;
 
-public interface IShapeLimit : IShape, ILimiter<IShapeLimit, IShape>, ICommonBase<IShapeLimit>
+namespace CsabaDu.FooVaria.ShapeLimits.Types;
+
+public interface IShapeLimit : IShape, ILimiter<IShapeLimit, IShape>, IGetNew<IShapeLimit>, IGetFactory<IShapeLimitFactory>
 {
     LimitMode LimitMode { get; init; }
     ISimpleShape SimpleShape { get; init; }
-    IShapeLimitFactory Factory { get; init; }
+    //IShapeLimitFactory Factory { get; init; }
 
     IShapeLimit GetShapeLimit(ISimpleShape simpleShape, LimitMode limitMode);
     IShapeLimit? GetShapeLimit(LimitMode limitMode, params IShapeComponent[] shapeComponents);

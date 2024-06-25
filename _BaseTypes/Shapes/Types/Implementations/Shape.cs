@@ -77,7 +77,7 @@ public abstract class Shape(IRootObject rootObject, string paramName) : Spread(r
 
     public IShape? GetShape(params IShapeComponent[] shapeComponents)
     {
-        IShapeFactory factory = (IShapeFactory)GetFactory();
+        IShapeFactory factory = (IShapeFactory)Factory;
 
         return factory.CreateShape(shapeComponents);
     }

@@ -142,7 +142,7 @@ public abstract class BaseMeasure(IRootObject rootObject, string paramName) : Qu
     #region Private methods
     private IBaseMeasureFactory GetBaseMeasureFactory()
     {
-        return (IBaseMeasureFactory)GetFactory();
+        return (IBaseMeasureFactory)Factory;
     }
 
     #region Static methods

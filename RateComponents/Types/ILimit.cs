@@ -1,8 +1,10 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Types;
+﻿using CsabaDu.FooVaria.BaseTypes.Common.Behaviors;
 
-public interface ILimit : IRateComponent<ILimit, ulong>, ILimiter<ILimit, IBaseMeasure>
+namespace CsabaDu.FooVaria.RateComponents.Types;
+
+public interface ILimit : IRateComponent<ILimit, ulong>, ILimiter<ILimit, IBaseMeasure>, IGetFactory<ILimitFactory>
 {
-    ILimitFactory Factory { get; init; }
+    //ILimitFactory Factory { get; init; }
     LimitMode LimitMode { get; init; }
 
     ILimit GetLimit(string name, ValueType quantity, LimitMode limitMode);

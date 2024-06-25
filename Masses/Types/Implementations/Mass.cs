@@ -347,7 +347,7 @@ internal abstract class Mass : BaseQuantifiable, IMass
 
     private IMassFactory GetMassFactory()
     {
-        return (IMassFactory)GetFactory();
+        return (IMassFactory)Factory;
     }
 
     private bool IsWeightNotLess(IWeight volumeWeight)

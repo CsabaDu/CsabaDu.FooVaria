@@ -1,6 +1,7 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.Common.Behaviors;
-
-public interface INamed
+﻿namespace CsabaDu.FooVaria.BaseTypes.Common.Behaviors
 {
-    string GetName();
+    public interface INamed
+    {
+        string GetName();
+    }
 }

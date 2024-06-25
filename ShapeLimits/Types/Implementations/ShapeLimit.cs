@@ -6,7 +6,7 @@ public sealed class ShapeLimit : Shape, IShapeLimit
     {
         SimpleShape = other.SimpleShape;
         LimitMode = other.LimitMode;
-        Factory = other.Factory;
+        //Factory = other.Factory;
     }
 
     internal ShapeLimit(IShapeLimitFactory factory, ISimpleShape simpleShape, LimitMode limitMode) : base(factory, nameof(factory))
@@ -15,12 +15,12 @@ public sealed class ShapeLimit : Shape, IShapeLimit
 
         SimpleShape = simpleShape;
         LimitMode = Defined(limitMode, nameof(limitMode));
-        Factory = factory;
+        //Factory = factory;
     }
 
     public LimitMode LimitMode { get; init; }
     public ISimpleShape SimpleShape { get; init; }
-    public IShapeLimitFactory Factory { get; init; }
+    //public IShapeLimitFactory Factory { get; init; }
 
     public IExtent? this[ShapeExtentCode shapeExtentCode] => SimpleShape[shapeExtentCode];
 
@@ -46,17 +46,17 @@ public sealed class ShapeLimit : Shape, IShapeLimit
 
     public IShapeLimit GetNew(IShapeLimit other)
     {
-        return Factory.CreateNew(other);
+        return GetFactory().CreateNew(other);
     }
 
     public IShapeLimit GetShapeLimit(ISimpleShape simpleShape, LimitMode limitMode)
     {
-        return Factory.Create(simpleShape, limitMode);
+        return GetFactory().Create(simpleShape, limitMode);
     }
 
     public IShapeLimit? GetShapeLimit(LimitMode limitMode, params IShapeComponent[] shapeComponents)
     {
-        return Factory.Create(limitMode, shapeComponents);
+        return GetFactory().Create(limitMode, shapeComponents);
     }
     public bool? Includes(IShape? limitable)
     {
@@ -67,21 +67,21 @@ public sealed class ShapeLimit : Shape, IShapeLimit
 
     public ISimpleShapeFactory GetSimpleShapeFactory()
     {
-        return (ISimpleShapeFactory)SimpleShape.GetFactory();
+        return (ISimpleShapeFactory)SimpleShape.Factory;
     }
 
     public void ValidateSimpleShape(ISimpleShape? simpleShape, string paramName)
     {
-        IFactory factory = NullChecked(simpleShape, nameof(simpleShape)).GetFactory();
+        IFactory factory = NullChecked(simpleShape, nameof(simpleShape)).Factory;
 
         if (GetSimpleShapeFactory().Equals(factory)) return;
 
         throw ArgumentTypeOutOfRangeException(paramName, simpleShape!);
     }
 
-    public override IShapeLimitFactory GetFactory()
+    public IShapeLimitFactory GetFactory()
     {
-        return Factory;
+        return (IShapeLimitFactory)Factory;
     }
 
     public override Enum GetBaseMeasureUnit()

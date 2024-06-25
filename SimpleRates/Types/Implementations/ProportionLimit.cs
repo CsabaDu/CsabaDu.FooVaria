@@ -6,19 +6,19 @@ internal sealed class ProportionLimit : SimpleRate, IProportionLimit
     internal ProportionLimit(IProportionLimitFactory factory, MeasureUnitCode numeratorCode, decimal defaultQuantity, MeasureUnitCode denominatorCode, LimitMode limitMode) : base(factory, numeratorCode, defaultQuantity, denominatorCode)
     {
         LimitMode = Defined(limitMode, nameof(limitMode));
-        Factory = factory;
+        //Factory = factory;
     }
 
     internal ProportionLimit(IProportionLimitFactory factory, IBaseRate baseRate, LimitMode limitMode) : base(factory, baseRate)
     {
         LimitMode = Defined(limitMode, nameof(limitMode));
-        Factory = factory;
+        //Factory = factory;
     }
     #endregion
 
     #region Properties
     public LimitMode LimitMode { get; init; }
-    public IProportionLimitFactory Factory { get; init; }
+    //public IProportionLimitFactory Factory { get; init; }
     #endregion
 
     #region Public methods
@@ -39,27 +39,27 @@ internal sealed class ProportionLimit : SimpleRate, IProportionLimit
 
     public IProportionLimit GetProportionLimit(IBaseRate baseRate, LimitMode limitMode)
     {
-        return Factory.Create(baseRate, limitMode);
+        return GetFactory().Create(baseRate, limitMode);
     }
 
     public IProportionLimit GetProportionLimit(Enum numeratorMeasureUnit, decimal quantity, Enum denominatorMeasureUnit, LimitMode limitMode)
     {
-        return Factory.Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit, limitMode);
+        return GetFactory().Create(numeratorMeasureUnit, quantity, denominatorMeasureUnit, limitMode);
     }
 
     public IProportionLimit GetProportionLimit(IQuantifiable numerator, IQuantifiable denominator, LimitMode limitMode)
     {
-        return Factory.Create(numerator, denominator, limitMode);
+        return GetFactory().Create(numerator, denominator, limitMode);
     }
 
     public IProportionLimit GetProportionLimit(IQuantifiable numerator, IBaseMeasurement denominatorMeasurement, LimitMode limitMode)
     {
-        return Factory.Create(numerator, denominatorMeasurement, limitMode);
+        return GetFactory().Create(numerator, denominatorMeasurement, limitMode);
     }
 
     public IProportionLimit GetProportionLimit(IQuantifiable numerator, Enum denominatorContext, LimitMode limitMode)
     {
-        return Factory.Create(numerator, denominatorContext, limitMode);
+        return GetFactory().Create(numerator, denominatorContext, limitMode);
     }
 
     public bool? Includes(IBaseRate? limitable)
@@ -70,9 +70,9 @@ internal sealed class ProportionLimit : SimpleRate, IProportionLimit
     }
 
     #region Override methods
-    public override IProportionLimitFactory GetFactory()
+    public IProportionLimitFactory GetFactory()
     {
-        return Factory;
+        return (IProportionLimitFactory)Factory;
     }
     #endregion
     #endregion

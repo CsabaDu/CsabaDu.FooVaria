@@ -1,20 +1,19 @@
 ﻿namespace CsabaDu.FooVaria.Measurements.Types.Implementations;
 
-internal abstract class Measurement : BaseMeasurement, IMeasurement
+internal abstract class Measurement(IMeasurementFactory factory, Enum measureUnit) : BaseMeasurement(factory, nameof(factory)), IMeasurement
 {
     #region Constructors
-    private protected Measurement(IMeasurementFactory factory, Enum measureUnit) : base(factory, nameof(factory))
-    {
-        ValidateMeasureUnit(measureUnit, nameof(measureUnit));
+    //private protected Measurement(IMeasurementFactory factory, Enum measureUnit) : base(factory, nameof(factory))
+    //{
+    //    ValidateMeasureUnit(measureUnit, nameof(measureUnit));
 
-        MeasureUnit = measureUnit;
-        Factory = factory;
-    }
+    //    MeasureUnit = measureUnit;
+    //}
     #endregion
 
     #region Properties
-    public IMeasurementFactory Factory { get; init; }
-    public object MeasureUnit { get; init; }
+    //public IMeasurementFactory Factory { get; init; }
+    public object MeasureUnit { get; init; } = GetValidMeasureUnit(measureUnit);
     #endregion
 
     #region Public methods
@@ -26,9 +25,9 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
         return (Enum)MeasureUnit;
     }
 
-    public override sealed IMeasurementFactory GetFactory()
+    public IMeasurementFactory GetFactory()
     {
-        return Factory;
+        return (IMeasurementFactory)Factory;
     }
 
     //public override sealed RateComponentCode GetMeasureUnitCode()
@@ -64,7 +63,7 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
 
     public IMeasurable? GetDefault(MeasureUnitCode measureUnitCode)
     {
-        return Factory.CreateDefault(measureUnitCode);
+        return GetFactory().CreateDefault(measureUnitCode);
     }
 
     public string GetDefaultName()
@@ -76,27 +75,27 @@ internal abstract class Measurement : BaseMeasurement, IMeasurement
 
     public IMeasurement GetMeasurement(Enum measureUnit)
     {
-        return Factory.Create(measureUnit);
+        return GetFactory().Create(measureUnit);
     }
 
     public IMeasurement GetMeasurement(IMeasurement other)
     {
-        return Factory.CreateNew(other);
+        return GetFactory().CreateNew(other);
     }
 
     public IMeasurement GetMeasurement(string name)
     {
-        return Factory.Create(name);
+        return GetFactory().Create(name);
     }
 
     public IMeasurement? GetMeasurement(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate)
     {
-        return Factory.Create(customName, measureUnitCode, exchangeRate);
+        return GetFactory().Create(customName, measureUnitCode, exchangeRate);
     }
 
     public IMeasurement? GetMeasurement(Enum measureUnit, decimal exchangeRate, string customName)
     {
-        return Factory.Create(measureUnit, exchangeRate, customName);
+        return GetFactory().Create(measureUnit, exchangeRate, customName);
     }
 
     public void SetCustomName(string customName)

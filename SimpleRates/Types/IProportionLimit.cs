@@ -1,9 +1,11 @@
-﻿namespace CsabaDu.FooVaria.SimpleRates.Types;
+﻿using CsabaDu.FooVaria.BaseTypes.Common.Behaviors;
 
-public interface IProportionLimit : ISimpleRate, ILimiter<IProportionLimit, IBaseRate>
+namespace CsabaDu.FooVaria.SimpleRates.Types;
+
+public interface IProportionLimit : ISimpleRate, ILimiter<IProportionLimit, IBaseRate>, IGetFactory<IProportionLimitFactory>
 {
     LimitMode LimitMode { get; init; }
-    IProportionLimitFactory Factory { get; init; }
+    //IProportionLimitFactory Factory { get; init; }
 
     IProportionLimit GetProportionLimit(IBaseRate baseRate, LimitMode limitMode);
     IProportionLimit GetProportionLimit(IQuantifiable numerator, IQuantifiable denominator, LimitMode limitMode);

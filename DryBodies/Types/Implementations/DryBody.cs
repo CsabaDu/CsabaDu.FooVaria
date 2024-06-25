@@ -110,7 +110,7 @@
         #region Private methods
         private IDryBodyFactory GetDryBodyFactory()
         {
-            return (IDryBodyFactory)GetFactory();
+            return (IDryBodyFactory)Factory;
         }
 
         public override sealed bool TryExchangeTo(Enum context, [NotNullWhen(true)] out IQuantifiable? exchanged)
@@ -161,7 +161,7 @@
         #region Public methods
         public TSelf GetDryBody(TBFace baseFace, IExtent height)
         {
-            IDryBodyFactory<TSelf, TBFace> factory = (IDryBodyFactory<TSelf, TBFace>)GetFactory();
+            IDryBodyFactory<TSelf, TBFace> factory = (IDryBodyFactory<TSelf, TBFace>)Factory;
 
             return factory.Create(baseFace, height);
         }

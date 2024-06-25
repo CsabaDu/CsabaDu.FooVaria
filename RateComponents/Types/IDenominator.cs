@@ -1,8 +1,10 @@
-﻿namespace CsabaDu.FooVaria.RateComponents.Types;
+﻿using CsabaDu.FooVaria.BaseTypes.Common.Behaviors;
 
-public interface IDenominator : IRateComponent<IDenominator, decimal>, IBaseMeasure<IDenominator>
+namespace CsabaDu.FooVaria.RateComponents.Types;
+
+public interface IDenominator : IRateComponent<IDenominator, decimal>, IBaseMeasure<IDenominator>, IGetFactory<IDenominatorFactory>
 {
-    IDenominatorFactory Factory { get; init; }
+    //IDenominatorFactory Factory { get; init; }
 
     IDenominator GetDenominator(Enum measureUnit);
     IDenominator GetDenominator(string name);

@@ -51,7 +51,7 @@ namespace CsabaDu.FooVaria.RateComponents.Types.Implementations
         #region Private methods
         private IRateComponentFactory GetRateComponentFactory()
         {
-            return (IRateComponentFactory)GetFactory();
+            return (IRateComponentFactory)Factory;
         }
         #endregion
     }

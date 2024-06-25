@@ -1,8 +1,10 @@
-﻿namespace CsabaDu.FooVaria.SimpleRates.Types;
+﻿using CsabaDu.FooVaria.BaseTypes.Common.Behaviors;
 
-public interface IProportion : ISimpleRate
+namespace CsabaDu.FooVaria.SimpleRates.Types;
+
+public interface IProportion : ISimpleRate, IGetFactory<IProportionFactory>
 {
-    IProportionFactory Factory { get; init; }
+    //IProportionFactory Factory { get; init; }
 
     IProportion GetProportion(IQuantifiable numerator, IQuantifiable denominator);
     IProportion GetProportion(IQuantifiable numerator, IBaseMeasurement denominator);
