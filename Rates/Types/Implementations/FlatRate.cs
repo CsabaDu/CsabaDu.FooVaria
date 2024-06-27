@@ -76,6 +76,11 @@ internal sealed class FlatRate : Rate, IFlatRate
         return GetFactory().CreateNew(other);
     }
 
+    public IFlatRate GetNew()
+    {
+        return GetNew(this);
+    }
+
     public IFlatRate Multiply(decimal multiplier)
     {
         IMeasure numerator = Numerator.Multiply(multiplier);

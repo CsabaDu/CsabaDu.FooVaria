@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.SimpleRates.Types;
 
-public interface IProportionLimit : ISimpleRate, ILimiter<IProportionLimit, IBaseRate>, IGetFactory<IProportionLimitFactory>
+public interface IProportionLimit : ISimpleRate, ILimiter<IProportionLimit, IBaseRate>, IConcreteFactory<IProportionLimitFactory>
 {
     LimitMode LimitMode { get; init; }
     //IProportionLimitFactory Factory { get; init; }

@@ -88,6 +88,11 @@ internal sealed class LimitedRate : Rate, ILimitedRate
         return GetFactory().CreateNew(other);
     }
 
+    public ILimitedRate GetNew()
+    {
+        return GetNew(this);
+    }
+
     public bool? Includes(IBaseMeasure? limitable)
     {
         return limitable is null ?

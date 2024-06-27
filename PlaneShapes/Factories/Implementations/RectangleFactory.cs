@@ -10,7 +10,15 @@ public sealed class RectangleFactory(IBulkSurfaceFactory bulkSpreadFactory, ICir
     #region Public methods
     public override IPlaneShape? CreateShape(params IShapeComponent[] shapeComponents)
     {
-        return CreatePlaneShape(this, shapeComponents);
+        int count = shapeComponents?.Length ?? 0;
+
+        return count switch
+        {
+            1 => CreatePlaneShape(GetTangentShapeFactory(), shapeComponents![0]),
+            2 => CreatePlaneShape(this, shapeComponents!),
+
+            _ => null,
+        };
     }
 
     public IRectangle Create(IExtent length, IExtent width)

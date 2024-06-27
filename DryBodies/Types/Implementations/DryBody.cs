@@ -28,7 +28,7 @@
 
         private protected DryBody(IDryBodyFactory factory, params IExtent[] shapeExtents) : base(factory)
         {
-            Height = shapeExtents.Last();
+            Height = shapeExtents[^1];
             Volume = (IVolume)GetSpreadMeasure(shapeExtents);
         }
         #endregion
@@ -164,6 +164,13 @@
             IDryBodyFactory<TSelf, TBFace> factory = (IDryBodyFactory<TSelf, TBFace>)Factory;
 
             return factory.Create(baseFace, height);
+        }
+
+        public TSelf GetNew()
+        {
+            TSelf other = (this as TSelf)!;
+
+            return GetNew(other);
         }
 
         #region Override methods

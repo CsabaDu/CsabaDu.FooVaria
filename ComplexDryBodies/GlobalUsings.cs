@@ -1,7 +1,4 @@
 ﻿namespace CsabaDu.FooVaria.ComplexDryBodies
 {
-    public class GlobalUsings
-    {
-
-    }
+    public class GlobalUsings;
 }

@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.RateComponents.Types;
 
-public interface ILimit : IRateComponent<ILimit, ulong>, ILimiter<ILimit, IBaseMeasure>, IGetFactory<ILimitFactory>
+public interface ILimit : IRateComponent<ILimit, ulong>, ILimiter<ILimit, IBaseMeasure>, IConcreteFactory<ILimitFactory>
 {
     //ILimitFactory Factory { get; init; }
     LimitMode LimitMode { get; init; }

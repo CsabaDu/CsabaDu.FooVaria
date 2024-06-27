@@ -75,7 +75,16 @@ public sealed class CuboidFactory(IBulkBodyFactory bulkSpreadFactory, IRectangle
 
     public override IDryBody? CreateShape(params IShapeComponent[] shapeComponents)
     {
-        return CreateDryBody(this, TangentShapeFactory, shapeComponents);
+        int count = shapeComponents?.Length ?? 0;
+
+        return count switch
+        {
+            1 => CreateDryBody(shapeComponents![0]),
+            2 => CreateDryBody(this, TangentShapeFactory, shapeComponents!),
+            3 => CreateDryBody(this, shapeComponents!),
+
+            _ => null,
+        };
     }
 
     public override IRectangleFactory GetBaseFaceFactory()

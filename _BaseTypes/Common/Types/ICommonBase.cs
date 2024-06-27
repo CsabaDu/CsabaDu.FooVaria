@@ -3,6 +3,4 @@
 public interface ICommonBase : IRootObject
 {
     IFactory Factory { get; init; }
-
-    //ICreateNew GetFactory();
 }

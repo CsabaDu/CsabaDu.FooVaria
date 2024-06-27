@@ -149,5 +149,10 @@ internal sealed class DryMass : Mass, IDryMass
     {
         return GetFactory().CreateNew(other);
     }
+
+    public IDryMass GetNew()
+    {
+        return GetNew(this);
+    }
     #endregion
 }

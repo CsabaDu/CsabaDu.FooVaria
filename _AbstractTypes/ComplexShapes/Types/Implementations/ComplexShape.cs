@@ -19,5 +19,4 @@ public abstract class ComplexShape : Shape, IComplexShape
     {
         return GetSimpleShape();
     }
-
 }

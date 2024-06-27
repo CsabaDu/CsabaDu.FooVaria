@@ -294,6 +294,13 @@
             return factory.CreateNew(other);
         }
 
+        public TSelf GetNew()
+        {
+            TSelf other = (this as TSelf)!;
+
+            return GetNew(other);
+        }
+
         public TSelf GetBulkSpread(TSMeasure spreadMeasure)
         {
             IBulkSpreadFactory<TSelf, TSMeasure> factory = GetBulkSpreadFactory();

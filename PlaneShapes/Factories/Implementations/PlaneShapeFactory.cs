@@ -19,41 +19,25 @@
 
         #region Protected methods
         #region Static methods
-        protected static IPlaneShape? CreatePlaneShape(IRectangleFactory rectangleFactory, params IShapeComponent[] shapeComponents)
+        protected static IPlaneShape? CreatePlaneShape(ICircleFactory circleFactory, IShapeComponent shapeComponent)
         {
-            int count = GetShapeComponentsCount(shapeComponents);
-
-            if (count == 0) return null;
-
-            IShapeComponent firstItem = shapeComponents[0];
-
-            return count switch
+            return shapeComponent switch
             {
-                1 => createPlaneSapeFrom1Param(),
-                2 => createPlaneSapeFrom2Params(),
+                Circle circle => circle.GetNew(),
+                Rectangle rectangle => rectangle.GetNew(),
+                IExtent radius => circleFactory.Create(radius),
 
                 _ => null,
             };
+        }
 
-            #region Local methods
-            IPlaneShape? createPlaneSapeFrom1Param()
-            {
-                if (firstItem is IRectangle rectangle) return rectangleFactory.CreateNew(rectangle);
+        protected static IPlaneShape? CreatePlaneShape(IRectangleFactory rectangleFactory, params IShapeComponent[] shapeComponents)
+        {
+            IEnumerable<IExtent>? shapeExtents = GetShapeExtents(shapeComponents);
 
-                if (firstItem is ICircle circle) return circle.GetNew(circle);
-
-                return null;
-            }
-
-            IPlaneShape? createPlaneSapeFrom2Params()
-            {
-                IEnumerable<IExtent>? shapeExtents = GetShapeExtents(shapeComponents);
-
-                return shapeExtents is not null ?
-                    rectangleFactory.Create(shapeExtents.First(), shapeExtents.Last())
-                    : null;
-            }
-            #endregion
+            return shapeExtents is not null ?
+                rectangleFactory.Create(shapeExtents.First(), shapeExtents.Last())
+                : null;
         }
         #endregion
         #endregion

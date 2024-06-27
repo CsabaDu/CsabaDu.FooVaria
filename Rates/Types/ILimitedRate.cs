@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.Rates.Types;
 
-public interface ILimitedRate : IRate, ILimiter<ILimitedRate, IBaseMeasure>, IGetNew<ILimitedRate>, IGetFactory<ILimitedRateFactory>
+public interface ILimitedRate : IRate, ILimiter<ILimitedRate, IBaseMeasure>, IDeepCopy<ILimitedRate>, IConcreteFactory<ILimitedRateFactory>
 {
     //ILimitedRateFactory Factory { get; init; }
     ILimit Limit { get; init; }

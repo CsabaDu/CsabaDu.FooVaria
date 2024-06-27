@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.Measurements.Types;
 
-public interface IMeasurement : IBaseMeasurement, IMeasureUnitCollection, ICustomNameCollection, IDefaultMeasurable<IMeasurement>, IGetFactory<IMeasurementFactory>
+public interface IMeasurement : IBaseMeasurement, IMeasureUnitCollection, ICustomNameCollection, IDefaultMeasurable<IMeasurement>, IConcreteFactory<IMeasurementFactory>
 {
     //IMeasurementFactory Factory { get; init; }
     object MeasureUnit { get; init; }

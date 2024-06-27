@@ -64,6 +64,11 @@ internal sealed class Limit(ILimitFactory factory, IMeasurement measurement, ulo
         return GetFactory().CreateNew(other);
     }
 
+    public ILimit GetNew()
+    {
+        return GetNew(this);
+    }
+
     public ulong GetQuantity()
     {
         return Quantity;

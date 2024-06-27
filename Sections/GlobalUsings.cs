@@ -1,7 +1,4 @@
 ﻿namespace CsabaDu.FooVaria.Sections
 {
-    public class GlobalUsings
-    {
-
-    }
+    public class GlobalUsings;
 }

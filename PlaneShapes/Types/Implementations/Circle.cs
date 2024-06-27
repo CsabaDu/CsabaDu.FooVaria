@@ -51,6 +51,11 @@ internal sealed class Circle : PlaneShape, ICircle
         return GetFactory().CreateNew(other);
     }
 
+    public ICircle GetNew()
+    {
+        return GetNew(this);
+    }
+
     public IExtent GetRadius()
     {
         return Radius;

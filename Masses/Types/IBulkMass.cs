@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.Masses.Types;
 
-public interface IBulkMass : IMass, IGetNew<IBulkMass>, IExchange<IBulkMass, VolumeUnit>, IGetFactory<IBulkMassFactory>
+public interface IBulkMass : IMass, IDeepCopy<IBulkMass>, IExchange<IBulkMass, VolumeUnit>, IConcreteFactory<IBulkMassFactory>
 {
     IBulkBody BulkBody { get; init; }
     //IBulkMassFactory Factory { get; init; }

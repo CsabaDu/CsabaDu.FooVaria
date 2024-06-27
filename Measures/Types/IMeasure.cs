@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Measures.Types
 {
-    public interface IMeasure : IBaseMeasure<IMeasure>, ICalculate<IMeasure, decimal>, IGetFactory<IMeasureFactory>
+    public interface IMeasure : IBaseMeasure<IMeasure>, ICalculate<IMeasure, decimal>, IConcreteFactory<IMeasureFactory>
     {
         //IMeasureFactory Factory { get; init; }
     }

@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.BulkSpreads.Types;
 
-public interface IBulkSurface : IBulkSpread<IBulkSurface, IArea, AreaUnit>, ISurface, IGetFactory<IBulkSurfaceFactory>
+public interface IBulkSurface : IBulkSpread<IBulkSurface, IArea, AreaUnit>, ISurface, IConcreteFactory<IBulkSurfaceFactory>
 {
     //IBulkSurfaceFactory Factory { get; init; }
 

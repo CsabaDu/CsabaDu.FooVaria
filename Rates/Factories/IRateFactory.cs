@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Rates.Factories;
 
-public interface IRateFactory : IBaseRateFactory, IFactory<IRate>
+public interface IRateFactory : IBaseRateFactory, IDeepCopyFactory<IRate>
 {
     IDenominatorFactory DenominatorFactory { get; init; }
 

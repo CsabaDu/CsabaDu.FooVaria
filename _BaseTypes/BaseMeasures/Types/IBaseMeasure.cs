@@ -34,7 +34,7 @@
         //#endregion
     }
 
-    public interface IBaseMeasure<TSelf, TNum> : IBaseMeasure, IQuantity<TNum>, IGetNew<TSelf>
+    public interface IBaseMeasure<TSelf, TNum> : IBaseMeasure, IQuantity<TNum>, IDeepCopy<TSelf>
         where TSelf : class, IBaseMeasure
         where TNum : struct
     {

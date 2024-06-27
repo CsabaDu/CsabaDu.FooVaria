@@ -74,7 +74,16 @@ public sealed class CylinderFactory(IBulkBodyFactory bulkSpreadFactory, ICircleF
 
     public override IDryBody? CreateShape(params IShapeComponent[] shapeComponents)
     {
-        return CreateDryBody(TangentShapeFactory, this, shapeComponents);
+        int count = shapeComponents?.Length ?? 0;
+
+        return count switch
+        {
+            1 => CreateDryBody(shapeComponents![0]),
+            2 => CreateDryBody(TangentShapeFactory, this, shapeComponents!),
+            3 => CreateDryBody(TangentShapeFactory, shapeComponents!),
+
+            _ => null,
+        };
     }
 
     public override ICircleFactory GetBaseFaceFactory()

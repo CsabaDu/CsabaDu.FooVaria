@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.Rates.Types;
 
-public interface IFlatRate : IRate, ICalculate<IFlatRate, decimal>, IGetNew<IFlatRate>, IGetFactory<IFlatRateFactory>
+public interface IFlatRate : IRate, ICalculate<IFlatRate, decimal>, IDeepCopy<IFlatRate>, IConcreteFactory<IFlatRateFactory>
 {
     //IFlatRateFactory Factory { get; init; }
 

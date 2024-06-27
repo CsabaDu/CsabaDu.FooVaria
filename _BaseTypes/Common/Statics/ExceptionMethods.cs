@@ -159,8 +159,7 @@ public static class ExceptionMethods
     {
         if (param is null
             || param is IEnumerable enumerable
-            && (enumerable.GetEnumerator() is null
-            || enumerable.Cast<object>().All(x => x is null)))
+            && (enumerable.GetEnumerator() is null || enumerable.Cast<object>().All(x => x is null)))
         {
             throw new ArgumentNullException(paramName);
         }

@@ -201,6 +201,13 @@
             return (TSelf)GetFactory().CreateNew(other);
         }
 
+        public TSelf GetNew()
+        {
+            TSelf other = (this as TSelf)!;
+
+            return GetNew(other);
+        }
+
         public TNum GetQuantity()
         {
             return Quantity;

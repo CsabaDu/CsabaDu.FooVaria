@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.PlaneShapes.Types
 {
-    public interface IRectangle : IPlaneShape, IRectangularShape<IRectangle, ICircle>, IHorizontalRotation<IRectangle>, IGetNew<IRectangle>, IGetFactory<IRectangleFactory>
+    public interface IRectangle : IPlaneShape, IRectangularShape<IRectangle, ICircle>, IHorizontalRotation<IRectangle>, IDeepCopy<IRectangle>, IConcreteFactory<IRectangleFactory>
     {
         IExtent Length { get; init; }
         IExtent Width { get; init; }

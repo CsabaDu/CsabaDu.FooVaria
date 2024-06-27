@@ -140,7 +140,6 @@ public abstract class BaseQuantifiable(IRootObject rootObject, string paramName)
     //        validateMeasureUnitCode(measureUnitCode);
     //    }
 
-
     //    #region Local methods
     //    void validateMeasureUnitCode(MeasureUnitCode measureUnitCode)
     //    {

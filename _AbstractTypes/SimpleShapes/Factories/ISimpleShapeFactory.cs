@@ -8,7 +8,7 @@
         IExtent CreateShapeExtent(ExtentUnit extentUnit, ValueType quantity);
     }
 
-    public interface ISimpleShapeFactory<T, out TTangent> : ISimpleShapeFactory, IFactory<T>
+    public interface ISimpleShapeFactory<T, out TTangent> : ISimpleShapeFactory, IDeepCopyFactory<T>
         where T : class, ISimpleShape, ITangentShape
         where TTangent : class, ISimpleShape, ITangentShape
     {

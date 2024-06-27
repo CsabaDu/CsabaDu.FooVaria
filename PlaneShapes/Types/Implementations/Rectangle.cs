@@ -80,6 +80,11 @@ internal sealed class Rectangle : PlaneShape, IRectangle
         return GetFactory().CreateNew(other);
     }
 
+    public IRectangle GetNew()
+    {
+        return GetNew(this);
+    }
+
     public IShape GetTangentShape(SideCode sideCode)
     {
         return GetFactory().CreateTangentShape(this, sideCode);

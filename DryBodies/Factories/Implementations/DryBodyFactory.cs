@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.DryBodies.Factories.Implementations
+﻿using CsabaDu.FooVaria.PlaneShapes.Types;
+
+namespace CsabaDu.FooVaria.DryBodies.Factories.Implementations
 {
     public abstract class DryBodyFactory(IBulkBodyFactory bulkBodyFactory) : SimpleShapeFactory, IDryBodyFactory
     {
@@ -78,56 +80,43 @@
         #endregion
 
         #region Protected methods
-        protected IDryBody? CreateDryBody(ICuboidFactory cuboidFactory, ICylinderFactory cylinderFactory, IShapeComponent[] shapeComponents)
+        #region Static methods
+        protected static IDryBody? CreateDryBody(IShapeComponent shapeComponent)
         {
-            int count = GetShapeComponentsCount(shapeComponents);
-
-            if (count == 0) return null;
-
-            IShapeComponent firstItem = shapeComponents[0];
-
-            return count switch
+            return shapeComponent switch
             {
-                1 => createDryBodyFrom1Param(),
-                2 => createDryBodyFrom2Params(),
-                3 => createDryBodyFrom3Params(),
+                Cuboid cuboid => cuboid.GetNew(),
+                Cylinder cylinder => cylinder.GetNew(),
 
                 _ => null,
+
             };
-
-            #region Local methods
-            IDryBody? createDryBodyFrom1Param()
-            {
-                if (firstItem is ICuboid cuboid) return cuboidFactory.CreateNew(cuboid);
-
-                if (firstItem is ICylinder cylinder) return cylinderFactory.CreateNew(cylinder);
-
-                return null;
-            }
-
-            IDryBody? createDryBodyFrom2Params()
-            {
-                if (GetShapeExtent(shapeComponents[1]) is not IExtent height) return null;
-
-                if (firstItem is IPlaneShape planeShape) return Create(planeShape, height);
-
-                if (firstItem is IExtent radius) return cylinderFactory.Create(radius, height);
-
-                return null;
-            }
-
-            IDryBody? createDryBodyFrom3Params()
-            {
-                IEnumerable<IExtent>? shapeExtents = GetShapeExtents(shapeComponents);
-
-                return shapeExtents is not null ?
-                    cuboidFactory.Create(shapeExtents.First(), shapeExtents.ElementAt(1), shapeExtents.Last())
-                    : null;
-            }
-            #endregion
         }
 
-        #region Static methods
+        protected static IDryBody? CreateDryBody(ICuboidFactory cuboidFactory, ICylinderFactory cylinderFactory, params IShapeComponent[] shapeComponents)
+        {
+            if (GetShapeExtent(shapeComponents[1]) is not IExtent height) return null;
+
+            return shapeComponents[0] switch
+            {
+                ICircle circle => cylinderFactory.Create(circle, height),
+                IRectangle rectangle => cuboidFactory.Create(rectangle, height),
+                IExtent radius => cylinderFactory.Create(radius, height),
+
+                _ => null,
+
+            };
+        }
+
+        protected static IDryBody? CreateDryBody(ICuboidFactory cuboidFactory, params IShapeComponent[] shapeComponents)
+        {
+            IEnumerable<IExtent>? shapeExtents = GetShapeExtents(shapeComponents);
+
+            return shapeExtents is not null ?
+                cuboidFactory.Create(shapeExtents.First(), shapeExtents.ElementAt(1), shapeExtents.Last())
+                : null;
+        }
+
         protected static IRectangle CreateVerticalProjection(IRectangleFactory factory, IExtent horizontal, IDryBody dryBody)
         {
             return factory.Create(horizontal, dryBody.Height)!;

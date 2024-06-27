@@ -39,6 +39,11 @@ internal sealed class Denominator(IDenominatorFactory factory, IMeasurement meas
         return GetFactory().CreateNew(other);
     }
 
+    public IDenominator GetNew()
+    {
+        return GetNew(this);
+    }
+
     #region Override methods
     public override ValueType GetBaseQuantity()
     {

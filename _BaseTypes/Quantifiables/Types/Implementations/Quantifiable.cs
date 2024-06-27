@@ -118,10 +118,13 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
     protected static bool Equals<T>(T? x, T? y)
         where T : class, IBaseShapeComponent
     {
-        return x is null == y is null
-            && (y is null
-            || x!.HasMeasureUnitCode(y.GetMeasureUnitCode())
-            && x!.GetBaseShapeComponents().SequenceEqual(y.GetBaseShapeComponents()));
+        bool xIsNull = x is null;
+
+        if (xIsNull != y is null) return false;
+
+        return xIsNull
+            || x.HasMeasureUnitCode(y!.GetMeasureUnitCode())
+            && x.GetBaseShapeComponents().SequenceEqual(y!.GetBaseShapeComponents());
     }
 
     protected static int GetHashCode<T>(T baseShapeComponent)

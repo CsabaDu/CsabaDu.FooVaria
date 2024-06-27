@@ -9,7 +9,7 @@ namespace CsabaDu.FooVaria.BulkSpreads.Types
         IBulkSpread GetBulkSpread(ISpread spread);
     }
 
-    public interface IBulkSpread<TSelf, TSMeasure> : IBulkSpread, IGetNew<TSelf>
+    public interface IBulkSpread<TSelf, TSMeasure> : IBulkSpread, IDeepCopy<TSelf>
         where TSelf : class, IBulkSpread
         where TSMeasure : class, IMeasure<TSMeasure, double>, ISpreadMeasure
     {

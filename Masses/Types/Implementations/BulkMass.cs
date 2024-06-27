@@ -108,5 +108,10 @@ internal sealed class BulkMass : Mass, IBulkMass
     {
         return GetFactory().CreateNew(other);
     }
+
+    public IBulkMass GetNew()
+    {
+        return GetNew(this);
+    }
     #endregion
 }

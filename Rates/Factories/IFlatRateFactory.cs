@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Rates.Factories;
 
-public interface IFlatRateFactory : IRateFactory, IFactory<IFlatRate>
+public interface IFlatRateFactory : IRateFactory, IDeepCopyFactory<IFlatRate>
 {
     IFlatRate Create(IMeasure numerator, string name, ValueType denominatorQuantity);
     IFlatRate Create(IMeasure numerator, string name);

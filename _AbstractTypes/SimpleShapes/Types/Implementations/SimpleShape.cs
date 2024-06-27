@@ -255,7 +255,7 @@ public abstract class SimpleShape : Shape, ISimpleShape
         foreach (ShapeExtentCode item in simpleShape.GetShapeExtentCodes())
         {
             if (!comparison.HasValue) return null;
-            
+
             int itemComparison = simpleShape[item]!.CompareTo(other[item]);
             comparison = comparison.Value.CompareToComparison(itemComparison);
         }

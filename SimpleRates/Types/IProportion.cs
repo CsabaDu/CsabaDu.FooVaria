@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.SimpleRates.Types;
 
-public interface IProportion : ISimpleRate, IGetFactory<IProportionFactory>
+public interface IProportion : ISimpleRate, IConcreteFactory<IProportionFactory>
 {
     //IProportionFactory Factory { get; init; }
 

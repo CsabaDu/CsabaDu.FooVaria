@@ -7,6 +7,6 @@
         TypeCode QuantityTypeCode { get; }
     }
 
-    public interface IRateComponentFactory<T> : IRateComponentFactory, IFactory<T>
+    public interface IRateComponentFactory<T> : IRateComponentFactory, IDeepCopyFactory<T>
         where T : class, IBaseMeasure;
 }

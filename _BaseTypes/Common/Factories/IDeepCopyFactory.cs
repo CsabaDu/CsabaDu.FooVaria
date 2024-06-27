@@ -2,7 +2,7 @@
 {
     public interface IFactory : IRootObject;
 
-    public interface IFactory<T>/* : ICreateNew*/
+    public interface IDeepCopyFactory<T>/* : IDeepCopyFactory*/
         where T : class, ICommonBase
     {
         T CreateNew(T other);

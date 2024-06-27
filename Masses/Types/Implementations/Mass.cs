@@ -270,7 +270,6 @@ internal abstract class Mass : BaseQuantifiable, IMass
         yield return GetBody().GetMeasureUnitCode();
     }
 
-    
     public virtual bool Equals(IMass? other)
     {
         return base.Equals(other)

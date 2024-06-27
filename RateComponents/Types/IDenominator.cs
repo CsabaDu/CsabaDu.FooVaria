@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.RateComponents.Types;
 
-public interface IDenominator : IRateComponent<IDenominator, decimal>, IBaseMeasure<IDenominator>, IGetFactory<IDenominatorFactory>
+public interface IDenominator : IRateComponent<IDenominator, decimal>, IBaseMeasure<IDenominator>, IConcreteFactory<IDenominatorFactory>
 {
     //IDenominatorFactory Factory { get; init; }
 

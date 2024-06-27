@@ -49,6 +49,11 @@ public sealed class ShapeLimit : Shape, IShapeLimit
         return GetFactory().CreateNew(other);
     }
 
+    public IShapeLimit GetNew()
+    {
+        return GetNew(this);
+    }
+
     public IShapeLimit GetShapeLimit(ISimpleShape simpleShape, LimitMode limitMode)
     {
         return GetFactory().Create(simpleShape, limitMode);

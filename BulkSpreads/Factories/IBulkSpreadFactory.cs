@@ -7,7 +7,7 @@
         IBulkSpread Create(params IExtent[] shapeExtents);
     }
 
-    public interface IBulkSpreadFactory<T, in TSMeasure> : IBulkSpreadFactory, IFactory<T>
+    public interface IBulkSpreadFactory<T, in TSMeasure> : IBulkSpreadFactory, IDeepCopyFactory<T>
         where T : class, IBulkSpread
         where TSMeasure : class, IMeasure, ISpreadMeasure
     {

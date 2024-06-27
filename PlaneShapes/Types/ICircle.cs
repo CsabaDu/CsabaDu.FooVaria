@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.PlaneShapes.Types
 {
-    public interface ICircle : IPlaneShape, ICircularShape<ICircle, IRectangle>, IGetNew<ICircle>, IGetFactory<ICircleFactory>
+    public interface ICircle : IPlaneShape, ICircularShape<ICircle, IRectangle>, IDeepCopy<ICircle>, IConcreteFactory<ICircleFactory>
     {
         IExtent Radius { get; init; }
         //ICircleFactory Factory { get; init; }

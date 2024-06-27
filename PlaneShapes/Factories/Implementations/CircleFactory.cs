@@ -56,7 +56,15 @@ public sealed class CircleFactory(IBulkSurfaceFactory bulkSpreadFactory, IRectan
     #region Override methods
     public override IPlaneShape? CreateShape(params IShapeComponent[] shapeComponents)
     {
-        return CreatePlaneShape(GetTangentShapeFactory(), shapeComponents);
+        int count = shapeComponents?.Length ?? 0;
+
+        return count switch
+        {
+            1 => CreatePlaneShape(this, shapeComponents![0]),
+            2 => CreatePlaneShape(GetTangentShapeFactory(), shapeComponents!),
+
+            _ => null,
+        };
     }
 
     public override IRectangleFactory GetTangentShapeFactory()
