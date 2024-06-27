@@ -1,6 +1,8 @@
-﻿namespace CsabaDu.FooVaria.Rates.Factories;
+﻿using CsabaDu.FooVaria.BaseTypes.Common.Behaviors;
 
-public interface ILimitedRateFactory : IRateFactory, IDeepCopyFactory<ILimitedRate>
+namespace CsabaDu.FooVaria.Rates.Factories;
+
+public interface ILimitedRateFactory : IRateFactory, IDeepCopyFactory<ILimitedRate>, IConcreteFactory
 {
     ILimitFactory LimitFactory { get; init; }
 

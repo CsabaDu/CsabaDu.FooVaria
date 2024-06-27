@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.RateComponents.Factories;
 
-public interface IDenominatorFactory : IRateComponentFactory<IDenominator>, IBaseMeasureFactory<IDenominator>
+public interface IDenominatorFactory : IRateComponentFactory<IDenominator>, IBaseMeasureFactory<IDenominator>, IConcreteFactory
 {
     IDenominator Create(Enum context);
     IDenominator Create(string name);

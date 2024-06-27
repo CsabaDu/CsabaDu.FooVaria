@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.Measures.Factories;
 
-public interface IMeasureFactory : IBaseMeasureFactory<IMeasure>, IDeepCopyFactory<IMeasure>
+public interface IMeasureFactory : IBaseMeasureFactory<IMeasure>, IDeepCopyFactory<IMeasure>, IConcreteFactory
 {
     IMeasurementFactory MeasurementFactory { get; init; }
 }

@@ -1,6 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.Common.Behaviors;
-
-namespace CsabaDu.FooVaria.RateComponents.Types;
+﻿namespace CsabaDu.FooVaria.RateComponents.Types;
 
 public interface IDenominator : IRateComponent<IDenominator, decimal>, IBaseMeasure<IDenominator>, IConcreteFactory<IDenominatorFactory>
 {

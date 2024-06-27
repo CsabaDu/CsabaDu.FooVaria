@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.RateComponents.Factories;
 
-public interface ILimitFactory : IRateComponentFactory<ILimit>
+public interface ILimitFactory : IRateComponentFactory<ILimit>, IConcreteFactory
 {
     ILimit Create(string name, ValueType quantity, LimitMode limitMode);
     ILimit Create(Enum measureUnit, ValueType quantity, LimitMode limitMode);

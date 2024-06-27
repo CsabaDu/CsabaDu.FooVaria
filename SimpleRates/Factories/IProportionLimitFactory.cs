@@ -1,6 +1,8 @@
-﻿namespace CsabaDu.FooVaria.SimpleRates.Factories;
+﻿using CsabaDu.FooVaria.BaseTypes.Common.Behaviors;
 
-public interface IProportionLimitFactory : ISimpleRateFactory
+namespace CsabaDu.FooVaria.SimpleRates.Factories;
+
+public interface IProportionLimitFactory : ISimpleRateFactory, IConcreteFactory
 {
     IProportionLimit Create(IBaseRate baseRate, LimitMode limitMode);
     IProportionLimit Create(IQuantifiable numerator, IQuantifiable denominator, LimitMode limitMode);

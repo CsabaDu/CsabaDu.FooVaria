@@ -1,6 +1,8 @@
-﻿namespace CsabaDu.FooVaria.SimpleRates.Factories;
+﻿using CsabaDu.FooVaria.BaseTypes.Common.Behaviors;
 
-public interface IProportionFactory : ISimpleRateFactory
+namespace CsabaDu.FooVaria.SimpleRates.Factories;
+
+public interface IProportionFactory : ISimpleRateFactory, IConcreteFactory
 {
     IProportion Create(Enum numeratorContext, decimal quantity, Enum denominator);
     IProportion Create(IBaseRate baseRate);

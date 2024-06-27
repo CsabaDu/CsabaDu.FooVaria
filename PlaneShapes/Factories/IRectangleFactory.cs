@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.PlaneShapes.Factories;
 
-public interface IRectangleFactory : IPlaneShapeFactory, IRectangularShapeFactory<IRectangle, ICircle>
+public interface IRectangleFactory : IPlaneShapeFactory, IRectangularShapeFactory<IRectangle, ICircle>, IConcreteFactory
 {
     ICircleFactory TangentShapeFactory { get; init; }
 

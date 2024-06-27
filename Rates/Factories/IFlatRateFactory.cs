@@ -1,6 +1,8 @@
-﻿namespace CsabaDu.FooVaria.Rates.Factories;
+﻿using CsabaDu.FooVaria.BaseTypes.Common.Behaviors;
 
-public interface IFlatRateFactory : IRateFactory, IDeepCopyFactory<IFlatRate>
+namespace CsabaDu.FooVaria.Rates.Factories;
+
+public interface IFlatRateFactory : IRateFactory, IDeepCopyFactory<IFlatRate>, IConcreteFactory
 {
     IFlatRate Create(IMeasure numerator, string name, ValueType denominatorQuantity);
     IFlatRate Create(IMeasure numerator, string name);

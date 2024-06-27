@@ -1,6 +1,8 @@
-﻿namespace CsabaDu.FooVaria.ShapeLimits.Factories;
+﻿using CsabaDu.FooVaria.BaseTypes.Common.Behaviors;
 
-public interface IShapeLimitFactory : IShapeFactory, IDeepCopyFactory<IShapeLimit>
+namespace CsabaDu.FooVaria.ShapeLimits.Factories;
+
+public interface IShapeLimitFactory : IShapeFactory, IDeepCopyFactory<IShapeLimit>, IConcreteFactory
 {
     ISimpleShapeFactory SimpleShapeFactory { get; init; }
     IShapeLimit Create(ISimpleShape simpleShape, LimitMode limitMode);

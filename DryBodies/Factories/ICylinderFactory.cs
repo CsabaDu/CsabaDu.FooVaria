@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.DryBodies.Factories;
 
-public interface ICylinderFactory : IDryBodyFactory<ICylinder, ICircle>, ICircularShapeFactory<ICylinder, ICuboid>
+public interface ICylinderFactory : IDryBodyFactory<ICylinder, ICircle>, ICircularShapeFactory<ICylinder, ICuboid>, IConcreteFactory
 {
     ICuboidFactory TangentShapeFactory { get; init; }
     ICircleFactory BaseFaceFactory { get; init; }
