@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.ShapeLimits.Types;
 
-public interface IShapeLimit : IShape, ILimiter<IShapeLimit, IShape>, IDeepCopy<IShapeLimit>, IConcreteFactory<IShapeLimitFactory>
+public interface IShapeLimit : IShape, ILimiter<IShapeLimit, IShape>, IDeepCopy<IShapeLimit>, IConcrete<IShapeLimitFactory>
 {
     LimitMode LimitMode { get; init; }
     ISimpleShape SimpleShape { get; init; }

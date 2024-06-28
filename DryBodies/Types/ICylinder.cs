@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.DryBodies.Types
 {
-    public interface ICylinder : IDryBody<ICylinder, ICircle>, ICircularShape<ICylinder, ICuboid>, IConcreteFactory<ICylinderFactory>
+    public interface ICylinder : IDryBody<ICylinder, ICircle>, ICircularShape<ICylinder, ICuboid>, IConcrete<ICylinderFactory>
     {
         //ICylinderFactory Factory { get; init; }
 

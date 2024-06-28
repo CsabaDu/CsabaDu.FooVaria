@@ -31,7 +31,7 @@ internal sealed class BulkSurface : BulkSpread<IBulkSurface, IArea, AreaUnit>, I
 
     public ISurface GetSurface()
     {
-        return GetNew(this);
+        return GetNew();
     }
 
     #region Override methods

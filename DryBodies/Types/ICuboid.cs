@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.DryBodies.Types
 {
-    public interface ICuboid : IDryBody<ICuboid, IRectangle>, IRectangularShape<ICuboid, ICylinder>, IHorizontalRotation<ICuboid>, ISpatialRotation<ICuboid>, IConcreteFactory<ICuboidFactory>
+    public interface ICuboid : IDryBody<ICuboid, IRectangle>, IRectangularShape<ICuboid, ICylinder>, IHorizontalRotation<ICuboid>, ISpatialRotation<ICuboid>, IConcrete<ICuboidFactory>
     {
         //ICuboidFactory Factory { get; init; }
 

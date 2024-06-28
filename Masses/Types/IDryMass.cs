@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVaria.Masses.Types;
 
-public interface IDryMass : IMass, IDeepCopy<IDryMass>, IExchange<IDryMass, ExtentUnit>, IConcreteFactory<IDryMassFactory>
+public interface IDryMass : IMass, IDeepCopy<IDryMass>, IExchange<IDryMass, ExtentUnit>, IConcrete<IDryMassFactory>
 {
     IDryBody DryBody { get; init; }
     //IDryMassFactory Factory { get; init; }
