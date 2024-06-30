@@ -6,7 +6,7 @@ global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
 global using CsabaDu.FooVaria.BaseTypes.Spreads.Factories;
 global using CsabaDu.FooVaria.BaseTypes.Spreads.Types;
 global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes;
-global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ObjectArrays;
+global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ArgsArrays;
 global using CsabaDu.FooVaria.Tests.TestHelpers.TestDoubles.BaseTypes.Quantifiables;
 global using CsabaDu.FooVaria.Tests.TestHelpers.TestDoubles.BaseTypes.Spreads;
 global using CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods;

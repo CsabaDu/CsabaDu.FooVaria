@@ -3,7 +3,7 @@ global using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
 global using CsabaDu.FooVaria.BaseTypes.Measurables.Statics;
 global using CsabaDu.FooVaria.BaseTypes.Measurables.Types;
 global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes;
-global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ObjectArrays;
+global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ArgsArrays;
 global using CsabaDu.FooVaria.Tests.TestHelpers.TestDoubles.BaseTypes.Measurables;
 global using CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Params;

@@ -1,7 +1,7 @@
 ﻿global using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
-global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ObjectArrays;
+global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ArgsArrays;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Params;
 global using Microsoft.VisualStudio.TestTools.UnitTesting;
 global using System.Diagnostics;

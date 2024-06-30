@@ -1,3 +1,3 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ReturnValues;
+﻿//namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ReturnValues;
 
-public class SpreadReturnValues : CommonBaseReturnValues;
+//public class SpreadReturnValues : CommonBaseReturnValues;

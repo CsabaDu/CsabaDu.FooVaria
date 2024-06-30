@@ -8,7 +8,7 @@ public abstract class CommonBase(IRootObject rootObject, string paramName) : ICo
         CommonBase commonBase => commonBase.Factory,
         IFactory factory => factory,
 
-        _ => throw new InvalidOperationException(null),
+        _ => throw ArgumentTypeOutOfRangeException(paramName, rootObject),
     };
     #endregion
 }

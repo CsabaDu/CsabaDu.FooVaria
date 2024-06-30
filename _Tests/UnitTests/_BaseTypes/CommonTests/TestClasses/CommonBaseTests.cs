@@ -4,72 +4,73 @@
 public sealed class CommonBaseTests
 {
     #region Private fields
-    private CommonBaseChild _commonBase;
-    private DataFields _fields;
+    private readonly Action<IRootObject> createCommonBaseChildAction
+        = (IRootObject rootObject) => _ = new CommonBaseChild(rootObject, ParamNames.TestName);
     #endregion
 
-    #region Initialize
-    [TestInitialize]
-    public void TestInitialize()
+    #region Helper methods
+    #region DynamicDataSources
+    private static IEnumerable<object[]> GetCommonBaseArgs()
     {
-        _fields = new();
+        DynamicDataSource dynamicDataSource = new();
+
+        return dynamicDataSource.GetCommonBaseArgs();
+    }
+    #endregion
+
+    public static string GetDisplayName(MethodInfo methodInfo, object[] args)
+    {
+        return CommonDynamicDataSource.GetDisplayName(methodInfo, args);
     }
     #endregion
 
     #region Test methods
     #region CommonBase
-    #region CommonBase(IRootObject)
+    #region CommonBase(IRootObject, string)
     [TestMethod, TestCategory("UnitTest")]
     public void CommonBase_nullArg_IRootobject_throws_ArgumentNullException()
     {
         // Arrange
-        _fields.paramName = _fields.RandomParams.GetRandomParamName();
+        IRootObject rootObject = null;
 
         // Act
-        void attempt() => _ = new CommonBaseChild(null, _fields.paramName);
+        void attempt() => createCommonBaseChildAction(rootObject);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(attempt);
-        Assert.AreEqual(_fields.paramName, ex.ParamName);
+        Assert.AreEqual(ParamNames.TestName, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void CommonBase_validArg_IRootobject_creates()
+    public void CommonBase_invalidArg_IRootobject_throws_ArgumentOutOfRangeException()
     {
         // Arrange
-        _fields.paramName = null;
+        IRootObject rootObject = new RootObject();
 
         // Act
-        var actual = new CommonBaseChild(_fields.RootObject, _fields.paramName);
+        void attempt() => createCommonBaseChildAction(rootObject);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
+        Assert.AreEqual(ParamNames.TestName, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetCommonBaseArgs), DynamicDataSourceType.Method, DynamicDataDisplayName = nameof(GetDisplayName))]
+    public void CommonBase_validArg_IRootobject_creates(IRootObject rootObject)
+    {
+        // Arrange
+        // Act
+        var actual = new CommonBaseChild(rootObject, ParamNames.TestName);
 
         // Assert
         Assert.IsInstanceOfType(actual, typeof(ICommonBase));
+        Assert.IsNotNull(actual.Factory);
     }
     #endregion
     #endregion
-
-    #region IFactory GetFactory
-    #region abstract ICommonBase.GetFactory()
-    [TestMethod, TestCategory("UnitTest")]
-    public void GetFactory_returns_expected()
-    {
-        // Arrange
-        _fields.paramName = null;
-        _commonBase = new(_fields.RootObject, _fields.paramName)
-        {
-            ReturnValues = new()
-            {
-                GetFactoryReturnValue = new FactoryObject(),
-            }
-        };
-
-        // Act
-        var actual = _commonBase.GetFactory();
-
-        // Assert
-        Assert.IsInstanceOfType(actual, typeof(IFactory));
-    }
     #endregion
-    #endregion
+
+    #region Private methods
     #endregion
 }

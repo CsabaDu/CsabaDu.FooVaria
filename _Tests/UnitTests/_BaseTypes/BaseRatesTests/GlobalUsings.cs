@@ -8,7 +8,7 @@ global using CsabaDu.FooVaria.BaseTypes.Measurables.Types;
 global using CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
 global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes;
-global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ObjectArrays;
+global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ArgsArrays;
 global using CsabaDu.FooVaria.Tests.TestHelpers.TestDoubles.BaseTypes.BaseQuantifiables;
 global using CsabaDu.FooVaria.Tests.TestHelpers.TestDoubles.BaseTypes.BaseRates;
 global using CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods;

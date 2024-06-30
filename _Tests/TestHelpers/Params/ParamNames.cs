@@ -20,6 +20,8 @@ public static class ParamNames
     public const string roundingMode = nameof(roundingMode);
     public const string spreadMeasure = nameof(spreadMeasure);
 
+    public const string TestName = nameof(TestName);
+
     public static IEnumerable<string> GetParamNames()
     {
         Type type = typeof(ParamNames);
