@@ -1,0 +1,141 @@
+#title: ProjectsInheritanceAndDependenciesDetails
+#.base: fill=#FFC080 bold italic
+#.abstract: fill=#FFFF80 bold italic
+#.concrete: fill=#80FF80 bold
+#.project: fill=#A1C7E7
+
+[<project>Common|
+	[<base>CommonBase]
+]
+[<project>Measurables|
+	[<base>Measurable]
+]
+[<project>BaseMeasurements|
+	[<base>BaseMeasurement]
+]
+[<project>BaseQuantifiables|
+	[<base>BaseQuantifiable]
+]
+[<project>Quantifiables|
+	[<base>Quantifiable]
+]
+[<project>BaseMeasures|
+	[<base>BaseMeasure]
+]
+[<project>Spreads|
+	[<base>Spread]
+]
+[<project>Shapes|
+	[<base>Shape]
+]
+[<project>BaseRates|
+	[<base>BaseRate]
+]
+[<project>SimpleRates|
+	[<abstract>SimpleRate]<:-[<concrete>Proportion]
+	[SimpleRate]<:-[<concrete>ProportionLimit]
+]
+[<project>SimpleShapes|
+	[<abstract>SimpleShape]
+]
+[<project>ComplexShapes|
+	[<abstract>ComplexShape]
+]
+[<project>Measurements|
+	[<abstract>Measurement]<:-[<concrete>ConstantMeasurement]
+    [Measurement]<:-[<concrete>CustomMeasurement]
+]
+[<project>Measures|
+	[<abstract>Measure]<:-[<abstract>Measure<TSelf, TNum>]
+    [Measure<TSelf, TNum>]<:-[<abstract>Measure<TSelf, TNum, TEnum>]
+    [Measure<TSelf, TNum, TEnum>]<:-[<concrete>Area]
+  	[Measure<TSelf, TNum, TEnum>]<:-[<concrete>Currency]
+    [Measure<TSelf, TNum, TEnum>]<:-[<concrete>Distance]
+    [Measure<TSelf, TNum, TEnum>]<:-[<concrete>Extent]
+    [Measure<TSelf, TNum, TEnum>]<:-[<concrete>PieceCount]
+    [Measure<TSelf, TNum, TEnum>]<:-[<concrete>TimePeriod]
+    [Measure<TSelf, TNum, TEnum>]<:-[<concrete>Volume]
+    [Measure<TSelf, TNum, TEnum>]<:-[<concrete>Weight]
+]
+[<project>RateComponents|
+	[<abstract>RateComponent]<:-[<abstract>RateComponent<TSelf>]
+    [RateComponent<TSelf>]<:-[<concrete>Denominator]
+    [RateComponent<TSelf>]<:-[<concrete>Limit]
+]
+[<project>Rates|
+	[<abstract>Rate]<:-[<concrete>FlatRate]
+	[Rate]<:-[<concrete>LimitedRate]
+]
+[<project>SimpleRates|
+	[<abstract>SimpleRate]<:-[<concrete>Proportion]
+	[<abstract>SimpleRate]<:-[<concrete>ProportionLimit]
+]
+[<project>BulkSpreads|
+	[<abstract>BulkSpread]<:-[<abstract>BulkSpread<TSelf, TSMeasure>]
+	[BulkSpread<TSelf, TSMeasure>]<:-[<abstract>BulkSpread<TSelf, TSMeasure, TEnum>]
+	[BulkSpread<TSelf, TSMeasure, TEnum>]<:-[<concrete>BulkSurface]
+	[BulkSpread<TSelf, TSMeasure, TEnum>]<:-[<concrete>BulkBody]
+]
+[<project>PlaneShapes|
+	[<abstract>PlaneShape]<:-[<concrete>Circle]
+    [PlaneShape]<:-[<concrete>Rectangle]
+]
+[<project>DryBodies|
+	[<abstract>DryBody]<:-[<abstract>DryBody<TSelf, TBFace>]
+    [<abstract>DryBody<TSelf, TBFace>]<:-[<concrete>Cylinder]
+    [DryBody<TSelf, TBFace>]<:-[<concrete>Cuboid]
+]
+[<project>Masses|
+	[<abstract>Mass]<:-[<concrete>BulkMass]
+	[Mass]<:-[<concrete>DryMass]
+]
+[<project>Sections|
+	[<abstract>Section]<:-[<concrete>PlaneSection]
+	[<abstract>Section]<:-[<concrete>CrossSection]
+]
+[<project>ComplexDryBodies|
+	[<concrete>ComplexDryBody]
+]
+[<project>ShapeLimits|
+	[<concrete>ShapeLimit]
+]
+
+[Common]<:-[Measurables]
+[BaseMeasurements]-:>[Measurables]
+[BaseMeasurements]<:-[Measurements]
+[Measurables]<:-[BaseQuantifiables]
+[BaseQuantifiables]<:-[Quantifiables]
+[BaseQuantifiables]<:-[BaseRates]
+[Masses]-:>[BaseQuantifiables]
+[Quantifiables]<:-[BaseMeasures]
+[Quantifiables]<:-[Spreads]
+[Spreads]<:-[BulkSpreads]
+[Spreads]<:-[Shapes]
+[SimpleShapes]<:-[PlaneShapes]
+[SimpleShapes]<:-[DryBodies]
+[BaseMeasures]<:-[Measures]
+[BaseMeasures]<:-[RateComponents]
+[BaseRates]<:-[Rates]
+[BaseRates]<:-[SimpleRates]
+[Shapes]<:-[SimpleShapes]
+[Shapes]<:-[ComplexShapes]
+[Shapes]<:-[ShapeLimits]
+[ComplexShapes]<:-[Sections]
+[ComplexShapes]<:-[ComplexDryBodies]
+
+[Measurements]<--[Measures]
+[Measures]<--[RateComponents]
+[RateComponents]<--[Rates]
+[Quantifiables]<--[BaseRates]
+[Masses]-->[SimpleRates]
+[DryBodies]<--[Masses]
+[ComplexDryBodies]-->[Sections]
+[SimpleRates]-->[Measures]
+[PlaneShapes]<--[DryBodies]
+[DryBodies]<--[Sections]
+[BulkSpreads]-->[Measures]
+[BulkSpreads]<--[SimpleShapes]
+[Spreads]-->[BaseMeasures]
+[BaseMeasurements]<--[BaseMeasures]
+[SimpleShapes]<--[ComplexShapes]
+[ShapeLimits]-->[SimpleShapes]
