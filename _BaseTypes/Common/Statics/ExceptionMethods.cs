@@ -73,15 +73,15 @@ public static class ExceptionMethods
         return new InvalidEnumArgumentException(paramName, (int)comparisonCode, comparisonCode.GetType());
     }
 
-    //public static InvalidEnumArgumentException InvalidSidenCodeEnumArgumentException(SideCode sideCode)
-    //{
-    //    return InvalidSidenCodeEnumArgumentException(sideCode, nameof(sideCode));
-    //}
+    public static InvalidEnumArgumentException InvalidSidenCodeEnumArgumentException(SideCode sideCode)
+    {
+        return InvalidSidenCodeEnumArgumentException(sideCode, nameof(sideCode));
+    }
 
-    //public static InvalidEnumArgumentException InvalidSidenCodeEnumArgumentException(SideCode sideCode, string paramName)
-    //{
-    //    return new InvalidEnumArgumentException(paramName, (int)sideCode, sideCode.GetType());
-    //}
+    public static InvalidEnumArgumentException InvalidSidenCodeEnumArgumentException(SideCode sideCode, string paramName)
+    {
+        return new InvalidEnumArgumentException(paramName, (int)sideCode, sideCode.GetType());
+    }
 
     //public static InvalidEnumArgumentException InvalidRateComponentCodeArgumentException(RateComponentCode rateComponentCode)
     //{

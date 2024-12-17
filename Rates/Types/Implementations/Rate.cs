@@ -83,7 +83,7 @@ internal abstract class Rate : BaseRate, IRate
 
     public IBaseMeasure GetBaseMeasure(RateComponentCode rateComponentCode)
     {
-        return GetRateComponent(rateComponentCode) ?? throw InvalidRateComponentCodeArgumentException(rateComponentCode);
+        return GetRateComponent(rateComponentCode) ?? throw InvalidRateComponentCodeEnumArgumentException(rateComponentCode);
     }
 
     public bool IsExchangeableTo(Enum? context)
