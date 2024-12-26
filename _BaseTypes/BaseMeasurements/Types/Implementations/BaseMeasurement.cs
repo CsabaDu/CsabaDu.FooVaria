@@ -1,12 +1,26 @@
 ﻿namespace CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;
 
+/// <summary>
+/// Represents the base class for measurements.
+/// </summary>
+/// <param name="rootObject">The root object associated with the measurement.</param>
+/// <param name="paramName">The parameter name associated with the measurement.</param>
 public abstract class BaseMeasurement(IRootObject rootObject, string paramName) : Measurable(rootObject, paramName), IBaseMeasurement
 {
     #region Records
+    /// <summary>
+    /// Represents the elements of a measurement.
+    /// </summary>
+    /// <param name="MeasureUnit">The measure unit.</param>
+    /// <param name="MeasureUnitCode">The code of the measure unit.</param>
+    /// <param name="ExchangeRate">The exchange rate of the measure unit.</param>
     public sealed record MeasurementElements(Enum MeasureUnit, MeasureUnitCode MeasureUnitCode, decimal ExchangeRate) : MeasureUnitElements(MeasureUnit, MeasureUnitCode);
     #endregion
 
     #region Static fields
+    /// <summary>
+    /// The count of constant exchange rates.
+    /// </summary>
     public static readonly int ConstantExchangeRateCount;
 
     #region Private static fields
@@ -21,6 +35,9 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
 
     #region Constructors
     #region Static constructor
+    /// <summary>
+    /// Initializes static members of the <see cref="BaseMeasurement"/> class.
+    /// </summary>
     static BaseMeasurement()
     {
         ConstantExchangeRateCollection = InitConstantExchangeRateCollection();
@@ -34,14 +51,29 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
 
     #region Properties
     #region Static properties
+    /// <summary>
+    /// Gets the collection of constant exchange rates.
+    /// </summary>
     public static Dictionary<object, decimal> ConstantExchangeRateCollection { get; }
+
+    /// <summary>
+    /// Gets or sets the collection of exchange rates.
+    /// </summary>
     public static Dictionary<object, decimal> ExchangeRateCollection { get; protected set; }
+
+    /// <summary>
+    /// Gets or sets the collection of custom names.
+    /// </summary>
     public static Dictionary<object, string> CustomNameCollection { get; protected set; }
     #endregion
     #endregion
 
     #region Public methods
     #region Static methods
+    /// <summary>
+    /// Gets all custom measure units that are not used.
+    /// </summary>
+    /// <returns>An enumerable collection of unused custom measure units.</returns>
     public static IEnumerable<Enum> GetAllNotUsedCustomMeasureUnits()
     {
         IEnumerable<Enum> notUsedCustomMeasureUnits = GetNotUsedCustomMeasureUnits(MeasureUnitCodes[0]);
@@ -55,16 +87,32 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         return notUsedCustomMeasureUnits;
     }
 
+    /// <summary>
+    /// Gets the custom name for the specified measure unit.
+    /// </summary>
+    /// <param name="measureUnit">The measure unit.</param>
+    /// <returns>The custom name if found; otherwise, null.</returns>
     public static string? GetCustomName(Enum measureUnit)
     {
         return CustomNameCollection.FirstOrDefault(x => x.Key == measureUnit).Value;
     }
 
+    /// <summary>
+    /// Gets the collection of custom names for the specified measure unit code.
+    /// </summary>
+    /// <param name="measureUnitCode">The measure unit code.</param>
+    /// <returns>A dictionary of custom names.</returns>
     public static Dictionary<object, string> GetCustomNameCollection(MeasureUnitCode measureUnitCode)
     {
         return GetMeasureUnitBasedCollection(CustomNameCollection, measureUnitCode);
     }
 
+    /// <summary>
+    /// Gets the exchange rate for the specified name.
+    /// </summary>
+    /// <param name="name">The name of the measure unit.</param>
+    /// <returns>The exchange rate.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when the name is out of range.</exception>
     public static decimal GetExchangeRate(string name)
     {
         const string paramName = nameof(name);
@@ -75,11 +123,21 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         throw NameArgumentOutOfRangeException(name);
     }
 
+    /// <summary>
+    /// Gets the name of the specified measure unit.
+    /// </summary>
+    /// <param name="measureUnit">The measure unit.</param>
+    /// <returns>The name of the measure unit.</returns>
     public static string GetMeasureUnitName(Enum measureUnit)
     {
         return GetCustomName(measureUnit) ?? GetDefaultName(measureUnit);
     }
 
+    /// <summary>
+    /// Gets the measure unit for the specified name.
+    /// </summary>
+    /// <param name="name">The name of the measure unit.</param>
+    /// <returns>The measure unit if found; otherwise, null.</returns>
     public static Enum? GetMeasureUnit(string name)
     {
         name ??= string.Empty;
@@ -88,6 +146,11 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
             ?? (Enum)GetMeasureUnitCollection().FirstOrDefault(x => x.Key == name).Value;
     }
 
+    /// <summary>
+    /// Gets the collection of measure units for the specified measure unit code.
+    /// </summary>
+    /// <param name="measureUnitCode">The measure unit code.</param>
+    /// <returns>A dictionary of measure units.</returns>
     public static Dictionary<string, object> GetMeasureUnitCollection(MeasureUnitCode measureUnitCode)
     {
         IEnumerable<object> validMeasureUnits = GetValidMeasureUnits(measureUnitCode);
@@ -96,6 +159,10 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         return GetMeasureUnitCollection(validMeasureUnits, customNameCollection);
     }
 
+    /// <summary>
+    /// Gets the collection of measure units.
+    /// </summary>
+    /// <returns>A dictionary of measure units.</returns>
     public static Dictionary<string, object> GetMeasureUnitCollection()
     {
         IEnumerable<object> validMeasureUnits = GetValidMeasureUnits();
@@ -103,11 +170,11 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         return GetMeasureUnitCollection(validMeasureUnits, CustomNameCollection);
     }
 
-    //public static IEnumerable<object> GetValidMeasureUnits(MeasureUnitCode measureUnitCode)
-    //{
-    //    return GetValidMeasureUnits().Where(x => x.GetType().Equals(measureUnitCode.GetMeasureUnitType()));
-    //}
-
+    /// <summary>
+    /// Gets the custom measure units that are not used for the specified measure unit code.
+    /// </summary>
+    /// <param name="measureUnitCode">The measure unit code.</param>
+    /// <returns>An enumerable collection of unused custom measure units.</returns>
     public static IEnumerable<Enum> GetNotUsedCustomMeasureUnits(MeasureUnitCode measureUnitCode)
     {
         ValidateCustomMeasureUnitCode(measureUnitCode);
@@ -118,6 +185,12 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         return customMeasureUnits.Where(x => !ExchangeRateCollection.ContainsKey(x));
     }
 
+    /// <summary>
+    /// Initializes custom exchange rates for the specified measure unit code.
+    /// </summary>
+    /// <param name="measureUnitCode">The measure unit code.</param>
+    /// <param name="customExchangeRateCollection">The collection of custom exchange rates.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when the exchange rate is out of range.</exception>
     public static void InitCustomExchangeRates(MeasureUnitCode measureUnitCode, IDictionary<string, decimal> customExchangeRateCollection)
     {
         ValidateCustomMeasureUnitCode(measureUnitCode);
@@ -138,6 +211,13 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         }
     }
 
+    /// <summary>
+    /// Sets a custom measure unit with the specified parameters.
+    /// </summary>
+    /// <param name="measureUnit">The measure unit.</param>
+    /// <param name="exchangeRate">The exchange rate.</param>
+    /// <param name="customName">The custom name.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when the measure unit is invalid.</exception>
     public static void SetCustomMeasureUnit(Enum measureUnit, decimal exchangeRate, string customName)
     {
         if (TrySetCustomMeasureUnit(measureUnit, exchangeRate, customName)) return;
@@ -145,6 +225,13 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         throw InvalidMeasureUnitEnumArgumentException(measureUnit);
     }
 
+    /// <summary>
+    /// Sets a custom measure unit with the specified parameters.
+    /// </summary>
+    /// <param name="customName">The custom name.</param>
+    /// <param name="measureUnitCode">The measure unit code.</param>
+    /// <param name="exchangeRate">The exchange rate.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when the measure unit code is invalid.</exception>
     public static void SetCustomMeasureUnit(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate)
     {
         ValidateCustomMeasureUnitCode(measureUnitCode);
@@ -154,6 +241,12 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         SetCustomMeasureUnit(measureUnit, exchangeRate, customName);
     }
 
+    /// <summary>
+    /// Sets a custom name for the specified measure unit.
+    /// </summary>
+    /// <param name="measureUnit">The measure unit.</param>
+    /// <param name="customName">The custom name.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when the custom name is invalid.</exception>
     public static void SetCustomName(Enum measureUnit, string customName)
     {
         if (TrySetCustomName(measureUnit, customName)) return;
@@ -161,6 +254,12 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         throw NameArgumentOutOfRangeException(customName);
     }
 
+    /// <summary>
+    /// Tries to get the measure unit for the specified name.
+    /// </summary>
+    /// <param name="name">The name of the measure unit.</param>
+    /// <param name="measureUnit">When this method returns, contains the measure unit if found; otherwise, null.</param>
+    /// <returns>true if the measure unit was found; otherwise, false.</returns>
     public static bool TryGetMeasureUnit(string name, [NotNullWhen(true)] out Enum? measureUnit)
     {
         measureUnit = GetMeasureUnit(name);
@@ -168,6 +267,13 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         return measureUnit is not null;
     }
 
+    /// <summary>
+    /// Tries to get the measure unit for the specified measure unit code and exchange rate.
+    /// </summary>
+    /// <param name="measureUnitCode">The measure unit code.</param>
+    /// <param name="exchangeRate">The exchange rate.</param>
+    /// <param name="measureUnit">When this method returns, contains the measure unit if found; otherwise, null.</param>
+    /// <returns>true if the measure unit was found; otherwise, false.</returns>
     public static bool TryGetMeasureUnit(MeasureUnitCode measureUnitCode, decimal exchangeRate, [NotNullWhen(true)] out Enum? measureUnit)
     {
         measureUnit = (Enum)GetExchangeRateCollection(measureUnitCode).FirstOrDefault(x => x.Value == exchangeRate).Key;
@@ -175,6 +281,13 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         return measureUnit is not null;
     }
 
+    /// <summary>
+    /// Tries to set a custom measure unit with the specified parameters.
+    /// </summary>
+    /// <param name="measureUnit">The measure unit.</param>
+    /// <param name="exchangeRate">The exchange rate.</param>
+    /// <param name="customName">The custom name.</param>
+    /// <returns>true if the custom measure unit was set successfully; otherwise, false.</returns>
     public static bool TrySetCustomMeasureUnit(Enum measureUnit, decimal exchangeRate, string customName)
     {
         if (!IsCustomMeasureUnit(measureUnit)) return false;
@@ -192,6 +305,13 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         throw new InvalidOperationException(null);
     }
 
+    /// <summary>
+    /// Tries to set a custom measure unit with the specified parameters.
+    /// </summary>
+    /// <param name="customName">The custom name.</param>
+    /// <param name="measureUnitCode">The measure unit code.</param>
+    /// <param name="exchangeRate">The exchange rate.</param>
+    /// <returns>true if the custom measure unit was set successfully; otherwise, false.</returns>
     public static bool TrySetCustomMeasureUnit(string customName, MeasureUnitCode measureUnitCode, decimal exchangeRate)
     {
         if (!measureUnitCode.IsCustomMeasureUnitCode()) return false;
@@ -201,6 +321,12 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         return TrySetCustomMeasureUnit(measureUnit, exchangeRate, customName);
     }
 
+    /// <summary>
+    /// Tries to set a custom name for the specified measure unit.
+    /// </summary>
+    /// <param name="measureUnit">The measure unit.</param>
+    /// <param name="customName">The custom name.</param>
+    /// <returns>true if the custom name was set successfully; otherwise, false.</returns>
     public static bool TrySetCustomName(Enum? measureUnit, string? customName)
     {
         if (measureUnit is null) return false;
@@ -216,6 +342,11 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         return CustomNameCollection.TryAdd(measureUnit, customName);
     }
 
+    /// <summary>
+    /// Validates the custom measure unit code.
+    /// </summary>
+    /// <param name="measureUnitCode">The measure unit code.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when the measure unit code is invalid.</exception>
     public static void ValidateCustomMeasureUnitCode(MeasureUnitCode measureUnitCode)
     {
         if (measureUnitCode.IsCustomMeasureUnitCode()) return;
@@ -223,11 +354,20 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         throw InvalidMeasureUnitCodeEnumArgumentException(measureUnitCode);
     }
 
+    /// <summary>
+    /// Gets the collection of constant exchange rates for the specified measure unit code.
+    /// </summary>
+    /// <param name="measureUnitCode">The measure unit code.</param>
+    /// <returns>A dictionary of constant exchange rates.</returns>
     public static Dictionary<object, decimal> GetConstantExchangeRateCollection(MeasureUnitCode measureUnitCode)
     {
         return GetMeasureUnitBasedCollection(ConstantExchangeRateCollection, measureUnitCode);
     }
 
+    /// <summary>
+    /// Gets all constant measure units.
+    /// </summary>
+    /// <returns>An enumerable collection of constant measure units.</returns>
     public static IEnumerable<object> GetConstantMeasureUnits()
     {
         foreach (object item in ConstantExchangeRateCollection.Keys)
@@ -236,6 +376,13 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         }
     }
 
+    /// <summary>
+    /// Gets the exchange rate for the specified measure unit.
+    /// </summary>
+    /// <param name="measureUnit">The measure unit.</param>
+    /// <param name="paramName">The parameter name.</param>
+    /// <returns>The exchange rate.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when the measure unit is invalid.</exception>
     public static decimal GetExchangeRate(Enum? measureUnit, string paramName)
     {
         measureUnit = GetMeasureUnitElements(measureUnit, paramName).MeasureUnit;
@@ -246,11 +393,22 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         throw InvalidMeasureUnitEnumArgumentException(measureUnit!, paramName);
     }
 
+    /// <summary>
+    /// Gets the collection of exchange rates for the specified measure unit code.
+    /// </summary>
+    /// <param name="measureUnitCode">The measure unit code.</param>
+    /// <returns>A dictionary of exchange rates.</returns>
     public static Dictionary<object, decimal> GetExchangeRateCollection(MeasureUnitCode measureUnitCode)
     {
         return GetMeasureUnitBasedCollection(ExchangeRateCollection, measureUnitCode);
     }
 
+    /// <summary>
+    /// Gets the measurement elements for the specified context and parameter name.
+    /// </summary>
+    /// <param name="context">The context.</param>
+    /// <param name="paramName">The parameter name.</param>
+    /// <returns>The measurement elements.</returns>
     public static MeasurementElements GetMeasurementElements(Enum? context, string paramName)
     {
         Enum? measureUnit = context is MeasureUnitCode measureUnitCode ?
@@ -264,11 +422,20 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         return new(measureUnit!, measureUnitCode, exchangeRate);
     }
 
+    /// <summary>
+    /// Gets all valid measure units.
+    /// </summary>
+    /// <returns>An enumerable collection of valid measure units.</returns>
     public static IEnumerable<object> GetValidMeasureUnits()
     {
         return ExchangeRateCollection.Keys;
     }
 
+    /// <summary>
+    /// Gets the valid measure units for the specified measure unit code.
+    /// </summary>
+    /// <param name="measureUnitCode">The measure unit code.</param>
+    /// <returns>An enumerable collection of valid measure units.</returns>
     public static IEnumerable<object> GetValidMeasureUnits(MeasureUnitCode measureUnitCode)
     {
         Type measureUnitType = measureUnitCode.GetMeasureUnitType();
@@ -276,6 +443,11 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         return GetValidMeasureUnits().Where(x => x.GetType() == measureUnitType);
     }
 
+    /// <summary>
+    /// Determines whether the specified measure unit is a custom measure unit.
+    /// </summary>
+    /// <param name="measureUnit">The measure unit.</param>
+    /// <returns>true if the measure unit is a custom measure unit; otherwise, false.</returns>
     public static bool IsCustomMeasureUnit(Enum measureUnit)
     {
         if (!IsDefinedMeasureUnit(measureUnit)) return false;
@@ -285,28 +457,56 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         return measureUnitCode.IsCustomMeasureUnitCode();
     }
 
+    /// <summary>
+    /// Determines whether the specified exchange rate is valid for the given measure unit.
+    /// </summary>
+    /// <param name="exchangeRate">The exchange rate.</param>
+    /// <param name="measureUnit">The measure unit.</param>
+    /// <returns>true if the exchange rate is valid; otherwise, false.</returns>
     public static bool IsValidExchangeRate(decimal exchangeRate, Enum measureUnit)
     {
         return exchangeRate == GetExchangeRate(measureUnit, nameof(measureUnit));
     }
 
+    /// <summary>
+    /// Determines whether the specified measure unit is valid.
+    /// </summary>
+    /// <param name="measureUnit">The measure unit.</param>
+    /// <returns>true if the measure unit is valid; otherwise, false.</returns>
     public static bool IsValidMeasureUnit(Enum? measureUnit)
     {
         return measureUnit is not null
             && GetValidMeasureUnits().Contains(measureUnit);
     }
 
+    /// <summary>
+    /// Determines whether the specified measure unit is valid for the given measure unit code.
+    /// </summary>
+    /// <param name="measureUnit">The measure unit.</param>
+    /// <param name="measureUnitCode">The measure unit code.</param>
+    /// <returns>true if the measure unit is valid for the given measure unit code; otherwise, false.</returns>
     public static bool IsValidMeasureUnit(Enum? measureUnit, MeasureUnitCode measureUnitCode)
     {
         return measureUnit is not null
             && GetValidMeasureUnits(measureUnitCode).Contains(measureUnit);
     }
 
+    /// <summary>
+    /// Determines whether the specified names are equal.
+    /// </summary>
+    /// <param name="name">The first name.</param>
+    /// <param name="otherName">The second name.</param>
+    /// <returns>true if the names are equal; otherwise, false.</returns>
     public static bool NameEquals(string name, string otherName)
     {
         return string.Equals(name, otherName, StringComparison.OrdinalIgnoreCase);
     }
 
+    /// <summary>
+    /// Validates the custom name.
+    /// </summary>
+    /// <param name="customName">The custom name.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when the custom name is invalid.</exception>
     public static void ValidateCustomName(string? customName)
     {
         if (IsValidCustomNameParam(NullChecked(customName, nameof(customName)))) return;
@@ -314,6 +514,13 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         throw NameArgumentOutOfRangeException(nameof(customName), customName!);
     }
 
+    /// <summary>
+    /// Validates the exchange rate for the specified measure unit.
+    /// </summary>
+    /// <param name="exchangeRate">The exchange rate.</param>
+    /// <param name="paramName">The parameter name.</param>
+    /// <param name="measureUnit">The measure unit.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when the exchange rate is invalid.</exception>
     public static void ValidateExchangeRate(decimal exchangeRate, string paramName, Enum measureUnit)
     {
         if (IsValidExchangeRate(exchangeRate, measureUnit)) return;
