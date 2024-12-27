@@ -1,5 +1,8 @@
 ﻿namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations
 {
+    /// <summary>
+    /// Represents an abstract spread with undefined boundaries.
+    /// </summary>
     internal abstract class BulkSpread : Spread, IBulkSpread
     {
         #region Constants

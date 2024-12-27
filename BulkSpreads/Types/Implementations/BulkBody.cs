@@ -1,5 +1,8 @@
 ﻿namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations;
 
+/// <summary>
+/// Represents a three dimensions body with undefined boundaries.
+/// </summary>
 internal sealed class BulkBody : BulkSpread<IBulkBody, IVolume, VolumeUnit>, IBulkBody
 {
     #region Constructors

@@ -1,7 +1,7 @@
 ﻿namespace CsabaDu.FooVaria.BulkSpreads.Types.Implementations;
 
 /// <summary>
-/// Represents a bulk surface implementation.
+/// Represents a two dimensions surface with undefined boundaries.
 /// </summary>
 internal sealed class BulkSurface : BulkSpread<IBulkSurface, IArea, AreaUnit>, IBulkSurface
 {
