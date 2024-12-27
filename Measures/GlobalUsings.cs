@@ -1,4 +1,5 @@
 ﻿global using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types;
+global using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;
 global using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Factories;
 global using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types;
 global using CsabaDu.FooVaria.BaseTypes.BaseMeasures.Types.Implementations;
@@ -22,4 +23,3 @@ global using static CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Types.Implement
 global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Statics.ExceptionMethods;
 global using static CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations.Measurable;
-global using static CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations.BaseMeasurement;
