@@ -7,22 +7,22 @@
     {
         #region Constants
         /// <summary>
-        /// The extent count for a circle shape.
+        /// The shape extent count for a circle.
         /// </summary>
         public const int CircleShapeExtentCount = 1;
 
         /// <summary>
-        /// The extent count for a rectangle shape.
+        /// The shape extent count for a rectangle.
         /// </summary>
         public const int RectangleShapeExtentCount = 2;
 
         /// <summary>
-        /// The extent count for a cylinder shape.
+        /// The shape extent count for a cylinder.
         /// </summary>
         public const int CylinderShapeExtentCount = 2;
 
         /// <summary>
-        /// The extent count for a cuboid shape.
+        /// The shape extent count for a cuboid.
         /// </summary>
         public const int CuboidShapeExtentCount = 3;
         #endregion
