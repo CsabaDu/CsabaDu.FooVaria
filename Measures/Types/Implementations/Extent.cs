@@ -3,6 +3,9 @@
 /// <summary>
 /// Represents an extent measure.
 /// </summary>
+/// <param name="factory">The measure factory.</param>
+/// <param name="extentUnit">The measure unit of the extent.</param>
+/// <param name="quantity">The quantity of the extent.</param>
 internal sealed class Extent(IMeasureFactory factory, ExtentUnit extentUnit, double quantity)
     : Measure<IExtent, double, ExtentUnit>(factory, extentUnit, quantity), IExtent
 {

@@ -1,8 +1,11 @@
 ﻿namespace CsabaDu.FooVaria.Measures.Types.Implementations;
 
 /// <summary>
-/// Represents a measure of piece count.
+/// Represents a measure of piece count measure.
 /// </summary>
+/// <param name="factory">The measure factory.</param>
+/// <param name="pieces">The pieces of the piece count.</param>
+/// <param name="quantity">The quantity of the piece count.</param>
 internal sealed class PieceCount(IMeasureFactory factory, Pieces pieces, long quantity)
     : Measure<IPieceCount, long, Pieces>(factory, pieces, quantity), IPieceCount
 {

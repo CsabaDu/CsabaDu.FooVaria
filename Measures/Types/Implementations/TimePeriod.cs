@@ -1,6 +1,12 @@
 ﻿
 namespace CsabaDu.FooVaria.Measures.Types.Implementations;
 
+/// <summary>
+/// Represents a time period measure.
+/// </summary>
+/// <param name="factory">The measure factory.</param>
+/// <param name="timePeriodUnit">The measure unit of the time period.</param>
+/// <param name="quantity">The quantity of the time period.</param>
 internal sealed class TimePeriod(IMeasureFactory factory, TimePeriodUnit timePeriodUnit, double quantity)
     : Measure<ITimePeriod, double, TimePeriodUnit>(factory, timePeriodUnit, quantity), ITimePeriod
 {

@@ -3,6 +3,9 @@
 /// <summary>
 /// Represents a volume measure.
 /// </summary>
+/// <param name="factory">The measure factory.</param>
+/// <param name="volumeUnit">The measure unit of the volume.</param>
+/// <param name="quantity">The quantity of the volume.</param>
 internal sealed class Volume(IMeasureFactory factory, VolumeUnit volumeUnit, double quantity)
     : Measure<IVolume, double, VolumeUnit>(factory, volumeUnit, quantity), IVolume
 {

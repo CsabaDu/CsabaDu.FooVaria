@@ -3,6 +3,9 @@
 /// <summary>
 /// Represents a distance measure.
 /// </summary>
+/// <param name="factory">The measure factory.</param>
+/// <param name="distanceUnit">The measure unit of the distance.</param>
+/// <param name="quantity">The quantity of the distance.</param>
 internal sealed class Distance(IMeasureFactory factory, DistanceUnit distanceUnit, double quantity)
     : Measure<IDistance, double, DistanceUnit>(factory, distanceUnit, quantity), IDistance
 {

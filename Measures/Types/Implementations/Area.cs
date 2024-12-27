@@ -3,6 +3,10 @@
 /// <summary>
 /// Represents an area measure.
 /// </summary>
+/// <param name="factory">The measure factory.</param>
+/// <param name="areaUnit">The measure unit of the area.</param>
+/// <param name="quantity">The quantity of the area.</param>
+
 internal sealed class Area(IMeasureFactory factory, AreaUnit areaUnit, double quantity)
     : Measure<IArea, double, AreaUnit>(factory, areaUnit, quantity), IArea
 {

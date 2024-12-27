@@ -3,6 +3,9 @@
 /// <summary>
 /// Represents a weight measure.
 /// </summary>
+/// <param name="factory">The measure factory.</param>
+/// <param name="weightUnit">The measure unit of the weight.</param>
+/// <param name="quantity">The quantity of the weight.</param>
 internal sealed class Weight(IMeasureFactory factory, WeightUnit weightUnit, double quantity)
     : Measure<IWeight, double, WeightUnit>(factory, weightUnit, quantity), IWeight
 {

@@ -294,7 +294,7 @@
 
         #region Public methods
         /// <summary>
-        /// Gets the base measure with the specified quantity.
+        /// Gets the strongly typed measure with the specified quantity.
         /// </summary>
         /// <param name="quantity">The quantity.</param>
         /// <returns>The base measure.</returns>
@@ -306,7 +306,7 @@
         }
 
         /// <summary>
-        /// Gets the measure with the specified name and quantity.
+        /// Gets the strongly typed measure with the specified name and quantity.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="quantity">The quantity.</param>
@@ -317,7 +317,7 @@
         }
 
         /// <summary>
-        /// Gets the measure with the specified measurement and quantity.
+        /// Gets the strongly typed measure with the specified measurement and quantity.
         /// </summary>
         /// <param name="measurement">The measurement.</param>
         /// <param name="quantity">The quantity.</param>
@@ -328,7 +328,7 @@
         }
 
         /// <summary>
-        /// Gets a new measure based on the specified measure.
+        /// Gets a new strongly typed measure based on the specified measure.
         /// </summary>
         /// <param name="other">The measure to base the new measure on.</param>
         /// <returns>The new measure.</returns>
@@ -396,7 +396,7 @@
 
         #region Public methods
         /// <summary>
-        /// Exchanges the current measure to the specified measure unit.
+        /// Exchanges the current strongly typed measure to the specified measure unit.
         /// </summary>
         /// <param name="measureUnit">The measure unit to exchange to.</param>
         /// <returns>The exchanged measure, or null if not exchangeable.</returns>
@@ -419,7 +419,7 @@
         }
 
         /// <summary>
-        /// Gets the measure with the specified measure unit.
+        /// Gets the strongly typed measure with the specified measure unit.
         /// </summary>
         /// <param name="measureUnit">The measure unit.</param>
         /// <returns>The measure.</returns>
@@ -442,9 +442,9 @@
         }
 
         /// <summary>
-        /// Gets the base measurement.
+        /// Gets the measurement.
         /// </summary>
-        /// <returns>The base measurement.</returns>
+        /// <returns>The measurement.</returns>
         public override sealed IMeasurement GetBaseMeasurement()
         {
             return Measurement;
