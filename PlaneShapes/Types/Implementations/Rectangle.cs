@@ -1,5 +1,8 @@
 ﻿namespace CsabaDu.FooVaria.PlaneShapes.Types.Implementations;
 
+/// <summary>
+/// Represents a rectangle shape.
+/// </summary>
 internal sealed class Rectangle : PlaneShape, IRectangle
 {
     #region Constructors

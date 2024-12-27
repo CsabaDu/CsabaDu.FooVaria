@@ -1,5 +1,8 @@
 ﻿namespace CsabaDu.FooVaria.DryBodies.Types.Implementations;
 
+/// <summary>
+/// Represents a cylinder shape.
+/// </summary>
 internal sealed class Cylinder : DryBody<ICylinder, ICircle>, ICylinder
 {
     #region Constructors

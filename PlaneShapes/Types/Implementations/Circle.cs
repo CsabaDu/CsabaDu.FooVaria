@@ -1,5 +1,8 @@
 ﻿namespace CsabaDu.FooVaria.PlaneShapes.Types.Implementations;
 
+/// <summary>
+/// Represents a circle shape.
+/// </summary>
 internal sealed class Circle : PlaneShape, ICircle
 {
     #region Constructors

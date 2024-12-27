@@ -1,5 +1,8 @@
 ﻿namespace CsabaDu.FooVaria.DryBodies.Types.Implementations;
 
+/// <summary>
+/// Represents a cuboid shape.
+/// </summary>
 internal sealed class Cuboid : DryBody<ICuboid, IRectangle>, ICuboid
 {
     #region Constructors
