@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
+﻿using System.Reflection;
+
+namespace CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
 
 /// <summary>
 /// Represents an abstract base class for measurable entities.
@@ -32,6 +34,10 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
     /// The default string constant.
     /// </summary>
     public const string Default = nameof(Default);
+    /// <summary>
+    /// The namespace name of the measure units.
+    /// </summary>
+    private const string MeasureUnitsNamespace = "CsabaDu.FooVaria.BaseTypes.Measurables.Enums.MeasureUnits";
     #endregion
 
     #region Constructors
@@ -41,21 +47,15 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
     /// </summary>
     static Measurable()
     {
-        MeasureUnitTypeSet =
-        [
-            typeof(AreaUnit),
-            typeof(Currency),
-            typeof(DistanceUnit),
-            typeof(ExtentUnit),
-            typeof(TimePeriodUnit),
-            typeof(Pieces),
-            typeof(VolumeUnit),
-            typeof(WeightUnit),
-        ];
+        MeasureUnitTypes = Assembly
+            .GetExecutingAssembly()
+            .GetTypes()
+            .Where(x => x.IsEnum && x.Namespace == MeasureUnitsNamespace)
+            .ToArray();
 
         MeasureUnitCodes = Enum.GetValues<MeasureUnitCode>();
 
-        if (MeasureUnitCodes.Length != MeasureUnitTypeSet.Count) throw new InvalidOperationException(null);
+        if (MeasureUnitCodes.Length != MeasureUnitTypes.Length) throw new InvalidOperationException(null);
 
         MeasureUnitTypeCollection = MeasureUnitCodes.ToDictionary
             (
@@ -68,7 +68,7 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
         {
             string? measureUnitCodeName = Enum.GetName(measureUnitCode);
 
-            return MeasureUnitTypeSet.First(x => x.Name == measureUnitCodeName);
+            return MeasureUnitTypes.First(x => x.Name == measureUnitCodeName);
         }
         #endregion
     }
@@ -86,7 +86,7 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
     /// <summary>
     /// Gets the set of measure unit types.
     /// </summary>
-    public static HashSet<Type> MeasureUnitTypeSet { get; }
+    public static Type[] MeasureUnitTypes { get; }
 
     /// <summary>
     /// Gets the array of measure unit codes.
@@ -208,7 +208,7 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
     {
         const string paramName = nameof(measureUnitType);
 
-        if (MeasureUnitTypeSet.Contains(NullChecked(measureUnitType, paramName)))
+        if (MeasureUnitTypes.Contains(NullChecked(measureUnitType, paramName)))
         {
             return MeasureUnitTypeCollection.First(x => x.Value == measureUnitType).Key;
         }
@@ -290,7 +290,7 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
 
         Type measureUnitType = measureUnit.GetType();
 
-        return MeasureUnitTypeSet.Contains(measureUnitType)
+        return MeasureUnitTypes.Contains(measureUnitType)
             && Enum.IsDefined(measureUnitType, measureUnit);
     }
 
@@ -346,7 +346,7 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
     /// <param name="measureUnitType">The measure unit type.</param>
     public static void ValidateMeasureUnitType(Type measureUnitType)
     {
-        if (MeasureUnitTypeSet.Contains(NullChecked(measureUnitType, nameof(measureUnitType)))) return;
+        if (MeasureUnitTypes.Contains(NullChecked(measureUnitType, nameof(measureUnitType)))) return;
 
         throw MeasureUnitTypeArgumentOutOfRangeException(measureUnitType);
     }
