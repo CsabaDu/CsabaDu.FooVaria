@@ -24,6 +24,9 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
     public static readonly int ConstantExchangeRateCount;
 
     #region Private static fields
+    private const string Unit = nameof(Unit);
+    private const string ExchangeRates = nameof(ExchangeRates);
+
     private static readonly decimal[] AreaExchangeRates = [100, 10000, 1000000];
     private static readonly decimal[] DistanceExchangeRates = [1000];
     private static readonly decimal[] ExtentExchangeRates = [10, 100, 1000];
@@ -830,13 +833,13 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
 
         foreach (Type item in MeasureUnitTypes)
         {
-            string exchangeRatesName = item.Name.Replace("Unit", "ExchangeRates");
+            string exchangeRatesName = item.Name.Replace(Unit, ExchangeRates);
             FieldInfo? exchangeRatesField = privateStaticFields.FirstOrDefault(x => x.FieldType == typeof(decimal[]) && x.Name == exchangeRatesName);
             decimal[]? exchangeRates = (decimal[]?)exchangeRatesField?.GetValue(null);
             Array measureUnits = Enum.GetValues(item);
             int exchangeRateCount = exchangeRates?.Length ?? 0;
 
-            if (exchangeRateCount != 0 || measureUnits.Length != exchangeRateCount + 1) throw new InvalidOperationException(null);
+            if (exchangeRateCount != 0 && measureUnits.Length != exchangeRateCount + 1) throw new InvalidOperationException(null);
 
             exchangeRateCollection[measureUnits.GetValue(0)!] = decimal.One;
 

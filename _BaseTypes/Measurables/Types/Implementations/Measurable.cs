@@ -50,7 +50,7 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
         MeasureUnitTypes = Assembly
             .GetExecutingAssembly()
             .GetTypes()
-            .Where(x => x.IsEnum && x.Namespace == MeasureUnitsNamespace && x.Name != nameof(MeasureUnitCode))
+            .Where(x => x.IsEnum && x.Namespace == MeasureUnitsNamespace)
             .ToArray();
 
         MeasureUnitCodes = Enum.GetValues<MeasureUnitCode>();
