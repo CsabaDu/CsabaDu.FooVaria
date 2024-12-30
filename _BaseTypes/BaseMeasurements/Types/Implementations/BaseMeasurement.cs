@@ -825,45 +825,28 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
     /// <exception cref="InvalidOperationException">Thrown when the number of measure units does not match the number of exchange rates.</exception>
     private static Dictionary<object, decimal> InitConstantExchangeRateCollection()
     {
-        return initConstantExchangeRates<AreaUnit>(AreaExchangeRates)
-            .Union(initConstantExchangeRates<Currency>())
-            .Union(initConstantExchangeRates<DistanceUnit>(DistanceExchangeRates))
-            .Union(initConstantExchangeRates<ExtentUnit>(ExtentExchangeRates))
-            .Union(initConstantExchangeRates<Pieces>())
-            .Union(initConstantExchangeRates<TimePeriodUnit>(TimePeriodExchangeRates))
-            .Union(initConstantExchangeRates<VolumeUnit>(VolumeExchangeRates))
-            .Union(initConstantExchangeRates<WeightUnit>(WeightExchangeRates))
-            .ToDictionary(x => x.Key, x => x.Value);
+        FieldInfo[] privateStaticFields = typeof(BaseMeasurement).GetFields(BindingFlags.NonPublic | BindingFlags.Static);
+        Dictionary<object, decimal> exchangeRateCollection = [];
 
-        #region Local methods
-        static IEnumerable<KeyValuePair<object, decimal>> initConstantExchangeRates<T>(params decimal[] exchangeRates)
-            where T : struct, Enum
+        foreach (Type item in MeasureUnitTypes)
         {
-            yield return getMeasureUnitExchangeRatePair(default(T), decimal.One);
-
+            string exchangeRatesName = item.Name.Replace("Unit", "ExchangeRates");
+            FieldInfo? exchangeRatesField = privateStaticFields.FirstOrDefault(x => x.FieldType == typeof(decimal[]) && x.Name == exchangeRatesName);
+            decimal[]? exchangeRates = (decimal[]?)exchangeRatesField?.GetValue(null);
+            Array measureUnits = Enum.GetValues(item);
             int exchangeRateCount = exchangeRates?.Length ?? 0;
 
-            if (exchangeRateCount > 0)
+            if (exchangeRateCount != 0 || measureUnits.Length != exchangeRateCount + 1) throw new InvalidOperationException(null);
+
+            exchangeRateCollection[measureUnits.GetValue(0)!] = decimal.One;
+
+            for (int i = 0; i < exchangeRateCount; i++)
             {
-                T[] measureUnits = Enum.GetValues<T>();
-                int measureUnitCount = measureUnits.Length;
-
-                if (measureUnitCount != exchangeRateCount + 1) throw new InvalidOperationException(null);
-
-                int i = 0;
-
-                foreach (decimal item in exchangeRates!)
-                {
-                    yield return getMeasureUnitExchangeRatePair(measureUnits[++i], item);
-                }
+                exchangeRateCollection[measureUnits.GetValue(i + 1)!] = exchangeRates![i];
             }
         }
 
-        static KeyValuePair<object, decimal> getMeasureUnitExchangeRatePair(Enum measureUnit, decimal exchangeRate)
-        {
-            return new KeyValuePair<object, decimal>(measureUnit, exchangeRate);
-        }
-        #endregion
+        return exchangeRateCollection;
     }
     #endregion
     #endregion

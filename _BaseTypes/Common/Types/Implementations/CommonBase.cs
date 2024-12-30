@@ -10,9 +10,9 @@ public abstract class CommonBase : ICommonBase
     /// Initializes a new instance of the <see cref="CommonBase"/> class.
     /// </summary>
     /// <param name="rootObject">A <see cref="IRootObject"/> child to be checked for null.
-    /// The rootObject can be either an <see cref="IFactory"/> child associated with the current type,
-    /// or an instance of the current <see cref="ICommonBase"/> child.</param>
-    /// <param name="paramName">The name of the parameter to be checked for null.</param>
+    /// The rootObject can be either an <see cref="IFactory"/> child instance associated with the current type,
+    /// or an instance of the current <see cref="ICommonBase"/> child type in case of copy constructor.</param>
+    /// <param name="paramName">The name of the <see cref="IRootObject"/> parameter to be checked.</param>
     /// <exception cref="ArgumentNullException">Thrown when the rootObject is null.</exception>
     protected CommonBase(IRootObject rootObject, string paramName)
     {
@@ -25,7 +25,7 @@ public abstract class CommonBase : ICommonBase
     /// <summary>
     /// Gets the factory associated with the current <see cref="ICommonBase"/> child instance.
     /// </summary>
-    /// <returns>An instance of <see cref="IFactory"/>.</returns>
+    /// <returns>An instance of <see cref="IFactory"/>.</returns> child instance.
     public abstract IFactory GetFactory();
     #endregion
     #endregion

@@ -1,4 +1,4 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
+﻿namespace CsabaDu.FooVaria.BaseTypes.Measurables.Enums.MeasureUnits;
 
 public enum TimePeriodUnit
 {
