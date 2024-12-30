@@ -37,7 +37,7 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
     /// <summary>
     /// The namespace name of the measure units.
     /// </summary>
-    private const string MeasureUnitsNamespace = "CsabaDu.FooVaria.BaseTypes.Measurables.Enums";
+    private const string MeasureUnitsNamespace = "CsabaDu.FooVaria.BaseTypes.Measurables.Enums.MeasureUnits";
     #endregion
 
     #region Constructors
