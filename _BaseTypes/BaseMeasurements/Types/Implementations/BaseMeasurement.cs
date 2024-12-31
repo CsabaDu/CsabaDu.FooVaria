@@ -800,11 +800,7 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
     /// <returns>A dictionary of measure units and their corresponding names.</returns>
     private static Dictionary<string, object> GetMeasureUnitCollection(IEnumerable<object> validMeasureUnits, IDictionary<object, string> customNameCollection)
     {
-        Dictionary<string, object> measureUnitCollection = validMeasureUnits.ToDictionary
-            (
-                getDefaultName,
-                x => x
-            );
+        Dictionary<string, object> measureUnitCollection = validMeasureUnits.ToDictionary(getDefaultName, x => x);
 
         foreach (KeyValuePair<object, string> item in customNameCollection)
         {
@@ -833,10 +829,28 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
 
         foreach (Type item in MeasureUnitTypes)
         {
-            string exchangeRatesName = item.Name.Replace(Unit, ExchangeRates);
-            FieldInfo? exchangeRatesField = privateStaticFields.FirstOrDefault(x => x.FieldType == typeof(decimal[]) && x.Name == exchangeRatesName);
-            decimal[]? exchangeRates = (decimal[]?)exchangeRatesField?.GetValue(null);
-            Array measureUnits = Enum.GetValues(item);
+            addExchangeRatesToCollection(getMeasureUnits(item), getExchangeRates(item));
+        }
+
+        return exchangeRateCollection;
+
+        #region Local methods
+        Array getMeasureUnits(Type measureUnitType)
+        {
+            return Enum.GetValues(measureUnitType);
+        }
+
+        decimal[]? getExchangeRates(Type measureUnitType)
+        {
+            string exchangeRatesName = measureUnitType.Name.Replace(Unit, ExchangeRates);
+            FieldInfo? exchangeRatesField = privateStaticFields
+                .FirstOrDefault(x => x.FieldType == typeof(decimal[]) && x.Name == exchangeRatesName);
+
+            return (decimal[]?)exchangeRatesField?.GetValue(null);
+        }
+
+        void addExchangeRatesToCollection(Array measureUnits, decimal[]? exchangeRates)
+        {
             int exchangeRateCount = exchangeRates?.Length ?? 0;
 
             if (exchangeRateCount != 0 && measureUnits.Length != exchangeRateCount + 1) throw new InvalidOperationException(null);
@@ -848,8 +862,7 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
                 exchangeRateCollection[measureUnits.GetValue(i + 1)!] = exchangeRates![i];
             }
         }
-
-        return exchangeRateCollection;
+        #endregion
     }
     #endregion
     #endregion
