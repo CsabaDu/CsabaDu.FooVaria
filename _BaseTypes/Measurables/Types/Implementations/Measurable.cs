@@ -57,11 +57,8 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
 
         if (MeasureUnitCodes.Length != MeasureUnitTypes.Length) throw new InvalidOperationException(null);
 
-        MeasureUnitTypeCollection = MeasureUnitCodes.ToDictionary
-            (
-                x => x,
-                getMeasureUnitType
-            );
+        MeasureUnitTypeCollection = MeasureUnitCodes
+            .ToDictionary(x => x, getMeasureUnitType);
 
         #region Local methods
         static Type getMeasureUnitType(MeasureUnitCode measureUnitCode)
