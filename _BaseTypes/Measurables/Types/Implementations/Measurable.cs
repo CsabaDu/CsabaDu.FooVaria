@@ -82,6 +82,9 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
 
     /// <summary>
     /// Gets the set of measure unit types.
+    /// Measure unit types are defined as enums in the <see cref="MeasureUnitsNamespace"/> namespace.
+    /// Constant measure unit types names must start with the captured measure type name and must be ended with "Unit".
+    /// Custom measure unit types names should be different from the captured measure type name and may not be ended with "Unit".
     /// </summary>
     public static Type[] MeasureUnitTypes { get; }
 

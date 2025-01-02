@@ -835,7 +835,7 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
         return exchangeRateCollection;
 
         #region Local methods
-        Array getMeasureUnits(Type measureUnitType)
+        static Array getMeasureUnits(Type measureUnitType)
         {
             return Enum.GetValues(measureUnitType);
         }
