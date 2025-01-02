@@ -200,7 +200,7 @@ public static class Extensions
 
     public static bool IsValidTypeQuantity(this ValueType quantity)
     {
-        return QuantityTypeSet.Contains(quantity.GetType());
+        return QuantityTypes.Contains(quantity.GetType());
     }
     #endregion
 }
