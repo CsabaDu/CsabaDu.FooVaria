@@ -204,8 +204,7 @@ public abstract class Quantifiable(IRootObject rootObject, string paramName) : B
         where T : class, IBaseShapeComponent
     {
         return x is null == y is null
-            && (y is null
-            || x!.HasMeasureUnitCode(y.GetMeasureUnitCode())
+            && (y is null || x!.HasMeasureUnitCode(y.GetMeasureUnitCode())
             && x!.GetBaseShapeComponents().SequenceEqual(y.GetBaseShapeComponents()));
     }
 
