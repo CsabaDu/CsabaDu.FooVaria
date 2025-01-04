@@ -5,7 +5,7 @@ public sealed class CommonBaseChild(IRootObject rootObject, string paramName) : 
     #region Members
 
     // CommonBaseChild CommonBaseChild(IRootObject rootObject, string paramName)
-    // IFactory ICommonBase.GetFactoryReturnValue()
+    // IFactory ICommonBase.GetFactory()
 
     #endregion
 

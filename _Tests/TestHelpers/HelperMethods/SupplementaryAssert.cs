@@ -2,6 +2,10 @@
 
 public sealed class SupplementaryAssert
 {
+    public static void DoesNotThrow(Action attempt)
+    {
+
+    }
     public static void DoesNotThrowException(Action attempt)
     {
         Assert.IsNull(getCaughtExceptionOrNull());

@@ -26,8 +26,6 @@ public sealed class MeasurableChild(IRootObject rootObject, string paramName) : 
 
     public static MeasurableChild GetMeasurableChild(Enum measureUnit, IMeasurableFactory factory = null)
     {
-        
-
         return new(Fields.RootObject, Fields.paramName)
         {
             ReturnValues = new()

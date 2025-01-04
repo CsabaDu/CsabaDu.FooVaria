@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
+﻿namespace CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
 
 /// <summary>
 /// Represents an abstract base class for measurable entities.
