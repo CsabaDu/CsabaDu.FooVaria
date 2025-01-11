@@ -26,7 +26,6 @@ public static class Extensions
     {
         return roundingMode switch
         {
-            //RoundingMode.General => decimal.Round(quantity),
             RoundingMode.Ceiling => decimal.Ceiling(quantity),
             RoundingMode.Floor => decimal.Floor(quantity),
             RoundingMode.Half => getHalfQuantity(),
@@ -187,8 +186,6 @@ public static class Extensions
     {
         return quantity switch
         {
-            //int or
-            //uint or
             long or
             ulong => quantity,
             double doubleQuyantity => doubleQuyantity.Round(roundingMode),

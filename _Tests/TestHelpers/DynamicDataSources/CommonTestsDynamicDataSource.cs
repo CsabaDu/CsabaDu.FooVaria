@@ -1,10 +1,10 @@
 ﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DynamicDataSources;
 
-public class CommonTestsDynamicDataSource : DynamicDataSourcesBase
+public class CommonTestsDynamicDataSource : DynamicDataSource
 {
     public IEnumerable<object[]> Extensions_IsValidExchangeRate_ArgsToList(ArgsCode argsCode)
     {
-        _expectedIsTrue = true;
+        bool expected = true;
         decimalQuantity = 0.0000000001m;
         yield return testDataToArgs();
 
@@ -14,7 +14,7 @@ public class CommonTestsDynamicDataSource : DynamicDataSourcesBase
         decimalQuantity = 1000000000m;
         yield return testDataToArgs();
 
-        _expectedIsTrue = false;
+        expected = false;
         decimalQuantity = 0m;
         yield return testDataToArgs();
 
@@ -27,24 +27,28 @@ public class CommonTestsDynamicDataSource : DynamicDataSourcesBase
         decimalQuantity = -1000000000m;
         yield return testDataToArgs();
 
-        object[] testDataToArgs() => TestDataToArgs(decimalQuantity, argsCode);
+        object[] testDataToArgs() => TestDataReturnsToArgs(decimalQuantity, expected, argsCode);
     }
 
     public IEnumerable<object[]> Extensions_IsDefined_ArgsToList(ArgsCode argsCode)
     {
-        _expectedIsTrue = true;
+        bool expected = true;
         string paramsDescription = null;
-        context = TestEnum.ValidMinValue;
+        TestEnum testEnum = TestEnum.MinValue;
         yield return testDataToArgs();
 
-        context = TestEnum.ValidMaxValue;
+        testEnum = TestEnum.MidValue;
         yield return testDataToArgs();
 
-        _expectedIsTrue = false;
-        paramsDescription = "Invalid value";
-        context = (TestEnum)2;
+        testEnum = TestEnum.MaxValue;
         yield return testDataToArgs();
 
-        object[] testDataToArgs() => TestDataToArgs(context, argsCode, paramsDescription);
+        expected = false;
+        int invalidValue = Enum.GetNames<TestEnum>().Length;
+        paramsDescription = nameof(invalidValue);
+        testEnum = (TestEnum)invalidValue;
+        yield return testDataToArgs();
+
+        object[] testDataToArgs() => TestDataReturnsToArgs(testEnum, expected, argsCode, paramsDescription);
     }
 }

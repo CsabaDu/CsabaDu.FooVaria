@@ -6,10 +6,10 @@ public sealed class MeasurableChild(IRootObject rootObject, string paramName) : 
 
     // Measurable(IRootObject rootObject, string paramName)
     // bool Measurable.Equals(object? obj)
-    // Enum IMeasureUnit.GetBaseMeasureUnitReturnValue()
+    // Enum IMeasureUnit.GetBaseMeasureUnit()
     // Enum IDefaultMeasureUnit.GetDefaultMeasureUnit()
     // IEnumerable<string> IDefaultMeasureUnit.GetDefaultMeasureUnitNames()
-    // IFactory ICommonBase.GetFactoryReturnValue()
+    // IFactory ICommonBase.GetFactory()
     // int Measurable.GetHashCode()
     // RateComponentCode IMeasureUnitCode.GetMeasureUnitCode()
     // Type IMeasureUnit.GetMeasureUnitType()

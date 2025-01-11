@@ -17,7 +17,6 @@ public abstract class BaseQuantifiable(IRootObject rootObject, string paramName)
             typeof(decimal),
         ];
 
-        //QuantityTypeCodes = QuantityTypeSet.Select(Type.GetTypeCode);
         QuantityTypeCodes = GetQuantityTypeCodes();
     }
     #endregion
@@ -164,33 +163,33 @@ public abstract class BaseQuantifiable(IRootObject rootObject, string paramName)
             .Round(RoundingMode.DoublePrecision);
     }
 
-    /// <summary>
-    /// Gets the quantity for the specified base quantifiable object and type code.
-    /// </summary>
-    /// <typeparam name="T">The type of the base quantifiable object.</typeparam>
-    /// <typeparam name="TNum">The type of the quantity.</typeparam>
-    /// <param name="baseQuantifiable">The base quantifiable object.</param>
-    /// <param name="quantityTypeCode">The type code of the quantity.</param>
-    /// <returns>The quantity.</returns>
-    protected static object GetQuantity<T, TNum>(T baseQuantifiable, TypeCode quantityTypeCode)
-        where T : class, IBaseQuantifiable, IQuantity<TNum>
-        where TNum : struct
-    {
-        ValueType quantity = (ValueType)(object)baseQuantifiable.GetQuantity();
+    ///// <summary>
+    ///// Gets the quantity for the specified base quantifiable object and type code.
+    ///// </summary>
+    ///// <typeparam name="T">The type of the base quantifiable object.</typeparam>
+    ///// <typeparam name="TNum">The type of the quantity.</typeparam>
+    ///// <param name="baseQuantifiable">The base quantifiable object.</param>
+    ///// <param name="quantityTypeCode">The type code of the quantity.</param>
+    ///// <returns>The quantity.</returns>
+    //protected static object GetQuantity<T, TNum>(T baseQuantifiable, TypeCode quantityTypeCode)
+    //    where T : class, IBaseQuantifiable, IQuantity<TNum>
+    //    where TNum : struct
+    //{
+    //    ValueType quantity = (ValueType)(object)baseQuantifiable.GetQuantity();
 
-        return quantity.ToQuantity(quantityTypeCode) ?? throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
-    }
+    //    return quantity.ToQuantity(quantityTypeCode) ?? throw InvalidQuantityTypeCodeEnumArgumentException(quantityTypeCode);
+    //}
 
-    /// <summary>
-    /// Determines whether the specified measure unit code is valid.
-    /// </summary>
-    /// <param name="measureUnitCodes">The measure unit codes.</param>
-    /// <param name="measureUnitCode">The measure unit code to check.</param>
-    /// <returns>true if the measure unit code is valid; otherwise, false.</returns>
-    protected static bool IsValidMeasureUnitCode(IMeasureUnitCodes measureUnitCodes, MeasureUnitCode measureUnitCode)
-    {
-        return measureUnitCodes.GetMeasureUnitCodes().Contains(measureUnitCode);
-    }
+    ///// <summary>
+    ///// Determines whether the specified measure unit code is valid.
+    ///// </summary>
+    ///// <param name="measureUnitCodes">The measure unit codes.</param>
+    ///// <param name="measureUnitCode">The measure unit code to check.</param>
+    ///// <returns>true if the measure unit code is valid; otherwise, false.</returns>
+    //protected static bool IsValidMeasureUnitCode(IMeasureUnitCodes measureUnitCodes, MeasureUnitCode measureUnitCode)
+    //{
+    //    return measureUnitCodes.GetMeasureUnitCodes().Contains(measureUnitCode);
+    //}
 
     /// <summary>
     /// Validates the specified measure unit code.

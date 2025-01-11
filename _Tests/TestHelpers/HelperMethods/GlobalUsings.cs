@@ -1,4 +1,7 @@
 ﻿global using CsabaDu.FooVaria.BaseTypes.BaseMeasurements.Types.Implementations;
+global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
+global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Enums;
+global using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Behaviors;
 global using CsabaDu.FooVaria.BaseTypes.Quantifiables.Types;
 global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.ObjectArrays;

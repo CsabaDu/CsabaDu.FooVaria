@@ -16,7 +16,7 @@ public abstract class CommonBase : ICommonBase
     /// <exception cref="ArgumentNullException">Thrown when the rootObject is null.</exception>
     protected CommonBase(IRootObject rootObject, string paramName)
     {
-        _ = NullChecked(rootObject, paramName);
+        ArgumentNullException.ThrowIfNull(rootObject, paramName);
     }
     #endregion
 

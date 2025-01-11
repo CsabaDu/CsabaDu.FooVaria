@@ -159,8 +159,7 @@ public static class ExceptionMethods
     {
         if (param is null
             || param is IEnumerable enumerable
-            && (enumerable.GetEnumerator() is null
-            || enumerable.Cast<object>().All(x => x is null)))
+            && (enumerable.GetEnumerator() is null || enumerable.Cast<object>().All(x => x is null)))
         {
             throw new ArgumentNullException(paramName);
         }
@@ -199,7 +198,7 @@ public static class ExceptionMethods
     public static T Defined<T>(T param, string? paramName)
         where T : struct, Enum
     {
-        if (Enum.IsDefined(param)) return param;
+        if (param.IsDefined()) return param;
 
         throw new InvalidEnumArgumentException(paramName, (int)(object)param, typeof(T));
     }

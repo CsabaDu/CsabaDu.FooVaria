@@ -1,8 +1,4 @@
-﻿//using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes;
-//using CsabaDu.FooVaria.Tests.TestHelpers.Params;
-//using CsabaDu.FooVaria.Tests.TestHelpers.TestDoubles.BaseTypes.Measurables;
-
-//namespace CsabaDu.FooVaria.Test.UnitTests_xUnit.BaseTypes.MeasurableTests;
+﻿//namespace CsabaDu.FooVaria.Test.UnitTests_xUnit.BaseTypes.MeasurableTests;
 
 //public sealed class MeasurableTests
 //{
@@ -18,7 +14,8 @@
 //    private readonly MeasurableChild _measurable;
 
 //    #region Static fields
-//    //private static readonly DynamicDataSource DynamicDataSource = new();
+//    private static readonly DynamicData<CommonTestsDynamicDataSource> DynamicData
+//        = new(new CommonTestsDynamicDataSource(), ArgsCode.Properties);
 //    #endregion
 //    #endregion
 
@@ -26,7 +23,9 @@
 //    public MeasurableTests()
 //    {
 //        _fields = new();
-//        _measurable = new MeasurableChild(_fields.RootObject, ParamNames.rootObject);
+//        _fields.SetMeasureUnit(DistanceUnit.km);
+//        _measurable = MeasurableChild.GetMeasurableChild(_fields, new MeasurableFactoryObject());
+
 //    }
 //    #endregion
 

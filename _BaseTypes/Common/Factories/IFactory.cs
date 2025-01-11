@@ -1,10 +1,9 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.Common.Factories
-{
-    public interface IFactory : IRootObject;
+﻿namespace CsabaDu.FooVaria.BaseTypes.Common.Factories;
 
-    public interface IFactory<T> : IFactory
-        where T : class, ICommonBase
-    {
-        T CreateNew(T other);
-    }
+public interface IFactory : IRootObject;
+
+public interface IFactory<T> : IFactory
+    where T : class, ICommonBase
+{
+    T CreateNew(T other);
 }

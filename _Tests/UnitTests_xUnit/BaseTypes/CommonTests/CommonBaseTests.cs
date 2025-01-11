@@ -10,7 +10,7 @@ public sealed class CommonBaseTests
     #region CommonBase
     #region CommonBase(IRootObject)
     [Fact]
-    public void CommonBase_nullArg_IRootobject_throws_ArgumentNullException()
+    public void CommonBase_nullArg_IRootobject_throwsArgumentNullException()
     {
         // Arrange
         _fields.paramName = ParamNames.rootObject;
@@ -38,7 +38,7 @@ public sealed class CommonBaseTests
     #region IFactory GetFactory
     #region abstract ICommonBase.GetFactory()
     [Fact]
-    public void GetFactory_returns_expected()
+    public void GetFactory_returnsExpected()
     {
         // Arrange
         _fields.paramName = null;

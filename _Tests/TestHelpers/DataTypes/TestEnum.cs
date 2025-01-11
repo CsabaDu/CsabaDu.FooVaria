@@ -2,6 +2,7 @@
 
 public enum TestEnum
 {
-    ValidMinValue,
-    ValidMaxValue
+    MinValue,
+    MidValue,
+    MaxValue,
 }

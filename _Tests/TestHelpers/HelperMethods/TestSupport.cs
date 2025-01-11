@@ -1,10 +1,4 @@
-﻿using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Behaviors;
-using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Enums;
-using CsabaDu.FooVaria.BaseTypes.BaseQuantifiables.Statics;
-using CsabaDu.FooVaria.BaseTypes.Measurables.Behaviors;
-using CsabaDu.FooVaria.BaseTypes.Measurables.Enums;
-
-namespace CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods;
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.HelperMethods;
 
 public sealed class TestSupport
 {
