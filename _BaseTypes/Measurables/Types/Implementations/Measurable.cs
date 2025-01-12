@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
+﻿using System.Reflection;
+
+namespace CsabaDu.FooVaria.BaseTypes.Measurables.Types.Implementations;
 
 /// <summary>
 /// Represents an abstract base class for measurable entities.
@@ -32,10 +34,15 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
     /// The default string constant.
     /// </summary>
     public const string Default = nameof(Default);
+<<<<<<< Updated upstream
     /// <summary>
     /// The namespace name of the measure units.
     /// </summary>
     private const string MeasureUnitsNamespace = "CsabaDu.FooVaria.BaseTypes.Measurables.Enums.MeasureUnits";
+=======
+
+    private const string MeasureUnitsNamespace = "CsabaDu.FooVaria.BaseTypes.Measurables.Enums";
+>>>>>>> Stashed changes
     #endregion
 
     #region Constructors
@@ -45,10 +52,28 @@ public abstract class Measurable(IRootObject rootObject, string paramName) : Com
     /// </summary>
     static Measurable()
     {
+<<<<<<< Updated upstream
         MeasureUnitTypes = Assembly
             .GetExecutingAssembly()
             .GetTypes()
             .Where(x => x.IsEnum && x.Namespace == MeasureUnitsNamespace)
+=======
+        //MeasureUnitTypes =
+        //[
+        //    typeof(AreaUnit),
+        //    typeof(Currency),
+        //    typeof(DistanceUnit),
+        //    typeof(ExtentUnit),
+        //    typeof(TimePeriodUnit),
+        //    typeof(Pieces),
+        //    typeof(VolumeUnit),
+        //    typeof(WeightUnit),
+        //];
+        MeasureUnitTypes = Assembly
+            .GetExecutingAssembly()
+            .GetTypes()
+            .Where(x => x.IsEnum && x.Namespace == MeasureUnitsNamespace && x.Name != nameof(MeasureUnitCode))
+>>>>>>> Stashed changes
             .ToArray();
 
         MeasureUnitCodes = Enum.GetValues<MeasureUnitCode>();
