@@ -20,16 +20,22 @@ public static class SampleParams
 
     public const LimitMode DefaultLimitMode = default;
 
+    public static TEnum GetNotDefinedEnum<TEnum>() where TEnum : struct, Enum
+    => (TEnum)(object)Enum.GetNames<TEnum>().Length;
+
+    public static object GetNotDefinedEnum(Type enumType)
+    => Enum.GetNames(enumType).Length;
+
     public static Enum GetNotDefinedMeasureUnit(MeasureUnitCode measureUnitCode)
     {
         Type measureUnitType = measureUnitCode.GetMeasureUnitType();
-        int count = Enum.GetNames(measureUnitType).Length;
+        int index = Enum.GetNames(measureUnitType).Length;
 
-        return (Enum)Enum.ToObject(measureUnitType, count);
+        return (Enum)Enum.ToObject(measureUnitType, index);
     }
 
-    public static TypeCode[] InvalidValueTypeCodes =>
-        [
+    public static TypeCode[] InvalidValueTypeCodes
+    => [
             TypeCode.Boolean,
             TypeCode.Char,
             TypeCode.SByte,
@@ -43,12 +49,8 @@ public static class SampleParams
         ];
 
     public static IEnumerable<TypeCode> GetInvalidQuantityTypeCodes()
-    {
-        return Enum.GetValues<TypeCode>().Except(QuantityTypeCodes);
-    }
+    => Enum.GetValues<TypeCode>().Except(QuantityTypeCodes);
 
     public static MeasureUnitCode GetOtherSpreadMeasureUnitCode(MeasureUnitCode measureUnitCode)
-    {
-        return SpreadMeasureUnitCodes.First(x => x != measureUnitCode);
-    }
+    => SpreadMeasureUnitCodes.First(x => x != measureUnitCode);
 }

@@ -1,8 +1,7 @@
-﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.TestDataRecords
+﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.TestDataRecords;
+
+public enum ResultCode
 {
-    public enum ResultCode
-    {
-        returns,
-        throws,
-    }
+    returns,
+    throws,
 }
