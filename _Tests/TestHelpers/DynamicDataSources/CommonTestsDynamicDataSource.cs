@@ -7,7 +7,7 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
     private object[] TestDataToArgs<T>(T arg, string paramsDescription = null) where T : struct
     {
         ParamsDescription = paramsDescription ?? arg.ToString();
-        return TestDataReturnsToArgs(arg, _expected);
+        return TestDataReturnsToArgs(_expected, arg);
     }
 
     public IEnumerable<object[]> Extensions_IsValidExchangeRate_ArgsToList()
