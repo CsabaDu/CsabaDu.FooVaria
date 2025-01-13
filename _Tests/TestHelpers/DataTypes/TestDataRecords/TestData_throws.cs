@@ -68,5 +68,5 @@ public record TestData_throws<TException, T1, T2, T3, T4, T5, T6, T7>(string Par
 public abstract record TestData_throws(string ParamsDescription, Exception Exception)
     : TestData_throws<Exception>(ParamsDescription, Exception)
 {
-    protected override string Result => Exception.GetType().Name;
+    protected override sealed string Result => Exception.GetType().Name;
 }
