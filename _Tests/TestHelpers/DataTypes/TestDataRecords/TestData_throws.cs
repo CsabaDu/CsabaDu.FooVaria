@@ -11,6 +11,8 @@ public record TestData_throws<TException, T1>(string ParamsDescription, TExcepti
     : TestData_throws<TException>(ParamsDescription, Exception)
     where TException : Exception
 {
+    protected override sealed string Result => base.Result;
+
     public override object[] ToArgs(ArgsCode argsCode)
     => argsCode == ArgsCode.Properties ? [TestCase, Exception, Arg1] : base.ToArgs(argsCode);
 }
