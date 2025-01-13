@@ -38,14 +38,19 @@ public abstract class DynamicDataSource(ArgsCode argsCode)
 
     protected object[] TestDataThrowsToArgs<TException, T1, T2>(TException exception, T1 arg1, T2 arg2) where TException : Exception
     => new TestData_throws<TException, T1, T2>(ParamsDescription, exception, arg1, arg2).ToArgs(ArgsCode);
+
     protected object[] TestDataThrowsToArgs<TException, T1, T2, T3>(TException exception, T1 arg1, T2 arg2, T3 arg3) where TException : Exception
     => new TestData_throws<TException, T1, T2, T3>(ParamsDescription, exception, arg1, arg2, arg3).ToArgs(ArgsCode);
+
     protected object[] TestDataThrowsToArgs<TException, T1, T2, T3, T4>(TException exception, T1 arg1, T2 arg2, T3 arg3, T4 arg4) where TException : Exception
     => new TestData_throws<TException, T1, T2, T3, T4>(ParamsDescription, exception, arg1, arg2, arg3, arg4).ToArgs(ArgsCode);
+
     protected object[] TestDataThrowsToArgs<TException, T1, T2, T3, T4, T5>(TException exception, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5) where TException : Exception
     => new TestData_throws<TException, T1, T2, T3, T4, T5>(ParamsDescription, exception, arg1, arg2, arg3, arg4, arg5).ToArgs(ArgsCode);
+
     protected object[] TestDataThrowsToArgs<TException, T1, T2, T3, T4, T5, T6>(TException exception, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6) where TException : Exception
     => new TestData_throws<TException, T1, T2, T3, T4, T5, T6>(ParamsDescription, exception, arg1, arg2, arg3, arg4, arg5, arg6).ToArgs(ArgsCode);
+
     protected object[]TestDataThrowsToArgs<TException, T1, T2, T3, T4, T5, T6, T7>(TException exception, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7) where TException : Exception
     => new TestData_throws<TException, T1, T2, T3, T4, T5, T6, T7>(ParamsDescription, exception, arg1, arg2, arg3, arg4, arg5, arg6, arg7).ToArgs(ArgsCode);
     #endregion

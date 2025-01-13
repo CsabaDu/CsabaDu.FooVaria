@@ -2,11 +2,12 @@
 
 public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource(argsCode)
 {
+    private string _paramsDescription = null;
     private bool _expected;
 
-    private object[] TestDataToArgs<T>(T arg, string paramsDescription = null) where T : struct
+    private object[] TestDataToArgs<T>(T arg) where T : struct
     {
-        ParamsDescription = paramsDescription ?? arg.ToString();
+        ParamsDescription = _paramsDescription ?? arg.ToString();
         return TestDataReturnsToArgs(_expected, arg);
     }
 
@@ -40,8 +41,6 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
 
     public IEnumerable<object[]> Extensions_IsDefined_ArgsToList()
     {
-        string paramsDescription = null;
-
         _expected = true;
         TestEnum testEnum = TestEnum.MinValue;
         yield return testDataToArgs();
@@ -54,10 +53,10 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
 
         _expected = false;
         int invalidValue = Enum.GetNames<TestEnum>().Length;
-        paramsDescription = nameof(invalidValue);
         testEnum = (TestEnum)invalidValue;
+        _paramsDescription = nameof(invalidValue);
         yield return testDataToArgs();
 
-        object[] testDataToArgs() => TestDataToArgs(testEnum, paramsDescription);
+        object[] testDataToArgs() => TestDataToArgs(testEnum);
     }
 }
