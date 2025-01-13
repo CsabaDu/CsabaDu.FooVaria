@@ -13,6 +13,7 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
 
     public IEnumerable<object[]> Extensions_IsValidExchangeRate_ArgsToList()
     {
+        #region returns True
         _expected = true;
         decimal decimalQuantity = 0.0000000001m;
         yield return testDataToArgs();
@@ -22,7 +23,9 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
 
         decimalQuantity = 1000000000m;
         yield return testDataToArgs();
+        #endregion
 
+        #region returns False
         _expected = false;
         decimalQuantity = 0m;
         yield return testDataToArgs();
@@ -35,12 +38,14 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
 
         decimalQuantity = -1000000000m;
         yield return testDataToArgs();
+        #endregion
 
         object[] testDataToArgs() => TestDataToArgs(decimalQuantity);
     }
 
     public IEnumerable<object[]> Extensions_IsDefined_ArgsToList()
     {
+        #region returns True
         _expected = true;
         TestEnum testEnum = TestEnum.MinValue;
         yield return testDataToArgs();
@@ -50,12 +55,15 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
 
         testEnum = TestEnum.MaxValue;
         yield return testDataToArgs();
+        #endregion
 
+        #region returns False
         _expected = false;
         int invalidValue = Enum.GetNames<TestEnum>().Length;
         testEnum = (TestEnum)invalidValue;
         _paramsDescription = nameof(invalidValue);
         yield return testDataToArgs();
+        #endregion
 
         object[] testDataToArgs() => TestDataToArgs(testEnum);
     }
