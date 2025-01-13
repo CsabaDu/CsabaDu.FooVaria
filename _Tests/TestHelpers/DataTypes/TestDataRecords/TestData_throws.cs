@@ -15,7 +15,6 @@ public record TestData_throws<TException, T1>(string ParamsDescription, TExcepti
     => argsCode == ArgsCode.Properties ? [TestCase, Exception, Arg1] : base.ToArgs(argsCode);
 }
 
-
 public record TestData_throws<TException, T1, T2>(string ParamsDescription, TException Exception, T1 Arg1, T2 Arg2)
     : TestData_throws<TException, T1>(ParamsDescription, Exception, Arg1)
     where TException : Exception
