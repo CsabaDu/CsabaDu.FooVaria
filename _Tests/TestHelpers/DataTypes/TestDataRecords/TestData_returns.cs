@@ -63,8 +63,8 @@ public record TestData_returns<TStruct, T1, T2, T3, T4, T5, T6, T7>(string Param
     => argsCode == ArgsCode.Properties ? [TestCase, Expected, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7] : base.ToArgs(argsCode);
 }
 
-public abstract record TestData_returns(string ParamsDescription, string ExpectedDescription = "")
+public abstract record TestData_returns(string ParamsDescription, string ResultDescription = "")
     : TestData<object>(ParamsDescription, ResultCode.returns)
 {
-    protected override string Result => ExpectedDescription;
+    protected override string Result => ResultDescription;
 }
