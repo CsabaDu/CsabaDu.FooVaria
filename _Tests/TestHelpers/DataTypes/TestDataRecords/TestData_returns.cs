@@ -1,9 +1,10 @@
 ﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.TestDataRecords;
 
 public abstract record TestData_returns<TStruct>(string ParamsDescription, TStruct Expected)
-    : TestData<TStruct>(ParamsDescription, ResultCode.returns)
+    : TestData<TStruct>(ParamsDescription)
     where TStruct : struct
 {
+    protected override sealed string ResultType => GetResultType();
     protected override sealed string Result => Expected.ToString();
 }
 
@@ -64,7 +65,9 @@ public record TestData_returns<TStruct, T1, T2, T3, T4, T5, T6, T7>(string Param
 }
 
 public abstract record TestData_returns(string ParamsDescription, string ResultDescription = "")
-    : TestData<object>(ParamsDescription, ResultCode.returns)
+    : TestData<object>(ParamsDescription)
 {
+    protected override sealed string ResultType => GetResultType();
+
     protected override string Result => ResultDescription;
 }

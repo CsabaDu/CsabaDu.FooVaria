@@ -1,9 +1,10 @@
 ﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.TestDataRecords;
 
 public abstract record TestData_throws<TException>(string ParamsDescription, TException Exception)
-    : TestData<TException>(ParamsDescription, ResultCode.throws)
+    : TestData<TException>(ParamsDescription)
     where TException : Exception
 {
+    protected override string ResultType => GetResultType();
     protected override string Result => typeof(TException).Name;
 }
 
