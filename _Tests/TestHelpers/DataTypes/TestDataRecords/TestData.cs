@@ -2,9 +2,10 @@
 
 public abstract record TestData<TResult>(string ParamsDescription) : ITestData where TResult : notnull
 {
-    protected abstract string Result { get; }
     protected abstract string ResultType { get; }
-    public string TestCase => $"{ParamsDescription} => {ResultType} {Result}";
+    protected abstract string ResultName { get; }
+
+    public string TestCase => ResultName == null ? $"{ParamsDescription} => {ResultType}" : $"{ParamsDescription} => {ResultType} {ResultName}";
 
     protected string GetResultType()
     {

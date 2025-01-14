@@ -5,14 +5,14 @@ public abstract record TestData_throws<TException>(string ParamsDescription, TEx
     where TException : Exception
 {
     protected override string ResultType => GetResultType();
-    protected override string Result => typeof(TException).Name;
+    protected override string ResultName => typeof(TException).Name;
 }
 
 public record TestData_throws<TException, T1>(string ParamsDescription, TException Exception, T1 Arg1)
     : TestData_throws<TException>(ParamsDescription, Exception)
     where TException : Exception
 {
-    protected override sealed string Result => base.Result;
+    protected override sealed string ResultName => base.ResultName;
 
     public override object[] ToArgs(ArgsCode argsCode)
     => argsCode == ArgsCode.Properties ? [TestCase, Exception, Arg1] : base.ToArgs(argsCode);
@@ -69,5 +69,5 @@ public record TestData_throws<TException, T1, T2, T3, T4, T5, T6, T7>(string Par
 public abstract record TestData_throws(string ParamsDescription, Exception Exception)
     : TestData_throws<Exception>(ParamsDescription, Exception)
 {
-    protected override sealed string Result => Exception.GetType().Name;
+    protected override sealed string ResultName => Exception.GetType().Name;
 }

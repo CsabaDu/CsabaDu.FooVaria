@@ -5,7 +5,7 @@ public abstract record TestData_returns<TStruct>(string ParamsDescription, TStru
     where TStruct : struct
 {
     protected override sealed string ResultType => GetResultType();
-    protected override sealed string Result => Expected.ToString();
+    protected override sealed string ResultName => Expected.ToString();
 }
 
 public record TestData_returns<TStruct, T1>(string ParamsDescription, TStruct Expected, T1 Arg1)
@@ -69,5 +69,5 @@ public abstract record TestData_returns(string ParamsDescription, string ResultD
 {
     protected override sealed string ResultType => GetResultType();
 
-    protected override string Result => ResultDescription;
+    protected override string ResultName => ResultDescription;
 }
