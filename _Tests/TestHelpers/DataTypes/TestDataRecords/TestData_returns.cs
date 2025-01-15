@@ -68,6 +68,5 @@ public abstract record TestData_returns(string ParamsDescription, string ResultD
     : TestData<object>(ParamsDescription)
 {
     protected override sealed string ResultType => GetResultType();
-
     protected override string ResultName => ResultDescription;
 }
