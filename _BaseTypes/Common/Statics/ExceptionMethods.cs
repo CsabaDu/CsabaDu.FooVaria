@@ -82,7 +82,7 @@ public static class ExceptionMethods
 
         if (enumerable.GetEnumerator() is not IEnumerator enumerator)
         {
-            throw new InvalidOperationException($"The {paramName} enumerable's GetEnumerator() returned null."));
+            throw new InvalidOperationException($"The {paramName} enumerable's GetEnumerator() returned null.");
         }
             
         if (!enumerator.MoveNext())
