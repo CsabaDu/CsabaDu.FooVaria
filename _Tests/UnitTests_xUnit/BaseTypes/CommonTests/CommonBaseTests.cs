@@ -3,7 +3,7 @@
 public sealed class CommonBaseTests
 {
     #region Private fields
-    private readonly DataFields _fields = new();
+    private readonly IRootObject _rootObject = new RootObject();
     #endregion
 
     #region Test methods
@@ -13,13 +13,13 @@ public sealed class CommonBaseTests
     public void CommonBase_nullArg_IRootobject_throwsArgumentNullException()
     {
         // Arrange
-        _fields.paramName = ParamNames.rootObject;
+        string paramName = ParamNames.rootObject;
 
         // Act
-        void attempt() => _ = new CommonBaseChild(null, _fields.paramName);
+        void attempt() => _ = new TestCommonBase(null, paramName, null);
 
         // Assert
-        Assert.Throws<ArgumentNullException>(_fields.paramName, attempt);
+        Assert.Throws<ArgumentNullException>(paramName, attempt);
     }
 
     [Fact]
@@ -27,9 +27,10 @@ public sealed class CommonBaseTests
     {
         // Arrange
         // Act
-        var actual = new CommonBaseChild(_fields.RootObject, null);
+        var actual = new TestCommonBase(_rootObject, null, null);
 
         // Assert
+        Assert.NotNull(actual);
         Assert.IsAssignableFrom<ICommonBase>(actual);
     }
     #endregion
@@ -41,19 +42,13 @@ public sealed class CommonBaseTests
     public void GetFactory_returnsExpected()
     {
         // Arrange
-        _fields.paramName = null;
-        CommonBaseChild commonBaseChild = new(_fields.RootObject, _fields.paramName)
-        {
-            ReturnValues = new()
-            {
-                GetFactoryReturnValue = new FactoryObject(),
-            }
-        };
+        TestCommonBase testCommonBase = new(_rootObject, null, new FactoryObject());
 
         // Act
-        var actual = commonBaseChild.GetFactory();
+        var actual = testCommonBase.GetFactory();
 
         // Assert
+        Assert.NotNull(actual);
         Assert.IsAssignableFrom<IFactory>(actual);
     }
     #endregion

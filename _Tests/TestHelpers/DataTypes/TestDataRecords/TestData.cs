@@ -5,7 +5,9 @@ public abstract record TestData<TResult>(string ParamsDescription) : ITestData w
     protected abstract string ResultType { get; }
     protected abstract string ResultName { get; }
 
-    public string TestCase => ResultName == null ? $"{ParamsDescription} => {ResultType}" : $"{ParamsDescription} => {ResultType} {ResultName}";
+    public string TestCase => ResultName == null ?
+        $"{ParamsDescription} => {ResultType}"
+        : $"{ParamsDescription} => {ResultType} {ResultName}";
 
     protected string GetResultType()
     {
@@ -18,5 +20,6 @@ public abstract record TestData<TResult>(string ParamsDescription) : ITestData w
     }
 
     public virtual object[] ToArgs(ArgsCode argsCode) => argsCode == ArgsCode.Instance ? [this] : null;
+
     public override sealed string ToString() => TestCase;
 }
