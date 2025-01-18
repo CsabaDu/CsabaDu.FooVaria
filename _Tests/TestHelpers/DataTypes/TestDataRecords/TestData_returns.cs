@@ -13,7 +13,9 @@ public record TestData_returns<TStruct, T1>(string ParamsDescription, TStruct Ex
     where TStruct : struct
 {
     public override object[] ToArgs(ArgsCode argsCode)
-    => argsCode == ArgsCode.Properties ? [TestCase, Expected, Arg1] : base.ToArgs(argsCode);
+    => argsCode == ArgsCode.Properties ?
+        [TestCase, Expected, Arg1]
+        : base.ToArgs(argsCode);
 }
 
 public record TestData_returns<TStruct, T1, T2>(string ParamsDescription, TStruct Expected, T1 Arg1, T2 Arg2)
@@ -21,7 +23,9 @@ public record TestData_returns<TStruct, T1, T2>(string ParamsDescription, TStruc
     where TStruct : struct
 {
     public override object[] ToArgs(ArgsCode argsCode)
-    => argsCode == ArgsCode.Properties ? [TestCase, Expected, Arg1, Arg2] : base.ToArgs(argsCode);
+    => argsCode == ArgsCode.Properties ?
+        [TestCase, Expected, Arg1, Arg2]
+        : base.ToArgs(argsCode);
 }
 
 public record TestData_returns<TStruct, T1, T2, T3>(string ParamsDescription, TStruct Expected, T1 Arg1, T2 Arg2, T3 Arg3)
@@ -29,7 +33,9 @@ public record TestData_returns<TStruct, T1, T2, T3>(string ParamsDescription, TS
     where TStruct : struct
 {
     public override object[] ToArgs(ArgsCode argsCode)
-    => argsCode == ArgsCode.Properties ? [TestCase, Expected, Arg1, Arg2, Arg3] : base.ToArgs(argsCode);
+    => argsCode == ArgsCode.Properties ?
+        [TestCase, Expected, Arg1, Arg2, Arg3]
+        : base.ToArgs(argsCode);
 }
 
 public record TestData_returns<TStruct, T1, T2, T3, T4>(string ParamsDescription, TStruct Expected, T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4)
@@ -37,7 +43,9 @@ public record TestData_returns<TStruct, T1, T2, T3, T4>(string ParamsDescription
     where TStruct : struct
 {
     public override object[] ToArgs(ArgsCode argsCode)
-    => argsCode == ArgsCode.Properties ? [TestCase, Expected, Arg1, Arg2, Arg3, Arg4] : base.ToArgs(argsCode);
+    => argsCode == ArgsCode.Properties ?
+        [TestCase, Expected, Arg1, Arg2, Arg3, Arg4]
+        : base.ToArgs(argsCode);
 }
 
 public record TestData_returns<TStruct, T1, T2, T3, T4, T5>(string ParamsDescription, TStruct Expected, T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4, T5 Arg5)
@@ -45,7 +53,9 @@ public record TestData_returns<TStruct, T1, T2, T3, T4, T5>(string ParamsDescrip
     where TStruct : struct
 {
     public override object[] ToArgs(ArgsCode argsCode)
-    => argsCode == ArgsCode.Properties ? [TestCase, Expected, Arg1, Arg2, Arg3, Arg4, Arg5] : base.ToArgs(argsCode);
+    => argsCode == ArgsCode.Properties ?
+        [TestCase, Expected, Arg1, Arg2, Arg3, Arg4, Arg5]
+        : base.ToArgs(argsCode);
 }
 
 public record TestData_returns<TStruct, T1, T2, T3, T4, T5, T6>(string ParamsDescription, TStruct Expected, T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4, T5 Arg5, T6 Arg6)
@@ -53,7 +63,9 @@ public record TestData_returns<TStruct, T1, T2, T3, T4, T5, T6>(string ParamsDes
     where TStruct : struct
 {
     public override object[] ToArgs(ArgsCode argsCode)
-    => argsCode == ArgsCode.Properties ? [TestCase, Expected, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6] : base.ToArgs(argsCode);
+    => argsCode == ArgsCode.Properties ?
+        [TestCase, Expected, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6]
+        : base.ToArgs(argsCode);
 }
 
 public record TestData_returns<TStruct, T1, T2, T3, T4, T5, T6, T7>(string ParamsDescription, TStruct Expected, T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4, T5 Arg5, T6 Arg6, T7 Arg7)
@@ -61,12 +73,19 @@ public record TestData_returns<TStruct, T1, T2, T3, T4, T5, T6, T7>(string Param
     where TStruct : struct
 {
     public override object[] ToArgs(ArgsCode argsCode)
-    => argsCode == ArgsCode.Properties ? [TestCase, Expected, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7] : base.ToArgs(argsCode);
+    => argsCode == ArgsCode.Properties ?
+        [TestCase, Expected, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7]
+        : base.ToArgs(argsCode);
 }
 
-public abstract record TestData_returns(string ParamsDescription, string ResultDescription = "")
+public record TestData_returns(string ParamsDescription, string ResultDescription, params object[] Args)
     : TestData<object>(ParamsDescription)
 {
     protected override sealed string ResultType => GetResultType();
-    protected override string ResultName => ResultDescription;
+    protected override sealed string ResultName => ResultDescription;
+
+    public override object[] ToArgs(ArgsCode argsCode)
+    => argsCode == ArgsCode.Properties ?
+        [TestCase, Args]
+        : base.ToArgs(argsCode);
 }

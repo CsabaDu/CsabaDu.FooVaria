@@ -2,25 +2,20 @@
 
 public sealed class ExtensionsTests
 {
-    #region Private fields
-    #region Static fields
-    private static readonly DynamicTestData<CommonTestsDynamicDataSource> DynamicTestData
-        = new(new CommonTestsDynamicDataSource(ArgsCode.Instance));
-    #endregion
+    #region Private static fields
+    private static readonly CommonTestsDynamicDataSource DynamicDataSource = new(ArgsCode.Instance);
     #endregion
 
-    #region Private properties
-    #region Static properties
+    #region Private static properties
     public static IEnumerable<object[]> IsValidExchangeRate_ArgsList
-    => DynamicTestData.Source.Extensions_IsValidExchangeRate_ArgsToList();
-
+    => DynamicDataSource.Extensions_IsValidExchangeRate_ArgsToList();
     public static IEnumerable<object[]> IsDefined_ArgsList
-    => DynamicTestData.Source.Extensions_IsDefined_ArgsToList();
-    #endregion
+    => DynamicDataSource.Extensions_IsDefined_ArgsToList();
     #endregion
 
     #region Test methods
-    #region IsValidExchangeRate
+    #region IsValidExchangeRate tests
+    #region static bool IsValidExchangeRate(this decimal)
     [Theory, MemberData(nameof(IsValidExchangeRate_ArgsList))]
     public void IsValidExchangeRate_returnsExpected(TestData_returns<bool, decimal> testData)
     {
@@ -34,8 +29,10 @@ public sealed class ExtensionsTests
         Assert.Equal(testData.Expected, actual);
     }
     #endregion
+    #endregion
 
-    #region IsDefined
+    #region IsDefined tests
+    #region static bool IsDefined<T>(this T) where T : struct, Enum
     [Theory, MemberData(nameof(IsDefined_ArgsList))]
     public void IsDefined_returnsExpected(TestData_returns<bool, TestEnum> testData)
     {
@@ -48,6 +45,7 @@ public sealed class ExtensionsTests
         // Assert
         Assert.Equal(testData.Expected, actual);
     }
+    #endregion
     #endregion
     #endregion
 }

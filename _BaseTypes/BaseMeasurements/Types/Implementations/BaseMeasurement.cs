@@ -831,29 +831,11 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
 
         foreach (Type item in MeasureUnitTypes)
         {
-<<<<<<< Updated upstream
             addExchangeRatesToCollection(getMeasureUnits(item), getExchangeRates(item));
-=======
-            string exchangeRatesName = item.Name.Replace("Unit", "ExchangeRates");
-            FieldInfo? exchangeRatesField = privateStaticFields.FirstOrDefault(x => x.FieldType == typeof(decimal[]) && x.Name == exchangeRatesName);
-            decimal[]? exchangeRates = (decimal[]?)exchangeRatesField?.GetValue(null);
-            Array measureUnits = Enum.GetValues(item);
-            int exchangeRateCount = exchangeRates?.Length ?? 0;
-
-            if (exchangeRateCount != 0 && measureUnits.Length != exchangeRateCount + 1) throw new InvalidOperationException(null);
-
-            exchangeRateCollection[measureUnits.GetValue(0)!] = decimal.One;
-
-            for (int i = 0; i < exchangeRateCount; i++)
-            {
-                exchangeRateCollection[measureUnits.GetValue(i + 1)!] = exchangeRates![i];
-            }
->>>>>>> Stashed changes
         }
 
         return exchangeRateCollection;
 
-<<<<<<< Updated upstream
         #region Local methods
         static Array getMeasureUnits(Type measureUnitType)
         {
@@ -883,47 +865,6 @@ public abstract class BaseMeasurement(IRootObject rootObject, string paramName) 
             }
         }
         #endregion
-=======
-        //return initConstantExchangeRates<AreaUnit>(AreaExchangeRates)
-        //    .Union(initConstantExchangeRates<Currency>())
-        //    .Union(initConstantExchangeRates<DistanceUnit>(DistanceExchangeRates))
-        //    .Union(initConstantExchangeRates<ExtentUnit>(ExtentExchangeRates))
-        //    .Union(initConstantExchangeRates<Pieces>())
-        //    .Union(initConstantExchangeRates<TimePeriodUnit>(TimePeriodExchangeRates))
-        //    .Union(initConstantExchangeRates<VolumeUnit>(VolumeExchangeRates))
-        //    .Union(initConstantExchangeRates<WeightUnit>(WeightExchangeRates))
-        //    .ToDictionary(x => x.Key, x => x.Value);
-
-        //#region Local methods
-        //static IEnumerable<KeyValuePair<object, decimal>> initConstantExchangeRates<T>(params decimal[] exchangeRates)
-        //    where T : struct, Enum
-        //{
-        //    yield return getMeasureUnitExchangeRatePair(default(T), decimal.One);
-
-        //    int exchangeRateCount = exchangeRates?.Length ?? 0;
-
-        //    if (exchangeRateCount > 0)
-        //    {
-        //        T[] measureUnits = Enum.GetValues<T>();
-        //        int measureUnitCount = measureUnits.Length;
-
-        //        if (measureUnitCount != exchangeRateCount + 1) throw new InvalidOperationException(null);
-
-        //        int i = 0;
-
-        //        foreach (decimal item in exchangeRates!)
-        //        {
-        //            yield return getMeasureUnitExchangeRatePair(measureUnits[++i], item);
-        //        }
-        //    }
-        //}
-
-        //static KeyValuePair<object, decimal> getMeasureUnitExchangeRatePair(Enum measureUnit, decimal exchangeRate)
-        //{
-        //    return new KeyValuePair<object, decimal>(measureUnit, exchangeRate);
-        //}
-        //#endregion
->>>>>>> Stashed changes
     }
     #endregion
     #endregion

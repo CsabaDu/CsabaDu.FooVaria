@@ -7,3 +7,7 @@ global using CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.TestDataRecords;
 global using CsabaDu.FooVaria.Tests.TestHelpers.DynamicDataSources;
 global using CsabaDu.FooVaria.Tests.TestHelpers.Params;
 global using CsabaDu.FooVaria.Tests.TestHelpers.TestDoubles.BaseTypes.Common;
+global using System.Collections;
+global using System.ComponentModel;
+global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.ExceptionMethods;
+global using static CsabaDu.FooVaria.BaseTypes.Common.Statics.Extensions;

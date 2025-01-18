@@ -14,6 +14,7 @@ public abstract record TestData<TResult>(string ParamsDescription) : ITestData w
         string typeName = GetType().Name;
         int lastUnderscoreIndexPlus = typeName.LastIndexOf('_') + 1;
         int apostropheIndex = typeName.IndexOf('`', lastUnderscoreIndexPlus);
+
         return apostropheIndex == -1 ?
             typeName[lastUnderscoreIndexPlus..]
             : typeName[lastUnderscoreIndexPlus..apostropheIndex];

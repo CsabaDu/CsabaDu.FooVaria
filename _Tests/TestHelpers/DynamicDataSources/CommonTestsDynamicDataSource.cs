@@ -2,15 +2,23 @@
 
 public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource(argsCode)
 {
-    private string _paramsDescription = null;
     private bool _expected;
+    private string _paramsDescription = null;
 
-    private object[] TestDataToArgs<T>(T arg) where T : struct
+    private void SetParamName() => ParamName = ParamNames.param;
+
+    private class NullEnumeratorEnumerable() : IEnumerable
+    {
+        public IEnumerator GetEnumerator() => null;
+    }
+
+    private object[] TestDataToArgs<TStruct>(TStruct arg) where TStruct : struct
     {
         ParamsDescription = _paramsDescription ?? arg.ToString();
         return TestDataReturnsToArgs(_expected, arg);
     }
 
+    #region Extensions
     public IEnumerable<object[]> Extensions_IsValidExchangeRate_ArgsToList()
     {
         #region returns True
@@ -67,4 +75,48 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
 
         object[] testDataToArgs() => TestDataToArgs(testEnum);
     }
+    #endregion
+
+    #region ExceptionMethods
+    #region NullChecked
+    public IEnumerable<object[]> ExceptionMethods_NullChecked_ArgumentException_ArgsToList()
+    {
+        SetParamName();
+
+        ParamsDescription = "Empty string";
+        object param = string.Empty;
+        MessageContent = "The value cannot be an empty string.";
+        yield return testDataToArgs();
+
+        ParamsDescription = "IEnumerable.GetEnumerator() returns null";
+        param = new NullEnumeratorEnumerable();
+        MessageContent = $"GetEnumerator() method of the {ParamName} enumerable returns null.";
+        yield return testDataToArgs();
+
+        ParamsDescription = "IEnumerable does not contain any element";
+        param = new List<object>();
+        MessageContent = $"The {ParamName} enumerable does not contain any element.";
+        yield return testDataToArgs();
+
+        object[] testDataToArgs() => TestDataThrowsToArgs<ArgumentException, object>(param);
+    }
+
+    public IEnumerable<object[]> ExceptionMethods_NullChecked_Returns_ArgsToList()
+    {
+        ParamsDescription = "object";
+        object param = new();
+        yield return testDataToArgs();
+
+        ParamsDescription = "Not empty string";
+        param = ParamNames.param;
+        yield return testDataToArgs();
+
+        ParamsDescription = "IEnumerable contains elements";
+        param = new List<object>() { new() };
+        yield return testDataToArgs();
+
+        object[] testDataToArgs() => TestDataReturnsToArgs(null, param);
+    }
+    #endregion
+    #endregion
 }

@@ -7,8 +7,8 @@ public sealed class CommonBaseTests
     #endregion
 
     #region Test methods
-    #region CommonBase
-    #region CommonBase(IRootObject)
+    #region CommonBase tests
+    #region CommonBase(IRootObject, string)
     [Fact]
     public void CommonBase_nullArg_IRootobject_throwsArgumentNullException()
     {
@@ -36,8 +36,8 @@ public sealed class CommonBaseTests
     #endregion
     #endregion
 
-    #region IFactory GetFactory
-    #region abstract ICommonBase.GetFactory()
+    #region GetFactory tests
+    #region abstract IFactory GetFactory()
     [Fact]
     public void GetFactory_returnsExpected()
     {

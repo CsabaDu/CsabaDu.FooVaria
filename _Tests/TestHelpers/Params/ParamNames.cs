@@ -12,6 +12,7 @@ public static class ParamNames
     public const string measureUnitCode = nameof(measureUnitCode);
     public const string numerator = nameof(numerator);
     public const string other = nameof(other);
+    public const string param = nameof(param);
     public const string paramName = nameof(paramName);
     public const string quantity = nameof(quantity);
     public const string quantityTypeCode = nameof(quantityTypeCode);
