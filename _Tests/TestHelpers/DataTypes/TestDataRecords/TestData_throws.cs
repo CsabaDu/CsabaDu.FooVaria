@@ -6,7 +6,7 @@ public abstract record TestData_throws<TException>(string ParamsDescription, str
 {
     public string Message => typeof(TException) == typeof(ArgumentException) ? $"{MessageContent} (Parameter '{ParamName}')" : MessageContent;
     public Type ExceptionType => typeof(TException);
-    protected override sealed string ResultType => GetResultType();
+    protected override sealed string ResultTypeName => GetResultTypeName();
     protected override sealed string ResultName => ExceptionType.Name;
 }
 

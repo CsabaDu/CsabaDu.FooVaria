@@ -85,13 +85,6 @@ public static class ExceptionMethods
 
         if (param is IEnumerable enumerable)
         {
-            throwIfNullEnumeratorOrEmpty(enumerable);
-        }
-
-        return param!;
-
-        void throwIfNullEnumeratorOrEmpty(IEnumerable enumerable) 
-        {
             if (enumerable.GetEnumerator() is not IEnumerator enumerator)
             {
                 throw new ArgumentException($"GetEnumerator() method of the {paramName} enumerable returns null.", paramName);
@@ -102,20 +95,24 @@ public static class ExceptionMethods
                 throw new ArgumentException($"The {paramName} enumerable does not contain any element.", paramName);
             }
         }
+
+        return param!;
     }
     #endregion
 
     #region TypeCheckers
-    public static T TypeChecked<T>(T? param, [DisallowNull] string paramName, [DisallowNull] Type validType)
+    public static T TypeChecked<T>(T? param, string paramName, Type validType)
     {
+        ArgumentNullException.ThrowIfNull(param, paramName);
+
         Type paramType = typeof(T);
 
-        if (paramType == validType) return NullChecked(param, paramName);
+        if (paramType == NullChecked(validType, nameof(validType))) return param;
 
         throw ArgumentTypeOutOfRangeException(paramName, paramType, validType);
     }
 
-    public static T TypeChecked<T>(object? param, [DisallowNull] string paramName)
+    public static T TypeChecked<T>(object? param, string paramName)
     {
         if (NullChecked(param, paramName) is T typeChecked) return typeChecked;
 
@@ -144,7 +141,9 @@ public static class ExceptionMethods
 
     public static ArgumentOutOfRangeException ArgumentTypeOutOfRangeException(string paramName, object arg, Type validType)
     {
-        return new ArgumentOutOfRangeException(paramName, arg.GetType().Name, $"The {paramName} argument's type is other than the valid {validType.Name} type.");
+        string argTypeName = arg.GetType().Name;
+
+        return new ArgumentOutOfRangeException(paramName, argTypeName, $"The {paramName} argument's type {argTypeName} is other than the valid {validType.Name} type.");
     }
 
     public static InvalidEnumArgumentException InvalidTypeEnumArgumentException(string? paramName, Enum param, Type enumType)

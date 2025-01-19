@@ -74,6 +74,7 @@ public sealed class ExceptionMethodsTests
     #region static T TypeChecked<T>(object?, string)
 
     #endregion
+
     [Fact]
     public void TypeChecked_InvalidType_ThrowsArgumentOutOfRangeException()
     {

@@ -12,6 +12,8 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
         public IEnumerator GetEnumerator() => null;
     }
 
+    private class TestType : object;
+
     private object[] TestDataToArgs<TStruct>(TStruct arg) where TStruct : struct
     {
         ParamsDescription = _paramsDescription ?? arg.ToString();
@@ -117,6 +119,15 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
 
         object[] testDataToArgs() => TestDataReturnsToArgs(null, param);
     }
+
+    public IEnumerable<object[]> ExceptionMethods_TypeChecked_3params_ArgumentNullException_ArgsToList()
+    {
+        SetParamName();
+
+
+
+    }
+
     #endregion
     #endregion
 }
