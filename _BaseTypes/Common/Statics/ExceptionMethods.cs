@@ -73,7 +73,7 @@ public static class ExceptionMethods
     #endregion
 
     #region Generic checkers
-    #region ArgumentNullException
+    #region NullCheckers
     public static T NullChecked<T>(T? param, string? paramName)
     {
         ArgumentNullException.ThrowIfNull(param, paramName);
@@ -105,7 +105,7 @@ public static class ExceptionMethods
     }
     #endregion
 
-    #region ArgumentOutOfRangeException
+    #region TypeCheckers
     public static T TypeChecked<T>(T? param, [DisallowNull] string paramName, [DisallowNull] Type validType)
     {
         Type paramType = typeof(T);
@@ -123,7 +123,7 @@ public static class ExceptionMethods
     }
     #endregion
 
-    #region InvalidEnumArgumentException
+    #region EnumCheckers
     public static T Defined<T>(T param, string? paramName, Type validType)
         where T : Enum
     {
