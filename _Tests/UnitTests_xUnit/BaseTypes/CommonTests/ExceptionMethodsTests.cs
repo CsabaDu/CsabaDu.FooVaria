@@ -150,22 +150,6 @@ public sealed class ExceptionMethodsTests
         // Assert
        _ = Assert.Throws<ArgumentOutOfRangeException>(paramName, attempt);
     }
-    #endregion
-
-    //[Fact]
-    //public void TypeChecked_InvalidType_ThrowsArgumentOutOfRangeException()
-    //{
-    //    // Arrange
-    //    string paramName = "param";
-    //    object param = new object();
-    //    Type expectedType = typeof(string);
-
-    //    // Act
-    //    void act() => TypeChecked(param, paramName, expectedType);
-
-    //    // Assert
-    //    _ = Assert.Throws<ArgumentOutOfRangeException>(paramName, act);
-    //}
 
     [Fact]
     public void TypeChecked_ValidType_ReturnsParam()
@@ -182,6 +166,7 @@ public sealed class ExceptionMethodsTests
         Assert.Equal(param, result);
     }
 
+    #endregion
     #endregion
 
     #region Defined Tests
