@@ -3,6 +3,7 @@
 public interface ITestData
 {
     string TestCase { get; }
+    string ResultMode { get; }
 
     object[] ToArgs(ArgsCode argsCode);
 }

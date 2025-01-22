@@ -13,10 +13,16 @@ public sealed class ExceptionMethodsTests
     #region Private static properties
     public static IEnumerable<object[]> NullChecked_object_ArgumentException_ArgsList
     => DynamicDataSource.ExceptionMethods_NullChecked_object_ArgumentException_ArgsToList();
-    public static IEnumerable<object[]> NullChecked_Returns_ArgsList
-    => DynamicDataSource.ExceptionMethods_NullChecked_Returns_ArgsToList();
+
+    public static IEnumerable<object[]> NullChecked_object_Returns_ArgsList
+    => DynamicDataSource.ExceptionMethods_NullChecked_object_Returns_ArgsToList();
+
     public static IEnumerable<object[]> NullChecked_IEnumerable_ArgumentException_ArgsList
     => DynamicDataSource.ExceptionMethods_NullChecked_IEnumerable_ArgumentException_ArgsToList();
+
+    public static IEnumerable<object[]> NullChecked_IEnumerable_Returns_ArgsList
+    => DynamicDataSource.ExceptionMethods_NullChecked_IEnumerable_Returns_ArgsToList();
+
     public static IEnumerable<object[]> TypeChecked_ArgumentNullException_ArgsList
     => DynamicDataSource.ExceptionMethods_TypeChecked_ArgumentNullException_ArgsToList();
     #endregion
@@ -51,7 +57,7 @@ public sealed class ExceptionMethodsTests
         Assert.Equal(testData.Message, exception.Message);
     }
 
-    [Theory, MemberData(nameof(NullChecked_Returns_ArgsList))]
+    [Theory, MemberData(nameof(NullChecked_object_Returns_ArgsList))]
     public void NullChecked_validArg_object_arg_string_returnsExpected(TestData_returns testData)
     {
         // Arrange
@@ -94,6 +100,20 @@ public sealed class ExceptionMethodsTests
         // Assert
         var exception = Assert.Throws<ArgumentException>(testData.ParamName, attempt);
         Assert.Equal(testData.Message, exception.Message);
+    }
+
+    [Theory, MemberData(nameof(NullChecked_IEnumerable_Returns_ArgsList))]
+    public void NullChecked_validArg_IEnumerable_arg_string_arg_bool_returnsExpected(TestData_returns testData)
+    {
+        // Arrange
+        var enumerable = (IEnumerable)testData.Args[0];
+        var checkElements = (bool)testData.Args[1];
+
+        // Act
+        var actual = NullChecked(enumerable, null, checkElements);
+
+        // Assert
+        Assert.Equal(enumerable, actual);
     }
 
     #endregion
