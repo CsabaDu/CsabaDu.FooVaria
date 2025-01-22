@@ -44,7 +44,7 @@ public sealed class ExceptionMethodsTests
     }
 
     [Theory, MemberData(nameof(NullChecked_object_ArgumentException_ArgsList))]
-    public void NullChecked_invalidArg_object_arg_string_throwsArgumentException(TestData_throws<ArgumentException, object> testData)
+    public void NullChecked_invalidArg_object_arg_string_throwsArgumentException(TestDataThrows<ArgumentException, object> testData)
     {
         // Arrange
         object param = testData.Arg1;
@@ -58,10 +58,10 @@ public sealed class ExceptionMethodsTests
     }
 
     [Theory, MemberData(nameof(NullChecked_object_Returns_ArgsList))]
-    public void NullChecked_validArg_object_arg_string_returnsExpected(TestData_returns testData)
+    public void NullChecked_validArg_object_arg_string_returnsExpected(TestData<string, object> testData)
     {
         // Arrange
-        object param = testData.Args[0];
+        object param = testData.Arg1;
 
         // Act
         var actual = NullChecked(param, null);
@@ -88,7 +88,7 @@ public sealed class ExceptionMethodsTests
     }
 
     [Theory, MemberData(nameof(NullChecked_IEnumerable_ArgumentException_ArgsList))]
-    public void NullChecked_invalidArg_IEnumerable_arg_string_arg_bool_throwsArgumentException(TestData_throws<ArgumentException, IEnumerable, bool> testData)
+    public void NullChecked_invalidArg_IEnumerable_arg_string_arg_bool_throwsArgumentException(TestDataThrows<ArgumentException, IEnumerable, bool> testData)
     {
         // Arrange
         IEnumerable enumerable = testData.Arg1;
@@ -103,11 +103,11 @@ public sealed class ExceptionMethodsTests
     }
 
     [Theory, MemberData(nameof(NullChecked_IEnumerable_Returns_ArgsList))]
-    public void NullChecked_validArg_IEnumerable_arg_string_arg_bool_returnsExpected(TestData_returns testData)
+    public void NullChecked_validArg_IEnumerable_arg_string_arg_bool_returnsExpected(TestData<string, IEnumerable, bool> testData)
     {
         // Arrange
-        var enumerable = (IEnumerable)testData.Args[0];
-        var checkElements = (bool)testData.Args[1];
+        IEnumerable enumerable = testData.Arg1;
+        bool checkElements = testData.Arg2;
 
         // Act
         var actual = NullChecked(enumerable, null, checkElements);
@@ -115,14 +115,13 @@ public sealed class ExceptionMethodsTests
         // Assert
         Assert.Equal(enumerable, actual);
     }
-
     #endregion
     #endregion
 
     #region TypeChecked tests
     #region static T TypeChecked<T>(T?, string, Type)
     [Theory, MemberData(nameof(TypeChecked_ArgumentNullException_ArgsList))]
-    public void TypeChecked_nullArg_object_arg_string_nullArg_Type_throwsArgumentNullException(TestData_throws<ArgumentNullException, object, Type> testData)
+    public void TypeChecked_nullArg_object_arg_string_nullArg_Type_throwsArgumentNullException(TestDataThrows<ArgumentNullException, object, Type> testData)
     {
         // Arrange
         object param = testData.Arg1;

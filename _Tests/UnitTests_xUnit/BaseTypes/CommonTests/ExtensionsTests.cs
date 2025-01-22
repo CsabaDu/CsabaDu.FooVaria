@@ -17,7 +17,7 @@ public sealed class ExtensionsTests
     #region IsValidExchangeRate tests
     #region static bool IsValidExchangeRate(this decimal)
     [Theory, MemberData(nameof(IsValidExchangeRate_ArgsList))]
-    public void IsValidExchangeRate_returnsExpected(TestData_returns<bool, decimal> testData)
+    public void IsValidExchangeRate_returnsExpected(TestDataReturns<bool, decimal> testData)
     {
         // Arrange
         decimal exchangeRate = testData.Arg1;
@@ -34,7 +34,7 @@ public sealed class ExtensionsTests
     #region IsDefined tests
     #region static bool IsDefined<TEnum>(this TEnum) where TEnum : struct, Enum
     [Theory, MemberData(nameof(IsDefined_ArgsList))]
-    public void IsDefined_returnsExpected(TestData_returns<bool, TestEnum> testData)
+    public void IsDefined_returnsExpected(TestDataReturns<bool, TestEnum> testData)
     {
         // Arrange
         TestEnum testEnum = testData.Arg1;

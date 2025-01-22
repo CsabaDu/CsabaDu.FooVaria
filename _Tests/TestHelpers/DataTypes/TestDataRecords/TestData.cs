@@ -2,7 +2,7 @@
 
 public abstract record TestData<TResult>(string ParamsDescription) : ITestData where TResult : notnull
 {
-    public abstract string ResultMode { get; }
+    protected abstract string ResultMode { get; }
 
     protected abstract string ResultName { get; }
 
@@ -31,7 +31,7 @@ public record TestData<String, T1>(string ParamsDescription, string ResultDescri
 {
     protected override sealed string ResultName => null;
 
-    public override sealed string ResultMode => ResultDescription;
+    protected override sealed string ResultMode => ResultDescription;
 
     public override object[] ToArgs(ArgsCode argsCode)
     => argsCode == ArgsCode.Properties ?

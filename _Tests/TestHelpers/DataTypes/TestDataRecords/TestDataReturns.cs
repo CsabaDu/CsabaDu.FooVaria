@@ -1,6 +1,6 @@
 ﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.TestDataRecords;
 
-public abstract record TestData_returns<TStruct>(string ParamsDescription, TStruct Expected)
+public abstract record TestDataReturns<TStruct>(string ParamsDescription, TStruct Expected)
     : TestData<TStruct>(ParamsDescription)
     where TStruct : struct
 {
@@ -8,8 +8,8 @@ public abstract record TestData_returns<TStruct>(string ParamsDescription, TStru
     protected override sealed string ResultName => Expected.ToString();
 }
 
-public record TestData_returns<TStruct, T1>(string ParamsDescription, TStruct Expected, T1 Arg1)
-    : TestData_returns<TStruct>(ParamsDescription, Expected)
+public record TestDataReturns<TStruct, T1>(string ParamsDescription, TStruct Expected, T1 Arg1)
+    : TestDataReturns<TStruct>(ParamsDescription, Expected)
     where TStruct : struct
 {
     public override object[] ToArgs(ArgsCode argsCode)
@@ -18,8 +18,8 @@ public record TestData_returns<TStruct, T1>(string ParamsDescription, TStruct Ex
         : base.ToArgs(argsCode);
 }
 
-public record TestData_returns<TStruct, T1, T2>(string ParamsDescription, TStruct Expected, T1 Arg1, T2 Arg2)
-    : TestData_returns<TStruct, T1>(ParamsDescription, Expected, Arg1)
+public record TestDataReturns<TStruct, T1, T2>(string ParamsDescription, TStruct Expected, T1 Arg1, T2 Arg2)
+    : TestDataReturns<TStruct, T1>(ParamsDescription, Expected, Arg1)
     where TStruct : struct
 {
     public override object[] ToArgs(ArgsCode argsCode)
@@ -28,8 +28,8 @@ public record TestData_returns<TStruct, T1, T2>(string ParamsDescription, TStruc
         : base.ToArgs(argsCode);
 }
 
-public record TestData_returns<TStruct, T1, T2, T3>(string ParamsDescription, TStruct Expected, T1 Arg1, T2 Arg2, T3 Arg3)
-    : TestData_returns<TStruct, T1, T2>(ParamsDescription, Expected, Arg1, Arg2)
+public record TestDataReturns<TStruct, T1, T2, T3>(string ParamsDescription, TStruct Expected, T1 Arg1, T2 Arg2, T3 Arg3)
+    : TestDataReturns<TStruct, T1, T2>(ParamsDescription, Expected, Arg1, Arg2)
     where TStruct : struct
 {
     public override object[] ToArgs(ArgsCode argsCode)
@@ -38,8 +38,8 @@ public record TestData_returns<TStruct, T1, T2, T3>(string ParamsDescription, TS
         : base.ToArgs(argsCode);
 }
 
-public record TestData_returns<TStruct, T1, T2, T3, T4>(string ParamsDescription, TStruct Expected, T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4)
-    : TestData_returns<TStruct, T1, T2, T3>(ParamsDescription, Expected, Arg1, Arg2, Arg3)
+public record TestDataReturns<TStruct, T1, T2, T3, T4>(string ParamsDescription, TStruct Expected, T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4)
+    : TestDataReturns<TStruct, T1, T2, T3>(ParamsDescription, Expected, Arg1, Arg2, Arg3)
     where TStruct : struct
 {
     public override object[] ToArgs(ArgsCode argsCode)
@@ -48,8 +48,8 @@ public record TestData_returns<TStruct, T1, T2, T3, T4>(string ParamsDescription
         : base.ToArgs(argsCode);
 }
 
-public record TestData_returns<TStruct, T1, T2, T3, T4, T5>(string ParamsDescription, TStruct Expected, T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4, T5 Arg5)
-    : TestData_returns<TStruct, T1, T2, T3, T4>(ParamsDescription, Expected, Arg1, Arg2, Arg3, Arg4)
+public record TestDataReturns<TStruct, T1, T2, T3, T4, T5>(string ParamsDescription, TStruct Expected, T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4, T5 Arg5)
+    : TestDataReturns<TStruct, T1, T2, T3, T4>(ParamsDescription, Expected, Arg1, Arg2, Arg3, Arg4)
     where TStruct : struct
 {
     public override object[] ToArgs(ArgsCode argsCode)
@@ -58,8 +58,8 @@ public record TestData_returns<TStruct, T1, T2, T3, T4, T5>(string ParamsDescrip
         : base.ToArgs(argsCode);
 }
 
-public record TestData_returns<TStruct, T1, T2, T3, T4, T5, T6>(string ParamsDescription, TStruct Expected, T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4, T5 Arg5, T6 Arg6)
-    : TestData_returns<TStruct, T1, T2, T3, T4, T5>(ParamsDescription, Expected, Arg1, Arg2, Arg3, Arg4, Arg5)
+public record TestDataReturns<TStruct, T1, T2, T3, T4, T5, T6>(string ParamsDescription, TStruct Expected, T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4, T5 Arg5, T6 Arg6)
+    : TestDataReturns<TStruct, T1, T2, T3, T4, T5>(ParamsDescription, Expected, Arg1, Arg2, Arg3, Arg4, Arg5)
     where TStruct : struct
 {
     public override object[] ToArgs(ArgsCode argsCode)
@@ -68,8 +68,8 @@ public record TestData_returns<TStruct, T1, T2, T3, T4, T5, T6>(string ParamsDes
         : base.ToArgs(argsCode);
 }
 
-public record TestData_returns<TStruct, T1, T2, T3, T4, T5, T6, T7>(string ParamsDescription, TStruct Expected, T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4, T5 Arg5, T6 Arg6, T7 Arg7)
-    : TestData_returns<TStruct, T1, T2, T3, T4, T5, T6>(ParamsDescription, Expected, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6)
+public record TestDataReturns<TStruct, T1, T2, T3, T4, T5, T6, T7>(string ParamsDescription, TStruct Expected, T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4, T5 Arg5, T6 Arg6, T7 Arg7)
+    : TestDataReturns<TStruct, T1, T2, T3, T4, T5, T6>(ParamsDescription, Expected, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6)
     where TStruct : struct
 {
     public override object[] ToArgs(ArgsCode argsCode)
@@ -78,7 +78,7 @@ public record TestData_returns<TStruct, T1, T2, T3, T4, T5, T6, T7>(string Param
         : base.ToArgs(argsCode);
 }
 
-public record TestData_returns(string ParamsDescription, string ResultDescription, params object[] Args)
+public record TestDataReturns(string ParamsDescription, string ResultDescription, params object[] Args)
     : TestData<object>(ParamsDescription)
 {
     protected override sealed string ResultMode => GetResultMode();

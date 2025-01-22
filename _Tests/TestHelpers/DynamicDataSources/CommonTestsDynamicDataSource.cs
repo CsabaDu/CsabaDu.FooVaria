@@ -31,6 +31,9 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
     private string GetEnumerableExceptionMessageContent(string messageEnd)
     => $"The {ParamName} enumerable{messageEnd}.";
 
+    private string GetResultDescription(string paramName)
+    => $"returns '{paramName}'";
+
     private object[] TestDataToArgs<TStruct>(TStruct arg) where TStruct : struct
     {
         ParamsDescription = _paramsDescription ?? arg.ToString();
@@ -134,7 +137,7 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
         param = new List<object>() { null };
         yield return testDataToArgs();
 
-        object[] testDataToArgs() => TestDataReturnsToArgs(null, param);
+        object[] testDataToArgs() => TestDataToArgs(GetResultDescription(nameof(param)), param);
     }
 
     public IEnumerable<object[]> ExceptionMethods_NullChecked_IEnumerable_ArgumentException_ArgsToList()
@@ -188,7 +191,7 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
         yield return testDataToArgs();
         #endregion
 
-        object[] testDataToArgs() => TestDataReturnsToArgs(null, enumerable, checkElements);
+        object[] testDataToArgs() => TestDataToArgs(GetResultDescription(nameof(enumerable)), enumerable, checkElements);
     }
 
     #endregion
