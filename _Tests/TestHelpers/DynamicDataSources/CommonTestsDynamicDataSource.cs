@@ -128,7 +128,6 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
         SetParamName(ParamNames.enumerable);
 
         bool checkElements = false;
-        string checkelementState = $" ({nameof(checkElements)}: {checkElements})";
         ParamsDescription = "IEnumerable.GetEnumerator() returns null";
         IEnumerable enumerable = new NullEnumeratorEnumerable();
         MessageContent = GetEnumerableExceptionMessageContent("'s GetEnumerator() method returns null");
@@ -140,8 +139,9 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
         yield return testDataToArgs();
 
         checkElements = true;
+        string checkelementState = $" ({nameof(checkElements)}: {checkElements})";
         ParamsDescription = "IEnumerable contains null elements only" + checkelementState;
-        enumerable = new List<object>() { null, };
+        enumerable = new List<object>() { null };
         MessageContent = GetEnumerableExceptionMessageContent(" contains null value elements");
         yield return testDataToArgs();
 

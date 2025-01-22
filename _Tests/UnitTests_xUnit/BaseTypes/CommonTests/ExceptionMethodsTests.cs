@@ -67,7 +67,7 @@ public sealed class ExceptionMethodsTests
 
     #region TEnumerable NullChecked<TEnumerable>(TEnumerable?, string, bool) where TEnumerable : IEnumerable
     [Fact]
-    public void NullChecked_nullArg_object_arg_string_arg_bool_throwsArgumentNullException()
+    public void NullChecked_nullArg_IEnumerable_arg_string_arg_bool_throwsArgumentNullException()
     {
         // Arrange
         IEnumerable enumerable = null;
@@ -82,7 +82,7 @@ public sealed class ExceptionMethodsTests
     }
 
     [Theory, MemberData(nameof(NullChecked_IEnumerable_ArgumentException_ArgsList))]
-    public void NullChecked_invalidArg_object_arg_string_arg_bool_throwsArgumentException(TestData_throws<ArgumentException, IEnumerable, bool> testData)
+    public void NullChecked_invalidArg_IEnumerable_arg_string_arg_bool_throwsArgumentException(TestData_throws<ArgumentException, IEnumerable, bool> testData)
     {
         // Arrange
         IEnumerable enumerable = testData.Arg1;
