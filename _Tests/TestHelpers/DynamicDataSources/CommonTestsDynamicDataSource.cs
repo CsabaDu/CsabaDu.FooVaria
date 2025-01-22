@@ -5,14 +5,17 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
     private bool _expected;
     private string _paramsDescription = null;
 
-    private void SetParamName() => ParamName = ParamNames.param;
-
     private class NullEnumeratorEnumerable() : IEnumerable
     {
         public IEnumerator GetEnumerator() => null;
     }
 
-    private class TestType : object;
+    private void SetParamName(string paramName) => ParamName = paramName;
+
+    private string GetEnumerableExceptionMessageContent(string messageEnd)
+    {
+        return $"The {ParamName} enumerable{messageEnd}.";
+    }
 
     private object[] TestDataToArgs<TStruct>(TStruct arg) where TStruct : struct
     {
@@ -81,9 +84,9 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
 
     #region ExceptionMethods
     #region NullChecked
-    public IEnumerable<object[]> ExceptionMethods_NullChecked_ArgumentException_ArgsToList()
+    public IEnumerable<object[]> ExceptionMethods_NullChecked_object_ArgumentException_ArgsToList()
     {
-        SetParamName();
+        SetParamName(ParamNames.param);
 
         ParamsDescription = "Empty string";
         object param = string.Empty;
@@ -92,12 +95,12 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
 
         ParamsDescription = "IEnumerable.GetEnumerator() returns null";
         param = new NullEnumeratorEnumerable();
-        MessageContent = $"GetEnumerator() method of the {ParamName} enumerable returns null.";
+        MessageContent = GetEnumerableExceptionMessageContent("'s GetEnumerator() method returns null");
         yield return testDataToArgs();
 
         ParamsDescription = "IEnumerable does not contain any element";
         param = new List<object>();
-        MessageContent = $"The {ParamName} enumerable does not contain any element.";
+        MessageContent = GetEnumerableExceptionMessageContent(" does not contain any element");
         yield return testDataToArgs();
 
         object[] testDataToArgs() => TestDataThrowsToArgs<ArgumentException, object>(param);
@@ -114,18 +117,56 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
         yield return testDataToArgs();
 
         ParamsDescription = "IEnumerable contains elements";
-        param = new List<object>() { new() };
+        param = new List<object>() { null };
         yield return testDataToArgs();
 
         object[] testDataToArgs() => TestDataReturnsToArgs(null, param);
     }
 
-    public IEnumerable<object[]> ExceptionMethods_TypeChecked_3params_ArgumentNullException_ArgsToList()
+    public IEnumerable<object[]> ExceptionMethods_NullChecked_IEnumerable_ArgumentException_ArgsToList()
     {
-        SetParamName();
+        SetParamName(ParamNames.enumerable);
 
+        bool checkElements = false;
+        string checkelementState = $" ({nameof(checkElements)}: {checkElements})";
+        ParamsDescription = "IEnumerable.GetEnumerator() returns null";
+        IEnumerable enumerable = new NullEnumeratorEnumerable();
+        MessageContent = GetEnumerableExceptionMessageContent("'s GetEnumerator() method returns null");
+        yield return testDataToArgs();
 
+        ParamsDescription = "IEnumerable does not contain any element";
+        enumerable = new List<object>();
+        MessageContent = GetEnumerableExceptionMessageContent(" does not contain any element");
+        yield return testDataToArgs();
 
+        checkElements = true;
+        ParamsDescription = "IEnumerable contains null elements only" + checkelementState;
+        enumerable = new List<object>() { null, };
+        MessageContent = GetEnumerableExceptionMessageContent(" contains null value elements");
+        yield return testDataToArgs();
+
+        ParamsDescription = "IEnumerable contains null and notnull elements" + checkelementState;
+        enumerable = new List<object>() { new(), null };
+        yield return testDataToArgs();
+
+        object[] testDataToArgs() => TestDataThrowsToArgs<ArgumentException, IEnumerable, bool>(enumerable, checkElements);
+    }
+
+    #endregion
+
+    #region TypeChecked
+    public IEnumerable<object[]> ExceptionMethods_TypeChecked_ArgumentNullException_ArgsToList()
+    {
+        SetParamName(ParamNames.param);
+        object param = null;
+        Type validType = null;
+        yield return testDataToArgs();
+
+        SetParamName(ParamNames.validType);
+        param = new();
+        yield return testDataToArgs();  
+
+        object[] testDataToArgs() => TestDataThrowsToArgs<ArgumentNullException, object, Type>(param, validType);
     }
 
     #endregion

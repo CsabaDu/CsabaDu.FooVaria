@@ -76,27 +76,63 @@ public static class ExceptionMethods
     #region NullCheckers
     public static T NullChecked<T>(T? param, string? paramName)
     {
-        ArgumentNullException.ThrowIfNull(param, paramName);
-
         if (param is string str)
         {
             ArgumentException.ThrowIfNullOrEmpty(str, paramName);
         }
-
-        if (param is IEnumerable enumerable)
+        else if (param is IEnumerable enumerable)
         {
-            if (enumerable.GetEnumerator() is not IEnumerator enumerator)
-            {
-                throw new ArgumentException($"GetEnumerator() method of the {paramName} enumerable returns null.", paramName);
-            }
+            return (T)NullChecked(enumerable, paramName, false);
+        }
 
-            if (!enumerator.MoveNext())
-            {
-                throw new ArgumentException($"The {paramName} enumerable does not contain any element.", paramName);
+        ArgumentNullException.ThrowIfNull(param, paramName);
+
+        return param!;
+    }
+
+    public static TEnumerable NullChecked<TEnumerable>(TEnumerable? enumerable, string? paramName, bool checkElements)
+        where TEnumerable : IEnumerable
+    {
+        ArgumentNullException.ThrowIfNull(enumerable, paramName);
+
+        if (enumerable.GetEnumerator() is not IEnumerator enumerator)
+        {
+            throw enumerableArgumentException("'s GetEnumerator() method returns null");
+        }
+
+        if (!enumeratorMoveNext())
+        {
+            throw enumerableArgumentException(" does not contain any element");
+        }
+
+        if (!checkElements) return enumerable;
+
+        if (enumeratorCurrentIsNull())
+        {
+            throw enumerableNullValueElementsArgumentException();
+        }
+
+        while (enumeratorMoveNext())
+        {
+            if (enumeratorCurrentIsNull())
+            {   
+                throw enumerableNullValueElementsArgumentException();
             }
         }
 
-        return param!;
+        return enumerable;
+
+        #region Local methods
+        bool enumeratorMoveNext() => enumerator.MoveNext();
+
+        bool enumeratorCurrentIsNull() => enumerator.Current is null;
+
+        ArgumentException enumerableArgumentException(string messageEnd)
+        => new($"The {paramName} enumerable{messageEnd}.", paramName);
+
+        ArgumentException enumerableNullValueElementsArgumentException()
+        => enumerableArgumentException(" contains null value elements");
+        #endregion
     }
     #endregion
 
@@ -143,7 +179,7 @@ public static class ExceptionMethods
     {
         string argTypeName = arg.GetType().Name;
 
-        return new ArgumentOutOfRangeException(paramName, argTypeName, $"The {paramName} argument's type {argTypeName} is other than the valid {validType.Name} type.");
+        return new ArgumentOutOfRangeException(paramName, argTypeName, $"The {paramName} argument's type is other than the valid {validType.Name} type.");
     }
 
     public static InvalidEnumArgumentException InvalidTypeEnumArgumentException(string? paramName, Enum param, Type enumType)

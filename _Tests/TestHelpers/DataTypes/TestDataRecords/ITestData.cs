@@ -6,3 +6,10 @@ public interface ITestData
 
     object[] ToArgs(ArgsCode argsCode);
 }
+
+public interface ITestData<TException> : ITestData where TException : Exception
+{
+    string ParamName { get; init; }
+    string Message { get; }
+    Type ExceptionType { get; }
+}

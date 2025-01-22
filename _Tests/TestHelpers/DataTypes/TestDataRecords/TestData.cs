@@ -2,14 +2,13 @@
 
 public abstract record TestData<TResult>(string ParamsDescription) : ITestData where TResult : notnull
 {
-    protected abstract string ResultTypeName { get; }
+    protected abstract string ResultMode { get; }
     protected abstract string ResultName { get; }
-
     public string TestCase => ResultName == null ?
-        $"{ParamsDescription} => {ResultTypeName}"
-        : $"{ParamsDescription} => {ResultTypeName} {ResultName}";
+        $"{ParamsDescription} => {ResultMode}"
+        : $"{ParamsDescription} => {ResultMode} {ResultName}";
 
-    protected string GetResultTypeName()
+    protected string GetResultMode()
     {
         string typeName = GetType().Name;
         int lastUnderscoreIndexPlus = typeName.LastIndexOf('_') + 1;

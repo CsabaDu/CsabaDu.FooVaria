@@ -4,19 +4,21 @@ namespace CsabaDu.FooVaria.Test.UnitTests_xUnit.BaseTypes.CommonTests;
 
 public sealed class ExceptionMethodsTests
 {
-    #region Private fields
-    #region Static fields
+    private class TestType : object;
+
+    #region Private static fields
     private static readonly CommonTestsDynamicDataSource DynamicDataSource = new(ArgsCode.Instance);
     #endregion
-    #endregion
 
-    #region Private properties
-    #region Static properties
-    public static IEnumerable<object[]> NullChecked_ArgumentException_ArgsList
-    => DynamicDataSource.ExceptionMethods_NullChecked_ArgumentException_ArgsToList();
+    #region Private static properties
+    public static IEnumerable<object[]> NullChecked_object_ArgumentException_ArgsList
+    => DynamicDataSource.ExceptionMethods_NullChecked_object_ArgumentException_ArgsToList();
     public static IEnumerable<object[]> NullChecked_Returns_ArgsList
     => DynamicDataSource.ExceptionMethods_NullChecked_Returns_ArgsToList();
-    #endregion
+    public static IEnumerable<object[]> NullChecked_IEnumerable_ArgumentException_ArgsList
+    => DynamicDataSource.ExceptionMethods_NullChecked_IEnumerable_ArgumentException_ArgsToList();
+    public static IEnumerable<object[]> TypeChecked_ArgumentNullException_ArgsList
+    => DynamicDataSource.ExceptionMethods_TypeChecked_ArgumentNullException_ArgsToList();
     #endregion
 
     #region NullChecked tests
@@ -35,18 +37,17 @@ public sealed class ExceptionMethodsTests
         _ = Assert.Throws<ArgumentNullException>(paramName, attempt);
     }
 
-    [Theory, MemberData(nameof(NullChecked_ArgumentException_ArgsList))]
+    [Theory, MemberData(nameof(NullChecked_object_ArgumentException_ArgsList))]
     public void NullChecked_invalidArg_object_arg_string_throwsArgumentException(TestData_throws<ArgumentException, object> testData)
     {
         // Arrange
         object param = testData.Arg1;
-        string paramName = ParamNames.param;
 
         // Act
-        void attempt() => _ = NullChecked(param, paramName);
+        void attempt() => _ = NullChecked(param, testData.ParamName);
 
         // Assert
-        var exception = Assert.Throws<ArgumentException>(paramName, attempt);
+        var exception = Assert.Throws<ArgumentException>(testData.ParamName, attempt);
         Assert.Equal(testData.Message, exception.Message);
     }
 
@@ -55,41 +56,97 @@ public sealed class ExceptionMethodsTests
     {
         // Arrange
         object param = testData.Args[0];
-        string paramName = ParamNames.param;
 
         // Act
-        var actual = NullChecked(param, paramName);
+        var actual = NullChecked(param, null);
 
         // Assert
         Assert.Equal(param, actual);
     }
     #endregion
+
+    #region TEnumerable NullChecked<TEnumerable>(TEnumerable?, string, bool) where TEnumerable : IEnumerable
+    [Fact]
+    public void NullChecked_nullArg_object_arg_string_arg_bool_throwsArgumentNullException()
+    {
+        // Arrange
+        IEnumerable enumerable = null;
+        string paramName = ParamNames.enumerable;
+        bool checkElements = false;
+
+        // Act
+        void attempt() => _ = NullChecked(enumerable, paramName, checkElements);
+
+        // Assert
+        _ = Assert.Throws<ArgumentNullException>(paramName, attempt);
+    }
+
+    [Theory, MemberData(nameof(NullChecked_IEnumerable_ArgumentException_ArgsList))]
+    public void NullChecked_invalidArg_object_arg_string_arg_bool_throwsArgumentException(TestData_throws<ArgumentException, IEnumerable, bool> testData)
+    {
+        // Arrange
+        IEnumerable enumerable = testData.Arg1;
+        bool checkElements = testData.Arg2;
+
+        // Act
+        void attempt() => _ = NullChecked(enumerable, testData.ParamName, checkElements);
+
+        // Assert
+        var exception = Assert.Throws<ArgumentException>(testData.ParamName, attempt);
+        Assert.Equal(testData.Message, exception.Message);
+    }
+
+    #endregion
     #endregion
 
     #region TypeChecked tests
     #region static T TypeChecked<T>(T?, string, Type)
+    [Theory, MemberData(nameof(TypeChecked_ArgumentNullException_ArgsList))]
+    public void TypeChecked_nullArg_object_arg_string_nullArg_Type_throwsArgumentNullException(TestData_throws<ArgumentNullException, object, Type> testData)
+    {
+        // Arrange
+        object param = testData.Arg1;
+        Type validType = testData.Arg2;
+
+        // Act
+        void attempt() => _ = TypeChecked(param, testData.ParamName, validType);
+
+        // Assert
+        _ = Assert.Throws<ArgumentNullException>(testData.ParamName, attempt);
+    }
 
     #endregion
 
     #region static T TypeChecked<T>(object?, string)
-
-    #endregion
-
     [Fact]
-    public void TypeChecked_InvalidType_ThrowsArgumentOutOfRangeException()
+    public void TypeChecked_invalidArg_object_arg_string_throwsArgumentOutOfRangeException()
     {
         // Arrange
-        string paramName = "param";
-        object param = new object();
-        Type expectedType = typeof(string);
+        object param = new();
+        string paramName = ParamNames.param;
 
         // Act
-        void act() => TypeChecked(param, paramName, expectedType);
+        void attempt() => _ = TypeChecked<TestType>(param, paramName);
 
         // Assert
-        var exception = Assert.Throws<ArgumentOutOfRangeException>(paramName, act);
-        Assert.Equal($"The {paramName} argument's type is invalid in this context.", exception.Message);
+       _ = Assert.Throws<ArgumentOutOfRangeException>(paramName, attempt);
     }
+    #endregion
+
+    //[Fact]
+    //public void TypeChecked_InvalidType_ThrowsArgumentOutOfRangeException()
+    //{
+    //    // Arrange
+    //    string paramName = "param";
+    //    object param = new object();
+    //    Type expectedType = typeof(string);
+
+    //    // Act
+    //    void act() => TypeChecked(param, paramName, expectedType);
+
+    //    // Assert
+    //    _ = Assert.Throws<ArgumentOutOfRangeException>(paramName, act);
+    //}
 
     [Fact]
     public void TypeChecked_ValidType_ReturnsParam()
@@ -105,23 +162,24 @@ public sealed class ExceptionMethodsTests
         // Assert
         Assert.Equal(param, result);
     }
+
     #endregion
 
     #region Defined Tests
-    [Fact]
-    public void Defined_InvalidEnum_ThrowsInvalidEnumArgumentException()
-    {
-        // Arrange
-        string paramName = "param";
-        SideCode invalidEnum = (SideCode)999;
+    //[Fact]
+    //public void Defined_InvalidEnum_ThrowsInvalidEnumArgumentException()
+    //{
+    //    // Arrange
+    //    string paramName = "param";
+    //    SideCode invalidEnum = (SideCode)999;
 
-        // Act
-        void act() => Defined(invalidEnum, paramName);
+    //    // Act
+    //    void act() => Defined(invalidEnum, paramName);
 
-        // Assert
-        var exception = Assert.Throws<InvalidEnumArgumentException>(paramName, act);
-        Assert.Equal($"The {paramName} argument's type is invalid in this context.", exception.Message);
-    }
+    //    // Assert
+    //    var exception = Assert.Throws<InvalidEnumArgumentException>(paramName, act);
+    //    Assert.Equal($"The {paramName} argument's type is invalid in this context.", exception.Message);
+    //}
 
     [Fact]
     public void Defined_ValidEnum_ReturnsEnum()

@@ -1,13 +1,31 @@
 ﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.TestDataRecords;
 
 public abstract record TestData_throws<TException>(string ParamsDescription, string ParamName, string MessageContent)
-    : TestData<TException>(ParamsDescription)
+    : TestData<TException>(ParamsDescription), ITestData<TException>
     where TException : Exception
 {
-    public string Message => typeof(TException) == typeof(ArgumentException) ? $"{MessageContent} (Parameter '{ParamName}')" : MessageContent;
+    public string Message { get; private set; } = MessageContent;
     public Type ExceptionType => typeof(TException);
-    protected override sealed string ResultTypeName => GetResultTypeName();
+    protected override sealed string ResultMode => GetResultMode();
     protected override sealed string ResultName => ExceptionType.Name;
+
+    public TestData_throws<TException> SetMessage(object value)
+    {
+        string parameter = $" (Parameter '{ParamName}')";
+
+        if (ExceptionType == typeof(ArgumentOutOfRangeException))
+        {
+            Message += parameter + getActualType();
+        }
+        else if (ExceptionType == typeof(ArgumentException))
+        {
+            Message += parameter;
+        }
+
+        return this;
+
+        string getActualType() => $"\r\nActual value was {value?.GetType().Name ?? string.Empty}.";
+    }
 }
 
 public record TestData_throws<TException, T1>(string ParamsDescription, string ParamName, string MessageContent, T1 Arg1)

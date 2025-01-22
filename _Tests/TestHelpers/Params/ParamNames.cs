@@ -6,6 +6,7 @@ public static class ParamNames
     public const string commonBase = nameof(commonBase);
     public const string context = nameof(context);
     public const string denominator = nameof(denominator);
+    public const string enumerable = nameof(enumerable);
     public const string factory = nameof(factory);
     public const string measurable = nameof(measurable);
     public const string measureUnit = nameof(measureUnit);
@@ -20,7 +21,7 @@ public static class ParamNames
     public const string rootObject = nameof(rootObject);
     public const string roundingMode = nameof(roundingMode);
     public const string spreadMeasure = nameof(spreadMeasure);
-
+    public const string validType = nameof(validType);
     public static IEnumerable<string> GetParamNames()
     {
         Type type = typeof(ParamNames);

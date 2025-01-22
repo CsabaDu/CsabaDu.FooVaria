@@ -32,7 +32,7 @@ public sealed class ExtensionsTests
     #endregion
 
     #region IsDefined tests
-    #region static bool IsDefined<T>(this T) where T : struct, Enum
+    #region static bool IsDefined<TEnum>(this TEnum) where TEnum : struct, Enum
     [Theory, MemberData(nameof(IsDefined_ArgsList))]
     public void IsDefined_returnsExpected(TestData_returns<bool, TestEnum> testData)
     {
