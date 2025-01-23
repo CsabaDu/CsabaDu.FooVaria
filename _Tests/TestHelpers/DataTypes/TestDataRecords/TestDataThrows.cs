@@ -10,7 +10,7 @@ public abstract record TestDataThrows<TException>(string ParamsDescription, stri
 
     protected override sealed string Result => ExceptionType.Name;
 
-    public TestDataThrows<TException> SetMessage(object value)
+    public TestDataThrows<TException> SetMessage(object? value)
     {
         string parameter = $" (Parameter '{ParamName}')";
 

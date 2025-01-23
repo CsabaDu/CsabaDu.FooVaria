@@ -4,7 +4,7 @@ public abstract record TestDataReturns<TStruct>(string ParamsDescription, TStruc
     : TestData<TStruct>(ParamsDescription)
     where TStruct : struct
 {
-    protected override sealed string Result => Expected.ToString();
+    protected override sealed string Result => Expected.ToString()!;
 }
 
 public record TestDataReturns<TStruct, T1>(string ParamsDescription, TStruct Expected, T1? Arg1)
