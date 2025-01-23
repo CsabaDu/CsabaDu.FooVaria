@@ -1,14 +1,12 @@
 ﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.TestDataRecords;
 
-public abstract record TestDataThrows<TException>(string ParamsDescription, string ParamName, string MessageContent)
-    : TestData<TException>(ParamsDescription), ITestData<TException>
+public abstract record TestDataThrows<TException>(string Definition, string ParamName, string MessageContent)
+    : TestData<TException>(Definition, typeof(TException).Name), ITestData<TException>
     where TException : Exception
 {
     public string Message { get; private set; } = MessageContent;
 
     public Type ExceptionType => typeof(TException);
-
-    protected override sealed string Result => ExceptionType.Name;
 
     public TestDataThrows<TException> SetMessage(object? value)
     {
@@ -29,8 +27,8 @@ public abstract record TestDataThrows<TException>(string ParamsDescription, stri
     }
 }
 
-public record TestDataThrows<TException, T1>(string ParamsDescription, string ParamName, string MessageContent, T1? Arg1)
-    : TestDataThrows<TException>(ParamsDescription, ParamName, MessageContent)
+public record TestDataThrows<TException, T1>(string Definition, string ParamName, string MessageContent, T1? Arg1)
+    : TestDataThrows<TException>(Definition, ParamName, MessageContent)
     where TException : Exception
 {
     public override object?[] ToArgs(ArgsCode argsCode)
@@ -39,8 +37,8 @@ public record TestDataThrows<TException, T1>(string ParamsDescription, string Pa
         : base.ToArgs(argsCode);
 }
 
-public record TestDataThrows<TException, T1, T2>(string ParamsDescription, string ParamName, string MessageContent, T1? Arg1, T2? Arg2)
-    : TestDataThrows<TException, T1>(ParamsDescription, ParamName, MessageContent, Arg1)
+public record TestDataThrows<TException, T1, T2>(string Definition, string ParamName, string MessageContent, T1? Arg1, T2? Arg2)
+    : TestDataThrows<TException, T1>(Definition, ParamName, MessageContent, Arg1)
     where TException : Exception
 {
     public override object?[] ToArgs(ArgsCode argsCode)
@@ -49,8 +47,8 @@ public record TestDataThrows<TException, T1, T2>(string ParamsDescription, strin
         : base.ToArgs(argsCode);
 }
 
-public record TestDataThrows<TException, T1, T2, T3>(string ParamsDescription, string ParamName, string MessageContent, T1? Arg1, T2? Arg2, T3? Arg3)
-    : TestDataThrows<TException, T1, T2>(ParamsDescription, ParamName, MessageContent, Arg1, Arg2)
+public record TestDataThrows<TException, T1, T2, T3>(string Definition, string ParamName, string MessageContent, T1? Arg1, T2? Arg2, T3? Arg3)
+    : TestDataThrows<TException, T1, T2>(Definition, ParamName, MessageContent, Arg1, Arg2)
     where TException : Exception
 {
     public override object?[] ToArgs(ArgsCode argsCode)
@@ -59,8 +57,8 @@ public record TestDataThrows<TException, T1, T2, T3>(string ParamsDescription, s
         : base.ToArgs(argsCode);
 }
 
-public record TestDataThrows<TException, T1, T2, T3, T4>(string ParamsDescription, string ParamName, string MessageContent, T1? Arg1, T2? Arg2, T3? Arg3, T4? Arg4)
-    : TestDataThrows<TException, T1, T2, T3>(ParamsDescription, ParamName, MessageContent, Arg1, Arg2, Arg3)
+public record TestDataThrows<TException, T1, T2, T3, T4>(string Definition, string ParamName, string MessageContent, T1? Arg1, T2? Arg2, T3? Arg3, T4? Arg4)
+    : TestDataThrows<TException, T1, T2, T3>(Definition, ParamName, MessageContent, Arg1, Arg2, Arg3)
     where TException : Exception
 {
     public override object?[] ToArgs(ArgsCode argsCode)
@@ -69,8 +67,8 @@ public record TestDataThrows<TException, T1, T2, T3, T4>(string ParamsDescriptio
         : base.ToArgs(argsCode);
 }
 
-public record TestDataThrows<TException, T1, T2, T3, T4, T5>(string ParamsDescription, string ParamName, string MessageContent, T1? Arg1, T2? Arg2, T3? Arg3, T4? Arg4, T5? Arg5)
-    : TestDataThrows<TException, T1, T2, T3, T4>(ParamsDescription, ParamName, MessageContent, Arg1, Arg2, Arg3, Arg4)
+public record TestDataThrows<TException, T1, T2, T3, T4, T5>(string Definition, string ParamName, string MessageContent, T1? Arg1, T2? Arg2, T3? Arg3, T4? Arg4, T5? Arg5)
+    : TestDataThrows<TException, T1, T2, T3, T4>(Definition, ParamName, MessageContent, Arg1, Arg2, Arg3, Arg4)
     where TException : Exception
 {
     public override object?[] ToArgs(ArgsCode argsCode)
@@ -79,8 +77,8 @@ public record TestDataThrows<TException, T1, T2, T3, T4, T5>(string ParamsDescri
         : base.ToArgs(argsCode);
 }
 
-public record TestDataThrows<TException, T1, T2, T3, T4, T5, T6>(string ParamsDescription, string ParamName, string MessageContent, T1? Arg1, T2? Arg2, T3? Arg3, T4? Arg4, T5? Arg5, T6? Arg6)
-    : TestDataThrows<TException, T1, T2, T3, T4, T5>(ParamsDescription, ParamName, MessageContent, Arg1, Arg2, Arg3, Arg4, Arg5)
+public record TestDataThrows<TException, T1, T2, T3, T4, T5, T6>(string Definition, string ParamName, string MessageContent, T1? Arg1, T2? Arg2, T3? Arg3, T4? Arg4, T5? Arg5, T6? Arg6)
+    : TestDataThrows<TException, T1, T2, T3, T4, T5>(Definition, ParamName, MessageContent, Arg1, Arg2, Arg3, Arg4, Arg5)
     where TException : Exception
 {
     public override object?[] ToArgs(ArgsCode argsCode)
@@ -89,8 +87,8 @@ public record TestDataThrows<TException, T1, T2, T3, T4, T5, T6>(string ParamsDe
         : base.ToArgs(argsCode);
 }
 
-public record TestDataThrows<TException, T1, T2, T3, T4, T5, T6, T7>(string ParamsDescription, string ParamName, string MessageContent, T1? Arg1, T2? Arg2, T3? Arg3, T4? Arg4, T5? Arg5, T6? Arg6, T7? Arg7)
-    : TestDataThrows<TException, T1, T2, T3, T4, T5, T6>(ParamsDescription, ParamName, MessageContent, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6)
+public record TestDataThrows<TException, T1, T2, T3, T4, T5, T6, T7>(string Definition, string ParamName, string MessageContent, T1? Arg1, T2? Arg2, T3? Arg3, T4? Arg4, T5? Arg5, T6? Arg6, T7? Arg7)
+    : TestDataThrows<TException, T1, T2, T3, T4, T5, T6>(Definition, ParamName, MessageContent, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6)
     where TException : Exception
 {
     public override object?[] ToArgs(ArgsCode argsCode)

@@ -52,7 +52,7 @@ public abstract class DynamicDataSource(ArgsCode argsCode)
     protected object?[] TestDataReturnsToArgs<TStruct, T1, T2, T3, T4, T5>(TStruct expected, T1? arg1, T2? arg2, T3? arg3, T4? arg4, T5? arg5) where TStruct : struct
     => new TestDataReturns<TStruct, T1, T2, T3, T4, T5>(Definition, expected, arg1, arg2, arg3, arg4, arg5).ToArgs(ArgsCode);
 
-    protected object?[] TestDataReturnsToArgs<TStruct, T1, T2, T3, T4, T5, T6>(TStruct expected, T1? arg1, T2? arg2, T3? arg3, T4? arg4, T5? arg5, T6 args6) where TStruct : struct
+    protected object?[] TestDataReturnsToArgs<TStruct, T1, T2, T3, T4, T5, T6>(TStruct expected, T1? arg1, T2? arg2, T3? arg3, T4? arg4, T5? arg5, T6? args6) where TStruct : struct
     => new TestDataReturns<TStruct, T1, T2, T3, T4, T5, T6>(Definition, expected, arg1, arg2, arg3, arg4, arg5, args6).ToArgs(ArgsCode);
 
     protected object?[] TestDataReturnsToArgs<TStruct, T1, T2, T3, T4, T5, T6, T7>(TStruct expected, T1? arg1, T2? arg2, T3? arg3, T4? arg4, T5? arg5, T6? arg6, T7? arg7) where TStruct : struct

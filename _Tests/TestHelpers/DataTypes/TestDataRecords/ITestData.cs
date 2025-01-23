@@ -3,13 +3,9 @@
 public interface ITestData
 {
     string TestCase { get; }
+    string Result { get; }
 
     object?[] ToArgs(ArgsCode argsCode);
 }
 
-public interface ITestData<TException> : ITestData where TException : Exception
-{
-    string ParamName { get; init; }
-    string Message { get; }
-    Type ExceptionType { get; }
-}
+public interface ITestData<String> : ITestData;

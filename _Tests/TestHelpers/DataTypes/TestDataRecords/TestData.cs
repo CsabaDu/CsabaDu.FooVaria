@@ -1,7 +1,8 @@
 ﻿namespace CsabaDu.FooVaria.Tests.TestHelpers.DataTypes.TestDataRecords;
 
-public abstract record TestData<TResult>(string Definition) : ITestData where TResult : notnull
+public abstract record TestData<TResult>(string Definition, string Result) : ITestData where TResult : notnull
 {
+    private readonly string NotNullResult = Result ?? string.Empty;
     private string ExitMode
     {
         get
@@ -15,11 +16,9 @@ public abstract record TestData<TResult>(string Definition) : ITestData where TR
         }
     }
 
-    protected abstract string Result { get; }
-
     public string TestCase => ExitMode == string.Empty ?
-        $"{Definition} => {Result}"
-        : $"{Definition} => {ExitMode} {Result}";
+        $"{Definition} => {NotNullResult}"
+        : $"{Definition} => {ExitMode} {NotNullResult}";
 
     public virtual object?[] ToArgs(ArgsCode argsCode)
     {
@@ -31,19 +30,17 @@ public abstract record TestData<TResult>(string Definition) : ITestData where TR
     public override sealed string ToString() => TestCase;
 }
 
-public record TestData<String, T1>(string ParamsDescription, string Outcome, T1? Arg1)
-    : TestData<string>(ParamsDescription)
+public record TestData<String, T1>(string Definition, string Result, T1? Arg1)
+    : TestData<string>(Definition, Result), ITestData<String>
 {
-    protected override sealed string Result => Outcome ?? string.Empty;
-
     public override object?[] ToArgs(ArgsCode argsCode)
     => argsCode == ArgsCode.Properties ?
         [TestCase, Arg1]
         : base.ToArgs(argsCode);
 }
 
-public record TestData<String, T1, T2>(string ParamsDescription, string Outcome, T1? Arg1, T2? Arg2)
-    : TestData<string, T1>(ParamsDescription, Outcome, Arg1)
+public record TestData<String, T1, T2>(string Definition, string Result, T1? Arg1, T2? Arg2)
+    : TestData<string, T1>(Definition, Result, Arg1)
 {
     public override object?[] ToArgs(ArgsCode argsCode)
     => argsCode == ArgsCode.Properties ?
@@ -51,8 +48,8 @@ public record TestData<String, T1, T2>(string ParamsDescription, string Outcome,
         : base.ToArgs(argsCode);
 }
 
-public record TestData<String, T1, T2, T3>(string ParamsDescription, string Outcome, T1? Arg1, T2? Arg2, T3? Arg3)
-    : TestData<string, T1, T2>(ParamsDescription, Outcome, Arg1, Arg2)
+public record TestData<String, T1, T2, T3>(string Definition, string Result, T1? Arg1, T2? Arg2, T3? Arg3)
+    : TestData<string, T1, T2>(Definition, Result, Arg1, Arg2)
 {
     public override object?[] ToArgs(ArgsCode argsCode)
     => argsCode == ArgsCode.Properties ?
@@ -60,8 +57,8 @@ public record TestData<String, T1, T2, T3>(string ParamsDescription, string Outc
         : base.ToArgs(argsCode);
 }
 
-public record TestData<String, T1, T2, T3, T4>(string ParamsDescription, string Outcome, T1? Arg1, T2? Arg2, T3? Arg3, T4? Arg4)
-    : TestData<string, T1, T2, T3>(ParamsDescription, Outcome, Arg1, Arg2, Arg3)
+public record TestData<String, T1, T2, T3, T4>(string Definition, string Result, T1? Arg1, T2? Arg2, T3? Arg3, T4? Arg4)
+    : TestData<string, T1, T2, T3>(Definition, Result, Arg1, Arg2, Arg3)
 {
     public override object?[] ToArgs(ArgsCode argsCode)
     => argsCode == ArgsCode.Properties ?
@@ -69,8 +66,8 @@ public record TestData<String, T1, T2, T3, T4>(string ParamsDescription, string 
         : base.ToArgs(argsCode);
 }
 
-public record TestData<String, T1, T2, T3, T4, T5>(string ParamsDescription, string Outcome, T1? Arg1, T2? Arg2, T3? Arg3, T4? Arg4, T5? Arg5)
-    : TestData<string, T1, T2, T3, T4>(ParamsDescription, Outcome, Arg1, Arg2, Arg3, Arg4)
+public record TestData<String, T1, T2, T3, T4, T5>(string Definition, string Result, T1? Arg1, T2? Arg2, T3? Arg3, T4? Arg4, T5? Arg5)
+    : TestData<string, T1, T2, T3, T4>(Definition, Result, Arg1, Arg2, Arg3, Arg4)
 {
     public override object?[] ToArgs(ArgsCode argsCode)
     => argsCode == ArgsCode.Properties ?
@@ -78,8 +75,8 @@ public record TestData<String, T1, T2, T3, T4, T5>(string ParamsDescription, str
         : base.ToArgs(argsCode);
 }
 
-public record TestData<String, T1, T2, T3, T4, T5, T6>(string ParamsDescription, string Outcome, T1? Arg1, T2? Arg2, T3? Arg3, T4? Arg4, T5? Arg5, T6? Arg6)
-    : TestData<string, T1, T2, T3, T4, T5>(ParamsDescription, Outcome, Arg1, Arg2, Arg3, Arg4, Arg5)
+public record TestData<String, T1, T2, T3, T4, T5, T6>(string Definition, string Result, T1? Arg1, T2? Arg2, T3? Arg3, T4? Arg4, T5? Arg5, T6? Arg6)
+    : TestData<string, T1, T2, T3, T4, T5>(Definition, Result, Arg1, Arg2, Arg3, Arg4, Arg5)
 {
     public override object?[] ToArgs(ArgsCode argsCode)
     => argsCode == ArgsCode.Properties ?
@@ -87,8 +84,8 @@ public record TestData<String, T1, T2, T3, T4, T5, T6>(string ParamsDescription,
         : base.ToArgs(argsCode);
 }
 
-public record TestData<String, T1, T2, T3, T4, T5, T6, T7>(string ParamsDescription, string Outcome, T1? Arg1, T2? Arg2, T3? Arg3, T4? Arg4, T5? Arg5, T6? Arg6, T7? Arg7)
-    : TestData<string, T1, T2, T3, T4, T5, T6>(ParamsDescription, Outcome, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6)
+public record TestData<String, T1, T2, T3, T4, T5, T6, T7>(string Definition, string Result, T1? Arg1, T2? Arg2, T3? Arg3, T4? Arg4, T5? Arg5, T6? Arg6, T7? Arg7)
+    : TestData<string, T1, T2, T3, T4, T5, T6>(Definition, Result, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6)
 {
     public override object?[] ToArgs(ArgsCode argsCode)
     => argsCode == ArgsCode.Properties ?
