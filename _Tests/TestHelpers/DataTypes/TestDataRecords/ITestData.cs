@@ -4,7 +4,7 @@ public interface ITestData
 {
     string TestCase { get; }
 
-    object[] ToArgs(ArgsCode argsCode);
+    object?[] ToArgs(ArgsCode argsCode);
 }
 
 public interface ITestData<TException> : ITestData where TException : Exception

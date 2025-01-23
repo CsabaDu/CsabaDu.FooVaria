@@ -9,18 +9,22 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
     private const string enumerableContainsNullElementsOnly = "Enumerable contains null elements only";
     private const string enumerableDoesNotContainElement = "Enumerable does not contain any element";
     private const string enumerableGetEnumeratorReturnsNull = "Enumerable.GetEnumerator() returns null";
+    private const string enumerableContainsElements = "Enumerable contains elements";
     private const string sGetEnumeratorReturnsNull = "'s GetEnumerator() method returns null";
+    private const string theValueCannotBeAnEmptyString = "The value cannot be an empty string.";
 
     private bool _expected;
-    private string _paramsDescription = null;
+    private string _exitMode = null;
 
     private class NullEnumeratorEnumerable() : IEnumerable
     {
         public IEnumerator GetEnumerator() => null;
     }
 
+    private string ReturnsParamName => $"Returns '{ParamName}'";
+
     private string GetCheckNullEnumerableParamsDescription(string paramsDescription, bool checkElements)
-    => ParamsDescription = paramsDescription + GetCheckElementsState(checkElements);
+    => Definition = paramsDescription + GetCheckElementsState(checkElements);
 
     private static string GetCheckElementsState(bool checkElements)
     => $" when bool checkElements param is {checkElements}";
@@ -31,12 +35,9 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
     private string GetEnumerableExceptionMessageContent(string messageEnd)
     => $"The {ParamName} enumerable{messageEnd}.";
 
-    private string GetResultDescription(string paramName)
-    => $"returns '{paramName}'";
-
     private object[] TestDataToArgs<TStruct>(TStruct arg) where TStruct : struct
     {
-        ParamsDescription = _paramsDescription ?? arg.ToString();
+        Definition = _exitMode ?? arg.ToString();
         return TestDataReturnsToArgs(_expected, arg);
     }
 
@@ -91,7 +92,7 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
         _expected = false;
         int invalidValue = Enum.GetNames<TestEnum>().Length;
         testEnum = (TestEnum)invalidValue;
-        _paramsDescription = nameof(invalidValue);
+        _exitMode = nameof(invalidValue);
         yield return testDataToArgs();
         #endregion
 
@@ -105,17 +106,17 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
     {
         SetParamName(ParamNames.param);
 
-        ParamsDescription = "Empty string";
+        Definition = "Empty string";
         object param = string.Empty;
-        MessageContent = "The value cannot be an empty string.";
+        MessageContent = theValueCannotBeAnEmptyString;
         yield return testDataToArgs();
 
-        ParamsDescription = enumerableGetEnumeratorReturnsNull;
+        Definition = enumerableGetEnumeratorReturnsNull;
         param = new NullEnumeratorEnumerable();
         MessageContent = GetEnumerableExceptionMessageContent(sGetEnumeratorReturnsNull);
         yield return testDataToArgs();
 
-        ParamsDescription = enumerableDoesNotContainElement;
+        Definition = enumerableDoesNotContainElement;
         param = new List<object>();
         MessageContent = GetEnumerableExceptionMessageContent(doesNotContainElement);
         yield return testDataToArgs();
@@ -125,19 +126,20 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
 
     public IEnumerable<object[]> ExceptionMethods_NullChecked_object_Returns_ArgsToList()
     {
-        ParamsDescription = "object";
+        Definition = "object";
+        ParamName = ParamNames.param;
         object param = new();
         yield return testDataToArgs();
 
-        ParamsDescription = "Not empty string";
-        param = ParamNames.param;
+        Definition = "Not empty string";
+        param = " ";
         yield return testDataToArgs();
 
-        ParamsDescription = "Enumerable contains elements";
+        Definition = enumerableContainsElements;
         param = new List<object>() { null };
         yield return testDataToArgs();
 
-        object[] testDataToArgs() => TestDataToArgs(GetResultDescription(nameof(param)), param);
+        object[] testDataToArgs() => TestDataToArgs(ReturnsParamName, param);
     }
 
     public IEnumerable<object[]> ExceptionMethods_NullChecked_IEnumerable_ArgumentException_ArgsToList()
@@ -146,12 +148,12 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
 
         #region checkElements = false
         bool checkElements = false;
-        ParamsDescription = enumerableGetEnumeratorReturnsNull;
+        Definition = enumerableGetEnumeratorReturnsNull;
         IEnumerable enumerable = new NullEnumeratorEnumerable();
         MessageContent = GetEnumerableExceptionMessageContent(sGetEnumeratorReturnsNull);
         yield return testDataToArgs();
 
-        ParamsDescription = enumerableDoesNotContainElement;
+        Definition = enumerableDoesNotContainElement;
         enumerable = new List<object>();
         MessageContent = GetEnumerableExceptionMessageContent(doesNotContainElement);
         yield return testDataToArgs();
@@ -159,12 +161,12 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
 
         #region checkElements = true
         checkElements = true;
-        ParamsDescription = GetCheckNullEnumerableParamsDescription(enumerableContainsNullElementsOnly, checkElements);
+        Definition = GetCheckNullEnumerableParamsDescription(enumerableContainsNullElementsOnly, checkElements);
         enumerable = new List<object>() { null };
         MessageContent = GetEnumerableExceptionMessageContent(containsNullValueElements);
         yield return testDataToArgs();
 
-        ParamsDescription = GetCheckNullEnumerableParamsDescription(enumerableContainsNullAndNotNullElements, checkElements);
+        Definition = GetCheckNullEnumerableParamsDescription(enumerableContainsNullAndNotNullElements, checkElements);
         enumerable = new List<object>() { new(), null };
         yield return testDataToArgs();
         #endregion
@@ -175,23 +177,24 @@ public class CommonTestsDynamicDataSource(ArgsCode argsCode) : DynamicDataSource
     {
         #region checkElements = false
         bool checkElements = false;
+        ParamName = ParamNames.enumerable;
         IEnumerable enumerable = new List<object>() { null };
-        ParamsDescription = GetCheckNullEnumerableParamsDescription(enumerableContainsNullElementsOnly, checkElements);
+        Definition = GetCheckNullEnumerableParamsDescription(enumerableContainsNullElementsOnly, checkElements);
         yield return testDataToArgs();
 
-        ParamsDescription = GetCheckNullEnumerableParamsDescription(enumerableContainsNullAndNotNullElements, checkElements);
+        Definition = GetCheckNullEnumerableParamsDescription(enumerableContainsNullAndNotNullElements, checkElements);
         enumerable = new List<object>() { new(), null };
         yield return testDataToArgs();
         #endregion
 
         #region checkElements = true
         checkElements = true;
-        ParamsDescription = GetCheckNullEnumerableParamsDescription(enumerableContainsNotNullElementsOnly, checkElements);
+        Definition = GetCheckNullEnumerableParamsDescription(enumerableContainsNotNullElementsOnly, checkElements);
         enumerable = new List<object>() { new() };
         yield return testDataToArgs();
         #endregion
 
-        object[] testDataToArgs() => TestDataToArgs(GetResultDescription(nameof(enumerable)), enumerable, checkElements);
+        object[] testDataToArgs() => TestDataToArgs(ReturnsParamName, enumerable, checkElements);
     }
 
     #endregion
