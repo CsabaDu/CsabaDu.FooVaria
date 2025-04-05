@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "csabadu.dynamictestdata": {
+      "version": "1.0.0",
+      "commands": [
+        "CsabaDu.DynamicTestData"
+      ],
+      "rollForward": false
+    }
+  }
+}
